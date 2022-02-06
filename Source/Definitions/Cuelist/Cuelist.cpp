@@ -26,7 +26,7 @@ Cuelist::Cuelist(var params) :
 	m->selectItemWhenCreated = false;
 	cues.reset(m);
 
-	id = addIntParameter("ID", "Id of this Cuelist", 0, 0);
+	id = addIntParameter("ID", "Id of this Cuelist", 1, 1);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
 	endAction->addOption("Off", "off");
@@ -118,7 +118,11 @@ void Cuelist::triggerTriggered(Trigger* t) {
 
 void Cuelist::go(Cue* c) {
 	int64 now = Time::getMillisecondCounter();
+	if (cueA != nullptr) {
+		cueA->TSAutoFollowEnd = 0;
+	}
 	cueA = c;
+	LOG("go Cuelist");
 	cueB = nullptr;
 	nextCue->resetValue();
 	if (c != nullptr) {
@@ -164,6 +168,7 @@ void Cuelist::go(Cue* c) {
 			it.getKey()->cuelistOnTopOfStack(this);
 			Brain::getInstance()->pleaseUpdate(it.getKey());
 		}
+		c->go();
 	}
 
 	return ;
@@ -238,6 +243,9 @@ void Cuelist::update() {
 		isOverWritten = isOverWritten && cv -> isOverWritten;
 	}
 	currentFade->setValue(tempPosition);
+	if (tempPosition == 1 && cueA != nullptr) {
+		cueA->endTransition();
+	}
 	if (isOverWritten && offIfOverwritten->getValue()) {
 		isUseFul = false;
 	}

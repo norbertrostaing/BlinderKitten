@@ -30,6 +30,13 @@ Brain :: ~Brain() {
 void Brain::run() {
     int64 now = Time::getMillisecondCounter();
 
+    cuePoolUpdating.addArray(cuePoolWaiting);
+    cuePoolWaiting.clear();
+    for (int i = 0; i < cuePoolUpdating.size(); i++) {
+        cuePoolUpdating[i]->update(now);
+    }
+    cuePoolUpdating.clear();
+
     cuelistPoolUpdating.addArray(cuelistPoolWaiting);
     cuelistPoolWaiting.clear();
     for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
@@ -190,11 +197,21 @@ void Brain::unregisterCuelist(Cuelist* c) {
 }
 
 void Brain::pleaseUpdate(Cuelist* c) {
-    cuelistPoolWaiting.add(c);
+    if (!cuelistPoolWaiting.contains(c)) {
+        cuelistPoolWaiting.add(c);
+    }
 }
 
 void Brain::pleaseUpdate(FixtureChannel* f) {
-    fixtureChannelPoolWaiting.add(f);
+    if (!fixtureChannelPoolWaiting.contains(f)) {
+        fixtureChannelPoolWaiting.add(f);
+    }
+}
+
+void Brain::pleaseUpdate(Cue* c) {
+    if (!cuePoolWaiting.contains(c)) {
+        cuePoolWaiting.add(c);
+    }
 }
 
 // utils

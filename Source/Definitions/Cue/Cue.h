@@ -24,16 +24,27 @@ public:
 
     std::unique_ptr<BaseManager<Command>> commands;
     FloatParameter* id;
-    FloatParameter* autoGoTime;
+
+    EnumParameter* autoFollow;
+    FloatParameter* autoFollowTiming;
+    FloatParameter* autoFollowCountDown;
+    int64 TSAutoFollowStart;
+    int64 TSAutoFollowEnd;
 
     Trigger* goBtn;
 
     HashMap<FixtureChannel*, ChannelValue*> computedValues;
 
-    void parameterValueChanged(Parameter* p) override;
+
+
     void triggerTriggered(Trigger* t) override;
+    void onContainerParameterChangedInternal(Parameter* p) override;
 
     void computeValues();
+    void update(int64 now);
+    void go();
+    void endTransition();
+
 
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }

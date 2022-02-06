@@ -36,6 +36,8 @@ public:
     Array<Cuelist*> cuelistPoolWaiting;
     Array<FixtureChannel*> fixtureChannelPoolUpdating;
     Array<FixtureChannel*> fixtureChannelPoolWaiting;
+    Array<Cue*> cuePoolUpdating;
+    Array<Cue*> cuePoolWaiting;
 
     void run() override;
     void registerFixture(Fixture* f, int id);
@@ -51,6 +53,7 @@ public:
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(FixtureChannel* f);
+    void pleaseUpdate(Cue* c);
 
     void updateChannel(FixtureChannel* fc);
 

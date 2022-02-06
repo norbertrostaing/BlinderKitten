@@ -37,7 +37,7 @@ public:
     EnumParameter* endAction;
     BoolParameter* loopTracking;
     BoolParameter* offIfOverwritten;
-
+    
     FloatParameter* nextCueId;
 
     Automation* offFadeCurve;
