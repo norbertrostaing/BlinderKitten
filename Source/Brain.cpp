@@ -44,6 +44,13 @@ void Brain::run() {
     }
     cuelistPoolUpdating.clear();
 
+    programmerPoolUpdating.addArray(programmerPoolWaiting);
+    programmerPoolWaiting.clear();
+    for (int i = 0; i < programmerPoolUpdating.size(); i++) {
+        programmerPoolUpdating[i]->update(now);
+    }
+    programmerPoolUpdating.clear();
+
     fixtureChannelPoolUpdating.addArray(fixtureChannelPoolWaiting);
     fixtureChannelPoolWaiting.clear();
     for (int i = 0; i < fixtureChannelPoolUpdating.size(); i++) {
@@ -196,6 +203,34 @@ void Brain::unregisterCuelist(Cuelist* c) {
     }
 }
 
+void Brain::registerProgrammer(Programmer* c, int id) {
+    Logger::writeToLog("Programmer request : " + String(id));
+    int askedId = id;
+    if (programmers.containsValue(c)) {
+        programmers.removeValue(c);
+    }
+    bool idIsOk = false;
+    while (!idIsOk) {
+        if (programmers.contains(id)) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    programmers.set(id, c);
+    c->id->setValue(id);
+    if (id != askedId) {
+        Logger::writeToLog("! programmer ID " + String(askedId) + " not available, ID " + String(id) + " given!");
+    }
+}
+
+void Brain::unregisterProgrammer(Programmer* c) {
+    if (programmers.containsValue(c)) {
+        programmers.removeValue(c);
+    }
+}
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);
@@ -211,6 +246,12 @@ void Brain::pleaseUpdate(FixtureChannel* f) {
 void Brain::pleaseUpdate(Cue* c) {
     if (!cuePoolWaiting.contains(c)) {
         cuePoolWaiting.add(c);
+    }
+}
+
+void Brain::pleaseUpdate(Programmer* c) {
+    if (!programmerPoolWaiting.contains(c)) {
+        programmerPoolWaiting.add(c);
     }
 }
 
@@ -247,3 +288,8 @@ Preset* Brain::getPresetById(int id) {
 Cuelist* Brain::getCuelistById(int id) {
     return cuelists.getReference(id);
 }
+
+Programmer* Brain::getProgrammerById(int id) {
+    return programmers.getReference(id);
+}
+

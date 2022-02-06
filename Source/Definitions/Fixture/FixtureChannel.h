@@ -14,6 +14,7 @@ class FixtureParamDefinition;
 class DeviceTypeChannel;
 class Device;
 class Cuelist;
+class Programmer;
 
 class FixtureChannel:
     public BaseItem
@@ -40,9 +41,13 @@ public:
     static FixtureChannel* create(var params) { return new FixtureChannel(params); }
 
     Array<Cuelist*> cuelistStack;
+    Array<Programmer*> programmerStack;
+
     void updateVal(int64 now);
 
     void cuelistOnTopOfStack(Cuelist* c);
     void cuelistOutOfStack(Cuelist* c);
+    void programmerOnTopOfStack(Programmer* p);
+    void programmerOutOfStack(Programmer* p);
 
 };

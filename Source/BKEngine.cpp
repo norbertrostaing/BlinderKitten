@@ -30,6 +30,7 @@
 #include "./Definitions/Preset/PresetManager.h"
 #include "./Definitions/Command/CommandManager.h"
 #include "./Definitions/Cuelist/CuelistManager.h"
+#include "./Definitions/Programmer/ProgrammerManager.h"
 
 
 ControllableContainer* getAppSettings();
@@ -53,6 +54,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(PresetManager::getInstance());
 	addChildControllableContainer(CommandManager::getInstance());
 	addChildControllableContainer(CuelistManager::getInstance());
+	addChildControllableContainer(ProgrammerManager::getInstance());
 	// addChildControllableContainer(StateManager::getInstance());
 	// addChildControllableContainer(ChataigneSequenceManager::getInstance());
 	// addChildControllableContainer(ModuleRouterManager::getInstance());
@@ -95,6 +97,7 @@ BKEngine::~BKEngine()
 	// CVGroupManager::deleteInstance();
 
 	// Guider::deleteInstance();
+	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();
 	CommandManager::deleteInstance();
 	PresetManager::deleteInstance();
@@ -115,6 +118,7 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	ProgrammerManager::getInstance()->clear();
 	CuelistManager::getInstance()->clear();
 	CommandManager::getInstance()->clear();
 	PresetManager::getInstance()->clear();
@@ -160,6 +164,9 @@ var BKEngine::getJSONData()
 	var clData = CuelistManager::getInstance()->getJSONData();
 	if (!clData.isVoid() && clData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CuelistManager::getInstance()->shortName, clData);
 
+	var prData = ProgrammerManager::getInstance()->getJSONData();
+	if (!prData.isVoid() && prData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ProgrammerManager::getInstance()->shortName, prData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -184,6 +191,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* pTask = loadingTask->addTask("Presets");
 	ProgressTask* cTask = loadingTask->addTask("Commands");
 	ProgressTask* clTask = loadingTask->addTask("Cuelists");
+	ProgressTask* prTask = loadingTask->addTask("Programmers");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
 	//ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	//ProgressTask* routerTask = loadingTask->addTask("Router");
@@ -237,6 +245,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	CuelistManager::getInstance()->loadJSONData(data.getProperty(CuelistManager::getInstance()->shortName, var()));
 	clTask->setProgress(1);
 	clTask->end();
+
+	prTask->start();
+	ProgrammerManager::getInstance()->loadJSONData(data.getProperty(ProgrammerManager::getInstance()->shortName, var()));
+	prTask->setProgress(1);
+	prTask->end();
 
 	//stateTask->start();
 	//StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));

@@ -10,6 +10,7 @@
 #include "Definitions/Preset/PresetManagerUI.h"
 #include "Definitions/Command/CommandManagerUI.h"
 #include "Definitions/Cuelist/CuelistManagerUI.h"
+#include "Definitions/Programmer/ProgrammerManagerUI.h"
 
 
 //==============================================================================
@@ -85,6 +86,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Presets", &PresetManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Commands", &CommandManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelists", &CuelistManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Programmers", &ProgrammerManagerUI::create));
     OrganicMainContentComponent::init();
 
 }

@@ -131,6 +131,21 @@
               file="Source/Common/CommonIncludes.h"/>
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
+        <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
+        <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
+              file="Source/Definitions/ChannelValue.cpp"/>
+        <GROUP id="{3CCC073F-169E-F72B-605F-F3D382B83A11}" name="Programmer">
+          <FILE id="eSTduU" name="Programmer.cpp" compile="1" resource="0" file="Source/Definitions/Programmer/Programmer.cpp"/>
+          <FILE id="URAOmY" name="Programmer.h" compile="0" resource="0" file="Source/Definitions/Programmer/Programmer.h"/>
+          <FILE id="RxFC5m" name="ProgrammerManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManager.cpp"/>
+          <FILE id="zc1RHO" name="ProgrammerManager.h" compile="0" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManager.h"/>
+          <FILE id="QdLdqy" name="ProgrammerManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManagerUI.cpp"/>
+          <FILE id="cVpv9b" name="ProgrammerManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManagerUI.h"/>
+        </GROUP>
         <GROUP id="{D30416E5-4695-CFE4-0437-DD6025195F6F}" name="Actions">
           <FILE id="we7qmS" name="CuelistAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/CuelistAction.cpp"/>
@@ -153,9 +168,6 @@
           <FILE id="zFF8vA" name="PresetValue.cpp" compile="1" resource="0" file="Source/Definitions/Preset/PresetValue.cpp"/>
           <FILE id="azxx7K" name="PresetValue.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetValue.h"/>
         </GROUP>
-        <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
-              file="Source/Definitions/ChannelValue.cpp"/>
-        <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
         <GROUP id="{57C6A31A-43FE-AB43-241D-751BB97A3999}" name="Cuelist">
           <FILE id="O6nYdI" name="Cuelist.cpp" compile="1" resource="0" file="Source/Definitions/Cuelist/Cuelist.cpp"/>
           <FILE id="lSme1r" name="Cuelist.h" compile="0" resource="0" file="Source/Definitions/Cuelist/Cuelist.h"/>

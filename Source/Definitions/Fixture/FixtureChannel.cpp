@@ -17,6 +17,7 @@
 #include "../Device/DevicePatch.h"
 #include "../Interface/InterfaceIncludes.h"
 #include "../Cuelist/Cuelist.h"
+#include "../Programmer/Programmer.h"
 #include "../ChannelValue.h"
 
 FixtureChannel::FixtureChannel(var params) :
@@ -106,6 +107,11 @@ void FixtureChannel::updateVal(int64 now) {
 		}
 
 	}
+
+	for (int i = 0; i < programmerStack.size(); i++) {
+		value = programmerStack[i]->applyToChannel(this, value, now);
+	}
+
 	writeValue(value);
 }
 
@@ -119,3 +125,15 @@ void FixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
 void FixtureChannel::cuelistOutOfStack(Cuelist* c) {
 	cuelistStack.removeAllInstancesOf(c);
 }
+
+void FixtureChannel::programmerOnTopOfStack(Programmer* p) {
+	if (programmerStack.indexOf(p) >= 0) {
+		programmerStack.removeAllInstancesOf(p);
+	}
+	programmerStack.add(p);
+}
+
+void FixtureChannel::programmerOutOfStack(Programmer* p) {
+	programmerStack.removeAllInstancesOf(p);
+}
+
