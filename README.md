@@ -1,3 +1,5 @@
+![BlinderKitten](http://tuveuxvoirunephotodemonchat.fr/blinderKittenHeader.png)
+
 # BlinderKitten
 
 It's a mess !
