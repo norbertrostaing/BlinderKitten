@@ -122,12 +122,14 @@ void Brain::unregisterDevice(Device* d) {
 void Brain::registerGroup(Group* g, int id) {
     Logger::writeToLog("group request : " + String(id));
     int askedId = id;
+    if (groups.getReference(id) == g) {return;}
     if (groups.containsValue(g)) {
         groups.removeValue(g);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (groups.contains(id)) {
+        if (groups.contains(id) && groups.getReference(id)!=nullptr) {
+            LOG(groups.getReference(id)->niceName);
             id++;
         }
         else {
@@ -135,10 +137,10 @@ void Brain::registerGroup(Group* g, int id) {
         }
     }
     groups.set(id, g);
-    g->id->setValue(id);
     if (id != askedId) {
         Logger::writeToLog("! group ID " + String(askedId) + " not available, ID " + String(id) + " given!");
-    }
+    } 
+    g->id->setValue(id);
 }
 
 void Brain::unregisterGroup(Group* g) {

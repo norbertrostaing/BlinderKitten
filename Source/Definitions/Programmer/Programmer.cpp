@@ -23,6 +23,7 @@ il faudrait que le formulaire soit pré rempli genre
 #include "Programmer.h"
 #include "../../Brain.h"
 #include "../ChannelValue.h"
+#include "../DataTransferManager/DataTransferManager.h"
 
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
@@ -44,6 +45,7 @@ Programmer::Programmer(var params) :
 
 	goBtn = addTrigger("GO", "trigger this Programmer");
 	releaseBtn = addTrigger("Release", "release this programmer");
+	recBtn = addTrigger("Record", "Record the content of this programmer in something");
 
 	BaseManager<Command>* m = new BaseManager<Command>("Commands");
 	m->selectItemWhenCreated = false;
@@ -65,6 +67,11 @@ void Programmer::triggerTriggered(Trigger* t) {
 	}
 	if (t == releaseBtn) {
 		release();
+	}
+	if (t == recBtn) {
+		DataTransferManager::getInstance()->sourceId ->setValue(id->getValue());
+		DataTransferManager::getInstance()->sourceType->setValue("Programmer");
+		DataTransferManager::getInstance()->selectThis();
 	}
 }
 

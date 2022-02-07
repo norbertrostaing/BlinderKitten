@@ -131,6 +131,12 @@
               file="Source/Common/CommonIncludes.h"/>
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
+        <GROUP id="{D50C9CDA-0677-C899-B012-44B39C163D22}" name="DataTransferManager">
+          <FILE id="WXnQqo" name="DataTransferManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/DataTransferManager/DataTransferManager.cpp"/>
+          <FILE id="ZgzAE9" name="DataTransferManager.h" compile="0" resource="0"
+                file="Source/Definitions/DataTransferManager/DataTransferManager.h"/>
+        </GROUP>
         <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
         <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
               file="Source/Definitions/ChannelValue.cpp"/>

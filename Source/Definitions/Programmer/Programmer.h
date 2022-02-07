@@ -29,6 +29,7 @@ public:
     FloatParameter* releaseTime;
     Trigger* goBtn;
     Trigger* releaseBtn;
+    Trigger* recBtn;
 
 
     HashMap<FixtureChannel*, ChannelValue*> computedValues;

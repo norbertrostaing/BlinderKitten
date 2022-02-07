@@ -19,7 +19,6 @@ GroupManager::GroupManager() :
     {
     itemDataType = "Group";
     selectItemWhenCreated = true;
-       
 }
 
 GroupManager::~GroupManager()

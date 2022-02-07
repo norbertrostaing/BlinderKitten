@@ -16,7 +16,7 @@
 GroupManagerUI::GroupManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, GroupManager::getInstance())
 {
-	addItemText = "Add new cGroup";
+	addItemText = "Add new Group";
 	noItemText = "Welcome in Groups land :)";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
