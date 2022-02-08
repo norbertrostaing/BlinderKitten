@@ -136,91 +136,21 @@
               file="Source/Common/CommonIncludes.h"/>
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
-        <GROUP id="{72A0E523-B0DE-0D5F-1DFB-E56DCE7C036C}" name="TimingPreset">
-          <FILE id="IQtRwi" name="TimingPreset.cpp" compile="1" resource="0"
-                file="Source/Definitions/TimingPreset/TimingPreset.cpp"/>
-          <FILE id="BnfxJA" name="TimingPreset.h" compile="0" resource="0" file="Source/Definitions/TimingPreset/TimingPreset.h"/>
-          <FILE id="vEJmlL" name="TimingPresetManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/TimingPreset/TimingPresetManager.cpp"/>
-          <FILE id="Ni5xTY" name="TimingPresetManager.h" compile="0" resource="0"
-                file="Source/Definitions/TimingPreset/TimingPresetManager.h"/>
-          <FILE id="auYeqi" name="TimingPresetManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/TimingPreset/TimingPresetManagerUI.cpp"/>
-          <FILE id="khpHjA" name="TimingPresetManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/TimingPreset/TimingPresetManagerUI.h"/>
-        </GROUP>
-        <GROUP id="{CBD78126-AE22-6F6A-6C63-E0676FA039CA}" name="CurvePreset">
-          <FILE id="EDOEpV" name="CurvePreset.cpp" compile="1" resource="0" file="Source/Definitions/CurvePreset/CurvePreset.cpp"/>
-          <FILE id="UpAExN" name="CurvePreset.h" compile="0" resource="0" file="Source/Definitions/CurvePreset/CurvePreset.h"/>
-          <FILE id="NiW50p" name="CurvePresetManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/CurvePreset/CurvePresetManager.cpp"/>
-          <FILE id="A1G4wr" name="CurvePresetManager.h" compile="0" resource="0"
-                file="Source/Definitions/CurvePreset/CurvePresetManager.h"/>
-          <FILE id="BV5Afm" name="CurvePresetManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/CurvePreset/CurvePresetManagerUI.cpp"/>
-          <FILE id="LboeMc" name="CurvePresetManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/CurvePreset/CurvePresetManagerUI.h"/>
-        </GROUP>
-        <GROUP id="{D50C9CDA-0677-C899-B012-44B39C163D22}" name="DataTransferManager">
-          <FILE id="WXnQqo" name="DataTransferManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/DataTransferManager/DataTransferManager.cpp"/>
-          <FILE id="ZgzAE9" name="DataTransferManager.h" compile="0" resource="0"
-                file="Source/Definitions/DataTransferManager/DataTransferManager.h"/>
-        </GROUP>
-        <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
-        <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
-              file="Source/Definitions/ChannelValue.cpp"/>
-        <GROUP id="{3CCC073F-169E-F72B-605F-F3D382B83A11}" name="Programmer">
-          <FILE id="eSTduU" name="Programmer.cpp" compile="1" resource="0" file="Source/Definitions/Programmer/Programmer.cpp"/>
-          <FILE id="URAOmY" name="Programmer.h" compile="0" resource="0" file="Source/Definitions/Programmer/Programmer.h"/>
-          <FILE id="RxFC5m" name="ProgrammerManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Programmer/ProgrammerManager.cpp"/>
-          <FILE id="zc1RHO" name="ProgrammerManager.h" compile="0" resource="0"
-                file="Source/Definitions/Programmer/ProgrammerManager.h"/>
-          <FILE id="QdLdqy" name="ProgrammerManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Programmer/ProgrammerManagerUI.cpp"/>
-          <FILE id="cVpv9b" name="ProgrammerManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Programmer/ProgrammerManagerUI.h"/>
+        <GROUP id="{B0F61552-9820-44AD-073F-12612E565630}" name="Effect">
+          <FILE id="ixgVmB" name="Effect.cpp" compile="1" resource="0" file="Source/Definitions/Effect/Effect.cpp"/>
+          <FILE id="SQNry6" name="Effect.h" compile="0" resource="0" file="Source/Definitions/Effect/Effect.h"/>
+          <FILE id="IyHvcB" name="EffectManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Effect/EffectManager.cpp"/>
+          <FILE id="ZRelUk" name="EffectManager.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectManager.h"/>
+          <FILE id="EjZNvk" name="EffectManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Effect/EffectManagerUI.cpp"/>
+          <FILE id="hutwuH" name="EffectManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Effect/EffectManagerUI.h"/>
         </GROUP>
         <GROUP id="{D30416E5-4695-CFE4-0437-DD6025195F6F}" name="Actions">
           <FILE id="we7qmS" name="CuelistAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/CuelistAction.cpp"/>
           <FILE id="gXF4aY" name="CuelistAction.h" compile="0" resource="0" file="Source/Definitions/Actions/CuelistAction.h"/>
-        </GROUP>
-        <GROUP id="{D80DCD01-3855-E92F-D247-63A965E80BAF}" name="Preset">
-          <FILE id="gEniAr" name="Preset.cpp" compile="1" resource="0" file="Source/Definitions/Preset/Preset.cpp"/>
-          <FILE id="k3EDt4" name="Preset.h" compile="0" resource="0" file="Source/Definitions/Preset/Preset.h"/>
-          <FILE id="TGFDoS" name="PresetFixtureValues.cpp" compile="1" resource="0"
-                file="Source/Definitions/Preset/PresetFixtureValues.cpp"/>
-          <FILE id="WuXmFK" name="PresetFixtureValues.h" compile="0" resource="0"
-                file="Source/Definitions/Preset/PresetFixtureValues.h"/>
-          <FILE id="WKIl50" name="PresetManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Preset/PresetManager.cpp"/>
-          <FILE id="fMYXJK" name="PresetManager.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetManager.h"/>
-          <FILE id="yJviYH" name="PresetManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Preset/PresetManagerUI.cpp"/>
-          <FILE id="AVLiaQ" name="PresetManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Preset/PresetManagerUI.h"/>
-          <FILE id="zFF8vA" name="PresetValue.cpp" compile="1" resource="0" file="Source/Definitions/Preset/PresetValue.cpp"/>
-          <FILE id="azxx7K" name="PresetValue.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetValue.h"/>
-        </GROUP>
-        <GROUP id="{57C6A31A-43FE-AB43-241D-751BB97A3999}" name="Cuelist">
-          <FILE id="O6nYdI" name="Cuelist.cpp" compile="1" resource="0" file="Source/Definitions/Cuelist/Cuelist.cpp"/>
-          <FILE id="lSme1r" name="Cuelist.h" compile="0" resource="0" file="Source/Definitions/Cuelist/Cuelist.h"/>
-          <FILE id="dKCHe3" name="CuelistManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Cuelist/CuelistManager.cpp"/>
-          <FILE id="ddj0U9" name="CuelistManager.h" compile="0" resource="0"
-                file="Source/Definitions/Cuelist/CuelistManager.h"/>
-          <FILE id="Z38TGv" name="CuelistManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Cuelist/CuelistManagerUI.cpp"/>
-          <FILE id="p14jwZ" name="CuelistManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Cuelist/CuelistManagerUI.h"/>
-        </GROUP>
-        <GROUP id="{D4C28E39-3022-6381-A99C-F772CA609492}" name="Cue">
-          <FILE id="PXR8sB" name="Cue.cpp" compile="1" resource="0" file="Source/Definitions/Cue/Cue.cpp"/>
-          <FILE id="SHkzRY" name="Cue.h" compile="0" resource="0" file="Source/Definitions/Cue/Cue.h"/>
-          <FILE id="t40Hqw" name="CueManager.cpp" compile="1" resource="0" file="Source/Definitions/Cue/CueManager.cpp"/>
-          <FILE id="xpazKJ" name="CueManager.h" compile="0" resource="0" file="Source/Definitions/Cue/CueManager.h"/>
         </GROUP>
         <GROUP id="{A9E2709B-DF39-DFB6-4B25-760293732897}" name="Command">
           <FILE id="z6HUwt" name="Command.cpp" compile="1" resource="0" file="Source/Definitions/Command/Command.cpp"/>
@@ -252,6 +182,71 @@
           <FILE id="JlpGsx" name="CommandValueManager.h" compile="0" resource="0"
                 file="Source/Definitions/Command/CommandValueManager.h"/>
         </GROUP>
+        <GROUP id="{D4C28E39-3022-6381-A99C-F772CA609492}" name="Cue">
+          <FILE id="PXR8sB" name="Cue.cpp" compile="1" resource="0" file="Source/Definitions/Cue/Cue.cpp"/>
+          <FILE id="SHkzRY" name="Cue.h" compile="0" resource="0" file="Source/Definitions/Cue/Cue.h"/>
+          <FILE id="t40Hqw" name="CueManager.cpp" compile="1" resource="0" file="Source/Definitions/Cue/CueManager.cpp"/>
+          <FILE id="xpazKJ" name="CueManager.h" compile="0" resource="0" file="Source/Definitions/Cue/CueManager.h"/>
+        </GROUP>
+        <GROUP id="{57C6A31A-43FE-AB43-241D-751BB97A3999}" name="Cuelist">
+          <FILE id="O6nYdI" name="Cuelist.cpp" compile="1" resource="0" file="Source/Definitions/Cuelist/Cuelist.cpp"/>
+          <FILE id="lSme1r" name="Cuelist.h" compile="0" resource="0" file="Source/Definitions/Cuelist/Cuelist.h"/>
+          <FILE id="dKCHe3" name="CuelistManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Cuelist/CuelistManager.cpp"/>
+          <FILE id="ddj0U9" name="CuelistManager.h" compile="0" resource="0"
+                file="Source/Definitions/Cuelist/CuelistManager.h"/>
+          <FILE id="Z38TGv" name="CuelistManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Cuelist/CuelistManagerUI.cpp"/>
+          <FILE id="p14jwZ" name="CuelistManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Cuelist/CuelistManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{CBD78126-AE22-6F6A-6C63-E0676FA039CA}" name="CurvePreset">
+          <FILE id="EDOEpV" name="CurvePreset.cpp" compile="1" resource="0" file="Source/Definitions/CurvePreset/CurvePreset.cpp"/>
+          <FILE id="UpAExN" name="CurvePreset.h" compile="0" resource="0" file="Source/Definitions/CurvePreset/CurvePreset.h"/>
+          <FILE id="NiW50p" name="CurvePresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManager.cpp"/>
+          <FILE id="A1G4wr" name="CurvePresetManager.h" compile="0" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManager.h"/>
+          <FILE id="BV5Afm" name="CurvePresetManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManagerUI.cpp"/>
+          <FILE id="LboeMc" name="CurvePresetManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{D50C9CDA-0677-C899-B012-44B39C163D22}" name="DataTransferManager">
+          <FILE id="WXnQqo" name="DataTransferManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/DataTransferManager/DataTransferManager.cpp"/>
+          <FILE id="ZgzAE9" name="DataTransferManager.h" compile="0" resource="0"
+                file="Source/Definitions/DataTransferManager/DataTransferManager.h"/>
+        </GROUP>
+        <GROUP id="{EA97FD59-0904-67DE-6330-B95BF1100E9A}" name="Device">
+          <FILE id="nueYDd" name="Device.cpp" compile="1" resource="0" file="Source/Definitions/Device/Device.cpp"/>
+          <FILE id="yGEkBU" name="Device.h" compile="0" resource="0" file="Source/Definitions/Device/Device.h"/>
+          <FILE id="AkUYx3" name="DeviceManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Device/DeviceManager.cpp"/>
+          <FILE id="cJLO7m" name="DeviceManager.h" compile="0" resource="0" file="Source/Definitions/Device/DeviceManager.h"/>
+          <FILE id="vpyIgq" name="DeviceManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Device/DeviceManagerUI.cpp"/>
+          <FILE id="XEZiLO" name="DeviceManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Device/DeviceManagerUI.h"/>
+          <FILE id="hK8bav" name="DevicePatch.cpp" compile="1" resource="0" file="Source/Definitions/Device/DevicePatch.cpp"/>
+          <FILE id="GOxZoi" name="DevicePatch.h" compile="0" resource="0" file="Source/Definitions/Device/DevicePatch.h"/>
+        </GROUP>
+        <GROUP id="{1D44272A-3E25-BAAE-6197-3D117532F81A}" name="DeviceType">
+          <FILE id="DVzyiZ" name="DeviceType.cpp" compile="1" resource="0" file="Source/Definitions/DeviceType/DeviceType.cpp"/>
+          <FILE id="N05tO5" name="DeviceType.h" compile="0" resource="0" file="Source/Definitions/DeviceType/DeviceType.h"/>
+          <FILE id="AgovoQ" name="DeviceTypeChannel.cpp" compile="1" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeChannel.cpp"/>
+          <FILE id="YE13sc" name="DeviceTypeChannel.h" compile="0" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeChannel.h"/>
+          <FILE id="kepC6d" name="DeviceTypeManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeManager.cpp"/>
+          <FILE id="eOScEi" name="DeviceTypeManager.h" compile="0" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeManager.h"/>
+          <FILE id="iWNDT3" name="DeviceTypeManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeManagerUI.cpp"/>
+          <FILE id="fcW3KC" name="DeviceTypeManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeManagerUI.h"/>
+        </GROUP>
         <GROUP id="{5AC300AA-9570-87BF-7AC7-6FAA3B849808}" name="Fixture">
           <FILE id="W3VArm" name="Fixture.cpp" compile="1" resource="0" file="Source/Definitions/Fixture/Fixture.cpp"/>
           <FILE id="UEMhNG" name="Fixture.h" compile="0" resource="0" file="Source/Definitions/Fixture/Fixture.h"/>
@@ -267,6 +262,26 @@
                 file="Source/Definitions/Fixture/FixtureManagerUI.cpp"/>
           <FILE id="FPKBgo" name="FixtureManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Fixture/FixtureManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{EFAA28AE-4B51-B80B-6D1D-B7A26D4B6258}" name="FixtureParamType">
+          <GROUP id="{31638A47-BCBD-76AA-6FDD-F29679E765B7}" name="FixtureParamDefinition">
+            <FILE id="BmwjZC" name="FixtureParamDefinition.cpp" compile="1" resource="0"
+                  file="Source/Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.cpp"/>
+            <FILE id="tcSJa8" name="FixtureParamDefinition.h" compile="0" resource="0"
+                  file="Source/Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"/>
+          </GROUP>
+          <FILE id="wgM8MS" name="FixtureParamTypeManagerUI.cpp" compile="1"
+                resource="0" file="Source/Definitions/FixtureParamType/FixtureParamTypeManagerUI.cpp"/>
+          <FILE id="v4s5wt" name="FixtureParamTypeManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureParamType/FixtureParamTypeManagerUI.h"/>
+          <FILE id="JmJKjd" name="FixtureParamTypeManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureParamType/FixtureParamTypeManager.cpp"/>
+          <FILE id="w0dc5x" name="FixtureParamTypeManager.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureParamType/FixtureParamTypeManager.h"/>
+          <FILE id="k3lT0H" name="FixtureParamType.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureParamType/FixtureParamType.cpp"/>
+          <FILE id="wNNNNi" name="FixtureParamType.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureParamType/FixtureParamType.h"/>
         </GROUP>
         <GROUP id="{8FBBC202-46A1-5C6A-F171-296B517ED469}" name="Group">
           <FILE id="D4h4qs" name="Group.cpp" compile="1" resource="0" file="Source/Definitions/Group/Group.cpp"/>
@@ -360,55 +375,51 @@
           <FILE id="tiMbY8" name="InterfaceManager.h" compile="0" resource="0"
                 file="Source/Definitions/Interface/InterfaceManager.h"/>
         </GROUP>
-        <GROUP id="{EA97FD59-0904-67DE-6330-B95BF1100E9A}" name="Device">
-          <FILE id="nueYDd" name="Device.cpp" compile="1" resource="0" file="Source/Definitions/Device/Device.cpp"/>
-          <FILE id="yGEkBU" name="Device.h" compile="0" resource="0" file="Source/Definitions/Device/Device.h"/>
-          <FILE id="AkUYx3" name="DeviceManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Device/DeviceManager.cpp"/>
-          <FILE id="cJLO7m" name="DeviceManager.h" compile="0" resource="0" file="Source/Definitions/Device/DeviceManager.h"/>
-          <FILE id="vpyIgq" name="DeviceManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Device/DeviceManagerUI.cpp"/>
-          <FILE id="XEZiLO" name="DeviceManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Device/DeviceManagerUI.h"/>
-          <FILE id="hK8bav" name="DevicePatch.cpp" compile="1" resource="0" file="Source/Definitions/Device/DevicePatch.cpp"/>
-          <FILE id="GOxZoi" name="DevicePatch.h" compile="0" resource="0" file="Source/Definitions/Device/DevicePatch.h"/>
+        <GROUP id="{D80DCD01-3855-E92F-D247-63A965E80BAF}" name="Preset">
+          <FILE id="gEniAr" name="Preset.cpp" compile="1" resource="0" file="Source/Definitions/Preset/Preset.cpp"/>
+          <FILE id="k3EDt4" name="Preset.h" compile="0" resource="0" file="Source/Definitions/Preset/Preset.h"/>
+          <FILE id="TGFDoS" name="PresetFixtureValues.cpp" compile="1" resource="0"
+                file="Source/Definitions/Preset/PresetFixtureValues.cpp"/>
+          <FILE id="WuXmFK" name="PresetFixtureValues.h" compile="0" resource="0"
+                file="Source/Definitions/Preset/PresetFixtureValues.h"/>
+          <FILE id="WKIl50" name="PresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Preset/PresetManager.cpp"/>
+          <FILE id="fMYXJK" name="PresetManager.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetManager.h"/>
+          <FILE id="yJviYH" name="PresetManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Preset/PresetManagerUI.cpp"/>
+          <FILE id="AVLiaQ" name="PresetManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Preset/PresetManagerUI.h"/>
+          <FILE id="zFF8vA" name="PresetValue.cpp" compile="1" resource="0" file="Source/Definitions/Preset/PresetValue.cpp"/>
+          <FILE id="azxx7K" name="PresetValue.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetValue.h"/>
         </GROUP>
-        <GROUP id="{1D44272A-3E25-BAAE-6197-3D117532F81A}" name="DeviceType">
-          <FILE id="DVzyiZ" name="DeviceType.cpp" compile="1" resource="0" file="Source/Definitions/DeviceType/DeviceType.cpp"/>
-          <FILE id="N05tO5" name="DeviceType.h" compile="0" resource="0" file="Source/Definitions/DeviceType/DeviceType.h"/>
-          <FILE id="AgovoQ" name="DeviceTypeChannel.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeChannel.cpp"/>
-          <FILE id="YE13sc" name="DeviceTypeChannel.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeChannel.h"/>
-          <FILE id="kepC6d" name="DeviceTypeManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManager.cpp"/>
-          <FILE id="eOScEi" name="DeviceTypeManager.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManager.h"/>
-          <FILE id="iWNDT3" name="DeviceTypeManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManagerUI.cpp"/>
-          <FILE id="fcW3KC" name="DeviceTypeManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManagerUI.h"/>
+        <GROUP id="{3CCC073F-169E-F72B-605F-F3D382B83A11}" name="Programmer">
+          <FILE id="eSTduU" name="Programmer.cpp" compile="1" resource="0" file="Source/Definitions/Programmer/Programmer.cpp"/>
+          <FILE id="URAOmY" name="Programmer.h" compile="0" resource="0" file="Source/Definitions/Programmer/Programmer.h"/>
+          <FILE id="RxFC5m" name="ProgrammerManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManager.cpp"/>
+          <FILE id="zc1RHO" name="ProgrammerManager.h" compile="0" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManager.h"/>
+          <FILE id="QdLdqy" name="ProgrammerManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManagerUI.cpp"/>
+          <FILE id="cVpv9b" name="ProgrammerManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Programmer/ProgrammerManagerUI.h"/>
         </GROUP>
-        <GROUP id="{EFAA28AE-4B51-B80B-6D1D-B7A26D4B6258}" name="FixtureParamType">
-          <GROUP id="{31638A47-BCBD-76AA-6FDD-F29679E765B7}" name="FixtureParamDefinition">
-            <FILE id="BmwjZC" name="FixtureParamDefinition.cpp" compile="1" resource="0"
-                  file="Source/Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.cpp"/>
-            <FILE id="tcSJa8" name="FixtureParamDefinition.h" compile="0" resource="0"
-                  file="Source/Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"/>
-          </GROUP>
-          <FILE id="wgM8MS" name="FixtureParamTypeManagerUI.cpp" compile="1"
-                resource="0" file="Source/Definitions/FixtureParamType/FixtureParamTypeManagerUI.cpp"/>
-          <FILE id="v4s5wt" name="FixtureParamTypeManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamTypeManagerUI.h"/>
-          <FILE id="JmJKjd" name="FixtureParamTypeManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamTypeManager.cpp"/>
-          <FILE id="w0dc5x" name="FixtureParamTypeManager.h" compile="0" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamTypeManager.h"/>
-          <FILE id="k3lT0H" name="FixtureParamType.cpp" compile="1" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamType.cpp"/>
-          <FILE id="wNNNNi" name="FixtureParamType.h" compile="0" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamType.h"/>
+        <GROUP id="{72A0E523-B0DE-0D5F-1DFB-E56DCE7C036C}" name="TimingPreset">
+          <FILE id="IQtRwi" name="TimingPreset.cpp" compile="1" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPreset.cpp"/>
+          <FILE id="BnfxJA" name="TimingPreset.h" compile="0" resource="0" file="Source/Definitions/TimingPreset/TimingPreset.h"/>
+          <FILE id="vEJmlL" name="TimingPresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManager.cpp"/>
+          <FILE id="Ni5xTY" name="TimingPresetManager.h" compile="0" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManager.h"/>
+          <FILE id="auYeqi" name="TimingPresetManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManagerUI.cpp"/>
+          <FILE id="khpHjA" name="TimingPresetManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManagerUI.h"/>
         </GROUP>
+        <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
+              file="Source/Definitions/ChannelValue.cpp"/>
+        <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
       </GROUP>
       <FILE id="otLsfG" name="Brain.cpp" compile="1" resource="0" file="Source/Brain.cpp"/>
       <FILE id="IXNzmp" name="Brain.h" compile="0" resource="0" file="Source/Brain.h"/>

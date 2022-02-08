@@ -294,6 +294,35 @@ void Brain::unregisterTimingPreset(TimingPreset* c) {
     }
 }
 
+void Brain::registerEffect(Effect* c, int id) {
+    Logger::writeToLog("Effect request : " + String(id));
+    int askedId = id;
+    if (effects.getReference(id) == c) { return; }
+    if (effects.containsValue(c)) {
+        effects.removeValue(c);
+    }
+    bool idIsOk = false;
+    while (!idIsOk) {
+        if (effects.contains(id) && effects.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    effects.set(id, c);
+    c->id->setValue(id);
+    if (id != askedId) {
+        Logger::writeToLog("! TimingPreset ID " + String(askedId) + " not available, ID " + String(id) + " given!");
+    }
+}
+
+void Brain::unregisterEffect(Effect* c) {
+    if (effects.containsValue(c)) {
+        effects.removeValue(c);
+    }
+}
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);

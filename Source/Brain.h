@@ -20,6 +20,7 @@
 #include "Definitions/Programmer/Programmer.h"
 #include "Definitions/CurvePreset/CurvePreset.h"
 #include "Definitions/TimingPreset/TimingPreset.h"
+#include "Definitions/Effect/Effect.h"
 
 class Brain :
     public Thread
@@ -37,6 +38,7 @@ public:
     HashMap<int, Programmer*>programmers;
     HashMap<int, CurvePreset*>curvePresets;
     HashMap<int, TimingPreset*>timingPresets;
+    HashMap<int, Effect*>effects;
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
@@ -66,6 +68,8 @@ public:
     void unregisterCurvePreset(CurvePreset* p);
     void registerTimingPreset(TimingPreset* p, int id);
     void unregisterTimingPreset(TimingPreset* p);
+    void registerEffect(Effect* p, int id);
+    void unregisterEffect(Effect* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(FixtureChannel* f);
@@ -82,6 +86,7 @@ public:
     Programmer* getProgrammerById(int id);
     CurvePreset* getCurvePresetById(int id);
     TimingPreset* getTimingPresetById(int id);
+    Effect* getEffectById(int id);
 
     static float symPosition(int index, int nElements);
 };

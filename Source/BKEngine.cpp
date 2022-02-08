@@ -34,6 +34,7 @@
 #include "./Definitions/Programmer/ProgrammerManager.h"
 #include "./Definitions/TimingPreset/TimingPresetManager.h"
 #include "./Definitions/CurvePreset/CurvePresetManager.h"
+#include "./Definitions/Effect/EffectManager.h"
 
 #include "./Common/MIDI/MIDIDevice.h"
 #include "./Common/MIDI/MIDIManager.h"
@@ -70,10 +71,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(ProgrammerManager::getInstance());
 	addChildControllableContainer(CurvePresetManager::getInstance());
 	addChildControllableContainer(TimingPresetManager::getInstance());
-	// addChildControllableContainer(StateManager::getInstance());
-	// addChildControllableContainer(ChataigneSequenceManager::getInstance());
-	// addChildControllableContainer(ModuleRouterManager::getInstance());
-	// addChildControllableContainer(CVGroupManager::getInstance());
+	addChildControllableContainer(EffectManager::getInstance());
 
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
@@ -112,6 +110,7 @@ BKEngine::~BKEngine()
 	// CVGroupManager::deleteInstance();
 
 	// Guider::deleteInstance();
+	EffectManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();
 	CommandManager::deleteInstance();
@@ -142,6 +141,7 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	EffectManager::getInstance()->clear();
 	ProgrammerManager::getInstance()->clear();
 	CuelistManager::getInstance()->clear();
 	CommandManager::getInstance()->clear();
@@ -199,6 +199,9 @@ var BKEngine::getJSONData()
 	var tpData = TimingPresetManager::getInstance()->getJSONData();
 	if (!tpData.isVoid() && tpData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, tpData);
 
+	var fxData = EffectManager::getInstance()->getJSONData();
+	if (!fxData.isVoid() && fxData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, fxData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -226,6 +229,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* prTask = loadingTask->addTask("Programmers");
 	ProgressTask* cpTask = loadingTask->addTask("Curve Presets");
 	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
+	ProgressTask* fxTask = loadingTask->addTask("Effects");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
 	//ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	//ProgressTask* routerTask = loadingTask->addTask("Router");
@@ -294,6 +298,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	TimingPresetManager::getInstance()->loadJSONData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
 	tpTask->setProgress(1);
 	tpTask->end();
+
+	fxTask->start();
+	EffectManager::getInstance()->loadJSONData(data.getProperty(EffectManager::getInstance()->shortName, var()));
+	fxTask->setProgress(1);
+	fxTask->end();
 
 	//stateTask->start();
 	//StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));
