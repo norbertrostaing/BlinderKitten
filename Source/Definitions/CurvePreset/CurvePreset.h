@@ -25,7 +25,7 @@ public:
     var objectData;
 
     IntParameter* id;
-    CommandSelectionManager* selection;
+    Automation curve;
 
     String getTypeString() const override { return objectType; }
 

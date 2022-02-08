@@ -25,7 +25,21 @@ public:
     var objectData;
 
     IntParameter* id;
-    CommandSelectionManager* selection;
+
+    FloatParameter* fadeFrom;
+    FloatParameter* delayFrom;
+    FloatParameter* delayTo;
+    BoolParameter* symmetryDelay;
+
+    BoolParameter* thruDelay;
+    BoolParameter* thruFade;
+    FloatParameter* fadeTo;
+    BoolParameter* symmetryFade;
+
+    Automation curveFade;
+    Automation curveDelayRepart;
+    Automation curveFadeRepart;
+
 
     String getTypeString() const override { return objectType; }
 

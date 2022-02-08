@@ -22,9 +22,18 @@ CurvePreset::CurvePreset(var params) :
 
 	itemDataType = "CurvePreset";
 
-	id = addIntParameter("ID", "ID of this device", 1, 1);
-	selection = new CommandSelectionManager();
-	addChildControllableContainer(selection);
+	id = addIntParameter("ID", "ID of this curve", 1, 1);
+
+	curve.setNiceName("Curve");
+	curve.allowKeysOutside = false;
+	curve.isSelectable = false;
+	curve.length->setValue(1);
+	curve.addKey(0, 0, false);
+	curve.items[0]->easingType->setValueWithData(Easing::LINEAR);
+	curve.addKey(1, 1, false);
+	curve.selectItemWhenCreated = false;
+	curve.editorCanBeCollapsed = true;
+	addChildControllableContainer(&curve);
 
 	Brain::getInstance()->registerCurvePreset(this, id->getValue());
 }

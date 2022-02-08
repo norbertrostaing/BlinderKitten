@@ -24,6 +24,8 @@
 #include "../Command/CommandSelection.h"
 #include "../FixtureParamType/FixtureParamTypeManager.h"
 #include "../FixtureParamType/FixtureParamType.h"
+#include "../TimingPreset/TimingPresetManager.h"
+#include "../TimingPreset/TimingPreset.h"
 
 juce_ImplementSingleton(DataTransferManager)
 
@@ -33,12 +35,14 @@ DataTransferManager::DataTransferManager() :
     sourceType = addEnumParameter("Source Type", "Type of the data source");
     sourceType->addOption("Group", "Group");
     sourceType->addOption("Preset", "Preset");
+    sourceType->addOption("Timing Preset", "TimingPreset");
     sourceType->addOption("Cuelist", "Cuelist");
     sourceType->addOption("Programmer", "Programmer");
     sourceId = addIntParameter("Source Id", "ID of the source", 0, 0);
     targetType = addEnumParameter("Target Type", "Type of the data target");
     targetType->addOption("Group", "Group");
     targetType->addOption("Preset", "Preset");
+    targetType->addOption("Timing Preset", "TimingPreset");
     targetType->addOption("Cuelist", "Cuelist");
     targetType->addOption("Programmer", "Programmer");
     targetId = addIntParameter("Target Id", "ID of the target", 0, 0);
@@ -153,11 +157,11 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
                 target = CuelistManager::getInstance()->addItem(new Cuelist());
                 target->id->setValue(targetId->getValue());
                 target->setNiceName("Cuelist " + String(int(target->id->getValue())));
-                }
-            
-            Cue* targetCue = target-> cues->addItem();
+            }
+
+            Cue* targetCue = target->cues->addItem();
             for (int i = 0; i < source->commands->items.size(); i++) {
-                Command* c = targetCue -> commands->addItem();
+                Command* c = targetCue->commands->addItem();
                 c->loadJSONData(source->commands->items[i]->getJSONData());
             }
         }

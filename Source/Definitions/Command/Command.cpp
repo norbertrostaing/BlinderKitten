@@ -65,15 +65,50 @@ void Command::computeValues() {
 	Array<CommandValue*> commandValues = values->getItemsWithType<CommandValue>();
 	Array<Fixture*> fixtures = selection.computedSelectedFixtures;
 
-	bool delayThru = timing.thruDelay->getValue();
-	bool delaySym = timing.symmetryDelay->getValue();
-	float delayFrom = (float)timing.delayFrom->getValue() * 1000;
-	float delayTo = (float)timing.delayTo->getValue()*1000;
+	bool delayThru = false;
+	bool delaySym = false;
+	float delayFrom = 0;
+	float delayTo = 0;
 
-	bool fadeThru = timing.thruFade->getValue();
-	bool fadeSym = timing.symmetryFade->getValue();
-	float fadeFrom = (float)timing.fadeFrom->getValue()*1000;
-	float fadeTo = (float)timing.fadeTo->getValue()*1000;
+	bool fadeThru = false;
+	bool fadeSym = false;
+	float fadeFrom = 0;
+	float fadeTo = 0;
+
+	Automation* fadeCurve;
+	Automation* fadeRepartCurve;
+	Automation* delayRepartCurve;
+
+	if (timing.presetOrValue->getValue() == "preset") {
+		TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timing.presetId->getValue());
+		if (tp != nullptr) {
+			delayThru = tp->thruDelay->getValue();
+			delaySym = tp->symmetryDelay->getValue();
+			delayFrom = (float)tp->delayFrom->getValue() * 1000;
+			delayTo = (float)tp->delayTo->getValue() * 1000;
+			fadeThru = tp->thruFade->getValue();
+			fadeSym = tp->symmetryFade->getValue();
+			fadeFrom = (float)tp->fadeFrom->getValue() * 1000;
+			fadeTo = (float)tp->fadeTo->getValue() * 1000;
+			fadeCurve = &tp->curveFade;
+			fadeRepartCurve = &tp->curveFadeRepart;
+			delayRepartCurve = &tp->curveDelayRepart;
+		}
+	}
+	else {
+		delayThru = timing.thruDelay->getValue();
+		delaySym = timing.symmetryDelay->getValue();
+		delayFrom = (float)timing.delayFrom->getValue() * 1000;
+		delayTo = (float)timing.delayTo->getValue() * 1000;
+		fadeThru = timing.thruFade->getValue();
+		fadeSym = timing.symmetryFade->getValue();
+		fadeFrom = (float)timing.fadeFrom->getValue() * 1000;
+		fadeTo = (float)timing.fadeTo->getValue() * 1000;
+		fadeCurve = &timing.curveFade;
+		fadeRepartCurve = &timing.curveFadeRepart;
+		delayRepartCurve = &timing.curveDelayRepart;
+	}
+
 
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
