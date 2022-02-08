@@ -23,8 +23,7 @@ Group::Group(var params) :
 	itemDataType = "Group";
 
 	id = addIntParameter("ID", "ID of this device", 1, 1);
-	selection = new CommandSelectionManager();
-	addChildControllableContainer(selection);
+	addChildControllableContainer(&selection);
 
 	Brain::getInstance()->registerGroup(this, id->getValue());
 }

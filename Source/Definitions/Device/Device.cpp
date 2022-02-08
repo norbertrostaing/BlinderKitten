@@ -23,8 +23,8 @@ Device::Device(var params) :
 	BaseItem(params.getProperty("name", "Device")),
 	objectType(params.getProperty("type", "Device").toString()),
 	objectData(params),
-	patchs(),
-	fixtures(),
+	patchs("Patch"),
+	fixtures("Fixtures"),
 	devTypeParam()
 {
 	saveAndLoadRecursiveData = true;
@@ -39,17 +39,12 @@ Device::Device(var params) :
 	devTypeParam -> maxDefaultSearchLevel = 0;
 	
 	// to add a manager with defined data
-	BaseManager<DevicePatch>* m = new BaseManager<DevicePatch>("Patch");
-	m->selectItemWhenCreated = false;
+	patchs.selectItemWhenCreated = false;
+	addChildControllableContainer(&patchs);
 
-	patchs.reset(m);
-	addChildControllableContainer(patchs.get());
-
-	BaseManager<Fixture>* f = new BaseManager<Fixture>("Fixtures");
-	f -> selectItemWhenCreated = false;
-	f -> userCanAddItemsManually = false;
-	fixtures.reset(f);
-	addChildControllableContainer(fixtures.get());
+	fixtures.selectItemWhenCreated = false;
+	fixtures.userCanAddItemsManually = false;
+	addChildControllableContainer(&fixtures);
 
 	Logger::writeToLog("call from constructor");
 	Brain::getInstance()->registerDevice(this, id->getValue());
@@ -116,11 +111,11 @@ void Device::checkChildrenFixtures() {
 		fixtNames.add(fixtName);
 		}
 
-	Array<Fixture*> currentFixtures = fixtures.get()->getItemsWithType<Fixture>();
+	Array<Fixture*> currentFixtures = fixtures.getItemsWithType<Fixture>();
 	for (int i = 0; i < currentFixtures.size(); i++) {
 		String name = currentFixtures[i]->niceName;
 		if (fixtNames.indexOf(name) == -1) {
-			fixtures.get()->removeItem(currentFixtures[i]);
+			fixtures.removeItem(currentFixtures[i]);
 		}
 	}
 
@@ -128,10 +123,10 @@ void Device::checkChildrenFixtures() {
 		DeviceTypeChannel* c = dynamic_cast<DeviceTypeChannel*>(chans[i].get());
 		String suffix = c->suffix->getValue();
 		String fixtName = niceName + suffix;
-		Fixture* f = fixtures.get()->getItemWithName(fixtName, true);
+		Fixture* f = fixtures.getItemWithName(fixtName, true);
 		if (f == nullptr) {
 			f = new Fixture();
-			fixtures -> addItem(f);
+			fixtures.addItem(f);
 		}
 		if (f != nullptr && f->niceName != fixtName) {
 			f->setNiceName(fixtName);
@@ -145,19 +140,24 @@ void Device::checkChildrenFixtures() {
 		FixtureChannel* chan;
 		if (c != nullptr) {
 			FixtureParamDefinition* param = dynamic_cast<FixtureParamDefinition*>(c -> channelType -> targetContainer.get());
-			chan = f -> channels->getItemWithName(param->niceName);
-			if (chan == nullptr) {
-				chan = new FixtureChannel();
-				chan -> setNiceName(param->niceName);
-				f -> channels->addItem(chan);
+			if (param != nullptr) {
+				chan = f -> channels->getItemWithName(param->niceName);
+				if (chan == nullptr) {
+					chan = new FixtureChannel();
+					LOG("hello");
+					LOG(param->niceName);
+					chan -> setNiceName(param->niceName);
+					f -> channels->addItem(chan);
+				}
+				f -> channelsMap.set(param, chan);
+				chan ->isHTP = param->priority->getValue() == "HTP";
+				chan-> resolution->setValue(c->resolution->getValue());
+				chan-> channelType->setValue(c->channelType->getValue());
+				chan->parentParamDefinition = param;
+				chan-> parentDeviceTypeChannel = c;
+				chan->parentDevice = this;
+				chan->parentFixture = f;
 			}
-			f -> channelsMap.set(param, chan);
-			chan ->isHTP = param->priority->getValue() == "HTP";
-			chan-> resolution->setValue(c->resolution->getValue());
-			chan-> channelType->setValue(c->channelType->getValue());
-			chan->parentParamDefinition = param;
-			chan-> parentDeviceTypeChannel = c;
-			chan-> parentDevice = this;
 		}
 		
 	}

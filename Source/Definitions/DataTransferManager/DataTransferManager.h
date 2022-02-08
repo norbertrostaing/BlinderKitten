@@ -21,11 +21,15 @@ public:
 	IntParameter* sourceId;
 	EnumParameter* targetType;
 	IntParameter* targetId;
+	EnumParameter* mergeMode;
+	TargetParameter* paramfilter;
 	Trigger* go;
 
 	DataTransferManager();
 	~DataTransferManager();
 
 	void triggerTriggered(Trigger* t);
+	void onContainerParameterChangedInternal(Parameter* p);
+	void updateDisplay();
 
 };

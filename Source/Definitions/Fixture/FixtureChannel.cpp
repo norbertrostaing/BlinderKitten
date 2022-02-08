@@ -61,7 +61,7 @@ void FixtureChannel::writeValue(float v) {
 		int deltaAdress = parentDeviceTypeChannel->dmxDelta->getValue();
 		deltaAdress--;
 		String resolution = parentDeviceTypeChannel->resolution->getValue();
-		Array<DevicePatch*> patchs = parentDevice->patchs->getItemsWithType<DevicePatch>();
+		Array<DevicePatch*> patchs = parentDevice->patchs.getItemsWithType<DevicePatch>();
 		for (int i = 0; i < patchs.size(); i++) {
 			DMXInterface* out = dynamic_cast<DMXInterface*>(patchs[i]->targetInterface->targetContainer.get());
 			if (out != nullptr) {
@@ -87,7 +87,7 @@ void FixtureChannel::writeValue(float v) {
 }
 
 
-void FixtureChannel::updateVal(int64 now) {
+void FixtureChannel::updateVal(double now) {
 	float value = 0;
 	int overWritten = -1;
 	for (int i = 0; i < cuelistStack.size(); i++)

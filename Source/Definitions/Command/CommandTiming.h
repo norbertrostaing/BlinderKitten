@@ -36,9 +36,9 @@ public:
     FloatParameter* fadeTo;
     BoolParameter* symmetryFade;
 
-    Automation* curveFade;
-    Automation* curveDelayRepart;
-    Automation* curveFadeRepart;
+    Automation curveFade;
+    Automation curveDelayRepart;
+    Automation curveFadeRepart;
 
     // String getTypeString() const override { return objectType; }
     void parameterValueChanged(Parameter* p);

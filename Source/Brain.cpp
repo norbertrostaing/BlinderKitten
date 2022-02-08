@@ -28,8 +28,8 @@ Brain :: ~Brain() {
 }
 
 void Brain::run() {
-    int64 now = Time::getMillisecondCounter();
-
+    now = Time::getMillisecondCounterHiRes();
+    ///double now = Time::getApproximateMillisecondCounter();
     cuePoolUpdating.addArray(cuePoolWaiting);
     cuePoolWaiting.clear();
     for (int i = 0; i < cuePoolUpdating.size(); i++) {
@@ -66,12 +66,13 @@ void Brain::run() {
 void Brain::registerFixture(Fixture* f, int id) {
     Logger::writeToLog("fixture request : " + String(id));
     int askedId = id;
+    if (fixtures.getReference(id) == f) { return; }
     if (fixtures.containsValue(f)) {
         fixtures.removeValue(f);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (fixtures.contains(id)) {
+        if (fixtures.contains(id) && fixtures.getReference(id) != nullptr) {
             id++;
         }
         else {
@@ -94,12 +95,13 @@ void Brain::unregisterFixture(Fixture* f) {
 void Brain::registerDevice(Device* d, int id) {
     Logger::writeToLog("device request : " + String(id));
     int askedId = id;
+    if (devices.getReference(id) == d) { return; }
     if (devices.containsValue(d)) {
         devices.removeValue(d);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (devices.contains(id)) {
+        if (devices.contains(id) && devices.getReference(id) != nullptr) {
             id++;
         }
         else {
@@ -129,7 +131,6 @@ void Brain::registerGroup(Group* g, int id) {
     bool idIsOk = false;
     while (!idIsOk) {
         if (groups.contains(id) && groups.getReference(id)!=nullptr) {
-            LOG(groups.getReference(id)->niceName);
             id++;
         }
         else {
@@ -152,12 +153,13 @@ void Brain::unregisterGroup(Group* g) {
 void Brain::registerPreset(Preset* p, int id) {
     Logger::writeToLog("preset request : " + String(id));
     int askedId = id;
+    if (presets.getReference(id) == p) { return; }
     if (presets.containsValue(p)) {
         presets.removeValue(p);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (presets.contains(id)) {
+        if (presets.contains(id) && presets.getReference(id) != nullptr) {
             id++;
         }
         else {
@@ -180,12 +182,13 @@ void Brain::unregisterPreset(Preset* p) {
 void Brain::registerCuelist(Cuelist* c, int id) {
     Logger::writeToLog("Cuelist request : " + String(id));
     int askedId = id;
+    if (cuelists.getReference(id) == c) { return; }
     if (cuelists.containsValue(c)) {
         cuelists.removeValue(c);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (cuelists.contains(id)) {
+        if (cuelists.contains(id) && cuelists.getReference(id) != nullptr) {
             id++;
         }
         else {
@@ -208,12 +211,13 @@ void Brain::unregisterCuelist(Cuelist* c) {
 void Brain::registerProgrammer(Programmer* c, int id) {
     Logger::writeToLog("Programmer request : " + String(id));
     int askedId = id;
+    if (programmers.getReference(id) == c) { return; }
     if (programmers.containsValue(c)) {
         programmers.removeValue(c);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (programmers.contains(id)) {
+        if (programmers.contains(id) && programmers.getReference(id) != nullptr) {
             id++;
         }
         else {
@@ -230,6 +234,64 @@ void Brain::registerProgrammer(Programmer* c, int id) {
 void Brain::unregisterProgrammer(Programmer* c) {
     if (programmers.containsValue(c)) {
         programmers.removeValue(c);
+    }
+}
+
+void Brain::registerCurvePreset(CurvePreset* c, int id) {
+    Logger::writeToLog("CurvePreset request : " + String(id));
+    int askedId = id;
+    if (curvePresets.getReference(id) == c) { return; }
+    if (curvePresets.containsValue(c)) {
+        curvePresets.removeValue(c);
+    }
+    bool idIsOk = false;
+    while (!idIsOk) {
+        if (curvePresets.contains(id) && curvePresets.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    curvePresets.set(id, c);
+    c->id->setValue(id);
+    if (id != askedId) {
+        Logger::writeToLog("! curvePreset ID " + String(askedId) + " not available, ID " + String(id) + " given!");
+    }
+}
+
+void Brain::unregisterCurvePreset(CurvePreset* c) {
+    if (curvePresets.containsValue(c)) {
+        curvePresets.removeValue(c);
+    }
+}
+
+void Brain::registerTimingPreset(TimingPreset* c, int id) {
+    Logger::writeToLog("TimingPreset request : " + String(id));
+    int askedId = id;
+    if (timingPresets.getReference(id) == c) { return; }
+    if (timingPresets.containsValue(c)) {
+        timingPresets.removeValue(c);
+    }
+    bool idIsOk = false;
+    while (!idIsOk) {
+        if (timingPresets.contains(id) && timingPresets.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    timingPresets.set(id, c);
+    c->id->setValue(id);
+    if (id != askedId) {
+        Logger::writeToLog("! TimingPreset ID " + String(askedId) + " not available, ID " + String(id) + " given!");
+    }
+}
+
+void Brain::unregisterTimingPreset(TimingPreset* c) {
+    if (timingPresets.containsValue(c)) {
+        timingPresets.removeValue(c);
     }
 }
 
@@ -293,5 +355,13 @@ Cuelist* Brain::getCuelistById(int id) {
 
 Programmer* Brain::getProgrammerById(int id) {
     return programmers.getReference(id);
+}
+
+CurvePreset* Brain::getCurvePresetById(int id) {
+    return curvePresets.getReference(id);
+}
+
+TimingPreset* Brain::getTimingPresetById(int id) {
+    return timingPresets.getReference(id);
 }
 

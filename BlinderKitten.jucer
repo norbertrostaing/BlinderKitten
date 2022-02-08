@@ -2,8 +2,13 @@
 
 <JUCERPROJECT id="e7FbaJ" name="BlinderKitten" projectType="guiapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              compilerFlagSchemes="NewScheme" headerPath="../../Source" defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;">
+              compilerFlagSchemes="NewScheme" headerPath="../../Source" defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;&#10;_ITERATOR_DEBUG_LEVEL=1">
   <MAINGROUP id="K7UlHD" name="BlinderKitten">
+    <GROUP id="{64D406CA-52C4-9FE6-20BA-B5AC131530E5}" name="Ressources">
+      <FILE id="qTJiMk" name="icon.png" compile="0" resource="1" file="Ressources/icon.png"/>
+      <FILE id="AVBqHa" name="kittenLayout.layout" compile="0" resource="1"
+            file="Ressources/kittenLayout.layout"/>
+    </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
       <FILE id="FzUHii" name="mainIncludes.cpp" compile="1" resource="0"
             file="Source/mainIncludes.cpp"/>
@@ -131,6 +136,31 @@
               file="Source/Common/CommonIncludes.h"/>
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
+        <GROUP id="{72A0E523-B0DE-0D5F-1DFB-E56DCE7C036C}" name="TimingPreset">
+          <FILE id="IQtRwi" name="TimingPreset.cpp" compile="1" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPreset.cpp"/>
+          <FILE id="BnfxJA" name="TimingPreset.h" compile="0" resource="0" file="Source/Definitions/TimingPreset/TimingPreset.h"/>
+          <FILE id="vEJmlL" name="TimingPresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManager.cpp"/>
+          <FILE id="Ni5xTY" name="TimingPresetManager.h" compile="0" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManager.h"/>
+          <FILE id="auYeqi" name="TimingPresetManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManagerUI.cpp"/>
+          <FILE id="khpHjA" name="TimingPresetManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/TimingPreset/TimingPresetManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{CBD78126-AE22-6F6A-6C63-E0676FA039CA}" name="CurvePreset">
+          <FILE id="EDOEpV" name="CurvePreset.cpp" compile="1" resource="0" file="Source/Definitions/CurvePreset/CurvePreset.cpp"/>
+          <FILE id="UpAExN" name="CurvePreset.h" compile="0" resource="0" file="Source/Definitions/CurvePreset/CurvePreset.h"/>
+          <FILE id="NiW50p" name="CurvePresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManager.cpp"/>
+          <FILE id="A1G4wr" name="CurvePresetManager.h" compile="0" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManager.h"/>
+          <FILE id="BV5Afm" name="CurvePresetManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManagerUI.cpp"/>
+          <FILE id="LboeMc" name="CurvePresetManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/CurvePreset/CurvePresetManagerUI.h"/>
+        </GROUP>
         <GROUP id="{D50C9CDA-0677-C899-B012-44B39C163D22}" name="DataTransferManager">
           <FILE id="WXnQqo" name="DataTransferManager.cpp" compile="1" resource="0"
                 file="Source/Definitions/DataTransferManager/DataTransferManager.cpp"/>
@@ -189,6 +219,8 @@
         <GROUP id="{D4C28E39-3022-6381-A99C-F772CA609492}" name="Cue">
           <FILE id="PXR8sB" name="Cue.cpp" compile="1" resource="0" file="Source/Definitions/Cue/Cue.cpp"/>
           <FILE id="SHkzRY" name="Cue.h" compile="0" resource="0" file="Source/Definitions/Cue/Cue.h"/>
+          <FILE id="t40Hqw" name="CueManager.cpp" compile="1" resource="0" file="Source/Definitions/Cue/CueManager.cpp"/>
+          <FILE id="xpazKJ" name="CueManager.h" compile="0" resource="0" file="Source/Definitions/Cue/CueManager.h"/>
         </GROUP>
         <GROUP id="{A9E2709B-DF39-DFB6-4B25-760293732897}" name="Command">
           <FILE id="z6HUwt" name="Command.cpp" compile="1" resource="0" file="Source/Definitions/Command/Command.cpp"/>
@@ -391,9 +423,10 @@
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
   <EXPORTFORMATS>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;dnssd.lib">
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;dnssd.lib"
+            smallIcon="qTJiMk" bigIcon="qTJiMk">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="GrandNoTest2" binaryPath="Binaries/Debug"
+        <CONFIGURATION isDebug="1" name="Debug" targetName="BlinderKitten" binaryPath="Binaries/Debug"
                        headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="GrandNoTest2" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"

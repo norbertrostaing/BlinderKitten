@@ -10,11 +10,13 @@
 
 #pragma once
 #include "JuceHeader.h"
+class FixtureParamType;
 class FixtureParamDefinition;
 class DeviceTypeChannel;
 class Device;
 class Cuelist;
 class Programmer;
+class Fixture;
 
 class FixtureChannel:
     public BaseItem
@@ -32,9 +34,11 @@ public:
 
     bool isHTP = false;
 
+    FixtureParamType* parentParamType;
     FixtureParamDefinition* parentParamDefinition;
     DeviceTypeChannel* parentDeviceTypeChannel;
     Device* parentDevice;
+    Fixture* parentFixture;
 
     void writeValue(float v);
     String getTypeString() const override { return objectType; }
@@ -43,7 +47,7 @@ public:
     Array<Cuelist*> cuelistStack;
     Array<Programmer*> programmerStack;
 
-    void updateVal(int64 now);
+    void updateVal(double now);
 
     void cuelistOnTopOfStack(Cuelist* c);
     void cuelistOutOfStack(Cuelist* c);

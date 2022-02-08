@@ -1,6 +1,6 @@
 /*
   ==============================================================================
-
+ 
     Object.h
     Created: 26 Sep 2020 10:02:32am
     Author:  bkupe
@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "CommandValue.h"
 #include "CommandTiming.h"
+#include "CommandSelectionManager.h"
 
 class CommandSelectionManager;
 
@@ -32,7 +33,7 @@ public:
 
     TargetParameter* devTypeParam;
 
-    CommandSelectionManager* selection;
+    CommandSelectionManager selection;
     std::unique_ptr<BaseManager<CommandValue>> values;
     CommandTiming timing;
 
@@ -43,7 +44,7 @@ public:
     void afterLoadJSONDataInternal();
     void updateDisplay();
 
-    int64 maxTiming;
+    double maxTiming;
     void computeValues();
 
     static Command* create(var params) { return new Command(params); }

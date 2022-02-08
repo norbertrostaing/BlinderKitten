@@ -10,24 +10,26 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "../Command/CommandSelectionManager.h"
 
-class Group :
+// #include "../Command/CommandSelectionManager.h"
+class CommandSelectionManager;
+
+class CurvePreset :
     public BaseItem
 {
 public:
-    Group(var params = var());
-    virtual ~Group();
+    CurvePreset(var params = var());
+    virtual ~CurvePreset();
 
     String objectType;
     var objectData;
 
     IntParameter* id;
-    CommandSelectionManager selection;
+    CommandSelectionManager* selection;
 
     String getTypeString() const override { return objectType; }
 
     void parameterValueChanged(Parameter* p);
 
-    static Group* create(var params) { return new Group(params); }
+    static CurvePreset* create(var params) { return new CurvePreset(params); }
 };

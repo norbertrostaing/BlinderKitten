@@ -35,45 +35,42 @@ CommandTiming::CommandTiming(var params) :
 	fadeTo = addFloatParameter("Fade To", "fade of th first element (in seconds)", 0, 0);
 	symmetryFade = addBoolParameter("Fade Symmetry", "Apply this fade in symmetry", false);
 
-	curveFade = new Automation();
-	curveFade->setNiceName("Fade curve");
-	curveFade->editorIsCollapsed = true;
-	curveFade->allowKeysOutside = false;
-	curveFade->isSelectable = false;
-	curveFade->length->setValue(1);
-	curveFade->addKey(0, 0, false);
-	curveFade->items[0]->easingType->setValueWithData(Easing::BEZIER);
-	curveFade->addKey(1, 1, false);
-	curveFade->selectItemWhenCreated = false;
-	curveFade->editorCanBeCollapsed = true;
+	curveFade.setNiceName("Fade curve");
+	curveFade.editorIsCollapsed = true;
+	curveFade.allowKeysOutside = false;
+	curveFade.isSelectable = false;
+	curveFade.length->setValue(1);
+	curveFade.addKey(0, 0, false);
+	curveFade.items[0]->easingType->setValueWithData(Easing::BEZIER);
+	curveFade.addKey(1, 1, false);
+	curveFade.selectItemWhenCreated = false;
+	curveFade.editorCanBeCollapsed = true;
 
-	curveDelayRepart = new Automation();
-	curveDelayRepart->editorIsCollapsed = true;
-	curveDelayRepart->setNiceName("Delay repartition");
-	curveDelayRepart->allowKeysOutside = false;
-	curveDelayRepart->isSelectable = false;
-	curveDelayRepart->length->setValue(1);
-	curveDelayRepart->addKey(0, 0, false);
-	curveDelayRepart->items[0]->easingType->setValueWithData(Easing::LINEAR);
-	curveDelayRepart->addKey(1, 1, false);
-	curveDelayRepart->selectItemWhenCreated = false;
-	curveDelayRepart->editorCanBeCollapsed = true;
+	curveDelayRepart.editorIsCollapsed = true;
+	curveDelayRepart.setNiceName("Delay repartition");
+	curveDelayRepart.allowKeysOutside = false;
+	curveDelayRepart.isSelectable = false;
+	curveDelayRepart.length->setValue(1);
+	curveDelayRepart.addKey(0, 0, false);
+	curveDelayRepart.items[0]->easingType->setValueWithData(Easing::LINEAR);
+	curveDelayRepart.addKey(1, 1, false);
+	curveDelayRepart.selectItemWhenCreated = false;
+	curveDelayRepart.editorCanBeCollapsed = true;
 
-	curveFadeRepart = new Automation();
-	curveFadeRepart->editorIsCollapsed = true;
-	curveFadeRepart->setNiceName("Fade repartition");
-	curveFadeRepart->allowKeysOutside = false;
-	curveFadeRepart->isSelectable = false;
-	curveFadeRepart->length->setValue(1);
-	curveFadeRepart->addKey(0, 0, false);
-	curveFadeRepart->items[0]->easingType->setValueWithData(Easing::LINEAR);
-	curveFadeRepart->addKey(1, 1, false);
-	curveFadeRepart->selectItemWhenCreated = false;
-	curveFadeRepart->editorCanBeCollapsed = true;
+	curveFadeRepart.editorIsCollapsed = true;
+	curveFadeRepart.setNiceName("Fade repartition");
+	curveFadeRepart.allowKeysOutside = false;
+	curveFadeRepart.isSelectable = false;
+	curveFadeRepart.length->setValue(1);
+	curveFadeRepart.addKey(0, 0, false);
+	curveFadeRepart.items[0]->easingType->setValueWithData(Easing::LINEAR);
+	curveFadeRepart.addKey(1, 1, false);
+	curveFadeRepart.selectItemWhenCreated = false;
+	curveFadeRepart.editorCanBeCollapsed = true;
 
-	addChildControllableContainer(curveFade);
-	addChildControllableContainer(curveDelayRepart);
-	addChildControllableContainer(curveFadeRepart);
+	addChildControllableContainer(&curveFade);
+	addChildControllableContainer(&curveDelayRepart);
+	addChildControllableContainer(&curveFadeRepart);
 	updateDisplay();
 }
 
@@ -100,9 +97,9 @@ void CommandTiming::updateDisplay()
 	fadeTo->hideInEditor = prst || !thf;
 	symmetryFade->hideInEditor = prst || !thf;
 
-	curveFade->hideInEditor = prst;
-	curveDelayRepart->hideInEditor = prst || !thd;
-	curveFadeRepart->hideInEditor = prst || !thf;
+	curveFade.hideInEditor = prst;
+	curveDelayRepart.hideInEditor = prst || !thd;
+	curveFadeRepart.hideInEditor = prst || !thf;
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

@@ -18,6 +18,8 @@
 #include "Definitions/Cuelist/Cuelist.h"
 #include "Definitions/Preset/Preset.h"
 #include "Definitions/Programmer/Programmer.h"
+#include "Definitions/CurvePreset/CurvePreset.h"
+#include "Definitions/TimingPreset/TimingPreset.h"
 
 class Brain :
     public Thread
@@ -33,6 +35,8 @@ public:
     HashMap<int, Preset*>presets;
     HashMap<int, Cuelist*>cuelists;
     HashMap<int, Programmer*>programmers;
+    HashMap<int, CurvePreset*>curvePresets;
+    HashMap<int, TimingPreset*>timingPresets;
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
@@ -42,6 +46,8 @@ public:
     Array<Cue*> cuePoolWaiting;
     Array<Programmer*> programmerPoolUpdating;
     Array<Programmer*> programmerPoolWaiting;
+
+    double now;
 
     void run() override;
     void registerFixture(Fixture* f, int id);
@@ -56,6 +62,10 @@ public:
     void unregisterCuelist(Cuelist* c);
     void registerProgrammer(Programmer* p, int id);
     void unregisterProgrammer(Programmer* p);
+    void registerCurvePreset(CurvePreset* p, int id);
+    void unregisterCurvePreset(CurvePreset* p);
+    void registerTimingPreset(TimingPreset* p, int id);
+    void unregisterTimingPreset(TimingPreset* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(FixtureChannel* f);
@@ -70,6 +80,8 @@ public:
     Preset* getPresetById(int id);
     Cuelist* getCuelistById(int id);
     Programmer* getProgrammerById(int id);
+    CurvePreset* getCurvePresetById(int id);
+    TimingPreset* getTimingPresetById(int id);
 
     static float symPosition(int index, int nElements);
 };

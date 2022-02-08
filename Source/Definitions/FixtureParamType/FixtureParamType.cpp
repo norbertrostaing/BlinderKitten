@@ -35,7 +35,6 @@ FixtureParamType::FixtureParamType(var params) :
 
 	addChildControllableContainer(definitions.get());
 
-
 	//addChildControllableContainer(&definitions);
 
 	// File objPath = File(params.getProperty("path", ""));

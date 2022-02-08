@@ -30,8 +30,8 @@ public:
     IntParameter* id;
     TargetParameter* devTypeParam;
 
-    std::unique_ptr<BaseManager<DevicePatch>> patchs;
-    std::unique_ptr<BaseManager<Fixture>> fixtures;
+    BaseManager<DevicePatch> patchs;
+    BaseManager<Fixture> fixtures;
     String getTypeString() const override { return objectType; }
     Array<FixtureChannel*> channels;
 

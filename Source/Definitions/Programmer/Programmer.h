@@ -39,17 +39,17 @@ public:
     void onContainerParameterChangedInternal(Parameter* p) override;
 
     void computeValues();
-    void update(int64 now);
+    void update(double now);
 
-    void render(int64 now);
-    void release(int64 now = 0);
+    void render(double now);
+    void release(double now = 0);
     void go();
 
-    float applyToChannel(FixtureChannel* fc, float currentVal, int64 now);
+    float applyToChannel(FixtureChannel* fc, float currentVal, double now);
 
     String getTypeString() const override { return objectType; }
     static Programmer* create(var params) { return new Programmer(params); }
-    int64 maxTiming = 0;
+    double maxTiming = 0;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 };
 

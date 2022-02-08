@@ -10,24 +10,26 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "../Command/CommandSelectionManager.h"
 
-class Group :
+// #include "../Command/CommandSelectionManager.h"
+class CommandSelectionManager;
+
+class TimingPreset :
     public BaseItem
 {
 public:
-    Group(var params = var());
-    virtual ~Group();
+    TimingPreset(var params = var());
+    virtual ~TimingPreset();
 
     String objectType;
     var objectData;
 
     IntParameter* id;
-    CommandSelectionManager selection;
+    CommandSelectionManager* selection;
 
     String getTypeString() const override { return objectType; }
 
     void parameterValueChanged(Parameter* p);
 
-    static Group* create(var params) { return new Group(params); }
+    static TimingPreset* create(var params) { return new TimingPreset(params); }
 };

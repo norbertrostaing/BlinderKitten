@@ -13,16 +13,22 @@
 #include "Brain.h"
 #include "../ChannelValue.h"
 
+int sortCues(Cue* A, Cue* B) {
+	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
+	return A->id->getValue() > B->id->getValue() ? 1 : -1;
+}
+
 Cuelist::Cuelist(var params) :
 	BaseItem(params.getProperty("name", "Cuelist")),
 	objectType(params.getProperty("type", "Cuelist").toString()),
-	objectData(params)
+	objectData(params),
+	offFadeCurve()
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
 
-	BaseManager<Cue>* m = new BaseManager<Cue>("Cues");
+	CueManager* m = new CueManager();
 	m->selectItemWhenCreated = false;
 	cues.reset(m);
 
@@ -47,6 +53,8 @@ Cuelist::Cuelist(var params) :
 	nextCue->maxDefaultSearchLevel = 0;
 	nextCue->targetType = TargetParameter::CONTAINER;
 
+	nextCueId = addFloatParameter("Next cue ID", "ID of the cue triggered when go pressed, 0 means next cue",0,0);
+
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
 
@@ -60,17 +68,18 @@ Cuelist::Cuelist(var params) :
 	currentFade->isControllableFeedbackOnly = true;
 
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
-	offFadeCurve = new Automation();
-	offFadeCurve->setNiceName("Off curve");
-	offFadeCurve->allowKeysOutside = false;
-	offFadeCurve->isSelectable = false;
-	offFadeCurve->length->setValue(1);
-	offFadeCurve->addKey(0, 0, false);
-	offFadeCurve->items[0]->easingType->setValueWithData(Easing::LINEAR);
-	offFadeCurve->addKey(1, 1, false);
-	offFadeCurve->selectItemWhenCreated = false;
-	offFadeCurve->editorCanBeCollapsed = true;
-	addChildControllableContainer(offFadeCurve);
+
+	// offFadeCurve = new Automation();
+	offFadeCurve.setNiceName("Off curve");
+	offFadeCurve.allowKeysOutside = false;
+	offFadeCurve.isSelectable = false;
+	offFadeCurve.length->setValue(1);
+	offFadeCurve.addKey(0, 0, false);
+	offFadeCurve.items[0]->easingType->setValueWithData(Easing::LINEAR);
+	offFadeCurve.addKey(1, 1, false);
+	offFadeCurve.selectItemWhenCreated = false;
+	offFadeCurve.editorCanBeCollapsed = true;
+	addChildControllableContainer(&offFadeCurve);
 
 	//nextCueId = addFloatParameter("Next Cue", "Index of the next cue", - 1, -1);
 	cueA = nullptr; // static current cue
@@ -83,12 +92,20 @@ Cuelist::Cuelist(var params) :
 
 	addChildControllableContainer(cues.get());
 
+	cues->comparator.compareFunc = &sortCues;
+	reorderCues();
+
 	Brain::getInstance()->registerCuelist(this, id->getValue());
 }
 
 Cuelist::~Cuelist()
 {
 	Brain::getInstance()->unregisterCuelist(this);
+}
+
+void Cuelist::reorderCues() {
+	cues->reorderItems();
+	//cues->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, cues.get()));
 }
 
 void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
@@ -117,7 +134,7 @@ void Cuelist::triggerTriggered(Trigger* t) {
 }
 
 void Cuelist::go(Cue* c) {
-	int64 now = Time::getMillisecondCounter();
+	double now = Brain::getInstance()->now;
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
@@ -125,6 +142,7 @@ void Cuelist::go(Cue* c) {
 	LOG("go Cuelist");
 	cueB = nullptr;
 	nextCue->resetValue();
+	nextCueId->resetValue();
 	if (c != nullptr) {
 		isCuelistOn->setValue(true);
 	}
@@ -133,12 +151,12 @@ void Cuelist::go(Cue* c) {
 	if (trackingType == "none" || c == nullptr) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			ChannelValue* temp = it.getValue();
-			float fadeTime = offFade->getValue();
-			temp->fadeCurve = offFadeCurve;
+			float fadeTime = (float)offFade->getValue()*1000;
+			temp->fadeCurve = &offFadeCurve;
 
 			temp->TSInit = now;
 			temp->TSStart = now;
-			temp->TSEnd= now + 1000.0*fadeTime;
+			temp->TSEnd= now + fadeTime; 
 
 			temp->endValue = -1;
 			temp->startValue = temp->value;
@@ -161,8 +179,8 @@ void Cuelist::go(Cue* c) {
 				temp->startValue = -1;
 			}
 			temp->TSInit = now;
-			temp->TSStart = now + (temp->delay * 1000.0);
-			temp->TSEnd = temp -> TSStart + (temp->fade* 1000.0);
+			temp->TSStart = now + (temp->delay);
+			temp->TSEnd = temp -> TSStart + (temp->fade );
 			temp -> isEnded = false;
 			activeValues.set(it.getKey(), temp);
 			it.getKey()->cuelistOnTopOfStack(this);
@@ -220,6 +238,14 @@ void Cuelist::go(Cue* c) {
 
 void Cuelist::go() {
 	cueB = dynamic_cast<Cue*>(nextCue->targetContainer.get());
+	float nextId = nextCueId->getValue();
+	if (nextId > 0) {
+		for (int i = 0; i < cues->items.size() && cueB == nullptr; i++) {
+			if ((float)cues->items[i]->id->getValue() >= nextId) {
+				cueB = cues->items[i];
+			}
+		}
+	}
 	if (cueB == nullptr) {
 		autoLoadCueB();
 	}
@@ -282,7 +308,7 @@ void Cuelist::autoLoadCueB() {
 	}
 }
 
-float Cuelist::applyToChannel(FixtureChannel* fc, float currentVal, int64 now) {
+float Cuelist::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
 	float val = currentVal;
 	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
 	
@@ -322,14 +348,14 @@ float Cuelist::applyToChannel(FixtureChannel* fc, float currentVal, int64 now) {
 		}
 	}
 	else {
-		float totTime = (cv->delay + cv->fade) * 1000.;
+		float totTime = (cv->delay + cv->fade);
 		if (totTime > 0) {
 			cv->currentPosition = (now - cv->TSInit) / (totTime);
 		}
 		else {
 			cv->currentPosition = 1;
 		}
-		float fade = float(now - cv->TSStart) / float(cv -> TSEnd - cv->TSStart);
+		float fade = double(now - cv->TSStart) / double(cv -> TSEnd - cv->TSStart);
 		fade = cv->fadeCurve->getValueAtPosition(fade);
 		localValue = jmap(fade, valueFrom, valueTo);
 		keepUpdate = true;
@@ -466,3 +492,4 @@ void Cuelist::kill(bool forceRefreshChannels) {
 void Cuelist::setHTPLevel(float level) {
 	HTPLevel->setValue(level);
 }
+

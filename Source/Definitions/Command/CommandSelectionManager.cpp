@@ -40,7 +40,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			for (int id = idFrom; id != idThru + mod; id = id + mod) {
 				if (b->devices.contains(id)) {
 					Device* d = b->devices.getReference(id);
-					tempSelection.addArray(d->fixtures->getItemsWithType<Fixture>());
+					tempSelection.addArray(d->fixtures.getItemsWithType<Fixture>());
 				}
 			}
 		}
@@ -50,8 +50,8 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					Group* g = b->groups.getReference(id);
 					if (groupHistory.indexOf(g->id->getValue()) == -1) {
 						groupHistory.add(id);
-						g->selection->computeSelection(groupHistory);
-						tempSelection.addArray(g->selection->computedSelectedFixtures);
+						g->selection.computeSelection(groupHistory);
+						tempSelection.addArray(g->selection.computedSelectedFixtures);
 					}
 				}
 			}

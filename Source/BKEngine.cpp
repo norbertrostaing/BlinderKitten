@@ -21,6 +21,7 @@
 // #include "StateMachine/StateMachineIncludes.h"
 // #include "Common/CommonIncludes.h"
 
+#include "Brain.h"
 #include "./Definitions/Interface/InterfaceManager.h"
 #include "./Definitions/FixtureParamType/FixtureParamTypeManager.h"
 #include "./Definitions/DeviceType/DeviceTypeManager.h"
@@ -31,6 +32,18 @@
 #include "./Definitions/Command/CommandManager.h"
 #include "./Definitions/Cuelist/CuelistManager.h"
 #include "./Definitions/Programmer/ProgrammerManager.h"
+#include "./Definitions/TimingPreset/TimingPresetManager.h"
+#include "./Definitions/CurvePreset/CurvePresetManager.h"
+
+#include "./Common/MIDI/MIDIDevice.h"
+#include "./Common/MIDI/MIDIManager.h"
+#include "./Common/DMX/DMXManager.h"
+#include "./Common/DMX/device/DMXDevice.h"
+#include "./Common/Serial/SerialDevice.h"
+#include "./Common/Serial/SerialManager.h"
+
+#include "./Common/Action/Action.h"
+#include "./Common/Action/ActionManager.h"
 
 
 ControllableContainer* getAppSettings();
@@ -55,6 +68,8 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(CommandManager::getInstance());
 	addChildControllableContainer(CuelistManager::getInstance());
 	addChildControllableContainer(ProgrammerManager::getInstance());
+	addChildControllableContainer(CurvePresetManager::getInstance());
+	addChildControllableContainer(TimingPresetManager::getInstance());
 	// addChildControllableContainer(StateManager::getInstance());
 	// addChildControllableContainer(ChataigneSequenceManager::getInstance());
 	// addChildControllableContainer(ModuleRouterManager::getInstance());
@@ -106,7 +121,16 @@ BKEngine::~BKEngine()
 	DeviceManager::deleteInstance();
 	DeviceTypeManager::deleteInstance();
 	FixtureParamTypeManager::deleteInstance();
+	TimingPresetManager::deleteInstance();
+	CurvePresetManager::deleteInstance();
+
 	InterfaceManager::deleteInstance();
+	MIDIManager::deleteInstance();
+	DMXManager::deleteInstance();
+	SerialManager::deleteInstance();
+
+	ActionFactory::deleteInstance();
+	Brain::deleteInstance();
 }
 
 
@@ -128,6 +152,8 @@ void BKEngine::clearInternal()
 	DeviceTypeManager::getInstance()->clear();
 	FixtureParamTypeManager::getInstance()->clear();
 	InterfaceManager::getInstance()->clear();
+	TimingPresetManager::getInstance()->clear();
+	CurvePresetManager::getInstance()->clear();
 }
 
 var BKEngine::getJSONData()
@@ -167,6 +193,12 @@ var BKEngine::getJSONData()
 	var prData = ProgrammerManager::getInstance()->getJSONData();
 	if (!prData.isVoid() && prData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ProgrammerManager::getInstance()->shortName, prData);
 
+	var cpData = CurvePresetManager::getInstance()->getJSONData();
+	if (!cpData.isVoid() && cpData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CurvePresetManager::getInstance()->shortName, cpData);
+
+	var tpData = TimingPresetManager::getInstance()->getJSONData();
+	if (!tpData.isVoid() && tpData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, tpData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -192,6 +224,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* cTask = loadingTask->addTask("Commands");
 	ProgressTask* clTask = loadingTask->addTask("Cuelists");
 	ProgressTask* prTask = loadingTask->addTask("Programmers");
+	ProgressTask* cpTask = loadingTask->addTask("Curve Presets");
+	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
 	//ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	//ProgressTask* routerTask = loadingTask->addTask("Router");
@@ -250,6 +284,16 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgrammerManager::getInstance()->loadJSONData(data.getProperty(ProgrammerManager::getInstance()->shortName, var()));
 	prTask->setProgress(1);
 	prTask->end();
+
+	cpTask->start();
+	CurvePresetManager::getInstance()->loadJSONData(data.getProperty(CurvePresetManager::getInstance()->shortName, var()));
+	cpTask->setProgress(1);
+	cpTask->end();
+
+	tpTask->start();
+	TimingPresetManager::getInstance()->loadJSONData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
+	tpTask->setProgress(1);
+	tpTask->end();
 
 	//stateTask->start();
 	//StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));

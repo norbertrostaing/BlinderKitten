@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "../Cue/Cue.h"
+#include "../Cue/CueManager.h"
 
 class Cuelist:
     public BaseItem
@@ -22,7 +23,7 @@ public:
     String objectType;
     var objectData;
 
-    std::unique_ptr<BaseManager<Cue>> cues;
+    std::unique_ptr<CueManager> cues;
 
     IntParameter* id;
     Trigger* goBtn;
@@ -40,7 +41,7 @@ public:
     
     FloatParameter* nextCueId;
 
-    Automation* offFadeCurve;
+    Automation offFadeCurve;
     FloatParameter* offFade;
     HashMap<FixtureChannel*, ChannelValue*> activeValues;
 
@@ -53,12 +54,12 @@ public:
     Cue* cueB;
 
     float xFade = 0;
-    int64 currentTimeElapsed = 0;
+    double currentTimeElapsed = 0;
     bool isOn = false;
 
-    int64 TSTransitionStart;
-    int64 TSTransitionDuration;
-    int64 TSTransitionEnd;
+    double TSTransitionStart;
+    double TSTransitionDuration;
+    double TSTransitionEnd;
 
     String getTypeString() const override { return objectType; }
 
@@ -68,8 +69,10 @@ public:
     void kill(bool forceRefreshChannels = true);
     void update();
     void autoLoadCueB();
-    float applyToChannel(FixtureChannel* fc, float currentVal, int64 now);
+    float applyToChannel(FixtureChannel* fc, float currentVal, double now);
     void cleanActiveValues();
+
+    void reorderCues();
 
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p);

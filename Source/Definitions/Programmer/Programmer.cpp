@@ -104,7 +104,7 @@ void Programmer::go() {
 	Brain::getInstance()->pleaseUpdate(this);
 }
 
-void Programmer::update(int64 now) {
+void Programmer::update(double now) {
 	render(now);
 }
 
@@ -113,7 +113,7 @@ void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 	Brain::getInstance()->pleaseUpdate(this);
 }
 
-void Programmer::render(int64 now) {
+void Programmer::render(double now) {
 	release(now);
 	computeValues();
 	String mode = editionMode->getValue();
@@ -129,8 +129,8 @@ void Programmer::render(int64 now) {
 			}
 			temp->TSInit = now;
 			if (mode == "timed") {
-				temp->TSStart = now + (temp->delay * 1000.0);
-				temp->TSEnd = temp->TSStart + (temp->fade * 1000.0);
+				temp->TSStart = now + (temp->delay );
+				temp->TSEnd = temp->TSStart + (temp->fade );
 				temp->isEnded = false;
 			}
 			else {
@@ -147,9 +147,9 @@ void Programmer::render(int64 now) {
 
 }
 
-void Programmer::release(int64 now) {
+void Programmer::release(double now) {
 	if (now == 0) {
-		now = Time::getMillisecondCounter();
+		now = Brain::getInstance()->now;
 	}
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		ChannelValue* temp = it.getValue();
@@ -157,7 +157,7 @@ void Programmer::release(int64 now) {
 
 		temp->TSInit = now;
 		temp->TSStart = now;
-		temp->TSEnd = now + 1000.0 * fadeTime;
+		temp->TSEnd = now +  fadeTime;
 
 		temp->endValue = -1;
 		temp->startValue = temp->value;
@@ -170,7 +170,7 @@ void Programmer::release(int64 now) {
 }
 
 
-float Programmer::applyToChannel(FixtureChannel* fc, float currentVal, int64 now) {
+float Programmer::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
 	float val = currentVal;
 
 	bool keepUpdate = false;
@@ -206,7 +206,7 @@ float Programmer::applyToChannel(FixtureChannel* fc, float currentVal, int64 now
 		}
 	}
 	else {
-		float totTime = (cv->delay + cv->fade) * 1000.;
+		float totTime = (cv->delay + cv->fade) ;
 		if (totTime > 0) {
 			cv->currentPosition = (now - cv->TSInit) / (totTime);
 		}

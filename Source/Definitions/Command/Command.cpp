@@ -27,8 +27,8 @@ Command::Command(var params) :
 	itemDataType = "Command";
 
 	// to add a manager with defined data
-	selection = new CommandSelectionManager();
-	addChildControllableContainer(selection);
+	//selection = new CommandSelectionManager();
+	addChildControllableContainer(&selection);
 
 	BaseManager<CommandValue>* mv = new BaseManager<CommandValue>("Values");
 	mv->selectItemWhenCreated = false;
@@ -60,20 +60,20 @@ void Command::parameterValueChanged(Parameter* p) {
 
 void Command::computeValues() {
 	maxTiming = 0;
-	selection->computeSelection();
+	selection.computeSelection();
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values->getItemsWithType<CommandValue>();
-	Array<Fixture*> fixtures = selection->computedSelectedFixtures;
+	Array<Fixture*> fixtures = selection.computedSelectedFixtures;
 
 	bool delayThru = timing.thruDelay->getValue();
 	bool delaySym = timing.symmetryDelay->getValue();
-	float delayFrom = timing.delayFrom->getValue();
-	float delayTo = timing.delayTo->getValue();
+	float delayFrom = (float)timing.delayFrom->getValue() * 1000;
+	float delayTo = (float)timing.delayTo->getValue()*1000;
 
 	bool fadeThru = timing.thruFade->getValue();
 	bool fadeSym = timing.symmetryFade->getValue();
-	float fadeFrom = timing.fadeFrom->getValue();
-	float fadeTo = timing.fadeTo->getValue();
+	float fadeFrom = (float)timing.fadeFrom->getValue()*1000;
+	float fadeTo = (float)timing.fadeTo->getValue()*1000;
 
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
@@ -132,7 +132,7 @@ void Command::computeValues() {
 					if (delayThru && fixtures.size() > 1) {
 						float position = float(indexFixt) / float(fixtures.size() - 1);
 						if (delaySym) { position = Brain::symPosition(indexFixt, fixtures.size()); }
-						position = timing.curveDelayRepart->getValueAtPosition(position);
+						position = timing.curveDelayRepart.getValueAtPosition(position);
 						delay = jmap(position, delayFrom, delayTo);
 					}
 					finalValue->delay = delay;
@@ -141,12 +141,12 @@ void Command::computeValues() {
 					if (fadeThru && fixtures.size() > 1) {
 						float position = float(indexFixt) / float(fixtures.size() - 1);
 						if (fadeSym) { position = Brain::symPosition(indexFixt, fixtures.size()); }
-						position = timing.curveFadeRepart->getValueAtPosition(position);
+						position = timing.curveFadeRepart.getValueAtPosition(position);
 						fade = jmap(position, fadeFrom, fadeTo);
 					}
 					finalValue->fade = fade;
-					finalValue->fadeCurve = timing.curveFade;
-					int64 tempTiming = round(1000 * (delay + fade));
+					finalValue->fadeCurve = &timing.curveFade;
+					double tempTiming = (delay + fade);
 					maxTiming = std::max(maxTiming, tempTiming);
 				}
 			}

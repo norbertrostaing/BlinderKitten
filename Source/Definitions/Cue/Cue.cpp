@@ -38,8 +38,6 @@ Cue::Cue(var params) :
 	m->selectItemWhenCreated = false;
 	commands.reset(m);
 	addChildControllableContainer(commands.get());
-
-
 }
 
 Cue::~Cue()
@@ -62,6 +60,12 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 		v = jmax((float)1, v);
 		autoFollowCountDown->setRange(0,v);
 	}
+	else if (p == id) {
+		if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
+			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+			parentCuelist->reorderCues();
+		}
+	}
 }
 
 void Cue::computeValues() {
@@ -80,18 +84,18 @@ void Cue::computeValues() {
 
 void Cue::go() {
 	if (autoFollow->getValue() == "immediate") {
-		int64 now = Time::getMillisecondCounter();
+		double now = Brain::getInstance()->now;
+
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
-		TSAutoFollowEnd = now + (1000*delay);
+		TSAutoFollowEnd = now + delay;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 }
 
-void Cue::update(int64 now) {
+void Cue::update(double now) {
 	if (TSAutoFollowEnd != 0 && now < TSAutoFollowEnd) {
 		float remaining = TSAutoFollowEnd-now;
-		remaining /=  1000;
 		autoFollowCountDown->setValue(remaining);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
@@ -105,10 +109,10 @@ void Cue::update(int64 now) {
 
 void Cue::endTransition() {
 	if (autoFollow->getValue() == "auto") {
-		int64 now = Time::getMillisecondCounter();
+		double now = Brain::getInstance()->now;
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
-		TSAutoFollowEnd = now + (1000 * delay);
+		TSAutoFollowEnd = now + delay;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 }

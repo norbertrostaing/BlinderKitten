@@ -28,8 +28,8 @@ public:
     EnumParameter* autoFollow;
     FloatParameter* autoFollowTiming;
     FloatParameter* autoFollowCountDown;
-    int64 TSAutoFollowStart;
-    int64 TSAutoFollowEnd;
+    double TSAutoFollowStart;
+    double TSAutoFollowEnd;
 
     Trigger* goBtn;
 
@@ -41,14 +41,14 @@ public:
     void onContainerParameterChangedInternal(Parameter* p) override;
 
     void computeValues();
-    void update(int64 now);
+    void update(double now);
     void go();
     void endTransition();
 
 
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }
-    int64 maxTiming = 0;
+    double maxTiming = 0;
     void updateChannels();
 
 };

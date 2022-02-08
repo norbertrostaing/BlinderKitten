@@ -1,0 +1,127 @@
+{
+  "mainLayout": {
+    "type": 1,
+    "width": 1920,
+    "height": 997,
+    "direction": 2,
+    "shifters": [
+      {
+        "type": 1,
+        "width": 1920,
+        "height": 997,
+        "direction": 1,
+        "shifters": [
+          {
+            "type": 1,
+            "width": 447,
+            "height": 997,
+            "direction": 2,
+            "shifters": [
+              {
+                "type": 0,
+                "width": 447,
+                "height": 242,
+                "currentContent": "Programmers",
+                "tabs": [
+                  {
+                    "name": "Interfaces"
+                  },
+                  {
+                    "name": "Fixture Type Params"
+                  },
+                  {
+                    "name": "Device Types"
+                  },
+                  {
+                    "name": "Programmers"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 447,
+                "height": 371,
+                "currentContent": "Devices",
+                "tabs": [
+                  {
+                    "name": "Devices"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 447,
+                "height": 370,
+                "currentContent": "Timing Presets",
+                "tabs": [
+                  {
+                    "name": "Groups"
+                  },
+                  {
+                    "name": "Presets"
+                  },
+                  {
+                    "name": "Curve Presets"
+                  },
+                  {
+                    "name": "Timing Presets"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": 1,
+            "width": 1467,
+            "height": 997,
+            "direction": 1,
+            "shifters": [
+              {
+                "type": 1,
+                "width": 666,
+                "height": 997,
+                "direction": 2,
+                "shifters": [
+                  {
+                    "type": 0,
+                    "width": 666,
+                    "height": 745,
+                    "currentContent": "Cuelists",
+                    "tabs": [
+                      {
+                        "name": "Cuelists"
+                      }
+                    ]
+                  },
+                  {
+                    "type": 0,
+                    "width": 666,
+                    "height": 246,
+                    "currentContent": "Logger",
+                    "tabs": [
+                      {
+                        "name": "Logger"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 795,
+                "height": 997,
+                "currentContent": "Inspector",
+                "tabs": [
+                  {
+                    "name": "Inspector"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "windows": null
+}
