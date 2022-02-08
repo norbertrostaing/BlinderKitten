@@ -28,38 +28,37 @@ Brain :: ~Brain() {
 }
 
 void Brain::run() {
-    now = Time::getMillisecondCounterHiRes();
-    ///double now = Time::getApproximateMillisecondCounter();
-    cuePoolUpdating.addArray(cuePoolWaiting);
-    cuePoolWaiting.clear();
-    for (int i = 0; i < cuePoolUpdating.size(); i++) {
-        cuePoolUpdating[i]->update(now);
-    }
-    cuePoolUpdating.clear();
+    while(!threadShouldExit()) {
+        now = Time::getMillisecondCounterHiRes();
+        ///double now = Time::getApproximateMillisecondCounter();
+        cuePoolUpdating.addArray(cuePoolWaiting);
+        cuePoolWaiting.clear();
+        for (int i = 0; i < cuePoolUpdating.size(); i++) {
+            cuePoolUpdating[i]->update(now);
+        }
+        cuePoolUpdating.clear();
 
-    cuelistPoolUpdating.addArray(cuelistPoolWaiting);
-    cuelistPoolWaiting.clear();
-    for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
-        cuelistPoolUpdating[i]->update();
-    }
-    cuelistPoolUpdating.clear();
+        cuelistPoolUpdating.addArray(cuelistPoolWaiting);
+        cuelistPoolWaiting.clear();
+        for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
+            cuelistPoolUpdating[i]->update();
+        }
+        cuelistPoolUpdating.clear();
 
-    programmerPoolUpdating.addArray(programmerPoolWaiting);
-    programmerPoolWaiting.clear();
-    for (int i = 0; i < programmerPoolUpdating.size(); i++) {
-        programmerPoolUpdating[i]->update(now);
-    }
-    programmerPoolUpdating.clear();
+        programmerPoolUpdating.addArray(programmerPoolWaiting);
+        programmerPoolWaiting.clear();
+        for (int i = 0; i < programmerPoolUpdating.size(); i++) {
+            programmerPoolUpdating[i]->update(now);
+        }
+        programmerPoolUpdating.clear();
 
-    fixtureChannelPoolUpdating.addArray(fixtureChannelPoolWaiting);
-    fixtureChannelPoolWaiting.clear();
-    for (int i = 0; i < fixtureChannelPoolUpdating.size(); i++) {
-        fixtureChannelPoolUpdating[i] -> updateVal(now);
-    }
-    fixtureChannelPoolUpdating.clear();
-    if (!threadShouldExit()) {
+        fixtureChannelPoolUpdating.addArray(fixtureChannelPoolWaiting);
+        fixtureChannelPoolWaiting.clear();
+        for (int i = 0; i < fixtureChannelPoolUpdating.size(); i++) {
+            fixtureChannelPoolUpdating[i] -> updateVal(now);
+        }
+        fixtureChannelPoolUpdating.clear();
         wait(22);
-        run();
     }
 }
 

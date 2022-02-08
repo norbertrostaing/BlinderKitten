@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   icon_png;
-    const int            icon_pngSize = 34938;
+    const int            icon_pngSize = 64470;
 
     extern const char*   kittenLayout_layout;
     const int            kittenLayout_layoutSize = 3281;
