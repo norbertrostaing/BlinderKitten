@@ -15,8 +15,11 @@ class DevicePatch:
     public BaseItem
 {
     public:
-    DevicePatch();
+    DevicePatch(var params = var());
     ~DevicePatch();
+
+    String objectType;
+    var objectData;
 
     TargetParameter* targetInterface;
     IntParameter* address;

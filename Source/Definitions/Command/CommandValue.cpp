@@ -11,8 +11,11 @@
 #include "CommandValue.h"
 #include "../FixtureParamType/FixtureParamTypeManager.h"
 
-CommandValue::CommandValue() :
-    BaseItem("Value")
+CommandValue::CommandValue(var params) :
+    BaseItem(params.getProperty("name", "Value")),
+    objectType(params.getProperty("type", "CommandValue").toString()),
+    objectData(params)
+
 {
     presetOrValue = addEnumParameter("Value type", "What kind of value do you want to apply ?");
     presetOrValue-> addOption("Raw Values", "value");

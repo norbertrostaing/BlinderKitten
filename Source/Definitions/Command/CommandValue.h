@@ -16,8 +16,11 @@ class CommandValue:
     public Inspectable::InspectableListener
 {
     public:
-    CommandValue();
+    CommandValue(var params = var());
     ~CommandValue();
+
+    String objectType;
+    var objectData;
 
     EnumParameter* presetOrValue;
 

@@ -10,8 +10,10 @@
 
 #include "CommandSelection.h"
 
-CommandSelection::CommandSelection() :
-    BaseItem("Selection")
+CommandSelection::CommandSelection(var params) :
+    BaseItem(params.getProperty("name", "Selection")),
+    objectType(params.getProperty("type", "CommandSelection").toString()),
+    objectData(params)
 {
     plusOrMinus = addEnumParameter("Action", "Do you wan to add or remove elements to selection ?");
     plusOrMinus->addOption("+", "add");

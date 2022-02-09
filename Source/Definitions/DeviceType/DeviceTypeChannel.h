@@ -15,8 +15,11 @@ class DeviceTypeChannel:
     public BaseItem
 {
     public:
-    DeviceTypeChannel();
+    DeviceTypeChannel(var params = var());
     ~DeviceTypeChannel();
+
+    String objectType;
+    var objectData;
 
     TargetParameter* channelType;
     StringParameter* suffix;

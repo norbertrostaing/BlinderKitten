@@ -10,8 +10,10 @@
 
 #include "FixtureParamDefinition.h"
 
-FixtureParamDefinition::FixtureParamDefinition() :
-    BaseItem("Channel type")
+FixtureParamDefinition::FixtureParamDefinition(var params) :
+    BaseItem(params.getProperty("name", "Channel type")),
+    objectType(params.getProperty("type", "FixtureParamDefinition").toString()),
+    objectData(params)
 {
     priority = addEnumParameter("Channel mode", "Type of channel", true);
     priority -> addOption("Highest Takes Precedence", "HTP");

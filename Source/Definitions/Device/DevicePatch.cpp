@@ -12,8 +12,10 @@
 #include "../Interface/InterfaceIncludes.h"
 // #include "../FixtureParamType/FixtureParamTypeManager.h"
 
-DevicePatch::DevicePatch() :
-    BaseItem("Patch")
+DevicePatch::DevicePatch(var params) :
+	BaseItem(params.getProperty("name", "Patch")),
+	objectType(params.getProperty("type", "DevicePatch").toString()),
+	objectData(params)
 {
     targetInterface = addTargetParameter("Interface", "output interface", InterfaceManager::getInstance());
     targetInterface->targetType = TargetParameter::CONTAINER;

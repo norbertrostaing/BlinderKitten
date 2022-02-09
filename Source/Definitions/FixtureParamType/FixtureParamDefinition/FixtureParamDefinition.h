@@ -15,8 +15,12 @@ class FixtureParamDefinition:
     public BaseItem
 {
     public:
-    FixtureParamDefinition();
+    FixtureParamDefinition(var params = var());
     ~FixtureParamDefinition();
+
+    String objectType;
+    var objectData;
+
     EnumParameter* priority;
     BoolParameter* reactGM;
     EnumParameter* snapOrFade;

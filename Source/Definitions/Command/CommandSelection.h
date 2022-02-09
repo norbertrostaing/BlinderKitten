@@ -16,8 +16,11 @@ class CommandSelection:
     public Inspectable::InspectableListener
 {
     public:
-    CommandSelection();
+    CommandSelection(var params = var());
     ~CommandSelection();
+
+    String objectType;
+    var objectData;
 
     EnumParameter* plusOrMinus;
     EnumParameter* targetType;

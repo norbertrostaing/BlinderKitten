@@ -12,8 +12,11 @@
 #include "../FixtureParamType/FixtureParamTypeManager.h"
 
 
-DeviceTypeChannel::DeviceTypeChannel() :
-    BaseItem("Channel")
+DeviceTypeChannel::DeviceTypeChannel(var params) :
+    BaseItem(params.getProperty("name", "Channel")),
+    objectType(params.getProperty("type", "DeviceTypeChannel").toString()),
+    objectData(params)
+
 {
     channelType = addTargetParameter("Channel type", "Type of data of this channel", FixtureParamTypeManager::getInstance());
     channelType -> targetType = TargetParameter::CONTAINER;
