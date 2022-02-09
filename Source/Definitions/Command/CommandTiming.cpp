@@ -35,6 +35,7 @@ CommandTiming::CommandTiming(var params) :
 	fadeTo = addFloatParameter("Fade To", "fade of th first element (in seconds)", 0, 0);
 	symmetryFade = addBoolParameter("Fade Symmetry", "Apply this fade in symmetry", false);
 
+	curveFade.saveAndLoadRecursiveData = true;
 	curveFade.setNiceName("Fade curve");
 	curveFade.editorIsCollapsed = true;
 	curveFade.allowKeysOutside = false;
@@ -46,6 +47,7 @@ CommandTiming::CommandTiming(var params) :
 	curveFade.selectItemWhenCreated = false;
 	curveFade.editorCanBeCollapsed = true;
 
+	curveDelayRepart.saveAndLoadRecursiveData = true;
 	curveDelayRepart.editorIsCollapsed = true;
 	curveDelayRepart.setNiceName("Delay repartition");
 	curveDelayRepart.allowKeysOutside = false;
@@ -57,6 +59,7 @@ CommandTiming::CommandTiming(var params) :
 	curveDelayRepart.selectItemWhenCreated = false;
 	curveDelayRepart.editorCanBeCollapsed = true;
 
+	curveFadeRepart.saveAndLoadRecursiveData = true;
 	curveFadeRepart.editorIsCollapsed = true;
 	curveFadeRepart.setNiceName("Fade repartition");
 	curveFadeRepart.allowKeysOutside = false;

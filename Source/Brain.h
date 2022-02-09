@@ -48,6 +48,8 @@ public:
     Array<Cue*> cuePoolWaiting;
     Array<Programmer*> programmerPoolUpdating;
     Array<Programmer*> programmerPoolWaiting;
+    Array<Effect*> effectPoolUpdating;
+    Array<Effect*> effectPoolWaiting;
 
     double now;
 
@@ -75,8 +77,9 @@ public:
     void pleaseUpdate(FixtureChannel* f);
     void pleaseUpdate(Cue* c);
     void pleaseUpdate(Programmer* p);
+    void pleaseUpdate(Effect* f);
 
-    void updateChannel(FixtureChannel* fc);
+    //void updateChannel(FixtureChannel* fc);
 
     Fixture* getFixtureById(int id);
     Device* getDeviceById(int id);

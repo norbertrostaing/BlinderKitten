@@ -110,6 +110,7 @@ BKEngine::~BKEngine()
 	// CVGroupManager::deleteInstance();
 
 	// Guider::deleteInstance();
+	Brain::getInstance()->stopThread(100);
 	EffectManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();

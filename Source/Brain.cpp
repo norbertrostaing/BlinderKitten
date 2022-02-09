@@ -45,6 +45,13 @@ void Brain::run() {
         }
         cuelistPoolUpdating.clear();
 
+        effectPoolUpdating.addArray(effectPoolWaiting);
+        effectPoolWaiting.clear();
+        for (int i = 0; i < effectPoolUpdating.size(); i++) {
+            effectPoolUpdating[i]->update(now);
+        }
+        effectPoolUpdating.clear();
+
         programmerPoolUpdating.addArray(programmerPoolWaiting);
         programmerPoolWaiting.clear();
         for (int i = 0; i < programmerPoolUpdating.size(); i++) {
@@ -344,6 +351,12 @@ void Brain::pleaseUpdate(Cue* c) {
 void Brain::pleaseUpdate(Programmer* c) {
     if (!programmerPoolWaiting.contains(c)) {
         programmerPoolWaiting.add(c);
+    }
+}
+
+void Brain::pleaseUpdate(Effect* f) {
+    if (!effectPoolWaiting.contains(f)) {
+        effectPoolWaiting.add(f);
     }
 }
 

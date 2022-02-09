@@ -20,5 +20,4 @@ class DevicePatch:
 
     TargetParameter* targetInterface;
     IntParameter* address;
-    Automation* curve;
 };

@@ -146,6 +146,10 @@
                 file="Source/Definitions/Effect/EffectManagerUI.cpp"/>
           <FILE id="hutwuH" name="EffectManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Effect/EffectManagerUI.h"/>
+          <FILE id="fMhAZL" name="EffectParam.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectParam.cpp"/>
+          <FILE id="GiEx7J" name="EffectParam.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectParam.h"/>
+          <FILE id="VQguAZ" name="EffectRow.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectRow.cpp"/>
+          <FILE id="EVk8tK" name="EffectRow.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectRow.h"/>
         </GROUP>
         <GROUP id="{D30416E5-4695-CFE4-0437-DD6025195F6F}" name="Actions">
           <FILE id="we7qmS" name="CuelistAction.cpp" compile="1" resource="0"

@@ -20,8 +20,7 @@ DevicePatch::DevicePatch() :
     targetInterface->maxDefaultSearchLevel = 0;
 
     address = addIntParameter("Address", "Address of this device, 0 means unpatched", 0, 0, 512);
-	curve = new Automation();
-	curve->editorIsCollapsed = true;
+	/*curve->editorIsCollapsed = true;
 	curve->setNiceName("Response curve");
 	curve->allowKeysOutside = false;
 	curve->isSelectable = false;
@@ -31,6 +30,7 @@ DevicePatch::DevicePatch() :
 	curve->addKey(1, 1, false);
 	curve->selectItemWhenCreated = false;
 	curve->editorCanBeCollapsed = true;
+	*/
 
 
 };

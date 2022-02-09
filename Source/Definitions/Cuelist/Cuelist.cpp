@@ -70,6 +70,7 @@ Cuelist::Cuelist(var params) :
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
 	// offFadeCurve = new Automation();
+	offFadeCurve.saveAndLoadRecursiveData = true;
 	offFadeCurve.setNiceName("Off curve");
 	offFadeCurve.allowKeysOutside = false;
 	offFadeCurve.isSelectable = false;
@@ -134,7 +135,7 @@ void Cuelist::triggerTriggered(Trigger* t) {
 }
 
 void Cuelist::go(Cue* c) {
-	double now = Brain::getInstance()->now;
+	double now = Time::getMillisecondCounterHiRes();;
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}

@@ -7,33 +7,14 @@
 
   ==============================================================================
 
-
-  l'effet de base
-  vitesse (cycles par secondes)
-  tap tempo
-  tap tempo divider (taps par cycles
-
-  EffectLine ? = >
-  curve courbe ou preset ?
-  curve origin (float 0-1)
-  curve width (ratio to effect width)
-
-  Selection
-  repart from
-  repart to
-  channel Type
-  size
-  baseValue
-
-
-
-
-
 */
 
 #pragma once
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
+#include "EffectRow.h"
+class EffectParam;
+class FixtureChannel;
 
 class Effect :
     public BaseItem
@@ -46,11 +27,33 @@ public:
     var objectData;
 
     IntParameter* id;
-    CommandSelectionManager selection;
+
+    BoolParameter* isEffectOn;
+    bool isOn;
+
+    Trigger* startBtn;
+    Trigger* stopBtn;
+
+    FloatParameter* speed;
+    FloatParameter* sizeValue;
+    BaseManager<EffectRow> values;
+
+    FloatParameter* currentPosition;
+    double TSLastUpdate;
+    double totalElapsed;
+
+    HashMap<FixtureChannel*, Array<EffectParam*>*> chanToFxParam;
 
     String getTypeString() const override { return objectType; }
 
     void parameterValueChanged(Parameter* p);
+    void triggerTriggered(Trigger* t);
+    void update(double now);
+    void computeData();
+    void start();
+    void stop();
+    float applyToChannel(FixtureChannel* fc, float currentVal, double now);
 
     static Effect* create(var params) { return new Effect(params); }
+    
 };

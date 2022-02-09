@@ -18,6 +18,7 @@
 #include "../Interface/InterfaceIncludes.h"
 #include "../Cuelist/Cuelist.h"
 #include "../Programmer/Programmer.h"
+#include "../Effect/Effect.h"
 #include "../ChannelValue.h"
 
 FixtureChannel::FixtureChannel(var params) :
@@ -108,6 +109,10 @@ void FixtureChannel::updateVal(double now) {
 
 	}
 
+	for (int i = 0; i < effectStack.size(); i++) {
+		value = effectStack[i]->applyToChannel(this, value, now);
+	}
+
 	for (int i = 0; i < programmerStack.size(); i++) {
 		value = programmerStack[i]->applyToChannel(this, value, now);
 	}
@@ -135,5 +140,16 @@ void FixtureChannel::programmerOnTopOfStack(Programmer* p) {
 
 void FixtureChannel::programmerOutOfStack(Programmer* p) {
 	programmerStack.removeAllInstancesOf(p);
+}
+
+void FixtureChannel::effectOnTopOfStack(Effect* f) {
+	if (effectStack.indexOf(f) >= 0) {
+		effectStack.removeAllInstancesOf(f);
+	}
+	effectStack.add(f);
+}
+
+void FixtureChannel::effectOutOfStack(Effect* f) {
+	effectStack.removeAllInstancesOf(f);
 }
 

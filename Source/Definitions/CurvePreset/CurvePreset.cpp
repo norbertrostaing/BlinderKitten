@@ -24,6 +24,7 @@ CurvePreset::CurvePreset(var params) :
 
 	id = addIntParameter("ID", "ID of this curve", 1, 1);
 
+	curve.saveAndLoadRecursiveData = true;
 	curve.setNiceName("Curve");
 	curve.allowKeysOutside = false;
 	curve.isSelectable = false;

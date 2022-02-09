@@ -1,0 +1,45 @@
+/*
+  ==============================================================================
+
+    DeviceTypeChannel.cpp
+    Created: 8 Nov 2021 7:28:28pm
+    Author:  No
+
+  ==============================================================================
+*/
+
+#include "EffectParam.h"
+#include "../FixtureParamType/FixtureParamTypeManager.h"
+#include "EffectRow.h"
+
+EffectParam::EffectParam(var params) :
+    BaseItem(params.getProperty("name", "Param")),
+    objectType(params.getProperty("type", "EffectParam").toString()),
+    objectData(params)
+{
+    saveAndLoadRecursiveData = true;
+    paramType = addTargetParameter("Channel type", "Type of data of this channel", FixtureParamTypeManager::getInstance());
+    paramType->targetType = TargetParameter::CONTAINER;
+    paramType->maxDefaultSearchLevel = 2;
+
+    String modeExplain = "How does effect changes the current output value : \n";
+    modeExplain += "- Relative adds the effect value to current output\n\n";
+    modeExplain += "- Absolute set the output to the base value (no matter master effect value) and adds the effect, HTP values are modified only if effect is higher \n\n";
+    modeExplain += "- Attractive calculate the absolute value of the effect at full and interpolate to this value in function of the master size, HTP values are modified only if effect is higher\n";
+    effectMode = addEnumParameter("Effect mode", modeExplain);
+    effectMode->addOption("Relative", "relative");
+    effectMode->addOption("Absolute", "absolute");
+    effectMode->addOption("Attracted", "attracted");
+
+    elementsStart = addFloatParameter("First Element position", "Position of the first element, relative to the curve", 0, 0, 1);
+    elementsSpread = addFloatParameter("Elements Spread", "Size of distribution", 1, 0);
+
+    curveSize = addFloatParameter("Size", "Size of the effect applied to outputs",1,0,2);
+    baseValue = addFloatParameter("Base Value","Base value applied to channels",0,0,1);
+
+};
+
+EffectParam::~EffectParam()
+{
+};
+

@@ -17,6 +17,7 @@ class Device;
 class Cuelist;
 class Programmer;
 class Fixture;
+class Effect;
 
 class FixtureChannel:
     public BaseItem
@@ -46,6 +47,7 @@ public:
 
     Array<Cuelist*> cuelistStack;
     Array<Programmer*> programmerStack;
+    Array<Effect*> effectStack;
 
     void updateVal(double now);
 
@@ -53,5 +55,7 @@ public:
     void cuelistOutOfStack(Cuelist* c);
     void programmerOnTopOfStack(Programmer* p);
     void programmerOutOfStack(Programmer* p);
+    void effectOnTopOfStack(Effect* f);
+    void effectOutOfStack(Effect* f);
 
 };
