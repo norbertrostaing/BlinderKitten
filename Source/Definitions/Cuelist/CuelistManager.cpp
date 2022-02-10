@@ -13,13 +13,18 @@
 
 juce_ImplementSingleton(CuelistManager);
 
+int compare(Cuelist* A, Cuelist* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
+
+
 
 CuelistManager::CuelistManager() :
     BaseManager("Cuelist")
     {
     itemDataType = "Cuelist";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
 }
 
 CuelistManager::~CuelistManager()
@@ -30,8 +35,7 @@ CuelistManager::~CuelistManager()
 
 void CuelistManager::addItemInternal(Cuelist* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void CuelistManager::removeItemInternal(Cuelist* o)

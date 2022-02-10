@@ -25,11 +25,12 @@ public:
     var objectData;
 
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
     Automation curve;
 
     String getTypeString() const override { return objectType; }
-
-    void parameterValueChanged(Parameter* p);
 
     static CurvePreset* create(var params) { return new CurvePreset(params); }
 };

@@ -24,7 +24,7 @@ void BlinderKittenApplication::initialiseInternal(const String &)
 
 	// DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
 	
-	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::kittenLayout_layout);
+	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_blinderlayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("blinderlayout", "BlinderKitten/layouts");
 }
 

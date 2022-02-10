@@ -13,8 +13,8 @@
 #include "FixtureParamDefinition/FixtureParamDefinition.h"
 
 FixtureParamType::FixtureParamType(var params) :
-	BaseItem(params.getProperty("name", "FixtureParamType")),
-	objectType(params.getProperty("type", "FixtureParamType").toString()),
+	BaseItem(params.getProperty("name", "Channel Family")),
+	objectType(params.getProperty("Channel types", "FixtureParamType").toString()),
 	// parameters("Parameters"),
 	definitions(),
 	objectData(params)
@@ -27,7 +27,7 @@ FixtureParamType::FixtureParamType(var params) :
 
 	itemDataType = "FixtureParamType";
 
-	BaseManager<FixtureParamDefinition>* m = new BaseManager<FixtureParamDefinition>("Types");
+	BaseManager<FixtureParamDefinition>* m = new BaseManager<FixtureParamDefinition>("Channel Types");
 	m -> selectItemWhenCreated = false;
 	definitions.reset(m);
 	

@@ -25,6 +25,9 @@ public:
     var objectData;
 
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
 
     FloatParameter* fadeFrom;
     FloatParameter* delayFrom;
@@ -40,10 +43,9 @@ public:
     Automation curveDelayRepart;
     Automation curveFadeRepart;
 
+    void updateDisplay();
 
     String getTypeString() const override { return objectType; }
-
-    void parameterValueChanged(Parameter* p);
 
     static TimingPreset* create(var params) { return new TimingPreset(params); }
 };

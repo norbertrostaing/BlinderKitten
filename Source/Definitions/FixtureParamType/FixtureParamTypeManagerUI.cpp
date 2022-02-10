@@ -16,8 +16,8 @@
 FixtureParamTypeManagerUI::FixtureParamTypeManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, FixtureParamTypeManager::getInstance())
 {
-	// addItemText = "Add Custom Variable Group";
-	// noItemText = "You can manage you own variables by first creating a group here.";
+	addItemText = "Add new channel Family";
+	noItemText = "Create here families of channels and channels you wanna use in the software.";
 	// setShowAddButton(false);
 	setShowSearchBar(false);
 	addExistingItems();

@@ -17,7 +17,7 @@ CurvePresetManagerUI::CurvePresetManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, CurvePresetManager::getInstance())
 {
 	addItemText = "Add new CurvePreset";
-	noItemText = "Welcome in CurvePresets land :)";
+	noItemText = "Draw here curves you wanna use often";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

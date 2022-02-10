@@ -78,33 +78,41 @@ DataTransferManager::~DataTransferManager()
 }
 
 void DataTransferManager::triggerTriggered(Trigger* t) {
+    
+}
+
+
+void DataTransferManager::execute() {
     String srcType = sourceType->getValue();
     String trgType = targetType->getValue();
+    bool valid = false;
 
     if (srcType == "Programmer") {
-        Programmer* source = Brain::getInstance() -> getProgrammerById(sourceId->getValue());
-        if (source == nullptr) {LOG("Invalid Programmer ID"); return; }
+        Programmer* source = Brain::getInstance()->getProgrammerById(sourceId->getValue());
+        if (source == nullptr) { LOG("Invalid Programmer ID"); return; }
         if (trgType == "Group") {
+            valid = true;
             Group* target = Brain::getInstance()->getGroupById(targetId->getValue());
             if (target == nullptr) {
                 target = GroupManager::getInstance()->addItem(new Group());
                 target->id->setValue(targetId->getValue());
-                target->setNiceName("Group "+String(int(target->id->getValue())));
+                target->setNiceName("Group " + String(int(target->id->getValue())));
             }
 
             target->selection.clear(); // erase data
 
             for (int commandIndex = 0; commandIndex < source->commands->items.size(); commandIndex++) {
-                
+
                 CommandSelectionManager* selections = &source->commands->items[commandIndex]->selection;
                 for (int selectionIndex = 0; selectionIndex < selections->items.size(); selectionIndex++) {
-                    CommandSelection* selection = selections -> items[selectionIndex];
+                    CommandSelection* selection = selections->items[selectionIndex];
                     CommandSelection* newSel = target->selection.addItem();
-                    newSel ->loadJSONData(selection->getJSONData());
+                    newSel->loadJSONData(selection->getJSONData());
                 }
             }
         }
         else if (trgType == "Preset") {
+            valid = true;
             Preset* target = Brain::getInstance()->getPresetById(targetId->getValue());
             if (target == nullptr) {
                 target = PresetManager::getInstance()->addItem(new Preset());
@@ -114,17 +122,17 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
 
             // target->fixtureValues->clear(); // erase data
 
-            FixtureParamType* filter = dynamic_cast<FixtureParamType* >(paramfilter->targetContainer.get());
+            FixtureParamType* filter = dynamic_cast<FixtureParamType*>(paramfilter->targetContainer.get());
 
-            source -> computeValues();
+            source->computeValues();
             for (auto it = source->computedValues.begin(); it != source->computedValues.end(); it.next()) {
                 // HashMap<FixtureChannel*, ChannelValue*> computedValues;
                 FixtureChannel* chan = it.getKey();
                 ChannelValue* cValue = it.getValue();
-                FixtureParamType* chanType = dynamic_cast<FixtureParamType*>(chan -> channelType->targetContainer->parentContainer->parentContainer.get());
+                FixtureParamType* chanType = dynamic_cast<FixtureParamType*>(chan->channelType->targetContainer->parentContainer->parentContainer.get());
 
                 if (cValue->endValue != -1 && (filter == nullptr || filter == chanType)) {
-                    
+
                     int fixtId = chan->parentFixture->id->getValue();
                     PresetFixtureValues* pfv = nullptr;
                     for (int i = 0; i < target->fixtureValues->items.size(); i++) {
@@ -147,11 +155,12 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
                         pv = pfv->values->addItem();
                         pv->param->setValue(chan->channelType->getValue());
                     }
-                    pv -> paramValue->setValue(cValue->endValue);
+                    pv->paramValue->setValue(cValue->endValue);
                 }
             }
         }
         else if (trgType == "Cuelist") {
+            valid = true;
             Cuelist* target = Brain::getInstance()->getCuelistById(targetId->getValue());
             if (target == nullptr) {
                 target = CuelistManager::getInstance()->addItem(new Cuelist());
@@ -167,7 +176,7 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
         }
 
     }
-         
+
 
     else if (srcType == "Cuelist") {
 
@@ -178,7 +187,11 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
     else if (srcType == "Group") {
 
     }
-    
+
+
+    if (!valid) {
+        LOGWARNING("target type and source type are not compatible");
+    }
 
 
 }

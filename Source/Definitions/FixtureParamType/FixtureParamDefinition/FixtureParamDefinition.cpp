@@ -11,13 +11,13 @@
 #include "FixtureParamDefinition.h"
 
 FixtureParamDefinition::FixtureParamDefinition(var params) :
-    BaseItem(params.getProperty("name", "Channel type")),
+    BaseItem(params.getProperty("name", "Channel")),
     objectType(params.getProperty("type", "FixtureParamDefinition").toString()),
     objectData(params)
 {
     priority = addEnumParameter("Channel mode", "Type of channel", true);
-    priority -> addOption("Highest Takes Precedence", "HTP");
     priority -> addOption("Latest Takes Precedence", "LTP");
+    priority->addOption("Highest Takes Precedence", "HTP");
 
     reactGM = addBoolParameter("React to grand master", "If checked, this channel will be dimmed by the grand master", false);
     

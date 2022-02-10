@@ -25,4 +25,6 @@ public:
 
     void onContainerParameterChanged(Parameter* p) override;
 
+    // static int sort(Group* A, Group* B) {return (int)A->id->getValue() - (int)B->id->getValue();};
+
 };

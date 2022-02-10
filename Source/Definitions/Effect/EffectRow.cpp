@@ -55,7 +55,7 @@ EffectRow::EffectRow(var params) :
     addChildControllableContainer(&selection);
     addChildControllableContainer(&paramContainer);
     
-
+    updateDisplay();
 };
 
 EffectRow::~EffectRow()
@@ -98,5 +98,19 @@ void EffectRow::computeData() {
             }
         }
     }
+}
+
+void EffectRow::onControllableFeedbackUpdate( ControllableContainer* cc, Controllable* c) {
+    if (c == curvePresetOrValue) {
+        updateDisplay();
+    }
+}
+
+void EffectRow::updateDisplay() {
+    bool curveIsPreset = curvePresetOrValue->getValue() == "preset";
+    presetId->hideInEditor = !curveIsPreset;
+    curve.hideInEditor = curveIsPreset;
+
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 

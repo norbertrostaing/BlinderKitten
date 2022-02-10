@@ -17,7 +17,7 @@ TimingPresetManagerUI::TimingPresetManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, TimingPresetManager::getInstance())
 {
 	addItemText = "Add new TimingPreset";
-	noItemText = "Welcome in TimingPresets land :)";
+	noItemText = "Store here your beautiful delays and fade combination";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

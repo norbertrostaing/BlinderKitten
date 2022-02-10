@@ -3,13 +3,18 @@
 
 juce_ImplementSingleton(PresetManager);
 
+int compare(Preset* A, Preset* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
+
 
 PresetManager::PresetManager() :
     BaseManager("Preset")
     {
     itemDataType = "Preset";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
+
 }
 
 PresetManager::~PresetManager()
@@ -19,8 +24,7 @@ PresetManager::~PresetManager()
 
 void PresetManager::addItemInternal(Preset* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void PresetManager::removeItemInternal(Preset* o)

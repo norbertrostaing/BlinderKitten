@@ -16,8 +16,8 @@
 DeviceTypeManagerUI::DeviceTypeManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, DeviceTypeManager::getInstance())
 {
-	addItemText = "Add new fixture type";
-	noItemText = "You must create fixture types to patch new fixtures";
+	addItemText = "Add new device type";
+	noItemText = "Set here what kind of devices you wanna use.";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

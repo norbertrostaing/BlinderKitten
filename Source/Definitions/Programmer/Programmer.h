@@ -23,7 +23,11 @@ public:
     var objectData;
 
     std::unique_ptr<BaseManager<Command>> commands;
+
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
 
     EnumParameter* editionMode;
     FloatParameter* releaseTime;
@@ -36,7 +40,6 @@ public:
     HashMap<FixtureChannel*, ChannelValue*> activeValues;
 
     void triggerTriggered(Trigger* t) override;
-    void onContainerParameterChangedInternal(Parameter* p) override;
 
     void computeValues();
     void update(double now);

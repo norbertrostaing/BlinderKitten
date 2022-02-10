@@ -17,7 +17,7 @@ CuelistManagerUI::CuelistManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, CuelistManager::getInstance())
 {
 	addItemText = "Add new Cuelist";
-	noItemText = "Welcome in cuelists land :)";
+	noItemText = "Add cuelists here";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

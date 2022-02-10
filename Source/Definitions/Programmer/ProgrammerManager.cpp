@@ -13,13 +13,18 @@
 
 juce_ImplementSingleton(ProgrammerManager);
 
+int compare(Programmer* A, Programmer* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
+
 
 ProgrammerManager::ProgrammerManager() :
     BaseManager("Programmer")
     {
     itemDataType = "Programmer";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
+
 }
 
 ProgrammerManager::~ProgrammerManager()
@@ -30,8 +35,7 @@ ProgrammerManager::~ProgrammerManager()
 
 void ProgrammerManager::addItemInternal(Programmer* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void ProgrammerManager::removeItemInternal(Programmer* o)

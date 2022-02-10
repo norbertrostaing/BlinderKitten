@@ -16,8 +16,8 @@
 ProgrammerManagerUI::ProgrammerManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, ProgrammerManager::getInstance())
 {
-	addItemText = "Add new cProgrammer";
-	noItemText = "Welcome in Programmers land :)";
+	addItemText = "Add new programmer";
+	noItemText = "Programmers allow yo to have a direct control to data, and you can record their content in various targets (groups, presets, cuelists...)";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

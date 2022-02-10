@@ -17,7 +17,7 @@ PresetManagerUI::PresetManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, PresetManager::getInstance())
 {
 	addItemText = "Add new preset";
-	noItemText = "Create here your beautiful presets";
+	noItemText = "Create here your beautiful presets.";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

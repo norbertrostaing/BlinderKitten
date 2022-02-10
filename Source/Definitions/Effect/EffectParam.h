@@ -34,5 +34,6 @@ class EffectParam:
 
     HashMap<FixtureChannel*, double> fixtureChannelOffsets;
 
-    void computeData();
+    void onContainerParameterChangedInternal(Parameter*);
+    void updateDisplay();
 };

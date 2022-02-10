@@ -13,12 +13,17 @@
 
 juce_ImplementSingleton(GroupManager);
 
+int compare(Group* A, Group* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 GroupManager::GroupManager() :
     BaseManager("Group")
-    {
+{
     itemDataType = "Group";
     selectItemWhenCreated = true;
+    comparator.compareFunc = compare;
+    autoReorderOnAdd = true;
 }
 
 GroupManager::~GroupManager()
@@ -29,18 +34,14 @@ GroupManager::~GroupManager()
 
 void GroupManager::addItemInternal(Group* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void GroupManager::removeItemInternal(Group* o)
 {
-    // o->removeObjectListener(this);
 }
-
 
 void GroupManager::onContainerParameterChanged(Parameter* p)
 {
-   // if (p == lockUI) for (auto& i : items) i->isUILocked->setValue(lockUI->boolValue());
 }
 

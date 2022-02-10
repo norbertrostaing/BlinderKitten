@@ -14,9 +14,7 @@ juce_ImplementSingleton(FixtureParamTypeManager);
 
 
 FixtureParamTypeManager::FixtureParamTypeManager() :
-    BaseManager("FixtureParamTypes"),
-    Thread("FixtureParamTypeManager")
-    {
+    BaseManager("Channel Families")    {
     itemDataType = "FixtureParamType";
     selectItemWhenCreated = true;
        
@@ -54,18 +52,3 @@ void FixtureParamTypeManager::onContainerParameterChanged(Parameter* p)
    // if (p == lockUI) for (auto& i : items) i->isUILocked->setValue(lockUI->boolValue());
 }
 
-
-void FixtureParamTypeManager::run()
-{
-    while (!threadShouldExit()) 
-    {
-        long millisBefore = Time::getMillisecondCounter();
-        items.getLock().enter();
-        //for (auto& o : items)  o->checkAndComputeComponentValuesIfNeeded();
-        items.getLock().exit();
-        long millisAfter = Time::getMillisecondCounter();
-
-        long millisToSleep = jmax<long>(1, 30-(millisAfter-millisBefore));
-        sleep((int)millisToSleep);
-    }
-}

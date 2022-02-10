@@ -3,13 +3,17 @@
 
 juce_ImplementSingleton(DeviceManager);
 
+int compare(Device* A, Device* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 DeviceManager::DeviceManager() :
     BaseManager("Device")
     {
     itemDataType = "Device";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
+
 }
 
 DeviceManager::~DeviceManager()
@@ -19,8 +23,7 @@ DeviceManager::~DeviceManager()
 
 void DeviceManager::addItemInternal(Device* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void DeviceManager::removeItemInternal(Device* o)

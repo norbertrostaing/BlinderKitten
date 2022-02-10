@@ -17,7 +17,7 @@ GroupManagerUI::GroupManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, GroupManager::getInstance())
 {
 	addItemText = "Add new Group";
-	noItemText = "Welcome in Groups land :)";
+	noItemText = "Groups are re-usable selections of fixtures.";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

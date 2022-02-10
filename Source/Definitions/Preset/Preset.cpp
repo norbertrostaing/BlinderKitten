@@ -13,6 +13,7 @@
 #include "PresetValue.h"
 #include "../FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"
 #include "../../Brain.h"
+#include "PresetManager.h"
 
 Preset::Preset(var params) :
 	BaseItem(params.getProperty("name", "Preset")),
@@ -27,6 +28,9 @@ Preset::Preset(var params) :
 	itemDataType = "Preset";
 	
 	id = addIntParameter("ID", "ID of this Preset", 1, 1);
+	userName = addStringParameter("Name", "Name of this preset", "New preset");
+	updateName();
+
 	presetType = addEnumParameter("Type", "Type of the preset");
 	presetType->addOption("Fixture", 1);
 	presetType->addOption("Fixture Type", 2);
@@ -50,22 +54,15 @@ void Preset::afterLoadJSONDataInternal() {
 
 Preset::~Preset()
 {
-	//Brain::getInstance()->unregisterPreset(this);
+	Brain::getInstance()->unregisterPreset(this);
 }
 
-
-void Preset::onContainerNiceNameChanged() 
-{
-	BaseItem::onContainerNiceNameChanged();
-	Logger::writeToLog("call from nameChanged");
-	// checkChildrenFixtures();
-}
-
-void Preset::parameterValueChanged(Parameter* p) {
-	BaseItem::parameterValueChanged(p);
-	Logger::writeToLog("changed !");
+void Preset::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerPreset(this, id->getValue());
+	}
+	if (p == userName || p == id) {
+		updateName();
 	}
 }
 
@@ -187,6 +184,14 @@ HashMap<FixtureParamDefinition*, float>* Preset::getFixtureValues(Fixture* f) {
 	return values;
 }
 
+
+void Preset::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<PresetManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
+}
 
 
 

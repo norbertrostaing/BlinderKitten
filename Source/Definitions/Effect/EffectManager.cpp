@@ -13,12 +13,16 @@
 
 juce_ImplementSingleton(EffectManager);
 
+int compare(Effect* A, Effect* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 EffectManager::EffectManager() :
     BaseManager("Effect")
     {
     itemDataType = "Effect";
     selectItemWhenCreated = true;
+    comparator.compareFunc = compare;
 }
 
 EffectManager::~EffectManager()
@@ -29,8 +33,7 @@ EffectManager::~EffectManager()
 
 void EffectManager::addItemInternal(Effect* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void EffectManager::removeItemInternal(Effect* o)

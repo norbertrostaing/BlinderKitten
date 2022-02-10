@@ -13,12 +13,16 @@
 
 juce_ImplementSingleton(TimingPresetManager);
 
+int compare(TimingPreset* A, TimingPreset* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 TimingPresetManager::TimingPresetManager() :
     BaseManager("TimingPreset")
     {
     itemDataType = "TimingPreset";
     selectItemWhenCreated = true;
+    comparator.compareFunc = compare;
 }
 
 TimingPresetManager::~TimingPresetManager()
@@ -29,8 +33,7 @@ TimingPresetManager::~TimingPresetManager()
 
 void TimingPresetManager::addItemInternal(TimingPreset* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void TimingPresetManager::removeItemInternal(TimingPreset* o)

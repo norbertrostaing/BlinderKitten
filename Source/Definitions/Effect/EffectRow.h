@@ -35,5 +35,11 @@ class EffectRow:
     CommandSelectionManager selection;
 
     HashMap<Fixture*, double> computedPositions;
+
     void computeData();
+
+    void onControllableFeedbackUpdate(ControllableContainer*, Controllable*);
+    void updateDisplay();
+
+
 };

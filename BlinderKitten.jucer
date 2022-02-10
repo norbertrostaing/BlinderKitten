@@ -5,8 +5,10 @@
               compilerFlagSchemes="NewScheme" headerPath="../../Source" defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;&#10;_ITERATOR_DEBUG_LEVEL=1">
   <MAINGROUP id="K7UlHD" name="BlinderKitten">
     <GROUP id="{64D406CA-52C4-9FE6-20BA-B5AC131530E5}" name="Ressources">
+      <FILE id="dINUyx" name="default.blinderlayout" compile="0" resource="1"
+            file="Ressources/default.blinderlayout"/>
       <FILE id="qTJiMk" name="icon.png" compile="0" resource="1" file="Ressources/icon.png"/>
-      <FILE id="AVBqHa" name="kittenLayout.layout" compile="0" resource="1"
+      <FILE id="AVBqHa" name="kittenLayout.layout" compile="0" resource="0"
             file="Ressources/kittenLayout.layout"/>
     </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
@@ -136,21 +138,6 @@
               file="Source/Common/CommonIncludes.h"/>
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
-        <GROUP id="{B0F61552-9820-44AD-073F-12612E565630}" name="Effect">
-          <FILE id="ixgVmB" name="Effect.cpp" compile="1" resource="0" file="Source/Definitions/Effect/Effect.cpp"/>
-          <FILE id="SQNry6" name="Effect.h" compile="0" resource="0" file="Source/Definitions/Effect/Effect.h"/>
-          <FILE id="IyHvcB" name="EffectManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Effect/EffectManager.cpp"/>
-          <FILE id="ZRelUk" name="EffectManager.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectManager.h"/>
-          <FILE id="EjZNvk" name="EffectManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Effect/EffectManagerUI.cpp"/>
-          <FILE id="hutwuH" name="EffectManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Effect/EffectManagerUI.h"/>
-          <FILE id="fMhAZL" name="EffectParam.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectParam.cpp"/>
-          <FILE id="GiEx7J" name="EffectParam.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectParam.h"/>
-          <FILE id="VQguAZ" name="EffectRow.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectRow.cpp"/>
-          <FILE id="EVk8tK" name="EffectRow.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectRow.h"/>
-        </GROUP>
         <GROUP id="{D30416E5-4695-CFE4-0437-DD6025195F6F}" name="Actions">
           <FILE id="we7qmS" name="CuelistAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/CuelistAction.cpp"/>
@@ -242,6 +229,10 @@
                 file="Source/Definitions/DeviceType/DeviceTypeChannel.cpp"/>
           <FILE id="YE13sc" name="DeviceTypeChannel.h" compile="0" resource="0"
                 file="Source/Definitions/DeviceType/DeviceTypeChannel.h"/>
+          <FILE id="Z8OfCU" name="DeviceTypeChannelManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeChannelManager.cpp"/>
+          <FILE id="jJNjmx" name="DeviceTypeChannelManager.h" compile="0" resource="0"
+                file="Source/Definitions/DeviceType/DeviceTypeChannelManager.h"/>
           <FILE id="kepC6d" name="DeviceTypeManager.cpp" compile="1" resource="0"
                 file="Source/Definitions/DeviceType/DeviceTypeManager.cpp"/>
           <FILE id="eOScEi" name="DeviceTypeManager.h" compile="0" resource="0"
@@ -250,6 +241,21 @@
                 file="Source/Definitions/DeviceType/DeviceTypeManagerUI.cpp"/>
           <FILE id="fcW3KC" name="DeviceTypeManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/DeviceType/DeviceTypeManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{B0F61552-9820-44AD-073F-12612E565630}" name="Effect">
+          <FILE id="ixgVmB" name="Effect.cpp" compile="1" resource="0" file="Source/Definitions/Effect/Effect.cpp"/>
+          <FILE id="SQNry6" name="Effect.h" compile="0" resource="0" file="Source/Definitions/Effect/Effect.h"/>
+          <FILE id="IyHvcB" name="EffectManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Effect/EffectManager.cpp"/>
+          <FILE id="ZRelUk" name="EffectManager.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectManager.h"/>
+          <FILE id="EjZNvk" name="EffectManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Effect/EffectManagerUI.cpp"/>
+          <FILE id="hutwuH" name="EffectManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Effect/EffectManagerUI.h"/>
+          <FILE id="fMhAZL" name="EffectParam.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectParam.cpp"/>
+          <FILE id="GiEx7J" name="EffectParam.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectParam.h"/>
+          <FILE id="VQguAZ" name="EffectRow.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectRow.cpp"/>
+          <FILE id="EVk8tK" name="EffectRow.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectRow.h"/>
         </GROUP>
         <GROUP id="{5AC300AA-9570-87BF-7AC7-6FAA3B849808}" name="Fixture">
           <FILE id="W3VArm" name="Fixture.cpp" compile="1" resource="0" file="Source/Definitions/Fixture/Fixture.cpp"/>

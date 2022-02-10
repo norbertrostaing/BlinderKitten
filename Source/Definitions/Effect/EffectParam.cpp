@@ -36,10 +36,25 @@ EffectParam::EffectParam(var params) :
 
     curveSize = addFloatParameter("Size", "Size of the effect applied to outputs",1,0,2);
     baseValue = addFloatParameter("Base Value","Base value applied to channels",0,0,1);
-
+    updateDisplay();
 };
 
 EffectParam::~EffectParam()
 {
 };
+
+
+void EffectParam::onContainerParameterChangedInternal(Parameter* c) {
+    if (c == effectMode) {
+        updateDisplay();
+    }
+}
+
+void EffectParam::updateDisplay() {
+    bool isRel = effectMode->getValue() == "relative";
+
+    baseValue->hideInEditor = isRel;
+
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
 

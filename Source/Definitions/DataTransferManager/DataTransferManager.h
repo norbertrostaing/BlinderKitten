@@ -31,5 +31,6 @@ public:
 	void triggerTriggered(Trigger* t);
 	void onContainerParameterChangedInternal(Parameter* p);
 	void updateDisplay();
+	void execute();
 
 };

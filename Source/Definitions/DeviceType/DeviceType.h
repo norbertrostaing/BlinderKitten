@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "DeviceTypeChannel.h"
+#include "DeviceTypeChannelManager.h"
 
 class DeviceType:
     public BaseItem
@@ -22,14 +23,10 @@ public:
     String objectType;
     var objectData;
     
-    Trigger* updateChannels;
-
-    BaseManager<DeviceTypeChannel>* chansManager;
+    DeviceTypeChannelManager chansManager;
     std::unique_ptr<BaseManager<DeviceTypeChannel>> channels;
     String getTypeString() const override { return objectType; }
 
-    void triggerTriggered(Trigger* t);
-    void calcDmxChannels();
     static DeviceType* create(var params) { return new DeviceType(params); }
     void onContainerParameterChangedInternal(Parameter* p);
 

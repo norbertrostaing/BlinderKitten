@@ -12,6 +12,7 @@
 #include "CurvePreset.h"
 #include "../Command/CommandSelectionManager.h"
 #include "../../Brain.h"
+#include "CurvePresetManager.h"
 
 CurvePreset::CurvePreset(var params) :
 	BaseItem(params.getProperty("name", "CurvePreset")),
@@ -23,6 +24,9 @@ CurvePreset::CurvePreset(var params) :
 	itemDataType = "CurvePreset";
 
 	id = addIntParameter("ID", "ID of this curve", 1, 1);
+	userName = addStringParameter("Name", "Name of this curve", "New curve");
+	updateName();
+
 
 	curve.saveAndLoadRecursiveData = true;
 	curve.setNiceName("Curve");
@@ -44,10 +48,20 @@ CurvePreset::~CurvePreset()
 	Brain::getInstance()->unregisterCurvePreset(this);
 }
 
-void CurvePreset::parameterValueChanged(Parameter* p) {
-	BaseItem::parameterValueChanged(p);
-	Logger::writeToLog("changed !");
+void CurvePreset::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerCurvePreset(this, id->getValue());
 	}
+	if (p == userName || p == id) {
+		updateName();
+	}
 }
+
+void CurvePreset::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<CurvePresetManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
+}
+

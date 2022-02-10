@@ -23,11 +23,13 @@ public:
     var objectData;
 
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
+
     CommandSelectionManager selection;
 
     String getTypeString() const override { return objectType; }
-
-    void parameterValueChanged(Parameter* p);
 
     static Group* create(var params) { return new Group(params); }
 };

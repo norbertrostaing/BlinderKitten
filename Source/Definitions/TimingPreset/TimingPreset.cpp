@@ -12,6 +12,7 @@
 #include "TimingPreset.h"
 #include "../Command/CommandSelectionManager.h"
 #include "../../Brain.h"
+#include "TimingPresetManager.h"
 
 TimingPreset::TimingPreset(var params) :
 	BaseItem(params.getProperty("name", "TimingPreset")),
@@ -22,7 +23,10 @@ TimingPreset::TimingPreset(var params) :
 
 	itemDataType = "TimingPreset";
 
-	id = addIntParameter("ID", "ID of this device", 1, 1);
+	id = addIntParameter("ID", "ID of this timing preset", 1, 1);
+	userName = addStringParameter("Name", "Name of this timing preset", "New timing preset");
+	updateName();
+
 
 	delayFrom = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
 	thruDelay = addBoolParameter("Thru delay", "Do you want to apply multiples delays ?", false);
@@ -36,7 +40,7 @@ TimingPreset::TimingPreset(var params) :
 
 	curveFade.saveAndLoadRecursiveData = true;
 	curveFade.setNiceName("Fade curve");
-	curveFade.editorIsCollapsed = true;
+	curveFade.editorIsCollapsed = false;
 	curveFade.allowKeysOutside = false;
 	curveFade.isSelectable = false;
 	curveFade.length->setValue(1);
@@ -47,7 +51,7 @@ TimingPreset::TimingPreset(var params) :
 	curveFade.editorCanBeCollapsed = true;
 
 	curveDelayRepart.saveAndLoadRecursiveData = true;
-	curveDelayRepart.editorIsCollapsed = true;
+	curveDelayRepart.editorIsCollapsed = false;
 	curveDelayRepart.setNiceName("Delay repartition");
 	curveDelayRepart.allowKeysOutside = false;
 	curveDelayRepart.isSelectable = false;
@@ -59,7 +63,7 @@ TimingPreset::TimingPreset(var params) :
 	curveDelayRepart.editorCanBeCollapsed = true;
 
 	curveFadeRepart.saveAndLoadRecursiveData = true;
-	curveFadeRepart.editorIsCollapsed = true;
+	curveFadeRepart.editorIsCollapsed = false;
 	curveFadeRepart.setNiceName("Fade repartition");
 	curveFadeRepart.allowKeysOutside = false;
 	curveFadeRepart.isSelectable = false;
@@ -75,6 +79,7 @@ TimingPreset::TimingPreset(var params) :
 	addChildControllableContainer(&curveFadeRepart);
 
 	Brain::getInstance()->registerTimingPreset(this, id->getValue());
+	updateDisplay();
 }
 
 TimingPreset::~TimingPreset()
@@ -82,10 +87,41 @@ TimingPreset::~TimingPreset()
 	Brain::getInstance()->unregisterTimingPreset(this);
 }
 
-void TimingPreset::parameterValueChanged(Parameter* p) {
-	BaseItem::parameterValueChanged(p);
-	Logger::writeToLog("changed !");
+void TimingPreset::onContainerParameterChangedInternal(Parameter* p) {
+	if (p == userName || p == id) {
+		updateName();
+	}
 	if (p == id) {
 		Brain::getInstance()->registerTimingPreset(this, id->getValue());
 	}
+	if (p == thruDelay || p == thruFade) {
+		updateDisplay();
+	}
+	
 }
+
+void TimingPreset::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<TimingPresetManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
+}
+
+void TimingPreset::updateDisplay()
+{
+	bool thd = thruDelay->getValue();
+	bool thf = thruFade->getValue();
+
+	delayTo->hideInEditor = !thd;
+	symmetryDelay->hideInEditor = !thd;
+
+	fadeTo->hideInEditor = !thf;
+	symmetryFade->hideInEditor = !thf;
+
+	curveDelayRepart.hideInEditor = !thd;
+	curveFadeRepart.hideInEditor = !thf;
+
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+

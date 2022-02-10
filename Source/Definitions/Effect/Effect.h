@@ -27,6 +27,9 @@ public:
     var objectData;
 
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
 
     BoolParameter* isEffectOn;
     bool isOn;
@@ -46,7 +49,6 @@ public:
 
     String getTypeString() const override { return objectType; }
 
-    void parameterValueChanged(Parameter* p);
     void triggerTriggered(Trigger* t);
     void update(double now);
     void computeData();

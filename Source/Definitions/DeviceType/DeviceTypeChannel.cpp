@@ -18,6 +18,7 @@ DeviceTypeChannel::DeviceTypeChannel(var params) :
     objectData(params)
 
 {
+    nameCanBeChangedByUser = false;
     channelType = addTargetParameter("Channel type", "Type of data of this channel", FixtureParamTypeManager::getInstance());
     channelType -> targetType = TargetParameter::CONTAINER;
     channelType -> maxDefaultSearchLevel = 2;

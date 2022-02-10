@@ -13,12 +13,16 @@
 
 juce_ImplementSingleton(CurvePresetManager);
 
+int compare(CurvePreset* A, CurvePreset* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 CurvePresetManager::CurvePresetManager() :
     BaseManager("CurvePreset")
     {
     itemDataType = "CurvePreset";
     selectItemWhenCreated = true;
+    comparator.compareFunc = compare;
 }
 
 CurvePresetManager::~CurvePresetManager()
@@ -29,8 +33,7 @@ CurvePresetManager::~CurvePresetManager()
 
 void CurvePresetManager::addItemInternal(CurvePreset* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void CurvePresetManager::removeItemInternal(CurvePreset* o)

@@ -12,9 +12,8 @@
 #include "FixtureParamType.h"
 
 class FixtureParamTypeManager :
-    public BaseManager<FixtureParamType>,
+    public BaseManager<FixtureParamType>
     // public FixtureParamType::ObjectListener,
-    public Thread
     //public URL::DownloadTask::Listener
 {
 public:
@@ -51,8 +50,6 @@ public:
     // var getSceneData();
     // void updateSceneData(var& sceneData);
     // void lerpFromSceneData(var startData, var endData, float weight);
-
-    void run() override;
 
     // virtual void progress(URL::DownloadTask* task, int64 downloaded, int64 total) override;
     // virtual void finished(URL::DownloadTask* task, bool success) override;

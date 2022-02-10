@@ -17,7 +17,7 @@ EffectManagerUI::EffectManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, EffectManager::getInstance())
 {
 	addItemText = "Add new Effect";
-	noItemText = "Welcome in Effects land :)";
+	noItemText = "Effects allows you add a curve to a value to change it over time";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

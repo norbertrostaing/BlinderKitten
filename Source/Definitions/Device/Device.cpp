@@ -11,6 +11,7 @@
 #include "JuceHeader.h"
 #include "Device.h"
 #include "DevicePatch.h"
+#include "DeviceManager.h"
 #include "../../Brain.h"
 #include "../DeviceType/DeviceTypeManager.h"
 #include "../DeviceType/DeviceType.h"
@@ -33,6 +34,9 @@ Device::Device(var params) :
 	itemDataType = "Device";
 	
 	id = addIntParameter("ID", "ID of this device", 1, 1);
+	userName = addStringParameter("Name", "Name of this device", "New device");
+	updateName();
+
 
 	devTypeParam = addTargetParameter("Device type", "Type of device", DeviceTypeManager::getInstance());
 	devTypeParam -> targetType = TargetParameter::CONTAINER;
@@ -71,8 +75,10 @@ void Device::onContainerNiceNameChanged()
 
 void Device::onContainerParameterChangedInternal(Parameter* p) 
 {
-	LOG("yepaaaa");
-	if (p == devTypeParam) 
+	if (p == userName || p == id) {
+		updateName();
+	}
+	if (p == devTypeParam)
 	{
 		Logger::writeToLog("call from ParamChanged");
 		checkChildrenFixtures();
@@ -95,11 +101,8 @@ void Device::checkChildrenFixtures() {
 	if (t== nullptr) {
 		return ;
 	}
-	if (t -> chansManager == nullptr) {
-		return ;
-	}
 
-	Array<WeakReference<ControllableContainer>> chans = t-> chansManager -> getAllContainers();
+	Array<WeakReference<ControllableContainer>> chans = t ->chansManager.getAllContainers();
 	Array<String> fixtNames;
 	HashMap<String, Array<String>> fixtChannels;
 
@@ -162,5 +165,13 @@ void Device::checkChildrenFixtures() {
 		
 	}
 
+}
+
+void Device::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<DeviceManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
 }
 

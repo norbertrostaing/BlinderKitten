@@ -69,6 +69,8 @@ void Brain::run() {
     }
 }
 
+
+
 void Brain::registerFixture(Fixture* f, int id) {
     Logger::writeToLog("fixture request : " + String(id));
     int askedId = id;
@@ -404,5 +406,9 @@ CurvePreset* Brain::getCurvePresetById(int id) {
 
 TimingPreset* Brain::getTimingPresetById(int id) {
     return timingPresets.getReference(id);
+}
+
+Effect* Brain::getEffectById(int id) {
+    return effects.getReference(id);
 }
 

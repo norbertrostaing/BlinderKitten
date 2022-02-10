@@ -24,6 +24,7 @@ il faudrait que le formulaire soit pré rempli genre
 #include "../../Brain.h"
 #include "../ChannelValue.h"
 #include "../DataTransferManager/DataTransferManager.h"
+#include "ProgrammerManager.h"
 
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
@@ -34,8 +35,11 @@ Programmer::Programmer(var params) :
 	editorIsCollapsed = false;
 	itemDataType = "Programmer";
 	
-	id = addIntParameter("ID", "Id of this Programmer", 0, 0);
-	
+	id = addIntParameter("ID", "Id of this Programmer", 1, 1);
+	userName = addStringParameter("Name", "Name of this programmer", "New programmer");
+	updateName();
+
+
 	editionMode = addEnumParameter("Edition mode", "mode of edition");
 	editionMode->addOption("Not timed", "notTimed");
 	editionMode->addOption("Timed", "timed");
@@ -78,6 +82,9 @@ void Programmer::triggerTriggered(Trigger* t) {
 void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerProgrammer(this, id->getValue());
+	}
+	if (p == userName || p == id) {
+		updateName();
 	}
 	if (p == editionMode) {
 		if (editionMode->getValue() == "blind") {
@@ -232,5 +239,13 @@ float Programmer::applyToChannel(FixtureChannel* fc, float currentVal, double no
 		Brain::getInstance()->pleaseUpdate(fc);
 	}
 	return val;
+}
+
+void Programmer::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<ProgrammerManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
 }
 

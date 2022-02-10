@@ -23,13 +23,16 @@ public:
     Preset(var params = var());
     virtual ~Preset();
 
-    void onContainerNiceNameChanged() override;
     void afterLoadJSONDataInternal() override;
 
     String objectType;
     var objectData;
 
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
+
     TargetParameter* devTypeParam;
     EnumParameter* presetType;
 
@@ -42,7 +45,6 @@ public:
 
     std::unique_ptr<BaseManager<PresetFixtureValues>> fixtureValues;
     String getTypeString() const override { return objectType; }
-    void parameterValueChanged(Parameter* p);
 
     static Preset* create(var params) { return new Preset(params); }
 

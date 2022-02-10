@@ -12,6 +12,7 @@
 #include "Cuelist.h"
 #include "Brain.h"
 #include "../ChannelValue.h"
+#include "CuelistManager.h"
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
@@ -33,6 +34,9 @@ Cuelist::Cuelist(var params) :
 	cues.reset(m);
 
 	id = addIntParameter("ID", "Id of this Cuelist", 1, 1);
+	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
+	updateName();
+
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
 	endAction->addOption("Off", "off");
@@ -116,9 +120,9 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerCuelist(this, id->getValue());
 	}
-	//if (p == LTPLevel) {
-		// updateLTPs();
-	//}
+	if (p == userName || p == id) {
+		updateName();
+	}
 }
 
 void Cuelist::triggerTriggered(Trigger* t) {
@@ -492,5 +496,14 @@ void Cuelist::kill(bool forceRefreshChannels) {
 
 void Cuelist::setHTPLevel(float level) {
 	HTPLevel->setValue(level);
+}
+
+
+void Cuelist::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<CuelistManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
 }
 

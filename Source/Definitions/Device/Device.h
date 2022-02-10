@@ -22,12 +22,14 @@ public:
 
     void onContainerNiceNameChanged() override;
     void afterLoadJSONDataInternal() override;
-    void onContainerParameterChangedInternal(Parameter*) override;
 
     String objectType;
     var objectData;
 
     IntParameter* id;
+    StringParameter* userName;
+    void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
     TargetParameter* devTypeParam;
 
     BaseManager<DevicePatch> patchs;

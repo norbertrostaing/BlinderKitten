@@ -8,11 +8,11 @@
 
 namespace BinaryData
 {
+    extern const char*   default_blinderlayout;
+    const int            default_blinderlayoutSize = 3350;
+
     extern const char*   icon_png;
     const int            icon_pngSize = 64470;
-
-    extern const char*   kittenLayout_layout;
-    const int            kittenLayout_layoutSize = 3281;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 2;

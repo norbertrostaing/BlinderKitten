@@ -26,6 +26,9 @@ public:
     std::unique_ptr<CueManager> cues;
 
     IntParameter* id;
+    StringParameter* userName;
+    void updateName();
+
     Trigger* goBtn;
     Trigger* offBtn;
     Trigger* killBtn;

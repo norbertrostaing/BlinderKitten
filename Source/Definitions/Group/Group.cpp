@@ -10,6 +10,7 @@
 
 #include "JuceHeader.h"
 #include "Group.h"
+#include "GroupManager.h"
 #include "../Command/CommandSelectionManager.h"
 #include "../../Brain.h"
 
@@ -22,9 +23,11 @@ Group::Group(var params) :
 
 	itemDataType = "Group";
 
-	id = addIntParameter("ID", "ID of this device", 1, 1);
-	addChildControllableContainer(&selection);
+	id = addIntParameter("ID", "ID of this group", 1, 1);
+	userName = addStringParameter("Name", "Name of this group","New group");
+	updateName();
 
+	addChildControllableContainer(&selection);
 	Brain::getInstance()->registerGroup(this, id->getValue());
 }
 
@@ -33,9 +36,18 @@ Group::~Group()
 	Brain::getInstance()->unregisterGroup(this);
 }
 
-void Group::parameterValueChanged(Parameter* p) {
-	BaseItem::parameterValueChanged(p);
-	Logger::writeToLog("changed !");
+void Group::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<GroupManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - "+n);
+}
+
+void Group::onContainerParameterChangedInternal(Parameter* p) {
+	if (p == userName || p == id) {
+		updateName();
+	}
 	if (p == id) {
 		Brain::getInstance()->registerGroup(this, id->getValue());
 	}

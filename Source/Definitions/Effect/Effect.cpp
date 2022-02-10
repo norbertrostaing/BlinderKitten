@@ -13,6 +13,7 @@
 #include "../Command/CommandSelectionManager.h"
 #include "../Fixture/FixtureChannel.h"
 #include "../../Brain.h"
+#include "EffectManager.h"
 
 Effect::Effect(var params) :
 	BaseItem(params.getProperty("name", "Effect")),
@@ -25,6 +26,9 @@ Effect::Effect(var params) :
 	itemDataType = "Effect";
 
 	id = addIntParameter("ID", "ID of this Effect", 1, 1);
+	userName = addStringParameter("Name", "Name of this effect", "New effect");
+	updateName();
+
 	isEffectOn = addBoolParameter("is ON", "Enable or disable this effect",false);
 	isEffectOn->isControllableFeedbackOnly;
 	isOn = false;
@@ -48,10 +52,12 @@ Effect::~Effect()
 	Brain::getInstance()->unregisterEffect(this);
 }
 
-void Effect::parameterValueChanged(Parameter* p) {
-	BaseItem::parameterValueChanged(p);
+void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerEffect(this, id->getValue());
+	}
+	if (p == userName || p == id) {
+		updateName();
 	}
 }
 
@@ -147,3 +153,13 @@ float Effect::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
 	}
 	return currentVal;
 }
+
+
+void Effect::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<EffectManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
+}
+
