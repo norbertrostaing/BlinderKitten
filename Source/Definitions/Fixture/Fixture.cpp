@@ -120,6 +120,7 @@ void Fixture::checkChildrenSubFixtures() {
 		if (subFixt == nullptr) {
 			subFixt = new SubFixture();
 			subFixtures.set(subId, subFixt);
+			subFixt->subId = subId;
 		}
 		
 		if (subFixt != nullptr && subFixt->parentFixture != this) {

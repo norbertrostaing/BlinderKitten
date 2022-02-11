@@ -47,4 +47,5 @@ public:
     static Preset* create(var params) { return new Preset(params); }
 
     void computeValues();
+    void updateDisplay();
 };

@@ -441,7 +441,7 @@
         <CONFIGURATION isDebug="1" name="Debug" targetName="BlinderKitten" binaryPath="Binaries/Debug"
                        headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="GrandNoTest2" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
+        <CONFIGURATION isDebug="0" name="Release" targetName="BlinderKitten" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
                        headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        binaryPath="Binaries/"/>
       </CONFIGURATIONS>

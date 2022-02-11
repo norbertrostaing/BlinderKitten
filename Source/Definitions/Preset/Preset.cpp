@@ -179,3 +179,8 @@ void Preset::updateName() {
 
 
 
+void Preset::updateDisplay()
+{
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+

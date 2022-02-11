@@ -78,7 +78,9 @@ DataTransferManager::~DataTransferManager()
 }
 
 void DataTransferManager::triggerTriggered(Trigger* t) {
-    
+    if (t == go) {
+        execute();
+    }
 }
 
 
@@ -118,6 +120,7 @@ void DataTransferManager::execute() {
                 target = PresetManager::getInstance()->addItem(new Preset());
                 target->id->setValue(targetId->getValue());
                 target->setNiceName("Preset " + String(int(target->id->getValue())));
+                target->updateName();
             }
 
             // target->SubFixtureValues->clear(); // erase data
@@ -133,16 +136,21 @@ void DataTransferManager::execute() {
 
                 if (cValue->endValue != -1 && (filter == nullptr || filter == chanType)) {
 
-                    int fixtId = chan->parentSubFixture->subId;
+                    int subfixtId = chan->parentSubFixture->subId;
+                    int fixtId = dynamic_cast<Fixture*>(chan->parentSubFixture->parentFixture)->id->getValue();
+                    LOG("fixt");
                     PresetSubFixtureValues* pfv = nullptr;
+
                     for (int i = 0; i < target->SubFixtureValues->items.size(); i++) {
-                        if ((int)target->SubFixtureValues->items[i]->targetSubFixtureId->getValue() == fixtId) {
+                        PresetSubFixtureValues* temp = target->SubFixtureValues->items[i];
+                        if ((int)temp->targetFixtureId->getValue() == fixtId && (int)temp->targetSubFixtureId->getValue() == subfixtId) {
                             pfv = target->SubFixtureValues->items[i];
                         }
                     }
                     if (pfv == nullptr) {
                         pfv = target->SubFixtureValues->addItem();
-                        pfv->targetSubFixtureId->setValue(fixtId);
+                        pfv->targetFixtureId->setValue(fixtId);
+                        pfv->targetSubFixtureId->setValue(subfixtId);
                     }
 
                     PresetValue* pv = nullptr;
@@ -157,6 +165,7 @@ void DataTransferManager::execute() {
                     }
                     pv->paramValue->setValue(cValue->endValue);
                 }
+            target->updateDisplay();
             }
         }
         else if (trgType == "Cuelist") {
@@ -191,6 +200,9 @@ void DataTransferManager::execute() {
 
     if (!valid) {
         LOGWARNING("target type and source type are not compatible");
+    }
+    else {
+        LOG("OK bro");
     }
 
 
