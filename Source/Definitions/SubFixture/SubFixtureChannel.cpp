@@ -83,7 +83,6 @@ void SubFixtureChannel::updateVal(double now) {
 		}
 
 	}
-
 	for (int i = 0; i < effectStack.size(); i++) {
 		value = effectStack[i]->applyToChannel(this, value, now);
 	}

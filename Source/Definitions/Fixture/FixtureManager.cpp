@@ -13,7 +13,6 @@ FixtureManager::FixtureManager() :
     itemDataType = "Fixture";
     selectItemWhenCreated = true;
     comparator.compareFunc = compare;
-
 }
 
 FixtureManager::~FixtureManager()

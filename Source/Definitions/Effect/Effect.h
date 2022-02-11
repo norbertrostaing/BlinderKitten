@@ -32,7 +32,7 @@ public:
     void updateName();
 
     BoolParameter* isEffectOn;
-    bool isOn;
+    bool isOn = false;
 
     Trigger* startBtn;
     Trigger* stopBtn;
@@ -52,6 +52,9 @@ public:
     void triggerTriggered(Trigger* t);
     void update(double now);
     void computeData();
+    bool computed = false;
+    bool computing = false;
+    void pleaseComputeIfRunning();
     void start();
     void stop();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);

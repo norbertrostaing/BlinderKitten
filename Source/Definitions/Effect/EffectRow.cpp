@@ -22,8 +22,8 @@ EffectRow::EffectRow(var params) :
     curveContainer("Curve"),
     paramContainer("Parameters"),
     curve("Curve")
-
 {
+
     saveAndLoadRecursiveData = true;
     speed = curveContainer.addFloatParameter("Speed", "Effect of this Curve, relative to the effect speed", 1, 0);
     curvePresetOrValue = curveContainer.addEnumParameter("Curve Type", "Use a preset curve or draw it here ?");
@@ -66,7 +66,6 @@ EffectRow::~EffectRow()
 void EffectRow::computeData() {
     computedPositions.clear();
     selection.computeSelection();
-    String test = parentContainer->parentContainer->niceName;
     Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
     if (parentEffect == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
@@ -86,8 +85,17 @@ void EffectRow::computeData() {
                     chans.add(c);
                 }
             }
+            int totWings= p->wings->getValue();
+            int sizeWing = chans.size()/totWings;
+            int nBuddying = p->buddying->getValue();
+            float nLimit = chans.size();
+            nLimit /= totWings;
             for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
-                double offset = chanIndex / (double)chans.size();
+                int nWing = chanIndex/sizeWing;
+                double offset = (chanIndex - (chanIndex%nBuddying)) / nLimit;
+                if (nWing % 2 == 1) {
+                    offset = -offset;
+                }
                 offset *= (double)p->elementsSpread->getValue();
                 offset += (double)p->elementsStart->getValue();
                 p->SubFixtureChannelOffsets.set(chans[chanIndex], -offset);

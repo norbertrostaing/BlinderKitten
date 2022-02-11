@@ -10,7 +10,7 @@
 
 #include "EffectParam.h"
 #include "../ChannelFamily/ChannelFamilyManager.h"
-#include "EffectRow.h"
+#include "Effect.h"
 
 EffectParam::EffectParam(var params) :
     BaseItem(params.getProperty("name", "Param")),
@@ -34,6 +34,9 @@ EffectParam::EffectParam(var params) :
     elementsStart = addFloatParameter("First Element position", "Position of the first element, relative to the curve", 0, 0, 1);
     elementsSpread = addFloatParameter("Elements Spread", "Size of distribution", 1, 0);
 
+    wings = addIntParameter("Wings", "A wing repeat the effect but inversed",1,1);
+    buddying = addIntParameter("Buddying", "make groups of X following subfixtures with the same value",1,1);
+
     curveSize = addFloatParameter("Size", "Size of the effect applied to outputs",1,0,2);
     baseValue = addFloatParameter("Base Value","Base value applied to channels",0,0,1);
     updateDisplay();
@@ -47,6 +50,15 @@ EffectParam::~EffectParam()
 void EffectParam::onContainerParameterChangedInternal(Parameter* c) {
     if (c == effectMode) {
         updateDisplay();
+    }
+    if (c == elementsSpread || c == elementsStart || c == wings || c == buddying) {
+        if (parentContainer != nullptr
+            && parentContainer->parentContainer != nullptr
+            && parentContainer->parentContainer->parentContainer != nullptr
+            && parentContainer->parentContainer->parentContainer->parentContainer != nullptr
+            ) {
+            dynamic_cast<Effect*>(parentContainer->parentContainer->parentContainer->parentContainer.get())->pleaseComputeIfRunning();
+        }
     }
 }
 

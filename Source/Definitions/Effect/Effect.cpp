@@ -32,6 +32,7 @@ Effect::Effect(var params) :
 
 	isEffectOn = addBoolParameter("is ON", "Enable or disable this effect",false);
 	isEffectOn->isControllableFeedbackOnly;
+	isEffectOn->setEnabled(false);
 	isOn = false;
 
 	startBtn = addTrigger("Start", "Start this effect");
@@ -79,11 +80,6 @@ void Effect::start() {
 	isEffectOn->setValue(true);
 	totalElapsed = 0;
 	computeData();
-	for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
-		it.getKey()->effectOnTopOfStack(this);
-		Brain::getInstance()->pleaseUpdate(it.getKey());
-	}
-	Brain::getInstance()->pleaseUpdate(this);
 }
 
 void Effect::stop() {
@@ -95,29 +91,54 @@ void Effect::stop() {
 }
 
 void Effect::update(double now) {
+	if (computed == false) {
+		computeData();
+	}
 	if (isOn) {
 		Brain::getInstance()->pleaseUpdate(this);
+		double deltaTime = now - TSLastUpdate;
+		TSLastUpdate = now;
+		double currentSpeed = speed->getValue();
+		if (speed != 0) {
+			double duration = 60000. / currentSpeed;
+			double delta = deltaTime / duration;
+			totalElapsed += delta;
+			currentPosition->setValue(fmodf(totalElapsed, 1.0));
+		}
 	}
-	double deltaTime = now - TSLastUpdate;
-	TSLastUpdate = now;
-	double currentSpeed = speed->getValue();
-	if (speed != 0) {
-		double duration = 60000. / currentSpeed;
-		double delta = deltaTime / duration;
-		totalElapsed += delta;
-		currentPosition->setValue(fmodf(totalElapsed, 1.0));
+	else {
+		currentPosition->setValue(0);
+	}
+}
+
+void Effect::pleaseComputeIfRunning() {
+	if (isOn) {
+		computed = false;
+		Brain::getInstance()->pleaseUpdate(this);
 	}
 }
 
 void Effect::computeData() {
+	computed = true;
+	computing = true;
 	chanToFxParam.clear();
 	for (int i = 0; i < values.items.size(); i++) {
 		values.items[i]->computeData();
 	}
+	if (isOn) {
+		for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
+			it.getKey()->effectOnTopOfStack(this);
+			Brain::getInstance()->pleaseUpdate(it.getKey());
+		}
+		Brain::getInstance()->pleaseUpdate(this);
+	}
+	computing = false;
+
 }
 
 float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToFxParam.contains(fc)) {return currentVal; }
+	if (computing) { return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	Array<EffectParam*>* params = chanToFxParam.getReference(fc);
 	for (int i = 0; i < params->size(); i++) {

@@ -26,6 +26,10 @@ class EffectParam:
 
     FloatParameter* elementsStart;
     FloatParameter* elementsSpread;
+    
+    IntParameter* wings;
+    IntParameter* buddying;
+    
     EnumParameter* effectMode;
     TargetParameter* paramType;
     FloatParameter* curveSize;
