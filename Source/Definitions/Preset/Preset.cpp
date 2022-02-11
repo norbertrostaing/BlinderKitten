@@ -11,7 +11,7 @@
 #include "JuceHeader.h"
 #include "Preset.h"
 #include "PresetValue.h"
-#include "../FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"
+#include "../ChannelFamily/ChannelType/ChannelType.h"
 #include "../../Brain.h"
 #include "PresetManager.h"
 
@@ -19,11 +19,12 @@ Preset::Preset(var params) :
 	BaseItem(params.getProperty("name", "Preset")),
 	objectType(params.getProperty("type", "Preset").toString()),
 	objectData(params),
-	fixtureValues(),
+	SubFixtureValues(),
 	devTypeParam()
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
+	nameCanBeChangedByUser = false;
 
 	itemDataType = "Preset";
 	
@@ -31,30 +32,44 @@ Preset::Preset(var params) :
 	userName = addStringParameter("Name", "Name of this preset", "New preset");
 	updateName();
 
-	presetType = addEnumParameter("Type", "Type of the preset");
-	presetType->addOption("Fixture", 1);
-	presetType->addOption("Fixture Type", 2);
-	presetType->addOption("Device Type", 3);
-	presetType->addOption("Same Parameters", 4);
+	String presetExplain = "Behaviour of the preset : \n\n";
+	presetExplain += "- SubFixture : preset applyes only to recorded SubFixtures\n\n";
+	// presetExplain += "- SubFixture Type : preset applies only to SubFixtures who have the same SubFixture type (same SubFixture suffix in Fixture type)\n\n";
+	presetExplain += "- Fixture type : preset applies only to SubFixtures from the same Fixture type\n\n";
+	presetExplain += "- Same channels : preset applies to all SubFixtures with same channels\n\n";
+
+	presetType = addEnumParameter("Type", presetExplain);
+	presetType->addOption("SubFixture", 1);
+	// presetType->addOption("SubFixture Type", 2);
+	presetType->addOption("Fixture Type", 3);
+	presetType->addOption("Same Channels type", 4);
 
 	// to add a manager with defined data
-	BaseManager<PresetFixtureValues>* m = new BaseManager<PresetFixtureValues>("Fixtures");
+	BaseManager<PresetSubFixtureValues>* m = new BaseManager<PresetSubFixtureValues>("SubFixtures");
 	m->selectItemWhenCreated = false;
-	fixtureValues.reset(m);
-	addChildControllableContainer(fixtureValues.get());
+	SubFixtureValues.reset(m);
+	addChildControllableContainer(SubFixtureValues.get());
 	getJSONData();
 
 	Brain::getInstance()->registerPreset(this, id->getValue());
 
 }
 
-void Preset::afterLoadJSONDataInternal() {
-	Logger::writeToLog("call from JSONDataInternal");
-}
-
 Preset::~Preset()
 {
 	Brain::getInstance()->unregisterPreset(this);
+	for (auto it = computedSubFixtureValues.begin(); it != computedSubFixtureValues.end(); it.next()) {
+		it.getValue()->~HashMap();
+	}
+	for (auto it = computedFixtureTypeValues.begin(); it != computedFixtureTypeValues.end(); it.next()) {
+		it.getValue()->~HashMap();
+	}
+	for (auto it = computedSubFixtureTypeValues.begin(); it != computedSubFixtureTypeValues.end(); it.next()) {
+		for (auto it2 = it.getValue()->begin(); it2 != it.getValue()->end(); it2.next()) {
+			it2.getValue()->~HashMap();
+		}
+		it.getValue()->~HashMap();
+	}
 }
 
 void Preset::onContainerParameterChangedInternal(Parameter* p) {
@@ -67,64 +82,48 @@ void Preset::onContainerParameterChangedInternal(Parameter* p) {
 }
 
 void Preset::computeValues() {
-	computedFixtureValues.clear();
-	computedDeviceTypeValues.clear();
+	computedSubFixtureValues.clear();
 	computedFixtureTypeValues.clear();
+	computedSubFixtureTypeValues.clear();
 	computedUniversalValues.clear();
 
-	Array<PresetFixtureValues*> fixtValues = fixtureValues->getItemsWithType<PresetFixtureValues>();
+	Array<PresetSubFixtureValues*> fixtValues = SubFixtureValues->getItemsWithType<PresetSubFixtureValues>();
 	int pType = presetType->getValue();
 
 	for (int commandIndex = 0; commandIndex < fixtValues.size(); commandIndex++) {
-		PresetFixtureValues* fixtVal = fixtValues[commandIndex];
+		PresetSubFixtureValues* fixtVal = fixtValues[commandIndex];
 		Fixture* fixt = nullptr;
-		String suffix = "";
-		DeviceType* type = nullptr;
+		SubFixture* subFixt = nullptr;
+		FixtureType* type = nullptr;
 		int fixtureId = fixtVal->targetFixtureId->getValue();
+		int subFixtId = fixtVal->targetSubFixtureId->getValue();
 		if (fixtureId > 0) {
 			fixt = Brain::getInstance()->getFixtureById(fixtureId);
 			if (fixt != nullptr) {
-				suffix = fixt -> suffixName;
-				type = dynamic_cast<DeviceType*>(fixt -> parentDevice -> devTypeParam->targetContainer.get());
+				type = dynamic_cast<FixtureType*>(fixt -> devTypeParam -> targetContainer.get());
+				subFixt = fixt->subFixtures.getReference(subFixtId);
 			}
 		}
 		
 		Array<PresetValue *> values = fixtVal->values->getItemsWithType<PresetValue>();
 		for (int valIndex = 0; valIndex < values.size(); valIndex++) {
-			FixtureParamDefinition* param = dynamic_cast<FixtureParamDefinition*>(values[valIndex]->param->targetContainer.get());
+			ChannelType* param = dynamic_cast<ChannelType*>(values[valIndex]->param->targetContainer.get());
 			float value = values[valIndex] -> paramValue -> getValue();
 			if (param != nullptr) {
-				// fixture mode
-				if (pType >= 1 && fixt != nullptr) {
-					HashMap<FixtureParamDefinition*, float>* content = computedFixtureValues.getReference(fixt);
+				if (pType >= 1 && subFixt != nullptr) {
+					HashMap<ChannelType*, float>* content = computedSubFixtureValues.getReference(subFixt);
 					if (content == nullptr) {
-						content = new HashMap<FixtureParamDefinition*, float>();
-						computedFixtureValues.set(fixt, content);
+						content = new HashMap<ChannelType*, float>();
+						computedSubFixtureValues.set(subFixt, content);
 					}
 					content -> set(param, value); 
 				}
-				// fixture type mode
-				if (pType >= 2 && fixt != nullptr && type != nullptr) {
-					HashMap<String, HashMap<FixtureParamDefinition*, float>*>* deviceContent = computedFixtureTypeValues.getReference(type);
-					if (deviceContent == nullptr) {
-						deviceContent = new HashMap<String, HashMap<FixtureParamDefinition*, float>*>();
-						computedFixtureTypeValues.set(type, deviceContent);
-					}
-
-					HashMap<FixtureParamDefinition*, float>* fixtTypeContent = deviceContent->getReference(suffix);
-					if (fixtTypeContent == nullptr) {
-						fixtTypeContent = new HashMap<FixtureParamDefinition*, float>();
-						deviceContent->set(suffix, fixtTypeContent);
-					}
-
-					fixtTypeContent->set(param, value);
-				}
-				// device mode
+				// Fixture mode
 				if (pType >= 3 && type != nullptr) {
-					HashMap<FixtureParamDefinition*, float>* content = computedDeviceTypeValues.getReference(type);
+					HashMap<ChannelType*, float>* content = computedFixtureTypeValues.getReference(type);
 					if (content == nullptr) {
-						content = new HashMap<FixtureParamDefinition*, float>();
-						computedDeviceTypeValues.set(type, content);
+						content = new HashMap<ChannelType*, float>();
+						computedFixtureTypeValues.set(type, content);
 					}
 					content->set(param, value);
 				}
@@ -141,41 +140,26 @@ void Preset::computeValues() {
 		}
 
 
-		// HashMap<Fixture*, HashMap<FixtureParamDefinition*, float>*> computedFixtureValues;
-		// HashMap<DeviceType*, HashMap<FixtureParamDefinition*, float>*> computedDeviceTypeValues;
-		// HashMap<DeviceType*, HashMap<String, HashMap<FixtureParamDefinition*, float>*>*> computedFixtureTypeValues;
-		// HashMap<FixtureParamDefinition*, float> computedUniversalValues;
-
-	
-	
 	}
 
 }
 
-HashMap<FixtureParamDefinition*, float>* Preset::getFixtureValues(Fixture* f) {
-	HashMap<FixtureParamDefinition*, float>* values = new HashMap<FixtureParamDefinition*, float>();
+HashMap<ChannelType*, float>* Preset::getSubFixtureValues(SubFixture* f) {
+	HashMap<ChannelType*, float>* values = new HashMap<ChannelType*, float>();
 	for (auto it = computedUniversalValues.begin(); it != computedUniversalValues.end(); it.next()) {
 		values->set(it.getKey(), it.getValue());
 	}
 
-	DeviceType* dt = dynamic_cast<DeviceType*>(f->parentDevice->devTypeParam->targetContainer.get());
-	if (computedDeviceTypeValues.contains(dt)) {
-		HashMap<FixtureParamDefinition*, float>* deviceValues = computedDeviceTypeValues.getReference(dt);
-		for (auto it = deviceValues->begin(); it != deviceValues->end(); it.next()) {
+	FixtureType* dt = dynamic_cast<FixtureType*>(f->parentFixture->devTypeParam->targetContainer.get());
+	if (computedFixtureTypeValues.contains(dt)) {
+		HashMap<ChannelType*, float>* FixtureValues = computedFixtureTypeValues.getReference(dt);
+		for (auto it = FixtureValues->begin(); it != FixtureValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}
 	}
 
-	String suffix = f->suffixName;
-	if (computedFixtureTypeValues.contains(dt) && computedFixtureTypeValues.getReference(dt)->contains(suffix)) {
-		HashMap<FixtureParamDefinition*, float>* FTValues = computedFixtureTypeValues.getReference(dt)->getReference(suffix);
-		for (auto it = FTValues->begin(); it != FTValues->end(); it.next()) {
-			values->set(it.getKey(), it.getValue());
-		}
-	}
-
-	if (computedFixtureValues.contains(f)) {
-		HashMap<FixtureParamDefinition*, float>* FValues = computedFixtureValues.getReference(f);
+	if (computedSubFixtureValues.contains(f)) {
+		HashMap<ChannelType*, float>* FValues = computedSubFixtureValues.getReference(f);
 		for (auto it = FValues->begin(); it != FValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}

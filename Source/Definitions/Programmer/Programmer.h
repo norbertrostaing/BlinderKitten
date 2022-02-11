@@ -36,8 +36,8 @@ public:
     Trigger* recBtn;
 
 
-    HashMap<FixtureChannel*, ChannelValue*> computedValues;
-    HashMap<FixtureChannel*, ChannelValue*> activeValues;
+    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
 
     void triggerTriggered(Trigger* t) override;
 
@@ -48,7 +48,7 @@ public:
     void release(double now = 0);
     void go();
 
-    float applyToChannel(FixtureChannel* fc, float currentVal, double now);
+    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 
     String getTypeString() const override { return objectType; }
     static Programmer* create(var params) { return new Programmer(params); }

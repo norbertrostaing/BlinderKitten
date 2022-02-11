@@ -13,13 +13,13 @@
         "shifters": [
           {
             "type": 1,
-            "width": 784,
+            "width": 589,
             "height": 997,
             "direction": 2,
             "shifters": [
               {
                 "type": 0,
-                "width": 784,
+                "width": 589,
                 "height": 242,
                 "currentContent": "Programmers",
                 "tabs": [
@@ -27,10 +27,10 @@
                     "name": "Interfaces"
                   },
                   {
-                    "name": "Channel types"
+                    "name": "Channels config"
                   },
                   {
-                    "name": "Device Types"
+                    "name": "Fixture Types"
                   },
                   {
                     "name": "Programmers"
@@ -39,20 +39,20 @@
               },
               {
                 "type": 0,
-                "width": 784,
+                "width": 589,
                 "height": 371,
-                "currentContent": "Devices",
+                "currentContent": "Fixtures",
                 "tabs": [
                   {
-                    "name": "Devices"
+                    "name": "Fixtures"
                   }
                 ]
               },
               {
                 "type": 0,
-                "width": 784,
+                "width": 589,
                 "height": 370,
-                "currentContent": "Effects",
+                "currentContent": "Groups",
                 "tabs": [
                   {
                     "name": "Groups"
@@ -75,19 +75,19 @@
           },
           {
             "type": 1,
-            "width": 1130,
+            "width": 1325,
             "height": 997,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 499,
+                "width": 636,
                 "height": 997,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 499,
+                    "width": 636,
                     "height": 745,
                     "currentContent": "Cuelists",
                     "tabs": [
@@ -98,7 +98,7 @@
                   },
                   {
                     "type": 0,
-                    "width": 499,
+                    "width": 636,
                     "height": 245,
                     "currentContent": "Logger",
                     "tabs": [
@@ -111,7 +111,7 @@
               },
               {
                 "type": 0,
-                "width": 625,
+                "width": 682,
                 "height": 997,
                 "currentContent": "Inspector",
                 "tabs": [

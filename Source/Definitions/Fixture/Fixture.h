@@ -10,8 +10,8 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "FixtureChannel.h"
-#include "Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"
+#include "FixturePatch.h"
+#include "../SubFixture/SubFixture.h"
 
 class Fixture:
     public BaseItem
@@ -20,17 +20,28 @@ public:
     Fixture(var params = var());
     virtual ~Fixture();
 
+    void onContainerNiceNameChanged() override;
+    void afterLoadJSONDataInternal() override;
+
     String objectType;
     var objectData;
+
     IntParameter* id;
-
-    String suffixName = "";
-    Device* parentDevice;
-
-    std::unique_ptr<BaseManager<FixtureChannel>> channels;
-    HashMap<FixtureParamDefinition*, FixtureChannel*> channelsMap;
+    StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
+    void updateName();
+    TargetParameter* devTypeParam;
 
+    HashMap<int, SubFixture*> subFixtures;
+    BaseManager<FixturePatch> patchs;
     String getTypeString() const override { return objectType; }
+    Array<SubFixtureChannel*> channels;
+
+    void applyPatchs();
+    void checkChildrenSubFixtures();
+
     static Fixture* create(var params) { return new Fixture(params); }
+
+    Array<SubFixture*> getAllSubFixtures();
+    SubFixture* getSubFixture(int id);
 };

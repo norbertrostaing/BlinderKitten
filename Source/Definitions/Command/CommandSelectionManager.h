@@ -10,8 +10,8 @@
 
 #pragma once
 #include "CommandSelection.h"
-//#include "../Fixture/Fixture.h"
-class Fixture;
+//#include "../SubFixture/SubFixture.h"
+class SubFixture;
 
 class CommandSelectionManager :
     public BaseManager<CommandSelection>
@@ -20,7 +20,7 @@ public:
     CommandSelectionManager();
     ~CommandSelectionManager();
 
-    Array<Fixture*> computedSelectedFixtures;
+    Array<SubFixture*> computedSelectedSubFixtures;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);
 };

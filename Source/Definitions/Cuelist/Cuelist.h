@@ -46,7 +46,7 @@ public:
 
     Automation offFadeCurve;
     FloatParameter* offFade;
-    HashMap<FixtureChannel*, ChannelValue*> activeValues;
+    HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
 
     TargetParameter* currentCue;
     TargetParameter* nextCue;
@@ -72,7 +72,7 @@ public:
     void kill(bool forceRefreshChannels = true);
     void update();
     void autoLoadCueB();
-    float applyToChannel(FixtureChannel* fc, float currentVal, double now);
+    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void cleanActiveValues();
 
     void reorderCues();

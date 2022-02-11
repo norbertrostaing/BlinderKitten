@@ -10,46 +10,162 @@
 
 #include "JuceHeader.h"
 #include "Fixture.h"
+#include "FixturePatch.h"
 #include "FixtureManager.h"
 #include "../../Brain.h"
+#include "../FixtureType/FixtureTypeManager.h"
+#include "../FixtureType/FixtureType.h"
+#include "../SubFixture/SubFixture.h"
+#include "../SubFixture/SubFixtureChannel.h"
+#include "../ChannelFamily/ChannelFamily.h"
 
 Fixture::Fixture(var params) :
 	BaseItem(params.getProperty("name", "Fixture")),
 	objectType(params.getProperty("type", "Fixture").toString()),
 	objectData(params),
-	channels(),
-	channelsMap()
+	patchs("Patch"),
+	devTypeParam(),
+	subFixtures()
 {
+	nameCanBeChangedByUser = false;
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
 
-	userCanDuplicate = false;
-	userCanRemove = false;
-	nameCanBeChangedByUser = false;
-
 	itemDataType = "Fixture";
-	Logger::writeToLog("I'm a new fixture !");
 	
-	id = addIntParameter("ID", "ID of this Fixture",1,1);
-	BaseManager<FixtureChannel>* m = new BaseManager<FixtureChannel>("Channels");
-	m->selectItemWhenCreated = false;
-	m->selectItemWhenCreated = false;
-	m->userCanAddItemsManually = false;
-	channels.reset(m);
-	channelsMap.clear();
-	addChildControllableContainer(channels.get());
+	id = addIntParameter("ID", "ID of this Fixture", 1, 1);
+	userName = addStringParameter("Name", "Name of this Fixture", "New Fixture");
+	updateName();
+
+	devTypeParam = addTargetParameter("Fixture type", "Type of Fixture", FixtureTypeManager::getInstance());
+	devTypeParam -> targetType = TargetParameter::CONTAINER;
+	devTypeParam -> maxDefaultSearchLevel = 0;
+	
+	// to add a manager with defined data
+	patchs.selectItemWhenCreated = false;
+	addChildControllableContainer(&patchs);
+
+	Logger::writeToLog("call from constructor");
 	Brain::getInstance()->registerFixture(this, id->getValue());
+	checkChildrenSubFixtures();
+}
+
+void Fixture::afterLoadJSONDataInternal() {
+	Logger::writeToLog("call from JSONDataInternal");
+	checkChildrenSubFixtures();
 }
 
 Fixture::~Fixture()
 {
 	Brain::getInstance()->unregisterFixture(this);
-}
-
-void Fixture::onContainerParameterChangedInternal(Parameter* p) {
-	Logger::writeToLog("changed !");
-	if (p == id) {
-		Brain::getInstance()->registerFixture(this,id->getValue());
+	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+		if (it.getValue()!= nullptr) {
+			it.getValue()->~SubFixture();
+		}
 	}
 }
 
+
+void Fixture::onContainerNiceNameChanged() 
+{
+	BaseItem::onContainerNiceNameChanged();
+	Logger::writeToLog("call from nameChanged");
+	checkChildrenSubFixtures();
+}
+
+void Fixture::onContainerParameterChangedInternal(Parameter* p) 
+{
+	if (p == userName || p == id) {
+		updateName();
+	}
+	if (p == devTypeParam)
+	{
+		Logger::writeToLog("call from ParamChanged");
+		checkChildrenSubFixtures();
+	}
+	else if(p == id) 
+	{
+		Brain::getInstance()->registerFixture(this, id->getValue());
+	}
+}
+
+void Fixture::applyPatchs() {
+	if (devTypeParam == nullptr) { return; }
+
+}
+
+void Fixture::checkChildrenSubFixtures() {
+	if (devTypeParam == nullptr) { return; }
+
+	FixtureType* t = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
+	if (t== nullptr) {
+		return ;
+	}
+
+	Array<WeakReference<ControllableContainer>> chans = t ->chansManager.getAllContainers();
+	Array<String> fixtNames;
+	// HashMap<String, Array<String>> fixtChannels;
+
+	// clean of unused SubFixtures
+	// should probabely clean subfixture brain updates
+	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+		it.getValue()->~SubFixture();
+	}
+	subFixtures.clear();
+
+	for (int i = 0; i < chans.size(); i++) {
+		FixtureTypeChannel* c = dynamic_cast<FixtureTypeChannel*>(chans[i].get());
+		int subId = c->subFixtureId->getValue();
+		SubFixture* subFixt = subFixtures.getReference(subId);
+		if (subFixt == nullptr) {
+			subFixt = new SubFixture();
+			subFixtures.set(subId, subFixt);
+		}
+		
+		if (subFixt != nullptr && subFixt->parentFixture != this) {
+			subFixt->parentFixture = this;
+		}
+
+		if (subFixt != nullptr && c != nullptr) {
+			ChannelType* param = dynamic_cast<ChannelType*>(c -> channelType -> targetContainer.get());
+			if (param != nullptr) {
+				if (subFixt->channelsMap.contains(param)) {
+					LOGERROR("You have multiple channels with the same type in the same subfixture !");
+				}
+				SubFixtureChannel* chan = new SubFixtureChannel();
+				subFixt->channelsMap.set(param, chan);
+				chan ->isHTP = param->priority->getValue() == "HTP";
+				chan-> resolution = c->resolution->getValue();
+				chan-> channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
+				chan->parentParamDefinition = param;
+				chan-> parentFixtureTypeChannel = c;
+				chan->parentFixture = this;
+				chan->parentSubFixture = subFixt;
+			}
+		}
+	}
+
+}
+
+void Fixture::updateName() {
+	String n = userName->getValue();
+	if (parentContainer != nullptr) {
+		dynamic_cast<FixtureManager*>(parentContainer.get())->reorderItems();
+	}
+	setNiceName(String((int)id->getValue()) + " - " + n);
+}
+
+
+Array<SubFixture*> Fixture::getAllSubFixtures() {
+	Array<SubFixture*> ret;
+	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+		if (it.getValue() != nullptr) {
+			ret.add(it.getValue());
+		}
+	}
+	return ret;
+}
+
+SubFixture* Fixture::getSubFixture(int id) {
+	return subFixtures.getReference(id);
+}

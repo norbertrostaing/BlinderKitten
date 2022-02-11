@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FixtureParamDefinition.h
+    ChannelType.h
     Created: 7 Nov 2021 7:40:48pm
     Author:  No
 
@@ -34,7 +34,7 @@ class EffectRow:
 
     CommandSelectionManager selection;
 
-    HashMap<Fixture*, double> computedPositions;
+    HashMap<SubFixture*, double> computedPositions;
 
     void computeData();
 

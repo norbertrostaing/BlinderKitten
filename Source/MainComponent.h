@@ -4,7 +4,7 @@
 
 
 #include "MainComponent.h"
-#include "Definitions/FixtureParamType/FixtureParamTypeManagerUI.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManagerUI.h"
 #include "BKEngine.h"
 
 

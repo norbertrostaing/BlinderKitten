@@ -9,7 +9,7 @@
 */
 
 #include "CommandValue.h"
-#include "../FixtureParamType/FixtureParamTypeManager.h"
+#include "../ChannelFamily/ChannelFamilyManager.h"
 
 CommandValue::CommandValue(var params) :
     BaseItem(params.getProperty("name", "Value")),
@@ -22,13 +22,9 @@ CommandValue::CommandValue(var params) :
     presetOrValue->addOption("Preset", "preset");
     presetOrValue->addOption("Release", "release");
 
-    channelType = addTargetParameter("Channel type", "Type of Channel", FixtureParamTypeManager::getInstance());
+    channelType = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
     channelType->maxDefaultSearchLevel = 2;
     channelType->targetType = TargetParameter::CONTAINER;
-
-    presetType = addTargetParameter("Preset family", "Type of preset", FixtureParamTypeManager::getInstance());
-    presetType -> maxDefaultSearchLevel = 0;
-    presetType -> targetType = TargetParameter::CONTAINER;
 
     // release = addBoolParameter("Release value", "release tracked values", false);
     valueFrom = addFloatParameter("Value", "Value of the first element", 0, 0, 1);
@@ -57,7 +53,6 @@ void CommandValue::updateDisplay()
     valueFrom->hideInEditor = !val;
     valueTo->hideInEditor = !(th && val);
 
-    presetType->hideInEditor = !(prst);
     presetIdFrom->hideInEditor = !(prst);
     presetIdTo->hideInEditor = !(th && prst);
 

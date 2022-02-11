@@ -76,7 +76,7 @@ void Cue::computeValues() {
 		cs[i]->computeValues();
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
 		for (auto it = cs[i]->computedValues.begin(); it != cs[i]->computedValues.end(); it.next()) {
-			FixtureChannel* fc = it.getKey();
+			SubFixtureChannel* fc = it.getKey();
 			computedValues.set(fc, it.getValue());
 		}
 	}

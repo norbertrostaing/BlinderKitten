@@ -19,7 +19,7 @@ class CommandSelectionManager;
 
 class CommandTiming;
 class ChannelValue;
-class FixtureChannel;
+class SubFixtureChannel;
 
 class Command:
     public BaseItem
@@ -37,7 +37,7 @@ public:
     std::unique_ptr<BaseManager<CommandValue>> values;
     CommandTiming timing;
 
-    HashMap<FixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
 
     String getTypeString() const override { return objectType; }
     void parameterValueChanged(Parameter* p);

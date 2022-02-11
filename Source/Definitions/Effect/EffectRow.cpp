@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    DeviceTypeChannel.cpp
+    FixtureTypeChannel.cpp
     Created: 8 Nov 2021 7:28:28pm
     Author:  No
 
@@ -9,10 +9,10 @@
 */
 
 #include "EffectRow.h"
-#include "../FixtureParamType/FixtureParamTypeManager.h"
-#include "../FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"
-#include "../Fixture/Fixture.h"
-#include "../Fixture/FixtureChannel.h"
+#include "../ChannelFamily/ChannelFamilyManager.h"
+#include "../ChannelFamily/ChannelType/ChannelType.h"
+#include "../SubFixture/SubFixture.h"
+#include "../SubFixture/SubFixtureChannel.h"
 #include "Effect.h"
 
 EffectRow::EffectRow(var params) :
@@ -69,19 +69,19 @@ void EffectRow::computeData() {
     String test = parentContainer->parentContainer->niceName;
     Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
     if (parentEffect == nullptr) {return;}
-    for (int i = 0; i < selection.computedSelectedFixtures.size(); i++) {
+    for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         double deltaPos = 0;
-        computedPositions.set(selection.computedSelectedFixtures[i], 0);
+        computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
     for (int i = 0; i < paramContainer.items.size(); i++) {
         EffectParam* p = paramContainer.items[i];
-        p -> fixtureChannelOffsets.clear();
-        FixtureParamDefinition* chanType = dynamic_cast<FixtureParamDefinition*>(p->paramType->targetContainer.get());
+        p -> SubFixtureChannelOffsets.clear();
+        ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
         if (chanType != nullptr) {
-            Array<FixtureChannel*> chans;
-            for (int fIndex = 0; fIndex < selection.computedSelectedFixtures.size(); fIndex++) {
-                Fixture* f = selection.computedSelectedFixtures[fIndex];
-                FixtureChannel* c = f->channelsMap.getReference(chanType);
+            Array<SubFixtureChannel*> chans;
+            for (int fIndex = 0; fIndex < selection.computedSelectedSubFixtures.size(); fIndex++) {
+                SubFixture* f = selection.computedSelectedSubFixtures[fIndex];
+                SubFixtureChannel* c = f->channelsMap.getReference(chanType);
                 if (c != nullptr) {
                     chans.add(c);
                 }
@@ -90,7 +90,7 @@ void EffectRow::computeData() {
                 double offset = chanIndex / (double)chans.size();
                 offset *= (double)p->elementsSpread->getValue();
                 offset += (double)p->elementsStart->getValue();
-                p->fixtureChannelOffsets.set(chans[chanIndex], -offset);
+                p->SubFixtureChannelOffsets.set(chans[chanIndex], -offset);
                 if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
                     parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
                 }

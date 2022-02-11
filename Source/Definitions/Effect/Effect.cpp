@@ -11,7 +11,7 @@
 #include "JuceHeader.h"
 #include "Effect.h"
 #include "../Command/CommandSelectionManager.h"
-#include "../Fixture/FixtureChannel.h"
+#include "../SubFixture/SubFixtureChannel.h"
 #include "../../Brain.h"
 #include "EffectManager.h"
 
@@ -22,6 +22,7 @@ Effect::Effect(var params) :
 	values("Curves")
 {
 	saveAndLoadRecursiveData = true;
+	nameCanBeChangedByUser = false;
 
 	itemDataType = "Effect";
 
@@ -115,7 +116,7 @@ void Effect::computeData() {
 	}
 }
 
-float Effect::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
+float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToFxParam.contains(fc)) {return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	Array<EffectParam*>* params = chanToFxParam.getReference(fc);
@@ -124,7 +125,7 @@ float Effect::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
 		EffectRow* row = dynamic_cast<EffectRow*>(p->parentContainer->parentContainer.get());
 
 		double offset = totalElapsed*(double)row->speed->getValue();
-		offset += p->fixtureChannelOffsets.getReference(fc);
+		offset += p->SubFixtureChannelOffsets.getReference(fc);
 		while (offset < 0) {
 			offset += 1;
 		}

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FixtureParamDefinition.h
+    ChannelType.h
     Created: 7 Nov 2021 7:40:48pm
     Author:  No
 
@@ -24,7 +24,6 @@ class CommandValue:
 
     EnumParameter* presetOrValue;
 
-    TargetParameter* presetType;
     TargetParameter* channelType;
 
     BoolParameter* release;

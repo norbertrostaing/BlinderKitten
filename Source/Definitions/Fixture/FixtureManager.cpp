@@ -3,25 +3,27 @@
 
 juce_ImplementSingleton(FixtureManager);
 
+int compare(Fixture* A, Fixture* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 FixtureManager::FixtureManager() :
     BaseManager("Fixture")
-{
+    {
     itemDataType = "Fixture";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
+
 }
 
 FixtureManager::~FixtureManager()
 {
-    // stopThread(1000);
 }
 
 
 void FixtureManager::addItemInternal(Fixture* o, var data)
 {
-    // o->addObjectListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
+    reorderItems();
 }
 
 void FixtureManager::removeItemInternal(Fixture* o)
@@ -30,7 +32,3 @@ void FixtureManager::removeItemInternal(Fixture* o)
 }
 
 
-void FixtureManager::onContainerParameterChanged(Parameter* p)
-{
-   // if (p == lockUI) for (auto& i : items) i->isUILocked->setValue(lockUI->boolValue());
-}

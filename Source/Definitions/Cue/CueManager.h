@@ -10,8 +10,8 @@
 
 #pragma once
 #include "Cue.h"
-//#include "../Fixture/Fixture.h"
-class Fixture;
+//#include "../SubFixture/SubFixture.h"
+class SubFixture;
 
 class CueManager :
     public BaseManager<Cue>

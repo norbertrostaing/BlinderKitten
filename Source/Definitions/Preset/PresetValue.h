@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FixtureParamDefinition.h
+    ChannelType.h
     Created: 7 Nov 2021 7:40:48pm
     Author:  No
 
@@ -9,7 +9,7 @@
 */
 
 #pragma once
-#include "JuceHeader.h";
+#include "JuceHeader.h"
 
 class PresetValue:
     public BaseItem

@@ -10,11 +10,11 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "PresetFixtureValues.h"
+#include "PresetSubFixtureValues.h"
 #include "PresetValue.h"
-#include "../Fixture/Fixture.h"
-#include "../FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"
-#include "../DeviceType/DeviceType.h"
+#include "../SubFixture/SubFixture.h"
+#include "../ChannelFamily/ChannelType/ChannelType.h"
+#include "../FixtureType/FixtureType.h"
 
 class Preset:
     public BaseItem
@@ -22,8 +22,6 @@ class Preset:
 public:
     Preset(var params = var());
     virtual ~Preset();
-
-    void afterLoadJSONDataInternal() override;
 
     String objectType;
     var objectData;
@@ -36,14 +34,14 @@ public:
     TargetParameter* devTypeParam;
     EnumParameter* presetType;
 
-    HashMap<Fixture*, HashMap<FixtureParamDefinition*, float>*> computedFixtureValues;
-    HashMap<DeviceType*, HashMap<FixtureParamDefinition*, float>*> computedDeviceTypeValues;
-    HashMap<DeviceType*, HashMap<String, HashMap<FixtureParamDefinition*, float>*>*> computedFixtureTypeValues;
-    HashMap<FixtureParamDefinition*, float> computedUniversalValues;
+    HashMap<SubFixture*, HashMap<ChannelType*, float>*> computedSubFixtureValues;
+    HashMap<FixtureType*, HashMap<ChannelType*, float>*> computedFixtureTypeValues;
+    HashMap<FixtureType*, HashMap<String, HashMap<ChannelType*, float>*>*> computedSubFixtureTypeValues;
+    HashMap<ChannelType*, float> computedUniversalValues;
 
-    HashMap<FixtureParamDefinition*, float>* getFixtureValues(Fixture* f);
+    HashMap<ChannelType*, float>* getSubFixtureValues(SubFixture* f);
 
-    std::unique_ptr<BaseManager<PresetFixtureValues>> fixtureValues;
+    std::unique_ptr<BaseManager<PresetSubFixtureValues>> SubFixtureValues;
     String getTypeString() const override { return objectType; }
 
     static Preset* create(var params) { return new Preset(params); }

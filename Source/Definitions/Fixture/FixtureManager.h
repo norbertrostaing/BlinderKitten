@@ -23,6 +23,4 @@ public:
     void addItemInternal(Fixture* o, var data) override;
     void removeItemInternal(Fixture* o) override;
 
-    void onContainerParameterChanged(Parameter* p) override;
-
 };

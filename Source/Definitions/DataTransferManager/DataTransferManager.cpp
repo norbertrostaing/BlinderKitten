@@ -11,7 +11,7 @@
 #include "DataTransferManager.h"
 #include "../ChannelValue.h"
 #include "../../Brain.h"
-#include "../Fixture/Fixture.h"
+#include "../SubFixture/SubFixture.h"
 #include "../Group/GroupManager.h"
 #include "../Group/Group.h"
 #include "../Preset/PresetManager.h"
@@ -22,8 +22,8 @@
 #include "../Programmer/Programmer.h"
 #include "../Command/CommandSelectionManager.h"
 #include "../Command/CommandSelection.h"
-#include "../FixtureParamType/FixtureParamTypeManager.h"
-#include "../FixtureParamType/FixtureParamType.h"
+#include "../ChannelFamily/ChannelFamilyManager.h"
+#include "../ChannelFamily/ChannelFamily.h"
 #include "../TimingPreset/TimingPresetManager.h"
 #include "../TimingPreset/TimingPreset.h"
 
@@ -47,7 +47,7 @@ DataTransferManager::DataTransferManager() :
     targetType->addOption("Programmer", "Programmer");
     targetId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
-    paramfilter = addTargetParameter("Param filter", "Filter recorded values in preset by parameter family", FixtureParamTypeManager::getInstance());
+    paramfilter = addTargetParameter("Param filter", "Filter recorded values in preset by parameter family", ChannelFamilyManager::getInstance());
     paramfilter->targetType = TargetParameter::CONTAINER;
     paramfilter->maxDefaultSearchLevel = 0;
 
@@ -120,40 +120,40 @@ void DataTransferManager::execute() {
                 target->setNiceName("Preset " + String(int(target->id->getValue())));
             }
 
-            // target->fixtureValues->clear(); // erase data
+            // target->SubFixtureValues->clear(); // erase data
 
-            FixtureParamType* filter = dynamic_cast<FixtureParamType*>(paramfilter->targetContainer.get());
+            ChannelFamily* filter = dynamic_cast<ChannelFamily*>(paramfilter->targetContainer.get());
 
             source->computeValues();
             for (auto it = source->computedValues.begin(); it != source->computedValues.end(); it.next()) {
-                // HashMap<FixtureChannel*, ChannelValue*> computedValues;
-                FixtureChannel* chan = it.getKey();
+                // HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+                SubFixtureChannel* chan = it.getKey();
                 ChannelValue* cValue = it.getValue();
-                FixtureParamType* chanType = dynamic_cast<FixtureParamType*>(chan->channelType->targetContainer->parentContainer->parentContainer.get());
+                ChannelFamily* chanType = dynamic_cast<ChannelFamily*>(chan->channelType->parentContainer->parentContainer.get());
 
                 if (cValue->endValue != -1 && (filter == nullptr || filter == chanType)) {
 
-                    int fixtId = chan->parentFixture->id->getValue();
-                    PresetFixtureValues* pfv = nullptr;
-                    for (int i = 0; i < target->fixtureValues->items.size(); i++) {
-                        if ((int)target->fixtureValues->items[i]->targetFixtureId->getValue() == fixtId) {
-                            pfv = target->fixtureValues->items[i];
+                    int fixtId = chan->parentSubFixture->subId;
+                    PresetSubFixtureValues* pfv = nullptr;
+                    for (int i = 0; i < target->SubFixtureValues->items.size(); i++) {
+                        if ((int)target->SubFixtureValues->items[i]->targetSubFixtureId->getValue() == fixtId) {
+                            pfv = target->SubFixtureValues->items[i];
                         }
                     }
                     if (pfv == nullptr) {
-                        pfv = target->fixtureValues->addItem();
-                        pfv->targetFixtureId->setValue(fixtId);
+                        pfv = target->SubFixtureValues->addItem();
+                        pfv->targetSubFixtureId->setValue(fixtId);
                     }
 
                     PresetValue* pv = nullptr;
                     for (int i = 0; i < pfv->values->items.size(); i++) {
-                        if (pfv->values->items[i]->param->getValue() == chan->channelType->getValue()) {
+                        if (dynamic_cast<ChannelType*>(pfv->values->items[i]->param->targetContainer.get()) == chan->channelType) {
                             pv = pfv->values->items[i];
                         }
                     }
                     if (pv == nullptr) {
                         pv = pfv->values->addItem();
-                        pv->param->setValue(chan->channelType->getValue());
+                        pv->param->setTarget(chan->channelType);
                     }
                     pv->paramValue->setValue(cValue->endValue);
                 }

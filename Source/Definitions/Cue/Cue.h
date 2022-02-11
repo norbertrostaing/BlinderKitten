@@ -33,7 +33,7 @@ public:
 
     Trigger* goBtn;
 
-    HashMap<FixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
 
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p) override;

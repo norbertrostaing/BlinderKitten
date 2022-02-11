@@ -20,6 +20,7 @@ CurvePreset::CurvePreset(var params) :
 	objectData(params)
 {
 	saveAndLoadRecursiveData = true;
+	nameCanBeChangedByUser = false;
 
 	itemDataType = "CurvePreset";
 

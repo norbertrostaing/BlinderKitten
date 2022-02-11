@@ -2,9 +2,8 @@
 #include "BKEngine.h"
 
 #include "Definitions/Interface/ui/InterfaceManagerUI.h"
-#include "Definitions/FixtureParamType/FixtureParamTypeManagerUI.h"
-#include "Definitions/DeviceType/DeviceTypeManagerUI.h"
-#include "Definitions/Device/DeviceManagerUI.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManagerUI.h"
+#include "Definitions/FixtureType/FixtureTypeManagerUI.h"
 #include "Definitions/Fixture/FixtureManagerUI.h"
 #include "Definitions/Group/GroupManagerUI.h"
 #include "Definitions/Preset/PresetManagerUI.h"
@@ -26,7 +25,7 @@ MainContentComponent::MainContentComponent()
 
 MainContentComponent::~MainContentComponent()
 {
-    // This shuts down the audio device and clears the audio source.
+    // This shuts down the audio Fixture and clears the audio source.
     //shutdownAudio();
 }
 
@@ -34,7 +33,7 @@ MainContentComponent::~MainContentComponent()
 /*
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    // This function will be called when the audio device is started, or when
+    // This function will be called when the audio Fixture is started, or when
     // its settings (i.e. sample rate, block size, etc) are changed.
 
     // You can use this function to initialise any resources you might need,
@@ -56,7 +55,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 
 void MainComponent::releaseResources()
 {
-    // This will be called when the audio device stops, or when it is being
+    // This will be called when the audio Fixture stops, or when it is being
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
@@ -81,9 +80,8 @@ void MainComponent::resized()
 void MainContentComponent::init()
 {
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Interfaces", &InterfaceManagerUI::create));
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Channel types", &FixtureParamTypeManagerUI::create));
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Device Types", &DeviceTypeManagerUI::create));
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Devices", &DeviceManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Channels config", &ChannelFamilyManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Fixture Types", &FixtureTypeManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Fixtures", &FixtureManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Groups", &GroupManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Presets", &PresetManagerUI::create));

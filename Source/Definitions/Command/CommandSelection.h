@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FixtureParamDefinition.h
+    ChannelType.h
     Created: 7 Nov 2021 7:40:48pm
     Author:  No
 
@@ -27,6 +27,11 @@ class CommandSelection:
     IntParameter* valueFrom;
     BoolParameter* thru;
     IntParameter* valueTo;
+
+    BoolParameter* subSel;
+    IntParameter* subFrom;
+    BoolParameter* subThru;
+    IntParameter* subTo;
 
     EnumParameter* filter;
     StringParameter* pattern;

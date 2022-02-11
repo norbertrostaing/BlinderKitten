@@ -143,6 +143,23 @@
                 file="Source/Definitions/Actions/CuelistAction.cpp"/>
           <FILE id="gXF4aY" name="CuelistAction.h" compile="0" resource="0" file="Source/Definitions/Actions/CuelistAction.h"/>
         </GROUP>
+        <GROUP id="{692CFCBA-37C7-80F1-DB80-392661BB25A7}" name="ChannelFamily">
+          <GROUP id="{8DC2F1AF-F1F2-B0B4-3E98-132DF65F339D}" name="ChannelType">
+            <FILE id="rLpRii" name="ChannelType.cpp" compile="1" resource="0" file="Source/Definitions/ChannelFamily/ChannelType/ChannelType.cpp"/>
+            <FILE id="lMoxlx" name="ChannelType.h" compile="0" resource="0" file="Source/Definitions/ChannelFamily/ChannelType/ChannelType.h"/>
+          </GROUP>
+          <FILE id="ui0nWk" name="ChannelFamily.cpp" compile="1" resource="0"
+                file="Source/Definitions/ChannelFamily/ChannelFamily.cpp"/>
+          <FILE id="qIyWb1" name="ChannelFamily.h" compile="0" resource="0" file="Source/Definitions/ChannelFamily/ChannelFamily.h"/>
+          <FILE id="oWsbLo" name="ChannelFamilyManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/ChannelFamily/ChannelFamilyManager.cpp"/>
+          <FILE id="QdxNJ2" name="ChannelFamilyManager.h" compile="0" resource="0"
+                file="Source/Definitions/ChannelFamily/ChannelFamilyManager.h"/>
+          <FILE id="o2FQeZ" name="ChannelFamilyManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.cpp"/>
+          <FILE id="Z1i6Yh" name="ChannelFamilyManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.h"/>
+        </GROUP>
         <GROUP id="{A9E2709B-DF39-DFB6-4B25-760293732897}" name="Command">
           <FILE id="z6HUwt" name="Command.cpp" compile="1" resource="0" file="Source/Definitions/Command/Command.cpp"/>
           <FILE id="Xt4qct" name="Command.h" compile="0" resource="0" file="Source/Definitions/Command/Command.h"/>
@@ -209,39 +226,6 @@
           <FILE id="ZgzAE9" name="DataTransferManager.h" compile="0" resource="0"
                 file="Source/Definitions/DataTransferManager/DataTransferManager.h"/>
         </GROUP>
-        <GROUP id="{EA97FD59-0904-67DE-6330-B95BF1100E9A}" name="Device">
-          <FILE id="nueYDd" name="Device.cpp" compile="1" resource="0" file="Source/Definitions/Device/Device.cpp"/>
-          <FILE id="yGEkBU" name="Device.h" compile="0" resource="0" file="Source/Definitions/Device/Device.h"/>
-          <FILE id="AkUYx3" name="DeviceManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Device/DeviceManager.cpp"/>
-          <FILE id="cJLO7m" name="DeviceManager.h" compile="0" resource="0" file="Source/Definitions/Device/DeviceManager.h"/>
-          <FILE id="vpyIgq" name="DeviceManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Device/DeviceManagerUI.cpp"/>
-          <FILE id="XEZiLO" name="DeviceManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Device/DeviceManagerUI.h"/>
-          <FILE id="hK8bav" name="DevicePatch.cpp" compile="1" resource="0" file="Source/Definitions/Device/DevicePatch.cpp"/>
-          <FILE id="GOxZoi" name="DevicePatch.h" compile="0" resource="0" file="Source/Definitions/Device/DevicePatch.h"/>
-        </GROUP>
-        <GROUP id="{1D44272A-3E25-BAAE-6197-3D117532F81A}" name="DeviceType">
-          <FILE id="DVzyiZ" name="DeviceType.cpp" compile="1" resource="0" file="Source/Definitions/DeviceType/DeviceType.cpp"/>
-          <FILE id="N05tO5" name="DeviceType.h" compile="0" resource="0" file="Source/Definitions/DeviceType/DeviceType.h"/>
-          <FILE id="AgovoQ" name="DeviceTypeChannel.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeChannel.cpp"/>
-          <FILE id="YE13sc" name="DeviceTypeChannel.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeChannel.h"/>
-          <FILE id="Z8OfCU" name="DeviceTypeChannelManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeChannelManager.cpp"/>
-          <FILE id="jJNjmx" name="DeviceTypeChannelManager.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeChannelManager.h"/>
-          <FILE id="kepC6d" name="DeviceTypeManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManager.cpp"/>
-          <FILE id="eOScEi" name="DeviceTypeManager.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManager.h"/>
-          <FILE id="iWNDT3" name="DeviceTypeManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManagerUI.cpp"/>
-          <FILE id="fcW3KC" name="DeviceTypeManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/DeviceType/DeviceTypeManagerUI.h"/>
-        </GROUP>
         <GROUP id="{B0F61552-9820-44AD-073F-12612E565630}" name="Effect">
           <FILE id="ixgVmB" name="Effect.cpp" compile="1" resource="0" file="Source/Definitions/Effect/Effect.cpp"/>
           <FILE id="SQNry6" name="Effect.h" compile="0" resource="0" file="Source/Definitions/Effect/Effect.h"/>
@@ -257,41 +241,40 @@
           <FILE id="VQguAZ" name="EffectRow.cpp" compile="1" resource="0" file="Source/Definitions/Effect/EffectRow.cpp"/>
           <FILE id="EVk8tK" name="EffectRow.h" compile="0" resource="0" file="Source/Definitions/Effect/EffectRow.h"/>
         </GROUP>
-        <GROUP id="{5AC300AA-9570-87BF-7AC7-6FAA3B849808}" name="Fixture">
-          <FILE id="W3VArm" name="Fixture.cpp" compile="1" resource="0" file="Source/Definitions/Fixture/Fixture.cpp"/>
-          <FILE id="UEMhNG" name="Fixture.h" compile="0" resource="0" file="Source/Definitions/Fixture/Fixture.h"/>
-          <FILE id="jCBkmW" name="FixtureChannel.cpp" compile="1" resource="0"
-                file="Source/Definitions/Fixture/FixtureChannel.cpp"/>
-          <FILE id="MXMutx" name="FixtureChannel.h" compile="0" resource="0"
-                file="Source/Definitions/Fixture/FixtureChannel.h"/>
-          <FILE id="arv2j5" name="FixtureManager.cpp" compile="1" resource="0"
+        <GROUP id="{D80F8B24-DFC3-A5B6-164F-687DC5F0A95E}" name="Fixture">
+          <FILE id="fzILko" name="Fixture.cpp" compile="1" resource="0" file="Source/Definitions/Fixture/Fixture.cpp"/>
+          <FILE id="B2avRT" name="Fixture.h" compile="0" resource="0" file="Source/Definitions/Fixture/Fixture.h"/>
+          <FILE id="QLBP6N" name="FixtureManager.cpp" compile="1" resource="0"
                 file="Source/Definitions/Fixture/FixtureManager.cpp"/>
-          <FILE id="G7gznE" name="FixtureManager.h" compile="0" resource="0"
+          <FILE id="rR0NUo" name="FixtureManager.h" compile="0" resource="0"
                 file="Source/Definitions/Fixture/FixtureManager.h"/>
-          <FILE id="aLUOxN" name="FixtureManagerUI.cpp" compile="1" resource="0"
+          <FILE id="OYR70w" name="FixtureManagerUI.cpp" compile="1" resource="0"
                 file="Source/Definitions/Fixture/FixtureManagerUI.cpp"/>
-          <FILE id="FPKBgo" name="FixtureManagerUI.h" compile="0" resource="0"
+          <FILE id="Aiz7Hr" name="FixtureManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Fixture/FixtureManagerUI.h"/>
+          <FILE id="zH1Lqd" name="FixturePatch.cpp" compile="1" resource="0"
+                file="Source/Definitions/Fixture/FixturePatch.cpp"/>
+          <FILE id="ZheeuP" name="FixturePatch.h" compile="0" resource="0" file="Source/Definitions/Fixture/FixturePatch.h"/>
         </GROUP>
-        <GROUP id="{EFAA28AE-4B51-B80B-6D1D-B7A26D4B6258}" name="FixtureParamType">
-          <GROUP id="{31638A47-BCBD-76AA-6FDD-F29679E765B7}" name="FixtureParamDefinition">
-            <FILE id="BmwjZC" name="FixtureParamDefinition.cpp" compile="1" resource="0"
-                  file="Source/Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.cpp"/>
-            <FILE id="tcSJa8" name="FixtureParamDefinition.h" compile="0" resource="0"
-                  file="Source/Definitions/FixtureParamType/FixtureParamDefinition/FixtureParamDefinition.h"/>
-          </GROUP>
-          <FILE id="wgM8MS" name="FixtureParamTypeManagerUI.cpp" compile="1"
-                resource="0" file="Source/Definitions/FixtureParamType/FixtureParamTypeManagerUI.cpp"/>
-          <FILE id="v4s5wt" name="FixtureParamTypeManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamTypeManagerUI.h"/>
-          <FILE id="JmJKjd" name="FixtureParamTypeManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamTypeManager.cpp"/>
-          <FILE id="w0dc5x" name="FixtureParamTypeManager.h" compile="0" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamTypeManager.h"/>
-          <FILE id="k3lT0H" name="FixtureParamType.cpp" compile="1" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamType.cpp"/>
-          <FILE id="wNNNNi" name="FixtureParamType.h" compile="0" resource="0"
-                file="Source/Definitions/FixtureParamType/FixtureParamType.h"/>
+        <GROUP id="{E085C61F-8028-E2EB-ADB4-64DE163A396C}" name="FixtureType">
+          <FILE id="N9RdkS" name="FixtureType.cpp" compile="1" resource="0" file="Source/Definitions/FixtureType/FixtureType.cpp"/>
+          <FILE id="yS1PlH" name="FixtureType.h" compile="0" resource="0" file="Source/Definitions/FixtureType/FixtureType.h"/>
+          <FILE id="ToiuWx" name="FixtureTypeChannel.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeChannel.cpp"/>
+          <FILE id="enouP3" name="FixtureTypeChannel.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeChannel.h"/>
+          <FILE id="X6yBVG" name="FixtureTypeChannelManager.cpp" compile="1"
+                resource="0" file="Source/Definitions/FixtureType/FixtureTypeChannelManager.cpp"/>
+          <FILE id="ygJcrh" name="FixtureTypeChannelManager.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeChannelManager.h"/>
+          <FILE id="WxTMFH" name="FixtureTypeManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeManager.cpp"/>
+          <FILE id="gBqTvH" name="FixtureTypeManager.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeManager.h"/>
+          <FILE id="lITPda" name="FixtureTypeManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp"/>
+          <FILE id="NzoqJA" name="FixtureTypeManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeManagerUI.h"/>
         </GROUP>
         <GROUP id="{8FBBC202-46A1-5C6A-F171-296B517ED469}" name="Group">
           <FILE id="D4h4qs" name="Group.cpp" compile="1" resource="0" file="Source/Definitions/Group/Group.cpp"/>
@@ -388,10 +371,6 @@
         <GROUP id="{D80DCD01-3855-E92F-D247-63A965E80BAF}" name="Preset">
           <FILE id="gEniAr" name="Preset.cpp" compile="1" resource="0" file="Source/Definitions/Preset/Preset.cpp"/>
           <FILE id="k3EDt4" name="Preset.h" compile="0" resource="0" file="Source/Definitions/Preset/Preset.h"/>
-          <FILE id="TGFDoS" name="PresetFixtureValues.cpp" compile="1" resource="0"
-                file="Source/Definitions/Preset/PresetFixtureValues.cpp"/>
-          <FILE id="WuXmFK" name="PresetFixtureValues.h" compile="0" resource="0"
-                file="Source/Definitions/Preset/PresetFixtureValues.h"/>
           <FILE id="WKIl50" name="PresetManager.cpp" compile="1" resource="0"
                 file="Source/Definitions/Preset/PresetManager.cpp"/>
           <FILE id="fMYXJK" name="PresetManager.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetManager.h"/>
@@ -399,6 +378,10 @@
                 file="Source/Definitions/Preset/PresetManagerUI.cpp"/>
           <FILE id="AVLiaQ" name="PresetManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Preset/PresetManagerUI.h"/>
+          <FILE id="PGBmRk" name="PresetSubFixtureValues.cpp" compile="1" resource="0"
+                file="Source/Definitions/Preset/PresetSubFixtureValues.cpp"/>
+          <FILE id="KVKzPP" name="PresetSubFixtureValues.h" compile="0" resource="0"
+                file="Source/Definitions/Preset/PresetSubFixtureValues.h"/>
           <FILE id="zFF8vA" name="PresetValue.cpp" compile="1" resource="0" file="Source/Definitions/Preset/PresetValue.cpp"/>
           <FILE id="azxx7K" name="PresetValue.h" compile="0" resource="0" file="Source/Definitions/Preset/PresetValue.h"/>
         </GROUP>
@@ -413,6 +396,14 @@
                 file="Source/Definitions/Programmer/ProgrammerManagerUI.cpp"/>
           <FILE id="cVpv9b" name="ProgrammerManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Programmer/ProgrammerManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{7FB4DF5D-8DCA-AC2D-DD2C-F67ECA24743D}" name="SubFixture">
+          <FILE id="jbO0qH" name="SubFixture.cpp" compile="1" resource="0" file="Source/Definitions/SubFixture/SubFixture.cpp"/>
+          <FILE id="pC6OfG" name="SubFixture.h" compile="0" resource="0" file="Source/Definitions/SubFixture/SubFixture.h"/>
+          <FILE id="GeQc1k" name="SubFixtureChannel.cpp" compile="1" resource="0"
+                file="Source/Definitions/SubFixture/SubFixtureChannel.cpp"/>
+          <FILE id="IfeqQk" name="SubFixtureChannel.h" compile="0" resource="0"
+                file="Source/Definitions/SubFixture/SubFixtureChannel.h"/>
         </GROUP>
         <GROUP id="{72A0E523-B0DE-0D5F-1DFB-E56DCE7C036C}" name="TimingPreset">
           <FILE id="IQtRwi" name="TimingPreset.cpp" compile="1" resource="0"

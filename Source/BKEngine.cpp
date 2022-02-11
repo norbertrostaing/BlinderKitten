@@ -23,9 +23,8 @@
 
 #include "Brain.h"
 #include "./Definitions/Interface/InterfaceManager.h"
-#include "./Definitions/FixtureParamType/FixtureParamTypeManager.h"
-#include "./Definitions/DeviceType/DeviceTypeManager.h"
-#include "./Definitions/Device/DeviceManager.h"
+#include "./Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "./Definitions/FixtureType/FixtureTypeManager.h"
 #include "./Definitions/Fixture/FixtureManager.h"
 #include "./Definitions/Group/GroupManager.h"
 #include "./Definitions/Preset/PresetManager.h"
@@ -39,7 +38,7 @@
 #include "./Common/MIDI/MIDIDevice.h"
 #include "./Common/MIDI/MIDIManager.h"
 #include "./Common/DMX/DMXManager.h"
-#include "./Common/DMX/device/DMXDevice.h"
+#include "./Common/DMX/Device/DMXDevice.h"
 #include "./Common/Serial/SerialDevice.h"
 #include "./Common/Serial/SerialManager.h"
 
@@ -52,7 +51,7 @@ ControllableContainer* getAppSettings();
 BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
 	defaultBehaviors("Test")
-	//ossiaDevice(nullptr)
+	//ossiaFixture(nullptr)
 {
 	convertURL = "http://hazlab.fr/";
 
@@ -60,9 +59,8 @@ BKEngine::BKEngine() :
 	Engine::mainEngine = this;
 	mainBrain = Brain::getInstance();
 	addChildControllableContainer(InterfaceManager::getInstance());
-	addChildControllableContainer(FixtureParamTypeManager::getInstance());
-	addChildControllableContainer(DeviceTypeManager::getInstance());
-	addChildControllableContainer(DeviceManager::getInstance());
+	addChildControllableContainer(ChannelFamilyManager::getInstance());
+	addChildControllableContainer(FixtureTypeManager::getInstance());
 	addChildControllableContainer(FixtureManager::getInstance());
 	addChildControllableContainer(GroupManager::getInstance());
 	addChildControllableContainer(PresetManager::getInstance());
@@ -118,9 +116,8 @@ BKEngine::~BKEngine()
 	PresetManager::deleteInstance();
 	GroupManager::deleteInstance();
 	FixtureManager::deleteInstance();
-	DeviceManager::deleteInstance();
-	DeviceTypeManager::deleteInstance();
-	FixtureParamTypeManager::deleteInstance();
+	FixtureTypeManager::deleteInstance();
+	ChannelFamilyManager::deleteInstance();
 	TimingPresetManager::deleteInstance();
 	CurvePresetManager::deleteInstance();
 
@@ -149,9 +146,8 @@ void BKEngine::clearInternal()
 	PresetManager::getInstance()->clear();
 	GroupManager::getInstance()->clear();
 	FixtureManager::getInstance()->clear();
-	DeviceManager::getInstance()->clear();
-	DeviceTypeManager::getInstance()->clear();
-	FixtureParamTypeManager::getInstance()->clear();
+	FixtureTypeManager::getInstance()->clear();
+	ChannelFamilyManager::getInstance()->clear();
 	InterfaceManager::getInstance()->clear();
 	TimingPresetManager::getInstance()->clear();
 	CurvePresetManager::getInstance()->clear();
@@ -167,14 +163,11 @@ var BKEngine::getJSONData()
 	var iData = InterfaceManager::getInstance()->getJSONData();
 	if (!iData.isVoid() && iData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(InterfaceManager::getInstance()->shortName, iData);
 
-	var dtData = DeviceTypeManager::getInstance()->getJSONData();
-	if (!dtData.isVoid() && dtData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(DeviceTypeManager::getInstance()->shortName, dtData);
+	var dtData = FixtureTypeManager::getInstance()->getJSONData();
+	if (!dtData.isVoid() && dtData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(FixtureTypeManager::getInstance()->shortName, dtData);
 
-	var fptData = FixtureParamTypeManager::getInstance()->getJSONData();
-	if (!fptData.isVoid() && fptData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(FixtureParamTypeManager::getInstance()->shortName, fptData);
-
-	var fData = FixtureManager::getInstance()->getJSONData();
-	if (!fData.isVoid() && fData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(FixtureManager::getInstance()->shortName, fData);
+	var fptData = ChannelFamilyManager::getInstance()->getJSONData();
+	if (!fptData.isVoid() && fptData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, fptData);
 
 	var gData = GroupManager::getInstance()->getJSONData();
 	if (!gData.isVoid() && gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(GroupManager::getInstance()->shortName, gData);
@@ -182,8 +175,8 @@ var BKEngine::getJSONData()
 	var pData = PresetManager::getInstance()->getJSONData();
 	if (!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(PresetManager::getInstance()->shortName, pData);
 
-	var dData = DeviceManager::getInstance()->getJSONData();
-	if (!dData.isVoid() && dData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(DeviceManager::getInstance()->shortName, dData);
+	var dData = FixtureManager::getInstance()->getJSONData();
+	if (!dData.isVoid() && dData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(FixtureManager::getInstance()->shortName, dData);
 
 	var cData = CommandManager::getInstance()->getJSONData();
 	if (!cData.isVoid() && cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CommandManager::getInstance()->shortName, cData);
@@ -219,10 +212,10 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 {
 	//ProgressTask* moduleTask = loadingTask->addTask("Modules");
 	ProgressTask* iTask = loadingTask->addTask("Interfaces");
-	ProgressTask* fptTask = loadingTask->addTask("Fixture Param Types");
-	ProgressTask* dtTask = loadingTask->addTask("Device Types");
-	ProgressTask* dTask = loadingTask->addTask("Devices");
-	ProgressTask* fTask = loadingTask->addTask("Fixtures");
+	ProgressTask* fptTask = loadingTask->addTask("SubFixture Param Types");
+	ProgressTask* dtTask = loadingTask->addTask("Fixture Types");
+	ProgressTask* dTask = loadingTask->addTask("Fixtures");
+	ProgressTask* fTask = loadingTask->addTask("SubFixtures");
 	ProgressTask* gTask = loadingTask->addTask("Groups");
 	ProgressTask* pTask = loadingTask->addTask("Presets");
 	ProgressTask* cTask = loadingTask->addTask("Commands");
@@ -246,12 +239,12 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	iTask->end();
 
 	fptTask->start();
-	FixtureParamTypeManager::getInstance()->loadJSONData(data.getProperty(FixtureParamTypeManager::getInstance()->shortName, var()));
+	ChannelFamilyManager::getInstance()->loadJSONData(data.getProperty(ChannelFamilyManager::getInstance()->shortName, var()));
 	fptTask->setProgress(1);
 	fptTask->end();
 
 	dtTask->start();
-	DeviceTypeManager::getInstance()->loadJSONData(data.getProperty(DeviceTypeManager::getInstance()->shortName, var()));
+	FixtureTypeManager::getInstance()->loadJSONData(data.getProperty(FixtureTypeManager::getInstance()->shortName, var()));
 	dtTask->setProgress(1);
 	dtTask->end();
 
@@ -265,13 +258,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	pTask->setProgress(1);
 	pTask->end();
 
-	fTask->start();
-	FixtureManager::getInstance()->loadJSONData(data.getProperty(FixtureManager::getInstance()->shortName, var()));
-	fTask->setProgress(1);
-	fTask->end();
-
 	dTask->start();
-	DeviceManager::getInstance()->loadJSONData(data.getProperty(DeviceManager::getInstance()->shortName, var()));
+	FixtureManager::getInstance()->loadJSONData(data.getProperty(FixtureManager::getInstance()->shortName, var()));
 	dTask->setProgress(1);
 	dTask->end();
 

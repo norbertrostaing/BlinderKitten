@@ -20,6 +20,7 @@ Group::Group(var params) :
 	objectData(params)
 {
 	saveAndLoadRecursiveData = true;
+	nameCanBeChangedByUser = false;
 
 	itemDataType = "Group";
 

@@ -20,7 +20,7 @@ CommandManager::~CommandManager()
 
 void CommandManager::addItemInternal(Command* o, var data)
 {
-    // o->addFixtureParamTypeListener(this);
+    // o->addChannelFamilyListener(this);
     // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
 }
 

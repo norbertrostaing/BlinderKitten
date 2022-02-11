@@ -14,7 +14,7 @@
 #include "../Command/CommandSelectionManager.h"
 #include "EffectRow.h"
 class EffectParam;
-class FixtureChannel;
+class SubFixtureChannel;
 
 class Effect :
     public BaseItem
@@ -45,7 +45,7 @@ public:
     double TSLastUpdate;
     double totalElapsed;
 
-    HashMap<FixtureChannel*, Array<EffectParam*>*> chanToFxParam;
+    HashMap<SubFixtureChannel*, Array<EffectParam*>*> chanToFxParam;
 
     String getTypeString() const override { return objectType; }
 
@@ -54,7 +54,7 @@ public:
     void computeData();
     void start();
     void stop();
-    float applyToChannel(FixtureChannel* fc, float currentVal, double now);
+    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 
     static Effect* create(var params) { return new Effect(params); }
     

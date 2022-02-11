@@ -26,6 +26,7 @@ Cuelist::Cuelist(var params) :
 	offFadeCurve()
 {
 	saveAndLoadRecursiveData = true;
+	nameCanBeChangedByUser = false;
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
 
@@ -178,7 +179,7 @@ void Cuelist::go(Cue* c) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				ChannelValue * current = activeValues.getReference(it.getKey());
-				temp->startValue = it.getKey()->value->getValue();
+				temp->startValue = it.getKey()->value;
 			}
 			else {
 				temp->startValue = -1;
@@ -313,7 +314,7 @@ void Cuelist::autoLoadCueB() {
 	}
 }
 
-float Cuelist::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
+float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	float val = currentVal;
 	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
 	
@@ -451,7 +452,7 @@ float Cuelist::applyToChannel(FixtureChannel* fc, float currentVal, double now) 
 }
 
 void Cuelist::cleanActiveValues() {
-	Array<FixtureChannel*> temp;
+	Array<SubFixtureChannel*> temp;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		if (it.getValue()->value == -1) {
 			temp.add(it.getKey());
@@ -464,7 +465,7 @@ void Cuelist::cleanActiveValues() {
 
 void Cuelist::updateHTPs() {
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		FixtureChannel* chan = it.getKey();
+		SubFixtureChannel* chan = it.getKey();
 		if (chan->isHTP) {
 			Brain::getInstance()->pleaseUpdate(chan);
 		}
@@ -473,7 +474,7 @@ void Cuelist::updateHTPs() {
 
 void Cuelist::updateLTPs() {
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		FixtureChannel* chan = it.getKey();
+		SubFixtureChannel* chan = it.getKey();
 		if (!chan->isHTP) {
 			Brain::getInstance()->pleaseUpdate(chan);
 		}
@@ -483,7 +484,7 @@ void Cuelist::updateLTPs() {
 
 void Cuelist::kill(bool forceRefreshChannels) {
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		FixtureChannel* chan = it.getKey();
+		SubFixtureChannel* chan = it.getKey();
 		chan->cuelistOutOfStack(this);
 		if (forceRefreshChannels) {
 			Brain::getInstance()->pleaseUpdate(chan);

@@ -32,6 +32,7 @@ Programmer::Programmer(var params) :
 	objectData(params)
 {
 	saveAndLoadRecursiveData = true;
+	nameCanBeChangedByUser = false;
 	editorIsCollapsed = false;
 	itemDataType = "Programmer";
 	
@@ -101,7 +102,7 @@ void Programmer::computeValues() {
 		cs[i]->computeValues();
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
 		for (auto it = cs[i]->computedValues.begin(); it != cs[i]->computedValues.end(); it.next()) {
-			FixtureChannel* fc = it.getKey();
+			SubFixtureChannel* fc = it.getKey();
 			computedValues.set(fc, it.getValue());
 		}
 	}
@@ -129,7 +130,7 @@ void Programmer::render(double now) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				ChannelValue* current = activeValues.getReference(it.getKey());
-				temp->startValue = it.getKey()->value->getValue();
+				temp->startValue = it.getKey()->value;
 			}
 			else {
 				temp->startValue = -1;
@@ -177,7 +178,7 @@ void Programmer::release(double now) {
 }
 
 
-float Programmer::applyToChannel(FixtureChannel* fc, float currentVal, double now) {
+float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	float val = currentVal;
 
 	bool keepUpdate = false;

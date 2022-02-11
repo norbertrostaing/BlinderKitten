@@ -10,7 +10,7 @@
 
 #include "Command.h"
 #include "../../Brain.h"
-#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/SubFixture/SubFixture.h"
 #include "CommandSelectionManager.h"
 #include "CommandTiming.h"
 #include "../ChannelValue.h"
@@ -63,7 +63,7 @@ void Command::computeValues() {
 	selection.computeSelection();
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values->getItemsWithType<CommandValue>();
-	Array<Fixture*> fixtures = selection.computedSelectedFixtures;
+	Array<SubFixture*> SubFixtures = selection.computedSelectedSubFixtures;
 
 	bool delayThru = false;
 	bool delaySym = false;
@@ -126,23 +126,38 @@ void Command::computeValues() {
 			}
 		}
 
-		FixtureParamDefinition* rawChan = dynamic_cast<FixtureParamDefinition*>(cv->channelType->targetContainer.get());
-		for (int indexFixt = 0; indexFixt < fixtures.size(); indexFixt++) {
-
-			HashMap<FixtureParamDefinition*, float>* valuesFrom = new HashMap<FixtureParamDefinition*, float>();
-			HashMap<FixtureParamDefinition*, float>* valuesTo = new HashMap<FixtureParamDefinition*, float>();
+		ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+		for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
+			
+			HashMap<ChannelType*, float>* valuesFrom = new HashMap<ChannelType*, float>();;
+			HashMap<ChannelType*, float>* valuesTo = new HashMap<ChannelType*, float>();;
 			String test = cv->presetOrValue->getValue();
 			if (cv->presetOrValue->getValue() == "preset") {
-				valuesFrom = pFrom != nullptr ? pFrom->getFixtureValues(fixtures[indexFixt]) : valuesFrom;
-				valuesTo = pTo != nullptr ? pTo->getFixtureValues(fixtures[indexFixt]) : valuesTo;
+
+				HashMap<ChannelType*, float>* tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+				HashMap<ChannelType*, float>* tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+				if (tempValuesFrom != nullptr) {
+					for (auto it = tempValuesFrom->begin(); it != tempValuesFrom->end(); it.next()) {
+						valuesFrom->set(it.getKey(), it.getValue());
+					}
+					tempValuesFrom->~HashMap();
+				}
+				if (tempValuesTo != nullptr) {
+					for (auto it = tempValuesTo->begin(); it != tempValuesTo->end(); it.next()) {
+						valuesTo->set(it.getKey(), it.getValue());
+					}
+					tempValuesTo->~HashMap();
+				}
+				
 			}
-			else if (cv->presetOrValue->getValue() == "value") {
+
+			if (cv->presetOrValue->getValue() == "value") {
 				valuesFrom->set(rawChan, cv->valueFrom->getValue());
 				valuesTo->set(rawChan, cv->valueTo->getValue());
 			}
 
 			for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
-				FixtureChannel* fchan = fixtures[indexFixt]->channelsMap.getReference(it.getKey());
+				SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(it.getKey());
 
 				float valueFrom = it.getValue();
 				float valueTo = valueFrom;
@@ -156,26 +171,26 @@ void Command::computeValues() {
 					}
 					ChannelValue* finalValue = computedValues.getReference(fchan);
 					float val = valueFrom;
-					if (cv->thru->getValue() && fixtures.size() > 1) {
-						float position = float(indexFixt) / float(fixtures.size() - 1);
-						if (symValues) { position = Brain::symPosition(indexFixt, fixtures.size()); }
+					if (cv->thru->getValue() && SubFixtures.size() > 1) {
+						float position = float(indexFixt) / float(SubFixtures.size() - 1);
+						if (symValues) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						val = jmap(position, val, valueTo);
 					}
 					finalValue->endValue = val;
 
 					float delay = delayFrom;
-					if (delayThru && fixtures.size() > 1) {
-						float position = float(indexFixt) / float(fixtures.size() - 1);
-						if (delaySym) { position = Brain::symPosition(indexFixt, fixtures.size()); }
+					if (delayThru && SubFixtures.size() > 1) {
+						float position = float(indexFixt) / float(SubFixtures.size() - 1);
+						if (delaySym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						position = timing.curveDelayRepart.getValueAtPosition(position);
 						delay = jmap(position, delayFrom, delayTo);
 					}
 					finalValue->delay = delay;
 
 					float fade = fadeFrom;
-					if (fadeThru && fixtures.size() > 1) {
-						float position = float(indexFixt) / float(fixtures.size() - 1);
-						if (fadeSym) { position = Brain::symPosition(indexFixt, fixtures.size()); }
+					if (fadeThru && SubFixtures.size() > 1) {
+						float position = float(indexFixt) / float(SubFixtures.size() - 1);
+						if (fadeSym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						position = timing.curveFadeRepart.getValueAtPosition(position);
 						fade = jmap(position, fadeFrom, fadeTo);
 					}
@@ -186,12 +201,16 @@ void Command::computeValues() {
 				}
 			}
 
+			if (valuesFrom != nullptr) {
+				valuesFrom->~HashMap();
+			}
+			if (valuesTo != nullptr) {
+				valuesTo->~HashMap();
+			}
 		}
 
-
-
 		if (cv->presetOrValue->getValue() == "value") {
-			FixtureParamDefinition* chan = dynamic_cast<FixtureParamDefinition*>(cv->channelType->targetContainer.get());
+			ChannelType* chan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
 			if (chan != nullptr) {
 
 			}
@@ -210,121 +229,22 @@ void Command::computeValues() {
 					pTo->computeValues();
 				}
 
-				for (int indexFixt = 0; indexFixt < fixtures.size(); indexFixt++) {
-					Fixture* f = fixtures[indexFixt];
-					HashMap<FixtureParamDefinition*, float>* valuesFrom = pFrom->getFixtureValues(f);
-					for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
-						FixtureParamDefinition* param = it.getKey();
+				for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
+					SubFixture* f = SubFixtures[indexFixt];
+					HashMap<ChannelType*, float>* vals = pFrom->getSubFixtureValues(f);
+					for (auto it = vals->begin(); it != vals->end(); it.next()) {
+						ChannelType* param = it.getKey();
 						float val = it.getValue();
 						if (f->channelsMap.contains(param)) {
-							FixtureChannel* fchan = fixtures[indexFixt]->channelsMap.getReference(param);
+							SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(param);
 
 						}
 					}
+					vals->~HashMap();
 				}
 			}
 		}
 		else {}
 	}
 }
-
-
-/*
-void Command::computeValues() {
-	maxTiming = 0;
-	selection->computeSelection();
-	computedValues.clear();
-	Array<CommandValue*> commandValues = values->getItemsWithType<CommandValue>();
-	Array<Fixture*> fixtures = selection->computedSelectedFixtures;
-
-	bool delayThru = timing.thruDelay->getValue();
-	bool delaySym = timing.symmetryDelay->getValue();
-	float delayFrom = timing.delayFrom->getValue();
-	float delayTo = timing.delayTo->getValue();
-
-	bool fadeThru = timing.thruFade->getValue();
-	bool fadeSym = timing.symmetryFade->getValue();
-	float fadeFrom = timing.fadeFrom->getValue();
-	float fadeTo = timing.fadeTo->getValue();
-
-	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
-		CommandValue* cv = commandValues[commandIndex];
-		bool symValues = cv->symmetry->getValue();
-		if (cv->presetOrValue->getValue() == "value") {
-			FixtureParamDefinition* chan = dynamic_cast<FixtureParamDefinition*>(cv->channelType->targetContainer.get());
-			if (chan != nullptr) {
-				for (int indexFixt = 0; indexFixt < fixtures.size(); indexFixt++) {
-
-					FixtureChannel* fchan = fixtures[indexFixt]->channelsMap.getReference(chan);
-
-					if (fchan != nullptr) {
-						if (!computedValues.contains(fchan)) {
-							computedValues.set(fchan, new ChannelValue());
-						}
-						ChannelValue* finalValue = computedValues.getReference(fchan);
-						float val = cv->valueFrom->getValue();
-						if (cv->thru->getValue() && fixtures.size() > 1) {
-							float position = float(indexFixt) / float(fixtures.size() - 1);
-							if (symValues) { position = Brain::symPosition(indexFixt, fixtures.size()); }
-							val = jmap(position, val, float(cv->valueTo->getValue()));
-						}
-						finalValue->endValue = val;
-
-						float delay = delayFrom;
-						if (delayThru && fixtures.size() > 1) {
-							float position = float(indexFixt) / float(fixtures.size() - 1);
-							if (delaySym) { position = Brain::symPosition(indexFixt, fixtures.size()); }
-							position = timing.curveDelayRepart->getValueAtPosition(position);
-							delay = jmap(position, delayFrom, delayTo);
-						}
-						finalValue->delay = delay;
-
-						float fade = fadeFrom;
-						if (fadeThru && fixtures.size() > 1) {
-							float position = float(indexFixt) / float(fixtures.size() - 1);
-							if (fadeSym) { position = Brain::symPosition(indexFixt, fixtures.size()); }
-							position = timing.curveFadeRepart->getValueAtPosition(position);
-							fade = jmap(position, fadeFrom, fadeTo);
-						}
-						finalValue->fade = fade;
-						finalValue->fadeCurve = timing.curveFade;
-						int64 tempTiming = round(1000 * (delay + fade));
-						maxTiming = std::max(maxTiming, tempTiming);
-					}
-				}
-			}
-		}
-		else if (cv->presetOrValue->getValue() == "preset") {
-			Preset* pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue());
-			Preset* pTo = nullptr;
-			if (cv->thru->getValue()) {
-				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue());
-			}
-			if (pFrom != nullptr) {
-				pFrom->computeValues();
-				bool thru = false;
-				if (pTo != nullptr) {
-					thru = true;
-					pTo->computeValues();
-				}
-
-				for (int indexFixt = 0; indexFixt < fixtures.size(); indexFixt++) {
-					Fixture* f = fixtures[indexFixt];
-					HashMap<FixtureParamDefinition*, float>* valuesFrom = pTo->getFixtureValues(f);
-					for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
-						FixtureParamDefinition* param = it.getKey();
-						float val = it.getValue();
-						if (f->channelsMap.contains(param)) {
-							FixtureChannel* fchan = fixtures[indexFixt]->channelsMap.getReference(param);
-
-						}
-					}
-				}
-			}
-		}
-		else {}
-	}
-}
-
-*/
 

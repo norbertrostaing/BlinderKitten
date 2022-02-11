@@ -1,5 +1,5 @@
 #include "CommandValueManager.h"
-#include "../Fixture/Fixture.h"
+#include "../SubFixture/SubFixture.h"
 #include "../../Brain.h"
 
 CommandValueManager::CommandValueManager() :

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    DeviceTypeChannel.cpp
+    FixtureTypeChannel.cpp
     Created: 8 Nov 2021 7:28:28pm
     Author:  No
 
@@ -9,7 +9,7 @@
 */
 
 #include "EffectParam.h"
-#include "../FixtureParamType/FixtureParamTypeManager.h"
+#include "../ChannelFamily/ChannelFamilyManager.h"
 #include "EffectRow.h"
 
 EffectParam::EffectParam(var params) :
@@ -18,7 +18,7 @@ EffectParam::EffectParam(var params) :
     objectData(params)
 {
     saveAndLoadRecursiveData = true;
-    paramType = addTargetParameter("Channel type", "Type of data of this channel", FixtureParamTypeManager::getInstance());
+    paramType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     paramType->targetType = TargetParameter::CONTAINER;
     paramType->maxDefaultSearchLevel = 2;
 

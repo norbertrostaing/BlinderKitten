@@ -10,8 +10,8 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "Definitions/SubFixture/SubFixture.h"
 #include "Definitions/Fixture/Fixture.h"
-#include "Definitions/Device/Device.h"
 #include "Definitions/Group/Group.h"
 #include "Definitions/Command/Command.h"
 #include "Definitions/Cue/Cue.h"
@@ -30,9 +30,9 @@ public:
     Brain();
     ~Brain();
 
-    HashMap<int, Fixture*>fixtures;
+    HashMap<int, SubFixture*>SubFixtures;
     HashMap<int, Group*>groups;
-    HashMap<int, Device*>devices;
+    HashMap<int, Fixture*>Fixtures;
     HashMap<int, Preset*>presets;
     HashMap<int, Cuelist*>cuelists;
     HashMap<int, Programmer*>programmers;
@@ -42,8 +42,8 @@ public:
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
-    Array<FixtureChannel*> fixtureChannelPoolUpdating;
-    Array<FixtureChannel*> fixtureChannelPoolWaiting;
+    Array<SubFixtureChannel*> SubFixtureChannelPoolUpdating;
+    Array<SubFixtureChannel*> SubFixtureChannelPoolWaiting;
     Array<Cue*> cuePoolUpdating;
     Array<Cue*> cuePoolWaiting;
     Array<Programmer*> programmerPoolUpdating;
@@ -54,10 +54,10 @@ public:
     double now;
 
     void run() override;
+    void registerSubFixture(SubFixture* f, int id);
+    void unregisterSubFixture(SubFixture* f);
     void registerFixture(Fixture* f, int id);
     void unregisterFixture(Fixture* f);
-    void registerDevice(Device* f, int id);
-    void unregisterDevice(Device* f);
     void registerGroup(Group* f, int id);
     void unregisterGroup(Group* f);
     void registerPreset(Preset* p, int id);
@@ -74,15 +74,15 @@ public:
     void unregisterEffect(Effect* p);
 
     void pleaseUpdate(Cuelist* c);
-    void pleaseUpdate(FixtureChannel* f);
+    void pleaseUpdate(SubFixtureChannel* f);
     void pleaseUpdate(Cue* c);
     void pleaseUpdate(Programmer* p);
     void pleaseUpdate(Effect* f);
 
-    //void updateChannel(FixtureChannel* fc);
+    //void updateChannel(SubFixtureChannel* fc);
 
+    SubFixture* getSubFixtureById(int id);
     Fixture* getFixtureById(int id);
-    Device* getDeviceById(int id);
     Group* getGroupById(int id);
     Preset* getPresetById(int id);
     Cuelist* getCuelistById(int id);

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FixtureParamTypeManagerUI.cpp
+    ChannelFamilyManagerUI.cpp
     Created: 4 Nov 2021 12:32:12am
     Author:  No
 

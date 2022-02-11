@@ -17,7 +17,6 @@ juce_ImplementSingleton(Brain);
 Brain::Brain() :
     Thread("BKBrain") 
 {
-    LOG("I'm a brand new brain !");
     startThread();
 }
 
@@ -59,78 +58,73 @@ void Brain::run() {
         }
         programmerPoolUpdating.clear();
 
-        fixtureChannelPoolUpdating.addArray(fixtureChannelPoolWaiting);
-        fixtureChannelPoolWaiting.clear();
-        for (int i = 0; i < fixtureChannelPoolUpdating.size(); i++) {
-            fixtureChannelPoolUpdating[i] -> updateVal(now);
+        SubFixtureChannelPoolUpdating.addArray(SubFixtureChannelPoolWaiting);
+        SubFixtureChannelPoolWaiting.clear();
+        for (int i = 0; i < SubFixtureChannelPoolUpdating.size(); i++) {
+            SubFixtureChannelPoolUpdating[i] -> updateVal(now);
         }
-        fixtureChannelPoolUpdating.clear();
+        SubFixtureChannelPoolUpdating.clear();
         wait(22);
     }
 }
 
 
 
-void Brain::registerFixture(Fixture* f, int id) {
-    Logger::writeToLog("fixture request : " + String(id));
+void Brain::registerSubFixture(SubFixture* f, int id) {
     int askedId = id;
-    if (fixtures.getReference(id) == f) { return; }
-    if (fixtures.containsValue(f)) {
-        fixtures.removeValue(f);
+    if (SubFixtures.getReference(id) == f) { return; }
+    if (SubFixtures.containsValue(f)) {
+        SubFixtures.removeValue(f);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (fixtures.contains(id) && fixtures.getReference(id) != nullptr) {
+        if (SubFixtures.contains(id) && SubFixtures.getReference(id) != nullptr) {
             id++;
         }
         else {
             idIsOk = true;
         }
     }
-    fixtures.set(id, f);
-    f->id->setValue(id);
+    SubFixtures.set(id, f);
+    f->subId =id;
     if (id != askedId) {
-        Logger::writeToLog("! Fixture ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
-void Brain::unregisterFixture(Fixture* f) {
-    if (fixtures.containsValue(f)) {
-        fixtures.removeValue(f);
+void Brain::unregisterSubFixture(SubFixture* f) {
+    if (SubFixtures.containsValue(f)) {
+        SubFixtures.removeValue(f);
     }
 }
 
-void Brain::registerDevice(Device* d, int id) {
-    Logger::writeToLog("device request : " + String(id));
+void Brain::registerFixture(Fixture* d, int id) {
     int askedId = id;
-    if (devices.getReference(id) == d) { return; }
-    if (devices.containsValue(d)) {
-        devices.removeValue(d);
+    if (Fixtures.getReference(id) == d) { return; }
+    if (Fixtures.containsValue(d)) {
+        Fixtures.removeValue(d);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (devices.contains(id) && devices.getReference(id) != nullptr) {
+        if (Fixtures.contains(id) && Fixtures.getReference(id) != nullptr) {
             id++;
         }
         else {
             idIsOk = true;
         }
     }
-    devices.set(id, d);
+    Fixtures.set(id, d);
     d->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! Device ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
-void Brain::unregisterDevice(Device* d) {
-    if (devices.containsValue(d)) {
-        devices.removeValue(d);
+void Brain::unregisterFixture(Fixture* d) {
+    if (Fixtures.containsValue(d)) {
+        Fixtures.removeValue(d);
     }
 }
 
 void Brain::registerGroup(Group* g, int id) {
-    Logger::writeToLog("group request : " + String(id));
     int askedId = id;
     if (groups.getReference(id) == g) {return;}
     if (groups.containsValue(g)) {
@@ -147,7 +141,6 @@ void Brain::registerGroup(Group* g, int id) {
     }
     groups.set(id, g);
     if (id != askedId) {
-        Logger::writeToLog("! group ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     } 
     g->id->setValue(id);
 }
@@ -159,7 +152,6 @@ void Brain::unregisterGroup(Group* g) {
 }
 
 void Brain::registerPreset(Preset* p, int id) {
-    Logger::writeToLog("preset request : " + String(id));
     int askedId = id;
     if (presets.getReference(id) == p) { return; }
     if (presets.containsValue(p)) {
@@ -177,7 +169,6 @@ void Brain::registerPreset(Preset* p, int id) {
     presets.set(id, p);
     p->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! presets ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
@@ -188,7 +179,6 @@ void Brain::unregisterPreset(Preset* p) {
 }
 
 void Brain::registerCuelist(Cuelist* c, int id) {
-    Logger::writeToLog("Cuelist request : " + String(id));
     int askedId = id;
     if (cuelists.getReference(id) == c) { return; }
     if (cuelists.containsValue(c)) {
@@ -206,7 +196,6 @@ void Brain::registerCuelist(Cuelist* c, int id) {
     cuelists.set(id, c);
     c->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! cuelists ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
@@ -217,7 +206,6 @@ void Brain::unregisterCuelist(Cuelist* c) {
 }
 
 void Brain::registerProgrammer(Programmer* c, int id) {
-    Logger::writeToLog("Programmer request : " + String(id));
     int askedId = id;
     if (programmers.getReference(id) == c) { return; }
     if (programmers.containsValue(c)) {
@@ -235,7 +223,6 @@ void Brain::registerProgrammer(Programmer* c, int id) {
     programmers.set(id, c);
     c->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! programmer ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
@@ -246,7 +233,6 @@ void Brain::unregisterProgrammer(Programmer* c) {
 }
 
 void Brain::registerCurvePreset(CurvePreset* c, int id) {
-    Logger::writeToLog("CurvePreset request : " + String(id));
     int askedId = id;
     if (curvePresets.getReference(id) == c) { return; }
     if (curvePresets.containsValue(c)) {
@@ -264,7 +250,6 @@ void Brain::registerCurvePreset(CurvePreset* c, int id) {
     curvePresets.set(id, c);
     c->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! curvePreset ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
@@ -275,7 +260,6 @@ void Brain::unregisterCurvePreset(CurvePreset* c) {
 }
 
 void Brain::registerTimingPreset(TimingPreset* c, int id) {
-    Logger::writeToLog("TimingPreset request : " + String(id));
     int askedId = id;
     if (timingPresets.getReference(id) == c) { return; }
     if (timingPresets.containsValue(c)) {
@@ -293,7 +277,6 @@ void Brain::registerTimingPreset(TimingPreset* c, int id) {
     timingPresets.set(id, c);
     c->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! TimingPreset ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
@@ -304,7 +287,6 @@ void Brain::unregisterTimingPreset(TimingPreset* c) {
 }
 
 void Brain::registerEffect(Effect* c, int id) {
-    Logger::writeToLog("Effect request : " + String(id));
     int askedId = id;
     if (effects.getReference(id) == c) { return; }
     if (effects.containsValue(c)) {
@@ -322,7 +304,6 @@ void Brain::registerEffect(Effect* c, int id) {
     effects.set(id, c);
     c->id->setValue(id);
     if (id != askedId) {
-        Logger::writeToLog("! TimingPreset ID " + String(askedId) + " not available, ID " + String(id) + " given!");
     }
 }
 
@@ -338,9 +319,9 @@ void Brain::pleaseUpdate(Cuelist* c) {
     }
 }
 
-void Brain::pleaseUpdate(FixtureChannel* f) {
-    if (!fixtureChannelPoolWaiting.contains(f)) {
-        fixtureChannelPoolWaiting.add(f);
+void Brain::pleaseUpdate(SubFixtureChannel* f) {
+    if (!SubFixtureChannelPoolWaiting.contains(f)) {
+        SubFixtureChannelPoolWaiting.add(f);
     }
 }
 
@@ -376,12 +357,12 @@ float Brain::symPosition(int index, int nElements) {
     return position;
 }
 
-Fixture* Brain::getFixtureById(int id) {
-    return fixtures.getReference(id);
+SubFixture* Brain::getSubFixtureById(int id) {
+    return SubFixtures.getReference(id);
 }
 
-Device* Brain::getDeviceById(int id) {
-    return devices.getReference(id);
+Fixture* Brain::getFixtureById(int id) {
+    return Fixtures.getReference(id);
 }
 
 Group* Brain::getGroupById(int id) {

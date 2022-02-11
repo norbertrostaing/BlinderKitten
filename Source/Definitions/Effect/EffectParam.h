@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FixtureParamDefinition.h
+    ChannelType.h
     Created: 7 Nov 2021 7:40:48pm
     Author:  No
 
@@ -12,7 +12,7 @@
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
 
-class FixtureChannel;
+class SubFixtureChannel;
 
 class EffectParam:
     public BaseItem
@@ -32,7 +32,7 @@ class EffectParam:
     BoolParameter* forceBaseValue;
     FloatParameter* baseValue;
 
-    HashMap<FixtureChannel*, double> fixtureChannelOffsets;
+    HashMap<SubFixtureChannel*, double> SubFixtureChannelOffsets;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

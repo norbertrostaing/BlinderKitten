@@ -9,14 +9,14 @@
 */
 
 #include "PresetValue.h"
-#include "../FixtureParamType/FixtureParamTypeManager.h"
+#include "../ChannelFamily/ChannelFamilyManager.h"
 
 PresetValue::PresetValue(var params) :
     BaseItem(params.getProperty("name", "Value")),
     objectType(params.getProperty("type", "PresetValue").toString()),
     objectData(params)
 {
-    param  = addTargetParameter("Channel type", "Type of data of this channel", FixtureParamTypeManager::getInstance());
+    param  = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     param ->targetType = TargetParameter::CONTAINER;
     param ->maxDefaultSearchLevel = 2;
 
