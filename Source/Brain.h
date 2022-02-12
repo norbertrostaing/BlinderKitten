@@ -51,6 +51,9 @@ public:
     Array<Effect*> effectPoolUpdating;
     Array<Effect*> effectPoolWaiting;
 
+    Array<SubFixtureChannel*> swoppableChannels;
+    Array<Cuelist*> swoppedCuelists;
+
     double now;
 
     void run() override;
@@ -90,6 +93,10 @@ public:
     CurvePreset* getCurvePresetById(int id);
     TimingPreset* getTimingPresetById(int id);
     Effect* getEffectById(int id);
+
+    void swoppedCuelist(Cuelist* c);
+    void unswoppedCuelist(Cuelist* c);
+    bool isSwopping = false;
 
     static float symPosition(int index, int nElements);
 };

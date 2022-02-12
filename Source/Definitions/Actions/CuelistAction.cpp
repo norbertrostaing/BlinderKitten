@@ -28,17 +28,6 @@ void CuelistAction::triggerInternal()
 {
     Cuelist * target = Brain::getInstance()->getCuelistById(cuelistId->getValue());
     if (target == nullptr) return;
-
-    switch (actionType)
-    {
-    case CL_GO:
-        target->go();
-        break;
-
-    case CL_OFF:
-        target->off();
-        break;
-    }
 }
 
 void CuelistAction::setValueInternal(var value) {
@@ -74,6 +63,15 @@ void CuelistAction::setValueInternal(var value) {
     case CL_FLASH:
         if (val > 0) {
             target->flash(true, false);
+        }
+        else {
+            target->flash(false, false);
+        }
+        break;
+
+    case CL_SWOP:
+        if (val > 0) {
+            target->flash(true, false, true);
         }
         else {
             target->flash(false, false);

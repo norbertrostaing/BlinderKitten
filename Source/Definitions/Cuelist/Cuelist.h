@@ -33,6 +33,8 @@ public:
     Trigger* goRandomBtn;
     Trigger* flashOnBtn;
     Trigger* flashOffBtn;
+    Trigger* swopOnBtn;
+    Trigger* swopOffBtn;
     Trigger* offBtn;
     Trigger* killBtn;
 
@@ -76,8 +78,9 @@ public:
     void go(Cue* c);
     void go();
     void goRandom();
-    void flash(bool on, bool timing);
+    void flash(bool on, bool timing, bool swop = false);
     bool isFlashing;
+    bool isSwopping;
     bool wannaOffFlash = false;
 
     void off();

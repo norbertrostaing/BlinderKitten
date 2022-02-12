@@ -52,8 +52,10 @@ Cuelist::Cuelist(var params) :
 	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
-	flashOnBtn = addTrigger("Flash ON", "Trigger next cue");
-	flashOffBtn = addTrigger("flash Off", "Trigger next cue");
+	// flashOnBtn = addTrigger("Flash ON", "release flash");
+	// flashOffBtn = addTrigger("flash Off", "press flash");
+	// swopOnBtn = addTrigger("Swop ON", "press swop");
+	// swopOffBtn = addTrigger("Swop Off", "release swop");
 
 	nextCue = addTargetParameter("Next Cue", "Cue triggered when button go pressed", &cues);
 	nextCue->maxDefaultSearchLevel = 0;
@@ -62,7 +64,7 @@ Cuelist::Cuelist(var params) :
 	nextCueId = addFloatParameter("Next cue ID", "ID of the cue triggered when go pressed, 0 means next cue",0,0);
 
 	HTPLevel = addFloatParameter("HTP Level", "Level master for HTP channels of this sequence", 1, 0, 1);
-	FlashLevel = addFloatParameter("Flash Level", "Level flash master for HTP channels of this sequence", 1, 0, 1);
+	FlashLevel = addFloatParameter("Flash Level", "Flash/swop level master for HTP channels of this sequence", 1, 0, 1);
 	// LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
 
 	isCuelistOn = addBoolParameter("is On", "Is this cuelist on ?", false);
@@ -149,6 +151,12 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	else if (t == flashOffBtn) {
 		flash(false, true);
 	}
+	else if (t == swopOnBtn) {
+		flash(true, true, true);
+	}
+	else if (t == swopOffBtn) {
+		flash(false, true);
+	}
 	else {}
 }
 
@@ -158,7 +166,6 @@ void Cuelist::go(Cue* c) {
 		cueA->TSAutoFollowEnd = 0;
 	}
 	cueA = c;
-	LOG("go Cuelist");
 	cueB = nullptr;
 	nextCue->resetValue();
 	nextCueId->resetValue();
@@ -227,7 +234,7 @@ void Cuelist::go() {
 	go(cueB);
 }
 
-void Cuelist::flash(bool setOn, bool withTiming) {
+void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 	if (setOn) {
 		isFlashing = true;
 		double now = Time::getMillisecondCounterHiRes();
@@ -238,11 +245,14 @@ void Cuelist::flash(bool setOn, bool withTiming) {
 			flashingCue = cueB;
 		}
 
-		LOG("go Flash");
 		cueB = nullptr;
 
+		if (swop) {
+			isSwopping = true;
+			Brain::getInstance()->swoppedCuelist(this);
+		}
+
 		if (flashingCue != nullptr) {
-			LOG("ok");
 			// set a flash tag to on ?
 			flashingCue->computeValues();
 			for (auto it = flashingCue->computedValues.begin(); it != flashingCue->computedValues.end(); it.next()) {
@@ -259,7 +269,6 @@ void Cuelist::flash(bool setOn, bool withTiming) {
 				temp->TSEnd = withTiming ? temp->TSStart + (temp->fade) : now;
 				temp->isEnded = false;
 				flashingValues.set(it.getKey(), temp);
-				LOG("yataaaaa");
 				it.getKey()->cuelistOnTopOfFlashStack(this);
 				Brain::getInstance()->pleaseUpdate(it.getKey());
 			}
@@ -267,6 +276,8 @@ void Cuelist::flash(bool setOn, bool withTiming) {
 	}
 	else {
 		wannaOffFlash = true;
+		isSwopping = false;
+		Brain::getInstance()->unswoppedCuelist(this);
 		for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
 			Brain::getInstance()->pleaseUpdate(it.getKey());
 		}
@@ -328,7 +339,6 @@ void Cuelist::update() {
 	}
 
 	if (wannaOffFlash) {
-		LOG("wannaOff");
 		bool canStopFlash = true;
 		for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
 			ChannelValue* cv = it.getValue();
@@ -336,7 +346,6 @@ void Cuelist::update() {
 		}
 
 		if (canStopFlash) {
-			LOG("yes");
 			for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
 				it.getKey()->cuelistOutOfFlashStack(this);
 				Brain::getInstance()->pleaseUpdate(it.getKey());

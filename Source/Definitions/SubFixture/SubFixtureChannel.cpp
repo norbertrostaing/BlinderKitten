@@ -101,6 +101,19 @@ void SubFixtureChannel::updateVal(double now) {
 		value = cuelistFlashStack[i]->applyToChannel(this, value, now, true);
 	}
 
+
+	if (swopKillable) {
+		if (Brain::getInstance()->isSwopping) {
+			value = 0;
+			for (int i = 0; i < cuelistFlashStack.size(); i++)
+			{
+				if (cuelistFlashStack[i]->isSwopping) {
+					value = cuelistFlashStack[i]->applyToChannel(this, value, now, true);
+				}
+			}
+		}
+	}
+
 	writeValue(value);
 }
 

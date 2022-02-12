@@ -142,6 +142,10 @@ void Fixture::checkChildrenSubFixtures() {
 				chan-> parentFixtureTypeChannel = c;
 				chan->parentFixture = this;
 				chan->parentSubFixture = subFixt;
+				if (c->killedBySWOP->getValue()) {
+					chan->swopKillable = true;
+					Brain::getInstance()->swoppableChannels.add(chan);
+				}
 			}
 		}
 	}

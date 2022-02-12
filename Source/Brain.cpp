@@ -393,3 +393,20 @@ Effect* Brain::getEffectById(int id) {
     return effects.getReference(id);
 }
 
+void Brain::swoppedCuelist(Cuelist* c) {
+    if (!swoppedCuelists.contains(c)) {
+        swoppedCuelists.add(c);
+    }
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels[i]);
+    }
+    isSwopping = true;
+}
+
+void Brain::unswoppedCuelist(Cuelist* c) {
+    swoppedCuelists.removeAllInstancesOf(c);
+    isSwopping = swoppedCuelists.size() > 0;
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels[i]);
+    }
+}

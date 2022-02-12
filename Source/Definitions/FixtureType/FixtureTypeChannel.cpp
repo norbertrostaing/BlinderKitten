@@ -31,6 +31,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     // idGroupName = addStringParameter("ID Group name", "All SubFixtures with the same id group name have following SubFixtures id", "");
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
     defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
+    killedBySWOP = addBoolParameter("Killed By SWOP", "if checked, this parameter will be set to its default value when cuelists with no command for ot are called with SWOP",false);
     dmxDelta = addIntParameter("DMX Channel", "Number of the channel in the DMX chart", 1, 1);
     dmxDelta -> setEnabled(false);
     

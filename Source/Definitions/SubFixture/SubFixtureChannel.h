@@ -29,6 +29,7 @@ public:
     float value = 0;
     float postCuelistValue = 0;
     bool isHTP = false;
+    bool swopKillable = false;
 
     ChannelFamily* parentParamType;
     ChannelType* parentParamDefinition;

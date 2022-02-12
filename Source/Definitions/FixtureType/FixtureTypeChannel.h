@@ -26,6 +26,7 @@ class FixtureTypeChannel:
     // StringParameter* idGroupName;
     IntParameter* subFixtureId;
     FloatParameter* defaultValue;
+    BoolParameter* killedBySWOP;
     EnumParameter* resolution;
     IntParameter* dmxDelta;
 };
