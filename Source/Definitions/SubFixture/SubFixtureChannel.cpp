@@ -30,10 +30,8 @@ SubFixtureChannel::~SubFixtureChannel()
 }
 
 void SubFixtureChannel::writeValue(float v) {
-
-	value = v;
-	value = jmin((float)1, value);
-	value = jmax((float)0, value);
+	v= jmin((float)1, v);
+	v= jmax((float)0, v);
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();
@@ -54,7 +52,10 @@ void SubFixtureChannel::writeValue(float v) {
 					else if(resolution == "16bits") {
 						int value = floor(65535.0 * v);
 						value = value > 65535 ? 65535 : value;
-						out->send16BitDMXValue(address, value, DMXInterface::MSB);
+						int valueA = value / 256;
+						int valueB = value % 256;
+						out->sendDMXValue(address, valueA);
+						out->sendDMXValue(address+1, valueB);
 					}
 				}
 			}
@@ -99,7 +100,6 @@ void SubFixtureChannel::updateVal(double now) {
 	{
 		value = cuelistFlashStack[i]->applyToChannel(this, value, now, true);
 	}
-
 
 	writeValue(value);
 }

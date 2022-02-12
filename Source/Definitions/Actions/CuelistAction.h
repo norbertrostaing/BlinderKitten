@@ -19,7 +19,8 @@ public:
     CuelistAction(var params);
     ~CuelistAction();
 
-    enum ActionType { CL_GO, CL_OFF, CL_HTPLEVEL };
+    enum ActionType { CL_GO, CL_OFF, CL_HTPLEVEL, CL_FLASH, CL_FLASHLEVEL, CL_GORANDOM
+    };
     ActionType actionType;
     IntParameter* cuelistId;
 

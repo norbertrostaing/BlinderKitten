@@ -142,6 +142,9 @@
           <FILE id="we7qmS" name="CuelistAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/CuelistAction.cpp"/>
           <FILE id="gXF4aY" name="CuelistAction.h" compile="0" resource="0" file="Source/Definitions/Actions/CuelistAction.h"/>
+          <FILE id="lsqSTo" name="EffectAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/EffectAction.cpp"/>
+          <FILE id="AD3mke" name="EffectAction.h" compile="0" resource="0" file="Source/Definitions/Actions/EffectAction.h"/>
         </GROUP>
         <GROUP id="{692CFCBA-37C7-80F1-DB80-392661BB25A7}" name="ChannelFamily">
           <GROUP id="{8DC2F1AF-F1F2-B0B4-3E98-132DF65F339D}" name="ChannelType">

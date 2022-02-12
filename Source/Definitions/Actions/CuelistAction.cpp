@@ -55,6 +55,12 @@ void CuelistAction::setValueInternal(var value) {
         }
         break;
 
+    case CL_GORANDOM:
+        if (val > 0) {
+            target->go();
+        }
+        break;
+
     case CL_OFF:
         if (val > 0) {
             target->off();
@@ -64,5 +70,20 @@ void CuelistAction::setValueInternal(var value) {
     case CL_HTPLEVEL:
         target->setHTPLevel(val);
         break;
+
+    case CL_FLASH:
+        if (val > 0) {
+            target->flash(true, false);
+        }
+        else {
+            target->flash(false, false);
+        }
+        break;
+
+    case CL_FLASHLEVEL:
+        target->setFlashLevel(val);
+        break;
     }
+
+
 }

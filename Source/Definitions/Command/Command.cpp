@@ -32,6 +32,8 @@ Command::Command(var params) :
 	addChildControllableContainer(&values);
 	addChildControllableContainer(&timing);
 
+	values.selectItemWhenCreated = false;
+
 	if (params.isVoid()) {
 		selection.addItem();
 		values.addItem();

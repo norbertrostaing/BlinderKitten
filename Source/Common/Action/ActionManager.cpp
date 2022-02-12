@@ -11,6 +11,7 @@
 juce_ImplementSingleton(ActionFactory);
 
 #include "Definitions/Actions/CuelistAction.h"
+#include "Definitions/Actions/EffectAction.h"
 
 ActionFactory::ActionFactory()
 {
@@ -32,9 +33,17 @@ ActionFactory::ActionFactory()
     // defs.add(Factory<Action>::Definition::createDef("Generic", "Set Parameter Value", &GenericAction::create)->addParam("actionType", GenericAction::SET_VALUE));
     // defs.add(Factory<Action>::Definition::createDef("Generic", "Trigger a control", &GenericAction::create)->addParam("actionType", GenericAction::TRIGGER));
 
-    defs.add(Factory<Action>::Definition::createDef("Cuelist", "GO", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO));
-    defs.add(Factory<Action>::Definition::createDef("Cuelist", "OFF", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFF));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go random", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GORANDOM));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFF));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "HTP Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_HTPLEVEL));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASHLEVEL));
+
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
 
 }
 

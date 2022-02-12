@@ -46,6 +46,7 @@ public:
     EnumParameter* endAction;
     BoolParameter* loopTracking;
     BoolParameter* offIfOverwritten;
+    BoolParameter* isRandom;
     
     FloatParameter* nextCueId;
 
@@ -94,7 +95,8 @@ public:
     void updateHTPs();
     void updateLTPs();
 
-    void setHTPLevel(float level); 
+    void setHTPLevel(float level);
+    void setFlashLevel(float level);
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

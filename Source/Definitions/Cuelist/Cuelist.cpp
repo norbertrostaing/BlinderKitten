@@ -515,6 +515,10 @@ void Cuelist::setHTPLevel(float level) {
 	HTPLevel->setValue(level);
 }
 
+void Cuelist::setFlashLevel(float level) {
+	FlashLevel->setValue(level);
+}
+
 
 void Cuelist::updateName() {
 	String n = userName->getValue();

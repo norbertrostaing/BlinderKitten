@@ -41,6 +41,7 @@ Effect::Effect(var params) :
 	currentPosition = addFloatParameter("Current Position", "Actual position of the effect",0,0,1);
 	currentPosition->isControllableFeedbackOnly = true;
 
+	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", false);
 	sizeValue = addFloatParameter("Size", "Master of this Effect", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this effect in cycles/minutes", 5, 0);
 	values.selectItemWhenCreated = false;
@@ -64,6 +65,16 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
+	}
+	if (p == sizeValue) {
+		if (autoStartAndStop->getValue()) {
+			if (isOn && (float)sizeValue->getValue() == 0) {
+				stop();
+			}
+			else if(!isOn && (float)sizeValue->getValue() > 0) {
+				start();
+			}
+		}
 	}
 }
 
@@ -158,7 +169,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		Automation* c = &row->curve;
 		float value = c->getValueAtPosition(offset);
 		value -= (float)row->curveOrigin->getValue();
-		
+
 		if (p->effectMode->getValue() == "relative") {
 			value *= (double)sizeValue->getValue();
 			value *= (double)p->curveSize->getValue();

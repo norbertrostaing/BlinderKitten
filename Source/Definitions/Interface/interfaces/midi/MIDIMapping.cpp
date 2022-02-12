@@ -16,18 +16,19 @@ MIDIMapping::MIDIMapping() :
     saveAndLoadRecursiveData = true;
 
     mode = addEnumParameter("Mode", "Set the mode of this mapping.");
-    mode->addOption("Trigger", TRIGGER)->addOption("On / Off", ONOFF)->addOption("Toggle", TOGGLE)->addOption("Continuous", CONTINUOUS);
-
+    mode->addOption("Continuous", CONTINUOUS)->addOption("Trigger", TRIGGER)->addOption("On / Off", ONOFF)->addOption("Toggle", TOGGLE);
+    
     midiType = addEnumParameter("Type", "Sets the type to check");
     midiType->addOption("Note", NOTE)->addOption("Control Change", CONTROLCHANGE);
+
     channel = addIntParameter("Channel", "The channel to use for this mapping.", 1, 1, 16);
     pitchOrNumber = addIntParameter("Pitch Or Number", "The pitch (for notes) or number (for controlChange) to use for this mapping.", 0, 0, 127);
-
-    inputRange = addPoint2DParameter("Input Range", "The range to get from input");
+    
+    inputRange = addPoint2DParameter("Input Range", "The range to get from input",false);
     inputRange->setBounds(0, 0, 127, 127);
     inputRange->setPoint(0, 127);
     
-    outputRange = addPoint2DParameter("Output Range", "The range to remap the value to.");
+    outputRange = addPoint2DParameter("Output Range", "The range to remap the value to.",false);
     outputRange->setPoint(0, 1);
 
     learnMode = addBoolParameter("Learn", "When active, this will automatically set the channel and pitch/number to the next incoming message", false);

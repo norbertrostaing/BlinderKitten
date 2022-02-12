@@ -37,6 +37,7 @@ public:
     Trigger* startBtn;
     Trigger* stopBtn;
 
+    BoolParameter* autoStartAndStop;
     FloatParameter* speed;
     FloatParameter* sizeValue;
     BaseManager<EffectRow> values;
