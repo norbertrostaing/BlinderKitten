@@ -75,6 +75,8 @@ void SubFixtureChannel::updateVal(double now) {
 		}
 	}
 
+	postCuelistValue = value;
+
 	for (int i = 0; i <= overWritten; i++) {
 		ChannelValue* cv = cuelistStack[i]->activeValues.getReference(this);
 		if (cv != nullptr && !cv->isOverWritten) {
@@ -91,6 +93,12 @@ void SubFixtureChannel::updateVal(double now) {
 		value = programmerStack[i]->applyToChannel(this, value, now);
 	}
 
+	for (int i = 0; i < cuelistFlashStack.size(); i++)
+	{
+		value = cuelistFlashStack[i]->applyToChannel(this, value, now, true);
+	}
+
+
 	writeValue(value);
 }
 
@@ -103,6 +111,17 @@ void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
 
 void SubFixtureChannel::cuelistOutOfStack(Cuelist* c) {
 	cuelistStack.removeAllInstancesOf(c);
+}
+
+void SubFixtureChannel::cuelistOnTopOfFlashStack(Cuelist* c) {
+	if (cuelistFlashStack.indexOf(c) >= 0) {
+		cuelistFlashStack.removeAllInstancesOf(c);
+	}
+	cuelistFlashStack.add(c);
+}
+
+void SubFixtureChannel::cuelistOutOfFlashStack(Cuelist* c) {
+	cuelistFlashStack.removeAllInstancesOf(c);
 }
 
 void SubFixtureChannel::programmerOnTopOfStack(Programmer* p) {

@@ -22,12 +22,13 @@ public:
     String objectType;
     var objectData;
 
-    std::unique_ptr<BaseManager<Command>> commands;
+    BaseManager<Command> commands;
     FloatParameter* id;
 
     EnumParameter* autoFollow;
     FloatParameter* autoFollowTiming;
     FloatParameter* autoFollowCountDown;
+    BoolParameter* canBeRandomlyCalled;
     double TSAutoFollowStart;
     double TSAutoFollowEnd;
 
@@ -42,7 +43,6 @@ public:
     void update(double now);
     void go();
     void endTransition();
-
 
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }

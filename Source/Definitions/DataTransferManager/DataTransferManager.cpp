@@ -103,9 +103,9 @@ void DataTransferManager::execute() {
 
             target->selection.clear(); // erase data
 
-            for (int commandIndex = 0; commandIndex < source->commands->items.size(); commandIndex++) {
+            for (int commandIndex = 0; commandIndex < source->commands.items.size(); commandIndex++) {
 
-                CommandSelectionManager* selections = &source->commands->items[commandIndex]->selection;
+                CommandSelectionManager* selections = &source->commands.items[commandIndex]->selection;
                 for (int selectionIndex = 0; selectionIndex < selections->items.size(); selectionIndex++) {
                     CommandSelection* selection = selections->items[selectionIndex];
                     CommandSelection* newSel = target->selection.addItem();
@@ -141,26 +141,26 @@ void DataTransferManager::execute() {
                     LOG("fixt");
                     PresetSubFixtureValues* pfv = nullptr;
 
-                    for (int i = 0; i < target->SubFixtureValues->items.size(); i++) {
-                        PresetSubFixtureValues* temp = target->SubFixtureValues->items[i];
+                    for (int i = 0; i < target->subFixtureValues.items.size(); i++) {
+                        PresetSubFixtureValues* temp = target->subFixtureValues.items[i];
                         if ((int)temp->targetFixtureId->getValue() == fixtId && (int)temp->targetSubFixtureId->getValue() == subfixtId) {
-                            pfv = target->SubFixtureValues->items[i];
+                            pfv = target->subFixtureValues.items[i];
                         }
                     }
                     if (pfv == nullptr) {
-                        pfv = target->SubFixtureValues->addItem();
+                        pfv = target->subFixtureValues.addItem();
                         pfv->targetFixtureId->setValue(fixtId);
                         pfv->targetSubFixtureId->setValue(subfixtId);
                     }
 
                     PresetValue* pv = nullptr;
-                    for (int i = 0; i < pfv->values->items.size(); i++) {
-                        if (dynamic_cast<ChannelType*>(pfv->values->items[i]->param->targetContainer.get()) == chan->channelType) {
-                            pv = pfv->values->items[i];
+                    for (int i = 0; i < pfv->values.items.size(); i++) {
+                        if (dynamic_cast<ChannelType*>(pfv->values.items[i]->param->targetContainer.get()) == chan->channelType) {
+                            pv = pfv->values.items[i];
                         }
                     }
                     if (pv == nullptr) {
-                        pv = pfv->values->addItem();
+                        pv = pfv->values.addItem();
                         pv->param->setTarget(chan->channelType);
                     }
                     pv->paramValue->setValue(cValue->endValue);
@@ -177,10 +177,10 @@ void DataTransferManager::execute() {
                 target->setNiceName("Cuelist " + String(int(target->id->getValue())));
             }
 
-            Cue* targetCue = target->cues->addItem();
-            for (int i = 0; i < source->commands->items.size(); i++) {
-                Command* c = targetCue->commands->addItem();
-                c->loadJSONData(source->commands->items[i]->getJSONData());
+            Cue* targetCue = target->cues.addItem();
+            for (int i = 0; i < source->commands.items.size(); i++) {
+                Command* c = targetCue->commands.addItem();
+                c->loadJSONData(source->commands.items[i]->getJSONData());
             }
         }
 

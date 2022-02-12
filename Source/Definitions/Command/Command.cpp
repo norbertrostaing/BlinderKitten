@@ -19,7 +19,7 @@ Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),
 	objectType(params.getProperty("type", "Command").toString()),
 	objectData(params),
-	values(),
+	values("Values"),
 	timing("Timing")
 {
 	saveAndLoadRecursiveData = true;
@@ -29,13 +29,13 @@ Command::Command(var params) :
 	// to add a manager with defined data
 	//selection = new CommandSelectionManager();
 	addChildControllableContainer(&selection);
-
-	BaseManager<CommandValue>* mv = new BaseManager<CommandValue>("Values");
-	mv->selectItemWhenCreated = false;
-	values.reset(mv);
-	addChildControllableContainer(values.get());
-
+	addChildControllableContainer(&values);
 	addChildControllableContainer(&timing);
+
+	if (params.isVoid()) {
+		selection.addItem();
+		values.addItem();
+	}
 
 	maxTiming = 0;
 	updateDisplay();
@@ -62,7 +62,7 @@ void Command::computeValues() {
 	maxTiming = 0;
 	selection.computeSelection();
 	computedValues.clear();
-	Array<CommandValue*> commandValues = values->getItemsWithType<CommandValue>();
+	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 	Array<SubFixture*> SubFixtures = selection.computedSelectedSubFixtures;
 
 	bool delayThru = false;

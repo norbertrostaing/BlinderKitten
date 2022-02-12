@@ -26,7 +26,8 @@ public:
 
     ChannelType* channelType;
     String resolution;
-    float value;
+    float value = 0;
+    float postCuelistValue = 0;
     bool isHTP = false;
 
     ChannelFamily* parentParamType;
@@ -40,11 +41,14 @@ public:
     Array<Cuelist*> cuelistStack;
     Array<Programmer*> programmerStack;
     Array<Effect*> effectStack;
+    Array<Cuelist*> cuelistFlashStack;
 
     void updateVal(double now);
 
     void cuelistOnTopOfStack(Cuelist* c);
     void cuelistOutOfStack(Cuelist* c);
+    void cuelistOnTopOfFlashStack(Cuelist* c);
+    void cuelistOutOfFlashStack(Cuelist* c);
     void programmerOnTopOfStack(Programmer* p);
     void programmerOutOfStack(Programmer* p);
     void effectOnTopOfStack(Effect* f);

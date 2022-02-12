@@ -29,7 +29,8 @@ il faudrait que le formulaire soit pré rempli genre
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
 	objectType(params.getProperty("type", "Programmer").toString()),
-	objectData(params)
+	objectData(params),
+	commands("Commands")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -52,10 +53,8 @@ Programmer::Programmer(var params) :
 	releaseBtn = addTrigger("Release", "release this programmer");
 	recBtn = addTrigger("Record", "Record the content of this programmer in something");
 
-	BaseManager<Command>* m = new BaseManager<Command>("Commands");
-	m->selectItemWhenCreated = false;
-	commands.reset(m);
-	addChildControllableContainer(commands.get());
+	commands.selectItemWhenCreated = false;
+	addChildControllableContainer(&commands);
 
 	Brain::getInstance()->registerProgrammer(this, id->getValue());
 }
@@ -97,7 +96,7 @@ void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 void Programmer::computeValues() {
 	maxTiming = 0;
 	computedValues.clear();
-	Array<Command*> cs = commands->getItemsWithType<Command>();
+	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
 		cs[i]->computeValues();
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);

@@ -47,6 +47,10 @@ Effect::Effect(var params) :
 	addChildControllableContainer(&values);
 
 	Brain::getInstance()->registerEffect(this, id->getValue());
+	if (params.isVoid()) {
+		values.addItem();
+	}
+
 }
 
 Effect::~Effect()

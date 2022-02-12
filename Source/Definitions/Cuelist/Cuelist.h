@@ -23,20 +23,25 @@ public:
     String objectType;
     var objectData;
 
-    std::unique_ptr<CueManager> cues;
+    CueManager cues;
 
     IntParameter* id;
     StringParameter* userName;
     void updateName();
 
     Trigger* goBtn;
+    Trigger* goRandomBtn;
+    Trigger* flashOnBtn;
+    Trigger* flashOffBtn;
     Trigger* offBtn;
     Trigger* killBtn;
 
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
+    FloatParameter* FlashLevel;
     FloatParameter* LTPLevel;
+    bool pleaseUpdateHTPs = false;
     EnumParameter* tracking;
     EnumParameter* endAction;
     BoolParameter* loopTracking;
@@ -47,6 +52,7 @@ public:
     Automation offFadeCurve;
     FloatParameter* offFade;
     HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
+    HashMap<SubFixtureChannel*, ChannelValue*> flashingValues;
 
     TargetParameter* currentCue;
     TargetParameter* nextCue;
@@ -68,11 +74,16 @@ public:
 
     void go(Cue* c);
     void go();
+    void goRandom();
+    void flash(bool on, bool timing);
+    bool isFlashing;
+    bool wannaOffFlash = false;
+
     void off();
     void kill(bool forceRefreshChannels = true);
     void update();
     void autoLoadCueB();
-    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
+    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flash = false);
     void cleanActiveValues();
 
     void reorderCues();

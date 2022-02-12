@@ -22,5 +22,4 @@ public:
 
     void addItemInternal(Fixture* o, var data) override;
     void removeItemInternal(Fixture* o) override;
-
 };

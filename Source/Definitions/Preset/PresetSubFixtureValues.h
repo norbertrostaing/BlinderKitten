@@ -24,7 +24,7 @@ class PresetSubFixtureValues:
 
     IntParameter* targetFixtureId;
     IntParameter* targetSubFixtureId;
-    std::unique_ptr<BaseManager<PresetValue>> values;
+    BaseManager<PresetValue> values;
 
     static PresetSubFixtureValues* create(var params) { return new PresetSubFixtureValues(params); }
 };

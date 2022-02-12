@@ -34,7 +34,7 @@ public:
     TargetParameter* devTypeParam;
 
     CommandSelectionManager selection;
-    std::unique_ptr<BaseManager<CommandValue>> values;
+    BaseManager<CommandValue> values;
     CommandTiming timing;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;

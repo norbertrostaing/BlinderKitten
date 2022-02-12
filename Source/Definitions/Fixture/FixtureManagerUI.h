@@ -20,4 +20,5 @@ public:
 	~FixtureManagerUI();
 
 	static FixtureManagerUI * create(const String &name) { return new FixtureManagerUI(name); }
+	void askSelectToThis(BaseItemMinimalUI<Fixture>* itemUI);
 };

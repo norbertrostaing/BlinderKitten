@@ -16,7 +16,7 @@ public:
     ChannelValue();
     ~ChannelValue();
 
-    float value=-1;
+    float value=-0;
     float delay=0;
     float fade=0;
 

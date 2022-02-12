@@ -6,7 +6,7 @@ CommandValueManager::CommandValueManager() :
     BaseManager("CommandValue")
 {
     itemDataType = "CommandValue";
-    selectItemWhenCreated = false;       
+    selectItemWhenCreated = false;
 
 }
 

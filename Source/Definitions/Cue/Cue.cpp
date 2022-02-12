@@ -16,7 +16,8 @@
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue")),
 	objectType(params.getProperty("type", "Cue").toString()),
-	objectData(params)
+	objectData(params),
+	commands("Commands")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
@@ -32,12 +33,15 @@ Cue::Cue(var params) :
 	autoFollowCountDown = addFloatParameter("Auto Follow CountdDown", "Triggers next cue when arrives to 0", 0, 0);
 	autoFollowCountDown->isControllableFeedbackOnly = true;
 
+	canBeRandomlyCalled = addBoolParameter("Random callable", "Can this cue be called by the randomGo of its cuelist ?", true);
 	goBtn = addTrigger("GO", "trigger this cue");
 
-	BaseManager<Command>* m = new BaseManager<Command>("Commands");
-	m->selectItemWhenCreated = false;
-	commands.reset(m);
-	addChildControllableContainer(commands.get());
+	commands.selectItemWhenCreated = false;
+	addChildControllableContainer(&commands);
+
+	if (params.isVoid()) {
+		commands.addItem();
+	}
 }
 
 Cue::~Cue()
@@ -71,7 +75,7 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 void Cue::computeValues() {
 	maxTiming = 0;
 	computedValues.clear();
-	Array<Command*> cs = commands->getItemsWithType<Command>();
+	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
 		cs[i]->computeValues();
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);

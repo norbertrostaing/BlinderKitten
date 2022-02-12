@@ -22,7 +22,7 @@ public:
     String objectType;
     var objectData;
 
-    std::unique_ptr<BaseManager<Command>> commands;
+    BaseManager<Command> commands;
 
     IntParameter* id;
     StringParameter* userName;

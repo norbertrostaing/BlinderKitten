@@ -54,6 +54,12 @@ EffectRow::EffectRow(var params) :
     addChildControllableContainer(&curveContainer);
     addChildControllableContainer(&selection);
     addChildControllableContainer(&paramContainer);
+
+    if (params.isVoid()) {
+        selection.addItem();
+        paramContainer.addItem();
+    }
+
     
     updateDisplay();
 };

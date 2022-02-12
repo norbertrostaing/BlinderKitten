@@ -23,21 +23,17 @@ Cuelist::Cuelist(var params) :
 	BaseItem(params.getProperty("name", "Cuelist")),
 	objectType(params.getProperty("type", "Cuelist").toString()),
 	objectData(params),
-	offFadeCurve()
+	offFadeCurve(),
+	cues()
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
 
-	CueManager* m = new CueManager();
-	m->selectItemWhenCreated = false;
-	cues.reset(m);
-
 	id = addIntParameter("ID", "Id of this Cuelist", 1, 1);
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	updateName();
-
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
 	endAction->addOption("Off", "off");
@@ -53,17 +49,20 @@ Cuelist::Cuelist(var params) :
 	loopTracking = addBoolParameter("Loop Tracking", "Do you want tracking keeps values when coming back to start after loop ?", false);
 
 	goBtn = addTrigger("GO", "Trigger next cue");
+	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
+	offBtn = addTrigger("OFF", "Off this cuelist");
+	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
+	flashOnBtn = addTrigger("Flash ON", "Trigger next cue");
+	flashOffBtn = addTrigger("flash Off", "Trigger next cue");
 
-	nextCue = addTargetParameter("Next Cue", "Cue triggered when button go pressed", cues.get());
+	nextCue = addTargetParameter("Next Cue", "Cue triggered when button go pressed", &cues);
 	nextCue->maxDefaultSearchLevel = 0;
 	nextCue->targetType = TargetParameter::CONTAINER;
 
 	nextCueId = addFloatParameter("Next cue ID", "ID of the cue triggered when go pressed, 0 means next cue",0,0);
 
-	offBtn = addTrigger("OFF", "Off this cuelist");
-	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
-
 	HTPLevel = addFloatParameter("HTP Level", "Level master for HTP channels of this sequence", 1, 0, 1);
+	FlashLevel = addFloatParameter("Flash Level", "Level flash master for HTP channels of this sequence", 1, 0, 1);
 	// LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
 
 	isCuelistOn = addBoolParameter("is On", "Is this cuelist on ?", false);
@@ -96,10 +95,14 @@ Cuelist::Cuelist(var params) :
 	// currentCue->targetType = TargetParameter::CONTAINER;
 
 
-	addChildControllableContainer(cues.get());
+	addChildControllableContainer(&cues);
 
-	cues->comparator.compareFunc = &sortCues;
+	cues.comparator.compareFunc = &sortCues;
 	reorderCues();
+
+	if (params.isVoid()) {
+		cues.addItem();
+	}
 
 	Brain::getInstance()->registerCuelist(this, id->getValue());
 }
@@ -110,13 +113,14 @@ Cuelist::~Cuelist()
 }
 
 void Cuelist::reorderCues() {
-	cues->reorderItems();
+	cues.reorderItems();
 	//cues->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, cues.get()));
 }
 
 void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
-	if (p == HTPLevel) {
-		updateHTPs();
+	if (p == HTPLevel || p == FlashLevel) {
+		pleaseUpdateHTPs = true;
+		Brain::getInstance()->pleaseUpdate(this);
 	}
 	if (p == id) {
 		Brain::getInstance()->registerCuelist(this, id->getValue());
@@ -130,11 +134,20 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	if (t == goBtn) {
 		go();
 	}
+	else if (t == goRandomBtn) {
+		goRandom();
+	}
 	else if(t == offBtn) {
 		off();
 	}
-	else if(t == killBtn) {
+	else if (t == killBtn) {
 		kill();
+	}
+	else if (t == flashOnBtn) {
+		flash(true, true);
+	}
+	else if (t == flashOffBtn) {
+		flash(false, true);
 	}
 	else {}
 }
@@ -179,7 +192,7 @@ void Cuelist::go(Cue* c) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				ChannelValue * current = activeValues.getReference(it.getKey());
-				temp->startValue = it.getKey()->value;
+				temp->startValue = it.getKey()->postCuelistValue;
 			}
 			else {
 				temp->startValue = -1;
@@ -196,59 +209,15 @@ void Cuelist::go(Cue* c) {
 	}
 
 	return ;
-	// old version
-	/*
-	if (!isOn && c!= nullptr) {
-		isOn = true;
-		//Brain::getInstance()->cuelistOnTopOfStack(this);
-	}
-
-	if (TSTransitionEnd > 0) {
-		endTransition();
-		return;
-	}
-
-	TSTransitionStart = Time::currentTimeMillis();
-	TSTransitionDuration = 1;
-	currentTimeElapsed = 0;
-
-	String trackingType = tracking->getValue();
-	if (trackingType == "none" || c == nullptr) {
-		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-			ChannelValue* temp = new ChannelValue();
-			temp->fade = offFade->getValue();
-			temp->fadeCurve = offFadeCurve;
-			temp->value = -1;
-			fadingValues.set(it.getKey(), temp);
-			Brain::getInstance()->pleaseUpdate(it.getKey());
-		}
-	}
-
-	if (c != nullptr) {
-		c->computeValues();
-		for (auto it = c->computedValues.begin(); it != c->computedValues.end(); it.next()) {
-			fadingValues.set(it.getKey(), it.getValue());
-			Brain::getInstance()->pleaseUpdate(it.getKey());
-		}
-	}
-
-	for (auto it = fadingValues.begin(); it != fadingValues.end(); it.next()) {
-		int64 delay = it.getValue() -> delay * 1000;
-		int64 fade = it.getValue() -> fade * 1000;
-		TSTransitionDuration = jmax(TSTransitionDuration, delay + fade);
-	}
-	TSTransitionEnd = TSTransitionStart + TSTransitionDuration;
-	Brain::getInstance()->pleaseUpdate(this);
-	*/
 }
 
 void Cuelist::go() {
 	cueB = dynamic_cast<Cue*>(nextCue->targetContainer.get());
 	float nextId = nextCueId->getValue();
 	if (nextId > 0) {
-		for (int i = 0; i < cues->items.size() && cueB == nullptr; i++) {
-			if ((float)cues->items[i]->id->getValue() >= nextId) {
-				cueB = cues->items[i];
+		for (int i = 0; i < cues.items.size() && cueB == nullptr; i++) {
+			if ((float)cues.items[i]->id->getValue() >= nextId) {
+				cueB = cues.items[i];
 			}
 		}
 	}
@@ -258,13 +227,86 @@ void Cuelist::go() {
 	go(cueB);
 }
 
+void Cuelist::flash(bool setOn, bool withTiming) {
+	if (setOn) {
+		isFlashing = true;
+		double now = Time::getMillisecondCounterHiRes();
+
+		Cue* flashingCue = cueA;
+		if (flashingCue == nullptr) {
+			autoLoadCueB();
+			flashingCue = cueB;
+		}
+
+		LOG("go Flash");
+		cueB = nullptr;
+
+		if (flashingCue != nullptr) {
+			LOG("ok");
+			// set a flash tag to on ?
+			flashingCue->computeValues();
+			for (auto it = flashingCue->computedValues.begin(); it != flashingCue->computedValues.end(); it.next()) {
+				ChannelValue* temp = it.getValue();
+				if (flashingValues.contains(it.getKey())) {
+					ChannelValue* current = flashingValues.getReference(it.getKey());
+					temp->startValue = it.getKey()->value;
+				}
+				else {
+					temp->startValue = -1;
+				}
+				temp->TSInit = now;
+				temp->TSStart = withTiming ? now + (temp->delay) : now;
+				temp->TSEnd = withTiming ? temp->TSStart + (temp->fade) : now;
+				temp->isEnded = false;
+				flashingValues.set(it.getKey(), temp);
+				LOG("yataaaaa");
+				it.getKey()->cuelistOnTopOfFlashStack(this);
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
+		}
+	}
+	else {
+		wannaOffFlash = true;
+		for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
+			Brain::getInstance()->pleaseUpdate(it.getKey());
+		}
+		Brain::getInstance()->pleaseUpdate(this);
+	}
+}
+
+
+void Cuelist::goRandom() {
+	Array<Cue*> childCues = cues.getItemsWithType<Cue>();
+	Array<Cue*> allowedCues;
+
+	for (int i = 0; i< childCues.size(); i++) {
+		if (childCues[i]!=cueA && childCues[i]->canBeRandomlyCalled->getValue()) {
+			allowedCues.add(childCues[i]);
+		}
+	}
+
+	int s = allowedCues.size();
+	if (s > 0) {
+		int r = rand()%s;
+		go(allowedCues[r]);
+	}
+}
+
 void Cuelist::off() {
 	go(nullptr);
 }
 
 
 
+
+
+
+
+
 void Cuelist::update() {
+	if (pleaseUpdateHTPs) {
+		updateHTPs();
+	}
 	float tempPosition = 1;
 	float isUseFul = false;
 	float isOverWritten = true;
@@ -284,18 +326,37 @@ void Cuelist::update() {
 	if (!isUseFul) {
 		kill(false);
 	}
+
+	if (wannaOffFlash) {
+		LOG("wannaOff");
+		bool canStopFlash = true;
+		for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
+			ChannelValue* cv = it.getValue();
+			canStopFlash = canStopFlash && cv->isEnded;
+		}
+
+		if (canStopFlash) {
+			LOG("yes");
+			for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
+				it.getKey()->cuelistOutOfFlashStack(this);
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
+			isFlashing = false;
+			wannaOffFlash = false;
+		}
+	}
 }
 
 void Cuelist::autoLoadCueB() {
 	bool valid = false;
 	if (cueA == nullptr) {
-		if (cues->getItemsWithType<Cue>().size() > 0) {
-			cueB = cues->getItemsWithType<Cue>()[0];
+		if (cues.getItemsWithType<Cue>().size() > 0) {
+			cueB = cues.getItemsWithType<Cue>()[0];
 			valid = true;
 		}
 	}
 	else {
-		Array<Cue*> currentCues = cues->getItemsWithType<Cue>();
+		Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
 		for (int i = 1; i < currentCues.size() && !valid; i++) {
 			if (currentCues[i - 1] == cueA) {
 				valid = true;
@@ -314,15 +375,30 @@ void Cuelist::autoLoadCueB() {
 	}
 }
 
-float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
+float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flashvalues) {
 	float val = currentVal;
 	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
 	
 	bool keepUpdate = false;
 
 	float localValue = 0;
-	if (!activeValues.contains(fc)) { return currentVal; }
-	ChannelValue* cv = activeValues.getReference(fc);
+	ChannelValue* cv;
+	float faderLevel = 0;
+	if (flashvalues) {
+		if (!flashingValues.contains(fc)) { return currentVal; }
+		cv = flashingValues.getReference(fc);
+		faderLevel = (float)FlashLevel->getValue();
+	}
+	else {
+		if (!activeValues.contains(fc)) { return currentVal; }
+		cv = activeValues.getReference(fc);
+		faderLevel = (float)HTPLevel->getValue();
+	}
+
+	if (cv == nullptr) {
+		LOG("c'est chelou");
+		return currentVal; 
+	}
 
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
@@ -335,7 +411,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	if (cv->endValue >= 0) { 
 		valueTo = cv->endValue; 
 		if (HTP) {
-			valueTo *= (float)HTPLevel->getValue();
+			valueTo *= faderLevel;
 		}
 	}
 	else {
@@ -382,73 +458,6 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		Brain::getInstance()->pleaseUpdate(fc);
 	}
 	return val;
-	// old version
-	/*
-	float valA = -1;
-	float valB = -1;
-	float ratioB = 0;
-
-	if (activeValues.contains(fc)) {
-		valA = activeValues.getReference(fc)->value;
-		ratioB = 0;
-	}
-	if (fadingValues.contains(fc)) {
-		ChannelValue* cv = fadingValues.getReference(fc);
-		valB = cv->value;
-		float fade = cv->fade * 1000;
-		float delay = cv->delay * 1000;
-		if (currentTimeElapsed < delay) {
-			ratioB = 0;
-		}
-		else {
-			ratioB = (currentTimeElapsed - delay) / fade;
-		}
-		if (ratioB >= 1) {
-			activeValues.set(fc, cv);
-			fadingValues.remove(fc);
-			ratioB = 1;
-		}
-		else {
-			ratioB = cv->fadeCurve->getValueAtPosition(ratioB);
-			Brain::getInstance()->pleaseUpdate(fc);
-		}
-	}
-
-
-	if (HTP) {
-		valA = valA == -1 ? 0 : valA;
-		valB = valB == -1 ? 0 : valB;
-		float valCuelist = jmap(ratioB,valA, valB);
-		float level = HTPLevel->getValue();
-		valCuelist *= level;
-		return jmax(valCuelist, currentVal);
-	}
-	else { // LTP
-		// LOG("LTP");
-		float endValue = currentVal;
-		float level = LTPLevel->getValue();
-		if (valA != -1 && valB != -1) {
-			// LOG("n1 "+fc->niceName);
-			// LOG(ratioB);
-			// LOG(valA);
-			// LOG(valB);
-			float valCuelist = jmap(ratioB, valA, valB);
-			endValue = jmap(level,currentVal, valCuelist);
-		}
-		else if (valB != -1) {
-			// LOG("2");
-			endValue = jmap(level*ratioB, currentVal, valB);
-		}
-		else if (valA != -1) {
-			// LOG("3");
-			endValue = jmap(ratioB, valA, currentVal);
-			endValue = jmap(level, currentVal, endValue);
-		}
-		return endValue;
-	}
-
-	return 0;
-	*/
 }
 
 void Cuelist::cleanActiveValues() {
@@ -464,7 +473,14 @@ void Cuelist::cleanActiveValues() {
 }
 
 void Cuelist::updateHTPs() {
+	pleaseUpdateHTPs = false;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		SubFixtureChannel* chan = it.getKey();
+		if (chan->isHTP) {
+			Brain::getInstance()->pleaseUpdate(chan);
+		}
+	}
+	for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
 		SubFixtureChannel* chan = it.getKey();
 		if (chan->isHTP) {
 			Brain::getInstance()->pleaseUpdate(chan);

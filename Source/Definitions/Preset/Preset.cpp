@@ -19,7 +19,7 @@ Preset::Preset(var params) :
 	BaseItem(params.getProperty("name", "Preset")),
 	objectType(params.getProperty("type", "Preset").toString()),
 	objectData(params),
-	SubFixtureValues(),
+	subFixtureValues("Subfixtures"),
 	devTypeParam()
 {
 	saveAndLoadRecursiveData = true;
@@ -45,13 +45,13 @@ Preset::Preset(var params) :
 	presetType->addOption("Same Channels type", 4);
 
 	// to add a manager with defined data
-	BaseManager<PresetSubFixtureValues>* m = new BaseManager<PresetSubFixtureValues>("SubFixtures");
-	m->selectItemWhenCreated = false;
-	SubFixtureValues.reset(m);
-	addChildControllableContainer(SubFixtureValues.get());
-	getJSONData();
+	subFixtureValues.selectItemWhenCreated = false;
+	addChildControllableContainer(&subFixtureValues);
 
 	Brain::getInstance()->registerPreset(this, id->getValue());
+	if (params.isVoid()) {
+		subFixtureValues.addItem();
+	}
 
 }
 
@@ -87,7 +87,7 @@ void Preset::computeValues() {
 	computedSubFixtureTypeValues.clear();
 	computedUniversalValues.clear();
 
-	Array<PresetSubFixtureValues*> fixtValues = SubFixtureValues->getItemsWithType<PresetSubFixtureValues>();
+	Array<PresetSubFixtureValues*> fixtValues = subFixtureValues.getItemsWithType<PresetSubFixtureValues>();
 	int pType = presetType->getValue();
 
 	for (int commandIndex = 0; commandIndex < fixtValues.size(); commandIndex++) {
@@ -105,7 +105,7 @@ void Preset::computeValues() {
 			}
 		}
 		
-		Array<PresetValue *> values = fixtVal->values->getItemsWithType<PresetValue>();
+		Array<PresetValue *> values = fixtVal->values.getItemsWithType<PresetValue>();
 		for (int valIndex = 0; valIndex < values.size(); valIndex++) {
 			ChannelType* param = dynamic_cast<ChannelType*>(values[valIndex]->param->targetContainer.get());
 			float value = values[valIndex] -> paramValue -> getValue();

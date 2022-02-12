@@ -30,6 +30,9 @@ Group::Group(var params) :
 
 	addChildControllableContainer(&selection);
 	Brain::getInstance()->registerGroup(this, id->getValue());
+	if (params.isVoid()) {
+		selection.addItem();
+	}
 }
 
 Group::~Group()

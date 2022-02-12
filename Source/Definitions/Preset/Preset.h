@@ -41,7 +41,7 @@ public:
 
     HashMap<ChannelType*, float>* getSubFixtureValues(SubFixture* f);
 
-    std::unique_ptr<BaseManager<PresetSubFixtureValues>> SubFixtureValues;
+    BaseManager<PresetSubFixtureValues> subFixtureValues;
     String getTypeString() const override { return objectType; }
 
     static Preset* create(var params) { return new Preset(params); }
