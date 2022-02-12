@@ -35,6 +35,9 @@
 #include "./Definitions/CurvePreset/CurvePresetManager.h"
 #include "./Definitions/Effect/EffectManager.h"
 
+#include "./Definitions/DataTransferManager/DataTransferManager.h"
+#include "./Definitions/Fixture/FixtureMultiEditor.h"
+
 #include "./Common/MIDI/MIDIDevice.h"
 #include "./Common/MIDI/MIDIManager.h"
 #include "./Common/DMX/DMXManager.h"
@@ -109,6 +112,10 @@ BKEngine::~BKEngine()
 
 	// Guider::deleteInstance();
 	Brain::getInstance()->stopThread(100);
+
+	DataTransferManager::deleteInstance();
+	FixtureMultiEditor::deleteInstance();
+
 	EffectManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();

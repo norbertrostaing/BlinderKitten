@@ -18,6 +18,8 @@
 #include "../SubFixture/SubFixture.h"
 #include "../SubFixture/SubFixtureChannel.h"
 #include "../ChannelFamily/ChannelFamily.h"
+#include "FixtureMultiEditor.h"
+
 
 Fixture::Fixture(var params) :
 	BaseItem(params.getProperty("name", "Fixture")),
@@ -173,4 +175,14 @@ Array<SubFixture*> Fixture::getAllSubFixtures() {
 
 SubFixture* Fixture::getSubFixture(int id) {
 	return subFixtures.getReference(id);
+}
+
+
+void Fixture::selectThis(bool addToSelection, bool notify) {
+	BaseItem::selectThis(addToSelection, notify);
+	if (addToSelection) {
+		InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent);
+		inspectorUI->inspector->setCurrentInspectable(FixtureMultiEditor::getInstance());
+
+	}
 }

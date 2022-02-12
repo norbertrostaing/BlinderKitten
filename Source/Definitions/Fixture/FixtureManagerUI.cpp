@@ -14,8 +14,6 @@
 
 #include "../../MainComponent.h"
 
-#include "../DataTransferManager/DataTransferManager.h"
-
 FixtureManagerUI::FixtureManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, FixtureManager::getInstance())
 {
@@ -30,6 +28,3 @@ FixtureManagerUI::~FixtureManagerUI()
 {
 }
 
-void FixtureManagerUI::askSelectToThis(BaseItemMinimalUI<Fixture>* itemUI) {
-	BaseManagerShapeShifterUI::askSelectToThis(itemUI);
-}

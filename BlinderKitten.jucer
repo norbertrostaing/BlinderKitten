@@ -255,6 +255,10 @@
                 file="Source/Definitions/Fixture/FixtureManagerUI.cpp"/>
           <FILE id="Aiz7Hr" name="FixtureManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Fixture/FixtureManagerUI.h"/>
+          <FILE id="v3RU8H" name="FixtureMultiEditor.cpp" compile="1" resource="0"
+                file="Source/Definitions/Fixture/FixtureMultiEditor.cpp"/>
+          <FILE id="wKPZ6t" name="FixtureMultiEditor.h" compile="0" resource="0"
+                file="Source/Definitions/Fixture/FixtureMultiEditor.h"/>
           <FILE id="zH1Lqd" name="FixturePatch.cpp" compile="1" resource="0"
                 file="Source/Definitions/Fixture/FixturePatch.cpp"/>
           <FILE id="ZheeuP" name="FixturePatch.h" compile="0" resource="0" file="Source/Definitions/Fixture/FixturePatch.h"/>
