@@ -31,7 +31,9 @@ SubFixtureChannel::~SubFixtureChannel()
 
 void SubFixtureChannel::writeValue(float v) {
 
-	value=v;
+	value = v;
+	value = jmin((float)1, value);
+	value = jmax((float)0, value);
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();
