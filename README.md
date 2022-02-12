@@ -26,5 +26,4 @@ You can find the latest build [here](https://github.com/norbertrostaing/BlinderK
 
 ### By compiling it yourself
 Clone BlinderKitten with --recursive options to integrate organicUI module
-workfile.olga is my current working project, can be opened to see the way I use everything
 
