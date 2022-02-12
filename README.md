@@ -18,7 +18,7 @@ Each fixture can have multiple **Subfixtures** in the case you have the same par
 - **Cuelists** contains **Cues** and allows you to run commands in the same order to act like a conductor
 - **Effects** add a moving value to fixtures channels depending on a curve
 - **Interfaces** can me midi (to control cuelists and effects with a controller) or DMX (to output a DMX univers thru a USB-DMX node or via artnet)
-
+- **Programmer** is an instant command on fixtures, you can copy the programmer content in groups, presets, or cuelist (actually not well implemented ^^, can be dangerous to use it)
 ## How to test it
 
 ### By downloading it
