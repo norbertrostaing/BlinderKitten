@@ -45,7 +45,8 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 	void updateDisplay();
 	void goRename();
-	void goRepatch();
+	void goUnpatch();
+	void goAddPatch();
 	void goRenumber();
 
 };

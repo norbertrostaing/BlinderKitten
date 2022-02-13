@@ -10,7 +10,9 @@
 #include "JuceHeader.h"
 #include "FixtureMultiEditor.h"
 #include "Fixture.h"
+#include "../FixtureType/FixtureType.h"
 #include "FixtureManager.h"
+#include "FixturePatch.h"
 #include "../Interface/InterfaceIncludes.h"
 
 juce_ImplementSingleton(FixtureMultiEditor)
@@ -48,6 +50,15 @@ void FixtureMultiEditor::onControllableFeedbackUpdateInternal(ControllableContai
     if (c == renameBtn) {
         goRename();
     }
+    else if(c == unpatchBtn) {
+        goUnpatch();
+    }
+    else if(c == addPatchBtn) {
+        goAddPatch();
+    }
+    else if(c == renumberBtn) {
+        goRenumber();
+    }
 }
 
 FixtureMultiEditor::~FixtureMultiEditor()
@@ -57,8 +68,18 @@ FixtureMultiEditor::~FixtureMultiEditor()
 
 void FixtureMultiEditor::goRename() {
     String name = newName->getValue();
-    name += " ";
+    name = name.trim();
     int num = 1;
+    int lastSpace = name.lastIndexOf(" ");
+    if (lastSpace > 0) {
+        String maybeDigit = name.substring(lastSpace+1);
+        if (maybeDigit.containsOnly("1234567890")) {
+            num = maybeDigit.getIntValue();
+            name = name.substring(0,lastSpace);
+        }
+    }
+
+    name += " ";
     for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
         Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
         if (f->objectType == "Fixture") {
@@ -73,33 +94,52 @@ void FixtureMultiEditor::goRename() {
     FixtureManager::getInstance()->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, FixtureManager::getInstance()));
 }
 
-void FixtureMultiEditor::goRepatch() {
-    String name = newName->getValue();
-    name += " ";
-    int num = 1;
+void FixtureMultiEditor::goUnpatch() {
     for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
         Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
         if (f->objectType == "Fixture") {
-            String localName = name + String(num);
-            f->userName->setValue(localName);
-            num++;
+            f->patchs.clear();
         }
-        else {
-            LOG(f->objectType);
+    }
+    FixtureManager::getInstance()->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, FixtureManager::getInstance()));
+}
+
+void FixtureMultiEditor::goAddPatch() {
+    int address = firstAddress->getValue();
+    int interval = adressesInterval->getValue();
+    Interface* outInterface = dynamic_cast<Interface*>(targetInterface->targetContainer.get());
+    if (outInterface == nullptr) { LOGWARNING("you must specify a target interface"); return; }
+    for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
+        Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
+
+        if (f->objectType == "Fixture") {
+            FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
+            if (ft != nullptr) {
+                FixturePatch* p = f->patchs.addItem();
+                p->targetInterface->setTarget(outInterface);
+                p->address->setValue(address);
+                int delta = interval;
+
+                for (int cn = 0; cn < ft->chansManager.items.size(); cn++) {
+                    delta = jmax(delta, (int)ft->chansManager.items[cn]->dmxDelta->getValue());
+                }
+                address += delta;
+            }
+            else {
+                LOGWARNING("Fixture type not valid");
+            }
+            
         }
     }
     FixtureManager::getInstance()->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, FixtureManager::getInstance()));
 }
 
 void FixtureMultiEditor::goRenumber() {
-    String name = newName->getValue();
-    name += " ";
-    int num = 1;
+    int num = firstId->getValue();
     for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
         Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
         if (f->objectType == "Fixture") {
-            String localName = name + String(num);
-            f->userName->setValue(localName);
+            f->id->setValue(num);
             num++;
         }
         else {

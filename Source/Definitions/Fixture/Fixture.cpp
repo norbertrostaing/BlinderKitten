@@ -183,6 +183,6 @@ void Fixture::selectThis(bool addToSelection, bool notify) {
 	if (addToSelection) {
 		InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent);
 		inspectorUI->inspector->setCurrentInspectable(FixtureMultiEditor::getInstance());
-
+		// inspectorUI->inspector->vp.setViewedComponent(FixtureMultiEditor::getInstance()->getEditor(true), false);
 	}
 }
