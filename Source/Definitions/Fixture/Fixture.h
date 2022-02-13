@@ -46,4 +46,5 @@ public:
     SubFixture* getSubFixture(int id);
 
     void selectThis(bool addToSelection=false, bool notify = true);
+    void autoName();
 };

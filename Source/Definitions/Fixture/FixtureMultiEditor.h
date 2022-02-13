@@ -27,7 +27,6 @@ public:
 	StringParameter* newName;
 	Trigger* renameBtn;
 
-
 	ControllableContainer repatcher;
 	TargetParameter* targetInterface;
 
@@ -37,13 +36,17 @@ public:
 	Trigger* addPatchBtn;
 	Trigger* unpatchBtn;
 
-
 	ControllableContainer renumberer;
 	IntParameter* firstId;
 	Trigger* renumberBtn;
 
+	ControllableContainer typeChanger;
+	TargetParameter* newType;
+	Trigger* changeTypeBtn;
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 	void updateDisplay();
+	void goChangeType();
 	void goRename();
 	void goUnpatch();
 	void goAddPatch();

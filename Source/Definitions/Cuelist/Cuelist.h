@@ -62,6 +62,8 @@ public:
 
     FloatParameter* currentFade;
 
+    Trigger* renumberCuesBtn;
+
     Cue* cueA;
     Cue* cueB;
 
@@ -97,6 +99,8 @@ public:
 
     void updateHTPs();
     void updateLTPs();
+
+    void renumberCues();
 
     void setHTPLevel(float level);
     void setFlashLevel(float level);

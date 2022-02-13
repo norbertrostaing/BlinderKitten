@@ -97,6 +97,8 @@ Cuelist::Cuelist(var params) :
 	// currentCue->targetType = TargetParameter::CONTAINER;
 
 
+	renumberCuesBtn = addTrigger("Renumber cues", "Reset all cues IDs");
+
 	addChildControllableContainer(&cues);
 
 	cues.comparator.compareFunc = &sortCues;
@@ -156,6 +158,9 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	}
 	else if (t == swopOffBtn) {
 		flash(false, true);
+	}
+	else if (t == renumberCuesBtn) {
+		renumberCues();
 	}
 	else {}
 }
@@ -537,3 +542,10 @@ void Cuelist::updateName() {
 	setNiceName(String((int)id->getValue()) + " - " + n);
 }
 
+void Cuelist::renumberCues() {
+	Array<Cue*> temp;
+	temp.addArray(cues.items);
+	for (int i = 0; i < temp.size(); i++) {
+		temp[i]->id->setValue(i+1);
+	}
+}

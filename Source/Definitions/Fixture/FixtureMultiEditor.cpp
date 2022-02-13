@@ -11,6 +11,7 @@
 #include "FixtureMultiEditor.h"
 #include "Fixture.h"
 #include "../FixtureType/FixtureType.h"
+#include "../FixtureType/FixtureTypeManager.h"
 #include "FixtureManager.h"
 #include "FixturePatch.h"
 #include "../Interface/InterfaceIncludes.h"
@@ -21,7 +22,8 @@ FixtureMultiEditor::FixtureMultiEditor() :
 	BaseItem("Fixture Multi Editor"),
     renamer("Rename fixtures"),
     repatcher("Repatch fixtures"),
-    renumberer("Change fixture IDs")
+    renumberer("Change fixture IDs"),
+    typeChanger("Change Fixture type")
 {    
     newName = renamer.addStringParameter("New Name", "if ends with a space then a number, this number will be used to increment name", "");
     renameBtn = renamer.addTrigger("Rename Fixtures", "");
@@ -36,9 +38,15 @@ FixtureMultiEditor::FixtureMultiEditor() :
     unpatchBtn = repatcher.addTrigger("Reset patch", "Delete all patchs of selected fixtures");
     addChildControllableContainer(&repatcher);
 
-    firstId = renumberer.addIntParameter("First ID", "ID of the fist fixture",1,1);
-    renumberBtn  = renumberer.addTrigger("Renumber fixtures","renumber selected fixtures");
+    firstId = renumberer.addIntParameter("First ID", "ID of the fist fixture", 1, 1);
+    renumberBtn = renumberer.addTrigger("Renumber fixtures", "renumber selected fixtures");
     addChildControllableContainer(&renumberer);
+
+    newType = typeChanger.addTargetParameter("Fixture type", "Type of Fixture", FixtureTypeManager::getInstance());
+    newType->targetType = TargetParameter::CONTAINER;
+    newType->maxDefaultSearchLevel = 0;
+    changeTypeBtn = typeChanger.addTrigger("Change Fixtures type", "Change the type al all these fixtures");
+    addChildControllableContainer(&typeChanger);
     // updateDisplay();
 }
 
@@ -56,8 +64,11 @@ void FixtureMultiEditor::onControllableFeedbackUpdateInternal(ControllableContai
     else if(c == addPatchBtn) {
         goAddPatch();
     }
-    else if(c == renumberBtn) {
+    else if (c == renumberBtn) {
         goRenumber();
+    }
+    else if (c == changeTypeBtn) {
+        goChangeType();
     }
 }
 
@@ -149,3 +160,18 @@ void FixtureMultiEditor::goRenumber() {
     FixtureManager::getInstance()->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, FixtureManager::getInstance()));
 }
 
+void FixtureMultiEditor::goChangeType() {
+    FixtureType* t = dynamic_cast<FixtureType* >(newType->targetContainer.get());
+    for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
+        Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
+        if (f->objectType == "Fixture") {
+            if (t != nullptr) {
+                f->devTypeParam->setTarget(t);
+            }
+            else {
+                f->devTypeParam->resetValue();
+            }
+        }
+    }
+    FixtureManager::getInstance()->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, FixtureManager::getInstance()));
+}

@@ -84,6 +84,9 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	{
 		Logger::writeToLog("call from ParamChanged");
 		checkChildrenSubFixtures();
+		if (userName->getValue().toString() == "New Fixture") {
+			autoName();
+		}
 	}
 	else if(p == id) 
 	{
@@ -186,3 +189,11 @@ void Fixture::selectThis(bool addToSelection, bool notify) {
 		// inspectorUI->inspector->vp.setViewedComponent(FixtureMultiEditor::getInstance()->getEditor(true), false);
 	}
 }
+
+void Fixture::autoName() {
+	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
+	if (ft!=nullptr) {
+		userName->setValue(ft->niceName);
+	}
+}
+
