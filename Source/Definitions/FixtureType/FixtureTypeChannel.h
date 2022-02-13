@@ -29,6 +29,8 @@ class FixtureTypeChannel:
     BoolParameter* killedBySWOP;
     EnumParameter* resolution;
     IntParameter* dmxDelta;
+    void onContainerParameterChangedInternal(Parameter* p);
+
 };
 
 

@@ -28,7 +28,6 @@ public:
     String getTypeString() const override { return objectType; }
 
     static FixtureType* create(var params) { return new FixtureType(params); }
-    void onContainerParameterChangedInternal(Parameter* p);
 
 };
 

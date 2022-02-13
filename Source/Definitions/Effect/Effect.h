@@ -29,6 +29,7 @@ public:
     IntParameter* id;
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void updateName();
 
     BoolParameter* isEffectOn;

@@ -15,6 +15,9 @@ FixtureTypeChannelManager::~FixtureTypeChannelManager()
 void FixtureTypeChannelManager::calcDmxChannels() {
 	int current = 1;
 	for (int i = 0; i < items.size(); i++) {
+		items[i]->setNiceName("temp 1");
+	}
+	for (int i = 0; i < items.size(); i++) {
 		items[i]->dmxDelta->setValue(current);
 		items[i]->setNiceName("Channel "+String(current));
 		if (items[i]->resolution->getValue() == "8bits") {

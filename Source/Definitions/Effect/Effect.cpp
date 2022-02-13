@@ -59,6 +59,11 @@ Effect::~Effect()
 	Brain::getInstance()->unregisterEffect(this);
 }
 
+void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+	pleaseComputeIfRunning();
+}
+
+
 void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerEffect(this, id->getValue());

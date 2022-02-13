@@ -127,12 +127,13 @@ void FixtureMultiEditor::goAddPatch() {
             FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
             if (ft != nullptr) {
                 FixturePatch* p = f->patchs.addItem();
-                p->targetInterface->setTarget(outInterface);
+                p->targetInterface->setValueFromTarget(outInterface);
                 p->address->setValue(address);
                 int delta = interval;
 
                 for (int cn = 0; cn < ft->chansManager.items.size(); cn++) {
-                    delta = jmax(delta, (int)ft->chansManager.items[cn]->dmxDelta->getValue());
+                    int chanSize = ft->chansManager.items[cn]->resolution->getValue().toString()=="16bits" ? 1 : 0;
+                    delta = jmax(delta, (int)ft->chansManager.items[cn]->dmxDelta->getValue()+chanSize);
                 }
                 address += delta;
             }
@@ -166,7 +167,7 @@ void FixtureMultiEditor::goChangeType() {
         Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
         if (f->objectType == "Fixture") {
             if (t != nullptr) {
-                f->devTypeParam->setTarget(t);
+                f->devTypeParam->setValueFromTarget(t);
             }
             else {
                 f->devTypeParam->resetValue();

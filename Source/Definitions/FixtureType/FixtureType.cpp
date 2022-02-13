@@ -35,6 +35,3 @@ FixtureType::~FixtureType()
 {
 }
 
-void FixtureType::onContainerParameterChangedInternal(Parameter* p) {
-	LOG("coucou");
-}

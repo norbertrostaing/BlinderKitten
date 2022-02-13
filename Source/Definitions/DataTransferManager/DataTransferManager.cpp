@@ -121,6 +121,7 @@ void DataTransferManager::execute() {
                 target->id->setValue(targetId->getValue());
                 target->setNiceName("Preset " + String(int(target->id->getValue())));
                 target->updateName();
+                target->subFixtureValues.clear();
             }
 
             // target->SubFixtureValues->clear(); // erase data
@@ -151,6 +152,7 @@ void DataTransferManager::execute() {
                         pfv = target->subFixtureValues.addItem();
                         pfv->targetFixtureId->setValue(fixtId);
                         pfv->targetSubFixtureId->setValue(subfixtId);
+                        pfv->values.clear();
                     }
 
                     PresetValue* pv = nullptr;
@@ -161,7 +163,7 @@ void DataTransferManager::execute() {
                     }
                     if (pv == nullptr) {
                         pv = pfv->values.addItem();
-                        pv->param->setTarget(chan->channelType);
+                        pv->param->setValueFromTarget(chan->channelType);
                     }
                     pv->paramValue->setValue(cValue->endValue);
                 }
@@ -175,9 +177,11 @@ void DataTransferManager::execute() {
                 target = CuelistManager::getInstance()->addItem(new Cuelist());
                 target->id->setValue(targetId->getValue());
                 target->setNiceName("Cuelist " + String(int(target->id->getValue())));
+                target->cues.clear();
             }
 
             Cue* targetCue = target->cues.addItem();
+            targetCue->commands.clear();
             for (int i = 0; i < source->commands.items.size(); i++) {
                 Command* c = targetCue->commands.addItem();
                 c->loadJSONData(source->commands.items[i]->getJSONData());

@@ -67,7 +67,8 @@ void SubFixtureChannel::writeValue(float v) {
 
 
 void SubFixtureChannel::updateVal(double now) {
-	float value = 0;
+	float value = defaultValue;
+	
 	int overWritten = -1;
 	for (int i = 0; i < cuelistStack.size(); i++)
 	{
@@ -88,12 +89,12 @@ void SubFixtureChannel::updateVal(double now) {
 		}
 
 	}
-	for (int i = 0; i < effectStack.size(); i++) {
-		value = effectStack[i]->applyToChannel(this, value, now);
-	}
-
 	for (int i = 0; i < programmerStack.size(); i++) {
 		value = programmerStack[i]->applyToChannel(this, value, now);
+	}
+
+	for (int i = 0; i < effectStack.size(); i++) {
+		value = effectStack[i]->applyToChannel(this, value, now);
 	}
 
 	for (int i = 0; i < cuelistFlashStack.size(); i++)
@@ -104,7 +105,7 @@ void SubFixtureChannel::updateVal(double now) {
 
 	if (swopKillable) {
 		if (Brain::getInstance()->isSwopping) {
-			value = 0;
+			value = defaultValue;
 			for (int i = 0; i < cuelistFlashStack.size(); i++)
 			{
 				if (cuelistFlashStack[i]->isSwopping) {

@@ -10,6 +10,7 @@
 
 #include "FixtureTypeChannel.h"
 #include "../ChannelFamily/ChannelFamilyManager.h"
+#include "FixtureTypeChannelManager.h"
 
 
 FixtureTypeChannel::FixtureTypeChannel(var params) :
@@ -27,8 +28,6 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     resolution->addOption("8bits", "8bits");
     resolution->addOption("16bits", "16bits");
 
-    // suffix = addStringParameter("SubFixture Suffix", "This suffix is added to the name of the Fixture to create the name of the SubFixture", "");
-    // idGroupName = addStringParameter("ID Group name", "All SubFixtures with the same id group name have following SubFixtures id", "");
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
     defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
     killedBySWOP = addBoolParameter("Killed By SWOP", "if checked, this parameter will be set to its default value when cuelists with no command for ot are called with SWOP",false);
@@ -41,3 +40,11 @@ FixtureTypeChannel::~FixtureTypeChannel()
 {
 };
 
+void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
+    if (p == resolution) {
+        FixtureTypeChannelManager* p = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
+        if (p != nullptr) {
+            p->calcDmxChannels();
+        }
+    }
+}

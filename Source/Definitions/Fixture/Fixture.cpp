@@ -50,6 +50,8 @@ Fixture::Fixture(var params) :
 	Logger::writeToLog("call from constructor");
 	Brain::getInstance()->registerFixture(this, id->getValue());
 	checkChildrenSubFixtures();
+
+	
 }
 
 void Fixture::afterLoadJSONDataInternal() {
@@ -140,6 +142,7 @@ void Fixture::checkChildrenSubFixtures() {
 				}
 				SubFixtureChannel* chan = new SubFixtureChannel();
 				subFixt->channelsMap.set(param, chan);
+				chan->defaultValue = c->defaultValue->getValue();
 				chan ->isHTP = param->priority->getValue() == "HTP";
 				chan-> resolution = c->resolution->getValue();
 				chan-> channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
@@ -151,6 +154,7 @@ void Fixture::checkChildrenSubFixtures() {
 					chan->swopKillable = true;
 					Brain::getInstance()->swoppableChannels.add(chan);
 				}
+				Brain::getInstance()->pleaseUpdate(chan);
 			}
 		}
 	}

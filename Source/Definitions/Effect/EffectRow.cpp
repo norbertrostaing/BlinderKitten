@@ -60,14 +60,20 @@ EffectRow::EffectRow(var params) :
         paramContainer.addItem();
     }
 
-    
     updateDisplay();
+    if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
+        Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
+        if (parentEffect->isOn) {
+            parentEffect->pleaseComputeIfRunning();
+        }
+
+    }
+
 };
 
 EffectRow::~EffectRow()
 {
 };
-
 
 void EffectRow::computeData() {
     computedPositions.clear();
