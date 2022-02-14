@@ -36,7 +36,7 @@ void SubFixtureChannel::writeValue(float v) {
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();
 		deltaAdress--;
-		String resolution = parentFixtureTypeChannel->resolution->getValue();
+		String chanRes = parentFixtureTypeChannel->resolution->getValue();
 		Array<FixturePatch*> patchs = parentFixture->patchs.getItemsWithType<FixturePatch>();
 		for (int i = 0; i < patchs.size(); i++) {
 			DMXInterface* out = dynamic_cast<DMXInterface*>(patchs[i]->targetInterface->targetContainer.get());
@@ -44,16 +44,16 @@ void SubFixtureChannel::writeValue(float v) {
 				int address = patchs[i]->address->getValue();
 				if (address > 0) {
 					address += (deltaAdress);
-					if (resolution == "8bits") {
-						int value = floor(256.0 * v);
-						value = value > 255 ? 255 : value;
-						out->sendDMXValue(address, value);
+					if (chanRes == "8bits") {
+						int val = floor(256.0 * v);
+						val = val > 255 ? 255 : val;
+						out->sendDMXValue(address, val);
 					}
-					else if(resolution == "16bits") {
-						int value = floor(65535.0 * v);
-						value = value > 65535 ? 65535 : value;
-						int valueA = value / 256;
-						int valueB = value % 256;
+					else if(chanRes == "16bits") {
+						int val = floor(65535.0 * v);
+						val = value > 65535 ? 65535 : val;
+						int valueA = val / 256;
+						int valueB = val % 256;
 						out->sendDMXValue(address, valueA);
 						out->sendDMXValue(address+1, valueB);
 					}
@@ -67,19 +67,19 @@ void SubFixtureChannel::writeValue(float v) {
 
 
 void SubFixtureChannel::updateVal(double now) {
-	float value = defaultValue;
+	float newValue = defaultValue;
 	
 	int overWritten = -1;
 	for (int i = 0; i < cuelistStack.size(); i++)
 	{
-		value = cuelistStack[i]->applyToChannel(this, value, now);
+		newValue = cuelistStack[i]->applyToChannel(this, newValue, now);
 		ChannelValue* cv = cuelistStack[i]->activeValues.getReference(this);
 		if (cv != nullptr && cv->isEnded) {
 			overWritten = i-1;
 		}
 	}
 
-	postCuelistValue = value;
+	postCuelistValue = newValue;
 
 	for (int i = 0; i <= overWritten; i++) {
 		ChannelValue* cv = cuelistStack[i]->activeValues.getReference(this);
@@ -90,32 +90,32 @@ void SubFixtureChannel::updateVal(double now) {
 
 	}
 	for (int i = 0; i < programmerStack.size(); i++) {
-		value = programmerStack[i]->applyToChannel(this, value, now);
+		newValue = programmerStack[i]->applyToChannel(this, newValue, now);
 	}
 
 	for (int i = 0; i < effectStack.size(); i++) {
-		value = effectStack[i]->applyToChannel(this, value, now);
+		newValue = effectStack[i]->applyToChannel(this, newValue, now);
 	}
 
 	for (int i = 0; i < cuelistFlashStack.size(); i++)
 	{
-		value = cuelistFlashStack[i]->applyToChannel(this, value, now, true);
+		newValue = cuelistFlashStack[i]->applyToChannel(this, newValue, now, true);
 	}
 
 
 	if (swopKillable) {
 		if (Brain::getInstance()->isSwopping) {
-			value = defaultValue;
+			newValue = defaultValue;
 			for (int i = 0; i < cuelistFlashStack.size(); i++)
 			{
 				if (cuelistFlashStack[i]->isSwopping) {
-					value = cuelistFlashStack[i]->applyToChannel(this, value, now, true);
+					newValue = cuelistFlashStack[i]->applyToChannel(this, newValue, now, true);
 				}
 			}
 		}
 	}
 
-	writeValue(value);
+	writeValue(newValue);
 }
 
 void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {

@@ -84,7 +84,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 			tempSelection = filteredSelection;
 		}
-		else if (selections[selId]->filter->getValue() == "divide") {
+		else if (selections[selId]->filter->getValue() == "divide" && patternLength > 0) {
 			if (sym) {
 				for (int i = patternLength - 1; i >= 0; i--) {
 					pattern += pattern[i];

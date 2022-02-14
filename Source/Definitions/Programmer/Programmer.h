@@ -34,6 +34,7 @@ public:
     Trigger* goBtn;
     Trigger* releaseBtn;
     Trigger* recBtn;
+    Trigger* clearAllBtn;
 
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
@@ -47,6 +48,7 @@ public:
     void render(double now);
     void release(double now = 0);
     void go();
+    void clearAll();
 
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 

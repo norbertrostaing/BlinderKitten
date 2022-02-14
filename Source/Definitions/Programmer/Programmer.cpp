@@ -52,15 +52,25 @@ Programmer::Programmer(var params) :
 	goBtn = addTrigger("GO", "trigger this Programmer");
 	releaseBtn = addTrigger("Release", "release this programmer");
 	recBtn = addTrigger("Record", "Record the content of this programmer in something");
+	clearAllBtn = addTrigger("Clear All", "Clear and reset this programmer");
 
 	commands.selectItemWhenCreated = false;
 	addChildControllableContainer(&commands);
 
+	if (params.isVoid()) {
+		commands.addItem();
+	}
 	Brain::getInstance()->registerProgrammer(this, id->getValue());
 }
 
 Programmer::~Programmer()
 {
+	clearAll();
+	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		it.getKey()->programmerOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(it.getKey());
+	}
+
 	LOG("delete Programmer");
 }
 
@@ -71,6 +81,9 @@ void Programmer::triggerTriggered(Trigger* t) {
 	}
 	if (t == releaseBtn) {
 		release();
+	}
+	if (t == clearAllBtn) {
+		clearAll();
 	}
 	if (t == recBtn) {
 		DataTransferManager::getInstance()->sourceId ->setValue(id->getValue());
@@ -116,7 +129,6 @@ void Programmer::update(double now) {
 }
 
 void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
-	LOG (cc->niceName);
 	Brain::getInstance()->pleaseUpdate(this);
 }
 
@@ -128,7 +140,7 @@ void Programmer::render(double now) {
 		for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
-				ChannelValue* current = activeValues.getReference(it.getKey());
+				// ChannelValue* current = activeValues.getReference(it.getKey());
 				temp->startValue = it.getKey()->value;
 			}
 			else {
@@ -249,3 +261,9 @@ void Programmer::updateName() {
 	setNiceName(String((int)id->getValue()) + " - " + n);
 }
 
+
+void Programmer :: clearAll() {
+	release();
+	commands.clear();
+	commands.addItem();
+}

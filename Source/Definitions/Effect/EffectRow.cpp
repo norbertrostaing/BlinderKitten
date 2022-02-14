@@ -45,7 +45,7 @@ EffectRow::EffectRow(var params) :
     curve.editorIsCollapsed = false;
     curveContainer.addChildControllableContainer(&curve);
 
-    presetId = curveContainer.addIntParameter("Curve preset ID", "ID of the curve preset you want to use", 0, 0);
+    presetId = curveContainer.addIntParameter("Curve preset ID", "ID of the curve preset you want to use", 1, 1);
     curveOrigin = curveContainer.addFloatParameter("Curve Origin", "Y Value of the curve to use as origin", 0, 0, 1);
 
     curveContainer.saveAndLoadRecursiveData = true;
