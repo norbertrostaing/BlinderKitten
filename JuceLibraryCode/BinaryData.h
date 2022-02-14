@@ -12,7 +12,7 @@ namespace BinaryData
     const int            default_blinderlayoutSize = 3354;
 
     extern const char*   icon_png;
-    const int            icon_pngSize = 64470;
+    const int            icon_pngSize = 85868;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 2;
