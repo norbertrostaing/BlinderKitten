@@ -35,8 +35,12 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("None", "none");
     filter->addOption("Divide", "divide");
     filter->addOption("Pattern", "pattern");
+    filter->addOption("Shuffle", "shuffle");
+    filter->addOption("Pick Random", "random");
     pattern = addStringParameter("Pattern", "type 1 to select SubFixtures and 0 to skip them, for example, 100 will select every first SubFixture of three in pattern mode, and the first third of all SubFixtures in divide mode", "");
     symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
+    randomSeed = addIntParameter("Seed", "Seed used to generate random, if 0, selection will change each call, if not, the random selection will alway be the same", 0, 0);
+    randomNumber = addIntParameter("Number of subfixtures", "Number of subfixtures to take randomly", 1, 1);
     updateDisplay();
 };
 
@@ -47,25 +51,34 @@ CommandSelection::~CommandSelection()
 void CommandSelection::updateDisplay()
 {
     bool th = thru->getValue();
-    bool pat = filter->getValue() != "none";
+    bool mult = thru->getValue() || targetType->getValue()=="group";
+    bool pat = filter->getValue() == "divide" || filter->getValue() == "pattern";
+    bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
+    bool randNum = filter->getValue() == "random";
+
+    randSeed = randSeed && mult;
+    randNum = randNum && mult;
+
     bool sub = subSel->getValue();
     bool subTh = subThru->getValue();
 
-
     valueTo -> hideInEditor = !th;
-    filter -> hideInEditor = !th;
-    pattern -> hideInEditor = !(th && pat);
-    symmetry -> hideInEditor = !(th && pat);
+    filter -> hideInEditor = !mult;
+    pattern -> hideInEditor = !(mult && pat);
+    symmetry -> hideInEditor = !(mult && pat);
 
     subFrom -> hideInEditor = !sub;
     subThru->hideInEditor = !sub;
     subTo->hideInEditor = !(sub && subTh);
 
+    randomSeed -> hideInEditor = !randSeed;
+    randomNumber -> hideInEditor = !randNum;
+
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void CommandSelection::onContainerParameterChangedInternal(Parameter* p) {
-    if (p == thru || p == filter || p == subSel || p == subThru) {
+    if (p == thru || p == targetType || p == filter || p == subSel || p == subThru) {
         updateDisplay();
     }
 }

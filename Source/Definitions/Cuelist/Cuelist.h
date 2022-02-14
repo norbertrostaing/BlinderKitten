@@ -44,6 +44,7 @@ public:
     FloatParameter* FlashLevel;
     FloatParameter* LTPLevel;
     bool pleaseUpdateHTPs = false;
+    bool wannaOff = false;
     EnumParameter* tracking;
     EnumParameter* endAction;
     BoolParameter* loopTracking;

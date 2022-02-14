@@ -176,6 +176,10 @@ void Cuelist::go(Cue* c) {
 	nextCueId->resetValue();
 	if (c != nullptr) {
 		isCuelistOn->setValue(true);
+		wannaOff = false;
+	}
+	else {
+		wannaOff = true;
 	}
 
 	String trackingType = tracking->getValue();
@@ -309,6 +313,7 @@ void Cuelist::goRandom() {
 }
 
 void Cuelist::off() {
+	wannaOff = true;
 	go(nullptr);
 }
 

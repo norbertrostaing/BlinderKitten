@@ -64,7 +64,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		}
 		else {}
 			
-		// filter here with divide and pattern...
+		// filter with divide and pattern...
 		String pattern = selections[selId]->pattern->getValue();
 		bool sym = selections[selId]->symmetry->getValue();
 		int patternLength = pattern.length();
@@ -84,9 +84,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 			tempSelection = filteredSelection;
 		}
-		else if(selections[selId]->filter->getValue() == "divide") {
+		else if (selections[selId]->filter->getValue() == "divide") {
 			if (sym) {
-				for (int i = patternLength -1; i >= 0; i--) {
+				for (int i = patternLength - 1; i >= 0; i--) {
 					pattern += pattern[i];
 				}
 				patternLength *= 2;
@@ -94,9 +94,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			Array<SubFixture*> filteredSelection;
 			for (int i = 0; i < tempSelection.size(); i++) {
 
-				float patternIndex = 0; 
-				if (i > tempSelectionSize/2) {
-					patternIndex = (i+1) * patternLength / float(tempSelectionSize);
+				float patternIndex = 0;
+				if (i > tempSelectionSize / 2) {
+					patternIndex = (i + 1) * patternLength / float(tempSelectionSize);
 				}
 				else {
 					patternIndex = i * patternLength / float(tempSelectionSize);
@@ -107,7 +107,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					patternIndex = patternIndex * patternLength / tempSelectionSize;
 				}
 
-				patternIndex = jmin(int(patternIndex), patternLength-1);
+				patternIndex = jmin(int(patternIndex), patternLength - 1);
 				char c = pattern[patternIndex];
 				if (c == '1') {
 					filteredSelection.add(tempSelection[i]);
@@ -116,7 +116,45 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			tempSelection = filteredSelection;
 
 		}
-			//apply patterns here
+		else if (selections[selId]->filter->getValue() == "shuffle") {
+			Array<SubFixture*> filteredSelection;
+
+			Random r;
+			if ((int)selections[selId]->randomSeed->getValue() == 0) {
+				r.setSeedRandomly();
+			}
+			else {
+				r.setSeed((int)selections[selId]->randomSeed->getValue());
+			}
+			
+			while (tempSelection.size() > 0) {
+				int randIndex = r.nextInt(tempSelection.size());
+				filteredSelection.add(tempSelection[randIndex]);
+				tempSelection.remove(randIndex);
+			}
+
+			tempSelection = filteredSelection;
+
+		}
+		else if (selections[selId]->filter->getValue() == "random") {
+			Array<SubFixture*> filteredSelection;
+
+			Random r;
+			if ((int)selections[selId]->randomSeed->getValue() == 0) {
+				r.setSeedRandomly();
+			}
+			else {
+				r.setSeed((int)selections[selId]->randomSeed->getValue());
+			}
+			int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
+			for (int i = 0; i< to; i++) {
+				int randIndex = r.nextInt(tempSelection.size());
+				filteredSelection.add(tempSelection[randIndex]);
+				tempSelection.remove(randIndex);
+			}
+
+			tempSelection = filteredSelection;
+		}
 
 		if (selections[selId]->plusOrMinus->getValue() == "add") {
 			computedSelectedSubFixtures.addArray(tempSelection);

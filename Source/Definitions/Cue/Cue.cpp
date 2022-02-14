@@ -92,22 +92,26 @@ void Cue::go() {
 
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
-		TSAutoFollowEnd = now + delay;
+		TSAutoFollowEnd = now + (delay*1000);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 }
 
 void Cue::update(double now) {
 	if (TSAutoFollowEnd != 0 && now < TSAutoFollowEnd) {
-		float remaining = TSAutoFollowEnd-now;
-		autoFollowCountDown->setValue(remaining);
+		if (TSAutoFollowEnd - TSAutoFollowStart > 200) {
+			float remaining = TSAutoFollowEnd - now;
+			autoFollowCountDown->setValue(remaining);
+		}
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	else {
 		TSAutoFollowEnd = 0;
 		autoFollowCountDown->setValue(0);
 		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-		parentCuelist->go();
+		if (!parentCuelist->wannaOff) {
+			parentCuelist->go();
+		}
 	}
 }
 

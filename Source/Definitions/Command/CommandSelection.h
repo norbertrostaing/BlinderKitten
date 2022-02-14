@@ -36,6 +36,8 @@ class CommandSelection:
     EnumParameter* filter;
     StringParameter* pattern;
     BoolParameter* symmetry;
+    IntParameter* randomSeed;
+    IntParameter* randomNumber;
 
     void updateDisplay();
 
