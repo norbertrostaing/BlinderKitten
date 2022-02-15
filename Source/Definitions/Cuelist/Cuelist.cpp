@@ -170,6 +170,23 @@ void Cuelist::go(Cue* c) {
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+
+	bool needRebuildTracking = false;
+	String trackingType = tracking->getValue();
+
+	int currentIndex = -1;
+	int nextIndex = -1;
+	if (c != nullptr && trackingType == "cuelist") {
+		nextIndex = cues.items.indexOf(c);
+		if (cueA != nullptr) {
+			currentIndex = cues.items.indexOf(cueA);
+		}
+
+		if (nextIndex != currentIndex + 1) {
+			needRebuildTracking = true;
+		}
+	}
+
 	cueA = c;
 	cueB = nullptr;
 	nextCue->resetValue();
@@ -182,8 +199,8 @@ void Cuelist::go(Cue* c) {
 		wannaOff = true;
 	}
 
-	String trackingType = tracking->getValue();
-	if (trackingType == "none" || c == nullptr) {
+	
+	if (trackingType == "none" || c == nullptr || needRebuildTracking) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			ChannelValue* temp = it.getValue();
 			float fadeTime = (float)offFade->getValue()*1000;
@@ -199,6 +216,31 @@ void Cuelist::go(Cue* c) {
 
 			activeValues.set(it.getKey(), temp);
 			Brain::getInstance()->pleaseUpdate(it.getKey());
+		}
+	}
+
+	if (needRebuildTracking) {
+		for (int i = 0; i <= nextIndex-1; i++) {
+			Cue* tempCue = cues.items[i];
+			tempCue->computeValues();
+			for (auto it = tempCue->computedValues.begin(); it != tempCue->computedValues.end(); it.next()) {
+				ChannelValue* temp = it.getValue();
+				if (activeValues.contains(it.getKey())) {
+					ChannelValue* current = activeValues.getReference(it.getKey());
+					temp->startValue = it.getKey()->postCuelistValue;
+				}
+				else {
+					temp->startValue = -1;
+				}
+				temp->TSInit = now;
+				temp->TSStart = now + (temp->delay);
+				temp->TSEnd = temp->TSStart + (temp->fade);
+				temp->isEnded = false;
+				activeValues.set(it.getKey(), temp);
+				it.getKey()->cuelistOnTopOfStack(this);
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
+			tempCue->go();
 		}
 	}
 
