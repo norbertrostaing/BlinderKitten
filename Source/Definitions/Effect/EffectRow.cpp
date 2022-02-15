@@ -29,6 +29,7 @@ EffectRow::EffectRow(var params) :
     curvePresetOrValue = curveContainer.addEnumParameter("Curve Type", "Use a preset curve or draw it here ?");
     curvePresetOrValue->addOption("Drawed", "drawed");
     curvePresetOrValue->addOption("Preset", "preset");
+    curvePresetOrValue->addOption("Chaser", "chaser");
 
     paramContainer.selectItemWhenCreated = false;
 
@@ -46,6 +47,9 @@ EffectRow::EffectRow(var params) :
     curveContainer.addChildControllableContainer(&curve);
 
     presetId = curveContainer.addIntParameter("Curve preset ID", "ID of the curve preset you want to use", 1, 1);
+    chaserFade = curveContainer.addFloatParameter("Chaser Fade","",0,0,1);
+    chaserBuddying = curveContainer.addIntParameter("Chaser Buddying", "Multiplies the chaser on time duration",1,1);
+
     curveOrigin = curveContainer.addFloatParameter("Curve Origin", "Y Value of the curve to use as origin", 0, 0, 1);
 
     curveContainer.saveAndLoadRecursiveData = true;
@@ -128,8 +132,12 @@ void EffectRow::onControllableFeedbackUpdate( ControllableContainer* cc, Control
 
 void EffectRow::updateDisplay() {
     bool curveIsPreset = curvePresetOrValue->getValue() == "preset";
-    presetId->hideInEditor = !curveIsPreset;
-    curve.hideInEditor = curveIsPreset;
+    String mode = curvePresetOrValue->getValue().toString();
+    presetId->hideInEditor = !(mode == "preset");
+    curve.hideInEditor = !(mode == "drawed");
+    chaserFade->hideInEditor = !(mode == "chaser");
+    chaserBuddying->hideInEditor = !(mode == "chaser");
+    curveOrigin->hideInEditor = mode == "chaser";
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

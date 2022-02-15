@@ -30,6 +30,8 @@ class EffectRow:
     Automation curve;
     FloatParameter* curveOrigin;
     IntParameter* presetId;
+    FloatParameter* chaserFade;
+    IntParameter* chaserBuddying;
     FloatParameter* speed;
 
     CommandSelectionManager selection;

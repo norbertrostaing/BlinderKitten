@@ -14,6 +14,7 @@
 #include "../SubFixture/SubFixtureChannel.h"
 #include "../../Brain.h"
 #include "EffectManager.h"
+#include "../CurvePreset/CurvePreset.h"
 
 Effect::Effect(var params) :
 	BaseItem(params.getProperty("name", "Effect")),
@@ -171,9 +172,36 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			offset += 1;
 		}
 		offset = fmodf(offset, 1);
-		Automation* c = &row->curve;
-		float value = c->getValueAtPosition(offset);
-		value -= (float)row->curveOrigin->getValue();
+		float value = 0;
+		String mode = row->curvePresetOrValue->getValue().toString();
+		if (mode == "chaser") {
+			float stepSize = 1. / row->selection.computedSelectedSubFixtures.size();
+			stepSize *= (float)row->chaserBuddying->getValue();
+			float fadeSize = (float)row->chaserFade->getValue();
+			fadeSize *= stepSize;
+			if (offset < stepSize) {
+				value = 1;
+				if (offset < fadeSize) {
+					float f = offset/fadeSize;
+					value = jmap(f, (float)0, (float)1);
+				}
+			}
+			else if (offset < stepSize+fadeSize) {
+				float f = (offset-stepSize) / fadeSize;
+				value = jmap(f, (float)1, (float)0);
+			}
+		}
+		else {
+			Automation* c = &row->curve;
+			if (mode == "preset") {
+				CurvePreset* pres = Brain::getInstance()->getCurvePresetById(row->presetId->getValue());
+				if (pres != nullptr) {
+					c = &pres->curve;
+				}
+			}
+			value = c->getValueAtPosition(offset);
+			value -= (float)row->curveOrigin->getValue();
+		}
 
 		if (p->effectMode->getValue() == "relative") {
 			value *= (double)sizeValue->getValue();
