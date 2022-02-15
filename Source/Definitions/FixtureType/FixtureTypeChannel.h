@@ -28,6 +28,7 @@ class FixtureTypeChannel:
     FloatParameter* defaultValue;
     BoolParameter* killedBySWOP;
     EnumParameter* resolution;
+    EnumParameter* fadeOrSnap;
     IntParameter* dmxDelta;
     void onContainerParameterChangedInternal(Parameter* p);
 

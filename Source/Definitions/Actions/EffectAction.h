@@ -19,7 +19,7 @@ public:
     EffectAction(var params);
     ~EffectAction();
 
-    enum ActionType { FX_START, FX_STOP, FX_SIZE, FX_SPEED };
+    enum ActionType { FX_START, FX_STOP, FX_SIZE, FX_SPEED, FX_TAPTEMPO };
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;

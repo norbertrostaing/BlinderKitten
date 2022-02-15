@@ -51,10 +51,19 @@ DataTransferManager::DataTransferManager() :
     paramfilter->targetType = TargetParameter::CONTAINER;
     paramfilter->maxDefaultSearchLevel = 0;
 
-    // mergeMode = addEnumParameter("Merge mode", "");
-    // mergeMode->addOption("Merge", "merge");
-    // mergeMode->addOption("Replace", "replace");
-    
+    groupMergeMode = addEnumParameter("Merge mode", "");
+    groupMergeMode->addOption("Merge", "merge");
+    groupMergeMode->addOption("Replace", "replace");
+
+    presetMergeMode = addEnumParameter("Merge mode", "");
+    presetMergeMode->addOption("Merge", "merge");
+    presetMergeMode->addOption("Replace", "replace");
+
+    cuelistMergeMode = addEnumParameter("Merge mode", "");
+    cuelistMergeMode->addOption("Merge cue", "merge");
+    cuelistMergeMode->addOption("Replace cue", "replace");
+    cuelistMergeMode->addOption("Add new cue", "add");
+
     go = addTrigger("Transfer Data", "Run the data transfer");
     updateDisplay();
 }

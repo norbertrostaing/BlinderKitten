@@ -49,6 +49,11 @@ public:
 
     HashMap<SubFixtureChannel*, Array<EffectParam*>*> chanToFxParam;
 
+    double lastTapTempo;
+    Trigger* tapTempoBtn;
+    IntParameter* beatPerCycle;
+
+
     String getTypeString() const override { return objectType; }
 
     void triggerTriggered(Trigger* t);
@@ -60,6 +65,7 @@ public:
     void start();
     void stop();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
+    void tapTempo();
 
     static Effect* create(var params) { return new Effect(params); }
     

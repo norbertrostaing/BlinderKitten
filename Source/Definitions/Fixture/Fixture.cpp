@@ -109,7 +109,8 @@ void Fixture::checkChildrenSubFixtures() {
 		return ;
 	}
 
-	Array<WeakReference<ControllableContainer>> chans = t ->chansManager.getAllContainers();
+	Array<WeakReference<ControllableContainer>> chans = t->chansManager.getAllContainers();
+	//Array<WeakReference<FixtureTypeChannel*>> chans = t->chansManager.getItemsWithType<FixtureTypeChannel*>();
 	Array<String> fixtNames;
 	// HashMap<String, Array<String>> fixtChannels;
 
@@ -147,6 +148,7 @@ void Fixture::checkChildrenSubFixtures() {
 				chan-> resolution = c->resolution->getValue();
 				chan-> channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
 				chan->parentParamDefinition = param;
+				chan->snapOnly = c->fadeOrSnap->getValue().toString() == "snap";
 				chan-> parentFixtureTypeChannel = c;
 				chan->parentFixture = this;
 				chan->parentSubFixture = subFixt;

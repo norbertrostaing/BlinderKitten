@@ -190,7 +190,10 @@ void Command::computeValues() {
 					finalValue->delay = delay;
 
 					float fade = fadeFrom;
-					if (fadeThru && SubFixtures.size() > 1) {
+					if (fchan->snapOnly) {
+						fade = 0;
+					}
+					else if (fadeThru && SubFixtures.size() > 1) {
 						float position = float(indexFixt) / float(SubFixtures.size() - 1);
 						if (fadeSym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						position = timing.curveFadeRepart.getValueAtPosition(position);

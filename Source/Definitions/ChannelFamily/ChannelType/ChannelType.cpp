@@ -21,9 +21,9 @@ ChannelType::ChannelType(var params) :
 
     reactGM = addBoolParameter("React to grand master", "If checked, this channel will be dimmed by the grand master", false);
     
-    snapOrFade = addEnumParameter("Snap or fade", "Is ths channel allowed to fade or should it jump to his new value ?");
-    snapOrFade->addOption("Fade", "fade");
-    snapOrFade->addOption("Snap", "snap");
+    // snapOrFade = addEnumParameter("Snap or fade", "Is ths channel allowed to fade or should it jump to his new value ?");
+    // snapOrFade->addOption("Fade", "fade");
+    // snapOrFade->addOption("Snap", "snap");
 
 };
 

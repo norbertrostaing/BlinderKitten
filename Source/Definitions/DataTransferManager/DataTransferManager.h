@@ -21,7 +21,10 @@ public:
 	IntParameter* sourceId;
 	EnumParameter* targetType;
 	IntParameter* targetId;
-	EnumParameter* mergeMode;
+	EnumParameter* groupMergeMode;
+	EnumParameter* presetMergeMode;
+	EnumParameter* cuelistMergeMode;
+	EnumParameter* programmerMergeMode;
 	TargetParameter* paramfilter;
 	Trigger* go;
 

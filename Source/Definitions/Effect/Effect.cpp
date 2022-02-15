@@ -45,6 +45,10 @@ Effect::Effect(var params) :
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", false);
 	sizeValue = addFloatParameter("Size", "Master of this Effect", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this effect in cycles/minutes", 5, 0);
+
+	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
+	tapTempoBtn = addTrigger("Tap tempo", "");
+
 	values.selectItemWhenCreated = false;
 	addChildControllableContainer(&values);
 
@@ -90,6 +94,9 @@ void Effect::triggerTriggered(Trigger* t) {
 	}
 	else if (t == stopBtn) {
 		stop();
+	}
+	else if (t == tapTempoBtn) {
+		tapTempo();
 	}
 	else {}
 }
@@ -233,3 +240,14 @@ void Effect::updateName() {
 	setNiceName(String((int)id->getValue()) + " - " + n);
 }
 
+
+void Effect::tapTempo() {
+	double now = Time::getMillisecondCounterHiRes();
+	double delta = now - lastTapTempo;
+	lastTapTempo = now;
+	if (delta < 3000) {
+		delta = delta * (int)beatPerCycle->getValue();
+		double cpm = 60000. / delta;
+		speed->setValue(cpm);
+	}
+}

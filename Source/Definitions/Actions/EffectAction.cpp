@@ -52,6 +52,12 @@ void EffectAction::setValueInternal(var value) {
         }
         break;
 
+    case FX_TAPTEMPO:
+        if (val > 0) {
+            target->tapTempo();
+        }
+        break;
+
     case FX_SIZE:
         target->sizeValue->setValue(val);
         break;
