@@ -49,5 +49,14 @@ public:
     double maxTiming = 0;
     void updateChannels();
 
+    FloatParameter* htpInDelay;
+    FloatParameter* htpOutDelay;
+    FloatParameter* ltpDelay;
+    FloatParameter* htpInFade;
+    FloatParameter* htpOutFade;
+    FloatParameter* ltpFade;
+
+    ControllableContainer timingContainer;
+
 };
 

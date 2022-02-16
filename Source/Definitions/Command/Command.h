@@ -20,6 +20,8 @@ class CommandSelectionManager;
 class CommandTiming;
 class ChannelValue;
 class SubFixtureChannel;
+class Cuelist;
+class Cue;
 
 class Command:
     public BaseItem
@@ -46,6 +48,7 @@ public:
 
     double maxTiming;
     void computeValues();
+    void computeValues(Cuelist* cl, Cue* c);
 
     static Command* create(var params) { return new Command(params); }
 

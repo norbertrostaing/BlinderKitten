@@ -199,34 +199,16 @@ void Cuelist::go(Cue* c) {
 		wannaOff = true;
 	}
 
+	HashMap<SubFixtureChannel*, ChannelValue*> newActiveValues;
 	
-	if (trackingType == "none" || c == nullptr || needRebuildTracking) {
-		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-			ChannelValue* temp = it.getValue();
-			float fadeTime = (float)offFade->getValue()*1000;
-			temp->fadeCurve = &offFadeCurve;
-
-			temp->TSInit = now;
-			temp->TSStart = now;
-			temp->TSEnd= now + fadeTime; 
-
-			temp->endValue = -1;
-			temp->startValue = temp->value;
-			temp->isEnded = false;
-
-			activeValues.set(it.getKey(), temp);
-			Brain::getInstance()->pleaseUpdate(it.getKey());
-		}
-	}
-
 	if (needRebuildTracking) {
 		for (int i = 0; i <= nextIndex-1; i++) {
 			Cue* tempCue = cues.items[i];
 			tempCue->computeValues();
 			for (auto it = tempCue->computedValues.begin(); it != tempCue->computedValues.end(); it.next()) {
 				ChannelValue* temp = it.getValue();
-				if (activeValues.contains(it.getKey())) {
-					ChannelValue* current = activeValues.getReference(it.getKey());
+				if (newActiveValues.contains(it.getKey())) {
+					ChannelValue* current = newActiveValues.getReference(it.getKey());
 					temp->startValue = it.getKey()->postCuelistValue;
 				}
 				else {
@@ -236,7 +218,7 @@ void Cuelist::go(Cue* c) {
 				temp->TSStart = now + (temp->delay);
 				temp->TSEnd = temp->TSStart + (temp->fade);
 				temp->isEnded = false;
-				activeValues.set(it.getKey(), temp);
+				newActiveValues.set(it.getKey(), temp);
 				it.getKey()->cuelistOnTopOfStack(this);
 				Brain::getInstance()->pleaseUpdate(it.getKey());
 			}
@@ -250,20 +232,56 @@ void Cuelist::go(Cue* c) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				ChannelValue * current = activeValues.getReference(it.getKey());
-				temp->startValue = it.getKey()->postCuelistValue;
+				if (it.getKey()->isHTP) {
+					if (current != nullptr) {
+						temp->startValue = current->endValue;
+					}
+					else {
+						temp->startValue = 0;
+					}
+				}
+				else {
+					temp->startValue = it.getKey()->postCuelistValue;
+				}
 			}
 			else {
 				temp->startValue = -1;
 			}
+			LOG(temp->startValue);
 			temp->TSInit = now;
 			temp->TSStart = now + (temp->delay);
 			temp->TSEnd = temp -> TSStart + (temp->fade );
 			temp -> isEnded = false;
-			activeValues.set(it.getKey(), temp);
+			newActiveValues.set(it.getKey(), temp);
 			it.getKey()->cuelistOnTopOfStack(this);
 			Brain::getInstance()->pleaseUpdate(it.getKey());
 		}
 		c->go();
+	}
+
+	if (trackingType == "none" || c == nullptr || needRebuildTracking) {
+		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+			if (!newActiveValues.contains(it.getKey())) {
+				ChannelValue* temp = it.getValue();
+				float fadeTime = (float)offFade->getValue() * 1000;
+				temp->fadeCurve = &offFadeCurve;
+
+				temp->TSInit = now;
+				temp->TSStart = now;
+				temp->TSEnd = now + fadeTime;
+
+				temp->endValue = -1;
+				temp->startValue = temp->value;
+				temp->isEnded = false;
+
+				activeValues.set(it.getKey(), temp);
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
+		}
+	}
+
+	for (auto it = newActiveValues.begin(); it != newActiveValues.end(); it.next()) {
+		activeValues.set(it.getKey(), it.getValue());
 	}
 
 	return ;

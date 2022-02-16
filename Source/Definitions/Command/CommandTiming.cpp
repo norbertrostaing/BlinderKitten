@@ -19,6 +19,7 @@ CommandTiming::CommandTiming(var params) :
 	editorIsCollapsed = false;
 
 	presetOrValue = addEnumParameter("Timing type", "What kind of timing do you want to apply ?");
+	presetOrValue->addOption("Cue timing", "cue");
 	presetOrValue->addOption("Raw Timing", "raw");
 	presetOrValue->addOption("Preset", "preset");
 
@@ -84,25 +85,26 @@ CommandTiming::~CommandTiming()
 void CommandTiming::updateDisplay()
 {
 	bool prst = presetOrValue->getValue() == "preset";
+	bool raw = presetOrValue->getValue() == "raw";
 	bool thd = thruDelay->getValue();
 	bool thf = thruFade->getValue();
 
 	presetId->hideInEditor = !prst;
 
 	// to add a manager with defined data
-	delayFrom->hideInEditor = prst;
-	thruDelay->hideInEditor = prst;
-	delayTo->hideInEditor = prst || !thd;
-	symmetryDelay->hideInEditor = prst || !thd;
+	delayFrom->hideInEditor = !raw;
+	thruDelay->hideInEditor = !raw;
+	delayTo->hideInEditor = !raw || !thd;
+	symmetryDelay->hideInEditor = !raw || !thd;
 
-	fadeFrom->hideInEditor = prst;
-	thruFade->hideInEditor = prst;
-	fadeTo->hideInEditor = prst || !thf;
-	symmetryFade->hideInEditor = prst || !thf;
+	fadeFrom->hideInEditor = !raw;
+	thruFade->hideInEditor = !raw;
+	fadeTo->hideInEditor = !raw || !thf;
+	symmetryFade->hideInEditor = !raw || !thf;
 
-	curveFade.hideInEditor = prst;
-	curveDelayRepart.hideInEditor = prst || !thd;
-	curveFadeRepart.hideInEditor = prst || !thf;
+	curveFade.hideInEditor = !raw;
+	curveDelayRepart.hideInEditor = !raw || !thd;
+	curveFadeRepart.hideInEditor = !raw || !thf;
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

@@ -14,6 +14,7 @@
 #include "CommandSelectionManager.h"
 #include "CommandTiming.h"
 #include "../ChannelValue.h"
+#include "../Cue/Cue.h"
 
 Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),
@@ -61,6 +62,10 @@ void Command::parameterValueChanged(Parameter* p) {
 }
 
 void Command::computeValues() {
+	computeValues(nullptr, nullptr);
+}
+
+void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
 	selection.computeSelection();
 	computedValues.clear();
@@ -81,7 +86,9 @@ void Command::computeValues() {
 	Automation* fadeRepartCurve;
 	Automation* delayRepartCurve;
 
-	if (timing.presetOrValue->getValue() == "preset") {
+	String timingMode = timing.presetOrValue->getValue();
+
+	if (timingMode == "preset") {
 		TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timing.presetId->getValue());
 		if (tp != nullptr) {
 			delayThru = tp->thruDelay->getValue();
@@ -97,7 +104,7 @@ void Command::computeValues() {
 			delayRepartCurve = &tp->curveDelayRepart;
 		}
 	}
-	else {
+	else if (timingMode == "raw"){
 		delayThru = timing.thruDelay->getValue();
 		delaySym = timing.symmetryDelay->getValue();
 		delayFrom = (float)timing.delayFrom->getValue() * 1000;
@@ -181,7 +188,21 @@ void Command::computeValues() {
 					finalValue->endValue = val;
 
 					float delay = delayFrom;
-					if (delayThru && SubFixtures.size() > 1) {
+					if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
+						if (!fchan->isHTP) {
+							delay = (float)callingCue->ltpDelay->getValue()*1000.;
+						}
+						else {
+							ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+							if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+								delay = (float)callingCue->htpInDelay->getValue() * 1000.;
+							}
+							else {
+								delay = (float)callingCue->htpOutDelay->getValue() * 1000.;
+							}
+						}
+					}
+					else if (delayThru && SubFixtures.size() > 1) {
 						float position = float(indexFixt) / float(SubFixtures.size() - 1);
 						if (delaySym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						position = timing.curveDelayRepart.getValueAtPosition(position);
@@ -192,6 +213,20 @@ void Command::computeValues() {
 					float fade = fadeFrom;
 					if (fchan->snapOnly) {
 						fade = 0;
+					}
+					else if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
+						if (!fchan->isHTP) {
+							fade = (float)callingCue->ltpFade->getValue() * 1000.;
+						}
+						else {
+							ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+							if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+								fade = (float)callingCue->htpInFade->getValue() * 1000.;
+							}
+							else {
+								fade = (float)callingCue->htpOutFade->getValue() * 1000.;
+							}
+						}
 					}
 					else if (fadeThru && SubFixtures.size() > 1) {
 						float position = float(indexFixt) / float(SubFixtures.size() - 1);

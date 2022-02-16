@@ -17,7 +17,8 @@ Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue")),
 	objectType(params.getProperty("type", "Cue").toString()),
 	objectData(params),
-	commands("Commands")
+	commands("Commands"),
+	timingContainer("Timing")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
@@ -37,6 +38,18 @@ Cue::Cue(var params) :
 	goBtn = addTrigger("GO", "trigger this cue");
 
 	commands.selectItemWhenCreated = false;
+
+	htpInDelay = timingContainer.addFloatParameter("HTP in delay", "Default delay for HTP rising values",0,0);
+	htpOutDelay = timingContainer.addFloatParameter("HTP out delay", "Default delay for HTP falling values", 0, 0);
+	ltpDelay = timingContainer.addFloatParameter("LTP delay", "Default delay for LTP values", 0, 0);
+	htpInFade = timingContainer.addFloatParameter("HTP in fade", "Default delay for HTP rising values", 0, 0);
+	htpOutFade = timingContainer.addFloatParameter("HTP out fade", "Default delay for HTP falling values", 0, 0);
+	ltpFade = timingContainer.addFloatParameter("LTP fade", "Default delay for LTP values", 0, 0);
+
+	timingContainer.editorIsCollapsed = true;
+
+	addChildControllableContainer(&timingContainer);
+
 	addChildControllableContainer(&commands);
 
 	if (params.isVoid()) {
@@ -75,9 +88,10 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 void Cue::computeValues() {
 	maxTiming = 0;
 	computedValues.clear();
+	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
-		cs[i]->computeValues();
+		cs[i]->computeValues(parentCuelist, this);
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
 		for (auto it = cs[i]->computedValues.begin(); it != cs[i]->computedValues.end(); it.next()) {
 			SubFixtureChannel* fc = it.getKey();
