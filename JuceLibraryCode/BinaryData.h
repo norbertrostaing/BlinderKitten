@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   default_blinderlayout;
-    const int            default_blinderlayoutSize = 3354;
+    const int            default_blinderlayoutSize = 3975;
 
     extern const char*   icon_png;
     const int            icon_pngSize = 85868;

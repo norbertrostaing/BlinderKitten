@@ -13,14 +13,14 @@
         "shifters": [
           {
             "type": 1,
-            "width": 589,
+            "width": 640,
             "height": 997,
             "direction": 2,
             "shifters": [
               {
                 "type": 0,
-                "width": 589,
-                "height": 242,
+                "width": 640,
+                "height": 237,
                 "currentContent": "Programmers",
                 "tabs": [
                   {
@@ -38,25 +38,41 @@
                 ]
               },
               {
-                "type": 0,
-                "width": 589,
-                "height": 371,
-                "currentContent": "Fixtures",
-                "tabs": [
+                "type": 1,
+                "width": 640,
+                "height": 511,
+                "direction": 1,
+                "shifters": [
                   {
-                    "name": "Fixtures"
+                    "type": 0,
+                    "width": 325,
+                    "height": 511,
+                    "currentContent": "Fixtures",
+                    "tabs": [
+                      {
+                        "name": "Fixtures"
+                      }
+                    ]
+                  },
+                  {
+                    "type": 0,
+                    "width": 308,
+                    "height": 511,
+                    "currentContent": "Groups",
+                    "tabs": [
+                      {
+                        "name": "Groups"
+                      }
+                    ]
                   }
                 ]
               },
               {
                 "type": 0,
-                "width": 589,
-                "height": 370,
-                "currentContent": "Groups",
+                "width": 640,
+                "height": 235,
+                "currentContent": "Presets",
                 "tabs": [
-                  {
-                    "name": "Groups"
-                  },
                   {
                     "name": "Presets"
                   },
@@ -65,9 +81,6 @@
                   },
                   {
                     "name": "Timing Presets"
-                  },
-                  {
-                    "name": "Effects"
                   }
                 ]
               }
@@ -75,30 +88,36 @@
           },
           {
             "type": 1,
-            "width": 1325,
+            "width": 1274,
             "height": 997,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 636,
+                "width": 585,
                 "height": 997,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 636,
+                    "width": 585,
                     "height": 745,
                     "currentContent": "Cuelists",
                     "tabs": [
                       {
                         "name": "Cuelists"
+                      },
+                      {
+                        "name": "Effects"
+                      },
+                      {
+                        "name": "Carousels"
                       }
                     ]
                   },
                   {
                     "type": 0,
-                    "width": 636,
+                    "width": 585,
                     "height": 245,
                     "currentContent": "Logger",
                     "tabs": [
@@ -111,7 +130,7 @@
               },
               {
                 "type": 0,
-                "width": 682,
+                "width": 683,
                 "height": 997,
                 "currentContent": "Inspector",
                 "tabs": [
