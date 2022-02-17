@@ -12,6 +12,7 @@ juce_ImplementSingleton(ActionFactory);
 
 #include "Definitions/Actions/CuelistAction.h"
 #include "Definitions/Actions/EffectAction.h"
+#include "Definitions/Actions/CarouselAction.h"
 
 ActionFactory::ActionFactory()
 {
@@ -45,6 +46,11 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Effect", "Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
+
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Size", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED));
 
 }
 

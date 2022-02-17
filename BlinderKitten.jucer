@@ -139,6 +139,10 @@
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
         <GROUP id="{D30416E5-4695-CFE4-0437-DD6025195F6F}" name="Actions">
+          <FILE id="Ye4gjd" name="CarouselAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/CarouselAction.cpp"/>
+          <FILE id="wKhc7C" name="CarouselAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/CarouselAction.h"/>
           <FILE id="we7qmS" name="CuelistAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/CuelistAction.cpp"/>
           <FILE id="gXF4aY" name="CuelistAction.h" compile="0" resource="0" file="Source/Definitions/Actions/CuelistAction.h"/>
