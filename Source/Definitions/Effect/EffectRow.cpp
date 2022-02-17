@@ -90,7 +90,7 @@ void EffectRow::computeData() {
     }
     for (int i = 0; i < paramContainer.items.size(); i++) {
         EffectParam* p = paramContainer.items[i];
-        p -> SubFixtureChannelOffsets.clear();
+        p -> subFixtureChannelOffsets.clear();
         ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
         if (chanType != nullptr) {
             Array<SubFixtureChannel*> chans;
@@ -105,7 +105,7 @@ void EffectRow::computeData() {
             int sizeWing = chans.size()/totWings;
             int nBuddying = p->buddying->getValue();
             float nLimit = chans.size();
-            nLimit /= totWings;
+
             for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
                 int nWing = chanIndex/sizeWing;
                 double offset = (chanIndex - (chanIndex%nBuddying)) / nLimit;
@@ -114,7 +114,7 @@ void EffectRow::computeData() {
                 }
                 offset *= (double)p->elementsSpread->getValue();
                 offset += (double)p->elementsStart->getValue();
-                p->SubFixtureChannelOffsets.set(chans[chanIndex], -offset);
+                p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
                 if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
                     parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
                 }

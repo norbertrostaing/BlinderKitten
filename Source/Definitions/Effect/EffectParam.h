@@ -36,7 +36,7 @@ class EffectParam:
     BoolParameter* forceBaseValue;
     FloatParameter* baseValue;
 
-    HashMap<SubFixtureChannel*, double> SubFixtureChannelOffsets;
+    HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

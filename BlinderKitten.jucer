@@ -146,6 +146,23 @@
                 file="Source/Definitions/Actions/EffectAction.cpp"/>
           <FILE id="AD3mke" name="EffectAction.h" compile="0" resource="0" file="Source/Definitions/Actions/EffectAction.h"/>
         </GROUP>
+        <GROUP id="{13C9BB5E-B353-480A-515C-A789D416195D}" name="Carousel">
+          <FILE id="eMVqEx" name="Carousel.cpp" compile="1" resource="0" file="Source/Definitions/Carousel/Carousel.cpp"/>
+          <FILE id="AnUHMz" name="Carousel.h" compile="0" resource="0" file="Source/Definitions/Carousel/Carousel.h"/>
+          <FILE id="NSBVB5" name="CarouselManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Carousel/CarouselManager.cpp"/>
+          <FILE id="Z5oht2" name="CarouselManager.h" compile="0" resource="0"
+                file="Source/Definitions/Carousel/CarouselManager.h"/>
+          <FILE id="HNHhGG" name="CarouselManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Carousel/CarouselManagerUI.cpp"/>
+          <FILE id="BmzQet" name="CarouselManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Carousel/CarouselManagerUI.h"/>
+          <FILE id="Zudq56" name="CarouselRow.cpp" compile="1" resource="0" file="Source/Definitions/Carousel/CarouselRow.cpp"/>
+          <FILE id="R3Bi1m" name="CarouselRow.h" compile="0" resource="0" file="Source/Definitions/Carousel/CarouselRow.h"/>
+          <FILE id="x5wkKZ" name="CarouselStep.cpp" compile="1" resource="0"
+                file="Source/Definitions/Carousel/CarouselStep.cpp"/>
+          <FILE id="aV3g4M" name="CarouselStep.h" compile="0" resource="0" file="Source/Definitions/Carousel/CarouselStep.h"/>
+        </GROUP>
         <GROUP id="{692CFCBA-37C7-80F1-DB80-392661BB25A7}" name="ChannelFamily">
           <GROUP id="{8DC2F1AF-F1F2-B0B4-3E98-132DF65F339D}" name="ChannelType">
             <FILE id="rLpRii" name="ChannelType.cpp" compile="1" resource="0" file="Source/Definitions/ChannelFamily/ChannelType/ChannelType.cpp"/>

@@ -12,10 +12,10 @@
 pour enregistrer, il faut un objet recoder
 l'appui sur le bouton rec fait apparaitre le formulaire d'enregistrement dans l'inspecteur
 comme pour le moduleManager de chataigne : 		CommunityModuleManager::getInstance()->selectThis();
-il faudrait que le formulaire soit pré rempli genre 
+il faudrait que le formulaire soit prÃ© rempli genre 
 - programmer source => id du programmeur 
 - type de cible (group, preset, cuelist)
-- type d'écriture : remplacer, merge...
+- type d'Ã©criture : remplacer, merge...
 - filtre de paramType pour les presets
 */
 

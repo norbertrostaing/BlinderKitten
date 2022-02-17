@@ -174,7 +174,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		EffectRow* row = dynamic_cast<EffectRow*>(p->parentContainer->parentContainer.get());
 
 		double offset = totalElapsed*(double)row->speed->getValue();
-		offset += p->SubFixtureChannelOffsets.getReference(fc);
+		offset += p->subFixtureChannelOffsets.getReference(fc);
 		while (offset < 0) {
 			offset += 1;
 		}

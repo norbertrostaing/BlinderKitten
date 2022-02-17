@@ -13,6 +13,7 @@
 #include "Definitions/CurvePreset/CurvePresetManagerUI.h"
 #include "Definitions/TimingPreset/TimingPresetManagerUI.h"
 #include "Definitions/Effect/EffectManagerUI.h"
+#include "Definitions/Carousel/CarouselManagerUI.h"
 
 
 //==============================================================================
@@ -91,6 +92,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelists", &CuelistManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Programmers", &ProgrammerManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effects", &EffectManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
     OrganicMainContentComponent::init();
 
 }

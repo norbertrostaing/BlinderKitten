@@ -33,6 +33,7 @@
 #include "./Definitions/Programmer/ProgrammerManager.h"
 #include "./Definitions/TimingPreset/TimingPresetManager.h"
 #include "./Definitions/CurvePreset/CurvePresetManager.h"
+#include "./Definitions/Carousel/CarouselManager.h"
 #include "./Definitions/Effect/EffectManager.h"
 
 #include "./Definitions/DataTransferManager/DataTransferManager.h"
@@ -72,6 +73,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(ProgrammerManager::getInstance());
 	addChildControllableContainer(CurvePresetManager::getInstance());
 	addChildControllableContainer(TimingPresetManager::getInstance());
+	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(EffectManager::getInstance());
 
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
@@ -117,6 +119,7 @@ BKEngine::~BKEngine()
 	FixtureMultiEditor::deleteInstance();
 
 	EffectManager::deleteInstance();
+	CarouselManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();
 	CommandManager::deleteInstance();
@@ -147,6 +150,7 @@ void BKEngine::clearInternal()
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
+	CarouselManager::getInstance()->clear();
 	ProgrammerManager::getInstance()->clear();
 	CuelistManager::getInstance()->clear();
 	CommandManager::getInstance()->clear();
@@ -203,6 +207,9 @@ var BKEngine::getJSONData()
 	var fxData = EffectManager::getInstance()->getJSONData();
 	if (!fxData.isVoid() && fxData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, fxData);
 
+	var carData = CarouselManager::getInstance()->getJSONData();
+	if (!carData.isVoid() && carData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, carData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -222,7 +229,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* fptTask = loadingTask->addTask("SubFixture Param Types");
 	ProgressTask* dtTask = loadingTask->addTask("Fixture Types");
 	ProgressTask* dTask = loadingTask->addTask("Fixtures");
-	ProgressTask* fTask = loadingTask->addTask("SubFixtures");
+	// ProgressTask* fTask = loadingTask->addTask("SubFixtures");
 	ProgressTask* gTask = loadingTask->addTask("Groups");
 	ProgressTask* pTask = loadingTask->addTask("Presets");
 	ProgressTask* cTask = loadingTask->addTask("Commands");
@@ -231,6 +238,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* cpTask = loadingTask->addTask("Curve Presets");
 	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
 	ProgressTask* fxTask = loadingTask->addTask("Effects");
+	ProgressTask* carTask = loadingTask->addTask("Carousels");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
 	//ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	//ProgressTask* routerTask = loadingTask->addTask("Router");
@@ -299,6 +307,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	EffectManager::getInstance()->loadJSONData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 	fxTask->setProgress(1);
 	fxTask->end();
+
+	carTask->start();
+	CarouselManager::getInstance()->loadJSONData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
+	carTask->setProgress(1);
+	carTask->end();
 
 	//stateTask->start();
 	//StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));

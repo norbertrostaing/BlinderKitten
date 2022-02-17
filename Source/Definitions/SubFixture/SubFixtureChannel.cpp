@@ -93,6 +93,10 @@ void SubFixtureChannel::updateVal(double now) {
 		newValue = programmerStack[i]->applyToChannel(this, newValue, now);
 	}
 
+	for (int i = 0; i < carouselStack.size(); i++) {
+		newValue = carouselStack[i]->applyToChannel(this, newValue, now);
+	}
+
 	for (int i = 0; i < effectStack.size(); i++) {
 		newValue = effectStack[i]->applyToChannel(this, newValue, now);
 	}
@@ -160,5 +164,16 @@ void SubFixtureChannel::effectOnTopOfStack(Effect* f) {
 
 void SubFixtureChannel::effectOutOfStack(Effect* f) {
 	effectStack.removeAllInstancesOf(f);
+}
+
+void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
+	if (carouselStack.indexOf(f) >= 0) {
+		carouselStack.removeAllInstancesOf(f);
+	}
+	carouselStack.add(f);
+}
+
+void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
+	carouselStack.removeAllInstancesOf(f);
 }
 

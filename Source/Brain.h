@@ -21,6 +21,7 @@
 #include "Definitions/CurvePreset/CurvePreset.h"
 #include "Definitions/TimingPreset/TimingPreset.h"
 #include "Definitions/Effect/Effect.h"
+#include "Definitions/Carousel/Carousel.h"
 
 class Brain :
     public Thread
@@ -39,6 +40,7 @@ public:
     HashMap<int, CurvePreset*>curvePresets;
     HashMap<int, TimingPreset*>timingPresets;
     HashMap<int, Effect*>effects;
+    HashMap<int, Carousel*>carousels;
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
@@ -50,6 +52,8 @@ public:
     Array<Programmer*> programmerPoolWaiting;
     Array<Effect*> effectPoolUpdating;
     Array<Effect*> effectPoolWaiting;
+    Array<Carousel*> carouselPoolUpdating;
+    Array<Carousel*> carouselPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
     Array<Cuelist*> swoppedCuelists;
@@ -75,12 +79,15 @@ public:
     void unregisterTimingPreset(TimingPreset* p);
     void registerEffect(Effect* p, int id);
     void unregisterEffect(Effect* p);
+    void registerCarousel(Carousel* p, int id);
+    void unregisterCarousel(Carousel* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(SubFixtureChannel* f);
     void pleaseUpdate(Cue* c);
     void pleaseUpdate(Programmer* p);
     void pleaseUpdate(Effect* f);
+    void pleaseUpdate(Carousel* c);
 
     //void updateChannel(SubFixtureChannel* fc);
 
@@ -93,6 +100,7 @@ public:
     CurvePreset* getCurvePresetById(int id);
     TimingPreset* getTimingPresetById(int id);
     Effect* getEffectById(int id);
+    Carousel* getCarouselById(int id);
 
     void swoppedCuelist(Cuelist* c);
     void unswoppedCuelist(Cuelist* c);

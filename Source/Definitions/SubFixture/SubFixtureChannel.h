@@ -18,6 +18,7 @@ class Cuelist;
 class Programmer;
 class SubFixture;
 class Effect;
+class Carousel;
 
 class SubFixtureChannel{
 public:
@@ -44,6 +45,7 @@ public:
     Array<Cuelist*> cuelistStack;
     Array<Programmer*> programmerStack;
     Array<Effect*> effectStack;
+    Array<Carousel*> carouselStack;
     Array<Cuelist*> cuelistFlashStack;
 
     void updateVal(double now);
@@ -56,5 +58,7 @@ public:
     void programmerOutOfStack(Programmer* p);
     void effectOnTopOfStack(Effect* f);
     void effectOutOfStack(Effect* f);
+    void carouselOnTopOfStack(Carousel* f);
+    void carouselOutOfStack(Carousel* f);
 
 };

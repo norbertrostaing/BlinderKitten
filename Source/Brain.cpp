@@ -51,6 +51,13 @@ void Brain::run() {
         }
         effectPoolUpdating.clear();
 
+        carouselPoolUpdating.addArray(carouselPoolWaiting);
+        carouselPoolWaiting.clear();
+        for (int i = 0; i < carouselPoolUpdating.size(); i++) {
+            carouselPoolUpdating[i]->update(now);
+        }
+        carouselPoolUpdating.clear();
+
         programmerPoolUpdating.addArray(programmerPoolWaiting);
         programmerPoolWaiting.clear();
         for (int i = 0; i < programmerPoolUpdating.size(); i++) {
@@ -313,6 +320,33 @@ void Brain::unregisterEffect(Effect* c) {
     }
 }
 
+void Brain::registerCarousel(Carousel* c, int id) {
+    int askedId = id;
+    if (carousels.getReference(id) == c) { return; }
+    if (carousels.containsValue(c)) {
+        carousels.removeValue(c);
+    }
+    bool idIsOk = false;
+    while (!idIsOk) {
+        if (carousels.contains(id) && carousels.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    carousels.set(id, c);
+    c->id->setValue(id);
+    if (id != askedId) {
+    }
+}
+
+void Brain::unregisterCarousel(Carousel* c) {
+    if (carousels.containsValue(c)) {
+        carousels.removeValue(c);
+    }
+}
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);
@@ -340,6 +374,12 @@ void Brain::pleaseUpdate(Programmer* c) {
 void Brain::pleaseUpdate(Effect* f) {
     if (!effectPoolWaiting.contains(f)) {
         effectPoolWaiting.add(f);
+    }
+}
+
+void Brain::pleaseUpdate(Carousel* f) {
+    if (!carouselPoolWaiting.contains(f)) {
+        carouselPoolWaiting.add(f);
     }
 }
 
@@ -392,6 +432,11 @@ TimingPreset* Brain::getTimingPresetById(int id) {
 Effect* Brain::getEffectById(int id) {
     return effects.getReference(id);
 }
+
+Carousel* Brain::getCarouselById(int id) {
+    return carousels.getReference(id);
+}
+
 
 void Brain::swoppedCuelist(Cuelist* c) {
     if (!swoppedCuelists.contains(c)) {
