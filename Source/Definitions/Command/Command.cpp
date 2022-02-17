@@ -248,43 +248,6 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				valuesTo->~HashMap();
 			}
 		}
-
-		if (cv->presetOrValue->getValue() == "value") {
-			ChannelType* chan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-			if (chan != nullptr) {
-
-			}
-		}
-		else if (cv->presetOrValue->getValue() == "preset") {
-			Preset* pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue());
-			Preset* pTo = nullptr;
-			if (cv->thru->getValue()) {
-				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue());
-			}
-			if (pFrom != nullptr) {
-				pFrom->computeValues();
-				bool thru = false;
-				if (pTo != nullptr) {
-					thru = true;
-					pTo->computeValues();
-				}
-
-				for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
-					SubFixture* f = SubFixtures[indexFixt];
-					HashMap<ChannelType*, float>* vals = pFrom->getSubFixtureValues(f);
-					for (auto it = vals->begin(); it != vals->end(); it.next()) {
-						ChannelType* param = it.getKey();
-						float val = it.getValue();
-						if (f->channelsMap.contains(param)) {
-							SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(param);
-
-						}
-					}
-					vals->~HashMap();
-				}
-			}
-		}
-		else {}
 	}
 }
 
