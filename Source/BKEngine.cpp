@@ -22,6 +22,7 @@
 // #include "Common/CommonIncludes.h"
 
 #include "Brain.h"
+#include "UserInputManager.h"
 #include "./Definitions/Interface/InterfaceManager.h"
 #include "./Definitions/ChannelFamily/ChannelFamilyManager.h"
 #include "./Definitions/FixtureType/FixtureTypeManager.h"
@@ -49,16 +50,19 @@
 #include "./Common/Action/Action.h"
 #include "./Common/Action/ActionManager.h"
 
+#include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
 
 BKEngine::BKEngine() :
-	Engine("BlinderKitten", ".olga"),
-	defaultBehaviors("Test")
+	Engine("BlinderKitten", ".olga")
+	//defaultBehaviors("Test"),
 	//ossiaFixture(nullptr)
 {
 	convertURL = "http://hazlab.fr/";
-
+	
+	//Communication
+	OSCRemoteControl::getInstance()->addRemoteControlListener(UserInputManager::getInstance());
 	//init here
 	Engine::mainEngine = this;
 	mainBrain = Brain::getInstance();
@@ -78,7 +82,7 @@ BKEngine::BKEngine() :
 
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
-	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
+	// getAppSettings()->addChildControllableContainer(&defaultBehaviors);
 }
 
 BKEngine::~BKEngine()
@@ -137,6 +141,7 @@ BKEngine::~BKEngine()
 	SerialManager::deleteInstance();
 
 	ActionFactory::deleteInstance();
+	UserInputManager::deleteInstance();
 	Brain::deleteInstance();
 }
 
@@ -348,4 +353,59 @@ void BKEngine::handleAsyncUpdate()
 String BKEngine::getMinimumRequiredFileVersion()
 {
 	return "1.0.0";
+}
+
+void BKEngine::importSelection(File f)
+{
+	if (!f.existsAsFile())
+	{
+		FileChooser fc("Load a mochi", File::getCurrentWorkingDirectory(), "*.mochi");
+		if (!fc.browseForFileToOpen()) return;
+		f = fc.getResult();
+	}
+
+	var data = JSON::parse(f);
+
+	if (!data.isObject()) return;
+
+	ChannelFamilyManager::getInstance()->addItemsFromData(data.getProperty(ChannelFamilyManager::getInstance()->shortName, var()));
+	FixtureTypeManager::getInstance()->addItemsFromData(data.getProperty(FixtureTypeManager::getInstance()->shortName, var()));
+	FixtureManager::getInstance()->addItemsFromData(data.getProperty(FixtureManager::getInstance()->shortName, var()));
+	GroupManager::getInstance()->addItemsFromData(data.getProperty(GroupManager::getInstance()->shortName, var()));
+	PresetManager::getInstance()->addItemsFromData(data.getProperty(PresetManager::getInstance()->shortName, var()));
+	CommandManager::getInstance()->addItemsFromData(data.getProperty(CommandManager::getInstance()->shortName, var()));
+	CuelistManager::getInstance()->addItemsFromData(data.getProperty(CuelistManager::getInstance()->shortName, var()));
+	ProgrammerManager::getInstance()->addItemsFromData(data.getProperty(ProgrammerManager::getInstance()->shortName, var()));
+	CurvePresetManager::getInstance()->addItemsFromData(data.getProperty(CurvePresetManager::getInstance()->shortName, var()));
+	TimingPresetManager::getInstance()->addItemsFromData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
+	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
+	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
+
+}
+
+void BKEngine::exportSelection()
+{
+	var data(new DynamicObject());
+
+	data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, ChannelFamilyManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(FixtureTypeManager::getInstance()->shortName, FixtureTypeManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(FixtureManager::getInstance()->shortName, FixtureManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(GroupManager::getInstance()->shortName, GroupManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(PresetManager::getInstance()->shortName, PresetManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CommandManager::getInstance()->shortName, CommandManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CuelistManager::getInstance()->shortName, CuelistManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(ProgrammerManager::getInstance()->shortName, ProgrammerManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CurvePresetManager::getInstance()->shortName, CurvePresetManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, TimingPresetManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, CarouselManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
+
+	String s = JSON::toString(data);
+
+	FileChooser fc("Save a mochi", File::getCurrentWorkingDirectory(), "*.mochi");
+	if (fc.browseForFileToSave(true))
+	{
+		File f = fc.getResult();
+		f.replaceWithText(s);
+	}
 }

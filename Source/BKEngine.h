@@ -22,11 +22,8 @@ public:
 	BKEngine();
 	~BKEngine();
 
-	//ChataigneGenericModule module;
-	//MultiplexModule multiplexModule;
-
 	//Global Settings
-	ControllableContainer defaultBehaviors;
+	//ControllableContainer defaultBehaviors;
 	Brain* mainBrain;
 
 	void clearInternal() override;
@@ -39,9 +36,9 @@ public:
 
 	void handleAsyncUpdate() override;
 
+	String getMinimumRequiredFileVersion() override;
+
 	void importSelection(File f = File());
 	void exportSelection();
-
-	String getMinimumRequiredFileVersion() override;
 
 };

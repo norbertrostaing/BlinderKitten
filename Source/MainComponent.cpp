@@ -15,13 +15,13 @@
 #include "Definitions/Effect/EffectManagerUI.h"
 #include "Definitions/Carousel/CarouselManagerUI.h"
 
-
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
     // setSize (800, 600);
+    getCommandManager().registerAllCommandsForTarget(this);
 }
 
 MainContentComponent::~MainContentComponent()

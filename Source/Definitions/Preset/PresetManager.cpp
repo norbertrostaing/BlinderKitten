@@ -14,7 +14,6 @@ PresetManager::PresetManager() :
     itemDataType = "Preset";
     selectItemWhenCreated = true;
     comparator.compareFunc = compare;
-
 }
 
 PresetManager::~PresetManager()

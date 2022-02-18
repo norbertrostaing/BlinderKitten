@@ -21,6 +21,9 @@ PresetManagerUI::PresetManagerUI(const String & contentName) :
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();
+	//paintOverChildren
+	//paintEntireComponent
+	//paint
 }
 
 PresetManagerUI::~PresetManagerUI()

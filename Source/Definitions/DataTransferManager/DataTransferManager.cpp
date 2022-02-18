@@ -45,37 +45,37 @@ DataTransferManager::DataTransferManager() :
     // targetType->addOption("Timing Preset", "TimingPreset");
     targetType->addOption("Cuelist", "Cuelist");
     targetType->addOption("Programmer", "Programmer");
-    targetId = addIntParameter("Target Id", "ID of the target", 0, 0);
+
+    targetUserId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
     paramfilter = addTargetParameter("Param filter", "Filter recorded values in preset by parameter family", ChannelFamilyManager::getInstance());
     paramfilter->targetType = TargetParameter::CONTAINER;
     paramfilter->maxDefaultSearchLevel = 0;
 
-    groupMergeMode = addEnumParameter("Merge mode", "");
-    groupMergeMode->addOption("Merge", "merge");
-    groupMergeMode->addOption("Replace", "replace");
+    groupCopyMode = addEnumParameter("Group merge mode", "Group record mode");
+    groupCopyMode->addOption("Merge", "merge");
+    groupCopyMode->addOption("Replace", "replace");
 
-    presetMergeMode = addEnumParameter("Merge mode", "");
-    presetMergeMode->addOption("Merge", "merge");
-    presetMergeMode->addOption("Replace", "replace");
+    presetCopyMode = addEnumParameter("Preset merge mode", "Preset record mode");
+    presetCopyMode->addOption("Merge", "merge");
+    presetCopyMode->addOption("Replace", "replace");
 
-    cuelistMergeMode = addEnumParameter("Merge mode", "");
-    cuelistMergeMode->addOption("Merge cue", "merge");
-    cuelistMergeMode->addOption("Replace cue", "replace");
-    cuelistMergeMode->addOption("Add new cue", "add");
+    cuelistCopyMode = addEnumParameter("Cuelist merge mode", "Cuelist record mode");
+    cuelistCopyMode->addOption("Add new cue", "add");
+    cuelistCopyMode->addOption("Update current cue", "update");
+    cuelistCopyMode->addOption("Replace current cue", "replace");
 
     go = addTrigger("Transfer Data", "Run the data transfer");
     updateDisplay();
 }
 
 void DataTransferManager::updateDisplay() {
-    if (targetType->getValue() == "Preset") {
-        paramfilter->setEnabled(true);
-    }
-    else {
-        paramfilter->setEnabled(false);
-    }
-
+    String tgt = targetType->getValue();
+    paramfilter->hideInEditor = !(tgt == "Preset");
+    groupCopyMode->hideInEditor = !(tgt == "Group");
+    presetCopyMode->hideInEditor = !(tgt == "Preset");
+    cuelistCopyMode->hideInEditor = !(tgt == "Cuelist");
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void DataTransferManager::onContainerParameterChangedInternal(Parameter* p) {
@@ -98,22 +98,25 @@ void DataTransferManager::execute() {
     String trgType = targetType->getValue();
     bool valid = false;
 
+    int tId = targetUserId->getValue();
+
     if (srcType == "Programmer") {
         Programmer* source = Brain::getInstance()->getProgrammerById(sourceId->getValue());
         if (source == nullptr) { LOG("Invalid Programmer ID"); return; }
         if (trgType == "Group") {
             valid = true;
-            Group* target = Brain::getInstance()->getGroupById(targetId->getValue());
+            Group* target = Brain::getInstance()->getGroupById(tId);
             if (target == nullptr) {
                 target = GroupManager::getInstance()->addItem(new Group());
-                target->id->setValue(targetId->getValue());
+                target->id->setValue(tId);
                 target->setNiceName("Group " + String(int(target->id->getValue())));
             }
 
-            target->selection.clear(); // erase data
+            if (groupCopyMode->getValue() == "replace") {
+                target->selection.clear(); // erase data
+            }
 
             for (int commandIndex = 0; commandIndex < source->commands.items.size(); commandIndex++) {
-
                 CommandSelectionManager* selections = &source->commands.items[commandIndex]->selection;
                 for (int selectionIndex = 0; selectionIndex < selections->items.size(); selectionIndex++) {
                     CommandSelection* selection = selections->items[selectionIndex];
@@ -124,16 +127,18 @@ void DataTransferManager::execute() {
         }
         else if (trgType == "Preset") {
             valid = true;
-            Preset* target = Brain::getInstance()->getPresetById(targetId->getValue());
+            Preset* target = Brain::getInstance()->getPresetById(tId);
             if (target == nullptr) {
                 target = PresetManager::getInstance()->addItem(new Preset());
-                target->id->setValue(targetId->getValue());
+                target->id->setValue(tId);
                 target->setNiceName("Preset " + String(int(target->id->getValue())));
                 target->updateName();
                 target->subFixtureValues.clear();
             }
 
-            // target->SubFixtureValues->clear(); // erase data
+            if (presetCopyMode->getValue() == "replace") {
+                target->subFixtureValues.clear(); // erase data
+            }
 
             ChannelFamily* filter = dynamic_cast<ChannelFamily*>(paramfilter->targetContainer.get());
 
@@ -148,7 +153,6 @@ void DataTransferManager::execute() {
 
                     int subfixtId = chan->parentSubFixture->subId;
                     int fixtId = dynamic_cast<Fixture*>(chan->parentSubFixture->parentFixture)->id->getValue();
-                    LOG("fixt");
                     PresetSubFixtureValues* pfv = nullptr;
 
                     for (int i = 0; i < target->subFixtureValues.items.size(); i++) {
@@ -181,16 +185,36 @@ void DataTransferManager::execute() {
         }
         else if (trgType == "Cuelist") {
             valid = true;
-            Cuelist* target = Brain::getInstance()->getCuelistById(targetId->getValue());
+            Cuelist* target = Brain::getInstance()->getCuelistById(tId);
             if (target == nullptr) {
                 target = CuelistManager::getInstance()->addItem(new Cuelist());
-                target->id->setValue(targetId->getValue());
-                target->setNiceName("Cuelist " + String(int(target->id->getValue())));
+
+                target->id->setValue(tId);
+                target->userName->setValue("Cuelist "+target->id->getValue().toString());
                 target->cues.clear();
             }
 
-            Cue* targetCue = target->cues.addItem();
-            targetCue->commands.clear();
+            String copyMode = cuelistCopyMode->getValue();
+            Cue* targetCue;
+
+            if (copyMode == "add") {
+                targetCue = target->cues.addItem();
+                targetCue->commands.clear();
+            }
+            else {
+                targetCue = target->cueA;
+                if (targetCue == nullptr) {
+                    targetCue = target->cues.items[0];
+                    if (targetCue == nullptr){
+                        targetCue = target->cues.addItem();
+                        targetCue->commands.clear();
+                    }
+                }
+            }
+            if (copyMode == "replace") {
+                targetCue->commands.clear();
+            }
+
             for (int i = 0; i < source->commands.items.size(); i++) {
                 Command* c = targetCue->commands.addItem();
                 c->loadJSONData(source->commands.items[i]->getJSONData());
@@ -215,7 +239,6 @@ void DataTransferManager::execute() {
         LOGWARNING("target type and source type are not compatible");
     }
     else {
-        LOG("OK bro");
     }
 
 

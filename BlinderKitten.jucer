@@ -12,9 +12,6 @@
             file="Ressources/kittenLayout.layout"/>
     </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
-      <FILE id="FzUHii" name="mainIncludes.cpp" compile="1" resource="0"
-            file="Source/mainIncludes.cpp"/>
-      <FILE id="AfwHY1" name="mainIncludes.h" compile="0" resource="0" file="Source/mainIncludes.h"/>
       <GROUP id="{45FB759F-EFE9-4473-37EC-722C12285C7E}" name="Common">
         <GROUP id="{FFFFEE64-A9BA-CAEB-F127-B70753B6745E}" name="Action">
           <FILE id="N23Wkf" name="Action.cpp" compile="0" resource="0" file="Source/Common/Action/Action.cpp"/>
@@ -450,15 +447,24 @@
               file="Source/Definitions/ChannelValue.cpp"/>
         <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
       </GROUP>
-      <FILE id="otLsfG" name="Brain.cpp" compile="1" resource="0" file="Source/Brain.cpp"/>
-      <FILE id="IXNzmp" name="Brain.h" compile="0" resource="0" file="Source/Brain.h"/>
       <FILE id="wUdtwZ" name="BKEngine.cpp" compile="1" resource="0" file="Source/BKEngine.cpp"/>
       <FILE id="pF2hTW" name="BKEngine.h" compile="0" resource="0" file="Source/BKEngine.h"/>
-      <FILE id="EYxePR" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
+      <FILE id="otLsfG" name="Brain.cpp" compile="1" resource="0" file="Source/Brain.cpp"/>
+      <FILE id="IXNzmp" name="Brain.h" compile="0" resource="0" file="Source/Brain.h"/>
       <FILE id="wU23B2" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="uEDJux" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="EYxePR" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="tiHDZJ" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
+      <FILE id="uEDJux" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="iCrhZe" name="MainComponentCommands.cpp" compile="1" resource="0"
+            file="Source/MainComponentCommands.cpp"/>
+      <FILE id="FzUHii" name="mainIncludes.cpp" compile="1" resource="0"
+            file="Source/mainIncludes.cpp"/>
+      <FILE id="AfwHY1" name="mainIncludes.h" compile="0" resource="0" file="Source/mainIncludes.h"/>
+      <FILE id="DijF0Y" name="UserInputManager.cpp" compile="1" resource="0"
+            file="Source/UserInputManager.cpp"/>
+      <FILE id="Ffg3Uq" name="UserInputManager.h" compile="0" resource="0"
+            file="Source/UserInputManager.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
@@ -485,7 +491,7 @@
         <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../Chataigne/modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules\"/>
         <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="../JUCE/modules"/>
       </MODULEPATHS>
