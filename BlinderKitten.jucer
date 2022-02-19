@@ -12,6 +12,10 @@
             file="Ressources/kittenLayout.layout"/>
     </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
+      <GROUP id="{C2CABB5D-DC86-5E72-CD97-9285EFEFA23C}" name="UI">
+        <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
+        <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
+      </GROUP>
       <GROUP id="{45FB759F-EFE9-4473-37EC-722C12285C7E}" name="Common">
         <GROUP id="{FFFFEE64-A9BA-CAEB-F127-B70753B6745E}" name="Action">
           <FILE id="N23Wkf" name="Action.cpp" compile="0" resource="0" file="Source/Common/Action/Action.cpp"/>

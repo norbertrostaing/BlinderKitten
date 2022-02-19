@@ -50,6 +50,8 @@
 #include "./Common/Action/Action.h"
 #include "./Common/Action/ActionManager.h"
 
+#include "UI/CommandLine.h"
+
 #include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
@@ -142,6 +144,7 @@ BKEngine::~BKEngine()
 
 	ActionFactory::deleteInstance();
 	UserInputManager::deleteInstance();
+	CommandLine::deleteInstance();
 	Brain::deleteInstance();
 }
 

@@ -70,7 +70,7 @@ Programmer::~Programmer()
 		it.getKey()->programmerOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
-
+	Brain::getInstance()->unregisterProgrammer(this);
 	LOG("delete Programmer");
 }
 

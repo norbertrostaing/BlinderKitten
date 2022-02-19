@@ -258,7 +258,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::createFromDescription("0").getKeyCode(), ModifierKeys::noModifiers);
 		break;
 
-
+	case 0x40004: // bypass deleteing item with backspace 
+		OrganicMainContentComponent::getCommandInfo(commandID, result);
+		result.defaultKeypresses.remove(1);
+		result.defaultKeypresses.remove(0);
+		break;
 
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
