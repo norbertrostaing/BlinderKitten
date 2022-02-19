@@ -15,6 +15,8 @@
       <GROUP id="{C2CABB5D-DC86-5E72-CD97-9285EFEFA23C}" name="UI">
         <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
+        <FILE id="V8gEcE" name="Encoders.cpp" compile="1" resource="0" file="Source/UI/Encoders.cpp"/>
+        <FILE id="yt8yKK" name="Encoders.h" compile="0" resource="0" file="Source/UI/Encoders.h"/>
       </GROUP>
       <GROUP id="{45FB759F-EFE9-4473-37EC-722C12285C7E}" name="Common">
         <GROUP id="{FFFFEE64-A9BA-CAEB-F127-B70753B6745E}" name="Action">
@@ -478,7 +480,8 @@
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="BlinderKitten" binaryPath="Binaries/Debug"
                        headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib"/>
+                       libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib"
+                       defines="JUCE_DISABLE_ASSERTIONS=1"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="BlinderKitten" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
                        headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        binaryPath="Binaries/"/>

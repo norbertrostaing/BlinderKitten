@@ -15,6 +15,7 @@
 #include "Definitions/Effect/EffectManagerUI.h"
 #include "Definitions/Carousel/CarouselManagerUI.h"
 #include "UI/CommandLine.h"
+#include "UI/Encoders.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -94,7 +95,8 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Programmers", &ProgrammerManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effects", &EffectManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("CommandLine", &CommandLineUI::create));
+    // ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("CommandLine", &CommandLineUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
 
     OrganicMainContentComponent::init();
 

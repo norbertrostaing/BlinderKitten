@@ -20,6 +20,8 @@ public:
     CommandSelectionManager();
     ~CommandSelectionManager();
 
+    void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
+
     Array<SubFixture*> computedSelectedSubFixtures;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);

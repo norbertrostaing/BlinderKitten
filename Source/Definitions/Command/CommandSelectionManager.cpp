@@ -1,13 +1,14 @@
 #include "CommandSelectionManager.h"
 #include "../SubFixture/SubFixture.h"
 #include "../../Brain.h"
+#include "../../UserInputManager.h"
+#include "Command.h"
 
 CommandSelectionManager::CommandSelectionManager() :
     BaseManager("Selections")
 {
     itemDataType = "CommandSelection";
-    selectItemWhenCreated = false;       
-
+    selectItemWhenCreated = false; 
 }
 
 CommandSelectionManager::~CommandSelectionManager()
@@ -167,4 +168,8 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	}
 
 
+}
+
+void CommandSelectionManager::onControllableFeedbackUpdate(ControllableContainer*, Controllable*) {
+	UserInputManager::getInstance()->commandSelectionChanged(dynamic_cast<Command*>(this->parentContainer.get()));
 }

@@ -20,6 +20,7 @@ class CommandLineUI : public ShapeShifterContent
 public:
     CommandLineUI(const String& contentName);
     ~CommandLineUI();
+
     static CommandLineUI* create(const String& name) { return new CommandLineUI(name); }
 
 
@@ -32,6 +33,8 @@ public:
     juce_DeclareSingleton(CommandLine, true);
     CommandLine();
     ~CommandLine() override;
+
+    Slider test;
 
     void paint (juce::Graphics&) override;
     void resized() override;

@@ -160,7 +160,6 @@ void UserInputManager::processMessage(const OSCMessage& m)
 void UserInputManager::processCommand() {
 
 	Programmer* prog = Brain::getInstance()->getProgrammerById(1);
-	Command* targetCommand;
 
 	if (prog == nullptr) {
 		prog = ProgrammerManager::getInstance()->addItem();
@@ -227,3 +226,17 @@ void UserInputManager::processCommand() {
 
 }
 
+void UserInputManager::encoderValueChanged(int index, float newValue) {
+	LOG("Encoder "+String(index+1)+ " just moved !");
+}
+
+void UserInputManager::commandSelectionChanged(Command* c) {
+	if (c == targetCommand) {
+		LOG("changed !");
+		// - cleaner pour que cette methode soit apellée depuis la commande et non depuis le commandSelectionManager
+		// - methode du commandSelectionManager pour recuperer les channels accessibles
+		// - reorganiser les channels acessibles
+		// afficher les channels acessibles dans les encoders
+
+	}
+}
