@@ -52,6 +52,7 @@
 
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
+#include "UI/InputPanel.h"
 
 #include "UserInputManager.h"
 
@@ -145,8 +146,11 @@ BKEngine::~BKEngine()
 
 	ActionFactory::deleteInstance();
 	UserInputManager::deleteInstance();
+
 	CommandLine::deleteInstance();
 	Encoders::deleteInstance();
+	InputPanel::deleteInstance();
+
 	Brain::deleteInstance();
 }
 

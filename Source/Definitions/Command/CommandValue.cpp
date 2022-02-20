@@ -28,12 +28,12 @@ CommandValue::CommandValue(var params) :
 
     // release = addBoolParameter("Release value", "release tracked values", false);
     valueFrom = addFloatParameter("Value", "Value of the first element", 0, 0, 1);
-    presetIdFrom = addIntParameter("ID", "ID of the preset for the first element", 1, 1);
+    presetIdFrom = addIntParameter("ID From", "ID of the preset for the first element", 0, 0);
 
     thru = addBoolParameter("Thru", "Do you want to apply to multiple elements ?", false);
 
     valueTo = addFloatParameter("Value To", "Value of the last element", 0, 0, 1);
-    presetIdTo = addIntParameter("ID", "ID of the preset for the last element", 1, 1);
+    presetIdTo = addIntParameter("ID To", "ID of the preset for the last element", 0, 0);
 
     symmetry = addBoolParameter("Symmetry", "Apply value with symmetry ?", false);
     updateDisplay();

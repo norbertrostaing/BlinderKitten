@@ -50,6 +50,7 @@ public:
     void computeValues();
     void computeValues(Cuelist* cl, Cue* c);
 
+    void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
     static Command* create(var params) { return new Command(params); }
 
 };

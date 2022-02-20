@@ -30,7 +30,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		int idThru = selections[selId]->thru->getValue() ? selections[selId]->valueTo->getValue() : idFrom;
 		int mod = idFrom <= idThru ? 1 : -1;
 
-		if (selections[selId]->targetType->getValue() == "Fixture") {
+		if (selections[selId]->targetType->getValue() == "fixture") {
 			for (int id = idFrom; id != idThru + mod; id = id + mod) {
 				if (b->Fixtures.contains(id)) {
 					Fixture* fixt = b->Fixtures.getReference(id);
@@ -166,10 +166,16 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		else {}
 
 	}
-
-
 }
 
-void CommandSelectionManager::onControllableFeedbackUpdate(ControllableContainer*, Controllable*) {
-	UserInputManager::getInstance()->commandSelectionChanged(dynamic_cast<Command*>(this->parentContainer.get()));
+Array<ChannelType *> CommandSelectionManager::getControllableChannelsTypes() {
+	Array<ChannelType*> chans;
+	for (int i = 0; i < computedSelectedSubFixtures.size(); i++) {
+		for (auto it = computedSelectedSubFixtures[i]->channelsMap.begin(); it != computedSelectedSubFixtures[i]->channelsMap.end(); it.next()) {
+			if (it.getKey()!=nullptr && !chans.contains(it.getKey())) {
+				chans.add(it.getKey());
+			}
+		}
+	}
+	return chans;
 }

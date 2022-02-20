@@ -13,6 +13,7 @@
 
 class Programmer;
 class Command;
+class ChannelType;
 //#include "Definitions/Programmer/Programmer.h"
 
 class UserInputManager:
@@ -32,7 +33,11 @@ public:
     void processMessage(const OSCMessage& m) override;
 
     void encoderValueChanged(int index, float absVal);
+    HashMap<int, ChannelType*> encoderChannels;
 
     void commandSelectionChanged(Command* c);
+    void commandValueChanged(Command* c);
+
+    void redrawEncoders();
 
 };

@@ -17,6 +17,8 @@
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
         <FILE id="V8gEcE" name="Encoders.cpp" compile="1" resource="0" file="Source/UI/Encoders.cpp"/>
         <FILE id="yt8yKK" name="Encoders.h" compile="0" resource="0" file="Source/UI/Encoders.h"/>
+        <FILE id="R1P4dS" name="InputPanel.cpp" compile="1" resource="0" file="Source/UI/InputPanel.cpp"/>
+        <FILE id="NMQyY5" name="InputPanel.h" compile="0" resource="0" file="Source/UI/InputPanel.h"/>
       </GROUP>
       <GROUP id="{45FB759F-EFE9-4473-37EC-722C12285C7E}" name="Common">
         <GROUP id="{FFFFEE64-A9BA-CAEB-F127-B70753B6745E}" name="Action">

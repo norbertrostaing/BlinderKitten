@@ -15,6 +15,7 @@
 #include "CommandTiming.h"
 #include "../ChannelValue.h"
 #include "../Cue/Cue.h"
+#include "UserInputManager.h"
 
 Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),
@@ -248,6 +249,18 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				valuesTo->~HashMap();
 			}
 		}
+	}
+}
+
+void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) {
+	if (&selection == cc) {
+		UserInputManager::getInstance()->commandSelectionChanged(this);
+	}
+	else if (&values == cc) {
+		UserInputManager::getInstance()->commandValueChanged(this);
+	}
+	else {
+
 	}
 }
 

@@ -31,16 +31,19 @@ Encoders::Encoders()
         addAndMakeVisible(s);
         s->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
         s->setRange(0,1);
+        s->setValue(0,juce::dontSendNotification);
+        s->setColour(Slider::rotarySliderFillColourId, Colour(63,63,63));
         s->setNumDecimalPlacesToDisplay(5);
+        s->addListener(this);
         encoders.add(s);
 
         Label* l = new Label();
         addAndMakeVisible(l);
-        l->setText("Label "+String(1+i), juce::dontSendNotification);
+        l->setText("", juce::dontSendNotification);
         l->attachToComponent(s, false);
         labels.add(l);
     }
-    updateContent();
+
 }
 
 Encoders::~Encoders()
@@ -66,8 +69,8 @@ void Encoders::resized()
         for (int i = 0; i < 8; i++) {
             encoders[i]->setBounds(0, i*h, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxRight, false, 60, 20);
-            encoders[i]->addListener(this);
             labels[i]->setBounds(60, i * h, 60, 20);
+            labels[i]->setJustificationType(1);
 
         }
     }
@@ -77,19 +80,9 @@ void Encoders::resized()
         for (int i = 0; i < 8; i++) {
             encoders[i]->setBounds(i*w, 0, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 60, 20);
+            labels[i]->setBounds(i*w, 80, 80, 20);
+            labels[i]->setJustificationType(36);
         }
-    }
-}
-
-void Encoders::updateContent() {
-    for (int i = 0; i < 8; i++) {
-        if (rand() % 2 == 1) {
-            encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
-        }
-        else {
-            encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(127, 127, 127));
-        }
-        encoders[i]->setValue(1, juce::dontSendNotification);
     }
 }
 
@@ -99,3 +92,4 @@ void Encoders::sliderValueChanged(Slider* slider)
     UserInputManager::getInstance()->encoderValueChanged(index, slider->getValue());
     
 }
+

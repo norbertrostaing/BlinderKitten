@@ -13,15 +13,15 @@
         "shifters": [
           {
             "type": 1,
-            "width": 640,
+            "width": 571,
             "height": 997,
             "direction": 2,
             "shifters": [
               {
                 "type": 0,
-                "width": 640,
+                "width": 571,
                 "height": 237,
-                "currentContent": "Programmers",
+                "currentContent": "Input Panel",
                 "tabs": [
                   {
                     "name": "Interfaces"
@@ -34,19 +34,22 @@
                   },
                   {
                     "name": "Programmers"
+                  },
+                  {
+                    "name": "Input Panel"
                   }
                 ]
               },
               {
                 "type": 1,
-                "width": 640,
-                "height": 511,
+                "width": 571,
+                "height": 479,
                 "direction": 1,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 325,
-                    "height": 511,
+                    "width": 291,
+                    "height": 479,
                     "currentContent": "Fixtures",
                     "tabs": [
                       {
@@ -56,8 +59,8 @@
                   },
                   {
                     "type": 0,
-                    "width": 308,
-                    "height": 511,
+                    "width": 274,
+                    "height": 479,
                     "currentContent": "Groups",
                     "tabs": [
                       {
@@ -69,8 +72,8 @@
               },
               {
                 "type": 0,
-                "width": 640,
-                "height": 235,
+                "width": 571,
+                "height": 267,
                 "currentContent": "Presets",
                 "tabs": [
                   {
@@ -88,20 +91,20 @@
           },
           {
             "type": 1,
-            "width": 1274,
+            "width": 1343,
             "height": 997,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 585,
+                "width": 704,
                 "height": 997,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 585,
-                    "height": 745,
+                    "width": 704,
+                    "height": 651,
                     "currentContent": "Cuelists",
                     "tabs": [
                       {
@@ -117,8 +120,19 @@
                   },
                   {
                     "type": 0,
-                    "width": 585,
-                    "height": 245,
+                    "width": 704,
+                    "height": 133,
+                    "currentContent": "Encoders",
+                    "tabs": [
+                      {
+                        "name": "Encoders"
+                      }
+                    ]
+                  },
+                  {
+                    "type": 0,
+                    "width": 704,
+                    "height": 201,
                     "currentContent": "Logger",
                     "tabs": [
                       {
@@ -130,7 +144,7 @@
               },
               {
                 "type": 0,
-                "width": 683,
+                "width": 633,
                 "height": 997,
                 "currentContent": "Inspector",
                 "tabs": [

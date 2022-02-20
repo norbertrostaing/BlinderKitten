@@ -20,11 +20,11 @@ CommandSelection::CommandSelection(var params) :
     plusOrMinus->addOption("-", "remove");
 
     targetType = addEnumParameter("Target type", "What kinf of element are you targetting ?");
-    targetType->addOption("Fixture", "Fixture");
+    targetType->addOption("Fixture", "fixture");
     targetType->addOption("Group", "group");
-    valueFrom = addIntParameter("ID", "ID of the first element",1,1);
+    valueFrom = addIntParameter("ID", "ID of the first element",0,0);
     thru = addBoolParameter("Thru", "Do you want to add multiple elements ?", false);
-    valueTo = addIntParameter("Last ID", "ID of the last element (only if thru checked)", 1, 1);
+    valueTo = addIntParameter("Last ID", "ID of the last element (only if thru checked)", 0, 0);
 
     subSel = addBoolParameter("SubFixtures", "select only some subfixtures ?",false);
     subFrom = addIntParameter("SubFixtures From", "First id of subFixture",0,0);

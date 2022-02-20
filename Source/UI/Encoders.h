@@ -41,7 +41,8 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     void updateContent();
-    void sliderValueChanged(Slider* slider);
+    void sliderValueChanged(Slider* slider) override;
+    void updateEncoders();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Encoders)

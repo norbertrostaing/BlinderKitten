@@ -12,6 +12,7 @@
 #include "CommandSelection.h"
 //#include "../SubFixture/SubFixture.h"
 class SubFixture;
+class ChannelType;
 
 class CommandSelectionManager :
     public BaseManager<CommandSelection>
@@ -20,9 +21,8 @@ public:
     CommandSelectionManager();
     ~CommandSelectionManager();
 
-    void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
-
     Array<SubFixture*> computedSelectedSubFixtures;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);
+    Array<ChannelType *> getControllableChannelsTypes();
 };
