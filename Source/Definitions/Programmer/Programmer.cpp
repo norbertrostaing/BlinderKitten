@@ -22,6 +22,7 @@ il faudrait que le formulaire soit pré rempli genre
 #include "JuceHeader.h"
 #include "Programmer.h"
 #include "../../Brain.h"
+#include "../../UserInputManager.h"
 #include "../ChannelValue.h"
 #include "../DataTransferManager/DataTransferManager.h"
 #include "ProgrammerManager.h"
@@ -266,4 +267,86 @@ void Programmer :: clearAll() {
 	release();
 	commands.clear();
 	commands.addItem();
+}
+
+void Programmer::processUserInput(String s) {
+	s = s.toLowerCase();
+
+	if (currentUserCommand == nullptr) {
+		if (commands.items.size() > 0) {
+			currentUserCommand = commands.items[0];
+		}
+		else {
+			currentUserCommand = commands.addItem();
+		}
+	}
+	currentUserCommand->getCommandAsTexts();
+
+	if (s == "clear") {
+		commands.removeItem(currentUserCommand);
+		if (commands.items.size() == 0) {
+			commands.addItem();
+		}
+		currentUserCommand = commands.items.getLast();
+		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
+	}
+	else if (s == "+" || s == "-") {
+		if (currentUserCommand->userCanPressPlusOrMinus) {
+			currentUserCommand->userPress(s);
+		}
+		else {
+			LOGERROR("not allowed");
+		}
+	}
+	else if (s == "group" || s == "fixture") {
+		if (currentUserCommand->userCanPressSelectionType) {
+			currentUserCommand->userPress(s);
+		}
+		else if (currentUserCommand->userCanPressTimingType) {
+			currentUserCommand = commands.addItem();
+			currentUserCommand->userPress(s);
+		}
+		else {
+			LOGERROR("not allowed");
+		}
+	}
+	else if (s == "subfixture") {
+		if (currentUserCommand->userCanPressSubSelection) {
+			currentUserCommand->userPress(s);
+		}
+		else {
+			LOGERROR("not allowed");
+		}
+	}
+	else if (s == "thru") {
+		if (currentUserCommand->userCanPressThru) {
+			currentUserCommand->userPress(s);
+		}
+		else {
+			LOGERROR("not allowed");
+		}
+	}
+	else if (s == "preset") {
+		if (currentUserCommand->userCanPressValueType) {
+			currentUserCommand->userPress(s);
+		}
+		else {
+			LOGERROR("not allowed");
+		}
+	}
+	else if (s.containsOnly("1234567890.")) {
+		if (currentUserCommand->userCanPressValue) {
+			currentUserCommand->userPress(s);
+		}
+		else if (currentUserCommand->userCanPressNumber && s.containsOnly("1234567890")) {
+			currentUserCommand->userPress(s);
+		}
+		else {
+			LOGERROR("not allowed");
+		}
+	}
+	else {
+		// probably a channel type;
+	}
+	// currentUserCommand->userPress(s);
 }

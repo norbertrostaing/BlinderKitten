@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "Encoders.h"
 #include "UserInputManager.h"
+#include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
+#include "Definitions/Programmer/Programmer.h"
 
 //==============================================================================
 EncodersUI::EncodersUI(const String& contentName):
@@ -24,9 +26,15 @@ EncodersUI::~EncodersUI()
 
 juce_ImplementSingleton(Encoders);
 
-Encoders::Encoders()
+Encoders::Encoders():
+    channels()
 {
-    for (int i = 0; i < 8; i++) {
+    addAndMakeVisible(&commandLine);
+    addAndMakeVisible(&btnMode);
+    btnMode.addListener(this);
+    btnMode.setButtonText("Value");
+
+    for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
         addAndMakeVisible(s);
         s->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
@@ -52,7 +60,7 @@ Encoders::~Encoders()
 
 void Encoders::paint (juce::Graphics& g)
 {
-
+    
 }
 
 void Encoders::resized()
@@ -60,13 +68,17 @@ void Encoders::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
     int windowH = getHeight();
-    int windowsW = getWidth();
+    int windowW = getWidth();
     int x = 0;
     int y = 0;
-    if (windowH > windowsW) { // portrait
+   
+    commandLine.setBounds(0,0,windowW, 20);
+    btnMode.setBounds(windowW-40, 0, 40, 20);
+
+    if (windowH > windowW) { // portrait
         float w = 120;
         float h = 60;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 10; i++) {
             encoders[i]->setBounds(0, i*h, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxRight, false, 60, 20);
             labels[i]->setBounds(60, i * h, 60, 20);
@@ -75,12 +87,12 @@ void Encoders::resized()
         }
     }
     else {
-        float w = 80;
-        float h = 80;
-        for (int i = 0; i < 8; i++) {
-            encoders[i]->setBounds(i*w, 0, w, h);
+        float w = 60;
+        float h = 60;
+        for (int i = 0; i < 10; i++) {
+            encoders[i]->setBounds(i*w, 20, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 60, 20);
-            labels[i]->setBounds(i*w, 80, 80, 20);
+            labels[i]->setBounds(i*w, 80, 60, 20);
             labels[i]->setJustificationType(36);
         }
     }
@@ -93,3 +105,63 @@ void Encoders::sliderValueChanged(Slider* slider)
     
 }
 
+void Encoders::buttonClicked(Button* b) {
+    if (b == &btnMode) {
+        mode = (mode+1) % 2;
+        updateModeButton();
+    }
+}
+
+void Encoders::updateModeButton() {
+    if (mode == 0) {
+        btnMode.setButtonText("Val");
+    }
+    else if (mode == 1) {
+        btnMode.setButtonText("Thru");
+    }
+    else if (mode == 2) {
+        btnMode.setButtonText("Time");
+    }
+    updateEncoders();
+}
+
+
+void Encoders::updateEncoders() {
+    Command * currentCommand = nullptr; 
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+        currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
+    }
+
+    for (int i = 0; i < nEncoders; i++) {
+        if (mode == 2) {
+            String l = "";
+            if (i == 0) { l = "Delay From"; }
+            if (i == 1) { l = "Delay To"; }
+            if (i == 2) { l = "Fade From"; }
+            if (i == 3) { l = "Fade to "; }
+            labels[i]->setText(l, juce::sendNotification);
+        }
+        else if (channels.size() > i) {
+            labels[i]->setText(String(channels[i]->niceName), juce::sendNotification);
+            encoders[i]->setEnabled(true);
+            encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(192, 192, 192));
+            encoders[i]->setValue(0, juce::dontSendNotification);
+            if (currentCommand != nullptr) {
+                float v = currentCommand->getChannelValue(channels[i], mode == 1);
+                if (v >= 0) {
+                    encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                    encoders[i]->setValue(v, juce::dontSendNotification);
+                }
+            }
+        }
+        else {
+            labels[i]->setText("", juce::dontSendNotification);
+            encoders[i]->setEnabled(false);
+            encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+            encoders[i]->setValue(0, juce::dontSendNotification);
+        }
+        labels[i]->repaint();
+    }
+    resized();
+
+}

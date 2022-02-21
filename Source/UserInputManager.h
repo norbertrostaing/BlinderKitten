@@ -14,6 +14,8 @@
 class Programmer;
 class Command;
 class ChannelType;
+class Programmer;
+
 //#include "Definitions/Programmer/Programmer.h"
 
 class UserInputManager:
@@ -25,11 +27,15 @@ public:
     StringArray currentCommand;
     Command* targetCommand;
 
+    OwnedArray<StringArray *> otherCommands;
+    OwnedArray<Command*> otherTargetCommands;
+
+    Programmer* currentProgrammer;
+
     UserInputManager();
     ~UserInputManager();
 
 	void processInput(String s);
-    void processCommand();
     void processMessage(const OSCMessage& m) override;
 
     void encoderValueChanged(int index, float absVal);
@@ -39,5 +45,10 @@ public:
     void commandValueChanged(Command* c);
 
     void redrawEncoders();
+    void updateCommandLine();
+
+    String toUserText(String s);
+    Programmer* getProgrammer();
 
 };
+

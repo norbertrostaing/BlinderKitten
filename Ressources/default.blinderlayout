@@ -13,13 +13,13 @@
         "shifters": [
           {
             "type": 1,
-            "width": 571,
+            "width": 605,
             "height": 997,
             "direction": 2,
             "shifters": [
               {
                 "type": 0,
-                "width": 571,
+                "width": 605,
                 "height": 237,
                 "currentContent": "Input Panel",
                 "tabs": [
@@ -42,13 +42,13 @@
               },
               {
                 "type": 1,
-                "width": 571,
+                "width": 605,
                 "height": 479,
                 "direction": 1,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 291,
+                    "width": 299,
                     "height": 479,
                     "currentContent": "Fixtures",
                     "tabs": [
@@ -59,7 +59,7 @@
                   },
                   {
                     "type": 0,
-                    "width": 274,
+                    "width": 300,
                     "height": 479,
                     "currentContent": "Groups",
                     "tabs": [
@@ -72,7 +72,7 @@
               },
               {
                 "type": 0,
-                "width": 571,
+                "width": 605,
                 "height": 267,
                 "currentContent": "Presets",
                 "tabs": [
@@ -91,20 +91,20 @@
           },
           {
             "type": 1,
-            "width": 1343,
+            "width": 1309,
             "height": 997,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 704,
+                "width": 654,
                 "height": 997,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 704,
-                    "height": 651,
+                    "width": 654,
+                    "height": 694,
                     "currentContent": "Cuelists",
                     "tabs": [
                       {
@@ -120,8 +120,8 @@
                   },
                   {
                     "type": 0,
-                    "width": 704,
-                    "height": 133,
+                    "width": 654,
+                    "height": 125,
                     "currentContent": "Encoders",
                     "tabs": [
                       {
@@ -131,8 +131,8 @@
                   },
                   {
                     "type": 0,
-                    "width": 704,
-                    "height": 201,
+                    "width": 654,
+                    "height": 166,
                     "currentContent": "Logger",
                     "tabs": [
                       {
@@ -144,7 +144,7 @@
               },
               {
                 "type": 0,
-                "width": 633,
+                "width": 648,
                 "height": 997,
                 "currentContent": "Inspector",
                 "tabs": [

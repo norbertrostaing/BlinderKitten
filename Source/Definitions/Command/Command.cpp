@@ -13,6 +13,7 @@
 #include "Definitions/SubFixture/SubFixture.h"
 #include "CommandSelectionManager.h"
 #include "CommandTiming.h"
+#include "CommandSelection.h"
 #include "../ChannelValue.h"
 #include "../Cue/Cue.h"
 #include "UserInputManager.h"
@@ -27,6 +28,8 @@ Command::Command(var params) :
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
 	itemDataType = "Command";
+
+	viewCommandBtn = addTrigger("Log command text", "display the textual content of this command in the log windows");
 
 	// to add a manager with defined data
 	//selection = new CommandSelectionManager();
@@ -264,3 +267,240 @@ void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllab
 	}
 }
 
+StringArray Command::getCommandAsTexts() {
+	StringArray words;
+	userCantPress();
+	if (selection.items.size() > 0) {
+		currentUserSelection = selection.items[0];
+	}
+	else {
+		currentUserSelection = selection.addItem();
+	}
+
+	if (values.items.size() > 0) {
+		currentUserValue = values.items[0];
+	}
+	else {
+		currentUserValue = values.addItem();
+	}
+
+	userCanPressSelectionType = true;
+	for (int i = 0; i < selection.items.size(); i++) {
+		CommandSelection *s = selection.items[i];
+		currentUserSelection = s;
+		if (s->plusOrMinus->getValue() == "-" || words.size() > 0) {
+			words.add(s->plusOrMinus->getValueData());
+			userCantPress();
+			userCanPressSelectionType = true;
+		}
+		words.add(s->targetType->getValueData());
+		userCantPress();
+		userCanPressSelectionType = true;
+		userCanPressNumber = true;
+		currentUserTarget = s->valueFrom;
+		if ((int)s->valueFrom->value > 0) {
+			words.add(s->valueFrom->value);
+			userCanPressSelectionType = false;
+			userCanPressThru = true;
+			currentUserThru = s->thru;
+			userCanPressPlusOrMinus = true;
+			userCanPressSubSelection = true;
+			userCanPressValueType = true;
+			if (s->thru->getValue()) {
+				words.add("thru");
+				userCantPress();
+				userCanPressNumber = true;
+				currentUserTarget = s->valueTo;
+				if ((int)s->valueTo->value > 0) {
+					words.add(s->valueTo->value);
+					userCantPress();
+					userCanPressNumber = true;
+					userCanPressPlusOrMinus = true;
+					userCanPressValueType = true;
+					userCanPressSubSelection = true;
+				}
+				else {
+					return words;
+				}
+			}
+		}
+		else {
+			return words;
+		}
+
+		if (s->subSel->getValue()) {
+			words.add("subfixture");
+			userCantPress();
+			userCanPressNumber = true;
+			currentUserTarget = s->subFrom;
+			if ((int)s->subFrom->value > 0) {
+				words.add(s->subFrom->value);
+				userCanPressThru = true;
+				currentUserThru = s->subThru;
+				userCanPressPlusOrMinus = true;
+				userCanPressValueType = true;
+				if (s->subThru->getValue()) {
+					words.add("thru");
+					userCantPress();
+					userCanPressNumber = true;
+					currentUserTarget = s->subTo;
+					if ((int)s->subTo->value > 0) {
+						words.add(s->subTo->value);
+						userCantPress();
+						userCanPressNumber = true;
+						userCanPressPlusOrMinus = true;
+						userCanPressValueType = true;
+					}
+					else {
+						return words;
+					}
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < values.items.size(); i++) {
+		CommandValue* v = values.items[i];
+		if (v->presetOrValue->getValue() == "preset") {
+			words.add("preset");
+			userCantPress();
+			userCanPressNumber = true;
+			currentUserTarget = v->presetIdFrom;
+			if ((int)v->presetIdFrom->value > 0) {
+				words.add(v->presetIdFrom->value);
+				userCanPressThru = true;
+				currentUserThru = v->thru;
+				userCanPressValueType = true;
+				userCanPressTimingType = true;
+				if (v->thru->getValue()) {
+					words.add("thru");
+					userCantPress();
+					userCanPressNumber = true;
+					currentUserTarget = v->presetIdTo;
+					if ((int)v->presetIdTo->value > 0) {
+						words.add(v->presetIdTo->value);
+						userCantPress();
+						userCanPressNumber = true;
+						userCanPressValueType = true;
+						userCanPressTimingType = true;
+					}
+					else {
+						return words;
+					}
+				}
+			}
+		}
+		else if (v->presetOrValue->getValue() == "value") {
+			ChannelType* c = dynamic_cast<ChannelType*>(v->channelType->targetContainer.get());
+			if (c != nullptr) {
+				words.add(c->niceName);
+				userCantPress();
+				userCanPressValue = true;
+				currentUserTarget = v->valueFrom;
+				if ((float)v->valueFrom->value > 0) {
+					words.add(formatValue(v->valueFrom->value));
+					userCanPressValueType = true;
+					userCanPressTimingType = true;
+					userCanPressThru = true;
+					currentUserThru = v->thru;
+
+					if (v->thru->getValue()) {
+						words.add("thru");
+						userCantPress();
+						userCanPressValue = true;
+						currentUserTarget = v->valueFrom;
+						if ((float)v->valueTo->value > 0) {
+							words.add(formatValue(v->valueTo->value));
+							userCanPressValue = true;
+							userCanPressValueType = true;
+							userCanPressTimingType = true;
+						}
+						else {
+							return words;
+						}
+					}
+				}
+			}
+		} 
+	}
+
+	return words;
+
+}
+
+void Command::userCantPress() {
+	userCanPressPlusOrMinus = false;
+	userCanPressSelectionType = false;
+	userCanPressSubSelection = false;
+	userCanPressValueType = false;
+	userCanPressTimingType = false;
+	userCanPressThru = false;
+	userCanPressNumber = false;
+	userCanPressValue = false;
+	userCanPressSym = false;
+}
+
+String Command::formatValue(float v) {
+	return String(round(v*1000)/1000.);
+}
+
+void Command::userPress(String s) {
+	if (currentUserSelection == nullptr) {
+		if (selection.items.size() > 0) {
+			currentUserSelection = selection.items[0];
+		}
+		else {
+			currentUserSelection = selection.addItem();
+		}
+	}
+
+	if (s == "group" || s == "fixture") {
+		currentUserSelection->targetType->setValueWithData(s);
+	}
+	else if (s == "subfixture") {
+		currentUserSelection->subSel->setValue(true);
+	}
+	else if (s == "+" || s == "-") {
+		String objType = currentUserSelection->targetType->getValueKey();
+		currentUserSelection = selection.addItem();
+		currentUserSelection->plusOrMinus->setValue(s);
+		currentUserSelection->targetType->setValueWithKey(objType);
+	}
+	else if (s == "thru") {
+		currentUserThru->setValue(true);
+	}
+	else if (s == "preset") {
+		String pov = currentUserValue->presetOrValue->getValue();
+		if (pov == "preset" && (int)currentUserValue->presetIdFrom->getValue() > 0) {
+			currentUserValue = values.addItem();
+		} else if (pov == "value" && currentUserValue->channelType->targetContainer != nullptr) {
+			currentUserValue = values.addItem();
+		}
+		currentUserValue->presetOrValue->setValueWithData("preset");
+	}
+	else if (s.containsOnly("1234567890.")) {
+		String v = currentUserTarget->getValue().toString();
+		v += s;
+		currentUserTarget->setValue(v.getFloatValue());
+	}
+}
+
+
+float Command::getChannelValue(ChannelType* t, bool thru) {
+	float val = -1;
+	for (int i = 0; i < values.items.size(); i++) {
+		if (values.items[i]->presetOrValue->getValue() == "value") {
+			if (dynamic_cast<ChannelType*>(values.items[i]->channelType->targetContainer.get()) == t) {
+				if (thru) {
+					if (values.items[i]->thru->getValue()) {
+						val = values.items[i]->valueTo->getValue();
+					}
+				}
+				else {
+					val = values.items[i]->valueFrom->getValue();
+				}
+			}
+		}
+	}
+	return val;
+}

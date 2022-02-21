@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+class ChannelType;
 
 //==============================================================================
 /*
@@ -28,7 +29,8 @@ public:
 
 class Encoders : 
     public juce::Component,
-    juce::Slider::Listener
+    juce::Slider::Listener,
+    juce::TextButton::Listener
 {
 public:
     juce_DeclareSingleton(Encoders, true);
@@ -37,12 +39,20 @@ public:
 
     OwnedArray<Slider> encoders;
     OwnedArray<Label> labels;
+    Label commandLine;
+    TextButton btnMode;
+    Array<ChannelType*> channels;
+
+    int nEncoders = 10;
+    int mode = 0;
 
     void paint (juce::Graphics&) override;
     void resized() override;
     void updateContent();
     void sliderValueChanged(Slider* slider) override;
+    void buttonClicked (Button*);
     void updateEncoders();
+    void updateModeButton();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Encoders)

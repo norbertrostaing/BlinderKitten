@@ -30,57 +30,15 @@ juce_ImplementSingleton(UserInputManager);
 
 UserInputManager::UserInputManager()
 {
+	currentProgrammer = nullptr;
 }
 
 UserInputManager::~UserInputManager() {
 }
 
 void UserInputManager::processInput(String s) {
-	s = s.toLowerCase();
-	int size = currentCommand.size();
-	if (s == "backspace") {
-		if (currentCommand.size() > 0) {
-			String s = currentCommand[size - 1];
-			if (s.containsOnly("1234567890") && s.length()>1) {
-				currentCommand.set(size - 1, s.substring(0, s.length()-1));
-			} 
-			else {
-				currentCommand.remove(size - 1);
-			}
-		}
-		else {
-			currentCommand.clear();
-			if (targetCommand != nullptr) {
-				targetCommand->selection.clear();
-				targetCommand->values.clear();
-				Brain::getInstance()->getProgrammerById(1)->go();
-			}
-		}
-	}
-	else if (s == "clear") {
-		currentCommand.clear();
-		if (targetCommand != nullptr) {
-			targetCommand->selection.clear();
-			targetCommand->values.clear();
-			Brain::getInstance()->getProgrammerById(1)->go();
-		}
-	}
-	else if (s.containsOnly("1234567890") && size>0 && currentCommand[size-1].containsOnly("1234567890")) {
-		currentCommand.set(size-1, currentCommand[size-1]+s);
-	}
-	else {
-		currentCommand.add(s.toLowerCase());
-	}
-
-	String test = "";
-	for (int i = 0; i < currentCommand.size(); i++) {
-		test = test + currentCommand[i] + " ";
-	}
-	LOG(test);
-
-	CommandLine::getInstance()->repaint();
-
-	processCommand();
+	
+	getProgrammer()->processUserInput(s);
 }
 
 void UserInputManager::processMessage(const OSCMessage& m)
@@ -175,209 +133,29 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	*/
 }
 
-void UserInputManager::processCommand() {
-	Programmer* prog = Brain::getInstance()->getProgrammerById(1);
-
-	if (prog == nullptr) {
-		prog = ProgrammerManager::getInstance()->addItem();
-		prog -> id -> setValue(1);
-	}
-
-	if (prog->commands.items.size() == 0) {
-		targetCommand = prog->commands.addItem();
-	}
-	else {
-		targetCommand = prog->commands.items[0];
-	}
-
-	String currentSelectionType = "fixture";
-	int cmdSize = currentCommand.size();
-
-	bool currentSelectionFilled = false;
-	CommandSelection* currentSelection = nullptr;
-	bool currentValueFilled = false;
-	CommandValue* currentValue = nullptr;
-
-
-	if (targetCommand->selection.items.size() > 0) {
-		currentSelection = targetCommand->selection.items[0];
-	}
-	else {
-		currentSelection = targetCommand->selection.addItem();
-	}
-
-	for (int i = 0; i < targetCommand->values.items.size() && currentValue == nullptr; i++) {
-		if (targetCommand->values.items[i]->presetOrValue->getValue() == "value") {
-			if (targetCommand->values.items[i]->channelType->targetContainer == nullptr) {
-				currentValue = targetCommand->values.items[i];
-			}
-		}
-		else if(targetCommand->values.items[i]->presetOrValue->getValue() == "preset") {
-			currentValue = targetCommand->values.items[i];
-		}
-	}
-	if (currentValue == nullptr) {
-		currentValue = targetCommand->values.addItem();
-	}
-
-	for (int i = 0; i < currentCommand.size(); i++) {
-		String w = currentCommand.getReference(i);
-		bool lastWord = i == currentCommand.size()-1;
-
-		if (w == "+" || w == "-") {
-			if (lastWord || currentCommand[i + 1] == "group" || currentCommand[i + 1] == "fixture" || currentCommand[i + 1].containsOnly("1234567890")) {
-				if (currentSelectionFilled) {
-					currentSelectionFilled = false;
-					int index = targetCommand->selection.items.indexOf(currentSelection) + 1;
-					if (targetCommand->selection.items.size() == index) {
-						targetCommand->selection.addItem();
-					}
-					currentSelection = targetCommand->selection.items[index];
-				}
-				currentSelection->plusOrMinus->setValue(w);
-			}
-			else {
-				LOGERROR(currentCommand[i + 1]+" is not allowed after the "+w+" command");
-				return;
-			}
-		}
-		else if (w == "fixture" || w == "group") {
-			currentSelection->subSel->setValue(false);
-			if (lastWord || currentCommand[i + 1].containsOnly("1234567890")) {
-				currentSelectionType = w;
-				if (!lastWord) {
-					i++;
-					currentSelection->targetType->setValueWithData(w);
-					currentSelection->valueFrom->setValue((int)(var)currentCommand[i]);
-					currentSelectionFilled = true;
-				}
-				if (cmdSize > i + 1 && currentCommand[i + 1] == "thru") {
-					currentSelection->thru->setValue(true);
-					i++;
-					if (cmdSize > i + 1) {
-						if (currentCommand[i + 1].containsOnly("1234567890")) {
-							currentSelection->valueTo->setValue(currentCommand[i + 1]);
-						}
-						else {
-							LOGERROR(currentCommand[i + 1] + " cannot be called after Thru command");
-							return;
-						}
-					}
-				}
-				else {
-					currentSelection->thru->setValue(false);
-				}
-			}
-			else {
-				LOGERROR(currentCommand[i + 1] + " is not allowed after the "+w+" command");
-			}
-		}
-		else if (w == "subfixture") {
-			if (lastWord || currentCommand[i + 1].containsOnly("1234567890")) {
-				currentSelection->subSel->setValue(true);
-				if (!lastWord) {
-					i++;
-					currentSelection->subFrom->setValue((int)(var)currentCommand[i]);
-				}
-				if (cmdSize > i + 1 && currentCommand[i + 1] == "thru") {
-					currentSelection->subThru->setValue(true);
-					i++;
-					if (cmdSize > i + 1) {
-						if (currentCommand[i + 1].containsOnly("1234567890")) {
-							currentSelection->subTo->setValue(currentCommand[i + 1]);
-						}
-						else {
-							LOGERROR(currentCommand[i + 1] + " cannot be called after Thru command");
-							return;
-						}
-					}
-				}
-				else {
-					currentSelection->thru->setValue(false);
-				}
-			}
-			else {
-				LOGERROR(currentCommand[i + 1] + " is not allowed after the subfixture command");
-			}
-		}
-		else if (w == "preset") {
-			if (lastWord || currentCommand[i + 1].containsOnly("1234567890")) {
-				if (currentValueFilled) {
-					currentValueFilled = false;
-					int index = targetCommand->values.items.indexOf(currentValue) + 1;
-					if (targetCommand->values.items.size() == index) {
-						targetCommand->values.addItem();
-					}
-					currentValue = targetCommand->values.items[index];
-				}
-				currentValue->presetOrValue->setValueWithData("preset");
-				if (!lastWord) {
-					i++;
-					currentValue->presetIdFrom->setValue((int)(var)currentCommand[i]);
-					currentValueFilled = true;
-				}
-				if (cmdSize > i + 1 && currentCommand[i + 1] == "thru") {
-					currentValue->thru->setValue(true);
-					i++;
-					if (cmdSize > i + 1) {
-						if (currentCommand[i + 1].containsOnly("1234567890")) {
-							currentValue->presetIdTo->setValue(currentCommand[i + 1]);
-						}
-						else {
-							LOGERROR(currentCommand[i + 1] + " cannot be called after Thru command");
-							return;
-						}
-					}
-				}
-				else {
-					currentSelection->thru->setValue(false);
-				}
-			}
-			else {
-				LOGERROR(currentCommand[i + 1] + " is not allowed after the Preset command");
-			}
-		}
-	}
-
-}
-
 void UserInputManager::commandSelectionChanged(Command* c) {
+	targetCommand = getProgrammer()->currentUserCommand;
 	if (c == targetCommand) {
 		targetCommand->selection.computeSelection();
 		Array<ChannelType* >chans = targetCommand->selection.getControllableChannelsTypes();
-		encoderChannels.clear();
+		Encoders::getInstance()->channels.clear();
 	
 		int currentIndex = 0;
 
 		for (int i = 0; i < ChannelFamilyManager::getInstance()->items.size(); i++) {
 			for (int j = 0; j < ChannelFamilyManager::getInstance()->items[i]->definitions->items.size(); j++) {
 				if (chans.contains(ChannelFamilyManager::getInstance()->items[i]->definitions->items[j])) {
-					encoderChannels.set(currentIndex, ChannelFamilyManager::getInstance()->items[i]->definitions->items[j]);
+					Encoders::getInstance()->channels.set(currentIndex, ChannelFamilyManager::getInstance()->items[i]->definitions->items[j]);
 					currentIndex++;
 				}
 			}
 		}
-	redrawEncoders();
+	Encoders::getInstance()->updateEncoders();
+	updateCommandLine();
 	}
 }
 
 void UserInputManager::redrawEncoders() {
-	for (int i = 0; i < 8; i++) {
-		if (encoderChannels.getReference(i) != nullptr) {
-
-			Encoders::getInstance()->labels[i]->setText(String(encoderChannels.getReference(i)->niceName), juce::sendNotification);
-			Encoders::getInstance()->encoders[i]->setEnabled(true);
-			Encoders::getInstance()->encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(192, 192, 192));
-		}
-		else {
-			Encoders::getInstance()->labels[i]->setText("", juce::dontSendNotification);
-			Encoders::getInstance()->encoders[i]->setEnabled(false);
-			Encoders::getInstance()->encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
-			Encoders::getInstance()->labels[i]->repaint();
-		}
-	}
-	Encoders::getInstance()->resized();
-
 }
 
 void UserInputManager::commandValueChanged(Command* c) {
@@ -388,43 +166,96 @@ void UserInputManager::commandValueChanged(Command* c) {
 			for (auto it = encoderChannels.begin(); it != encoderChannels.end(); it.next()) {
 				if (it.getValue() == c) {
 					Encoders::getInstance()->encoders[it.getKey()]->setValue(cv->valueFrom->getValue(), juce::dontSendNotification);
+					Encoders::getInstance()->encoders[it.getKey()]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
 				}
 			}
 		}
 	}
+	updateCommandLine();
 }
 
 void UserInputManager::encoderValueChanged(int index, float newValue) {
-	ChannelType* c = encoderChannels.getReference(index);
-	if (c != nullptr) {
-		if (targetCommand == nullptr) {
-			return;
-		}
-		CommandValue* t = nullptr;
-		CommandValue* empty = nullptr;
-		for (int i = 0; t == nullptr && i < targetCommand->values.items.size(); i++) {
-			CommandValue* temp = targetCommand->values.items[i];
-			if (temp->presetOrValue->getValue() == "value") {
-				ChannelType* valCT = dynamic_cast<ChannelType*>(temp->channelType->targetContainer.get());
-				if (valCT == c) {
-					t = temp;
-				}
-				else if (empty == nullptr && valCT == nullptr) {
-					empty = temp;
+	int mode = Encoders::getInstance()->mode;
+	targetCommand = getProgrammer()->currentUserCommand;
+	if (mode < 2) {
+		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
+		if (c != nullptr) {
+			if (targetCommand == nullptr) {
+				return;
+			}
+			CommandValue* t = nullptr;
+			CommandValue* empty = nullptr;
+			for (int i = 0; t == nullptr && i < targetCommand->values.items.size(); i++) {
+				CommandValue* temp = targetCommand->values.items[i];
+				if (temp->presetOrValue->getValue() == "value") {
+					ChannelType* valCT = dynamic_cast<ChannelType*>(temp->channelType->targetContainer.get());
+					if (valCT == c) {
+						t = temp;
+					}
+					else if (empty == nullptr && valCT == nullptr) {
+						empty = temp;
+					}
 				}
 			}
-		}
-		if (t == nullptr) {
-			if (empty != nullptr) {
-				t = empty;
-				t->channelType->setValueFromTarget(c);
+			if (t == nullptr) {
+				if (empty != nullptr) {
+					t = empty;
+					t->channelType->setValueFromTarget(c);
+				}
+				else {
+					t = targetCommand->values.addItem();
+				}
+			}
+		
+			if (mode == 0) {
+				t->valueFrom->setValue(newValue, false);
 			}
 			else {
-				t = targetCommand->values.addItem();
+				if (!t->thru->getValue()) {
+					t->thru->setValue(true);
+				}
+				t->valueTo->setValue(newValue, false);
 			}
+			Encoders::getInstance()->encoders[index]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
 		}
-		
-		t->valueFrom->setValue(newValue, false);
+	}
+	else {
+		// timing
 	}
 }
 
+void UserInputManager::updateCommandLine() {
+	StringArray txts = targetCommand->getCommandAsTexts();
+	String txt = "";
+	for (int i = 0; i < txts.size(); i++) {
+		if (i != 0) {
+			txt += " ";
+		}
+		txt += toUserText(txts[i]);
+	}
+	Encoders::getInstance()->commandLine.setText(txt, juce::dontSendNotification);
+	Encoders::getInstance()->resized();
+}
+
+String UserInputManager::toUserText(String s) {
+	if (s.containsOnly("1234567890.")) {return s;}
+	if (s == "group") { return "Group"; }
+	if (s == "fixture") { return "Fixture"; }
+	if (s == "subfixture") { return "Subfixture"; }
+	if (s == "thru") { return "Thru"; }
+	if (s == "preset") { return "Preset"; }
+	if (s == "add") { return "+"; }
+	if (s == "remove") { return "-"; }
+
+	return s;
+}
+
+Programmer* UserInputManager::getProgrammer() {
+	currentProgrammer = Brain::getInstance()->getProgrammerById(1);
+
+	if (currentProgrammer == nullptr) {
+		currentProgrammer = ProgrammerManager::getInstance()->addItem();
+		currentProgrammer->id->setValue(1);
+	}
+	return currentProgrammer;
+}

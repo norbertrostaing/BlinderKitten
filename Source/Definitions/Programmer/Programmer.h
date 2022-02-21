@@ -56,5 +56,8 @@ public:
     static Programmer* create(var params) { return new Programmer(params); }
     double maxTiming = 0;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+    Command* currentUserCommand = nullptr;
+    void processUserInput(String s);
 };
 
