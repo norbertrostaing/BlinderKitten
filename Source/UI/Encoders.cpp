@@ -13,6 +13,7 @@
 #include "UserInputManager.h"
 #include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
 #include "Definitions/Programmer/Programmer.h"
+#include "Definitions/Command/Command.h"
 
 //==============================================================================
 EncodersUI::EncodersUI(const String& contentName):
@@ -163,5 +164,21 @@ void Encoders::updateEncoders() {
         labels[i]->repaint();
     }
     resized();
+
+}
+
+void Encoders::updateContentWithCommand(Command* c) {
+    for (int i = 0; i < c->values.items.size(); i++) {
+        CommandValue* cv = c->values.items[i];
+        if (cv->presetOrValue->getValue() == "value") {
+            ChannelType* c = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+            for (int i = 0; i< channels.size(); i++) {
+                if (channels[i] == c) {
+                    Encoders::getInstance()->encoders[i]->setValue(cv->valueFrom->getValue(), juce::sendNotification);
+                    Encoders::getInstance()->encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                }
+            }
+        }
+    }
 
 }

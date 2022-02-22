@@ -40,6 +40,22 @@ public:
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
     HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
 
+    ControllableContainer cliContainer;
+    EnumParameter* cliActionType;
+    EnumParameter* cliParamAType;
+    IntParameter*  cliParamAId;
+    EnumParameter* cliParamBType;
+    IntParameter*  cliParamBId;
+    Trigger* cliGo;
+    bool userCanPressAction = false;
+    bool userCanPressTargetType = false;
+    bool userCanPressNumber = false;
+    bool userCanPressGo = false;
+    Parameter* currentUserTarget = nullptr;
+
+    StringArray getCliAsTexts();
+    void userCantPress();
+
     void triggerTriggered(Trigger* t) override;
 
     void computeValues();
@@ -59,5 +75,7 @@ public:
 
     Command* currentUserCommand = nullptr;
     void processUserInput(String s);
+
+    String getTextCommand();
 };
 

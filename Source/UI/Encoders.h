@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 class ChannelType;
+class Command;
 
 //==============================================================================
 /*
@@ -53,6 +54,7 @@ public:
     void buttonClicked (Button*);
     void updateEncoders();
     void updateModeButton();
+    void updateContentWithCommand(Command* c);
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Encoders)

@@ -31,7 +31,8 @@ Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
 	objectType(params.getProperty("type", "Programmer").toString()),
 	objectData(params),
-	commands("Commands")
+	commands("Commands"),
+	cliContainer("Command LIne")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -41,7 +42,6 @@ Programmer::Programmer(var params) :
 	id = addIntParameter("ID", "Id of this Programmer", 1, 1);
 	userName = addStringParameter("Name", "Name of this programmer", "New programmer");
 	updateName();
-
 
 	editionMode = addEnumParameter("Edition mode", "mode of edition");
 	editionMode->addOption("Not timed", "notTimed");
@@ -55,8 +55,38 @@ Programmer::Programmer(var params) :
 	recBtn = addTrigger("Record", "Record the content of this programmer in something");
 	clearAllBtn = addTrigger("Clear All", "Clear and reset this programmer");
 
+	cliActionType = cliContainer.addEnumParameter("Action type", "What kind of action do you wanna do ?");
+	cliActionType->addOption("None", "");
+	cliActionType->addOption("Copy", "copy");
+	cliActionType->addOption("Move", "move");
+	cliActionType->addOption("Record", "record");
+	cliActionType->addOption("Update", "update");
+	cliActionType->addOption("Edit", "edit");
+	cliActionType->addOption("Delete", "delete");
+	cliParamAType = cliContainer.addEnumParameter("Param A type", "What kind of object do you want to target");
+	cliParamAType->addOption("None", "");
+	cliParamAType->addOption("Group", "group");
+	cliParamAType->addOption("Preset", "preset");
+	cliParamAType->addOption("Cuelist", "cuelist");
+	cliParamAType->addOption("Effect", "effect");
+	cliParamAType->addOption("Carousel", "carousel");
+	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param",0,0);
+
+	cliParamBType = cliContainer.addEnumParameter("Param B type", "second object type");
+	cliParamBType->addOption("", "");
+	cliParamBType->addOption("Group", "group");
+	cliParamBType->addOption("Preset", "preset");
+	cliParamBType->addOption("Cuelist", "cuelist");
+	cliParamBType->addOption("Effect", "effect");
+	cliParamBType->addOption("Carousel", "carousel");
+	cliParamBId = cliContainer.addIntParameter("Param B ID", "second object id for copy, move", 0, 0);
+
+	cliGo = cliContainer.addTrigger("GO", "Execute this command");
+
 	commands.selectItemWhenCreated = false;
 	addChildControllableContainer(&commands);
+
+	addChildControllableContainer(&cliContainer);
 
 	if (params.isVoid()) {
 		commands.addItem();
@@ -271,7 +301,72 @@ void Programmer :: clearAll() {
 
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
+	LOG(s);
 
+	if (cliActionType->getValue() != "") {
+		getCliAsTexts();
+		String action = cliActionType->getValue();
+		if (s.containsOnly("1234567890")) {
+			if (userCanPressNumber) {
+				String val = currentUserTarget -> getValue().toString();
+				val += s;
+				currentUserTarget->setValue(val.getIntValue());
+			}
+			else {
+				LOGERROR("not allowed");
+			}
+		}
+		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel") {
+			if (userCanPressTargetType) {
+				dynamic_cast<EnumParameter*>(currentUserTarget)->setValueWithData(s);
+			}
+			else {
+				LOGERROR("not allowed");
+			}
+		}
+		else if (s == "record") {
+			if (userCanPressAction) {
+				if (action == "record") { cliActionType->setValueWithData("update"); }
+				else { cliActionType->setValueWithData("record"); }
+			}
+			else {
+				LOGERROR("not allowed");
+			}
+		}
+		else if (s == "copy") {
+			if (userCanPressAction) {
+				if (action == "copy") { cliActionType->setValueWithData("move"); }
+				else { cliActionType->setValueWithData("copy"); }
+			}
+			else {
+				LOGERROR("not allowed");
+			}
+		}
+		else if (s == "edit") {
+			if (userCanPressAction) {
+				cliActionType->setValueWithData(s); 
+			}
+			else {
+				LOGERROR("not allowed");
+			}
+		}
+		else if (s == "delete") {
+			if (userCanPressAction) {
+				cliActionType->setValueWithData(s);
+			}
+			else {
+				LOGERROR("not allowed");
+			}
+		}
+		
+	UserInputManager::getInstance() -> updateCommandLine();
+	return;
+	}
+
+	if (s == "record" || s == "copy" || s == "edit" || s == "delete") {
+		cliActionType->setValueWithData(s);
+		UserInputManager::getInstance()->updateCommandLine();
+	}
 	if (currentUserCommand == nullptr) {
 		if (commands.items.size() > 0) {
 			currentUserCommand = commands.items[0];
@@ -288,6 +383,7 @@ void Programmer::processUserInput(String s) {
 		}
 		currentUserCommand = commands.items.getLast();
 		Brain::getInstance()->pleaseUpdate(this);
+		UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
 		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 	}
 	else if (s == "+" || s == "-") {
@@ -312,8 +408,8 @@ void Programmer::processUserInput(String s) {
 	}
 	else if (s == "backspace") {
 		currentUserCommand->userPress(s);
-		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 		UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
+		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 	}
 	else if (s == "subfixture") {
 		if (currentUserCommand->userCanPressSubSelection) {
@@ -355,3 +451,83 @@ void Programmer::processUserInput(String s) {
 	}
 	// currentUserCommand->userPress(s);
 }
+
+String Programmer::getTextCommand() {
+	StringArray txts;
+	String txt = "";
+	LOG("here ?");
+	LOG(cliActionType->getValue().toString());
+	if (cliActionType->getValue() != "") {
+		txts = getCliAsTexts();
+	}
+	else if (currentUserCommand == nullptr) {return ""; }
+	else {
+		txts = currentUserCommand->getCommandAsTexts();
+	}
+	for (int i = 0; i < txts.size(); i++) {
+		if (i != 0) {
+			txt += " ";
+		}
+		txt += UserInputManager::getInstance()->toUserText(txts[i]);
+	}
+	return txt;
+}
+
+StringArray Programmer::getCliAsTexts() {
+	StringArray words;
+	userCantPress();
+	userCanPressAction = true;
+	currentUserTarget = nullptr;
+	String action = cliActionType->getValue();
+	if (action != "") {
+		words.add(cliActionType->getValue());
+		userCanPressTargetType = true;
+		currentUserTarget = cliParamAType;
+
+		if (cliParamAType->getValue() != "") {
+			words.add(cliParamAType->getValueData());
+			userCanPressAction = false;
+			userCanPressNumber = true;
+			currentUserTarget = cliParamAId;
+
+			if ((int)cliParamAId->getValue() > 0) {
+				words.add(cliParamAId->getValue());
+				// value entered
+				if (action == "copy" || action == "move") {
+					userCanPressTargetType = true;
+					currentUserTarget = cliParamBType;
+
+					if (cliParamBType->getValue() != "") {
+						words.add(cliParamBType->getValueData());
+						userCanPressTargetType = false;
+						currentUserTarget = cliParamBId;
+						if ((int)cliParamAId->getValue() > 0) {
+							words.add(cliParamBId->getValue());
+							userCanPressGo = true;
+						}
+					}
+				}
+				else {
+					userCanPressGo = true;
+				}
+			}
+		}
+	}
+
+
+
+	for (int i = 0; i < words.size(); i++) {
+		LOG(words[i]);
+	}
+	return words;
+
+}
+
+void Programmer::userCantPress() {
+	userCanPressAction = false;
+	userCanPressTargetType = false;
+	userCanPressNumber = false;
+	userCanPressGo = false;
+
+}
+

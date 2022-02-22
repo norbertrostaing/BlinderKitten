@@ -528,7 +528,7 @@ void Command::userPress(String s) {
 		} else if (lastTarget == "selectionSubTo") {
 			currentUserSelection->subTo->setValue(backspaceOnInt(currentUserSelection->subTo->getValue()));
 		} else if (lastTarget == "valuePreset") {
-			values.removeItem(currentUserValue);
+			values.removeItem(values.items.getLast());
 			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
 		} else if (lastTarget == "valuePresetFrom") {
 			currentUserValue->presetIdFrom->setValue(backspaceOnInt(currentUserValue->presetIdFrom->getValue()));
@@ -540,7 +540,7 @@ void Command::userPress(String s) {
 			values.removeItem(currentUserValue);
 			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
 		} else if (lastTarget == "valueRawFrom") {
-			values.removeItem(currentUserValue);
+			values.removeItem(values.items.getLast());
 			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
 		} else if (lastTarget == "valueRawThru") {
 			currentUserValue->thru->setValue(false);

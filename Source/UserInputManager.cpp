@@ -159,19 +159,10 @@ void UserInputManager::redrawEncoders() {
 }
 
 void UserInputManager::commandValueChanged(Command* c) {
-	for (int i = 0; i < c->values.items.size(); i++) {
-		CommandValue *cv = c->values.items[i];
-		if (cv->presetOrValue->getValue() == "value") {
-			ChannelType* c = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-			for (auto it = encoderChannels.begin(); it != encoderChannels.end(); it.next()) {
-				if (it.getValue() == c) {
-					Encoders::getInstance()->encoders[it.getKey()]->setValue(cv->valueFrom->getValue(), juce::dontSendNotification);
-					Encoders::getInstance()->encoders[it.getKey()]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
-				}
-			}
-		}
+	if (c == getProgrammer() ->currentUserCommand) {
+		Encoders::getInstance()->updateContentWithCommand(c);
+		updateCommandLine();
 	}
-	updateCommandLine();
 }
 
 void UserInputManager::encoderValueChanged(int index, float newValue) {
@@ -225,14 +216,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 }
 
 void UserInputManager::updateCommandLine() {
-	StringArray txts = targetCommand->getCommandAsTexts();
-	String txt = "";
-	for (int i = 0; i < txts.size(); i++) {
-		if (i != 0) {
-			txt += " ";
-		}
-		txt += toUserText(txts[i]);
-	}
+	String txt = getProgrammer()->getTextCommand();
 	Encoders::getInstance()->commandLine.setText(txt, juce::dontSendNotification);
 	Encoders::getInstance()->resized();
 }
