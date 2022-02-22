@@ -290,16 +290,19 @@ StringArray Command::getCommandAsTexts() {
 		currentUserSelection = s;
 		if (s->plusOrMinus->getValue() == "-" || words.size() > 0) {
 			words.add(s->plusOrMinus->getValueData());
+			lastTarget = "selectionPlusOrMinus";
 			userCantPress();
 			userCanPressSelectionType = true;
 		}
 		words.add(s->targetType->getValueData());
+		lastTarget = "selectionTargetType";
 		userCantPress();
 		userCanPressSelectionType = true;
 		userCanPressNumber = true;
 		currentUserTarget = s->valueFrom;
 		if ((int)s->valueFrom->value > 0) {
 			words.add(s->valueFrom->value);
+			lastTarget = "selectionValueFrom";
 			userCanPressSelectionType = false;
 			userCanPressThru = true;
 			currentUserThru = s->thru;
@@ -308,11 +311,13 @@ StringArray Command::getCommandAsTexts() {
 			userCanPressValueType = true;
 			if (s->thru->getValue()) {
 				words.add("thru");
+				lastTarget = "selectionThru";
 				userCantPress();
 				userCanPressNumber = true;
 				currentUserTarget = s->valueTo;
 				if ((int)s->valueTo->value > 0) {
 					words.add(s->valueTo->value);
+					lastTarget = "selectionValueTo";
 					userCantPress();
 					userCanPressNumber = true;
 					userCanPressPlusOrMinus = true;
@@ -330,22 +335,26 @@ StringArray Command::getCommandAsTexts() {
 
 		if (s->subSel->getValue()) {
 			words.add("subfixture");
+			lastTarget = "selectionSubFixture";
 			userCantPress();
 			userCanPressNumber = true;
 			currentUserTarget = s->subFrom;
 			if ((int)s->subFrom->value > 0) {
 				words.add(s->subFrom->value);
+				lastTarget = "selectionSubFrom";
 				userCanPressThru = true;
 				currentUserThru = s->subThru;
 				userCanPressPlusOrMinus = true;
 				userCanPressValueType = true;
 				if (s->subThru->getValue()) {
 					words.add("thru");
+					lastTarget = "selectionSubThru";
 					userCantPress();
 					userCanPressNumber = true;
 					currentUserTarget = s->subTo;
 					if ((int)s->subTo->value > 0) {
 						words.add(s->subTo->value);
+						lastTarget = "selectionSubTo";
 						userCantPress();
 						userCanPressNumber = true;
 						userCanPressPlusOrMinus = true;
@@ -363,22 +372,26 @@ StringArray Command::getCommandAsTexts() {
 		CommandValue* v = values.items[i];
 		if (v->presetOrValue->getValue() == "preset") {
 			words.add("preset");
+			lastTarget = "valuePreset";
 			userCantPress();
 			userCanPressNumber = true;
 			currentUserTarget = v->presetIdFrom;
 			if ((int)v->presetIdFrom->value > 0) {
 				words.add(v->presetIdFrom->value);
+				lastTarget = "valuePresetFrom";
 				userCanPressThru = true;
 				currentUserThru = v->thru;
 				userCanPressValueType = true;
 				userCanPressTimingType = true;
 				if (v->thru->getValue()) {
 					words.add("thru");
+					lastTarget = "valuePresetThru";
 					userCantPress();
 					userCanPressNumber = true;
 					currentUserTarget = v->presetIdTo;
 					if ((int)v->presetIdTo->value > 0) {
 						words.add(v->presetIdTo->value);
+						lastTarget = "valuePresetTo";
 						userCantPress();
 						userCanPressNumber = true;
 						userCanPressValueType = true;
@@ -394,11 +407,13 @@ StringArray Command::getCommandAsTexts() {
 			ChannelType* c = dynamic_cast<ChannelType*>(v->channelType->targetContainer.get());
 			if (c != nullptr) {
 				words.add(c->niceName);
+				lastTarget = "valueRaw";
 				userCantPress();
 				userCanPressValue = true;
 				currentUserTarget = v->valueFrom;
 				if ((float)v->valueFrom->value > 0) {
 					words.add(formatValue(v->valueFrom->value));
+					lastTarget = "valueRawFrom";
 					userCanPressValueType = true;
 					userCanPressTimingType = true;
 					userCanPressThru = true;
@@ -406,11 +421,13 @@ StringArray Command::getCommandAsTexts() {
 
 					if (v->thru->getValue()) {
 						words.add("thru");
+						lastTarget = "valueRawThru";
 						userCantPress();
 						userCanPressValue = true;
 						currentUserTarget = v->valueFrom;
 						if ((float)v->valueTo->value > 0) {
 							words.add(formatValue(v->valueTo->value));
+							lastTarget = "valueRawTo";
 							userCanPressValue = true;
 							userCanPressValueType = true;
 							userCanPressTimingType = true;
@@ -454,6 +471,7 @@ void Command::userPress(String s) {
 		}
 	}
 
+
 	if (s == "group" || s == "fixture") {
 		currentUserSelection->targetType->setValueWithData(s);
 	}
@@ -483,6 +501,53 @@ void Command::userPress(String s) {
 		v += s;
 		currentUserTarget->setValue(v.getFloatValue());
 	}
+	else if (s == "backspace") {
+
+		LOG(lastTarget);
+		if (lastTarget == "selectionPlusOrMinus") {
+			selection.removeItem(currentUserSelection);
+			currentUserSelection = selection.items.getLast();
+		} else if (lastTarget == "selectionTargetType") {
+			if (selection.items.size() > 1) {
+				selection.removeItem(currentUserSelection);
+				currentUserSelection = selection.items.getLast();
+			}
+
+		} else if (lastTarget == "selectionValueFrom") {
+			currentUserSelection->valueFrom->setValue(backspaceOnInt(currentUserSelection->valueFrom->getValue()));
+		} else if (lastTarget == "selectionThru") {
+			currentUserSelection->thru->setValue(false);
+		} else if (lastTarget == "selectionValueTo") {
+			currentUserSelection->valueTo->setValue(backspaceOnInt(currentUserSelection->valueTo->getValue()));
+		} else if (lastTarget == "selectionSubFixture") {
+			currentUserSelection->subSel->setValue(false);
+		} else if (lastTarget == "selectionSubFrom") {
+			currentUserSelection->subFrom->setValue(backspaceOnInt(currentUserSelection->subFrom->getValue()));
+		} else if (lastTarget == "selectionSubThru") {
+			currentUserSelection->subThru->setValue(false);
+		} else if (lastTarget == "selectionSubTo") {
+			currentUserSelection->subTo->setValue(backspaceOnInt(currentUserSelection->subTo->getValue()));
+		} else if (lastTarget == "valuePreset") {
+			values.removeItem(currentUserValue);
+			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
+		} else if (lastTarget == "valuePresetFrom") {
+			currentUserValue->presetIdFrom->setValue(backspaceOnInt(currentUserValue->presetIdFrom->getValue()));
+		} else if (lastTarget == "valuePresetThru") {
+			currentUserValue->thru->setValue(false);
+		} else if (lastTarget == "valuePresetTo") {
+			currentUserValue->presetIdTo->setValue(backspaceOnInt(currentUserValue->presetIdTo->getValue()));
+		} else if (lastTarget == "valueRaw") {
+			values.removeItem(currentUserValue);
+			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
+		} else if (lastTarget == "valueRawFrom") {
+			values.removeItem(currentUserValue);
+			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
+		} else if (lastTarget == "valueRawThru") {
+			currentUserValue->thru->setValue(false);
+		} else if (lastTarget == "valueRawTo") {
+			currentUserValue->thru->setValue(false);
+		}
+	}
 }
 
 
@@ -503,4 +568,27 @@ float Command::getChannelValue(ChannelType* t, bool thru) {
 		}
 	}
 	return val;
+}
+
+int Command::backspaceOnInt(var v) {
+	String s = v.toString();
+	if (s.length() == 1) {
+		return 0;
+	}
+	else {
+		s = s.substring(0,s.length()-1);
+		return s.getIntValue();
+	}
+}
+
+float Command::backspaceOnFloat(var v) {
+	String s = v.toString();
+	if (s.length() == 1) {
+		return 0;
+	}
+	else {
+		s = s.substring(0, s.length() - 1);
+		LOG(s);
+		return s.getFloatValue();
+	}
 }

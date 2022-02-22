@@ -281,13 +281,13 @@ void Programmer::processUserInput(String s) {
 		}
 	}
 	currentUserCommand->getCommandAsTexts();
-
 	if (s == "clear") {
 		commands.removeItem(currentUserCommand);
 		if (commands.items.size() == 0) {
 			commands.addItem();
 		}
 		currentUserCommand = commands.items.getLast();
+		Brain::getInstance()->pleaseUpdate(this);
 		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 	}
 	else if (s == "+" || s == "-") {
@@ -309,6 +309,11 @@ void Programmer::processUserInput(String s) {
 		else {
 			LOGERROR("not allowed");
 		}
+	}
+	else if (s == "backspace") {
+		currentUserCommand->userPress(s);
+		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
+		UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
 	}
 	else if (s == "subfixture") {
 		if (currentUserCommand->userCanPressSubSelection) {

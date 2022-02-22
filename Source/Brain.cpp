@@ -354,6 +354,7 @@ void Brain::pleaseUpdate(Cuelist* c) {
 }
 
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
+    if ( f == nullptr) {return; };
     if (!SubFixtureChannelPoolWaiting.contains(f)) {
         SubFixtureChannelPoolWaiting.add(f);
     }
