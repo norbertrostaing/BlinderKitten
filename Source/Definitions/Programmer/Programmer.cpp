@@ -121,6 +121,9 @@ void Programmer::triggerTriggered(Trigger* t) {
 		DataTransferManager::getInstance()->sourceType->setValue("Programmer");
 		DataTransferManager::getInstance()->selectThis();
 	}
+	if (t == cliGo) {
+		runCliCommand();
+	}
 }
 
 void Programmer::onContainerParameterChangedInternal(Parameter* p) {
@@ -301,16 +304,16 @@ void Programmer :: clearAll() {
 
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
-	LOG(s);
+	// LOG(s);
 
 	if (cliActionType->getValue() != "") {
 		getCliAsTexts();
 		String action = cliActionType->getValue();
 		if (s.containsOnly("1234567890")) {
 			if (userCanPressNumber) {
-				String val = currentUserTarget -> getValue().toString();
+				String val = currentUserTargetId -> getValue().toString();
 				val += s;
-				currentUserTarget->setValue(val.getIntValue());
+				currentUserTargetId->setValue(val.getIntValue());
 			}
 			else {
 				LOGERROR("not allowed");
@@ -318,11 +321,26 @@ void Programmer::processUserInput(String s) {
 		}
 		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel") {
 			if (userCanPressTargetType) {
-				dynamic_cast<EnumParameter*>(currentUserTarget)->setValueWithData(s);
+				dynamic_cast<EnumParameter*>(currentUserTargetType)->setValueWithData(s);
 			}
 			else {
 				LOGERROR("not allowed");
 			}
+		}
+		else if (s == "enter") {
+			if (userCanPressGo) {
+				runCliCommand();
+			}
+			else {
+				LOGERROR("Invalid command");
+			}
+		}
+		else if (s == "backspace") {
+			if (cliLastTarget == "actionType") { cliActionType->setValueWithData(""); }
+			else if (cliLastTarget == "paramAType") { cliParamAType->setValueWithData(""); }
+			else if (cliLastTarget == "paramBType") { cliParamBType->setValueWithData(""); }
+			else if (cliLastTarget == "paramAId") { cliParamAId->setValue(UserInputManager::backspaceOnInt(cliParamAId->getValue())); }
+			else if (cliLastTarget == "paramBId") { cliParamBId->setValue(UserInputManager::backspaceOnInt(cliParamBId->getValue())); }
 		}
 		else if (s == "record") {
 			if (userCanPressAction) {
@@ -455,12 +473,10 @@ void Programmer::processUserInput(String s) {
 String Programmer::getTextCommand() {
 	StringArray txts;
 	String txt = "";
-	LOG("here ?");
-	LOG(cliActionType->getValue().toString());
 	if (cliActionType->getValue() != "") {
 		txts = getCliAsTexts();
 	}
-	else if (currentUserCommand == nullptr) {return ""; }
+	else if (currentUserCommand == nullptr) {return "";}
 	else {
 		txts = currentUserCommand->getCommandAsTexts();
 	}
@@ -473,35 +489,80 @@ String Programmer::getTextCommand() {
 	return txt;
 }
 
+void Programmer::runCliCommand() {
+	getCliAsTexts();
+	if (!userCanPressGo) {LOGERROR("Invalid command"); return;}
+	String action = cliActionType->getValue();
+	String targetType = cliParamAType->getValue();
+	int targetId = cliParamAId->getValue();
+	if (action == "record" || action == "update") {
+		DataTransferManager::getInstance()->sourceType->setValueWithData("programmer");
+		DataTransferManager::getInstance()->sourceId->setValue(id->getValue());
+		DataTransferManager::getInstance()->targetType->setValueWithData(targetType);
+		DataTransferManager::getInstance()->targetUserId->setValue(targetId);
+		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
+		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
+		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");
+		DataTransferManager::getInstance()->execute();
+	}
+	else if (action == "copy") {
+		DataTransferManager::getInstance()->sourceType->setValueWithData(targetType);
+		DataTransferManager::getInstance()->sourceId->setValue(targetId);
+		DataTransferManager::getInstance()->targetType->setValueWithData(cliParamAType->getValue());
+		DataTransferManager::getInstance()->targetUserId->setValue((int)cliParamAId->getValue());
+		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
+		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
+		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");
+		DataTransferManager::getInstance()->execute();
+	}
+	else if (action == "move") {
+		DataTransferManager::getInstance()->moveObject(targetType, targetId, (int)cliParamBId->getValue());
+	}
+	else if (action == "edit") {
+		DataTransferManager::getInstance()->editObject(targetType, targetId);
+	}
+	else if (action == "delete") {
+		DataTransferManager::getInstance()->deleteObject(targetType, targetId);
+	}
+	resetCli();
+}
+
 StringArray Programmer::getCliAsTexts() {
 	StringArray words;
 	userCantPress();
 	userCanPressAction = true;
-	currentUserTarget = nullptr;
+	currentUserTargetId = nullptr;
+	currentUserTargetType = nullptr;
+	cliLastTarget = "";
 	String action = cliActionType->getValue();
 	if (action != "") {
 		words.add(cliActionType->getValue());
+		cliLastTarget = "actionType";
 		userCanPressTargetType = true;
-		currentUserTarget = cliParamAType;
+		currentUserTargetType = cliParamAType;
 
 		if (cliParamAType->getValue() != "") {
 			words.add(cliParamAType->getValueData());
+			cliLastTarget = "paramAType";
 			userCanPressAction = false;
 			userCanPressNumber = true;
-			currentUserTarget = cliParamAId;
+			currentUserTargetId = cliParamAId;
 
 			if ((int)cliParamAId->getValue() > 0) {
 				words.add(cliParamAId->getValue());
+				cliLastTarget = "paramAId";
 				// value entered
 				if (action == "copy" || action == "move") {
 					userCanPressTargetType = true;
-					currentUserTarget = cliParamBType;
+					currentUserTargetType = cliParamBType;
 
 					if (cliParamBType->getValue() != "") {
 						words.add(cliParamBType->getValueData());
+						cliLastTarget = "paramBType";
 						userCanPressTargetType = false;
-						currentUserTarget = cliParamBId;
+						currentUserTargetId = cliParamBId;
 						if ((int)cliParamAId->getValue() > 0) {
+							cliLastTarget = "paramBValue";
 							words.add(cliParamBId->getValue());
 							userCanPressGo = true;
 						}
@@ -514,11 +575,6 @@ StringArray Programmer::getCliAsTexts() {
 		}
 	}
 
-
-
-	for (int i = 0; i < words.size(); i++) {
-		LOG(words[i]);
-	}
 	return words;
 
 }
@@ -528,6 +584,13 @@ void Programmer::userCantPress() {
 	userCanPressTargetType = false;
 	userCanPressNumber = false;
 	userCanPressGo = false;
+}
 
+void Programmer::resetCli() {
+	cliActionType->setValueWithData("");
+	cliParamAType->setValueWithData("");
+	cliParamBType ->setValueWithData("");
+	cliParamAId->setValue(0);
+	cliParamBId->setValue(0);
 }
 

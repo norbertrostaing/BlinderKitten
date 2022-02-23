@@ -79,9 +79,5 @@ public:
     float getChannelValue(ChannelType* t, bool thru = false);
     String lastTarget = "";
 
-    int backspaceOnInt(var);
-    float backspaceOnFloat(var);
-
-
 };
 

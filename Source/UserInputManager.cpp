@@ -243,3 +243,27 @@ Programmer* UserInputManager::getProgrammer() {
 	}
 	return currentProgrammer;
 }
+
+
+int UserInputManager::backspaceOnInt(var v) {
+	String s = v.toString();
+	if (s.length() == 1) {
+		return 0;
+	}
+	else {
+		s = s.substring(0, s.length() - 1);
+		return s.getIntValue();
+	}
+}
+
+float UserInputManager::backspaceOnFloat(var v) {
+	String s = v.toString();
+	if (s.length() == 1) {
+		return 0;
+	}
+	else {
+		s = s.substring(0, s.length() - 1);
+		LOG(s);
+		return s.getFloatValue();
+	}
+}

@@ -36,7 +36,6 @@ public:
     Trigger* recBtn;
     Trigger* clearAllBtn;
 
-
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
     HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
 
@@ -47,11 +46,15 @@ public:
     EnumParameter* cliParamBType;
     IntParameter*  cliParamBId;
     Trigger* cliGo;
+    void resetCli();
     bool userCanPressAction = false;
     bool userCanPressTargetType = false;
     bool userCanPressNumber = false;
     bool userCanPressGo = false;
-    Parameter* currentUserTarget = nullptr;
+    EnumParameter* currentUserTargetType = nullptr;
+    IntParameter* currentUserTargetId = nullptr;
+    String cliLastTarget = "";
+    void runCliCommand();
 
     StringArray getCliAsTexts();
     void userCantPress();

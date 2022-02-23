@@ -36,4 +36,8 @@ public:
 	void updateDisplay();
 	void execute();
 
+	void editObject(String type, int id);
+	void deleteObject(String type, int id);
+	void moveObject(String type, int id, int idTo);
+
 };

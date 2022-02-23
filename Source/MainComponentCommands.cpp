@@ -37,6 +37,10 @@ namespace BlinderKittenCommandId
 	static const int keyPlus = 0x60105;
 	static const int keyMinus = 0x60106;
 
+	static const int keyRecord = 0x60201;
+	static const int keyEdit = 0x60202;
+	static const int keyCopy = 0x60203;
+	static const int keyDelete = 0x60204;
 
 	static const int keyFixture = 0x60301;
 	static const int keyGroup = 0x60302;
@@ -47,16 +51,16 @@ namespace BlinderKittenCommandId
 	static const int keyCarousel = 0x60307;
 
 
-	static const int key1 = 0x60201;
-	static const int key2 = 0x60202;
-	static const int key3 = 0x60203;
-	static const int key4 = 0x60204;
-	static const int key5 = 0x60205;
-	static const int key6 = 0x60206;
-	static const int key7 = 0x60207;
-	static const int key8 = 0x60208;
-	static const int key9 = 0x60209;
-	static const int key0 = 0x60210;
+	static const int key1 = 0x60401;
+	static const int key2 = 0x60402;
+	static const int key3 = 0x60403;
+	static const int key4 = 0x60404;
+	static const int key5 = 0x60405;
+	static const int key6 = 0x60406;
+	static const int key7 = 0x60407;
+	static const int key8 = 0x60408;
+	static const int key9 = 0x60409;
+	static const int key0 = 0x60410;
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
@@ -164,6 +168,27 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::createFromDescription("-").getKeyCode(), ModifierKeys::noModifiers);
 		break;
 
+	case BlinderKittenCommandId::keyRecord:
+		result.setInfo("Record", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("r").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::createFromDescription("r").getKeyCode(), ModifierKeys::altModifier);
+		break;
+
+	case BlinderKittenCommandId::keyEdit:
+		result.setInfo("Edit", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("e").getKeyCode(), ModifierKeys::altModifier);
+		break;
+
+	case BlinderKittenCommandId::keyCopy:
+		result.setInfo("Copy", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::altModifier);
+		break;
+
+	case BlinderKittenCommandId::keyDelete:
+		result.setInfo("Delete", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("-").getKeyCode(), ModifierKeys::altModifier);
+		break;
+
 
 
 
@@ -199,7 +224,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case BlinderKittenCommandId::keyCarousel:
 		result.setInfo("Carousel", "", "Direct Commands", 0);
-		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::ctrlModifier);
 		break;
 
 
@@ -298,6 +323,11 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		BlinderKittenCommandId::keyThru,
 		BlinderKittenCommandId::keyPlus,
 		BlinderKittenCommandId::keyMinus,
+
+		BlinderKittenCommandId::keyRecord,
+		BlinderKittenCommandId::keyEdit,
+		BlinderKittenCommandId::keyCopy,
+		BlinderKittenCommandId::keyDelete,
 
 		BlinderKittenCommandId::keyFixture,
 		BlinderKittenCommandId::keyGroup,
@@ -461,6 +491,11 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::keyThru: {		UserInputManager::getInstance()->processInput("Thru"); }break;
 	case BlinderKittenCommandId::keyPlus: {		UserInputManager::getInstance()->processInput("+"); }break;
 	case BlinderKittenCommandId::keyMinus: {	UserInputManager::getInstance()->processInput("-"); }break;
+
+	case BlinderKittenCommandId::keyRecord: {	UserInputManager::getInstance()->processInput("record"); }break;
+	case BlinderKittenCommandId::keyCopy: {		UserInputManager::getInstance()->processInput("copy"); }break;
+	case BlinderKittenCommandId::keyEdit: {		UserInputManager::getInstance()->processInput("edit"); }break;
+	case BlinderKittenCommandId::keyDelete: {	UserInputManager::getInstance()->processInput("delete"); }break;
 
 	case BlinderKittenCommandId::key1: {		UserInputManager::getInstance()->processInput("1"); }break;
 	case BlinderKittenCommandId::key2: {		UserInputManager::getInstance()->processInput("2"); }break;

@@ -514,28 +514,28 @@ void Command::userPress(String s) {
 			}
 
 		} else if (lastTarget == "selectionValueFrom") {
-			currentUserSelection->valueFrom->setValue(backspaceOnInt(currentUserSelection->valueFrom->getValue()));
+			currentUserSelection->valueFrom->setValue(UserInputManager::backspaceOnInt(currentUserSelection->valueFrom->getValue()));
 		} else if (lastTarget == "selectionThru") {
 			currentUserSelection->thru->setValue(false);
 		} else if (lastTarget == "selectionValueTo") {
-			currentUserSelection->valueTo->setValue(backspaceOnInt(currentUserSelection->valueTo->getValue()));
+			currentUserSelection->valueTo->setValue(UserInputManager::backspaceOnInt(currentUserSelection->valueTo->getValue()));
 		} else if (lastTarget == "selectionSubFixture") {
 			currentUserSelection->subSel->setValue(false);
 		} else if (lastTarget == "selectionSubFrom") {
-			currentUserSelection->subFrom->setValue(backspaceOnInt(currentUserSelection->subFrom->getValue()));
+			currentUserSelection->subFrom->setValue(UserInputManager::backspaceOnInt(currentUserSelection->subFrom->getValue()));
 		} else if (lastTarget == "selectionSubThru") {
 			currentUserSelection->subThru->setValue(false);
 		} else if (lastTarget == "selectionSubTo") {
-			currentUserSelection->subTo->setValue(backspaceOnInt(currentUserSelection->subTo->getValue()));
+			currentUserSelection->subTo->setValue(UserInputManager::backspaceOnInt(currentUserSelection->subTo->getValue()));
 		} else if (lastTarget == "valuePreset") {
 			values.removeItem(values.items.getLast());
 			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
 		} else if (lastTarget == "valuePresetFrom") {
-			currentUserValue->presetIdFrom->setValue(backspaceOnInt(currentUserValue->presetIdFrom->getValue()));
+			currentUserValue->presetIdFrom->setValue(UserInputManager::backspaceOnInt(currentUserValue->presetIdFrom->getValue()));
 		} else if (lastTarget == "valuePresetThru") {
 			currentUserValue->thru->setValue(false);
 		} else if (lastTarget == "valuePresetTo") {
-			currentUserValue->presetIdTo->setValue(backspaceOnInt(currentUserValue->presetIdTo->getValue()));
+			currentUserValue->presetIdTo->setValue(UserInputManager::backspaceOnInt(currentUserValue->presetIdTo->getValue()));
 		} else if (lastTarget == "valueRaw") {
 			values.removeItem(currentUserValue);
 			currentUserValue = values.items.size() > 0 ? values.items.getLast() : values.addItem();
@@ -568,27 +568,4 @@ float Command::getChannelValue(ChannelType* t, bool thru) {
 		}
 	}
 	return val;
-}
-
-int Command::backspaceOnInt(var v) {
-	String s = v.toString();
-	if (s.length() == 1) {
-		return 0;
-	}
-	else {
-		s = s.substring(0,s.length()-1);
-		return s.getIntValue();
-	}
-}
-
-float Command::backspaceOnFloat(var v) {
-	String s = v.toString();
-	if (s.length() == 1) {
-		return 0;
-	}
-	else {
-		s = s.substring(0, s.length() - 1);
-		LOG(s);
-		return s.getFloatValue();
-	}
 }

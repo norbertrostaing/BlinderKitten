@@ -50,5 +50,7 @@ public:
     String toUserText(String s);
     Programmer* getProgrammer();
 
-};
+    static int backspaceOnInt(var);
+    static float backspaceOnFloat(var);
 
+};

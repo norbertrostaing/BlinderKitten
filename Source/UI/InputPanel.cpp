@@ -30,6 +30,8 @@ InputPanel::InputPanel()
     addAndMakeVisible(btnClear); btnClear.setButtonText("Clear"); btnClear.addListener(this);
     addAndMakeVisible(btnEdit); btnEdit.setButtonText("Edit"); btnEdit.addListener(this);
     addAndMakeVisible(btnRecord); btnRecord.setButtonText("Record"); btnRecord.addListener(this);
+    addAndMakeVisible(btnDelete); btnDelete.setButtonText("Delete"); btnDelete.addListener(this);
+    addAndMakeVisible(btnCopy); btnCopy.setButtonText("Copy"); btnCopy.addListener(this);
     addAndMakeVisible(btnFixture); btnFixture.setButtonText("Fixture"); btnFixture.addListener(this);
     addAndMakeVisible(btnGroup); btnGroup.setButtonText("Group"); btnGroup.addListener(this);
     addAndMakeVisible(btnSub); btnSub.setButtonText("SubFixture"); btnSub.addListener(this);
@@ -86,15 +88,21 @@ void InputPanel::paint (juce::Graphics& g)
 void InputPanel::resized()
 {
     
+    int margin = 20;
     int h = 40;
     int r = 40;
     int sm = 40;
     int lg = 120;
-    int p2 = 2*lg + 20;
+    int p2 = 2*lg + margin;
+    int p3 = p2 + (4 * sm) + margin;
+    int mid = (p3 + lg)/2;
 
-    btnClear.setBounds      (0 * lg, 0 * r, lg, h);
-    btnEdit.setBounds       (1 * lg, 0 * r, lg, h);
-    btnRecord.setBounds     (2 * lg, 0 * r, lg, h);
+    btnClear.setBounds      (mid - lg - (margin/2), 0 * r, lg, h);
+    btnRecord.setBounds     (mid + (margin / 2), 0 * r, lg, h);
+
+    btnEdit.setBounds       (0 * lg + p3, 1 * r, lg, h);
+    btnCopy.setBounds       (0 * lg + p3, 2 * r, lg, h);
+    btnDelete.setBounds     (0 * lg + p3, 3 * r, lg, h);
 
     btnFixture.setBounds    (0 * lg, 1 * r, lg, h);
     btnSub.setBounds        (1 * lg, 1 * r, lg, h);

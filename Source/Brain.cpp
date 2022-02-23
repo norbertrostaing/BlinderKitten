@@ -11,7 +11,6 @@
 
 #include "Brain.h"
 #include "Definitions/ChannelValue.h"
-
 juce_ImplementSingleton(Brain);
 
 Brain::Brain() :
