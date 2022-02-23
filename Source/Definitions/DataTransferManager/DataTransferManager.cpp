@@ -104,6 +104,7 @@ void DataTransferManager::execute() {
     String trgType = targetType->getValue();
     bool valid = false;
 
+    int sId = sourceId->getValue();
     int tId = targetUserId->getValue();
 
     if (srcType == "programmer") {
@@ -231,18 +232,44 @@ void DataTransferManager::execute() {
 
 
     else if (srcType == "cuelist") {
-
+        if (trgType == "cuelist") {
+            valid = true;
+            Cuelist* src = Brain::getInstance()->getCuelistById(sId);
+            Cuelist* trg = Brain::getInstance()->getCuelistById(tId);
+            if (trg == nullptr) {
+                trg = CuelistManager::getInstance()->addItemFromData(src->getJSONData());
+                trg->id->setValue(tId);
+            }
+        }
     }
     else if (srcType == "preset") {
+        if (trgType == "preset") {
+            valid = true;
+            Preset* src = Brain::getInstance()->getPresetById(sId);
+            Preset* trg = Brain::getInstance()->getPresetById(tId);
+            if (trg == nullptr) {
+                trg = PresetManager::getInstance()->addItemFromData(src->getJSONData());
+                trg->id->setValue(tId);
+            }
+        }
 
     }
     else if (srcType == "group") {
+        if (trgType == "group") {
+            valid = true;
+            Group* src = Brain::getInstance()->getGroupById(sId);
+            Group* trg = Brain::getInstance()->getGroupById(tId);
+            if (trg == nullptr) {
+                trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
+                trg->id->setValue(tId);
+            }
+        }
 
     }
 
 
     if (!valid) {
-        LOGWARNING("target type and source type are not compatible");
+        LOGWARNING("source type ("+srcType+") and target type ("+trgType+") are not compatible");
     }
     else {
     }

@@ -508,8 +508,8 @@ void Programmer::runCliCommand() {
 	else if (action == "copy") {
 		DataTransferManager::getInstance()->sourceType->setValueWithData(targetType);
 		DataTransferManager::getInstance()->sourceId->setValue(targetId);
-		DataTransferManager::getInstance()->targetType->setValueWithData(cliParamAType->getValue());
-		DataTransferManager::getInstance()->targetUserId->setValue((int)cliParamAId->getValue());
+		DataTransferManager::getInstance()->targetType->setValueWithData(cliParamBType->getValue());
+		DataTransferManager::getInstance()->targetUserId->setValue((int)cliParamBId->getValue());
 		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");

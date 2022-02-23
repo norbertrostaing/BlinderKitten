@@ -398,43 +398,93 @@ float Brain::symPosition(int index, int nElements) {
 }
 
 SubFixture* Brain::getSubFixtureById(int id) {
-    return SubFixtures.getReference(id);
+    if (SubFixtures.contains(id)) {
+        return SubFixtures.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Fixture* Brain::getFixtureById(int id) {
-    return Fixtures.getReference(id);
+    if (Fixtures.contains(id)) {
+        return Fixtures.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Group* Brain::getGroupById(int id) {
-    return groups.getReference(id);
+    if (groups.contains(id)) {
+        return groups.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Preset* Brain::getPresetById(int id) {
-    return presets.getReference(id);
+    if (presets.contains(id)) {
+        return presets.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Cuelist* Brain::getCuelistById(int id) {
-    return cuelists.getReference(id);
+    if (cuelists.contains(id)) {
+        return cuelists.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Programmer* Brain::getProgrammerById(int id) {
-    return programmers.getReference(id);
+    if (programmers.contains(id)) {
+        return programmers.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 CurvePreset* Brain::getCurvePresetById(int id) {
-    return curvePresets.getReference(id);
+    if (curvePresets.contains(id)) {
+        return curvePresets.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 TimingPreset* Brain::getTimingPresetById(int id) {
-    return timingPresets.getReference(id);
+    if (timingPresets.contains(id)) {
+        return timingPresets.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Effect* Brain::getEffectById(int id) {
-    return effects.getReference(id);
+    if (effects.contains(id)) {
+        return effects.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 Carousel* Brain::getCarouselById(int id) {
-    return carousels.getReference(id);
+    if (carousels.contains(id)) {
+        return carousels.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 
