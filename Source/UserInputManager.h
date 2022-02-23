@@ -52,5 +52,6 @@ public:
 
     static int backspaceOnInt(var);
     static float backspaceOnFloat(var);
+    void gridViewCellPressed(String type, int id);
 
 };

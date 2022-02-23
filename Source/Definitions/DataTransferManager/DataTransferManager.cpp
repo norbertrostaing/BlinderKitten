@@ -33,6 +33,8 @@
 #include "../Fixture/FixtureManager.h"
 #include "../Fixture/Fixture.h"
 
+#include "UI/GridView/GroupGridView.h"
+
 juce_ImplementSingleton(DataTransferManager)
 
 DataTransferManager::DataTransferManager() :
@@ -324,7 +326,7 @@ void DataTransferManager::deleteObject(String type, int id) {
     }
     else if (type == "group") {
         Group* target = Brain::getInstance()->getGroupById(id);
-        if (target != nullptr) { GroupManager::getInstance()->removeItem(target); }
+        if (target != nullptr) { GroupManager::getInstance()->removeItem(target); GroupGridView::getInstance()->updateCells();}
     }
     else if (type == "preset") {
         Preset* target = Brain::getInstance()->getPresetById(id);

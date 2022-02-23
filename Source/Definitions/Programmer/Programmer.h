@@ -80,5 +80,6 @@ public:
     void processUserInput(String s);
 
     String getTextCommand();
+    void checkCurrentUserCommand();
 };
 

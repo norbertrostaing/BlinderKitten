@@ -13,6 +13,7 @@
 #include "GroupManager.h"
 #include "../Command/CommandSelectionManager.h"
 #include "../../Brain.h"
+#include "UI/GridView/GroupGridView.h"
 
 Group::Group(var params) :
 	BaseItem(params.getProperty("name", "Group")),
@@ -55,4 +56,5 @@ void Group::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerGroup(this, id->getValue());
 	}
+	GroupGridView::getInstance()->updateCells();
 }

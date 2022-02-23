@@ -54,6 +54,8 @@
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
 
+#include "UI/GridView/GroupGridView.h"
+
 #include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
@@ -341,6 +343,9 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	//ModuleRouterManager::getInstance()->loadJSONData(data.getProperty(ModuleRouterManager::getInstance()->shortName, var()));
 	//routerTask->setProgress(1);
 	//routerTask->end();
+
+
+	GroupGridView::getInstance()->updateCells();
 
 }
 

@@ -385,14 +385,7 @@ void Programmer::processUserInput(String s) {
 		cliActionType->setValueWithData(s);
 		UserInputManager::getInstance()->updateCommandLine();
 	}
-	if (currentUserCommand == nullptr) {
-		if (commands.items.size() > 0) {
-			currentUserCommand = commands.items[0];
-		}
-		else {
-			currentUserCommand = commands.addItem();
-		}
-	}
+	checkCurrentUserCommand();
 	currentUserCommand->getCommandAsTexts();
 	if (s == "clear") {
 		commands.removeItem(currentUserCommand);
@@ -562,7 +555,7 @@ StringArray Programmer::getCliAsTexts() {
 						userCanPressTargetType = false;
 						currentUserTargetId = cliParamBId;
 						if ((int)cliParamAId->getValue() > 0) {
-							cliLastTarget = "paramBValue";
+							cliLastTarget = "paramBId";
 							words.add(cliParamBId->getValue());
 							userCanPressGo = true;
 						}
@@ -594,3 +587,14 @@ void Programmer::resetCli() {
 	cliParamBId->setValue(0);
 }
 
+void Programmer::checkCurrentUserCommand() {
+	if (currentUserCommand == nullptr) {
+		if (commands.items.size() > 0) {
+			currentUserCommand = commands.items[0];
+		}
+		else {
+			currentUserCommand = commands.addItem();
+		}
+	}
+
+}

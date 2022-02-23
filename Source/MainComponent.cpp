@@ -17,6 +17,7 @@
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
+#include "UI/GridView/GroupGridView.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -96,9 +97,10 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Programmers", &ProgrammerManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effects", &EffectManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
-    // ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("CommandLine", &CommandLineUI::create));
+
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Input Panel", &InputPanelUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Group Grid View", &GroupGridViewUI::create));
 
     OrganicMainContentComponent::init();
 
