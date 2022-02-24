@@ -19,6 +19,10 @@
           <FILE id="FCSyGj" name="GroupGridView.cpp" compile="1" resource="0"
                 file="Source/UI/GridView/GroupGridView.cpp"/>
           <FILE id="PZHaJI" name="GroupGridView.h" compile="0" resource="0" file="Source/UI/GridView/GroupGridView.h"/>
+          <FILE id="QwkOQm" name="PresetGridView.cpp" compile="1" resource="0"
+                file="Source/UI/GridView/PresetGridView.cpp"/>
+          <FILE id="BXrKtJ" name="PresetGridView.h" compile="0" resource="0"
+                file="Source/UI/GridView/PresetGridView.h"/>
         </GROUP>
         <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>

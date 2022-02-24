@@ -14,6 +14,7 @@
 #include "../ChannelFamily/ChannelType/ChannelType.h"
 #include "../../Brain.h"
 #include "PresetManager.h"
+#include "UI/GridView/PresetGridView.h"
 
 Preset::Preset(var params) :
 	BaseItem(params.getProperty("name", "Preset")),
@@ -27,7 +28,6 @@ Preset::Preset(var params) :
 	nameCanBeChangedByUser = false;
 
 	itemDataType = "Preset";
-	
 	id = addIntParameter("ID", "ID of this Preset", 1, 1);
 	userName = addStringParameter("Name", "Name of this preset", "New preset");
 	updateName();
@@ -74,11 +74,12 @@ Preset::~Preset()
 
 void Preset::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerPreset(this, id->getValue());
+		Brain::getInstance()->registerPreset(this, id->getValue(), true);
 	}
 	if (p == userName || p == id) {
 		updateName();
 	}
+	PresetGridView::getInstance()->updateCells();
 }
 
 void Preset::computeValues() {

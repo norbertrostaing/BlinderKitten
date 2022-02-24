@@ -34,6 +34,7 @@
 #include "../Fixture/Fixture.h"
 
 #include "UI/GridView/GroupGridView.h"
+#include "UI/GridView/PresetGridView.h"
 
 juce_ImplementSingleton(DataTransferManager)
 
@@ -240,7 +241,7 @@ void DataTransferManager::execute() {
             Cuelist* trg = Brain::getInstance()->getCuelistById(tId);
             if (trg == nullptr) {
                 trg = CuelistManager::getInstance()->addItemFromData(src->getJSONData());
-                trg->id->setValue(tId);
+                src->id->setValue(tId);
             }
         }
     }
@@ -251,7 +252,7 @@ void DataTransferManager::execute() {
             Preset* trg = Brain::getInstance()->getPresetById(tId);
             if (trg == nullptr) {
                 trg = PresetManager::getInstance()->addItemFromData(src->getJSONData());
-                trg->id->setValue(tId);
+                src->id->setValue(tId);
             }
         }
 
@@ -263,7 +264,7 @@ void DataTransferManager::execute() {
             Group* trg = Brain::getInstance()->getGroupById(tId);
             if (trg == nullptr) {
                 trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
-                trg->id->setValue(tId);
+                src->id->setValue(tId);
             }
         }
 
@@ -330,7 +331,8 @@ void DataTransferManager::deleteObject(String type, int id) {
     }
     else if (type == "preset") {
         Preset* target = Brain::getInstance()->getPresetById(id);
-        if (target != nullptr) { PresetManager::getInstance()->removeItem(target); }
+        if (target != nullptr) { PresetManager::getInstance()->removeItem(target); PresetGridView::getInstance()->updateCells();
+        }
     }
     else if (type == "cuelist") {
         Cuelist* target = Brain::getInstance()->getCuelistById(id);

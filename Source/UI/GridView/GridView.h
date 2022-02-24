@@ -11,7 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+class BKEngine;
 //==============================================================================
 /*
 */
@@ -22,7 +22,6 @@ public:
     ~GridViewUI();
 
     static GridViewUI* create(const String& name) { return new GridViewUI(name); }
-
 
 };
 
@@ -38,6 +37,7 @@ public:
     GridView();
     ~GridView() override;
 
+    BKEngine* engine = nullptr;
     OwnedArray<TextButton> gridButtons;
     ScrollBar scroll;
 
@@ -56,5 +56,4 @@ public:
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GridView)
 };
-
 

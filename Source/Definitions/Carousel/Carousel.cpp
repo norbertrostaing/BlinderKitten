@@ -73,7 +73,7 @@ void Carousel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, C
 
 void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerCarousel(this, id->getValue());
+		Brain::getInstance()->registerCarousel(this, id->getValue(), true);
 	}
 	if (p == userName || p == id) {
 		updateName();

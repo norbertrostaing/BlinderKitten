@@ -11,7 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-
+class BKEngine;
 //==============================================================================
 /*
 */
@@ -35,6 +35,8 @@ public:
     juce_DeclareSingleton(InputPanel, true);
     InputPanel();
     ~InputPanel() override;
+
+    BKEngine * engine = nullptr;
 
     TextButton btnFixture;
     TextButton btnGroup;

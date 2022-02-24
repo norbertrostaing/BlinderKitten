@@ -93,7 +93,7 @@ void TimingPreset::onContainerParameterChangedInternal(Parameter* p) {
 		updateName();
 	}
 	if (p == id) {
-		Brain::getInstance()->registerTimingPreset(this, id->getValue());
+		Brain::getInstance()->registerTimingPreset(this, id->getValue(), true);
 	}
 	if (p == thruDelay || p == thruFade) {
 		updateDisplay();

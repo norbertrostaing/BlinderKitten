@@ -370,6 +370,7 @@ StringArray Command::getCommandAsTexts() {
 
 	for (int i = 0; i < values.items.size(); i++) {
 		CommandValue* v = values.items[i];
+		currentUserValue = v;
 		if (v->presetOrValue->getValue() == "preset") {
 			words.add("preset");
 			lastTarget = "valuePreset";

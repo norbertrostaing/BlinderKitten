@@ -128,7 +128,7 @@ void Programmer::triggerTriggered(Trigger* t) {
 
 void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerProgrammer(this, id->getValue());
+		Brain::getInstance()->registerProgrammer(this, id->getValue(), true);
 	}
 	if (p == userName || p == id) {
 		updateName();

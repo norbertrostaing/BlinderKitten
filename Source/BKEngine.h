@@ -26,6 +26,10 @@ public:
 	//ControllableContainer defaultBehaviors;
 	Brain* mainBrain;
 
+	ControllableContainer uiParamsContainer;
+	FloatParameter* gridScale;
+	FloatParameter* panelScale;
+
 	void clearInternal() override;
 
 	var getJSONData() override;
@@ -41,4 +45,5 @@ public:
 	void importSelection(File f = File());
 	void exportSelection();
 
+	void parameterValueChanged(Parameter* p);
 };

@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "InputPanel.h"
 #include "UserInputManager.h"
+#include "BKEngine.h"
 
 //==============================================================================
 InputPanelUI::InputPanelUI(const String& contentName):
@@ -88,11 +89,15 @@ void InputPanel::paint (juce::Graphics& g)
 void InputPanel::resized()
 {
     
-    int margin = 20;
-    int h = 40;
-    int r = 40;
-    int sm = 40;
-    int lg = 120;
+    float scale = 1;
+    if (engine != nullptr && engine->panelScale != nullptr) {
+        scale = engine->panelScale->getValue();
+    }
+    int margin = 20 * scale;
+    int h = 40 * scale;
+    int r = 40 * scale;
+    int sm = 40 * scale;
+    int lg = 120 * scale;
     int p2 = 2*lg + margin;
     int p3 = p2 + (4 * sm) + margin;
     int mid = (p3 + lg)/2;

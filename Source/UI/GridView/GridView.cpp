@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "GridView.h"
 #include "UserInputManager.h"
+#include "BKEngine.h"
 
 //==============================================================================
 GridViewUI::GridViewUI(const String& contentName):
@@ -39,7 +40,10 @@ GridView::GridView():
         b->addListener(this);
         addAndMakeVisible(b);
     }
+
     resized();
+
+
     // addAndMakeVisible(test);
     // test.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
 }
@@ -54,12 +58,16 @@ void GridView::paint (juce::Graphics& g)
 
 void GridView::resized()
 {
+    float scale = 1;
+    if (engine != nullptr && engine->gridScale != nullptr) {
+        scale = engine->gridScale->getValue();
+    }
     int h = getHeight();
     int w = getWidth();
     int scrollWidth = 10;
+    int btnSizeH = 50*scale;
     scroll.setBounds(w-scrollWidth,0,scrollWidth,h);
     w = w-scrollWidth;
-    int btnSizeH = 50;
    
     int nByRow = w/ btnSizeH;
     if (nByRow == 0) { return; }
@@ -73,7 +81,9 @@ void GridView::resized()
     for (int i = 0; i < numberOfCells; i++) {
         x = i%nByRow;
         y = i/nByRow;
-        gridButtons[i]->setBounds(margin + (x*btnSizeW),y*btnSizeH - scroll.getCurrentRangeStart(), btnSizeW, btnSizeH);
+        x = margin + (x * btnSizeW);
+        y = y* btnSizeH - scroll.getCurrentRangeStart();
+        gridButtons[i]->setBounds(x,y, btnSizeW, btnSizeH);
         maxY = (y+1)* btnSizeH;
     }
     scroll.setCurrentRange(scroll.getCurrentRangeStart(), h,juce::dontSendNotification);

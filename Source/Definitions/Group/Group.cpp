@@ -54,7 +54,7 @@ void Group::onContainerParameterChangedInternal(Parameter* p) {
 		updateName();
 	}
 	if (p == id) {
-		Brain::getInstance()->registerGroup(this, id->getValue());
+		Brain::getInstance()->registerGroup(this, id->getValue(), true);
 	}
 	GroupGridView::getInstance()->updateCells();
 }

@@ -33,7 +33,7 @@ public:
 
     HashMap<int, SubFixture*>SubFixtures;
     HashMap<int, Group*>groups;
-    HashMap<int, Fixture*>Fixtures;
+    HashMap<int, Fixture*>fixtures;
     HashMap<int, Preset*>presets;
     HashMap<int, Cuelist*>cuelists;
     HashMap<int, Programmer*>programmers;
@@ -63,23 +63,23 @@ public:
     void run() override;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);
-    void registerFixture(Fixture* f, int id);
+    void registerFixture(Fixture* f, int id, bool swap = false);
     void unregisterFixture(Fixture* f);
-    void registerGroup(Group* f, int id);
+    void registerGroup(Group* f, int id, bool swap = false);
     void unregisterGroup(Group* f);
-    void registerPreset(Preset* p, int id);
+    void registerPreset(Preset* p, int id, bool swap = false);
     void unregisterPreset(Preset* p);
-    void registerCuelist(Cuelist* c, int id);
+    void registerCuelist(Cuelist* c, int id, bool swap = false);
     void unregisterCuelist(Cuelist* c);
-    void registerProgrammer(Programmer* p, int id);
+    void registerProgrammer(Programmer* p, int id, bool swap = false);
     void unregisterProgrammer(Programmer* p);
-    void registerCurvePreset(CurvePreset* p, int id);
+    void registerCurvePreset(CurvePreset* p, int id, bool swap = false);
     void unregisterCurvePreset(CurvePreset* p);
-    void registerTimingPreset(TimingPreset* p, int id);
+    void registerTimingPreset(TimingPreset* p, int id, bool swap = false);
     void unregisterTimingPreset(TimingPreset* p);
-    void registerEffect(Effect* p, int id);
+    void registerEffect(Effect* p, int id, bool swap = false);
     void unregisterEffect(Effect* p);
-    void registerCarousel(Carousel* p, int id);
+    void registerCarousel(Carousel* p, int id, bool swap = false);
     void unregisterCarousel(Carousel* p);
 
     void pleaseUpdate(Cuelist* c);

@@ -271,40 +271,46 @@ float UserInputManager::backspaceOnFloat(var v) {
 void UserInputManager::gridViewCellPressed(String type, int id) {
 	LOG("cell pressed : "+type+" "+String(id));
 	Programmer *p = getProgrammer();
-	if (type == "group") {
-		if (p->cliActionType->getValue() != "") {
-			if (p->userCanPressTargetType) {
-				p->processUserInput("group");
-				p->processUserInput(String(id));
-				if (p->userCanPressGo) {
-					p->processUserInput("enter");
-				}
+	if (p->cliActionType->getValue() != "") {
+		if (p->userCanPressTargetType) {
+			p->processUserInput(type);
+			p->processUserInput(String(id));
+			if (p->userCanPressGo) {
+				p->processUserInput("enter");
 			}
 		}
-		else {
-			p->checkCurrentUserCommand();
-			p->getTextCommand();;
-			if (p->currentUserCommand->userCanPressSelectionType) {
+	} else if (type == "group") {
+		p->checkCurrentUserCommand();
+		p->getTextCommand();;
+		if (p->currentUserCommand->userCanPressSelectionType) {
+			p->processUserInput("group");
+			p->processUserInput(String(id));
+		}
+		else if (p->currentUserCommand->userCanPressPlusOrMinus) {
+			bool pleaseAdd = true;
+			for (int i = p->currentUserCommand->selection.items.size() - 1; i >= 0; i--) {
+				CommandSelection* s = p->currentUserCommand->selection.items[i];
+				if (s->targetType->getValue() == "group" && (int)s->valueFrom->getValue() == id) {
+					pleaseAdd = false;
+					p->currentUserCommand->selection.removeItem(s);
+				}
+			}
+			if (pleaseAdd) {
+				p->processUserInput("+");
 				p->processUserInput("group");
 				p->processUserInput(String(id));
 			}
-			else if (p->currentUserCommand->userCanPressPlusOrMinus) {
-				bool pleaseAdd = true;
-				for (int i = p->currentUserCommand->selection.items.size()-1; i >=0; i--) {
-					CommandSelection * s = p->currentUserCommand->selection.items[i];
-					if (s->targetType->getValue() == "group" && (int)s->valueFrom->getValue() == id) {
-						pleaseAdd = false;
-						p->currentUserCommand->selection.removeItem(s);
-					}
-				}
-				if (pleaseAdd) {
-					p->processUserInput("+");
-					p->processUserInput("group");
-					p->processUserInput(String(id));
-				} else if (p->currentUserCommand->selection.items.size() == 0) {
-					p->currentUserCommand->selection.addItem();
-				}
+			else if (p->currentUserCommand->selection.items.size() == 0) {
+				p->currentUserCommand->selection.addItem();
 			}
+		}
+	}
+	else if (type == "preset") {
+		p->checkCurrentUserCommand();
+		p->getTextCommand();;
+		if (p->currentUserCommand->userCanPressValueType) {
+			p->processUserInput("preset");
+			p->processUserInput(String(id));
 		}
 	}
 }

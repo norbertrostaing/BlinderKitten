@@ -55,13 +55,15 @@
 #include "UI/InputPanel.h"
 
 #include "UI/GridView/GroupGridView.h"
+#include "UI/GridView/PresetGridView.h"
 
 #include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
 
 BKEngine::BKEngine() :
-	Engine("BlinderKitten", ".olga")
+	Engine("BlinderKitten", ".olga"),
+	uiParamsContainer("UI Settings")
 	//defaultBehaviors("Test"),
 	//ossiaFixture(nullptr)
 {
@@ -71,6 +73,14 @@ BKEngine::BKEngine() :
 	OSCRemoteControl::getInstance()->addRemoteControlListener(UserInputManager::getInstance());
 	//init here
 	Engine::mainEngine = this;
+
+	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
+
+	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
+	gridScale -> addParameterListener(this);
+	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
+	panelScale -> addParameterListener(this);
+
 	mainBrain = Brain::getInstance();
 	addChildControllableContainer(InterfaceManager::getInstance());
 	addChildControllableContainer(ChannelFamilyManager::getInstance());
@@ -85,6 +95,10 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(TimingPresetManager::getInstance());
 	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(EffectManager::getInstance());
+
+	InputPanel::getInstance()->engine = this;
+	GroupGridView::getInstance()->engine = this;
+	PresetGridView::getInstance()->engine = this;
 
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
@@ -346,6 +360,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 
 	GroupGridView::getInstance()->updateCells();
+	PresetGridView::getInstance()->updateCells();
 
 }
 
@@ -395,6 +410,8 @@ void BKEngine::importSelection(File f)
 	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 
+	GroupGridView::getInstance()->updateCells();
+	PresetGridView::getInstance()->updateCells();
 }
 
 void BKEngine::exportSelection()
@@ -421,5 +438,16 @@ void BKEngine::exportSelection()
 	{
 		File f = fc.getResult();
 		f.replaceWithText(s);
+	}
+}
+
+void BKEngine::parameterValueChanged(Parameter* p) {
+	Engine::parameterValueChanged(p);
+	if (p == panelScale) {
+		InputPanel::getInstance()->resized();
+	}
+	else if (p == gridScale) {
+		GroupGridView::getInstance()->resized();
+		PresetGridView::getInstance()->resized();
 	}
 }

@@ -186,7 +186,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case BlinderKittenCommandId::keyDelete:
 		result.setInfo("Delete", "", "Direct Commands", 0);
-		result.addDefaultKeypress(KeyPress::createFromDescription("-").getKeyCode(), ModifierKeys::altModifier);
+		result.addDefaultKeypress(KeyPress::createFromDescription("d").getKeyCode(), ModifierKeys::altModifier);
 		break;
 
 

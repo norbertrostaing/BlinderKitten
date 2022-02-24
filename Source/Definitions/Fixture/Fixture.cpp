@@ -92,7 +92,7 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	}
 	else if(p == id) 
 	{
-		Brain::getInstance()->registerFixture(this, id->getValue());
+		Brain::getInstance()->registerFixture(this, id->getValue(), true);
 	}
 }
 

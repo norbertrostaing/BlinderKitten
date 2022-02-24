@@ -71,7 +71,7 @@ void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Con
 
 void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerEffect(this, id->getValue());
+		Brain::getInstance()->registerEffect(this, id->getValue(), true);
 	}
 	if (p == userName || p == id) {
 		updateName();

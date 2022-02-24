@@ -23,6 +23,7 @@ public:
     var objectData;
 
     IntParameter* id;
+    int registeredId = 0;
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
