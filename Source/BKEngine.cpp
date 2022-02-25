@@ -57,12 +57,16 @@
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
 
+#include "UI/VirtualButtons/VirtualButtonManager.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
+
 #include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
 
 BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
+	virtualParamsContainer("Virtual Playbacks Settings"),
 	uiParamsContainer("UI Settings")
 	//defaultBehaviors("Test"),
 	//ossiaFixture(nullptr)
@@ -74,7 +78,15 @@ BKEngine::BKEngine() :
 	//init here
 	Engine::mainEngine = this;
 
+	GlobalSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
+
+	virtualButtonGridCols = virtualParamsContainer.addIntParameter("Button cols", "Number of cols in playback button grid", 5, 1);
+	virtualButtonGridCols->addParameterListener(this);
+	virtualButtonGridRows = virtualParamsContainer.addIntParameter("Button rows", "Number of rows in playback button grid", 5, 1);
+	virtualButtonGridRows->addParameterListener(this);
+
+
 
 	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
 	panelScale->addParameterListener(this);
@@ -83,6 +95,7 @@ BKEngine::BKEngine() :
 	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
 	gridScale->addParameterListener(this);
 	encoderBigNumber = addIntParameter("Encoder big offset", "Offset of encoders when << or >> pressed",4,2);
+
 
 	mainBrain = Brain::getInstance();
 	addChildControllableContainer(InterfaceManager::getInstance());
@@ -99,11 +112,16 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(EffectManager::getInstance());
 
+	addChildControllableContainer(VirtualButtonManager::getInstance());
+
+
 	Encoders::getInstance()->engine = this;
 	InputPanel::getInstance()->engine = this;
 	GroupGridView::getInstance()->engine = this;
 	PresetGridView::getInstance()->engine = this;
 
+	VirtualButtonGrid::getInstance()->engine = this;
+	VirtualButtonGrid::getInstance()->initCells();
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
 	// getAppSettings()->addChildControllableContainer(&defaultBehaviors);
@@ -143,8 +161,11 @@ BKEngine::~BKEngine()
 	// Guider::deleteInstance();
 	Brain::getInstance()->stopThread(100);
 
+
 	DataTransferManager::deleteInstance();
 	FixtureMultiEditor::deleteInstance();
+
+	VirtualButtonManager::deleteInstance();
 
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
@@ -183,6 +204,7 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	VirtualButtonManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
 	CarouselManager::getInstance()->clear();
 	ProgrammerManager::getInstance()->clear();
@@ -244,6 +266,9 @@ var BKEngine::getJSONData()
 	var carData = CarouselManager::getInstance()->getJSONData();
 	if (!carData.isVoid() && carData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, carData);
 
+	var vbData = VirtualButtonManager::getInstance()->getJSONData();
+	if (!vbData.isVoid() && vbData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, vbData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -273,6 +298,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
 	ProgressTask* fxTask = loadingTask->addTask("Effects");
 	ProgressTask* carTask = loadingTask->addTask("Carousels");
+	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
 	//ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	//ProgressTask* routerTask = loadingTask->addTask("Router");
@@ -347,6 +373,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	carTask->setProgress(1);
 	carTask->end();
 
+	vbTask->start();
+	VirtualButtonManager::getInstance()->loadJSONData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
+	vbTask->setProgress(1);
+	vbTask->end();
+
 	//stateTask->start();
 	//StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));
 	//stateTask->setProgress(1);
@@ -362,9 +393,10 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	//routerTask->setProgress(1);
 	//routerTask->end();
 
-
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
+
+	VirtualButtonGrid::getInstance()->initCells();
 
 }
 
@@ -413,6 +445,7 @@ void BKEngine::importSelection(File f)
 	TimingPresetManager::getInstance()->addItemsFromData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
 	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
+	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
 
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
@@ -434,6 +467,7 @@ void BKEngine::exportSelection()
 	data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, TimingPresetManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, CarouselManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
 
 	String s = JSON::toString(data);
 
@@ -456,5 +490,8 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == gridScale) {
 		GroupGridView::getInstance()->resized();
 		PresetGridView::getInstance()->resized();
+	}
+	else if (p == virtualButtonGridCols || p == virtualButtonGridRows) {
+		VirtualButtonGrid::getInstance()->initCells();
 	}
 }

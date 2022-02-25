@@ -21,6 +21,9 @@
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
 
+#include "UI/VirtualButtons/VirtualButtonManagerUI.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
+
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
@@ -104,6 +107,9 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Input Panel", &InputPanelUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Group Grid View", &GroupGridViewUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Preset Grid View", &PresetGridViewUI::create));
+
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons", &VirtualButtonManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons grid", &VirtualButtonGridUI::create));
 
     OrganicMainContentComponent::init();
 

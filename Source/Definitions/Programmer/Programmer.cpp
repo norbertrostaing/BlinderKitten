@@ -70,6 +70,7 @@ Programmer::Programmer(var params) :
 	cliParamAType->addOption("Cuelist", "cuelist");
 	cliParamAType->addOption("Effect", "effect");
 	cliParamAType->addOption("Carousel", "carousel");
+	cliParamAType->addOption("Virtual button", "virtualbutton");
 	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param",0,0);
 
 	cliParamBType = cliContainer.addEnumParameter("Param B type", "second object type");
@@ -79,6 +80,7 @@ Programmer::Programmer(var params) :
 	cliParamBType->addOption("Cuelist", "cuelist");
 	cliParamBType->addOption("Effect", "effect");
 	cliParamBType->addOption("Carousel", "carousel");
+	cliParamBType->addOption("Virtual button", "virtualbutton");
 	cliParamBId = cliContainer.addIntParameter("Param B ID", "second object id for copy, move", 0, 0);
 
 	cliGo = cliContainer.addTrigger("GO", "Execute this command");
@@ -319,7 +321,7 @@ void Programmer::processUserInput(String s) {
 				LOGERROR("not allowed");
 			}
 		}
-		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel") {
+		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel" || s == "virtualbutton") {
 			if (userCanPressTargetType) {
 				dynamic_cast<EnumParameter*>(currentUserTargetType)->setValueWithData(s);
 			}

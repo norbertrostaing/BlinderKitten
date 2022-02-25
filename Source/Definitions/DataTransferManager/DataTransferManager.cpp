@@ -33,8 +33,15 @@
 #include "../Fixture/FixtureManager.h"
 #include "../Fixture/Fixture.h"
 
+#include "UI/VirtualButtons/VirtualButtonManager.h"
+#include "UI/VirtualButtons/VirtualButton.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
+
+
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
+
+
 
 juce_ImplementSingleton(DataTransferManager)
 
@@ -47,6 +54,7 @@ DataTransferManager::DataTransferManager() :
     // sourceType->addOption("Timing Preset", "TimingPreset");
     sourceType->addOption("Cuelist", "cuelist");
     sourceType->addOption("Programmer", "programmer");
+    sourceType->addOption("Virtual Button", "virtualbutton");
     sourceId = addIntParameter("Source Id", "ID of the source", 0, 0);
     targetType = addEnumParameter("Target Type", "Type of the data target");
     targetType->addOption("Group", "group");
@@ -54,6 +62,7 @@ DataTransferManager::DataTransferManager() :
     // targetType->addOption("Timing Preset", "TimingPreset");
     targetType->addOption("Cuelist", "cuelist");
     targetType->addOption("Programmer", "programmer");
+    targetType->addOption("Virtual Button", "virtualbutton");
 
     targetUserId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
@@ -318,6 +327,9 @@ void DataTransferManager::editObject(String type, int id) {
         if (target == nullptr) { target = CarouselManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
     }
+    else if (type == "virtualbutton") {
+        VirtualButtonGrid::getInstance()->editCell(id);
+    }
 }
 
 void DataTransferManager::deleteObject(String type, int id) {
@@ -331,8 +343,7 @@ void DataTransferManager::deleteObject(String type, int id) {
     }
     else if (type == "preset") {
         Preset* target = Brain::getInstance()->getPresetById(id);
-        if (target != nullptr) { PresetManager::getInstance()->removeItem(target); PresetGridView::getInstance()->updateCells();
-        }
+        if (target != nullptr) { PresetManager::getInstance()->removeItem(target); PresetGridView::getInstance()->updateCells();}
     }
     else if (type == "cuelist") {
         Cuelist* target = Brain::getInstance()->getCuelistById(id);

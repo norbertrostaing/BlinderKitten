@@ -62,6 +62,7 @@ public:
     void updateContent();
     void sliderValueChanged(Slider* slider) override;
     void buttonClicked (Button*);
+    void updateFilters();
     void updateEncoders();
     void updateModeButton();
     void updateContentWithCommand(Command* c);

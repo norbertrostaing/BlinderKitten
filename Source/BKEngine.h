@@ -32,6 +32,10 @@ public:
 	FloatParameter* encodersScale;
 	IntParameter* encoderBigNumber;
 
+	ControllableContainer virtualParamsContainer;
+	IntParameter* virtualButtonGridCols;
+	IntParameter* virtualButtonGridRows;
+
 	void clearInternal() override;
 
 	var getJSONData() override;

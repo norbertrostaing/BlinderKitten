@@ -24,6 +24,23 @@
           <FILE id="BXrKtJ" name="PresetGridView.h" compile="0" resource="0"
                 file="Source/UI/GridView/PresetGridView.h"/>
         </GROUP>
+        <GROUP id="{DE55AD18-F1DB-71A0-45E6-09BF8140287E}" name="VirtualButtons">
+          <FILE id="RAt7pp" name="VirtualButton.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButton.cpp"/>
+          <FILE id="ldx2zk" name="VirtualButton.h" compile="0" resource="0" file="Source/UI/VirtualButtons/VirtualButton.h"/>
+          <FILE id="pCkb4J" name="VirtualButtonGrid.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButtonGrid.cpp"/>
+          <FILE id="i5Iann" name="VirtualButtonGrid.h" compile="0" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButtonGrid.h"/>
+          <FILE id="tsvuhQ" name="VirtualButtonManager.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButtonManager.cpp"/>
+          <FILE id="O6HPL6" name="VirtualButtonManager.h" compile="0" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButtonManager.h"/>
+          <FILE id="Uj4Fqc" name="VirtualButtonManagerUI.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButtonManagerUI.cpp"/>
+          <FILE id="jRc4vj" name="VirtualButtonManagerUI.h" compile="0" resource="0"
+                file="Source/UI/VirtualButtons/VirtualButtonManagerUI.h"/>
+        </GROUP>
         <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
         <FILE id="V8gEcE" name="Encoders.cpp" compile="1" resource="0" file="Source/UI/Encoders.cpp"/>

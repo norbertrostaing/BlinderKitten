@@ -103,7 +103,7 @@ void Encoders::resized()
     int btnWidth = 30;
     int btnValueWidth = 40;
    
-    commandLine.setBounds(0,0,windowW-120, 20);
+    commandLine.setBounds(0,22,windowW, 20);
 
     btnMode.setBounds(windowW - btnValueWidth, 0, 40, 20);
     bigMoveRightBtn.setBounds(windowW - btnValueWidth-(1*btnWidth), 0, btnWidth, 20);
@@ -116,7 +116,7 @@ void Encoders::resized()
         float h = 60;
         for (int i = 0; i < 10; i++) {
             encoders[i]->setBounds(0, i*h, w, h);
-            encoders[i]->setTextBoxStyle(Slider::TextBoxRight, false, 60, 20);
+            encoders[i]->setTextBoxStyle(Slider::TextBoxRight, false, 44, 20);
             labels[i]->setBounds(60, i * h, 60, 20);
             labels[i]->setJustificationType(1);
 
@@ -127,8 +127,8 @@ void Encoders::resized()
         float h = 60;
         for (int i = 0; i < 10; i++) {
             int encoderId = i + encodersOffset;
-            encoders[i]->setBounds(i*w, 20, w, h);
-            encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 60, 20);
+            encoders[i]->setBounds(i*w, 60, w, h);
+            encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
             labels[i]->setBounds(i*w, 80, 60, 20);
             labels[i]->setJustificationType(36);
         }
@@ -180,6 +180,9 @@ void Encoders::updateModeButton() {
     updateEncoders();
 }
 
+void Encoders::updateFilters() {
+    // add buttons to filter types of channels by family
+}
 
 void Encoders::updateEncoders() {
     Command * currentCommand = nullptr; 
@@ -229,8 +232,8 @@ void Encoders::updateContentWithCommand(Command* c) {
         CommandValue* cv = c->values.items[i];
         if (cv->presetOrValue->getValue() == "value") {
             ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-            for (int i = 0; i< channels.size(); i++) {
-                int channelId = i + encodersOffset;
+            for (int ci = 0; ci< channels.size(); ci++) {
+                int channelId = ci + encodersOffset;
                 if (channels[channelId] == ct) {
                     float v = c->getChannelValue(channels[channelId], mode == 1);
                     Encoders::getInstance()->encoders[i]->setValue(v, juce::sendNotification);

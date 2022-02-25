@@ -168,7 +168,8 @@ void UserInputManager::commandValueChanged(Command* c) {
 void UserInputManager::encoderValueChanged(int index, float newValue) {
 	int mode = Encoders::getInstance()->mode;
 	targetCommand = getProgrammer()->currentUserCommand;
-	if (mode < 2) {
+	if (targetCommand == nullptr) {return;}
+	if (mode < 2) { // bug ici
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
 			if (targetCommand == nullptr) {
@@ -207,7 +208,6 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 				}
 				t->valueTo->setValue(newValue, false);
 			}
-			Encoders::getInstance()->encoders[index]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
 		}
 	}
 	else {
@@ -269,7 +269,6 @@ float UserInputManager::backspaceOnFloat(var v) {
 }
 
 void UserInputManager::gridViewCellPressed(String type, int id) {
-	LOG("cell pressed : "+type+" "+String(id));
 	Programmer *p = getProgrammer();
 	if (p->cliActionType->getValue() != "") {
 		if (p->userCanPressTargetType) {
