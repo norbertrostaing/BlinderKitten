@@ -497,7 +497,7 @@
                        defines="JUCE_DISABLE_ASSERTIONS=1"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="BlinderKitten" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
                        headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       binaryPath="Binaries/"/>
+                       binaryPath="Binaries/" defines="JUCE_DISABLE_ASSERTIONS=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
