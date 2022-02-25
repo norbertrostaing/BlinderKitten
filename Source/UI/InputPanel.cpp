@@ -93,11 +93,18 @@ void InputPanel::resized()
     if (engine != nullptr && engine->panelScale != nullptr) {
         scale = engine->panelScale->getValue();
     }
-    int margin = 20 * scale;
-    int h = 40 * scale;
-    int r = 40 * scale;
-    int sm = 40 * scale;
-    int lg = 120 * scale;
+    int nChildren =getNumChildComponents ();
+    for (int i = 0; i < nChildren; i++) {
+        getChildComponent(i)->setTransform(AffineTransform::scale(scale));
+
+    }
+
+
+    int margin = 20;
+    int h = 40;
+    int r = 40;
+    int sm = 40;
+    int lg = 120;
     int p2 = 2*lg + margin;
     int p3 = p2 + (4 * sm) + margin;
     int mid = (p3 + lg)/2;

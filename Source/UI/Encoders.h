@@ -11,6 +11,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "BKEngine.h"
+
 class ChannelType;
 class Command;
 
@@ -38,13 +40,21 @@ public:
     Encoders();
     ~Encoders() override;
 
+    BKEngine* engine = nullptr;
+
     OwnedArray<Slider> encoders;
     OwnedArray<Label> labels;
     Label commandLine;
     TextButton btnMode;
+
+    TextButton littleMoveLeftBtn;
+    TextButton littleMoveRightBtn;
+    TextButton bigMoveLeftBtn;
+    TextButton bigMoveRightBtn;
     Array<ChannelType*> channels;
 
     int nEncoders = 10;
+    int encodersOffset = 0;
     int mode = 0;
 
     void paint (juce::Graphics&) override;

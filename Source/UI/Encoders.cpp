@@ -31,9 +31,26 @@ Encoders::Encoders():
     channels()
 {
     addAndMakeVisible(&commandLine);
+
     addAndMakeVisible(&btnMode);
     btnMode.addListener(this);
-    btnMode.setButtonText("Value");
+    btnMode.setButtonText("Val");
+
+    addAndMakeVisible(&bigMoveLeftBtn);
+    bigMoveLeftBtn.addListener(this);
+    bigMoveLeftBtn.setButtonText("<<");
+
+    addAndMakeVisible(&littleMoveLeftBtn);
+    littleMoveLeftBtn.addListener(this);
+    littleMoveLeftBtn.setButtonText("<");
+
+    addAndMakeVisible(&bigMoveRightBtn);
+    bigMoveRightBtn.addListener(this);
+    bigMoveRightBtn.setButtonText(">>");
+
+    addAndMakeVisible(&littleMoveRightBtn);
+    littleMoveRightBtn.addListener(this);
+    littleMoveRightBtn.setButtonText(">");
 
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
@@ -66,15 +83,33 @@ void Encoders::paint (juce::Graphics& g)
 
 void Encoders::resized()
 {
+
+    float scale = 1;
+    if (engine != nullptr && engine->encodersScale != nullptr) {
+        scale = engine->encodersScale->getValue();
+    }
+    int nChildren = getNumChildComponents();
+    for (int i = 0; i < nChildren; i++) {
+        getChildComponent(i)->setTransform(AffineTransform::scale(scale));
+
+    }
+
     // This method is where you should set the bounds of any child
     // components that your component contains..
     int windowH = getHeight();
     int windowW = getWidth();
     int x = 0;
     int y = 0;
+    int btnWidth = 30;
+    int btnValueWidth = 40;
    
-    commandLine.setBounds(0,0,windowW, 20);
-    btnMode.setBounds(windowW-40, 0, 40, 20);
+    commandLine.setBounds(0,0,windowW-120, 20);
+
+    btnMode.setBounds(windowW - btnValueWidth, 0, 40, 20);
+    bigMoveRightBtn.setBounds(windowW - btnValueWidth-(1*btnWidth), 0, btnWidth, 20);
+    littleMoveRightBtn.setBounds(windowW - btnValueWidth - (2 * btnWidth), 0, btnWidth, 20);
+    littleMoveLeftBtn.setBounds(windowW - btnValueWidth - (3 * btnWidth), 0, btnWidth, 20);
+    bigMoveLeftBtn.setBounds(windowW - btnValueWidth - (4 * btnWidth),0, btnWidth,20);
 
     if (windowH > windowW) { // portrait
         float w = 120;
@@ -91,6 +126,7 @@ void Encoders::resized()
         float w = 60;
         float h = 60;
         for (int i = 0; i < 10; i++) {
+            int encoderId = i + encodersOffset;
             encoders[i]->setBounds(i*w, 20, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 60, 20);
             labels[i]->setBounds(i*w, 80, 60, 20);
@@ -101,7 +137,7 @@ void Encoders::resized()
 
 void Encoders::sliderValueChanged(Slider* slider)
 {   
-    int index = encoders.indexOf(slider);
+    int index = encoders.indexOf(slider)+encodersOffset;
     UserInputManager::getInstance()->encoderValueChanged(index, slider->getValue());
     
 }
@@ -110,6 +146,24 @@ void Encoders::buttonClicked(Button* b) {
     if (b == &btnMode) {
         mode = (mode+1) % 2;
         updateModeButton();
+    }
+    else if (b == &bigMoveLeftBtn) {
+        int bigOffset = engine->encoderBigNumber->getValue();
+        encodersOffset = jmax(0, encodersOffset - bigOffset);
+        updateEncoders();
+    }
+    else if (b == &bigMoveRightBtn) {
+        int bigOffset = engine->encoderBigNumber->getValue();
+        encodersOffset = jmax(0, encodersOffset + bigOffset);
+        updateEncoders();
+    }
+    else if (b == &littleMoveLeftBtn) {
+        encodersOffset = jmax(0, encodersOffset - 1);
+        updateEncoders();
+    }
+    else if (b == &littleMoveRightBtn) {
+        encodersOffset = jmax(0, encodersOffset + 1);
+        updateEncoders();
     }
 }
 
@@ -132,8 +186,11 @@ void Encoders::updateEncoders() {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
     }
+    encodersOffset = jmin(encodersOffset, channels.size()-nEncoders);
+    encodersOffset = jmax(encodersOffset, 0);
 
     for (int i = 0; i < nEncoders; i++) {
+        int channelId = i+encodersOffset;
         if (mode == 2) {
             String l = "";
             if (i == 0) { l = "Delay From"; }
@@ -142,13 +199,13 @@ void Encoders::updateEncoders() {
             if (i == 3) { l = "Fade to "; }
             labels[i]->setText(l, juce::sendNotification);
         }
-        else if (channels.size() > i) {
-            labels[i]->setText(String(channels[i]->niceName), juce::sendNotification);
+        else if (channels.size() > channelId) {
+            labels[i]->setText(String(channels[channelId]->niceName), juce::sendNotification);
             encoders[i]->setEnabled(true);
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(192, 192, 192));
             encoders[i]->setValue(0, juce::dontSendNotification);
             if (currentCommand != nullptr) {
-                float v = currentCommand->getChannelValue(channels[i], mode == 1);
+                float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
                 if (v >= 0) {
                     encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                     encoders[i]->setValue(v, juce::dontSendNotification);
@@ -171,10 +228,12 @@ void Encoders::updateContentWithCommand(Command* c) {
     for (int i = 0; i < c->values.items.size(); i++) {
         CommandValue* cv = c->values.items[i];
         if (cv->presetOrValue->getValue() == "value") {
-            ChannelType* c = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+            ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
             for (int i = 0; i< channels.size(); i++) {
-                if (channels[i] == c) {
-                    Encoders::getInstance()->encoders[i]->setValue(cv->valueFrom->getValue(), juce::sendNotification);
+                int channelId = i + encodersOffset;
+                if (channels[channelId] == ct) {
+                    float v = c->getChannelValue(channels[channelId], mode == 1);
+                    Encoders::getInstance()->encoders[i]->setValue(v, juce::sendNotification);
                     Encoders::getInstance()->encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                 }
             }

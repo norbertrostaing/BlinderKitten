@@ -29,6 +29,8 @@ public:
 	ControllableContainer uiParamsContainer;
 	FloatParameter* gridScale;
 	FloatParameter* panelScale;
+	FloatParameter* encodersScale;
+	IntParameter* encoderBigNumber;
 
 	void clearInternal() override;
 

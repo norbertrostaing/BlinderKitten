@@ -76,10 +76,13 @@ BKEngine::BKEngine() :
 
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 
-	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
-	gridScale -> addParameterListener(this);
 	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
-	panelScale -> addParameterListener(this);
+	panelScale->addParameterListener(this);
+	encodersScale = uiParamsContainer.addFloatParameter("Encoders scale", "scale the encoders view", 1, 0.1, 3);
+	encodersScale->addParameterListener(this);
+	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
+	gridScale->addParameterListener(this);
+	encoderBigNumber = addIntParameter("Encoder big offset", "Offset of encoders when << or >> pressed",4,2);
 
 	mainBrain = Brain::getInstance();
 	addChildControllableContainer(InterfaceManager::getInstance());
@@ -96,6 +99,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(EffectManager::getInstance());
 
+	Encoders::getInstance()->engine = this;
 	InputPanel::getInstance()->engine = this;
 	GroupGridView::getInstance()->engine = this;
 	PresetGridView::getInstance()->engine = this;
@@ -445,6 +449,9 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	Engine::parameterValueChanged(p);
 	if (p == panelScale) {
 		InputPanel::getInstance()->resized();
+	}
+	else if (p == encodersScale) {
+		Encoders::getInstance()->resized();
 	}
 	else if (p == gridScale) {
 		GroupGridView::getInstance()->resized();
