@@ -92,10 +92,10 @@ void VirtualButton::pressed() {
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
 			if (action == "go") { targ->go(); }
-			if (action == "Off") { targ->off(); }
-			if (action == "Flash") { targ->flash(true, false, false); }
-			if (action == "Swop") { targ->flash(true, false, true); }
-			if (action == "Go random") { targ->goRandom(); }
+			if (action == "off") { targ->off(); }
+			if (action == "flash") { targ->flash(true, false, false); }
+			if (action == "swop") { targ->flash(true, false, true); }
+			if (action == "gorandom") { targ->goRandom(); }
 		}
 	}
 	else if (targType == "effect") {
@@ -128,8 +128,8 @@ void VirtualButton::released() {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
-			if (action == "Flash") { targ->flash(false, false, false); }
-			if (action == "Swop") { targ->flash(false, false, true); }
+			if (action == "flash") { targ->flash(false, false, false); }
+			if (action == "swop") { targ->flash(false, false, true); }
 		}
 	}
 	else if (targType == "effect") {

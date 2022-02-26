@@ -51,7 +51,9 @@ public:
     BoolParameter* loopTracking;
     BoolParameter* offIfOverwritten;
     BoolParameter* isRandom;
-    
+    BoolParameter* autoStart;
+    BoolParameter* autoStop;
+
     FloatParameter* nextCueId;
 
     Automation offFadeCurve;
@@ -71,7 +73,6 @@ public:
 
     float xFade = 0;
     double currentTimeElapsed = 0;
-    bool isOn = false;
 
     double TSTransitionStart;
     double TSTransitionDuration;

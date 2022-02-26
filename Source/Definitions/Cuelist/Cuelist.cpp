@@ -48,6 +48,9 @@ Cuelist::Cuelist(var params) :
 
 	loopTracking = addBoolParameter("Loop Tracking", "Do you want tracking keeps values when coming back to start after loop ?", false);
 
+	autoStart = addBoolParameter("Auto start", "Starts the cuelist if HTP level is set to a different value than 0", false);
+	autoStop = addBoolParameter("Auto stop", "Stops the cuelist if HTP level is set to 0", false);
+
 	goBtn = addTrigger("GO", "Trigger next cue");
 	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
 	offBtn = addTrigger("OFF", "Off this cuelist");
@@ -123,6 +126,16 @@ void Cuelist::reorderCues() {
 
 void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == HTPLevel || p == FlashLevel) {
+		if (p == HTPLevel) {
+			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0) { 
+				LOG("auto go");
+				go();
+			}
+			else if (autoStop->getValue() && isCuelistOn->getValue() && (float)HTPLevel->getValue() == 0) { 
+				LOG("auto off");
+				off();
+			}
+		}
 		pleaseUpdateHTPs = true;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
@@ -408,9 +421,11 @@ void Cuelist::update() {
 	float isOverWritten = true;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		ChannelValue* cv = it.getValue();
-		tempPosition = jmin(tempPosition, cv->currentPosition);
-		isUseFul = isUseFul || cv -> endValue != -1 || !cv->isEnded;
-		isOverWritten = isOverWritten && cv -> isOverWritten;
+		if (cv != nullptr) {
+			tempPosition = jmin(tempPosition, cv->currentPosition);
+			isUseFul = isUseFul || cv->endValue != -1 || !cv->isEnded;
+			isOverWritten = isOverWritten && cv->isOverWritten;
+		}
 	}
 	currentFade->setValue(tempPosition);
 	if (tempPosition == 1 && cueA != nullptr) {
