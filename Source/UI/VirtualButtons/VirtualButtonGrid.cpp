@@ -35,6 +35,19 @@ VirtualButtonGrid::VirtualButtonGrid():
     // addAndMakeVisible(scroll);
     // scroll.addListener(this);
 
+    addAndMakeVisible(pagePlusBtn);
+    pagePlusBtn.addListener(this);
+    pagePlusBtn.setButtonText("Page +");
+
+    addAndMakeVisible(pageMinusBtn);
+    pageMinusBtn.addListener(this);
+    pageMinusBtn.setButtonText("Page -");
+
+    addAndMakeVisible(pageDisplayBtn);
+    pageDisplayBtn.addListener(this);
+    pageDisplayBtn.setEnabled(false);
+    pageDisplayBtn.setButtonText("Page 1");
+
     initCells();
 
 
@@ -57,7 +70,15 @@ void VirtualButtonGrid::resized()
 
     int btnWidth = w/cols;
     int btnHeight = h/(rows+1);
-   
+
+    int staticBtnWith = btnWidth;
+    if (cols < 3) {
+        staticBtnWith = w/3;
+    }
+    pageMinusBtn.setBounds(w - (3 * staticBtnWith), 0, staticBtnWith, btnHeight);
+    pageDisplayBtn.setBounds(w - (2 * staticBtnWith), 0, staticBtnWith, btnHeight);
+    pagePlusBtn.setBounds(w - (1 * staticBtnWith), 0, staticBtnWith, btnHeight);
+
     for (int i = 0; i < gridButtons.size(); i++) {
         int x = i%cols;
         int y = (i/cols)+1;
@@ -88,6 +109,7 @@ void VirtualButtonGrid::initCells() {
 
 void VirtualButtonGrid::fillCells() {
     buttonToVirtualButton.clear();
+    pageDisplayBtn.setButtonText("Page "+String(page));
     for (int i = 0; i < gridButtons.size(); i++) {
         gridButtons[i]->setColour(TextButton::buttonColourId, Colour(63,63,63));
         gridButtons[i]->setButtonText("");
@@ -109,7 +131,16 @@ void VirtualButtonGrid::fillCells() {
 }
 
 void VirtualButtonGrid::buttonClicked(juce::Button* button) {
-    buttonPressedUp((TextButton*)button);
+    if ((TextButton*)button == &pagePlusBtn) {
+        page += 1;
+        fillCells();
+    } else if ((TextButton*)button == &pageMinusBtn) {
+        page = jmax(1, page-1);
+        fillCells();
+    }
+    else {
+        buttonPressedUp((TextButton*)button);
+    }
 }
 
 void VirtualButtonGrid::buttonStateChanged(juce::Button* button) {

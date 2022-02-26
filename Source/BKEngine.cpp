@@ -396,6 +396,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
 
+	VirtualButtonGrid::getInstance()->page = 1;
 	VirtualButtonGrid::getInstance()->initCells();
 
 }

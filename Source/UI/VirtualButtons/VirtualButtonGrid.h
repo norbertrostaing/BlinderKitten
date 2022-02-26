@@ -42,6 +42,9 @@ public:
     void initCells();
     void fillCells();
 
+    TextButton pagePlusBtn;
+    TextButton pageDisplayBtn;
+    TextButton pageMinusBtn;
     OwnedArray<TextButton> gridButtons;
 
     void paint (juce::Graphics&) override;
