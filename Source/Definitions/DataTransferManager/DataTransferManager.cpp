@@ -267,16 +267,22 @@ void DataTransferManager::execute() {
 
     }
     else if (srcType == "group") {
-        if (trgType == "group") {
-            valid = true;
-            Group* src = Brain::getInstance()->getGroupById(sId);
-            Group* trg = Brain::getInstance()->getGroupById(tId);
-            if (trg == nullptr) {
-                trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(tId);
-            }
+    if (trgType == "group") {
+        valid = true;
+        Group* src = Brain::getInstance()->getGroupById(sId);
+        Group* trg = Brain::getInstance()->getGroupById(tId);
+        if (trg == nullptr) {
+            trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
+            src->id->setValue(tId);
         }
+    }
 
+    }
+    else if (srcType == "virtualbutton") {
+    if (trgType == "virtualbutton") {
+        valid = true;
+        VirtualButtonGrid::getInstance()->copyCell(sId, tId);
+        }
     }
 
 
@@ -357,6 +363,9 @@ void DataTransferManager::deleteObject(String type, int id) {
         Carousel* target = Brain::getInstance()->getCarouselById(id);
         if (target != nullptr) { CarouselManager::getInstance()->removeItem(target); }
     }
+    else if (type == "virtualbutton") {
+        VirtualButtonGrid::getInstance()->deleteCell(id);
+    }
 }
 
 void DataTransferManager::moveObject(String type, int id, int idTo) {
@@ -401,5 +410,8 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
+    }
+    else if (type == "virtualbutton") {
+        VirtualButtonGrid::getInstance()->moveCell(id, idTo);
     }
 }

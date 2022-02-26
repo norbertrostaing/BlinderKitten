@@ -63,6 +63,7 @@ Programmer::Programmer(var params) :
 	cliActionType->addOption("Update", "update");
 	cliActionType->addOption("Edit", "edit");
 	cliActionType->addOption("Delete", "delete");
+
 	cliParamAType = cliContainer.addEnumParameter("Param A type", "What kind of object do you want to target");
 	cliParamAType->addOption("None", "");
 	cliParamAType->addOption("Group", "group");
@@ -74,7 +75,7 @@ Programmer::Programmer(var params) :
 	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param",0,0);
 
 	cliParamBType = cliContainer.addEnumParameter("Param B type", "second object type");
-	cliParamBType->addOption("", "");
+	cliParamBType->addOption("None", "");
 	cliParamBType->addOption("Group", "group");
 	cliParamBType->addOption("Preset", "preset");
 	cliParamBType->addOption("Cuelist", "cuelist");

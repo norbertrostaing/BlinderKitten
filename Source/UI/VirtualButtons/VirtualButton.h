@@ -37,6 +37,7 @@ public:
 
     void pressed();
     void released();
+    String getBtnText();
 
     String getTypeString() const override { return objectType; }
 

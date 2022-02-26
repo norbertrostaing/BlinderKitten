@@ -97,10 +97,11 @@ void VirtualButtonGrid::fillCells() {
         if ((int)vb->pageNumber->getValue() == page) {
             int r = vb->rowNumber->getValue();
             int c = vb->colNumber->getValue();
-            if (r != 0 && c != 0) {
+            String btnText = vb->getBtnText();
+            if (r != 0 && c != 0 && r < rows && c < cols) {
                 int index = ((r-1)*cols)+(c-1);
                 gridButtons[index]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
-                gridButtons[index]->setButtonText("");
+                gridButtons[index]->setButtonText(btnText);
                 buttonToVirtualButton.set(gridButtons[index], vb);
             }
         }
@@ -117,14 +118,11 @@ void VirtualButtonGrid::buttonStateChanged(juce::Button* button) {
     } else if (button->isMouseButtonDown()) {
         buttonPressedUp((TextButton*)button);
     }
-
-    // int id = gridButtons.indexOf((TextButton*)button);
-    // cellClicked(id+1);
 }
 
 void VirtualButtonGrid::buttonPressedDown(TextButton* t) {
     int index = gridButtons.indexOf(t) + 1;
-    UserInputManager::getInstance()->gridViewCellPressed("virtualbutton", index);
+    // UserInputManager::getInstance()->gridViewCellPressed("virtualbutton", index);
     Programmer* p = UserInputManager::getInstance()->getProgrammer();
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
@@ -136,13 +134,18 @@ void VirtualButtonGrid::buttonPressedDown(TextButton* t) {
         }
     }
     else {
-        LOG("clicked up " + String(index));
+        VirtualButton * vb = buttonToVirtualButton.getReference(t);
+        if (vb != nullptr) {
+            vb -> pressed();
+        }
     }
 }
 
 void VirtualButtonGrid::buttonPressedUp(TextButton* t) {
-    int index = gridButtons.indexOf(t) +1;
-    LOG("clicked down " + String(index));
+   VirtualButton* vb = buttonToVirtualButton.getReference(t);
+   if (vb != nullptr) {
+       vb->released();
+   }
 }
 
 void VirtualButtonGrid::editCell(int id) {
