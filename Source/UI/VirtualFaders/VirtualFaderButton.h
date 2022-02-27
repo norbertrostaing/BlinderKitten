@@ -21,12 +21,9 @@ public:
     String objectType;
     var objectData;
 
-    IntParameter * pageNumber;
-    IntParameter * rowNumber;
-    IntParameter * colNumber;
-
     EnumParameter * targetType;
     IntParameter * targetId;
+
     EnumParameter * cuelistAction;
     EnumParameter * effectAction;
     EnumParameter * carouselAction;

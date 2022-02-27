@@ -12,14 +12,16 @@
 #include "VirtualFaderCol.h"
 #include "VirtualFaderColManager.h"
 #include "VirtualFaderColGrid.h"
-#include "VirtualFaderButton.h"
-#include "VirtualFaderSlider.h"
 #include "../../Brain.h"
 
 VirtualFaderCol::VirtualFaderCol(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderCol")),
 	objectType(params.getProperty("type", "VirtualFaderCol").toString()),
-	objectData(params)
+	objectData(params),
+	rotaries("Rotaries"),
+	aboveButtons("Above Buttons"),
+	fader("Fader"),
+	belowButtons("Below Buttons")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -35,6 +37,15 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 	targetType->addOption("Carousel", "carousel");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
+
+	addChildControllableContainer(&rotaries);
+	rotaries.selectItemWhenCreated = false;
+	addChildControllableContainer(&aboveButtons);
+	aboveButtons.selectItemWhenCreated = false;
+	addChildControllableContainer(&fader);
+	belowButtons.selectItemWhenCreated = false;
+	addChildControllableContainer(&belowButtons);
+
 	updateDisplay();
 	updateName();
 

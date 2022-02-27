@@ -10,6 +10,8 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "VirtualFaderButton.h"
+#include "VirtualFaderSlider.h"
 
 class VirtualFaderCol :
     public BaseItem
@@ -26,6 +28,11 @@ public:
 
     EnumParameter * targetType;
     IntParameter * targetId;
+
+    BaseManager<VirtualFaderSlider> rotaries;
+    BaseManager<VirtualFaderButton> aboveButtons;
+    VirtualFaderSlider fader;
+    BaseManager<VirtualFaderButton> belowButtons;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();

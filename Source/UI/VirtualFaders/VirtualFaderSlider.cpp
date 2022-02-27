@@ -24,11 +24,8 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 
 	itemDataType = "VirtualFaderSlider";
 
-	pageNumber = addIntParameter("Page number", "", 0,0);
-	rowNumber = addIntParameter("Row number", "", 0,0);
-	colNumber = addIntParameter("Col number", "", 0,0);
-
 	targetType = addEnumParameter("Target type", "");
+	targetType->addOption("Same as column", "column");
 	targetType->addOption("Cuelist", "cuelist");
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
