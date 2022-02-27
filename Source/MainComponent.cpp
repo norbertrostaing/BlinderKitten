@@ -23,6 +23,8 @@
 
 #include "UI/VirtualButtons/VirtualButtonManagerUI.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
+#include "UI/VirtualFaders/VirtualFaderColManagerUI.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -110,6 +112,8 @@ void MainContentComponent::init()
 
     // ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons", &VirtualButtonManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons grid", &VirtualButtonGridUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual faders", &VirtualFaderColManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual faders grid", &VirtualFaderColGridUI::create));
 
     OrganicMainContentComponent::init();
 

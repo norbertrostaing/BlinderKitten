@@ -60,6 +60,9 @@
 #include "UI/VirtualButtons/VirtualButtonManager.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 
+#include "UI/VirtualFaders/VirtualFaderColManager.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
+
 #include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
@@ -86,7 +89,16 @@ BKEngine::BKEngine() :
 	virtualButtonGridRows = virtualParamsContainer.addIntParameter("Button rows", "Number of rows in playback button grid", 5, 1);
 	virtualButtonGridRows->addParameterListener(this);
 
-
+	virtualFaderCols = virtualParamsContainer.addIntParameter("Fader cols", "Number of cols in playback button grid", 5, 1);
+	virtualFaderCols->addParameterListener(this);
+	virtualFaderRotary = virtualParamsContainer.addIntParameter("Rotary number", "Number of rotary in each fader column", 1, 0);
+	virtualFaderRotary->addParameterListener(this);
+	virtualFaderAbove = virtualParamsContainer.addIntParameter("Above button numbers", "Number of buttons above the fader in each fader column", 1, 0);
+	virtualFaderAbove->addParameterListener(this);
+	virtualFaderSize = virtualParamsContainer.addIntParameter("Fader Size", "Size of the fader (unit is button size)", 3, 1);
+	virtualFaderSize->addParameterListener(this);
+	virtualFaderBelow = virtualParamsContainer.addIntParameter("Below button numbers", "Number of buttons below the fader in each fader column", 1, 0);
+	virtualFaderBelow->addParameterListener(this);
 
 	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
 	panelScale->addParameterListener(this);
@@ -113,6 +125,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(EffectManager::getInstance());
 
 	addChildControllableContainer(VirtualButtonManager::getInstance());
+	addChildControllableContainer(VirtualFaderColManager::getInstance());
 
 
 	Encoders::getInstance()->engine = this;
@@ -122,6 +135,9 @@ BKEngine::BKEngine() :
 
 	VirtualButtonGrid::getInstance()->engine = this;
 	VirtualButtonGrid::getInstance()->initCells();
+
+	VirtualFaderColGrid::getInstance()->engine = this;
+	VirtualFaderColGrid::getInstance()->initCells();
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
 	// getAppSettings()->addChildControllableContainer(&defaultBehaviors);
@@ -166,6 +182,9 @@ BKEngine::~BKEngine()
 	FixtureMultiEditor::deleteInstance();
 
 	VirtualButtonManager::deleteInstance();
+	VirtualButtonGrid::deleteInstance();
+	VirtualFaderColManager::deleteInstance();
+	VirtualFaderColGrid::deleteInstance();
 
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
@@ -204,6 +223,7 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
 	CarouselManager::getInstance()->clear();
@@ -269,6 +289,9 @@ var BKEngine::getJSONData()
 	var vbData = VirtualButtonManager::getInstance()->getJSONData();
 	if (!vbData.isVoid() && vbData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, vbData);
 
+	var vfData = VirtualFaderColManager::getInstance()->getJSONData();
+	if (!vfData.isVoid() && vfData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, vfData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -299,6 +322,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* fxTask = loadingTask->addTask("Effects");
 	ProgressTask* carTask = loadingTask->addTask("Carousels");
 	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
+	ProgressTask* vfTask = loadingTask->addTask("Virtual faders");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
 	//ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	//ProgressTask* routerTask = loadingTask->addTask("Router");
@@ -378,6 +402,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	vbTask->setProgress(1);
 	vbTask->end();
 
+	vfTask->start();
+	VirtualFaderColManager::getInstance()->loadJSONData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
+	vfTask->setProgress(1);
+	vfTask->end();
+
 	//stateTask->start();
 	//StateManager::getInstance()->loadJSONData(data.getProperty(StateManager::getInstance()->shortName, var()));
 	//stateTask->setProgress(1);
@@ -398,6 +427,9 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 	VirtualButtonGrid::getInstance()->page = 1;
 	VirtualButtonGrid::getInstance()->initCells();
+
+	VirtualFaderColGrid::getInstance()->page = 1;
+	VirtualFaderColGrid::getInstance()->initCells();
 
 }
 
@@ -447,6 +479,7 @@ void BKEngine::importSelection(File f)
 	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
+	VirtualFaderColManager::getInstance()->addItemsFromData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
 
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
@@ -469,6 +502,7 @@ void BKEngine::exportSelection()
 	data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, CarouselManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, VirtualFaderColManager::getInstance()->getExportSelectionData());
 
 	String s = JSON::toString(data);
 
@@ -494,5 +528,8 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	}
 	else if (p == virtualButtonGridCols || p == virtualButtonGridRows) {
 		VirtualButtonGrid::getInstance()->initCells();
+	}
+	else if (p == virtualFaderCols || p == virtualFaderRotary || p == virtualFaderAbove || p == virtualFaderSize || p == virtualFaderBelow) {
+		VirtualFaderColGrid::getInstance()->initCells();
 	}
 }

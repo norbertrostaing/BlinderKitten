@@ -41,6 +41,32 @@
           <FILE id="jRc4vj" name="VirtualButtonManagerUI.h" compile="0" resource="0"
                 file="Source/UI/VirtualButtons/VirtualButtonManagerUI.h"/>
         </GROUP>
+        <GROUP id="{DCA8507B-B479-DBCC-8D39-6BCB07B928A9}" name="VirtualFaders">
+          <FILE id="QpZm76" name="VirtualFaderButton.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderButton.cpp"/>
+          <FILE id="hBCfFJ" name="VirtualFaderButton.h" compile="0" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderButton.h"/>
+          <FILE id="UnvToA" name="VirtualFaderCol.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderCol.cpp"/>
+          <FILE id="It0IFW" name="VirtualFaderCol.h" compile="0" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderCol.h"/>
+          <FILE id="tdyePE" name="VirtualFaderColGrid.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderColGrid.cpp"/>
+          <FILE id="syv3IF" name="VirtualFaderColGrid.h" compile="0" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderColGrid.h"/>
+          <FILE id="YuFkyR" name="VirtualFaderColManager.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderColManager.cpp"/>
+          <FILE id="CPqwag" name="VirtualFaderColManager.h" compile="0" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderColManager.h"/>
+          <FILE id="YV9UrX" name="VirtualFaderColManagerUI.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderColManagerUI.cpp"/>
+          <FILE id="zKobdz" name="VirtualFaderColManagerUI.h" compile="0" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderColManagerUI.h"/>
+          <FILE id="rES5w7" name="VirtualFaderSlider.cpp" compile="1" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderSlider.cpp"/>
+          <FILE id="OiMifk" name="VirtualFaderSlider.h" compile="0" resource="0"
+                file="Source/UI/VirtualFaders/VirtualFaderSlider.h"/>
+        </GROUP>
         <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
         <FILE id="V8gEcE" name="Encoders.cpp" compile="1" resource="0" file="Source/UI/Encoders.cpp"/>

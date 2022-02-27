@@ -36,6 +36,12 @@ public:
 	IntParameter* virtualButtonGridCols;
 	IntParameter* virtualButtonGridRows;
 
+	IntParameter* virtualFaderCols;
+	IntParameter* virtualFaderRotary;
+	IntParameter* virtualFaderAbove;
+	IntParameter* virtualFaderSize;
+	IntParameter* virtualFaderBelow;
+
 	void clearInternal() override;
 
 	var getJSONData() override;
