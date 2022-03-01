@@ -13,6 +13,8 @@
 #include <JuceHeader.h>
 
 class VirtualFaderCol;
+class VirtualFaderButton;
+class VirtualFaderSlider;
 class BKEngine;
 //==============================================================================
 /*
@@ -47,9 +49,12 @@ public:
     TextButton pageDisplayBtn;
     TextButton pageMinusBtn;
 
-    OwnedArray<OwnedArray<TextButton>> buttons;
+    OwnedArray<OwnedArray<TextButton>> aboveButtons;
+    OwnedArray<OwnedArray<TextButton>> belowButtons;
     OwnedArray<OwnedArray<Slider>> rotaries;
+    OwnedArray<OwnedArray<Label>> rotaryLabels;
     OwnedArray<Slider> faders;
+    OwnedArray<Label>faderLabels;
 
     void paint (juce::Graphics&) override;
     void resized() override;
@@ -62,8 +67,11 @@ public:
 
     int page = 1;
 
-    HashMap<TextButton*, VirtualFaderCol*> buttonToVirtualFaderColSlider;
-    HashMap<Slider*, VirtualFaderCol*> sliderToVirtualFaderColFader;
+    HashMap<TextButton*, VirtualFaderButton*> buttonToVFB;
+    HashMap<Slider*, VirtualFaderSlider*> sliderToVFS;
+    HashMap<TextButton*, int> buttonColumnIndex;
+    HashMap<Slider*, int> sliderColumnIndex;
+    HashMap<int, VirtualFaderCol*> columnToVFC;
 
     void buttonClicked(juce::Button* button) override;
     void buttonStateChanged(juce::Button* button) override;

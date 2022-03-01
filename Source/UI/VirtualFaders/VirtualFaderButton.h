@@ -32,9 +32,9 @@ public:
     void updateName();
     void updateDisplay();
 
-    void pressed();
-    void released();
-    String getBtnText();
+    void pressed(String colTargetType, int colTargetId);
+    void released(String colTargetType, int colTargetId);
+    String getBtnText(String columnType);
 
     String getTypeString() const override { return objectType; }
 

@@ -25,6 +25,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	itemDataType = "VirtualFaderButton";
 
 	targetType = addEnumParameter("Target type", "");
+	targetType->addOption("disabled", "disabled");
 	targetType->addOption("Same as column", "column");
 	targetType->addOption("Cuelist", "cuelist");
 	targetType->addOption("Effect", "effect");
@@ -51,8 +52,6 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	// id = addIntParameter("ID", "ID of this VirtualFaderButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualFaderButton","New VirtualFaderButton");
 	updateDisplay();
-	updateName();
-
 }
 
 VirtualFaderButton::~VirtualFaderButton()
@@ -71,6 +70,8 @@ void VirtualFaderButton::onContainerParameterChangedInternal(Parameter* c) {
 
 void VirtualFaderButton::updateDisplay() {
 	String targType = targetType->getValue();
+	
+	targetId->hideInEditor = targType == "column" || targType == "disabled" ;
 
 	if (targType == "column" && parentContainer != nullptr) {
 		targType = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get())->targetType->getValue();
@@ -79,12 +80,18 @@ void VirtualFaderButton::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 
-    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
-void VirtualFaderButton::pressed() { 
+void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
 	int targId = targetId->getValue();
+	
+	if (targType == "column") {
+		targType = colTargetType;
+		targId = colTargetId;
+	}
+
 	if (targId == 0) {return;}
 
 	if (targType == "cuelist") {
@@ -119,10 +126,15 @@ void VirtualFaderButton::pressed() {
 
 }
 
-void VirtualFaderButton::released() { 
+void VirtualFaderButton::released(String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
 	int targId = targetId->getValue();
 	if (targId == 0) { return; }
+
+	if (targType == "column") {
+		targType = colTargetType;
+		targId = colTargetId;
+	}
 
 	if (targType == "cuelist") {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
@@ -149,37 +161,53 @@ void VirtualFaderButton::released() {
 
 }
 
-String VirtualFaderButton::getBtnText() {
+String VirtualFaderButton::getBtnText(String columnType) {
 	String text = "";
 	String targType = targetType->getValue();
 	String action = "";
-	int targId = targetId->getValue();
-	if (targId == 0) { return ""; }
+	if (targType == "column" && columnType != "") {
+		targType = columnType;
+		if (targType == "cuelist") {
+			action = cuelistAction->getValue();
+		}
+		else if (targType == "effect") {
+			action = effectAction->getValue();
+		}
+		else if (targType == "carousel") {
+			action = carouselAction->getValue();
+		}
 
-	if (targType == "cuelist") {
-		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
-		action = cuelistAction->getValue();
-		if (targ != nullptr) {
-			text = targ->userName->getValue();
+		return action;
+	}
+	else {
+		int targId = targetId->getValue();
+		if (targId == 0) { return ""; }
+
+		if (targType == "cuelist") {
+			Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+			action = cuelistAction->getValue();
+			if (targ != nullptr) {
+				text = targ->userName->getValue();
+			}
 		}
-	}
-	else if(targType == "effect") {
-		Effect* targ = Brain::getInstance()->getEffectById(targId);
-		action = effectAction->getValue();
-		if (targ != nullptr) {
-			text = targ->userName->getValue();
+		else if (targType == "effect") {
+			Effect* targ = Brain::getInstance()->getEffectById(targId);
+			action = effectAction->getValue();
+			if (targ != nullptr) {
+				text = targ->userName->getValue();
+			}
 		}
-	}
-	else if(targType == "carousel") {
-		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
-		action = carouselAction->getValue();
-		if (targ != nullptr) {
-			text = targ->userName->getValue();
+		else if (targType == "carousel") {
+			Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+			action = carouselAction->getValue();
+			if (targ != nullptr) {
+				text = targ->userName->getValue();
+			}
 		}
+
+		if (text != "") {
+			text = action + "\n" + text;
+		}
+		return text;
 	}
-	
-	if (text != "") {
-		text = action + "\n" + text;
-	}
-	return text;
 }

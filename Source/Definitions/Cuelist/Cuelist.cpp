@@ -128,11 +128,9 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == HTPLevel || p == FlashLevel) {
 		if (p == HTPLevel) {
 			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0) { 
-				LOG("auto go");
 				go();
 			}
 			else if (autoStop->getValue() && isCuelistOn->getValue() && (float)HTPLevel->getValue() == 0) { 
-				LOG("auto off");
 				off();
 			}
 		}
@@ -260,7 +258,6 @@ void Cuelist::go(Cue* c) {
 			else {
 				temp->startValue = -1;
 			}
-			LOG(temp->startValue);
 			temp->TSInit = now;
 			temp->TSStart = now + (temp->delay);
 			temp->TSEnd = temp -> TSStart + (temp->fade );

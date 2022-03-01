@@ -17,6 +17,7 @@ VirtualFaderColManager::VirtualFaderColManager() :
     BaseManager("VirtualFaderCol")
 {
     itemDataType = "VirtualFaderCol";
+    saveAndLoadRecursiveData = true;
     // selectItemWhenCreated = true;
     // autoReorderOnAdd = true;
 }

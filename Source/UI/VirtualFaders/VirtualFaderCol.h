@@ -40,9 +40,10 @@ public:
 
     void pressed();
     void released();
-    String getBtnText();
+    String getTargetName();
+    String getTargetType();
 
     String getTypeString() const override { return objectType; }
-
+    void loadJSONDataInternal(var data) override;
     static VirtualFaderCol* create(var params) { return new VirtualFaderCol(params); }
 };

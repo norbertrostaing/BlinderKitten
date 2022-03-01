@@ -31,9 +31,9 @@ public:
     void updateName();
     void updateDisplay();
 
-    void pressed();
+    void moved(float value, String colTargetType, int colTargetId);
     void released();
-    String getBtnText();
+    String getBtnText(String columnType);
 
     String getTypeString() const override { return objectType; }
 

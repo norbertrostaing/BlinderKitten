@@ -14,6 +14,8 @@
 #include "BKEngine.h"
 #include "VirtualFaderCol.h"
 #include "VirtualFaderColManager.h"
+#include "VirtualFaderButton.h"
+#include "VirtualFaderSlider.h"
 
 //==============================================================================
 VirtualFaderColGridUI::VirtualFaderColGridUI(const String& contentName):
@@ -90,16 +92,18 @@ void VirtualFaderColGrid::resized()
         int currentCell = 1;
         for (int i = 0; i < nRotaries; i++) {
             rotaries[x]->getRawDataPointer()[i]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
+            rotaryLabels[x]->getRawDataPointer()[i]->setBounds(coordX, (currentCell+0.25) * btnHeight, btnWidth, btnHeight*0.25);
             currentCell += 1;
         }
         for (int i = 0; i < nAbove; i++) {
-            buttons[x]->getRawDataPointer()[i]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
+            aboveButtons[x]->getRawDataPointer()[i]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
             currentCell += 1;
         }
-        faders[x]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight*sizeFader);
-        currentCell+= sizeFader;
+        faders[x]->setBounds(coordX, (currentCell * btnHeight), btnWidth, (btnHeight * sizeFader)-40);
+        currentCell += sizeFader;
+        faderLabels[x]->setBounds(coordX, (currentCell * btnHeight)-40, btnWidth, 40);
         for (int i = 0; i < nBelow; i++) {
-            buttons[x]->getRawDataPointer()[i + nAbove]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
+            belowButtons[x]->getRawDataPointer()[i]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
             currentCell += 1;
         }
 
@@ -110,9 +114,18 @@ void VirtualFaderColGrid::resized()
 void VirtualFaderColGrid::initCells() {
     if (engine == nullptr ) { return; }
     // gridButtons.clear();
-    buttons.clear();
+    aboveButtons.clear();
+    belowButtons.clear();
     rotaries.clear();
     faders.clear();
+    faderLabels.clear();
+    rotaryLabels.clear();
+
+    buttonToVFB.clear();
+    sliderToVFS.clear();
+    buttonColumnIndex.clear();
+    sliderColumnIndex.clear();
+
     cols = engine->virtualFaderCols->getValue();
     nRotaries = engine->virtualFaderRotary->getValue();
     nAbove = engine->virtualFaderAbove->getValue();
@@ -120,26 +133,36 @@ void VirtualFaderColGrid::initCells() {
     nBelow = engine->virtualFaderBelow->getValue();
 
     for (int x = 0; x < cols; x++) {
-        buttons.add(new OwnedArray<TextButton>());
+        aboveButtons.add(new OwnedArray<TextButton>());
+        belowButtons.add(new OwnedArray<TextButton>());
         rotaries.add(new OwnedArray<Slider>());
+        rotaryLabels.add(new OwnedArray<Label>());
         
         for (int i = 0; i < nRotaries; i++) {
             Slider* s = new Slider();
             addAndMakeVisible(s);
             s->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-            s->setColour(Slider::rotarySliderFillColourId, Colour(127, 127, 127));
             s->setRange(0, 1);
             s->setValue(0, juce::dontSendNotification);
             s->addListener(this);
             s->setTextBoxStyle(Slider::NoTextBox,true,0,0);
             rotaries[x]->add(s);
+            sliderColumnIndex.set(s, x);
+            Label * l = new Label();
+            addAndMakeVisible(l);
+            l->setEditable(false);
+            l->setText("", juce::dontSendNotification);
+            l->setJustificationType(Justification(36));
+            rotaryLabels[x]->add(l);
+
         }
 
         for (int i = 0; i < nAbove; i++) {
             TextButton* b = new TextButton();
             addAndMakeVisible(b);
             b->addListener(this);
-            buttons[x]->add(b);
+            aboveButtons[x]->add(b);
+            buttonColumnIndex.set(b, x);
         }
 
         Slider* f = new Slider();
@@ -151,14 +174,22 @@ void VirtualFaderColGrid::initCells() {
         f->addListener(this);
         f->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
         faders.add(f);
+        sliderColumnIndex.set(f, x);
+        Label* l = new Label();
+        addAndMakeVisible(l);
+        l->setEditable(false);
+        l->setText("", juce::dontSendNotification);
+        l->setJustificationType(Justification(36));
+
+        faderLabels.add(l);
 
         for (int i = 0; i < nBelow; i++) {
             TextButton* b = new TextButton();
             addAndMakeVisible(b);
             b->addListener(this);
-            buttons[x]->add(b);
+            belowButtons[x]->add(b);
+            buttonColumnIndex.set(b, x);
         }
-
     }
 
     fillCells();
@@ -166,26 +197,77 @@ void VirtualFaderColGrid::initCells() {
 }
 
 void VirtualFaderColGrid::fillCells() {
-//    buttonToVirtualFaderCol.clear();
-    //pageDisplayBtn.setButtonText("Page "+String(page));
-    //for (int i = 0; i < gridButtons.size(); i++) {
-    //    gridButtons[i]->setColour(TextButton::buttonColourId, Colour(63,63,63));
-    //    gridButtons[i]->setButtonText("");
-    //}
-    //for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
-    //    VirtualFaderCol* vb = VirtualFaderColManager::getInstance()->items[i];
-    //    if ((int)vb->pageNumber->getValue() == page) {
-    //        int r = vb->rowNumber->getValue();
-    //        int c = vb->colNumber->getValue();
-    //        String btnText = vb->getBtnText();
-    //        if (r != 0 && c != 0 && r < rows && c < cols) {
-    //            int index = ((r-1)*cols)+(c-1);
-    //            gridButtons[index]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
-    //            gridButtons[index]->setButtonText(btnText);
-    //            buttonToVirtualFaderCol.set(gridButtons[index], vb);
-    //        }
-    //    }
-    //}
+
+    buttonToVFB.clear();
+    sliderToVFS.clear();
+    columnToVFC.clear();
+    pageDisplayBtn.setButtonText("Page "+String(page));
+    for (int i = 0; i < faders.size(); i++) {
+        faders[i]->setColour(Slider::backgroundColourId, Colour(63,63,63));
+        faders[i]->setColour(Slider::thumbColourId, Colour(63,63,63));
+        faders[i]->setColour(Slider::trackColourId, Colour(63,63,63));
+    }
+    for (int i = 0; i < rotaries.size(); i++) {
+        for (int j = 0; j < rotaries[i]->size(); j++) {
+            rotaries[i]->getRawDataPointer()[j]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+        }
+    }
+    for (int i = 0; i < aboveButtons.size(); i++) {
+        for (int j = 0; j < aboveButtons[i]->size(); j++) {
+            aboveButtons[i]->getRawDataPointer()[j]->setColour(TextButton::buttonColourId, Colour(63, 63, 63));
+            aboveButtons[i]->getRawDataPointer()[j]->setButtonText("");
+        }
+    }
+    for (int i = 0; i < belowButtons.size(); i++) {
+        for (int j = 0; j < belowButtons[i]->size(); j++) {
+            belowButtons[i]->getRawDataPointer()[j]->setColour(TextButton::buttonColourId, Colour(63, 63, 63));
+            belowButtons[i]->getRawDataPointer()[j]->setButtonText("");
+        }
+    }
+
+    for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
+        VirtualFaderCol* vf = VirtualFaderColManager::getInstance()->items[i];
+        if ((int)vf->pageNumber->getValue() == page) {
+            int c = vf->colNumber->getValue();
+            columnToVFC.set(c, vf);
+            String targName = vf->getTargetName();
+            String targType = vf->getTargetType();
+            if (c < cols) {
+                for (int n = 0; n < vf->rotaries.items.size() && n < nAbove; n++) {
+                    VirtualFaderSlider* vs = vf->rotaries.items[n];
+                    sliderToVFS.set(rotaries[c]->getRawDataPointer()[n], vs);
+                    String text = vs->getBtnText(targType);
+                    if (text != "") {
+                        rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);
+                    }
+                }
+                for (int n = 0; n < vf->aboveButtons.items.size() && n < nAbove; n++) {
+                    VirtualFaderButton* vb = vf->aboveButtons.items[n];
+                    buttonToVFB.set(aboveButtons[c]->getRawDataPointer()[n], vb);
+                    String text = vb->getBtnText(targType);
+                    if (text != "") {
+                        aboveButtons[c]->getRawDataPointer()[n]->setButtonText(text);
+                    }
+                }
+                String text = vf->fader.getBtnText(targType);
+                sliderToVFS.set(faders[c], &vf->fader);
+                if (text != "") {
+                    faderLabels[c]->setText(text, juce::dontSendNotification);
+                }
+
+                for (int n = 0; n < vf->belowButtons.items.size() && n < nBelow; n++) {
+                    VirtualFaderButton* vb = vf->belowButtons.items[n];
+                    buttonToVFB.set(belowButtons[c]->getRawDataPointer()[n], vb);
+                    String text = vb->getBtnText(targType);
+                    if (text != "") {
+                        belowButtons[c]->getRawDataPointer()[n]->setButtonText(text);
+                    }
+                }
+                //faderLabels[c]->setText(btnText, juce::dontSendNotification);
+            }
+        }
+    }
+    resized();
 }
 
 void VirtualFaderColGrid::buttonClicked(juce::Button* button) {
@@ -210,50 +292,65 @@ void VirtualFaderColGrid::buttonStateChanged(juce::Button* button) {
 }
 
 void VirtualFaderColGrid::sliderValueChanged(Slider* slider) {
-
+    int col = sliderColumnIndex.getReference(slider);
+    VirtualFaderCol* vfc = columnToVFC.getReference(col);
+    if (vfc != nullptr) {
+        VirtualFaderSlider* vf = sliderToVFS.getReference(slider);
+        if (vf != nullptr) {
+            vf->moved(slider->getValue(), vfc->targetType->getValue(), vfc->targetId->getValue());
+        }
+    }
 }
 
 void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
-    //int index = gridButtons.indexOf(t) + 1;
+    int col = buttonColumnIndex.getReference(t);
     //// UserInputManager::getInstance()->gridViewCellPressed("VirtualFaderCol", index);
-    //Programmer* p = UserInputManager::getInstance()->getProgrammer();
-    //if (p->cliActionType->getValue() != "") {
-    //    if (p->userCanPressTargetType) {
-    //        p->processUserInput("VirtualFaderCol");
-    //        p->processUserInput(String(index));
-    //        if (p->userCanPressGo) {
-    //            p->processUserInput("enter");
-    //        }
-    //    }
-    //}
-    //else {
-    //    VirtualFaderCol * vb = buttonToVirtualFaderCol.getReference(t);
-    //    if (vb != nullptr) {
-    //        vb -> pressed();
-    //    }
-    //}
+    Programmer* p = UserInputManager::getInstance()->getProgrammer();
+    if (p->cliActionType->getValue() != "") {
+        if (p->userCanPressTargetType) {
+            p->processUserInput("VirtualFaderCol");
+            p->processUserInput(String(col));
+            if (p->userCanPressGo) {
+                p->processUserInput("enter");
+            }
+        }
+    }
+    else {
+        VirtualFaderCol * vfc = columnToVFC.getReference(col);
+        if (vfc != nullptr) {
+            
+            VirtualFaderButton* vb = buttonToVFB.getReference(t);
+            if (vb != nullptr) {
+                vb->pressed(vfc->targetType->getValue(), vfc->targetId->getValue());
+            }
+        }
+    }
 }
 
 void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
-   //VirtualFaderCol* vb = buttonToVirtualFaderCol.getReference(t);
-   //if (vb != nullptr) {
-   //    vb->released();
-   //}
+    int col = buttonColumnIndex.getReference(t);
+    //// UserInputManager::getInstance()->gridViewCellPressed("VirtualFaderCol", index);
+    Programmer* p = UserInputManager::getInstance()->getProgrammer();
+    VirtualFaderCol* vfc = columnToVFC.getReference(col);
+    if (vfc != nullptr) {
+
+        VirtualFaderButton* vb = buttonToVFB.getReference(t);
+        if (vb != nullptr) {
+            vb->released(vfc->targetType->getValue(), vfc->targetId->getValue());
+        }
+    }
 }
 
 void VirtualFaderColGrid::editCell(int id) {
-    //id = id - 1;
-    //if (id >= 0 && id >= gridButtons.size()) {return; }
-    //TextButton* b = gridButtons[id];
-    //VirtualFaderCol* vb = buttonToVirtualFaderCol.getReference(b);
-    //if (vb == nullptr) {
-    //    vb = VirtualFaderColManager::getInstance()->addItem();
-    //    vb->pageNumber->setValue(page);
-    //    vb->rowNumber->setValue(1+(id / cols));
-    //    vb->colNumber->setValue(1+(id % cols));
-    //    fillCells();
-    //}
-    //vb->selectThis();
+    if (id < 1 || id > cols) {return; }
+    VirtualFaderCol* vf = columnToVFC.getReference(id);
+    if (vf == nullptr) {
+        vf = VirtualFaderColManager::getInstance()->addItem();
+        vf->pageNumber->setValue(page);
+        vf->colNumber->setValue(id);
+        fillCells();
+    }
+    vf->selectThis();
 }
 
 void VirtualFaderColGrid::deleteCell(int id) {

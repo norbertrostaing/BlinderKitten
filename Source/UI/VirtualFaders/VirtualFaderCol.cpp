@@ -48,7 +48,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 
 	updateDisplay();
 	updateName();
-
+	
 }
 
 VirtualFaderCol::~VirtualFaderCol()
@@ -59,7 +59,7 @@ void VirtualFaderCol::updateName() {
 }
 
 void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType) {
+	if (c == targetType || c == targetId) {
 		updateDisplay();
 	}
 	VirtualFaderColGrid::getInstance()->fillCells();
@@ -69,6 +69,11 @@ void VirtualFaderCol::updateDisplay() {
 	String targType = targetType->getValue();
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
+	for (int i = 0; i < rotaries.items.size(); i++) { rotaries.items[i]->updateDisplay(); }
+	for (int i = 0; i < aboveButtons.items.size(); i++) { aboveButtons.items[i]->updateDisplay(); }
+	fader.updateDisplay();
+	for (int i = 0; i < belowButtons.items.size(); i++) { belowButtons.items[i]->updateDisplay(); }
 }
 
 void VirtualFaderCol::pressed() { 
@@ -85,15 +90,48 @@ void VirtualFaderCol::released() {
 
 }
 
-String VirtualFaderCol::getBtnText() {
+String VirtualFaderCol::getTargetName() {
 	String text = "";
 	String targType = targetType->getValue();
-	String action = "";
 	int targId = targetId->getValue();
 	if (targId == 0) { return ""; }
-	
-	if (text != "") {
-		text = action + "\n" + text;
+	if (targType == "cuelist") {
+		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+		if (targ != nullptr) { text = targ->userName->getValue(); }
 	}
+	else if (targType == "effect") {
+		Effect* targ = Brain::getInstance()->getEffectById(targId);
+		if (targ != nullptr) { text = targ->userName->getValue(); }
+	}
+	else if (targType == "carousel") {
+		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+		if (targ != nullptr) { text = targ->userName->getValue(); }
+	}
+
 	return text;
+}
+
+String VirtualFaderCol::getTargetType() {
+	String targType = targetType->getValue();
+	int targId = targetId->getValue();
+	if (targId == 0) { return ""; }
+	if (targType == "cuelist") {
+		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+		if (targ != nullptr) { return "cuelist"; }
+	}
+	else if (targType == "effect") {
+		Effect* targ = Brain::getInstance()->getEffectById(targId);
+		if (targ != nullptr) { return "effect"; }
+	}
+	else if (targType == "carousel") {
+		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+		if (targ != nullptr) { return "carousel"; }
+	}
+
+	return "";
+}
+
+void VirtualFaderCol::loadJSONDataInternal(var data) {
+	BaseItem::loadJSONDataInternal(data);
+	updateDisplay();
 }

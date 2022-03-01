@@ -37,6 +37,10 @@
 #include "UI/VirtualButtons/VirtualButton.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 
+#include "UI/VirtualFaders/VirtualFaderColManager.h"
+#include "UI/VirtualFaders/VirtualFaderCol.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
+
 
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
@@ -55,6 +59,7 @@ DataTransferManager::DataTransferManager() :
     sourceType->addOption("Cuelist", "cuelist");
     sourceType->addOption("Programmer", "programmer");
     sourceType->addOption("Virtual Button", "virtualbutton");
+    sourceType->addOption("Virtual Fader", "virtualfaderCol");
     sourceId = addIntParameter("Source Id", "ID of the source", 0, 0);
     targetType = addEnumParameter("Target Type", "Type of the data target");
     targetType->addOption("Group", "group");
@@ -63,6 +68,7 @@ DataTransferManager::DataTransferManager() :
     targetType->addOption("Cuelist", "cuelist");
     targetType->addOption("Programmer", "programmer");
     targetType->addOption("Virtual Button", "virtualbutton");
+    targetType->addOption("Virtual Fader", "virtualfaderCol");
 
     targetUserId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
@@ -335,6 +341,9 @@ void DataTransferManager::editObject(String type, int id) {
     }
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->editCell(id);
+    }
+    else if (type == "virtualfadercol") {
+        VirtualFaderColGrid::getInstance()->editCell(id);
     }
 }
 
