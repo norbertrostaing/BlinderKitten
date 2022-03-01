@@ -239,6 +239,8 @@ void VirtualFaderColGrid::fillCells() {
                     String text = vs->getBtnText(targType);
                     if (text != "") {
                         rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);
+                        rotaries[c]->getRawDataPointer()[n]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+
                     }
                 }
                 for (int n = 0; n < vf->aboveButtons.items.size() && n < nAbove; n++) {
@@ -247,12 +249,14 @@ void VirtualFaderColGrid::fillCells() {
                     String text = vb->getBtnText(targType);
                     if (text != "") {
                         aboveButtons[c]->getRawDataPointer()[n]->setButtonText(text);
+                        aboveButtons[c]->getRawDataPointer()[n]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
                     }
                 }
                 String text = vf->fader.getBtnText(targType);
                 sliderToVFS.set(faders[c], &vf->fader);
                 if (text != "") {
                     faderLabels[c]->setText(text, juce::dontSendNotification);
+                    faders[c]->setColour(Slider::trackColourId, Colour(127, 127, 127));
                 }
 
                 for (int n = 0; n < vf->belowButtons.items.size() && n < nBelow; n++) {
@@ -261,6 +265,7 @@ void VirtualFaderColGrid::fillCells() {
                     String text = vb->getBtnText(targType);
                     if (text != "") {
                         belowButtons[c]->getRawDataPointer()[n]->setButtonText(text);
+                        belowButtons[c]->getRawDataPointer()[n]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
                     }
                 }
                 //faderLabels[c]->setText(btnText, juce::dontSendNotification);
@@ -354,44 +359,38 @@ void VirtualFaderColGrid::editCell(int id) {
 }
 
 void VirtualFaderColGrid::deleteCell(int id) {
-    //id = id-1;
-    //if (id >= 0 && id >= gridButtons.size()) { return; }
-    //TextButton* b = gridButtons[id];
-    //VirtualFaderCol* vb = buttonToVirtualFaderCol.getReference(b);
-    //if (vb != nullptr) {
-    //    VirtualFaderColManager::getInstance()->removeItem(vb);
-    //    fillCells();
-    //}
+    if (id < 1 || id > cols) { return; }
+    VirtualFaderCol* vf = columnToVFC.getReference(id);
+    if (vf != nullptr) {
+        VirtualFaderColManager::getInstance()->removeItem(vf);
+        fillCells();
+    }
 }
 
 void VirtualFaderColGrid::moveCell(int idFrom, int idTo) {
-    //idFrom = idFrom - 1;
-    //idTo = idTo - 1;
-    //if (idFrom >= 0 && idFrom >= gridButtons.size()) { return; }
-    //if (idTo>= 0 && idTo >= gridButtons.size()) { return; }
-    //TextButton* b = gridButtons[idFrom];
-    //VirtualFaderCol* vb = buttonToVirtualFaderCol.getReference(b);
-    //if (vb != nullptr) {
-    //    vb->rowNumber->setValue(1+(idTo / cols));
-    //    vb->colNumber->setValue(1+(idTo % cols));
-    //    fillCells();
-    //}
+    idFrom = idFrom;
+    idTo = idTo;
+    if (idFrom <= 0 || idFrom > cols) { return; }
+    if (idTo <= 0 || idTo > cols) { return; }
+    VirtualFaderCol* vf = columnToVFC.getReference(idFrom);
+    if (vf != nullptr) {
+        vf->colNumber->setValue(idTo);
+        fillCells();
+    }
 }
 
 void VirtualFaderColGrid::copyCell(int idFrom, int idTo) {
-    //idFrom = idFrom - 1;
-    //idTo = idTo - 1;
-    //if (idFrom >= 0 && idFrom >= gridButtons.size()) { return; }
-    //if (idTo>= 0 && idTo >= gridButtons.size()) { return; }
-    //TextButton* b = gridButtons[idFrom];
-    //VirtualFaderCol* vb = buttonToVirtualFaderCol.getReference(b);
-    //if (vb != nullptr) {
-    //    VirtualFaderCol* vbCopy = nullptr;
-    //    vbCopy = VirtualFaderColManager::getInstance()->addItemFromData(vb->getJSONData());
-    //    vbCopy->rowNumber->setValue(1+(idTo / cols));
-    //    vbCopy->colNumber->setValue(1+(idTo % cols));
-    //    fillCells();
-    //    vbCopy->selectThis();
-    //}
+    idFrom = idFrom;
+    idTo = idTo;
+    if (idFrom <= 0 || idFrom > cols) { return; }
+    if (idTo <= 0 || idTo > cols) { return; }
+    VirtualFaderCol* vf = columnToVFC.getReference(idFrom);
+    if (vf != nullptr) {
+        VirtualFaderCol* vfCopy = nullptr;
+        vfCopy = VirtualFaderColManager::getInstance()->addItemFromData(vf->getJSONData());
+        vfCopy->colNumber->setValue(idTo);
+        fillCells();
+        vfCopy->selectThis();
+    }
 }
 

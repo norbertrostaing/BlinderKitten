@@ -59,7 +59,7 @@ DataTransferManager::DataTransferManager() :
     sourceType->addOption("Cuelist", "cuelist");
     sourceType->addOption("Programmer", "programmer");
     sourceType->addOption("Virtual Button", "virtualbutton");
-    sourceType->addOption("Virtual Fader", "virtualfaderCol");
+    sourceType->addOption("Virtual Fader", "virtualfadercol");
     sourceId = addIntParameter("Source Id", "ID of the source", 0, 0);
     targetType = addEnumParameter("Target Type", "Type of the data target");
     targetType->addOption("Group", "group");
@@ -68,7 +68,7 @@ DataTransferManager::DataTransferManager() :
     targetType->addOption("Cuelist", "cuelist");
     targetType->addOption("Programmer", "programmer");
     targetType->addOption("Virtual Button", "virtualbutton");
-    targetType->addOption("Virtual Fader", "virtualfaderCol");
+    targetType->addOption("Virtual Fader", "virtualfadercol");
 
     targetUserId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
@@ -121,7 +121,6 @@ void DataTransferManager::execute() {
     String srcType = sourceType->getValue();
     String trgType = targetType->getValue();
     bool valid = false;
-
     int sId = sourceId->getValue();
     int tId = targetUserId->getValue();
 
@@ -273,21 +272,27 @@ void DataTransferManager::execute() {
 
     }
     else if (srcType == "group") {
-    if (trgType == "group") {
-        valid = true;
-        Group* src = Brain::getInstance()->getGroupById(sId);
-        Group* trg = Brain::getInstance()->getGroupById(tId);
-        if (trg == nullptr) {
-            trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
-            src->id->setValue(tId);
+        if (trgType == "group") {
+            valid = true;
+            Group* src = Brain::getInstance()->getGroupById(sId);
+            Group* trg = Brain::getInstance()->getGroupById(tId);
+            if (trg == nullptr) {
+                trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
+                src->id->setValue(tId);
+            }
         }
-    }
 
     }
     else if (srcType == "virtualbutton") {
-    if (trgType == "virtualbutton") {
-        valid = true;
-        VirtualButtonGrid::getInstance()->copyCell(sId, tId);
+        if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualButtonGrid::getInstance()->copyCell(sId, tId);
+        }
+    }
+    else if (srcType == "virtualfadercol") {
+        if (trgType == "virtualfadercol") {
+            valid = true;
+            VirtualFaderColGrid::getInstance()->copyCell(sId, tId);
         }
     }
 
@@ -375,6 +380,9 @@ void DataTransferManager::deleteObject(String type, int id) {
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->deleteCell(id);
     }
+    else if (type == "virtualfadercol") {
+        VirtualFaderColGrid::getInstance()->deleteCell(id);
+    }
 }
 
 void DataTransferManager::moveObject(String type, int id, int idTo) {
@@ -422,5 +430,8 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     }
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->moveCell(id, idTo);
+    }
+    else if (type == "virtualfadercol") {
+        VirtualFaderColGrid::getInstance()->moveCell(id, idTo);
     }
 }
