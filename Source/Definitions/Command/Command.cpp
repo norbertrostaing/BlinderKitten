@@ -504,7 +504,6 @@ void Command::userPress(String s) {
 	}
 	else if (s == "backspace") {
 
-		LOG(lastTarget);
 		if (lastTarget == "selectionPlusOrMinus") {
 			selection.removeItem(currentUserSelection);
 			currentUserSelection = selection.items.getLast();

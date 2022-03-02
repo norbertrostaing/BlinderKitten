@@ -130,7 +130,7 @@ void Cue::update(double now) {
 }
 
 void Cue::endTransition() {
-	if (autoFollow->getValue() == "auto") {
+	if (autoFollow != nullptr && autoFollow->getValue() == "auto") {
 		double now = Brain::getInstance()->now;
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();

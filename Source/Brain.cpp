@@ -27,49 +27,55 @@ Brain :: ~Brain() {
 
 void Brain::run() {
     while(!threadShouldExit()) {
-        now = Time::getMillisecondCounterHiRes();
-        ///double now = Time::getApproximateMillisecondCounter();
-        cuePoolUpdating.addArray(cuePoolWaiting);
-        cuePoolWaiting.clear();
-        for (int i = 0; i < cuePoolUpdating.size(); i++) {
-            cuePoolUpdating[i]->update(now);
-        }
-        cuePoolUpdating.clear();
+        try {
+            now = Time::getMillisecondCounterHiRes();
+            ///double now = Time::getApproximateMillisecondCounter();
+            cuePoolUpdating.addArray(cuePoolWaiting);
+            cuePoolWaiting.clear();
+            for (int i = 0; i < cuePoolUpdating.size(); i++) {
+                cuePoolUpdating[i]->update(now);
+            }
+            cuePoolUpdating.clear();
 
-        cuelistPoolUpdating.addArray(cuelistPoolWaiting);
-        cuelistPoolWaiting.clear();
-        for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
-            cuelistPoolUpdating[i]->update();
-        }
-        cuelistPoolUpdating.clear();
+            cuelistPoolUpdating.addArray(cuelistPoolWaiting);
+            cuelistPoolWaiting.clear();
+            for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
+                cuelistPoolUpdating[i]->update();
+            }
+            cuelistPoolUpdating.clear();
 
-        effectPoolUpdating.addArray(effectPoolWaiting);
-        effectPoolWaiting.clear();
-        for (int i = 0; i < effectPoolUpdating.size(); i++) {
-            effectPoolUpdating[i]->update(now);
-        }
-        effectPoolUpdating.clear();
+            effectPoolUpdating.addArray(effectPoolWaiting);
+            effectPoolWaiting.clear();
+            for (int i = 0; i < effectPoolUpdating.size(); i++) {
+                effectPoolUpdating[i]->update(now);
+            }
+            effectPoolUpdating.clear();
 
-        carouselPoolUpdating.addArray(carouselPoolWaiting);
-        carouselPoolWaiting.clear();
-        for (int i = 0; i < carouselPoolUpdating.size(); i++) {
-            carouselPoolUpdating[i]->update(now);
-        }
-        carouselPoolUpdating.clear();
+            carouselPoolUpdating.addArray(carouselPoolWaiting);
+            carouselPoolWaiting.clear();
+            for (int i = 0; i < carouselPoolUpdating.size(); i++) {
+                carouselPoolUpdating[i]->update(now);
+            }
+            carouselPoolUpdating.clear();
 
-        programmerPoolUpdating.addArray(programmerPoolWaiting);
-        programmerPoolWaiting.clear();
-        for (int i = 0; i < programmerPoolUpdating.size(); i++) {
-            programmerPoolUpdating[i]->update(now);
-        }
-        programmerPoolUpdating.clear();
+            programmerPoolUpdating.addArray(programmerPoolWaiting);
+            programmerPoolWaiting.clear();
+            for (int i = 0; i < programmerPoolUpdating.size(); i++) {
+                programmerPoolUpdating[i]->update(now);
+            }
+            programmerPoolUpdating.clear();
 
-        SubFixtureChannelPoolUpdating.addArray(SubFixtureChannelPoolWaiting);
-        SubFixtureChannelPoolWaiting.clear();
-        for (int i = 0; i < SubFixtureChannelPoolUpdating.size(); i++) {
-            SubFixtureChannelPoolUpdating[i] -> updateVal(now);
+            SubFixtureChannelPoolUpdating.addArray(SubFixtureChannelPoolWaiting);
+            SubFixtureChannelPoolWaiting.clear();
+            for (int i = 0; i < SubFixtureChannelPoolUpdating.size(); i++) {
+                SubFixtureChannelPoolUpdating[i] -> updateVal(now);
+            }
+            SubFixtureChannelPoolUpdating.clear();
         }
-        SubFixtureChannelPoolUpdating.clear();
+        catch (...) {
+            LOG("maow");
+            // ...
+        }
         wait(22);
     }
 }
@@ -431,8 +437,13 @@ void Brain::pleaseUpdate(Cuelist* c) {
 
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if ( f == nullptr) {return; };
-    if (!SubFixtureChannelPoolWaiting.contains(f)) {
-        SubFixtureChannelPoolWaiting.add(f);
+    try {
+        if (!SubFixtureChannelPoolWaiting.contains(f)) {
+            SubFixtureChannelPoolWaiting.add(f);
+        }
+    }
+    catch (...) {
+        LOG("meow");
     }
 }
 

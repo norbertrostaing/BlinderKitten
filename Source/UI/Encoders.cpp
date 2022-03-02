@@ -232,12 +232,14 @@ void Encoders::updateContentWithCommand(Command* c) {
         CommandValue* cv = c->values.items[i];
         if (cv->presetOrValue->getValue() == "value") {
             ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-            for (int ci = 0; ci< channels.size(); ci++) {
-                int channelId = ci + encodersOffset;
-                if (channels[channelId] == ct) {
-                    float v = c->getChannelValue(channels[channelId], mode == 1);
-                    Encoders::getInstance()->encoders[i]->setValue(v, juce::sendNotification);
-                    Encoders::getInstance()->encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+            if (ct != nullptr) {
+                for (int ci = 0; ci < channels.size(); ci++) {
+                    int channelId = ci + encodersOffset;
+                    if (channels[channelId] == ct) {
+                        float v = c->getChannelValue(channels[channelId], mode == 1);
+                        Encoders::getInstance()->encoders[channelId]->setValue(v, juce::sendNotification);
+                        Encoders::getInstance()->encoders[channelId]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                    }
                 }
             }
         }

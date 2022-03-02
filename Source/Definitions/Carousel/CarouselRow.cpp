@@ -114,7 +114,7 @@ void CarouselRow::computeData() {
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
 
-                LOG(offset);
+                // LOG(offset);
                 subFixtureChannelOffsets.set(chan, offset);
             }
             ChannelValue* cValue = it.getValue();

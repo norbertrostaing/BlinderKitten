@@ -42,15 +42,15 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "HTP Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_HTPLEVEL));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASHLEVEL));
 
-    defs.add(Factory<Action>::Definition::createDef("Effect", "Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
-    defs.add(Factory<Action>::Definition::createDef("Effect", "Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));
-    defs.add(Factory<Action>::Definition::createDef("Effect", "Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
-    defs.add(Factory<Action>::Definition::createDef("Effect", "Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
 
-    defs.add(Factory<Action>::Definition::createDef("Carousel", "Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
-    defs.add(Factory<Action>::Definition::createDef("Carousel", "Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
-    defs.add(Factory<Action>::Definition::createDef("Carousel", "Size", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE));
-    defs.add(Factory<Action>::Definition::createDef("Carousel", "Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Size", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED));
 
 }
 

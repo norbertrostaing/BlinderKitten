@@ -77,7 +77,7 @@ void VirtualFaderColGrid::resized()
     nElements += sizeFader;
     nElements += nBelow;
 
-    int btnHeight = h/(nElements);
+    int btnHeight = (h-20)/(nElements);
 
     int staticBtnWith = btnWidth;
     if (cols < 3) {
@@ -90,6 +90,7 @@ void VirtualFaderColGrid::resized()
     for (int x = 0; x < cols; x++) {
         int coordX = x*btnWidth;
         int currentCell = 1;
+        columnLabels[x]->setBounds(coordX, h-20, btnWidth, 20);
         for (int i = 0; i < nRotaries; i++) {
             rotaries[x]->getRawDataPointer()[i]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
             rotaryLabels[x]->getRawDataPointer()[i]->setBounds(coordX, (currentCell+0.25) * btnHeight, btnWidth, btnHeight*0.25);
@@ -120,6 +121,7 @@ void VirtualFaderColGrid::initCells() {
     faders.clear();
     faderLabels.clear();
     rotaryLabels.clear();
+    columnLabels.clear();
 
     buttonToVFB.clear();
     sliderToVFS.clear();
@@ -138,6 +140,13 @@ void VirtualFaderColGrid::initCells() {
         rotaries.add(new OwnedArray<Slider>());
         rotaryLabels.add(new OwnedArray<Label>());
         
+        Label* mainLabel = new Label();
+        addAndMakeVisible(mainLabel);
+        mainLabel->setEditable(false);
+        mainLabel->setText("", juce::dontSendNotification);
+        mainLabel->setJustificationType(Justification(36));
+        columnLabels.add(mainLabel);
+
         for (int i = 0; i < nRotaries; i++) {
             Slider* s = new Slider();
             addAndMakeVisible(s);
@@ -203,9 +212,12 @@ void VirtualFaderColGrid::fillCells() {
     columnToVFC.clear();
     pageDisplayBtn.setButtonText("Page "+String(page));
     for (int i = 0; i < faders.size(); i++) {
-        faders[i]->setColour(Slider::backgroundColourId, Colour(63,63,63));
-        faders[i]->setColour(Slider::thumbColourId, Colour(63,63,63));
-        faders[i]->setColour(Slider::trackColourId, Colour(63,63,63));
+        faders[i]->setColour(Slider::backgroundColourId, Colour(63, 63, 63));
+        faders[i]->setColour(Slider::thumbColourId, Colour(63, 63, 63));
+        faders[i]->setColour(Slider::trackColourId, Colour(63, 63, 63));
+    }
+    for (int i = 0; i < columnLabels.size(); i++) {
+        columnLabels[i]->setText("", juce::dontSendNotification);
     }
     for (int i = 0; i < rotaries.size(); i++) {
         for (int j = 0; j < rotaries[i]->size(); j++) {
@@ -233,6 +245,7 @@ void VirtualFaderColGrid::fillCells() {
             String targName = vf->getTargetName();
             String targType = vf->getTargetType();
             if (c < cols) {
+                columnLabels[c]->setText(targName, juce::dontSendNotification);
                 for (int n = 0; n < vf->rotaries.items.size() && n < nAbove; n++) {
                     VirtualFaderSlider* vs = vf->rotaries.items[n];
                     sliderToVFS.set(rotaries[c]->getRawDataPointer()[n], vs);

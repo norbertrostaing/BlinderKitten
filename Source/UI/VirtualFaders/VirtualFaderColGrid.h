@@ -55,6 +55,7 @@ public:
     OwnedArray<OwnedArray<Label>> rotaryLabels;
     OwnedArray<Slider> faders;
     OwnedArray<Label>faderLabels;
+    OwnedArray<Label>columnLabels;
 
     void paint (juce::Graphics&) override;
     void resized() override;
