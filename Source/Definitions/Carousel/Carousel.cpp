@@ -184,12 +184,17 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		float stepSize = 0;
 		for (int stepId = 0; stepId < r->paramContainer.items.size(); stepId++) {
 			CarouselStep* step = r->paramContainer.items[stepId];
-			if (step->relativeStartPosition < offset) {
+			if (step->relativeStartPosition <= offset) {
 				toApply = step;
-			}
+			}	
 		}
 
-		ChannelValue* cVal = toApply->computedValues.getReference(fc);
+		if (toApply == nullptr) {
+			LOG("miaou !");
+			LOG(offset);
+			return currentVal;
+		}
+		ChannelValue* cVal = toApply->computedValues.getReference(fc); //bug ici
 		if (cVal != nullptr) {
 			float fadeValue = 1;
 			

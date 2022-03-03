@@ -59,21 +59,23 @@ void VirtualFaderCol::updateName() {
 }
 
 void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
+	VirtualFaderColGrid::getInstance()->fillCells();
 	if (c == targetType || c == targetId) {
 		updateDisplay();
 	}
-	VirtualFaderColGrid::getInstance()->fillCells();
 }
 
 void VirtualFaderCol::updateDisplay() {
 	String targType = targetType->getValue();
 
-    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
-
+	targetId->deselectThis();
 	for (int i = 0; i < rotaries.items.size(); i++) { rotaries.items[i]->updateDisplay(); }
 	for (int i = 0; i < aboveButtons.items.size(); i++) { aboveButtons.items[i]->updateDisplay(); }
 	fader.updateDisplay();
 	for (int i = 0; i < belowButtons.items.size(); i++) { belowButtons.items[i]->updateDisplay(); }
+	
+    //queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
 }
 
 void VirtualFaderCol::pressed() { 

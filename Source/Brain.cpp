@@ -29,54 +29,69 @@ void Brain::run() {
     while(!threadShouldExit()) {
         try {
             now = Time::getMillisecondCounterHiRes();
-            ///double now = Time::getApproximateMillisecondCounter();
+            updateIsRunning = true;
             cuePoolUpdating.addArray(cuePoolWaiting);
             cuePoolWaiting.clear();
+            updateIsRunning = false;
             for (int i = 0; i < cuePoolUpdating.size(); i++) {
                 cuePoolUpdating[i]->update(now);
             }
             cuePoolUpdating.clear();
 
+            updateIsRunning = true;
             cuelistPoolUpdating.addArray(cuelistPoolWaiting);
             cuelistPoolWaiting.clear();
+            updateIsRunning = false;
             for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
                 cuelistPoolUpdating[i]->update();
             }
             cuelistPoolUpdating.clear();
 
+            updateIsRunning = true;
             effectPoolUpdating.addArray(effectPoolWaiting);
             effectPoolWaiting.clear();
+            updateIsRunning = false;
             for (int i = 0; i < effectPoolUpdating.size(); i++) {
                 effectPoolUpdating[i]->update(now);
             }
             effectPoolUpdating.clear();
 
+            updateIsRunning = true;
             carouselPoolUpdating.addArray(carouselPoolWaiting);
             carouselPoolWaiting.clear();
+            updateIsRunning = false;
             for (int i = 0; i < carouselPoolUpdating.size(); i++) {
                 carouselPoolUpdating[i]->update(now);
             }
             carouselPoolUpdating.clear();
 
+            updateIsRunning = true;
             programmerPoolUpdating.addArray(programmerPoolWaiting);
             programmerPoolWaiting.clear();
+            updateIsRunning = false;
             for (int i = 0; i < programmerPoolUpdating.size(); i++) {
                 programmerPoolUpdating[i]->update(now);
             }
             programmerPoolUpdating.clear();
 
+            updateIsRunning = true;
             SubFixtureChannelPoolUpdating.addArray(SubFixtureChannelPoolWaiting);
             SubFixtureChannelPoolWaiting.clear();
+            updateIsRunning = false;
             for (int i = 0; i < SubFixtureChannelPoolUpdating.size(); i++) {
                 SubFixtureChannelPoolUpdating[i] -> updateVal(now);
             }
             SubFixtureChannelPoolUpdating.clear();
+            updateIsRunning = false;
+
+            //double delta = Time::getMillisecondCounterHiRes() - now;
+            //LOG(delta);
         }
         catch (...) {
             LOG("maow");
             // ...
         }
-        wait(22);
+        wait(10);
     }
 }
 
@@ -430,12 +445,14 @@ void Brain::unregisterCarousel(Carousel* c) {
 }
 
 void Brain::pleaseUpdate(Cuelist* c) {
+    while (updateIsRunning) {wait(1); }
     if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);
     }
 }
 
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
+    while (updateIsRunning) { wait(1); }
     if ( f == nullptr) {return; };
     try {
         if (!SubFixtureChannelPoolWaiting.contains(f)) {
@@ -448,24 +465,28 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
 }
 
 void Brain::pleaseUpdate(Cue* c) {
+    while (updateIsRunning) { wait(1); }
     if (!cuePoolWaiting.contains(c)) {
         cuePoolWaiting.add(c);
     }
 }
 
 void Brain::pleaseUpdate(Programmer* c) {
+    while (updateIsRunning) { wait(1); }
     if (!programmerPoolWaiting.contains(c)) {
         programmerPoolWaiting.add(c);
     }
 }
 
 void Brain::pleaseUpdate(Effect* f) {
+    while (updateIsRunning) { wait(1); }
     if (!effectPoolWaiting.contains(f)) {
         effectPoolWaiting.add(f);
     }
 }
 
 void Brain::pleaseUpdate(Carousel* f) {
+    while (updateIsRunning) { wait(1); }
     if (!carouselPoolWaiting.contains(f)) {
         carouselPoolWaiting.add(f);
     }

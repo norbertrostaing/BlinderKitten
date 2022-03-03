@@ -59,6 +59,7 @@ public:
     Array<Cuelist*> swoppedCuelists;
 
     double now;
+    bool updateIsRunning = false;
 
     void run() override;
     void registerSubFixture(SubFixture* f, int id);

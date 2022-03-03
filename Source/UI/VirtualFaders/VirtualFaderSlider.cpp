@@ -80,7 +80,7 @@ void VirtualFaderSlider::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 
-    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId) {
