@@ -39,6 +39,7 @@ public:
     Trigger* offBtn;
     Trigger* killBtn;
 
+    Trigger* loadBtn;
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;

@@ -69,6 +69,10 @@
         </GROUP>
         <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
+        <FILE id="OKIrwV" name="CuelistLoadWindow.cpp" compile="1" resource="0"
+              file="Source/UI/CuelistLoadWindow.cpp"/>
+        <FILE id="CgBx6O" name="CuelistLoadWindow.h" compile="0" resource="0"
+              file="Source/UI/CuelistLoadWindow.h"/>
         <FILE id="V8gEcE" name="Encoders.cpp" compile="1" resource="0" file="Source/UI/Encoders.cpp"/>
         <FILE id="yt8yKK" name="Encoders.h" compile="0" resource="0" file="Source/UI/Encoders.h"/>
         <FILE id="R1P4dS" name="InputPanel.cpp" compile="1" resource="0" file="Source/UI/InputPanel.cpp"/>

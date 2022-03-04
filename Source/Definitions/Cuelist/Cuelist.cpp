@@ -13,6 +13,8 @@
 #include "Brain.h"
 #include "../ChannelValue.h"
 #include "CuelistManager.h"
+#include "UI/CuelistLoadWindow.h"
+
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
@@ -55,6 +57,7 @@ Cuelist::Cuelist(var params) :
 	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
+	loadBtn = addTrigger("Load", "Choose next cue");
 	// flashOnBtn = addTrigger("Flash ON", "release flash");
 	// flashOffBtn = addTrigger("flash Off", "press flash");
 	// swopOnBtn = addTrigger("Swop ON", "press swop");
@@ -172,6 +175,9 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	}
 	else if (t == renumberCuesBtn) {
 		renumberCues();
+	}
+	else if (t == loadBtn) {
+		CuelistLoadWindow::getInstance()->loadCuelist(this);
 	}
 	else {}
 }
