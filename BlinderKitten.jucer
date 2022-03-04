@@ -213,6 +213,10 @@
                 file="Source/Definitions/Actions/EffectAction.cpp"/>
           <FILE id="AD3mke" name="EffectAction.h" compile="0" resource="0" file="Source/Definitions/Actions/EffectAction.h"/>
         </GROUP>
+        <GROUP id="{233644E1-12BD-A331-F6AE-C2A52723F793}" name="Assistant">
+          <FILE id="qQxHMP" name="Assistant.cpp" compile="1" resource="0" file="Source/Definitions/Assistant/Assistant.cpp"/>
+          <FILE id="uexuKL" name="Assistant.h" compile="0" resource="0" file="Source/Definitions/Assistant/Assistant.h"/>
+        </GROUP>
         <GROUP id="{13C9BB5E-B353-480A-515C-A789D416195D}" name="Carousel">
           <FILE id="eMVqEx" name="Carousel.cpp" compile="1" resource="0" file="Source/Definitions/Carousel/Carousel.cpp"/>
           <FILE id="AnUHMz" name="Carousel.h" compile="0" resource="0" file="Source/Definitions/Carousel/Carousel.h"/>

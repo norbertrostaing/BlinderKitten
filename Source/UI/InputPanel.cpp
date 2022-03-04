@@ -12,6 +12,7 @@
 #include "InputPanel.h"
 #include "UserInputManager.h"
 #include "BKEngine.h"
+#include "Definitions/Assistant/Assistant.h"
 
 //==============================================================================
 InputPanelUI::InputPanelUI(const String& contentName):
@@ -58,6 +59,7 @@ InputPanel::InputPanel()
     addAndMakeVisible(btnThru); btnThru.setButtonText("Thru"); btnThru.addListener(this);
     addAndMakeVisible(btnBackspace); btnBackspace.setButtonText("<-"); btnBackspace.addListener(this);
     addAndMakeVisible(btnEnter); btnEnter.setButtonText("Enter"); btnEnter.addListener(this);
+    addAndMakeVisible(btnAssistant); btnAssistant.setButtonText("Assistant"); btnAssistant.addListener(this);
 
 
 }
@@ -67,7 +69,10 @@ InputPanel::~InputPanel()
 }
 
 void InputPanel::buttonClicked(juce::Button* button) {
-    if (button == &btnBackspace) {
+    if (button == &btnAssistant){
+        Assistant::getInstance()->selectThis();
+    }
+    else if (button == &btnBackspace) {
         UserInputManager::getInstance()->processInput("backspace");
     }
     else {
@@ -109,8 +114,12 @@ void InputPanel::resized()
     int p3 = p2 + (4 * sm) + margin;
     int mid = (p3 + lg)/2;
 
-    btnClear.setBounds      (mid - lg - (margin/2), 0 * r, lg, h);
-    btnRecord.setBounds     (mid + (margin / 2), 0 * r, lg, h);
+    int tot = p3+lg;
+    int firstLineMargin = (tot-(3*lg))/2;
+
+    btnAssistant.setBounds  (0,0,lg, h);
+    btnClear.setBounds      (lg+firstLineMargin, 0 * r, lg, h);
+    btnRecord.setBounds     (2*(lg + firstLineMargin), 0 * r, lg, h);
 
     btnEdit.setBounds       (0 * lg + p3, 1 * r, lg, h);
     btnCopy.setBounds       (0 * lg + p3, 2 * r, lg, h);

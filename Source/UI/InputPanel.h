@@ -67,6 +67,7 @@ public:
     TextButton btnEdit;
     TextButton btnCopy;
     TextButton btnDelete;
+    TextButton btnAssistant;
 
     void paint (juce::Graphics&) override;
     void resized() override;
