@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Definitions/Command/CommandValueManager.h"
 
 class Assistant :
 	public BaseItem,
@@ -24,13 +25,20 @@ public:
 	void run() override;
 
 	ControllableContainer paletteMakerCC;
-	IntParameter * paletteGroupId;
-	IntParameter * paletteFirstPresetId;
-	IntParameter * paletteLastPresetId;
-	IntParameter * paletteTimingPresetId;
-	Trigger * paletteBtn;
+	IntParameter* paletteGroupId;
+	IntParameter* paletteFirstPresetId;
+	IntParameter* paletteLastPresetId;
+	IntParameter* paletteTimingPresetId;
+	Trigger* paletteBtn;
+
+	ControllableContainer masterMakerCC;
+	IntParameter* masterFirstGroupId;
+	IntParameter* masterLastGroupId;
+	CommandValueManager masterValue;
+	Trigger* masterBtn;
 
 	bool pleaseCreatePalette = false;
+	bool pleaseCreateMasters = false;
 
 	void triggerTriggered(Trigger* t);
 	void onContainerParameterChangedInternal(Parameter* p);
@@ -38,5 +46,6 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
 	void createPalette();
+	void createMasters();
 
 };
