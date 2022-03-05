@@ -12,7 +12,8 @@
 #include "JuceHeader.h"
 
 class Assistant :
-	public BaseItem
+	public BaseItem,
+	Thread
 {
 public:
 	juce_DeclareSingleton(Assistant, true);
@@ -20,12 +21,16 @@ public:
 	Assistant();
 	~Assistant();
 
+	void run() override;
+
 	ControllableContainer paletteMakerCC;
 	IntParameter * paletteGroupId;
 	IntParameter * paletteFirstPresetId;
 	IntParameter * paletteLastPresetId;
 	IntParameter * paletteTimingPresetId;
 	Trigger * paletteBtn;
+
+	bool pleaseCreatePalette = false;
 
 	void triggerTriggered(Trigger* t);
 	void onContainerParameterChangedInternal(Parameter* p);

@@ -25,7 +25,7 @@ public:
     BaseManager<Command> commands;
     FloatParameter* id;
 
-    EnumParameter* autoFollow;
+    EnumParameter* autoFollow = nullptr;
     FloatParameter* autoFollowTiming;
     FloatParameter* autoFollowCountDown;
     BoolParameter* canBeRandomlyCalled;
