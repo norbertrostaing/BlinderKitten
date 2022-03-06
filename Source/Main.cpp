@@ -8,6 +8,7 @@
 BlinderKittenApplication::BlinderKittenApplication() :
 	OrganicApplication("BlinderKitten", true, ImageCache::getFromMemory(BinaryData::icon_png, BinaryData::icon_pngSize))
 {
+	//_crtBreakAlloc = 32185;
 }
 
 

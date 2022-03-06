@@ -57,6 +57,7 @@ VirtualButtonGrid::VirtualButtonGrid():
 
 VirtualButtonGrid::~VirtualButtonGrid()
 {
+    buttonToVirtualButton.clear();
 }
 
 void VirtualButtonGrid::paint (juce::Graphics& g)

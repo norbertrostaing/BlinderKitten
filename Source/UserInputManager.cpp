@@ -143,9 +143,9 @@ void UserInputManager::commandSelectionChanged(Command* c) {
 		int currentIndex = 0;
 
 		for (int i = 0; i < ChannelFamilyManager::getInstance()->items.size(); i++) {
-			for (int j = 0; j < ChannelFamilyManager::getInstance()->items[i]->definitions->items.size(); j++) {
-				if (chans.contains(ChannelFamilyManager::getInstance()->items[i]->definitions->items[j])) {
-					Encoders::getInstance()->channels.set(currentIndex, ChannelFamilyManager::getInstance()->items[i]->definitions->items[j]);
+			for (int j = 0; j < ChannelFamilyManager::getInstance()->items[i]->definitions.items.size(); j++) {
+				if (chans.contains(ChannelFamilyManager::getInstance()->items[i]->definitions.items[j])) {
+					Encoders::getInstance()->channels.set(currentIndex, ChannelFamilyManager::getInstance()->items[i]->definitions.items[j]);
 					currentIndex++;
 				}
 			}

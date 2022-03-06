@@ -207,6 +207,9 @@ BKEngine::~BKEngine()
 	ActionFactory::deleteInstance();
 	UserInputManager::deleteInstance();
 
+	GroupGridView::deleteInstance();
+	PresetGridView::deleteInstance();
+
 	CommandLine::deleteInstance();
 	Encoders::deleteInstance();
 	InputPanel::deleteInstance();
@@ -468,7 +471,8 @@ void BKEngine::importSelection(File f)
 
 	if (!data.isObject()) return;
 
-	ChannelFamilyManager::getInstance()->addItemsFromData(data.getProperty(ChannelFamilyManager::getInstance()->shortName, var()));
+
+	ChannelFamilyManager::getInstance()->importData(data.getProperty(ChannelFamilyManager::getInstance()->shortName, var()));
 	FixtureTypeManager::getInstance()->addItemsFromData(data.getProperty(FixtureTypeManager::getInstance()->shortName, var()));
 	FixtureManager::getInstance()->addItemsFromData(data.getProperty(FixtureManager::getInstance()->shortName, var()));
 	GroupManager::getInstance()->addItemsFromData(data.getProperty(GroupManager::getInstance()->shortName, var()));

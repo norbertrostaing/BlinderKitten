@@ -18,20 +18,10 @@ ChannelFamilyManager::ChannelFamilyManager() :
     itemDataType = "ChannelFamily";
     selectItemWhenCreated = true;
        
-    // managerFactory = &factory;
-
-    // gridThumbSize = addIntParameter("Thumb Size", "Size of thumbnails in grid view", 96, 32, 256);
-    // defaultFlashValue = addFloatParameter("Flash Value", "Flash Value", .5f, 0, 1);
-    // blackOut = addBoolParameter("Black Out", "Force 0 on all computed values", false);
-    // filterActiveInScene = addBoolParameter("Show Only active", "Show only active objects in scene", false);
-    //lockUI = addBoolParameter("Lock UI", "If checked, all objects will be locked", false);
-    // startThread();
-
 }
 
 ChannelFamilyManager::~ChannelFamilyManager()
 {
-    // stopThread(1000);
 }
 
 
@@ -50,5 +40,41 @@ void ChannelFamilyManager::removeItemInternal(ChannelFamily* o)
 void ChannelFamilyManager::onContainerParameterChanged(Parameter* p)
 {
    // if (p == lockUI) for (auto& i : items) i->isUILocked->setValue(lockUI->boolValue());
+}
+
+void ChannelFamilyManager::importData(var data)
+{
+    Array<var>* elements = data.getArray();
+
+    for (var d : *elements) {
+        String name = d.getProperty("niceName", "nop").toString();
+        bool valid = false;
+        ChannelFamily* cf = nullptr;
+        for (int i = 0; i < items.size(); i++) {
+            if (items[i]->niceName == name) {
+                cf = items[i];
+            }
+        }
+
+        if (cf == nullptr) {
+            addItemsFromData(data);
+        }
+        else {
+            Array<var>* childItems = d.getProperty("containers", var()).getProperty("channelTypes", var()).getProperty("items", var()).getArray();
+            for (var ct : *childItems) {
+                String paramName = ct.getProperty("niceName", "plop").toString();
+                bool alreadyHere = false;
+                for (int i = 0; i < cf->definitions.items.size(); i++) {
+                    if (cf->definitions.items[i]->niceName == paramName) {
+                        alreadyHere = true;
+                    }
+                }
+                if (!alreadyHere) {
+                    cf->definitions.addItemFromData(ct);
+                }
+                // LOG(ct.getProperty("niceName", "plop").toString());
+            }
+        }
+    }
 }
 

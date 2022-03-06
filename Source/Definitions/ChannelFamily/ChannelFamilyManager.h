@@ -47,6 +47,8 @@ public:
 
     void onContainerParameterChanged(Parameter* p) override;
 
+    void importData(var data = var());
+
     // var getSceneData();
     // void updateSceneData(var& sceneData);
     // void lerpFromSceneData(var startData, var endData, float weight);

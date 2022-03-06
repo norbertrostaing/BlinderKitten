@@ -25,7 +25,7 @@ public:
 
     // ControllableContainer definitions;
 
-    std::unique_ptr<BaseManager<ChannelType>> definitions;
+    BaseManager<ChannelType> definitions;
     // BaseManager<T> parameters;
     // TargetParameter* targetInterface;
     // std::unique_ptr<ControllableContainer> interfaceParameters;
