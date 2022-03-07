@@ -588,13 +588,13 @@ void Cuelist::updateHTPs() {
 	pleaseUpdateHTPs = false;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		SubFixtureChannel* chan = it.getKey();
-		if (chan->isHTP) {
+		if (chan!=nullptr && chan->isHTP) {
 			Brain::getInstance()->pleaseUpdate(chan);
 		}
 	}
 	for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
 		SubFixtureChannel* chan = it.getKey();
-		if (chan->isHTP) {
+		if (chan != nullptr && chan->isHTP) {
 			Brain::getInstance()->pleaseUpdate(chan);
 		}
 	}
@@ -603,7 +603,7 @@ void Cuelist::updateHTPs() {
 void Cuelist::updateLTPs() {
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		SubFixtureChannel* chan = it.getKey();
-		if (!chan->isHTP) {
+		if (chan != nullptr && !chan->isHTP) {
 			Brain::getInstance()->pleaseUpdate(chan);
 		}
 	}

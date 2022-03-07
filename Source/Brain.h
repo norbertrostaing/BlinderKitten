@@ -30,6 +30,7 @@ public:
     juce_DeclareSingleton(Brain, true);
     Brain();
     ~Brain();
+    void clear();
 
     HashMap<int, SubFixture*>SubFixtures;
     HashMap<int, Group*>groups;

@@ -27,6 +27,7 @@ SubFixtureChannel::SubFixtureChannel()
 
 SubFixtureChannel::~SubFixtureChannel()
 {
+	//isDeleted = true;
 }
 
 void SubFixtureChannel::writeValue(float v) {
@@ -34,6 +35,7 @@ void SubFixtureChannel::writeValue(float v) {
 	v= jmax((float)0, v);
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
+
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();
 		deltaAdress--;
 		String chanRes = parentFixtureTypeChannel->resolution->getValue();

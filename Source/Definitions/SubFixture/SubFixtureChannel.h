@@ -24,6 +24,7 @@ class SubFixtureChannel{
 public:
     SubFixtureChannel();
     virtual ~SubFixtureChannel();
+    bool isDeleted = false;
 
     ChannelType* channelType;
     String resolution;
@@ -34,11 +35,11 @@ public:
     bool swopKillable = false;
     bool snapOnly = false;
 
-    ChannelFamily* parentParamType;
-    ChannelType* parentParamDefinition;
-    FixtureTypeChannel* parentFixtureTypeChannel;
-    Fixture* parentFixture;
-    SubFixture* parentSubFixture;
+    ChannelFamily* parentParamType = nullptr;
+    ChannelType* parentParamDefinition = nullptr;
+    FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
+    Fixture* parentFixture = nullptr;
+    SubFixture* parentSubFixture = nullptr;
 
     void writeValue(float v);
 

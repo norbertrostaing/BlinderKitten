@@ -67,6 +67,8 @@ Fixture::~Fixture()
 			it.getValue()->~SubFixture();
 		}
 	}
+	subFixtures.clear();
+
 }
 
 
@@ -143,15 +145,15 @@ void Fixture::checkChildrenSubFixtures() {
 				}
 				SubFixtureChannel* chan = new SubFixtureChannel();
 				subFixt->channelsMap.set(param, chan);
-				chan->defaultValue = c->defaultValue->getValue();
-				chan ->isHTP = param->priority->getValue() == "HTP";
-				chan-> resolution = c->resolution->getValue();
-				chan-> channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
-				chan->parentParamDefinition = param;
-				chan->snapOnly = c->fadeOrSnap->getValue().toString() == "snap";
-				chan-> parentFixtureTypeChannel = c;
-				chan->parentFixture = this;
-				chan->parentSubFixture = subFixt;
+				chan -> defaultValue = c->defaultValue->getValue();
+				chan -> isHTP = param->priority->getValue() == "HTP";
+				chan -> resolution = c->resolution->getValue();
+				chan -> channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
+				chan -> parentParamDefinition = param;
+				chan -> snapOnly = c->fadeOrSnap->getValue().toString() == "snap";
+				chan -> parentFixtureTypeChannel = c;
+				chan -> parentFixture = this;
+				chan -> parentSubFixture = subFixt;
 				if (c->killedBySWOP->getValue()) {
 					chan->swopKillable = true;
 					Brain::getInstance()->swoppableChannels.add(chan);
