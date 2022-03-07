@@ -16,7 +16,7 @@ SubFixture::SubFixture() :
 	channelsMap()
 {
 
-	Logger::writeToLog("I'm a new SubFixture !");
+	// Logger::writeToLog("I'm a new SubFixture !");
 	
 	channelsMap.clear();
 	//Brain::getInstance()->registerSubFixture(this, id->getValue());
@@ -24,11 +24,12 @@ SubFixture::SubFixture() :
 
 SubFixture::~SubFixture()
 {
-	for (auto it = channelsMap.begin(); it != channelsMap.end(); it.next()) {
-		if (it.getValue() != nullptr) {
-			it.getValue()->~SubFixtureChannel();
-		}
-	}
+	
+	//for (auto it = channelsMap.begin(); it != channelsMap.end(); it.next()) {
+	//	if (it.getValue() != nullptr) {
+	//		it.getValue()->~SubFixtureChannel();
+	//	}
+	//}
 	channelsMap.clear();
 }
 

@@ -18,16 +18,35 @@
 #include "Definitions/TimingPreset/TimingPreset.h"
 #include "Definitions/Command/CommandValueManager.h";
 #include "Definitions/Command/CommandValue.h";
+#include "Definitions/Interface/InterfaceManager.h"
+#include "Definitions/FixtureType/FixtureTypeManager.h"
+#include "Definitions/Fixture/FixtureManager.h"
+#include "Definitions/Fixture/Fixture.h"
 
 juce_ImplementSingleton(Assistant)
 
 Assistant::Assistant() :
 	BaseItem("Offline Lighting General Assistant"),
+    patcherCC("Patch Helper"),
     paletteMakerCC("Palette maker"),
     masterMakerCC("Masters maker"),
     Thread("Assistant")
 {
     updateDisplay(); 
+
+    patcherFixtureType = patcherCC.addTargetParameter("Fixture type", "", FixtureTypeManager::getInstance());
+    patcherFixtureType->targetType = TargetParameter::CONTAINER;
+    patcherFixtureType->maxDefaultSearchLevel = 0;
+    patcherAmount = patcherCC.addIntParameter("Amount", "",1,1);
+    patcherName = patcherCC.addStringParameter("Fixture name", "", "");
+    patcherFirstId = patcherCC.addIntParameter("First ID", "", 1, 1);
+    patcherInterface = patcherCC.addTargetParameter("Interface", "", InterfaceManager::getInstance());
+    patcherInterface->targetType = TargetParameter::CONTAINER;
+    patcherInterface->maxDefaultSearchLevel = 0;
+    patcherFirstAddress = patcherCC.addIntParameter("Start Address", "",1);
+    patcherAddressInterval = patcherCC.addIntParameter("Address Interval", "",1);
+    patcherBtn = patcherCC.addTrigger("Add Fixtures", "Add desired fixtures");
+    addChildControllableContainer(&patcherCC);
 
 	paletteGroupId = paletteMakerCC.addIntParameter("Group ID", "", 1,0);
 	paletteFirstPresetId = paletteMakerCC.addIntParameter("First Preset ID", "", 1,0);
@@ -36,8 +55,6 @@ Assistant::Assistant() :
     paletteBtn = paletteMakerCC.addTrigger("Create Palette", "create a new cuelist with selected group and presets");
     addChildControllableContainer(&paletteMakerCC);
 
-
-    paletteGroupId = paletteMakerCC.addIntParameter("Group ID", "", 1, 0);
     masterFirstGroupId = masterMakerCC.addIntParameter("First group ID", "", 1, 1);
     masterLastGroupId = masterMakerCC.addIntParameter("Last group ID", "", 1, 1);
     masterMakerCC.addChildControllableContainer(&masterValue);
@@ -61,6 +78,10 @@ Assistant::~Assistant()
 
 void Assistant::run()
 {
+    if (pleasePatchFixtures) {
+        pleasePatchFixtures = false;
+        patchFixtures();
+    }
     if (pleaseCreatePalette) {
         pleaseCreatePalette = false;
         createPalette();
@@ -75,6 +96,10 @@ void Assistant::triggerTriggered(Trigger* t) {
 }
 
 void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+    if ((Trigger*)c == patcherBtn) {
+        pleasePatchFixtures = true;
+        startThread(1);
+    }
     if ((Trigger*)c == paletteBtn) {
         pleaseCreatePalette = true;
         startThread(1);
@@ -85,9 +110,50 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
     }
 }
 
+void Assistant::patchFixtures()
+{
+    FixtureType* fixtureType = dynamic_cast<FixtureType*>(patcherFixtureType->targetContainer.get());
+    int amount = patcherAmount->getValue();
+    String name = patcherName->getValue();
+    int firstId= patcherFirstId->getValue();
+    Interface* targetInterface = dynamic_cast<Interface*>(patcherInterface->targetContainer.get());
+    int firstAddress = patcherFirstAddress->getValue();
+    int addressInterval = patcherAddressInterval->getValue();
+
+    if (fixtureType == nullptr) {LOGERROR("You must provide me a valid fixture type"); return;}
+    if (name == "") { name = fixtureType->niceName; }
+
+    LOG("Patching your fixtures, please wait");
+    int currentAdress = firstAddress;
+
+    for (int i = 0; i < amount; i++) {
+        Fixture* f = FixtureManager::getInstance()->addItem();
+        f-> id->setValue(firstId+i);
+        if (amount > 1) {
+            f->userName->setValue(name + " " +String(i+1));
+        }
+        else {
+            f->userName->setValue(name);
+        }
+        f->devTypeParam->setValueFromTarget(fixtureType);
+        if (targetInterface != nullptr) {
+            FixturePatch* p = f->patchs.addItem();
+            p->targetInterface->setValueFromTarget(targetInterface);
+            p->address->setValue(currentAdress);
+            int delta = addressInterval;
+
+            for (int cn = 0; cn < fixtureType->chansManager.items.size(); cn++) {
+                int chanSize = fixtureType->chansManager.items[cn]->resolution->getValue().toString() == "16bits" ? 1 : 0;
+                delta = jmax(delta, (int)fixtureType->chansManager.items[cn]->dmxDelta->getValue() + chanSize);
+            }
+            currentAdress += delta;
+        }
+    }
+
+}
+
 void Assistant::createPalette()
 {
-    LOG("Start creating palette, please wait...");
     int groupId = paletteGroupId->getValue();
     int presetFrom = paletteFirstPresetId->getValue();
     int presetTo = paletteLastPresetId->getValue();
@@ -100,6 +166,7 @@ void Assistant::createPalette()
     int delta = presetFrom <= presetTo ? 1 : -1;
     bool valid = false;
 
+    LOG("Start creating palette, please wait...");
     for (int i = presetFrom; i != presetTo + delta; i += delta) {
         if (Brain::getInstance()->getPresetById(i) != nullptr) {
             valid = true;

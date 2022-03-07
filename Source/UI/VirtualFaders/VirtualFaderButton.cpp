@@ -36,6 +36,8 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	cuelistAction->addOption("Go", "go");
 	cuelistAction->addOption("Off", "off");
 	cuelistAction->addOption("Flash", "flash");
+	cuelistAction->addOption("Load", "load");
+	cuelistAction->addOption("Loadn and Go", "loadandgo");
 	cuelistAction->addOption("Swop", "swop");
 	cuelistAction->addOption("Go random", "gorandom");
 
@@ -101,6 +103,8 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 			if (action == "go") { targ->go(); }
 			if (action == "off") { targ->off(); }
 			if (action == "flash") { targ->flash(true, false, false); }
+			if (action == "load") { targ->showLoad(); }
+			if (action == "loadandgo") { targ->showLoadAndGo(); }
 			if (action == "swop") { targ->flash(true, false, true); }
 			if (action == "gorandom") { targ->goRandom(); }
 		}

@@ -23,6 +23,11 @@
 
 SubFixtureChannel::SubFixtureChannel()
 {
+	cuelistStack.clear(false);
+	programmerStack.clear(false);
+	effectStack.clear(false);
+	carouselStack.clear(false);
+	cuelistFlashStack.clear(false);
 }
 
 SubFixtureChannel::~SubFixtureChannel()
@@ -126,56 +131,56 @@ void SubFixtureChannel::updateVal(double now) {
 
 void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
 	if (cuelistStack.indexOf(c) >= 0) {
-		cuelistStack.removeAllInstancesOf(c);
+		cuelistStack.removeObject(c);
 	}
 	cuelistStack.add(c);
 }
 
 void SubFixtureChannel::cuelistOutOfStack(Cuelist* c) {
-	cuelistStack.removeAllInstancesOf(c);
+	cuelistStack.removeObject(c);
 }
 
 void SubFixtureChannel::cuelistOnTopOfFlashStack(Cuelist* c) {
 	if (cuelistFlashStack.indexOf(c) >= 0) {
-		cuelistFlashStack.removeAllInstancesOf(c);
+		cuelistFlashStack.removeObject(c);
 	}
 	cuelistFlashStack.add(c);
 }
 
 void SubFixtureChannel::cuelistOutOfFlashStack(Cuelist* c) {
-	cuelistFlashStack.removeAllInstancesOf(c);
+	cuelistFlashStack.removeObject(c);
 }
 
 void SubFixtureChannel::programmerOnTopOfStack(Programmer* p) {
 	if (programmerStack.indexOf(p) >= 0) {
-		programmerStack.removeAllInstancesOf(p);
+		programmerStack.removeObject(p);
 	}
 	programmerStack.add(p);
 }
 
 void SubFixtureChannel::programmerOutOfStack(Programmer* p) {
-	programmerStack.removeAllInstancesOf(p);
+	programmerStack.removeObject(p);
 }
 
 void SubFixtureChannel::effectOnTopOfStack(Effect* f) {
 	if (effectStack.indexOf(f) >= 0) {
-		effectStack.removeAllInstancesOf(f);
+		effectStack.removeObject(f);
 	}
 	effectStack.add(f);
 }
 
 void SubFixtureChannel::effectOutOfStack(Effect* f) {
-	effectStack.removeAllInstancesOf(f);
+	effectStack.removeObject(f);
 }
 
 void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
 	if (carouselStack.indexOf(f) >= 0) {
-		carouselStack.removeAllInstancesOf(f);
+		carouselStack.removeObject(f);
 	}
 	carouselStack.add(f);
 }
 
 void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
-	carouselStack.removeAllInstancesOf(f);
+	carouselStack.removeObject(f);
 }
 

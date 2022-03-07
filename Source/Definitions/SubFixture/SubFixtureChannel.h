@@ -43,11 +43,11 @@ public:
 
     void writeValue(float v);
 
-    Array<Cuelist*> cuelistStack;
-    Array<Programmer*> programmerStack;
-    Array<Effect*> effectStack;
-    Array<Carousel*> carouselStack;
-    Array<Cuelist*> cuelistFlashStack;
+    OwnedArray<Cuelist> cuelistStack;
+    OwnedArray<Programmer> programmerStack;
+    OwnedArray<Effect> effectStack;
+    OwnedArray<Carousel> carouselStack;
+    OwnedArray<Cuelist> cuelistFlashStack;
 
     void updateVal(double now);
 

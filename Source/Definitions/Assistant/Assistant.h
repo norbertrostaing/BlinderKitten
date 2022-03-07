@@ -24,6 +24,16 @@ public:
 
 	void run() override;
 
+	ControllableContainer patcherCC;
+	TargetParameter * patcherFixtureType;
+	IntParameter* patcherAmount;
+	StringParameter * patcherName;
+	IntParameter* patcherFirstId;
+	TargetParameter* patcherInterface;
+	IntParameter* patcherFirstAddress;
+	IntParameter* patcherAddressInterval;
+	Trigger* patcherBtn;
+
 	ControllableContainer paletteMakerCC;
 	IntParameter* paletteGroupId;
 	IntParameter* paletteFirstPresetId;
@@ -37,6 +47,7 @@ public:
 	CommandValueManager masterValue;
 	Trigger* masterBtn;
 
+	bool pleasePatchFixtures = false;
 	bool pleaseCreatePalette = false;
 	bool pleaseCreateMasters = false;
 
@@ -45,6 +56,7 @@ public:
 	void updateDisplay();
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
+	void patchFixtures();
 	void createPalette();
 	void createMasters();
 

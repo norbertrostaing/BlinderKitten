@@ -56,6 +56,18 @@ void CuelistAction::setValueInternal(var value) {
         }
         break;
 
+    case CL_LOAD:
+        if (val > 0) {
+            target->showLoad();
+        }
+        break;
+
+    case CL_LOADANDGO:
+        if (val > 0) {
+            target->showLoadAndGo();
+        }
+        break;
+
     case CL_HTPLEVEL:
         target->setHTPLevel(val);
         break;

@@ -58,6 +58,7 @@ Cuelist::Cuelist(var params) :
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
 	loadBtn = addTrigger("Load", "Choose next cue");
+	loadAndGoBtn = addTrigger("Load and go", "Choose a cue");
 	// flashOnBtn = addTrigger("Flash ON", "release flash");
 	// flashOffBtn = addTrigger("flash Off", "press flash");
 	// swopOnBtn = addTrigger("Swop ON", "press swop");
@@ -177,7 +178,10 @@ void Cuelist::triggerTriggered(Trigger* t) {
 		renumberCues();
 	}
 	else if (t == loadBtn) {
-		CuelistLoadWindow::getInstance()->loadCuelist(this);
+		showLoad();
+	}
+	else if (t == loadAndGoBtn) {
+		showLoadAndGo();
 	}
 	else {}
 }
@@ -629,6 +633,16 @@ void Cuelist::setHTPLevel(float level) {
 
 void Cuelist::setFlashLevel(float level) {
 	FlashLevel->setValue(level);
+}
+
+void Cuelist::showLoad()
+{
+	CuelistLoadWindow::getInstance()->loadCuelist(this, false);
+}
+
+void Cuelist::showLoadAndGo()
+{
+	CuelistLoadWindow::getInstance()->loadCuelist(this, true);
 }
 
 

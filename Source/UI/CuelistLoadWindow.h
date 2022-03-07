@@ -34,8 +34,9 @@ public:
 
     TextButton exitBtn;
     void fillButtons(Cuelist * c);
-    void loadCuelist(Cuelist * c);
+    void loadCuelist(Cuelist * c, bool triggerGoWhenSelected = false);
     void buttonClicked(Button*);
+    bool triggerGo = false;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuelistLoadWindow)

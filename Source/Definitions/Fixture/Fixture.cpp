@@ -47,7 +47,7 @@ Fixture::Fixture(var params) :
 	patchs.selectItemWhenCreated = false;
 	addChildControllableContainer(&patchs);
 
-	Logger::writeToLog("call from constructor");
+	//Logger::writeToLog("call from constructor");
 	Brain::getInstance()->registerFixture(this, id->getValue());
 	checkChildrenSubFixtures();
 
@@ -55,7 +55,7 @@ Fixture::Fixture(var params) :
 }
 
 void Fixture::afterLoadJSONDataInternal() {
-	Logger::writeToLog("call from JSONDataInternal");
+	// Logger::writeToLog("call from JSONDataInternal");
 	checkChildrenSubFixtures();
 }
 
@@ -67,15 +67,13 @@ Fixture::~Fixture()
 			it.getValue()->~SubFixture();
 		}
 	}
-	subFixtures.clear();
-
 }
 
 
 void Fixture::onContainerNiceNameChanged() 
 {
 	BaseItem::onContainerNiceNameChanged();
-	Logger::writeToLog("call from nameChanged");
+	// Logger::writeToLog("call from nameChanged");
 	checkChildrenSubFixtures();
 }
 
@@ -86,7 +84,7 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	}
 	if (p == devTypeParam)
 	{
-		Logger::writeToLog("call from ParamChanged");
+		// Logger::writeToLog("call from ParamChanged");
 		checkChildrenSubFixtures();
 		if (userName->getValue().toString() == "New Fixture") {
 			autoName();

@@ -40,6 +40,7 @@ public:
     Trigger* killBtn;
 
     Trigger* loadBtn;
+    Trigger* loadAndGoBtn;
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
@@ -108,6 +109,9 @@ public:
 
     void setHTPLevel(float level);
     void setFlashLevel(float level);
+
+    void showLoad();
+    void showLoadAndGo();
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

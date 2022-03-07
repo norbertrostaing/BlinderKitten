@@ -39,6 +39,8 @@ VirtualButton::VirtualButton(var params) :
 	cuelistAction->addOption("Off", "off");
 	cuelistAction->addOption("Flash", "flash");
 	cuelistAction->addOption("Swop", "swop");
+	cuelistAction->addOption("Load", "load");
+	cuelistAction->addOption("Load and Go", "loadandgo");
 	cuelistAction->addOption("Go random", "gorandom");
 
 	effectAction = addEnumParameter("Effect action", "");
@@ -93,6 +95,8 @@ void VirtualButton::pressed() {
 			String action = cuelistAction->getValue();
 			if (action == "go") { targ->go(); }
 			if (action == "off") { targ->off(); }
+			if (action == "load") { targ->showLoad(); }
+			if (action == "loadandgo") { targ->showLoadAndGo(); }
 			if (action == "flash") { targ->flash(true, false, false); }
 			if (action == "swop") { targ->flash(true, false, true); }
 			if (action == "gorandom") { targ->goRandom(); }
