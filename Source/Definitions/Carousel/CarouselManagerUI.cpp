@@ -17,7 +17,7 @@ CarouselManagerUI::CarouselManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, CarouselManager::getInstance())
 {
 	addItemText = "Add new Carousel";
-	noItemText = "Carousels allows you add a curve to a value to change it over time";
+	noItemText = "Carousels are a mix between sequence and effect !";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

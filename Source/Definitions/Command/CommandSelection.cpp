@@ -58,8 +58,11 @@ void CommandSelection::updateDisplay()
 
     randSeed = randSeed && mult;
     randNum = randNum && mult;
+    
+    bool isFixture = targetType->getValue() == "fixture";
 
-    bool sub = subSel->getValue();
+
+    bool sub = isFixture && subSel->getValue();
     bool subTh = subThru->getValue();
 
     valueTo -> hideInEditor = !th;
@@ -67,6 +70,7 @@ void CommandSelection::updateDisplay()
     pattern -> hideInEditor = !(mult && pat);
     symmetry -> hideInEditor = !(mult && pat);
 
+    subSel -> hideInEditor = !isFixture;
     subFrom -> hideInEditor = !sub;
     subThru->hideInEditor = !sub;
     subTo->hideInEditor = !(sub && subTh);

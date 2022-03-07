@@ -59,7 +59,7 @@ Cue::Cue(var params) :
 
 Cue::~Cue()
 {
-	LOG("delete cue");
+//	LOG("delete cue");
 }
 
 
@@ -95,7 +95,9 @@ void Cue::computeValues() {
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
 		for (auto it = cs[i]->computedValues.begin(); it != cs[i]->computedValues.end(); it.next()) {
 			SubFixtureChannel* fc = it.getKey();
-			computedValues.set(fc, it.getValue());
+			if (fc != nullptr) {
+				computedValues.set(fc, it.getValue());
+			}
 		}
 	}
 }
@@ -130,11 +132,15 @@ void Cue::update(double now) {
 }
 
 void Cue::endTransition() {
-	if (autoFollow != nullptr && autoFollow->getValue() == "auto") { // bug ici au load
-		double now = Brain::getInstance()->now;
-		TSAutoFollowStart = now;
-		float delay = autoFollowTiming->getValue();
-		TSAutoFollowEnd = now + delay;
-		Brain::getInstance()->pleaseUpdate(this);
+	try {
+		if (autoFollow != nullptr && autoFollow->getValue() == "auto") { // bug ici au load
+			double now = Brain::getInstance()->now;
+			TSAutoFollowStart = now;
+			float delay = autoFollowTiming->getValue();
+			TSAutoFollowEnd = now + delay;
+			Brain::getInstance()->pleaseUpdate(this);
+		}
+	}
+	catch (...) {
 	}
 }

@@ -23,11 +23,11 @@
 
 SubFixtureChannel::SubFixtureChannel()
 {
-	cuelistStack.clear(false);
-	programmerStack.clear(false);
-	effectStack.clear(false);
-	carouselStack.clear(false);
-	cuelistFlashStack.clear(false);
+	cuelistStack.clear();
+	programmerStack.clear();
+	effectStack.clear();
+	carouselStack.clear();
+	cuelistFlashStack.clear();
 }
 
 SubFixtureChannel::~SubFixtureChannel()
@@ -130,57 +130,67 @@ void SubFixtureChannel::updateVal(double now) {
 }
 
 void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
-	if (cuelistStack.indexOf(c) >= 0) {
-		cuelistStack.removeObject(c);
+	while (cuelistStack.indexOf(c) >= 0) {
+		cuelistStack.removeAllInstancesOf(c);
 	}
 	cuelistStack.add(c);
 }
 
 void SubFixtureChannel::cuelistOutOfStack(Cuelist* c) {
-	cuelistStack.removeObject(c);
+	while (cuelistStack.indexOf(c) >= 0) {
+		cuelistStack.removeAllInstancesOf(c);
+	}
 }
 
 void SubFixtureChannel::cuelistOnTopOfFlashStack(Cuelist* c) {
-	if (cuelistFlashStack.indexOf(c) >= 0) {
-		cuelistFlashStack.removeObject(c);
+	while (cuelistFlashStack.indexOf(c) >= 0) {
+		cuelistFlashStack.removeAllInstancesOf(c);
 	}
 	cuelistFlashStack.add(c);
 }
 
 void SubFixtureChannel::cuelistOutOfFlashStack(Cuelist* c) {
-	cuelistFlashStack.removeObject(c);
+	while (cuelistFlashStack.indexOf(c) >= 0) {
+		cuelistFlashStack.removeAllInstancesOf(c);
+	}
 }
 
 void SubFixtureChannel::programmerOnTopOfStack(Programmer* p) {
-	if (programmerStack.indexOf(p) >= 0) {
-		programmerStack.removeObject(p);
+	while (programmerStack.indexOf(p) >= 0) {
+		programmerStack.removeAllInstancesOf(p);
 	}
 	programmerStack.add(p);
 }
 
 void SubFixtureChannel::programmerOutOfStack(Programmer* p) {
-	programmerStack.removeObject(p);
+	while (programmerStack.indexOf(p) >= 0) {
+		programmerStack.removeAllInstancesOf(p);
+	}
 }
 
 void SubFixtureChannel::effectOnTopOfStack(Effect* f) {
-	if (effectStack.indexOf(f) >= 0) {
-		effectStack.removeObject(f);
+	while (effectStack.indexOf(f) >= 0) {
+		effectStack.removeAllInstancesOf(f);
 	}
 	effectStack.add(f);
 }
 
 void SubFixtureChannel::effectOutOfStack(Effect* f) {
-	effectStack.removeObject(f);
+	while (effectStack.indexOf(f) >= 0) {
+		effectStack.removeAllInstancesOf(f);
+	}
 }
 
 void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
-	if (carouselStack.indexOf(f) >= 0) {
-		carouselStack.removeObject(f);
+	while (carouselStack.indexOf(f) >= 0) {
+		carouselStack.removeAllInstancesOf(f);
 	}
 	carouselStack.add(f);
 }
 
 void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
-	carouselStack.removeObject(f);
+	while (carouselStack.indexOf(f) >= 0) {
+		carouselStack.removeAllInstancesOf(f);
+	}
 }
 

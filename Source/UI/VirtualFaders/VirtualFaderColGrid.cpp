@@ -327,7 +327,7 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
             p->processUserInput("VirtualFaderCol");
-            p->processUserInput(String(col));
+            p->processUserInput(String(col+1));
             if (p->userCanPressGo) {
                 p->processUserInput("enter");
             }
@@ -336,7 +336,6 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
     else {
         VirtualFaderCol * vfc = columnToVFC.getReference(col);
         if (vfc != nullptr) {
-            
             VirtualFaderButton* vb = buttonToVFB.getReference(t);
             if (vb != nullptr) {
                 vb->pressed(vfc->targetType->getValue(), vfc->targetId->getValue());
@@ -351,7 +350,6 @@ void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
     Programmer* p = UserInputManager::getInstance()->getProgrammer();
     VirtualFaderCol* vfc = columnToVFC.getReference(col);
     if (vfc != nullptr) {
-
         VirtualFaderButton* vb = buttonToVFB.getReference(t);
         if (vb != nullptr) {
             vb->released(vfc->targetType->getValue(), vfc->targetId->getValue());
@@ -361,6 +359,7 @@ void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
 
 void VirtualFaderColGrid::editCell(int id) {
     if (id < 1 || id > cols) {return; }
+    id = id-1;
     VirtualFaderCol* vf = columnToVFC.getReference(id);
     if (vf == nullptr) {
         vf = VirtualFaderColManager::getInstance()->addItem();
@@ -373,6 +372,7 @@ void VirtualFaderColGrid::editCell(int id) {
 
 void VirtualFaderColGrid::deleteCell(int id) {
     if (id < 1 || id > cols) { return; }
+    id = id - 1;
     VirtualFaderCol* vf = columnToVFC.getReference(id);
     if (vf != nullptr) {
         VirtualFaderColManager::getInstance()->removeItem(vf);
@@ -385,6 +385,8 @@ void VirtualFaderColGrid::moveCell(int idFrom, int idTo) {
     idTo = idTo;
     if (idFrom <= 0 || idFrom > cols) { return; }
     if (idTo <= 0 || idTo > cols) { return; }
+    idFrom = idFrom - 1;
+    idTo = idTo - 1;
     VirtualFaderCol* vf = columnToVFC.getReference(idFrom);
     if (vf != nullptr) {
         vf->colNumber->setValue(idTo);
@@ -397,6 +399,8 @@ void VirtualFaderColGrid::copyCell(int idFrom, int idTo) {
     idTo = idTo;
     if (idFrom <= 0 || idFrom > cols) { return; }
     if (idTo <= 0 || idTo > cols) { return; }
+    idFrom = idFrom - 1;
+    idTo = idTo - 1;
     VirtualFaderCol* vf = columnToVFC.getReference(idFrom);
     if (vf != nullptr) {
         VirtualFaderCol* vfCopy = nullptr;

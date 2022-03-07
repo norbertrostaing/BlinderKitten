@@ -103,7 +103,6 @@ Cuelist::Cuelist(var params) :
 	// currentCue->maxDefaultSearchLevel = 0;
 	// currentCue->targetType = TargetParameter::CONTAINER;
 
-
 	renumberCuesBtn = addTrigger("Renumber cues", "Reset all cues IDs");
 
 	addChildControllableContainer(&cues);
@@ -229,7 +228,7 @@ void Cuelist::go(Cue* c) {
 			for (auto it = tempCue->computedValues.begin(); it != tempCue->computedValues.end(); it.next()) {
 				ChannelValue* temp = it.getValue();
 				if (newActiveValues.contains(it.getKey())) {
-					ChannelValue* current = newActiveValues.getReference(it.getKey());
+					//ChannelValue* current = newActiveValues.getReference(it.getKey());
 					temp->startValue = it.getKey()->postCuelistValue;
 				}
 				else {
@@ -283,34 +282,36 @@ void Cuelist::go(Cue* c) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			if (!newActiveValues.contains(it.getKey())) {
 				ChannelValue* temp = it.getValue();
-
-				float fadeTime = 0;
-				float delay = 0;
-				if (c == nullptr) {
-					fadeTime = (float)offFade->getValue() * 1000;
-					temp->fadeCurve = &offFadeCurve;
-				}
-				else {
-					if (it.getKey()->isHTP) {
-						fadeTime = (float)c->htpOutFade->getValue() * 1000;
-						delay = (float)c->htpOutDelay->getValue() * 1000;
+				if (temp != nullptr) {
+					float fadeTime = 0;
+					float delay = 0;
+					if (c == nullptr) {
+						fadeTime = (float)offFade->getValue() * 1000;
+						temp->fadeCurve = &offFadeCurve;
 					}
 					else {
-						fadeTime = (float)c->ltpFade->getValue() * 1000;
-						delay = (float)c->ltpDelay->getValue() * 1000;
+						if (it.getKey()->isHTP) {
+							fadeTime = (float)c->htpOutFade->getValue() * 1000;
+							delay = (float)c->htpOutDelay->getValue() * 1000;
+						}
+						else {
+							fadeTime = (float)c->ltpFade->getValue() * 1000;
+							delay = (float)c->ltpDelay->getValue() * 1000;
+						}
 					}
+
+					temp->TSInit = now;
+					temp->TSStart = now + delay;
+					temp->TSEnd = now + fadeTime + delay;
+
+					temp->endValue = -1;
+					temp->startValue = temp->value;
+					temp->isEnded = false;
+
+					activeValues.set(it.getKey(), temp);
+					Brain::getInstance()->pleaseUpdate(it.getKey());
 				}
 
-				temp->TSInit = now;
-				temp->TSStart = now + delay;
-				temp->TSEnd = now + fadeTime + delay;
-
-				temp->endValue = -1;
-				temp->startValue = temp->value;
-				temp->isEnded = false;
-
-				activeValues.set(it.getKey(), temp);
-				Brain::getInstance()->pleaseUpdate(it.getKey());
 			}
 		}
 	}

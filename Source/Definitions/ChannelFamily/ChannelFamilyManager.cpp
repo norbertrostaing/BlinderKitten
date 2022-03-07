@@ -45,7 +45,7 @@ void ChannelFamilyManager::onContainerParameterChanged(Parameter* p)
 void ChannelFamilyManager::importData(var data)
 {
     Array<var>* elements = data.getArray();
-
+    if (elements == nullptr) {return;}
     for (var d : *elements) {
         String name = d.getProperty("niceName", "nop").toString();
         bool valid = false;

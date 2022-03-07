@@ -98,11 +98,35 @@ void CarouselRow::computeData() {
     float nLimit = selection.computedSelectedSubFixtures.size();
     int sizeWing = nLimit / totWings;
 
+    Array<SubFixtureChannel*> targetChannels;
+
     for (int i = 1; i <= paramContainer.items.size(); i++) {
         CarouselStep* currentStep = paramContainer.items[i%paramContainer.items.size()];
         CarouselStep* previousStep = paramContainer.items[i-1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();
+            if (!targetChannels.contains(chan)) {targetChannels.add(chan);}
+        }
+    }
+
+    for (int i = 0; i < paramContainer.items.size(); i++) {
+        CarouselStep* currentStep = paramContainer.items[i];
+        for (int ci = 0; ci < targetChannels.size(); ci++) {
+            SubFixtureChannel* chan = targetChannels[ci];
+            if (!currentStep->computedValues.contains(chan)) {
+                ChannelValue* newVal = new ChannelValue();
+                newVal->endValue = -1;
+                currentStep->computedValues.set(chan, newVal);
+            }
+        }
+    }
+
+    for (int i = 1; i <= paramContainer.items.size(); i++) {
+        CarouselStep* currentStep = paramContainer.items[i % paramContainer.items.size()];
+        CarouselStep* previousStep = paramContainer.items[i - 1];
+        for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
+            SubFixtureChannel* chan = it.getKey();
+            ChannelValue* cValue = it.getValue();
             if (!subFixtureChannelOffsets.contains(chan)) {
 
                 int chanIndex = selection.computedSelectedSubFixtures.indexOf(chan->parentSubFixture);
@@ -117,15 +141,13 @@ void CarouselRow::computeData() {
                 // LOG(offset);
                 subFixtureChannelOffsets.set(chan, offset);
             }
-            ChannelValue* cValue = it.getValue();
-            if (!currentStep->computedValues.contains(chan)) {
-                ChannelValue newVal;
-                newVal.endValue = cValue->endValue;
-                currentStep->computedValues.set(chan, &newVal);
-            }
             currentStep->computedValues.getReference(chan)->startValue = cValue->endValue;
         }
+
     }
+
+
+
 
 }
 

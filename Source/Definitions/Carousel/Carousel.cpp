@@ -115,7 +115,9 @@ void Carousel::stop() {
 	isOn = false;
 	isCarouselOn->setValue(false);
 	for (auto it = chanToCarouselRow.begin(); it != chanToCarouselRow.end(); it.next()) {
-		it.getKey()->carouselOutOfStack(this);
+		if (it.getKey() != nullptr) {
+			it.getKey()->carouselOutOfStack(this);
+		}
 	}
 }
 
@@ -194,7 +196,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 			LOG(offset);
 			return currentVal;
 		}
-		ChannelValue* cVal = toApply->computedValues.getReference(fc); //bug ici
+		ChannelValue* cVal = toApply->computedValues.getReference(fc); 
 		if (cVal != nullptr) {
 			float fadeValue = 1;
 			
@@ -205,7 +207,11 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 				fadeValue = toApply->curve.getValueAtPosition(fadeValue);
 			}
 
-			calcValue = jmap(fadeValue, cVal->startValue, cVal->endValue);
+			float start = cVal->startValue;
+			float end = cVal->endValue;
+			start = start == -1 ? currentVal : start;
+			end = end == -1 ? currentVal : end;
+			calcValue = jmap(fadeValue, start, end);
 		}
 
 

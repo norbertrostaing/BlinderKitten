@@ -241,6 +241,12 @@ void BKEngine::clearInternal()
 	InterfaceManager::getInstance()->clear();
 	TimingPresetManager::getInstance()->clear();
 	CurvePresetManager::getInstance()->clear();
+
+	VirtualButtonGrid::getInstance()->initCells();
+	VirtualFaderColGrid::getInstance()->initCells();
+	GroupGridView::getInstance()->updateCells();
+	PresetGridView::getInstance()->updateCells();
+
 }
 
 var BKEngine::getJSONData()

@@ -633,7 +633,11 @@ void Brain::swoppedCuelist(Cuelist* c) {
 }
 
 void Brain::unswoppedCuelist(Cuelist* c) {
-    swoppedCuelists.removeObject(c);
+    
+    while (swoppedCuelists.indexOf(c) >= 0) {
+        swoppedCuelists.removeObject(c);
+    }
+
     isSwopping = swoppedCuelists.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels[i]);
