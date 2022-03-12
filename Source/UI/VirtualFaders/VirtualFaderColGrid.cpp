@@ -156,7 +156,7 @@ void VirtualFaderColGrid::initCells() {
             s->addListener(this);
             s->setTextBoxStyle(Slider::NoTextBox,true,0,0);
             rotaries[x]->add(s);
-            sliderColumnIndex.set(s, x);
+            sliderColumnIndex.set(s, x+1);
             Label * l = new Label();
             addAndMakeVisible(l);
             l->setEditable(false);
@@ -171,7 +171,7 @@ void VirtualFaderColGrid::initCells() {
             addAndMakeVisible(b);
             b->addListener(this);
             aboveButtons[x]->add(b);
-            buttonColumnIndex.set(b, x);
+            buttonColumnIndex.set(b, x+1);
         }
 
         Slider* f = new Slider();
@@ -183,7 +183,7 @@ void VirtualFaderColGrid::initCells() {
         f->addListener(this);
         f->setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
         faders.add(f);
-        sliderColumnIndex.set(f, x);
+        sliderColumnIndex.set(f, x+1);
         Label* l = new Label();
         addAndMakeVisible(l);
         l->setEditable(false);
@@ -197,7 +197,7 @@ void VirtualFaderColGrid::initCells() {
             addAndMakeVisible(b);
             b->addListener(this);
             belowButtons[x]->add(b);
-            buttonColumnIndex.set(b, x);
+            buttonColumnIndex.set(b, x+1);
         }
     }
 
@@ -242,9 +242,10 @@ void VirtualFaderColGrid::fillCells() {
         if ((int)vf->pageNumber->getValue() == page) {
             int c = vf->colNumber->getValue();
             columnToVFC.set(c, vf);
+            c = c - 1;
             String targName = vf->getTargetName();
             String targType = vf->getTargetType();
-            if (c < cols) {
+            if (c>=0 && c < cols) {
                 columnLabels[c]->setText(targName, juce::dontSendNotification);
                 for (int n = 0; n < vf->rotaries.items.size() && n < nAbove; n++) {
                     VirtualFaderSlider* vs = vf->rotaries.items[n];
@@ -327,7 +328,7 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
             p->processUserInput("VirtualFaderCol");
-            p->processUserInput(String(col+1));
+            p->processUserInput(String(col));
             if (p->userCanPressGo) {
                 p->processUserInput("enter");
             }
@@ -359,7 +360,6 @@ void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
 
 void VirtualFaderColGrid::editCell(int id) {
     if (id < 1 || id > cols) {return; }
-    id = id-1;
     VirtualFaderCol* vf = columnToVFC.getReference(id);
     if (vf == nullptr) {
         vf = VirtualFaderColManager::getInstance()->addItem();
@@ -372,7 +372,6 @@ void VirtualFaderColGrid::editCell(int id) {
 
 void VirtualFaderColGrid::deleteCell(int id) {
     if (id < 1 || id > cols) { return; }
-    id = id - 1;
     VirtualFaderCol* vf = columnToVFC.getReference(id);
     if (vf != nullptr) {
         VirtualFaderColManager::getInstance()->removeItem(vf);
@@ -385,8 +384,6 @@ void VirtualFaderColGrid::moveCell(int idFrom, int idTo) {
     idTo = idTo;
     if (idFrom <= 0 || idFrom > cols) { return; }
     if (idTo <= 0 || idTo > cols) { return; }
-    idFrom = idFrom - 1;
-    idTo = idTo - 1;
     VirtualFaderCol* vf = columnToVFC.getReference(idFrom);
     if (vf != nullptr) {
         vf->colNumber->setValue(idTo);
@@ -399,8 +396,6 @@ void VirtualFaderColGrid::copyCell(int idFrom, int idTo) {
     idTo = idTo;
     if (idFrom <= 0 || idFrom > cols) { return; }
     if (idTo <= 0 || idTo > cols) { return; }
-    idFrom = idFrom - 1;
-    idTo = idTo - 1;
     VirtualFaderCol* vf = columnToVFC.getReference(idFrom);
     if (vf != nullptr) {
         VirtualFaderCol* vfCopy = nullptr;

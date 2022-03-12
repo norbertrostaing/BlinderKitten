@@ -201,3 +201,4 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		return text;
 	}
 }
+

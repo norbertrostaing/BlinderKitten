@@ -212,6 +212,14 @@
           <FILE id="lsqSTo" name="EffectAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/EffectAction.cpp"/>
           <FILE id="AD3mke" name="EffectAction.h" compile="0" resource="0" file="Source/Definitions/Actions/EffectAction.h"/>
+          <FILE id="f7okso" name="VirtualButtonAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/VirtualButtonAction.cpp"/>
+          <FILE id="CHLzi3" name="VirtualButtonAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/VirtualButtonAction.h"/>
+          <FILE id="cjwA7K" name="VirtualFaderAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/VirtualFaderAction.cpp"/>
+          <FILE id="co1tht" name="VirtualFaderAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/VirtualFaderAction.h"/>
         </GROUP>
         <GROUP id="{233644E1-12BD-A331-F6AE-C2A52723F793}" name="Assistant">
           <FILE id="qQxHMP" name="Assistant.cpp" compile="1" resource="0" file="Source/Definitions/Assistant/Assistant.cpp"/>

@@ -7,8 +7,8 @@ By the way, you should probably check [Chataigne](https://benjamin.kuperberg.fr/
 
 BlinkderKitten is actually not a production software but just a personnal learning project. The current developement is dependant of my learning process :)
 
-## How does it work ?
 
+## How does it work ?
 BlinderKitten uses some differents objects to help you create wonderful shows :
 - **Channels type** : they are the different kind of DMX channels you wanna use, for example : *intensity*, *red*, *green*, *blue*, *pan*, *tilt*, etc.. They are organised in **Channel Families** like *Dimmers*, *Colors*, *Positions*... 
 You can create / modify / delete types and families like you want.

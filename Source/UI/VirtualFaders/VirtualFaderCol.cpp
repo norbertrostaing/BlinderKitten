@@ -29,7 +29,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 	itemDataType = "VirtualFaderCol";
 
 	pageNumber = addIntParameter("Page number", "", 0,0);
-	colNumber = addIntParameter("Col number", "", 0,0);
+	colNumber = addIntParameter("Col number", "", 1,1);
 
 	targetType = addEnumParameter("Target type", "");
 	targetType->addOption("Cuelist", "cuelist");
@@ -74,7 +74,7 @@ void VirtualFaderCol::updateDisplay() {
 	fader.updateDisplay();
 	for (int i = 0; i < belowButtons.items.size(); i++) { belowButtons.items[i]->updateDisplay(); }
 	
-    //queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 
 }
 
@@ -137,3 +137,5 @@ void VirtualFaderCol::loadJSONDataInternal(var data) {
 	BaseItem::loadJSONDataInternal(data);
 	updateDisplay();
 }
+
+
