@@ -1,6 +1,6 @@
 # BlinderKitten documentation index
 
-## first steps
+## First steps
 
 - My first patch
 - Create group and preset
