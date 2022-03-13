@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   crash_png;
+    const int            crash_pngSize = 96417;
+
     extern const char*   default_blinderlayout;
     const int            default_blinderlayoutSize = 4406;
 
@@ -15,7 +18,7 @@ namespace BinaryData
     const int            icon_pngSize = 85868;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 2;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

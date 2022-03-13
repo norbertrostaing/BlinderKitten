@@ -21,7 +21,7 @@ void BlinderKittenApplication::initialiseInternal(const String &)
 	// AppUpdater::getInstance()->setURLs("http://benjamin.kuperberg.fr/chataigne/releases/update.json", "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
 	// HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/help/");
 
-	// CrashDumpUploader::getInstance()->init("http://benjamin.kuperberg.fr/chataigne/support/crash_report.php",ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize));
+	CrashDumpUploader::getInstance()->init("http://hazlab.fr/BlinderKitten/crash_report.php",ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize));
 
 	// DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
 	

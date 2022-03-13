@@ -5,6 +5,7 @@
               compilerFlagSchemes="NewScheme" headerPath="../../Source" defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;&#10;_ITERATOR_DEBUG_LEVEL=1">
   <MAINGROUP id="K7UlHD" name="BlinderKitten">
     <GROUP id="{64D406CA-52C4-9FE6-20BA-B5AC131530E5}" name="Ressources">
+      <FILE id="aJlTBc" name="crash.png" compile="0" resource="1" file="Ressources/crash.png"/>
       <FILE id="zdOjkI" name="default.blinderlayout" compile="0" resource="1"
             file="Ressources/default.blinderlayout"/>
       <FILE id="qTJiMk" name="icon.png" compile="0" resource="1" file="Ressources/icon.png"/>

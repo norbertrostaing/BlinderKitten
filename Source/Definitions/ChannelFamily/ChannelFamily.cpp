@@ -30,6 +30,7 @@ ChannelFamily::ChannelFamily(var params) :
 	// definitions->addBaseManagerListener(this);
 
 	addChildControllableContainer(&definitions);
+	definitions.selectItemWhenCreated = false;
 
 	var objectsData = params.getProperty("objects", var());
 
