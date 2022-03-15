@@ -7,6 +7,8 @@ By the way, you should probably check [Chataigne](https://benjamin.kuperberg.fr/
 
 BlinkderKitten is actually not a production software but just a personnal learning project. The current developement is dependant of my learning process :)
 
+Please check the [online documentation](https://norbertrostaing.gitbook.io/blinderkitten/).
+
 
 ## How does it work ?
 BlinderKitten uses some differents objects to help you create wonderful shows :
