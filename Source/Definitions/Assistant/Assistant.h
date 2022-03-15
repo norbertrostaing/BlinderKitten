@@ -47,9 +47,18 @@ public:
 	CommandValueManager masterValue;
 	Trigger* masterBtn;
 
+	ControllableContainer midiMapperCC;
+	TargetParameter* midiMapperTargetInterface;
+	EnumParameter* midiMapperTargetType = nullptr;
+	IntParameter* midiMapperTargetId;
+	IntParameter* midiMapperPageNumber;
+	Trigger* midiMapperBtn;
+
+
 	bool pleasePatchFixtures = false;
 	bool pleaseCreatePalette = false;
 	bool pleaseCreateMasters = false;
+	bool pleaseCreateMidiMappings = false;
 
 	void triggerTriggered(Trigger* t);
 	void onContainerParameterChangedInternal(Parameter* p);
@@ -59,5 +68,6 @@ public:
 	void patchFixtures();
 	void createPalette();
 	void createMasters();
+	void createMidiMappings();
 
 };

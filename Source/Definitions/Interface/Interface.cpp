@@ -29,3 +29,8 @@ InterfaceUI* Interface::createUI()
 {
     return new InterfaceUI(this);
 }
+
+bool Interface::isMidiInterface(Interface* i)
+{
+    return false;
+}

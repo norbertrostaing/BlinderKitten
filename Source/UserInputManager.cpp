@@ -45,7 +45,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 {
 	StringArray aList;
 	aList.addTokens(m.getAddressPattern().toString(), "/", "\"");
-	LOG("Yeah baby" + m.getAddressPattern().toString());
+	// LOG("Yeah baby" + m.getAddressPattern().toString());
 	if (aList.size() < 3) return;
 
 	String firstWord = aList[1].toLowerCase();

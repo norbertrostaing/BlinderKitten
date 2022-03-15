@@ -16,7 +16,7 @@ class CuelistAction :
     public Action
 {
 public:
-    CuelistAction(var params);
+    CuelistAction(var params = var());
     ~CuelistAction();
 
     enum ActionType { CL_GO, CL_OFF, CL_HTPLEVEL, CL_FLASH, CL_SWOP, CL_LOAD, CL_LOADANDGO, CL_FLASHLEVEL, CL_GORANDOM};

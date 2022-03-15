@@ -70,8 +70,8 @@ public:
 
     Trigger* renumberCuesBtn;
 
-    Cue* cueA;
-    Cue* cueB;
+    Cue* cueA = nullptr;
+    Cue* cueB = nullptr;
 
     float xFade = 0;
     double currentTimeElapsed = 0;

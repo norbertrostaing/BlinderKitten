@@ -127,18 +127,18 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 			if (action == "taptempo") { targ->tapTempo(); }
 		}
 	}
-
 }
 
 void VirtualFaderButton::released(String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
 	int targId = targetId->getValue();
-	if (targId == 0) { return; }
 
 	if (targType == "column") {
 		targType = colTargetType;
 		targId = colTargetId;
 	}
+
+	if (targId == 0) { return; }
 
 	if (targType == "cuelist") {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);

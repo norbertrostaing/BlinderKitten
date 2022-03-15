@@ -32,4 +32,6 @@ public:
     virtual ControllableContainer* getInterfaceParams() { return new ControllableContainer("Interface parameters"); }
 
     virtual InterfaceUI* createUI();
+
+    static bool isMidiInterface(Interface* i);
 };

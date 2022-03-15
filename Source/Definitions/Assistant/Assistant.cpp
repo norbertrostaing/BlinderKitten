@@ -19,17 +19,23 @@
 #include "Definitions/Command/CommandValueManager.h";
 #include "Definitions/Command/CommandValue.h";
 #include "Definitions/Interface/InterfaceManager.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
 #include "Definitions/FixtureType/FixtureTypeManager.h"
 #include "Definitions/Fixture/FixtureManager.h"
 #include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Actions/CuelistAction.h"
+#include "Definitions/Actions/EffectAction.h"
+#include "Definitions/Actions/CarouselAction.h"
 
 juce_ImplementSingleton(Assistant)
+
 
 Assistant::Assistant() :
 	BaseItem("Offline Lighting General Assistant"),
     patcherCC("Patch Helper"),
     paletteMakerCC("Palette maker"),
     masterMakerCC("Masters maker"),
+    midiMapperCC("Midi mappings"),
     Thread("Assistant")
 {
     updateDisplay(); 
@@ -60,13 +66,46 @@ Assistant::Assistant() :
     masterMakerCC.addChildControllableContainer(&masterValue);
     masterBtn = masterMakerCC.addTrigger("Create Masters", "create a master cuelist for each group with these values");
     addChildControllableContainer(&masterMakerCC);
+    
+    midiMapperTargetInterface = midiMapperCC.addTargetParameter("Midi interface", "Midi interface to connect your new mapping, let empty to create a new one", InterfaceManager::getInstance());
+    midiMapperTargetInterface->maxDefaultSearchLevel = 0;
+    midiMapperTargetInterface->targetType = TargetParameter::CONTAINER;
+    // midiMapperTargetInterface->typesFilter.add("MIDIInterface");
+    addChildControllableContainer(&midiMapperCC);
+    midiMapperTargetType = midiMapperCC.addEnumParameter("Target Type","Type of the midim mapping target");
+    midiMapperTargetType->addOption("Cuelist", "Cuelist");
+    midiMapperTargetType->addOption("Effect", "Effect");
+    midiMapperTargetType->addOption("Carousel", "Carousel");
+    midiMapperTargetType->addOption("Input Panel", "Input Panel");
+    midiMapperTargetType->addOption("Virtual buttons", "Virtual Buttons");
+    midiMapperTargetType->addOption("Virtual faders", "Virtual Faders");
+    midiMapperTargetId = midiMapperCC.addIntParameter("Target ID","",0,0);
+    midiMapperPageNumber = midiMapperCC.addIntParameter("Page number","0 means current page",0,0);
+    midiMapperBtn = midiMapperCC.addTrigger("Create Mappings", "Create mappings for desired target");
 
-
+    updateDisplay();
 }
 
 void Assistant::updateDisplay() {
+    if (midiMapperTargetType != nullptr) {
+        String midiType = midiMapperTargetType->getValue();
+        if (midiType == "virtualButtons" || midiType == "virtualFaders") {
+            midiMapperTargetId->hideInEditor = true;
+            midiMapperPageNumber->hideInEditor = false;
+        }
+        else if (midiType == "inputPanel" ) {
+            midiMapperTargetId->hideInEditor = true;
+            midiMapperPageNumber->hideInEditor = true;
+        }
+        else {
+            midiMapperTargetId->hideInEditor = false;
+            midiMapperPageNumber->hideInEditor = true;
+        }
+    }   
+
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
+
 
 void Assistant::onContainerParameterChangedInternal(Parameter* p) {
     // updateDisplay();
@@ -90,6 +129,10 @@ void Assistant::run()
         pleaseCreateMasters = false;
         createMasters();
     }
+    if (pleaseCreateMidiMappings) {
+        pleaseCreateMidiMappings = false;
+        createMidiMappings();
+    }
 }
 
 void Assistant::triggerTriggered(Trigger* t) {
@@ -100,13 +143,20 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
         pleasePatchFixtures = true;
         startThread(1);
     }
-    if ((Trigger*)c == paletteBtn) {
+    else if ((Trigger*)c == paletteBtn) {
         pleaseCreatePalette = true;
         startThread(1);
     }
-    if ((Trigger*)c == masterBtn) {
+    else if ((Trigger*)c == masterBtn) {
         pleaseCreateMasters = true;
         startThread(1);
+    }
+    else if ((Trigger*)c == midiMapperBtn) {
+        pleaseCreateMidiMappings = true;
+        startThread(1);
+    }
+    else if (c == midiMapperTargetType) {
+        updateDisplay();
     }
 }
 
@@ -210,8 +260,6 @@ void Assistant::createPalette()
     LOG("Palette created :)");
 
 
-    // create HERE;
-
 }
 
 
@@ -256,6 +304,76 @@ void Assistant::createMasters()
     }
 
     LOG("Masters created :)");
+
+}
+
+void Assistant::createMidiMappings()
+{
+    MIDIInterface* targetInterface = dynamic_cast<MIDIInterface*>(midiMapperTargetInterface->targetContainer.get());
+    bool changeInterfaceName = false;
+
+    if (targetInterface == nullptr || targetInterface->getTypeString()!="MIDI") {
+    changeInterfaceName = true;
+        targetInterface = new MIDIInterface();
+        InterfaceManager::getInstance()->addItem(targetInterface);
+        targetInterface->setNiceName("Interface gros");
+    }
+    
+    String targetType = midiMapperTargetType->getValue();
+    if (targetType == "Cuelist" || targetType == "Effect" || targetType == "Carousel") {
+        int targetId = midiMapperTargetId->getValue();
+        if (targetId == 0) { return; }
+
+        for (int i = 0; i < ActionFactory::getInstance()->defs.size(); i++) {
+            FactorySimpleParametricDefinition<Action>* t = (FactorySimpleParametricDefinition<Action>*)ActionFactory::getInstance()->defs[i];
+            if (t->menuPath == targetType) {
+                MIDIMapping* m = targetInterface->mappingManager.addItem();
+                m->setNiceName(targetType +" " + String(targetId) + " " + String(t->type));
+                if (targetType == "Cuelist") {
+                    CuelistAction* a = new CuelistAction();
+                    a->actionType = (CuelistAction::ActionType)(int)t->params.getProperty("actionType", "");
+                    a->cuelistId->setValue(targetId);
+                    a->setNiceName(t->type);
+                    m->actionManager.addItem(a);
+                } else if (targetType == "Effect") {
+                    EffectAction* a = new EffectAction();
+                    a->actionType = (EffectAction::ActionType)(int)t->params.getProperty("actionType", "");
+                    a->targetId->setValue(targetId);
+                    a->setNiceName(t->type);
+                    m->actionManager.addItem(a);
+                } else if (targetType == "Cuelist") {
+                    CarouselAction* a = new CarouselAction();
+                    a->actionType = (CarouselAction::ActionType)(int)t->params.getProperty("actionType", "");
+                    a->targetId->setValue(targetId);
+                    a->setNiceName(t->type);
+                    m->actionManager.addItem(a);
+                } 
+
+            }
+        }
+    }
+    else if(targetType == "inputPanel") {
+
+    }
+    else if (targetType == "inputPanel") {
+
+    }
+    else if (targetType == "inputPanel") {
+
+    }
+    else if (targetType == "inputPanel") {
+
+    }
+    else if (targetType == "inputPanel") {
+
+    }
+    else if (targetType == "inputPanel") {
+
+    }
+    else if (targetType == "inputPanel") {
+
+    }
+
 
 }
 

@@ -16,7 +16,7 @@ class CarouselAction :
     public Action
 {
 public:
-    CarouselAction(var params);
+    CarouselAction(var params = var());
     ~CarouselAction();
 
     enum ActionType { CAR_START, CAR_STOP, CAR_SIZE, CAR_SPEED, CAR_TAPTEMPO };
