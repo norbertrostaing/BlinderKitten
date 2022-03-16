@@ -31,6 +31,7 @@ public:
     Brain();
     ~Brain();
     void clear();
+    void clearUpdates();
 
     HashMap<int, SubFixture*>SubFixtures;
     HashMap<int, Group*>groups;

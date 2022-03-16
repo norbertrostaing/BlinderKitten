@@ -226,6 +226,9 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	Brain::getInstance()->stopThread(1);
+	Brain::getInstance()->clear();
+
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
@@ -246,6 +249,8 @@ void BKEngine::clearInternal()
 	VirtualFaderColGrid::getInstance()->initCells();
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
+	Brain::getInstance()->startThread();
+
 
 }
 
@@ -440,6 +445,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 	VirtualFaderColGrid::getInstance()->page = 1;
 	VirtualFaderColGrid::getInstance()->initCells();
+	Brain::getInstance()->clearUpdates();
 	Brain::getInstance()->startThread();
 
 }

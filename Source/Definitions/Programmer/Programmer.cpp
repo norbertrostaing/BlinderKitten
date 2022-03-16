@@ -393,7 +393,9 @@ void Programmer::processUserInput(String s) {
 	checkCurrentUserCommand();
 	currentUserCommand->getCommandAsTexts();
 	if (s == "clear") {
-		commands.removeItem(currentUserCommand);
+		if (commands.items.size() > 0 && currentUserCommand != nullptr) {
+			commands.removeItem(currentUserCommand);
+		}
 		if (commands.items.size() == 0) {
 			commands.addItem();
 		}
@@ -593,6 +595,9 @@ void Programmer::resetCli() {
 }
 
 void Programmer::checkCurrentUserCommand() {
+	if (currentUserCommand != nullptr && currentUserCommand->toDelete) {
+		currentUserCommand = nullptr;
+	}
 	if (currentUserCommand == nullptr) {
 		if (commands.items.size() > 0) {
 			currentUserCommand = commands.items[0];
@@ -600,6 +605,5 @@ void Programmer::checkCurrentUserCommand() {
 		else {
 			currentUserCommand = commands.addItem();
 		}
-	}
-
+	} 
 }

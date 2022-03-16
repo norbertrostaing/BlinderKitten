@@ -76,9 +76,9 @@ Assistant::Assistant() :
     midiMapperTargetType->addOption("Cuelist", "Cuelist");
     midiMapperTargetType->addOption("Effect", "Effect");
     midiMapperTargetType->addOption("Carousel", "Carousel");
-    midiMapperTargetType->addOption("Input Panel", "Input Panel");
-    midiMapperTargetType->addOption("Virtual buttons", "Virtual Buttons");
-    midiMapperTargetType->addOption("Virtual faders", "Virtual Faders");
+    //midiMapperTargetType->addOption("Input Panel", "Input Panel");
+    //midiMapperTargetType->addOption("Virtual buttons", "Virtual Buttons");
+    //midiMapperTargetType->addOption("Virtual faders", "Virtual Faders");
     midiMapperTargetId = midiMapperCC.addIntParameter("Target ID","",0,0);
     midiMapperPageNumber = midiMapperCC.addIntParameter("Page number","0 means current page",0,0);
     midiMapperBtn = midiMapperCC.addTrigger("Create Mappings", "Create mappings for desired target");
@@ -316,65 +316,74 @@ void Assistant::createMidiMappings()
     changeInterfaceName = true;
         targetInterface = new MIDIInterface();
         InterfaceManager::getInstance()->addItem(targetInterface);
-        targetInterface->setNiceName("Interface gros");
+        targetInterface->setNiceName("Auto mapped midi");
     }
     
     String targetType = midiMapperTargetType->getValue();
-    if (targetType == "Cuelist" || targetType == "Effect" || targetType == "Carousel") {
+    if (targetType == "Cuelist") {
         int targetId = midiMapperTargetId->getValue();
         if (targetId == 0) { return; }
 
         for (int i = 0; i < ActionFactory::getInstance()->defs.size(); i++) {
-            FactorySimpleParametricDefinition<Action>* t = (FactorySimpleParametricDefinition<Action>*)ActionFactory::getInstance()->defs[i];
+            FactorySimpleParametricDefinition<CuelistAction>* t = (FactorySimpleParametricDefinition<CuelistAction>*)ActionFactory::getInstance()->defs[i];
             if (t->menuPath == targetType) {
                 MIDIMapping* m = targetInterface->mappingManager.addItem();
                 m->setNiceName(targetType +" " + String(targetId) + " " + String(t->type));
-                if (targetType == "Cuelist") {
-                    CuelistAction* a = new CuelistAction();
-                    a->actionType = (CuelistAction::ActionType)(int)t->params.getProperty("actionType", "");
-                    a->cuelistId->setValue(targetId);
-                    a->setNiceName(t->type);
-                    m->actionManager.addItem(a);
-                } else if (targetType == "Effect") {
-                    EffectAction* a = new EffectAction();
-                    a->actionType = (EffectAction::ActionType)(int)t->params.getProperty("actionType", "");
-                    a->targetId->setValue(targetId);
-                    a->setNiceName(t->type);
-                    m->actionManager.addItem(a);
-                } else if (targetType == "Cuelist") {
-                    CarouselAction* a = new CarouselAction();
-                    a->actionType = (CarouselAction::ActionType)(int)t->params.getProperty("actionType", "");
-                    a->targetId->setValue(targetId);
-                    a->setNiceName(t->type);
-                    m->actionManager.addItem(a);
-                } 
-
+                DynamicObject* obj = new DynamicObject();
+                obj->setProperty("type", t->type);
+                obj->setProperty("actionType", (EffectAction::ActionType)(int)t->params.getProperty("actionType", ""));
+                CuelistAction* a = CuelistAction::create(var(obj));
+                a->cuelistId->setValue(targetId);
+                a->setNiceName(t->type);
+                m->actionManager.addItem(a);
+                m->editorIsCollapsed = true;
             }
         }
     }
-    else if(targetType == "inputPanel") {
+    else if (targetType == "Effect") {
+        int targetId = midiMapperTargetId->getValue();
+        if (targetId == 0) { return; }
+
+        for (int i = 0; i < ActionFactory::getInstance()->defs.size(); i++) {
+            FactorySimpleParametricDefinition<EffectAction>* t = (FactorySimpleParametricDefinition<EffectAction>*)ActionFactory::getInstance()->defs[i];
+            if (t->menuPath == targetType) {
+                MIDIMapping* m = targetInterface->mappingManager.addItem();
+                m->setNiceName(targetType +" " + String(targetId) + " " + String(t->type));
+                DynamicObject* obj = new DynamicObject();
+                obj->setProperty("type", t->type);
+                obj->setProperty("actionType", (EffectAction::ActionType)(int)t->params.getProperty("actionType", ""));
+                EffectAction* a = EffectAction::create(var(obj));
+                a->targetId->setValue(targetId);
+                a->setNiceName(t->type);
+                m->actionManager.addItem(a);
+                m->editorIsCollapsed = true;
+            }
+        }
+    }
+    else if (targetType == "Carousel") {
+        int targetId = midiMapperTargetId->getValue();
+        if (targetId == 0) { return; }
+
+        for (int i = 0; i < ActionFactory::getInstance()->defs.size(); i++) {
+            FactorySimpleParametricDefinition<CarouselAction>* t = (FactorySimpleParametricDefinition<CarouselAction>*)ActionFactory::getInstance()->defs[i];
+            if (t->menuPath == targetType) {
+                MIDIMapping* m = targetInterface->mappingManager.addItem();
+                m->setNiceName(targetType +" " + String(targetId) + " " + String(t->type));
+                DynamicObject* obj = new DynamicObject();
+                obj->setProperty("type", t->type);
+                obj->setProperty("actionType", (CarouselAction::ActionType)(int)t->params.getProperty("actionType", ""));
+                CarouselAction* a = CarouselAction::create(var(obj));
+                a->targetId->setValue(targetId);
+                a->setNiceName(t->type);
+                m->actionManager.addItem(a);
+                m->editorIsCollapsed = true;
+            }
+        }
+    }
+    else if(targetType == "Input Panel") {
 
     }
-    else if (targetType == "inputPanel") {
-
-    }
-    else if (targetType == "inputPanel") {
-
-    }
-    else if (targetType == "inputPanel") {
-
-    }
-    else if (targetType == "inputPanel") {
-
-    }
-    else if (targetType == "inputPanel") {
-
-    }
-    else if (targetType == "inputPanel") {
-
-    }
-
-
+    targetInterface->selectThis();
 }
 
 

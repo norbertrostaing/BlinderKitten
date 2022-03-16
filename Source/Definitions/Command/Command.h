@@ -42,6 +42,7 @@ public:
     CommandTiming timing;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    bool toDelete = false;
 
     String getTypeString() const override { return objectType; }
     void parameterValueChanged(Parameter* p);

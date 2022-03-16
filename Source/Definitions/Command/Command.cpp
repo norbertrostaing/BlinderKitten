@@ -50,6 +50,7 @@ Command::Command(var params) :
 
 Command::~Command()
 {
+	toDelete = true;
 }
 
 void Command::updateDisplay() {

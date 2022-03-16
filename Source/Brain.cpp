@@ -50,6 +50,22 @@ void Brain::clear()
     effectPoolWaiting.clear(false);
     carouselPoolUpdating.clear(false);
     carouselPoolWaiting.clear(false);
+}
+
+void Brain::clearUpdates()
+{
+    cuelistPoolUpdating.clear(false);
+    cuelistPoolWaiting.clear(false);
+    SubFixtureChannelPoolUpdating.clear(false);
+    SubFixtureChannelPoolWaiting.clear(false);
+    cuePoolUpdating.clear(false);
+    cuePoolWaiting.clear(false);
+    programmerPoolUpdating.clear(false);
+    programmerPoolWaiting.clear(false);
+    effectPoolUpdating.clear(false);
+    effectPoolWaiting.clear(false);
+    carouselPoolUpdating.clear(false);
+    carouselPoolWaiting.clear(false);
 
 }
 
