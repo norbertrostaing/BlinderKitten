@@ -35,22 +35,27 @@ Encoders::Encoders():
     addAndMakeVisible(&btnMode);
     btnMode.addListener(this);
     btnMode.setButtonText("Val");
+    btnMode.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&bigMoveLeftBtn);
     bigMoveLeftBtn.addListener(this);
     bigMoveLeftBtn.setButtonText("<<");
+    bigMoveLeftBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&littleMoveLeftBtn);
     littleMoveLeftBtn.addListener(this);
     littleMoveLeftBtn.setButtonText("<");
+    littleMoveLeftBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&bigMoveRightBtn);
     bigMoveRightBtn.addListener(this);
     bigMoveRightBtn.setButtonText(">>");
+    bigMoveRightBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&littleMoveRightBtn);
     littleMoveRightBtn.addListener(this);
     littleMoveRightBtn.setButtonText(">");
+    littleMoveRightBtn.setWantsKeyboardFocus(false);
 
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
@@ -61,6 +66,7 @@ Encoders::Encoders():
         s->setColour(Slider::rotarySliderFillColourId, Colour(63,63,63));
         s->setNumDecimalPlacesToDisplay(5);
         s->addListener(this);
+        s->setWantsKeyboardFocus(false);
         encoders.add(s);
 
         Label* l = new Label();
@@ -68,6 +74,7 @@ Encoders::Encoders():
         l->setText("", juce::dontSendNotification);
         l->attachToComponent(s, false);
         labels.add(l);
+        l->setWantsKeyboardFocus(false);
     }
 
 }

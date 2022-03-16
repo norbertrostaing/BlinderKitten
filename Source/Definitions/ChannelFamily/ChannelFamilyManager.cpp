@@ -47,17 +47,22 @@ void ChannelFamilyManager::importData(var data)
     Array<var>* elements = data.getArray();
     if (elements == nullptr) {return;}
     for (var d : *elements) {
-        String name = d.getProperty("niceName", "nop").toString();
+        String name = d.getProperty("niceName", "nop").toString().trim();
         bool valid = false;
         ChannelFamily* cf = nullptr;
         for (int i = 0; i < items.size(); i++) {
-            if (items[i]->niceName == name) {
+            if (items[i]->niceName.trim() == name) {
                 cf = items[i];
+                LOG("found !");
             }
         }
 
+        LOG("test "+name);
         if (cf == nullptr) {
-            addItemsFromData(data);
+            LOG("add all items : "+ name);
+            var temp = var();
+            temp.append(d);
+            addItemsFromData(temp);
         }
         else {
             Array<var>* childItems = d.getProperty("containers", var()).getProperty("channelTypes", var()).getProperty("items", var()).getArray();
@@ -72,7 +77,6 @@ void ChannelFamilyManager::importData(var data)
                 if (!alreadyHere) {
                     cf->definitions.addItemFromData(ct);
                 }
-                // LOG(ct.getProperty("niceName", "plop").toString());
             }
         }
     }
