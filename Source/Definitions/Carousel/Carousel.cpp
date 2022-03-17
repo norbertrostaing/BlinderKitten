@@ -16,6 +16,7 @@
 #include "CarouselManager.h"
 #include "../CurvePreset/CurvePreset.h"
 #include "../ChannelValue.h"
+#include "UI/GridView/CarouselGridView.h"
 
 Carousel::Carousel(var params) :
 	BaseItem(params.getProperty("name", "Carousel")),
@@ -77,6 +78,7 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
+		CarouselGridView::getInstance()->updateCells();
 	}
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {

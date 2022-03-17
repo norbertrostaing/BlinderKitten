@@ -15,6 +15,7 @@
 #include "../../Brain.h"
 #include "EffectManager.h"
 #include "../CurvePreset/CurvePreset.h"
+#include "UI/GridView/EffectGridView.h"
 
 Effect::Effect(var params) :
 	BaseItem(params.getProperty("name", "Effect")),
@@ -75,6 +76,7 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
+		EffectGridView::getInstance()->updateCells();
 	}
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {

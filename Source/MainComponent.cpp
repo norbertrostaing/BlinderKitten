@@ -20,6 +20,9 @@
 
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
+#include "UI/GridView/CuelistGridView.h"
+#include "UI/GridView/EffectGridView.h"
+#include "UI/GridView/CarouselGridView.h"
 
 #include "UI/VirtualButtons/VirtualButtonManagerUI.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
@@ -107,8 +110,11 @@ void MainContentComponent::init()
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Input Panel", &InputPanelUI::create));
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Group Grid View", &GroupGridViewUI::create));
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Preset Grid View", &PresetGridViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Group Grid", &GroupGridViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Preset Grid", &PresetGridViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelist Grid", &CuelistGridViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effect Grid", &EffectGridViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousel Grid", &CarouselGridViewUI::create));
 
     // ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons", &VirtualButtonManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons grid", &VirtualButtonGridUI::create));

@@ -67,6 +67,8 @@ public:
     void moveCell(int idFrom, int idTo);
     void copyCell(int idFrom, int idTo);
 
+    VirtualButton* getVirtualButton(int index, bool create = false);
+
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VirtualButtonGrid)

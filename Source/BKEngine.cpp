@@ -56,6 +56,9 @@
 
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
+#include "UI/GridView/CuelistGridView.h"
+#include "UI/GridView/EffectGridView.h"
+#include "UI/GridView/CarouselGridView.h"
 
 #include "UI/VirtualButtons/VirtualButtonManager.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
@@ -132,6 +135,9 @@ BKEngine::BKEngine() :
 	InputPanel::getInstance()->engine = this;
 	GroupGridView::getInstance()->engine = this;
 	PresetGridView::getInstance()->engine = this;
+	CuelistGridView::getInstance()->engine = this;
+	EffectGridView::getInstance()->engine = this;
+	CarouselGridView::getInstance()->engine = this;
 
 	VirtualButtonGrid::getInstance()->engine = this;
 	VirtualButtonGrid::getInstance()->initCells();
@@ -209,6 +215,9 @@ BKEngine::~BKEngine()
 
 	GroupGridView::deleteInstance();
 	PresetGridView::deleteInstance();
+	CuelistGridView::deleteInstance();
+	EffectGridView::deleteInstance();
+	CarouselGridView::deleteInstance();
 
 	CommandLine::deleteInstance();
 	Encoders::deleteInstance();
@@ -249,6 +258,9 @@ void BKEngine::clearInternal()
 	VirtualFaderColGrid::getInstance()->initCells();
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
+	CuelistGridView::getInstance()->updateCells();
+	EffectGridView::getInstance()->updateCells();
+	CarouselGridView::getInstance()->updateCells();
 	Brain::getInstance()->startThread();
 
 
@@ -439,6 +451,9 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
+	CuelistGridView::getInstance()->updateCells();
+	EffectGridView::getInstance()->updateCells();
+	CarouselGridView::getInstance()->updateCells();
 
 	VirtualButtonGrid::getInstance()->page = 1;
 	VirtualButtonGrid::getInstance()->initCells();
@@ -501,6 +516,9 @@ void BKEngine::importSelection(File f)
 
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
+	CuelistGridView::getInstance()->updateCells();
+	EffectGridView::getInstance()->updateCells();
+	CarouselGridView::getInstance()->updateCells();
 }
 
 void BKEngine::exportSelection()

@@ -44,6 +44,9 @@
 
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
+#include "UI/GridView/CuelistGridView.h"
+#include "UI/GridView/EffectGridView.h"
+#include "UI/GridView/CarouselGridView.h"
 
 
 
@@ -57,6 +60,8 @@ DataTransferManager::DataTransferManager() :
     sourceType->addOption("Preset", "preset");
     // sourceType->addOption("Timing Preset", "TimingPreset");
     sourceType->addOption("Cuelist", "cuelist");
+    sourceType->addOption("Effect", "effect");
+    sourceType->addOption("Carousel", "carousel");
     sourceType->addOption("Programmer", "programmer");
     sourceType->addOption("Virtual Button", "virtualbutton");
     sourceType->addOption("Virtual Fader", "virtualfadercol");
@@ -66,6 +71,8 @@ DataTransferManager::DataTransferManager() :
     targetType->addOption("Preset", "preset");
     // targetType->addOption("Timing Preset", "TimingPreset");
     targetType->addOption("Cuelist", "cuelist");
+    targetType->addOption("Effect", "effect");
+    targetType->addOption("Carousel", "carousel");
     targetType->addOption("Programmer", "programmer");
     targetType->addOption("Virtual Button", "virtualbutton");
     targetType->addOption("Virtual Fader", "virtualfadercol");
@@ -123,7 +130,6 @@ void DataTransferManager::execute() {
     bool valid = false;
     int sId = sourceId->getValue();
     int tId = targetUserId->getValue();
-
     if (srcType == "programmer") {
         Programmer* source = Brain::getInstance()->getProgrammerById(sourceId->getValue());
         if (source == nullptr) { LOG("Invalid Programmer ID"); return; }
@@ -148,6 +154,7 @@ void DataTransferManager::execute() {
                     newSel->loadJSONData(selection->getJSONData());
                 }
             }
+            target->selectThis();
         }
         else if (trgType == "preset") {
             valid = true;
@@ -205,6 +212,7 @@ void DataTransferManager::execute() {
                     pv->paramValue->setValue(cValue->endValue);
                 }
             target->updateDisplay();
+            target->selectThis();
             }
         }
         else if (trgType == "cuelist") {
@@ -243,6 +251,7 @@ void DataTransferManager::execute() {
                 Command* c = targetCue->commands.addItem();
                 c->loadJSONData(source->commands.items[i]->getJSONData());
             }
+            target->selectThis();
         }
 
     }
@@ -255,8 +264,81 @@ void DataTransferManager::execute() {
             Cuelist* trg = Brain::getInstance()->getCuelistById(tId);
             if (trg == nullptr) {
                 trg = CuelistManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(tId);
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
             }
+        }
+        else if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("cuelist");
+            trg->selectThis();
+        }
+        else if (trgType == "virtualfadercol") {
+            valid = true;
+            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("cuelist");
+            trg->selectThis();
+        }
+    }
+    else if (srcType == "effect") {
+        if (trgType == "effect") {
+            valid = true;
+            Effect* src = Brain::getInstance()->getEffectById(sId);
+            Effect* trg = Brain::getInstance()->getEffectById(tId);
+            if (trg == nullptr) {
+                trg = EffectManager::getInstance()->addItemFromData(src->getJSONData());
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
+            }
+        }
+        else if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("effect");
+            trg->selectThis();
+        }
+        else if (trgType == "virtualfadercol") {
+            valid = true;
+            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("effect");
+            trg->selectThis();
+        }
+    }
+    else if (srcType == "carousel") {
+        if (trgType == "carousel") {
+            valid = true;
+            Carousel* src = Brain::getInstance()->getCarouselById(sId);
+            Carousel* trg = Brain::getInstance()->getCarouselById(tId);
+            if (trg == nullptr) {
+                trg = CarouselManager::getInstance()->addItemFromData(src->getJSONData());
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
+            }
+        }
+        else if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("carousel");
+            trg->selectThis();
+        }
+        else if (trgType == "virtualfadercol") {
+            valid = true;
+            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("carousel");
+            trg->selectThis();
         }
     }
     else if (srcType == "preset") {
@@ -266,10 +348,12 @@ void DataTransferManager::execute() {
             Preset* trg = Brain::getInstance()->getPresetById(tId);
             if (trg == nullptr) {
                 trg = PresetManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(tId);
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
             }
         }
-
     }
     else if (srcType == "group") {
         if (trgType == "group") {
@@ -278,7 +362,10 @@ void DataTransferManager::execute() {
             Group* trg = Brain::getInstance()->getGroupById(tId);
             if (trg == nullptr) {
                 trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(tId);
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
             }
         }
 
@@ -367,15 +454,15 @@ void DataTransferManager::deleteObject(String type, int id) {
     }
     else if (type == "cuelist") {
         Cuelist* target = Brain::getInstance()->getCuelistById(id);
-        if (target != nullptr) { CuelistManager::getInstance()->removeItem(target); }
+        if (target != nullptr) { CuelistManager::getInstance()->removeItem(target); CuelistGridView::getInstance()->updateCells();}
     }
     else if (type == "effect") {
         Effect* target = Brain::getInstance()->getEffectById(id);
-        if (target != nullptr) { EffectManager::getInstance()->removeItem(target); }
+        if (target != nullptr) { EffectManager::getInstance()->removeItem(target); EffectGridView::getInstance()->updateCells();}
     }
     else if (type == "carousel") {
         Carousel* target = Brain::getInstance()->getCarouselById(id);
-        if (target != nullptr) { CarouselManager::getInstance()->removeItem(target); }
+        if (target != nullptr) { CarouselManager::getInstance()->removeItem(target); CarouselGridView::getInstance()->updateCells();}
     }
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->deleteCell(id);

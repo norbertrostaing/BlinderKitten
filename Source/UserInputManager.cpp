@@ -278,7 +278,8 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 				p->processUserInput("enter");
 			}
 		}
-	} else if (type == "group") {
+	} 
+	else if (type == "group") {
 		p->checkCurrentUserCommand();
 		p->getTextCommand();;
 		if (p->currentUserCommand->userCanPressSelectionType) {

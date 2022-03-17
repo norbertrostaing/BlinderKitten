@@ -53,13 +53,10 @@ void ChannelFamilyManager::importData(var data)
         for (int i = 0; i < items.size(); i++) {
             if (items[i]->niceName.trim() == name) {
                 cf = items[i];
-                LOG("found !");
             }
         }
 
-        LOG("test "+name);
         if (cf == nullptr) {
-            LOG("add all items : "+ name);
             var temp = var();
             temp.append(d);
             addItemsFromData(temp);

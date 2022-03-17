@@ -14,7 +14,7 @@
 #include "../ChannelValue.h"
 #include "CuelistManager.h"
 #include "UI/CuelistLoadWindow.h"
-
+#include "UI/GridView/CuelistGridView.h"
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
@@ -145,6 +145,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
+		CuelistGridView::getInstance()->updateCells();
 	}
 }
 

@@ -309,7 +309,7 @@ void Programmer :: clearAll() {
 
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
-	// LOG(s);
+	LOG(s);
 
 	if (cliActionType->getValue() != "") {
 		getCliAsTexts();
@@ -514,6 +514,8 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");
 		DataTransferManager::getInstance()->execute();
+
+		
 	}
 	else if (action == "move") {
 		DataTransferManager::getInstance()->moveObject(targetType, targetId, (int)cliParamBId->getValue());

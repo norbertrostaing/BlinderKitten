@@ -406,3 +406,15 @@ void VirtualFaderColGrid::copyCell(int idFrom, int idTo) {
     }
 }
 
+VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
+{
+    if (id < 1 || id > cols) { return nullptr; }
+    VirtualFaderCol* vf = columnToVFC.getReference(id);
+    if (create) {
+        vf = VirtualFaderColManager::getInstance()->addItem();
+        vf->pageNumber->setValue(page);
+        vf->colNumber->setValue(id);
+    }
+    return vf;
+}
+

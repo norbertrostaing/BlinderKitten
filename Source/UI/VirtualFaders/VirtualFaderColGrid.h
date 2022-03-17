@@ -86,6 +86,7 @@ public:
     void moveCell(int idFrom, int idTo);
     void copyCell(int idFrom, int idTo);
 
+    VirtualFaderCol* getVirtualFaderCol(int index, bool create = false);
 
 
 
