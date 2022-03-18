@@ -215,6 +215,7 @@ void VirtualFaderColGrid::fillCells() {
         faders[i]->setColour(Slider::backgroundColourId, Colour(63, 63, 63));
         faders[i]->setColour(Slider::thumbColourId, Colour(63, 63, 63));
         faders[i]->setColour(Slider::trackColourId, Colour(63, 63, 63));
+        faderLabels[i]->setText("", juce::dontSendNotification);
     }
     for (int i = 0; i < columnLabels.size(); i++) {
         columnLabels[i]->setText("", juce::dontSendNotification);
@@ -222,6 +223,7 @@ void VirtualFaderColGrid::fillCells() {
     for (int i = 0; i < rotaries.size(); i++) {
         for (int j = 0; j < rotaries[i]->size(); j++) {
             rotaries[i]->getRawDataPointer()[j]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+            rotaryLabels[i]->getRawDataPointer()[j]->setText("", juce::dontSendNotification);
         }
     }
     for (int i = 0; i < aboveButtons.size(); i++) {

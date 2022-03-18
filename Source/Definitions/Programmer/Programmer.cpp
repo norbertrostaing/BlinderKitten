@@ -309,7 +309,7 @@ void Programmer :: clearAll() {
 
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
-	LOG(s);
+	// LOG(s);
 
 	if (cliActionType->getValue() != "") {
 		getCliAsTexts();

@@ -27,6 +27,7 @@ public:
 	Brain* mainBrain;
 
 	ControllableContainer uiParamsContainer;
+	IntParameter* gridCols;
 	FloatParameter* gridScale;
 	FloatParameter* panelScale;
 	FloatParameter* encodersScale;
@@ -54,7 +55,8 @@ public:
 
 	String getMinimumRequiredFileVersion() override;
 
-	void importSelection(File f = File());
+	void importSelection();
+	void importMochi(File f);
 	void exportSelection();
 
 	void parameterValueChanged(Parameter* p);

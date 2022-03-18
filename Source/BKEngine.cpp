@@ -107,6 +107,8 @@ BKEngine::BKEngine() :
 	panelScale->addParameterListener(this);
 	encodersScale = uiParamsContainer.addFloatParameter("Encoders scale", "scale the encoders view", 1, 0.1, 3);
 	encodersScale->addParameterListener(this);
+	gridCols= uiParamsContainer.addIntParameter("Grid Columns", "Number of columns for grid viewss", 10, 1);
+	gridCols->addParameterListener(this);
 	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
 	gridScale->addParameterListener(this);
 	encoderBigNumber = addIntParameter("Encoder big offset", "Offset of encoders when << or >> pressed",4,2);
@@ -485,19 +487,20 @@ String BKEngine::getMinimumRequiredFileVersion()
 	return "1.0.0";
 }
 
-void BKEngine::importSelection(File f)
+void BKEngine::importSelection()
 {
-	if (!f.existsAsFile())
-	{
-		FileChooser fc("Load a mochi", File::getCurrentWorkingDirectory(), "*.mochi");
-		if (!fc.browseForFileToOpen()) return;
-		f = fc.getResult();
+	FileChooser fc("Load some mochis", File::getCurrentWorkingDirectory(), "*.mochi");
+	if (!fc.browseForMultipleFilesToOpen()) return;
+	Array<File> f = fc.getResults();
+	for (int i = 0; i < f.size(); i++) {
+		importMochi(f[i]);
 	}
+}
 
+void BKEngine::importMochi(File f) {
 	var data = JSON::parse(f);
 
 	if (!data.isObject()) return;
-
 
 	ChannelFamilyManager::getInstance()->importData(data.getProperty(ChannelFamilyManager::getInstance()->shortName, var()));
 	FixtureTypeManager::getInstance()->addItemsFromData(data.getProperty(FixtureTypeManager::getInstance()->shortName, var()));
@@ -558,9 +561,12 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == encodersScale) {
 		Encoders::getInstance()->resized();
 	}
-	else if (p == gridScale) {
+	else if (p == gridScale || p == gridCols) {
 		GroupGridView::getInstance()->resized();
 		PresetGridView::getInstance()->resized();
+		CuelistGridView::getInstance()->resized();
+		EffectGridView::getInstance()->resized();
+		CarouselGridView::getInstance()->resized();
 	}
 	else if (p == virtualButtonGridCols || p == virtualButtonGridRows) {
 		VirtualButtonGrid::getInstance()->initCells();

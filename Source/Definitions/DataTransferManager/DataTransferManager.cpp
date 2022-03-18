@@ -339,6 +339,19 @@ void DataTransferManager::execute() {
             trg->targetId->setValue(sId);
             trg->targetType->setValueWithData("carousel");
             trg->selectThis();
+            trg->fader.targetType->setValueWithData("column");
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nRotaries; i++) {
+                VirtualFaderSlider* t = trg->rotaries.addItem();
+                t->targetType->setValueWithData("column");
+            }
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nAbove; i++) {
+                VirtualFaderButton* t = trg->aboveButtons.addItem();
+                t->targetType->setValueWithData("column");
+            }
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nBelow; i++) {
+                VirtualFaderButton* t = trg->belowButtons.addItem();
+                t->targetType->setValueWithData("column");
+            }
         }
     }
     else if (srcType == "preset") {

@@ -263,7 +263,7 @@ float UserInputManager::backspaceOnFloat(var v) {
 	}
 	else {
 		s = s.substring(0, s.length() - 1);
-		LOG(s);
+		//LOG(s);
 		return s.getFloatValue();
 	}
 }

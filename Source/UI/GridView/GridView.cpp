@@ -72,6 +72,8 @@ void GridView::resized()
     int nByRow = w/ btnSizeH;
     if (nByRow == 0) { return; }
 
+    nByRow = engine->gridCols->getValue();
+
     int btnSizeW = w/nByRow;
     int margin = (w%btnSizeW)/2;
 
