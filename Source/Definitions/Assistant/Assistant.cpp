@@ -328,6 +328,7 @@ void Assistant::createMidiMappings()
             FactorySimpleParametricDefinition<CuelistAction>* t = (FactorySimpleParametricDefinition<CuelistAction>*)ActionFactory::getInstance()->defs[i];
             if (t->menuPath == targetType) {
                 MIDIMapping* m = targetInterface->mappingManager.addItem();
+                m->enabled->setValue(false);
                 m->setNiceName(targetType +" " + String(targetId) + " " + String(t->type));
                 DynamicObject* obj = new DynamicObject();
                 obj->setProperty("type", t->type);

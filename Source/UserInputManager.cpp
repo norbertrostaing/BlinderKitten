@@ -269,6 +269,7 @@ float UserInputManager::backspaceOnFloat(var v) {
 }
 
 void UserInputManager::gridViewCellPressed(String type, int id) {
+	type = type.toLowerCase();
 	Programmer *p = getProgrammer();
 	if (p->cliActionType->getValue() != "") {
 		if (p->userCanPressTargetType) {
@@ -311,6 +312,24 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 		if (p->currentUserCommand->userCanPressValueType) {
 			p->processUserInput("preset");
 			p->processUserInput(String(id));
+		}
+	}
+	else if (type == "cuelist") {
+		Cuelist* trg = Brain::getInstance()->getCuelistById(id);
+		if (trg != nullptr) {
+			trg->selectThis();
+		}
+	}
+	else if (type == "effect") {
+		Effect* trg = Brain::getInstance()->getEffectById(id);
+		if (trg != nullptr) {
+			trg->selectThis();
+		}
+	}
+	else if (type == "carousel") {
+		Carousel* trg = Brain::getInstance()->getCarouselById(id);
+		if (trg != nullptr) {
+			trg->selectThis();
 		}
 	}
 }

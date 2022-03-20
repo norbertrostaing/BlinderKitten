@@ -244,8 +244,8 @@ void Encoders::updateContentWithCommand(Command* c) {
                     int channelId = ci + encodersOffset;
                     if (channels[channelId] == ct) {
                         float v = c->getChannelValue(channels[channelId], mode == 1);
-                        Encoders::getInstance()->encoders[channelId]->setValue(v, juce::sendNotification);
-                        Encoders::getInstance()->encoders[channelId]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                        Encoders::getInstance()->encoders[ci]->setValue(v, juce::sendNotification);
+                        Encoders::getInstance()->encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                     }
                 }
             }
