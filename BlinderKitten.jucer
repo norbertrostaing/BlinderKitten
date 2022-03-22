@@ -27,6 +27,10 @@
                 file="Source/UI/GridView/EffectGridView.cpp"/>
           <FILE id="GEgrsT" name="EffectGridView.h" compile="0" resource="0"
                 file="Source/UI/GridView/EffectGridView.h"/>
+          <FILE id="o47Cb6" name="FixtureGridView.cpp" compile="1" resource="0"
+                file="Source/UI/GridView/FixtureGridView.cpp"/>
+          <FILE id="eXrXUQ" name="FixtureGridView.h" compile="0" resource="0"
+                file="Source/UI/GridView/FixtureGridView.h"/>
           <FILE id="I8JDeJ" name="GridView.cpp" compile="1" resource="0" file="Source/UI/GridView/GridView.cpp"/>
           <FILE id="Hb2YFS" name="GridView.h" compile="0" resource="0" file="Source/UI/GridView/GridView.h"/>
           <FILE id="FCSyGj" name="GroupGridView.cpp" compile="1" resource="0"

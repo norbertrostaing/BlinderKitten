@@ -42,6 +42,7 @@
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 
+#include "UI/GridView/FixtureGridView.h"
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
 #include "UI/GridView/CuelistGridView.h"
@@ -455,7 +456,7 @@ void DataTransferManager::editObject(String type, int id) {
 void DataTransferManager::deleteObject(String type, int id) {
     if (type == "fixture") {
         Fixture* target = Brain::getInstance()->getFixtureById(id);
-        if (target != nullptr) { FixtureManager::getInstance()->removeItem(target); }
+        if (target != nullptr) { FixtureManager::getInstance()->removeItem(target); FixtureGridView::getInstance()->updateCells();}
     }
     else if (type == "group") {
         Group* target = Brain::getInstance()->getGroupById(id);

@@ -41,11 +41,14 @@ public:
     OwnedArray<TextButton> gridButtons;
     ScrollBar scroll;
 
+    bool completeGridMode = true;
+
     void paint (juce::Graphics&) override;
     void resized() override;
 
     int numberOfCells = 200;
     String targetType;
+    Array<int> validCells;
 
     void scrollBarMoved(ScrollBar* scrollBarThatHasMoved, double newRangeStart );
     void mouseWheelMove(const MouseEvent& event,const MouseWheelDetails& wheel);

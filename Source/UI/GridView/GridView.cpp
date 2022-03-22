@@ -65,7 +65,7 @@ void GridView::resized()
     int h = getHeight();
     int w = getWidth();
     int scrollWidth = 10;
-    int btnSizeH = 50*scale;
+    int btnSizeH = 50 * scale;
     scroll.setBounds(w-scrollWidth,0,scrollWidth,h);
     w = w-scrollWidth;
    
@@ -78,15 +78,41 @@ void GridView::resized()
     int margin = (w%btnSizeW)/2;
 
     int x = 0;
-    int y = 0;
+    int y = -1;
     int maxY = 0;
+    int currentX = 0;
+    int lastValidId = 0;
     for (int i = 0; i < numberOfCells; i++) {
-        x = i%nByRow;
-        y = i/nByRow;
-        x = margin + (x * btnSizeW);
-        y = y* btnSizeH - scroll.getCurrentRangeStart();
-        gridButtons[i]->setBounds(x,y, btnSizeW, btnSizeH);
-        maxY = (y+1)* btnSizeH;
+        if (completeGridMode) {
+            x = i % nByRow;
+            y = i / nByRow;
+            x = margin + (x * btnSizeW);
+            maxY = (y + 1) * btnSizeH;
+            y = y * btnSizeH - scroll.getCurrentRangeStart();
+            gridButtons[i]->setBounds(x, y, btnSizeW, btnSizeH);
+        }
+        else {
+            if (validCells.contains(i)) {
+                gridButtons[i]->setVisible(true);
+                if (i == lastValidId + 1) {
+                    x = (x+1) % nByRow;
+                    if (x == 0) {y+=1;}
+                }
+                else {
+                    x = 0;
+                    y += 1;
+                }
+                int drawX = margin + (x * btnSizeW);
+                int drawY = y * btnSizeH - scroll.getCurrentRangeStart();
+                gridButtons[i]->setBounds(drawX, drawY, btnSizeW, btnSizeH);
+                maxY = (y + 1) * btnSizeH;
+                lastValidId = i;
+            }
+            else {
+                gridButtons[i]->setVisible(false);
+            }
+        }
+        
     }
     scroll.setCurrentRange(scroll.getCurrentRangeStart(), h,juce::dontSendNotification);
     scroll.setRangeLimits(0, maxY, juce::dontSendNotification);

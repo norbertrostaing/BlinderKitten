@@ -69,6 +69,7 @@ public:
     bool userCanPressNumber = false;
     bool userCanPressValue = false;
     bool userCanPressSym = false;
+    bool userCanHaveAnotherCommand = false;
     void userCantPress();
     void userPress(String s);
 

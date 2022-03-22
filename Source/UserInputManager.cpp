@@ -45,7 +45,6 @@ void UserInputManager::processMessage(const OSCMessage& m)
 {
 	StringArray aList;
 	aList.addTokens(m.getAddressPattern().toString(), "/", "\"");
-	// LOG("Yeah baby" + m.getAddressPattern().toString());
 	if (aList.size() < 3) return;
 
 	String firstWord = aList[1].toLowerCase();
@@ -280,7 +279,37 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			}
 		}
 	} 
-	else if (type == "group") {
+	else if (type == "fixture") {
+		p->checkCurrentUserCommand();
+		p->getTextCommand();
+		String test = p->currentUserCommand->userCanHaveAnotherCommand ? "oui" : "non";
+		if (p->currentUserCommand->userCanPressSelectionType) {
+			p->processUserInput("fixture");
+			p->processUserInput(String(id));
+		}
+		else if (p->currentUserCommand->userCanHaveAnotherCommand) {
+			p->processUserInput("fixture");
+			p->processUserInput(String(id));
+		}
+		else if (p->currentUserCommand->userCanPressPlusOrMinus) {
+			bool pleaseAdd = true;
+			for (int i = p->currentUserCommand->selection.items.size() - 1; i >= 0; i--) {
+				CommandSelection* s = p->currentUserCommand->selection.items[i];
+				if (s->targetType->getValue() == "fixture" && (int)s->valueFrom->getValue() == id) {
+					pleaseAdd = false;
+					p->currentUserCommand->selection.removeItem(s);
+				}
+			}
+			if (pleaseAdd) {
+				p->processUserInput("+");
+				p->processUserInput("fixture");
+				p->processUserInput(String(id));
+			}
+			else if (p->currentUserCommand->selection.items.size() == 0) {
+				p->currentUserCommand->selection.addItem();
+			}
+		}
+	}	else if (type == "group") {
 		p->checkCurrentUserCommand();
 		p->getTextCommand();;
 		if (p->currentUserCommand->userCanPressSelectionType) {

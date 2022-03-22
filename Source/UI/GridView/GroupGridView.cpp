@@ -31,7 +31,7 @@ GroupGridView::GroupGridView()
 {
     numberOfCells = 200;
     targetType = "group";
-
+    completeGridMode = true;
 }
 
 GroupGridView::~GroupGridView()
@@ -39,11 +39,13 @@ GroupGridView::~GroupGridView()
 }
 
 void GroupGridView::updateCells() {
+    validCells.clear();
     for (int i = 0; i < numberOfCells; i++) {
         Group* g = Brain::getInstance()->getGroupById(i+1);
         if (g != nullptr) {
             gridButtons[i]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
             gridButtons[i]->setButtonText(String(i + 1) + "\n"+g->userName->getValue().toString());
+            validCells.add(i);
         }
         else {
             gridButtons[i]->setButtonText(String(i + 1));

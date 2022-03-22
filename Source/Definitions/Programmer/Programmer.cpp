@@ -416,6 +416,10 @@ void Programmer::processUserInput(String s) {
 		if (currentUserCommand->userCanPressSelectionType) {
 			currentUserCommand->userPress(s);
 		}
+		else if (currentUserCommand->userCanHaveAnotherCommand) {
+			currentUserCommand = commands.addItem();
+			currentUserCommand->userPress(s);
+		}
 		else if (currentUserCommand->userCanPressTimingType) {
 			currentUserCommand = commands.addItem();
 			currentUserCommand->userPress(s);

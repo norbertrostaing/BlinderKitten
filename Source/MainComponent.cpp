@@ -18,6 +18,7 @@
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
 
+#include "UI/GridView/FixtureGridView.h"
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
 #include "UI/GridView/CuelistGridView.h"
@@ -110,6 +111,7 @@ void MainContentComponent::init()
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Input Panel", &InputPanelUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Fixture Grid", &FixtureGridViewUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Group Grid", &GroupGridViewUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Preset Grid", &PresetGridViewUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelist Grid", &CuelistGridViewUI::create));

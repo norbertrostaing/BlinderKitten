@@ -385,6 +385,7 @@ StringArray Command::getCommandAsTexts() {
 				currentUserThru = v->thru;
 				userCanPressValueType = true;
 				userCanPressTimingType = true;
+				userCanHaveAnotherCommand = true;
 				if (v->thru->getValue()) {
 					words.add("thru");
 					lastTarget = "valuePresetThru";
@@ -398,6 +399,7 @@ StringArray Command::getCommandAsTexts() {
 						userCanPressNumber = true;
 						userCanPressValueType = true;
 						userCanPressTimingType = true;
+						userCanHaveAnotherCommand = true;
 					}
 					else {
 						return words;
@@ -420,7 +422,7 @@ StringArray Command::getCommandAsTexts() {
 					userCanPressTimingType = true;
 					userCanPressThru = true;
 					currentUserThru = v->thru;
-
+					userCanHaveAnotherCommand = true;
 					if (v->thru->getValue()) {
 						words.add("thru");
 						lastTarget = "valueRawThru";
@@ -433,6 +435,7 @@ StringArray Command::getCommandAsTexts() {
 							userCanPressValue = true;
 							userCanPressValueType = true;
 							userCanPressTimingType = true;
+							userCanHaveAnotherCommand = true;
 						}
 						else {
 							return words;
@@ -457,6 +460,7 @@ void Command::userCantPress() {
 	userCanPressNumber = false;
 	userCanPressValue = false;
 	userCanPressSym = false;
+	userCanHaveAnotherCommand = false;
 }
 
 String Command::formatValue(float v) {

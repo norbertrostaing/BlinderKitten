@@ -54,6 +54,7 @@
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
 
+#include "UI/GridView/FixtureGridView.h"
 #include "UI/GridView/GroupGridView.h"
 #include "UI/GridView/PresetGridView.h"
 #include "UI/GridView/CuelistGridView.h"
@@ -135,6 +136,7 @@ BKEngine::BKEngine() :
 
 	Encoders::getInstance()->engine = this;
 	InputPanel::getInstance()->engine = this;
+	FixtureGridView::getInstance()->engine = this;
 	GroupGridView::getInstance()->engine = this;
 	PresetGridView::getInstance()->engine = this;
 	CuelistGridView::getInstance()->engine = this;
@@ -215,6 +217,7 @@ BKEngine::~BKEngine()
 	ActionFactory::deleteInstance();
 	UserInputManager::deleteInstance();
 
+	FixtureGridView::deleteInstance();
 	GroupGridView::deleteInstance();
 	PresetGridView::deleteInstance();
 	CuelistGridView::deleteInstance();
@@ -258,6 +261,7 @@ void BKEngine::clearInternal()
 
 	VirtualButtonGrid::getInstance()->initCells();
 	VirtualFaderColGrid::getInstance()->initCells();
+	FixtureGridView::getInstance()->updateCells();
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
 	CuelistGridView::getInstance()->updateCells();
@@ -452,6 +456,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	//routerTask->setProgress(1);
 	//routerTask->end();
 
+	FixtureGridView::getInstance()->updateCells();
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
 	CuelistGridView::getInstance()->updateCells();
@@ -519,6 +524,7 @@ void BKEngine::importMochi(File f) {
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
 	VirtualFaderColManager::getInstance()->addItemsFromData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
 
+	FixtureGridView::getInstance()->updateCells();
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();
 	CuelistGridView::getInstance()->updateCells();
@@ -564,6 +570,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 		Encoders::getInstance()->resized();
 	}
 	else if (p == gridScale || p == gridCols) {
+		FixtureGridView::getInstance()->resized();
 		GroupGridView::getInstance()->resized();
 		PresetGridView::getInstance()->resized();
 		CuelistGridView::getInstance()->resized();

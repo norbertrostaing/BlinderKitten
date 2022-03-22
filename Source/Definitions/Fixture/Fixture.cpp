@@ -19,6 +19,7 @@
 #include "../SubFixture/SubFixtureChannel.h"
 #include "../ChannelFamily/ChannelFamily.h"
 #include "FixtureMultiEditor.h"
+#include "UI/GridView/FixtureGridView.h"
 
 
 Fixture::Fixture(var params) :
@@ -81,6 +82,7 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == userName || p == id) {
 		updateName();
+		FixtureGridView::getInstance()->updateCells();
 	}
 	if (p == devTypeParam)
 	{
