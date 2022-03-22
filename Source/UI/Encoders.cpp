@@ -240,7 +240,7 @@ void Encoders::updateContentWithCommand(Command* c) {
         if (cv->presetOrValue->getValue() == "value") {
             ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
             if (ct != nullptr) {
-                for (int ci = 0; ci < channels.size(); ci++) {
+                for (int ci = 0; ci < nEncoders; ci++) {
                     int channelId = ci + encodersOffset;
                     if (channels[channelId] == ct) {
                         float v = c->getChannelValue(channels[channelId], mode == 1);
