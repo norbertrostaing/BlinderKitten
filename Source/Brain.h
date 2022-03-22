@@ -44,24 +44,30 @@ public:
     HashMap<int, Effect*>effects;
     HashMap<int, Carousel*>carousels;
 
-    OwnedArray<Cuelist> cuelistPoolUpdating;
-    OwnedArray<Cuelist> cuelistPoolWaiting;
-    OwnedArray<SubFixtureChannel> SubFixtureChannelPoolUpdating;
-    OwnedArray<SubFixtureChannel> SubFixtureChannelPoolWaiting;
-    OwnedArray<Cue> cuePoolUpdating;
-    OwnedArray<Cue> cuePoolWaiting;
-    OwnedArray<Programmer> programmerPoolUpdating;
-    OwnedArray<Programmer> programmerPoolWaiting;
-    OwnedArray<Effect> effectPoolUpdating;
-    OwnedArray<Effect> effectPoolWaiting;
-    OwnedArray<Carousel> carouselPoolUpdating;
-    OwnedArray<Carousel> carouselPoolWaiting;
+    Array<Cuelist*> cuelistPoolUpdating;
+    Array<Cuelist*> cuelistPoolWaiting;
+    Array<SubFixtureChannel*> SubFixtureChannelPoolUpdating;
+    Array<SubFixtureChannel*> SubFixtureChannelPoolWaiting;
+    Array<Cue*> cuePoolUpdating;
+    Array<Cue*> cuePoolWaiting;
+    Array<Programmer*> programmerPoolUpdating;
+    Array<Programmer*> programmerPoolWaiting;
+    Array<Effect*> effectPoolUpdating;
+    Array<Effect*> effectPoolWaiting;
+    Array<Carousel*> carouselPoolUpdating;
+    Array<Carousel*> carouselPoolWaiting;
 
-    OwnedArray<SubFixtureChannel> swoppableChannels;
-    OwnedArray<Cuelist> swoppedCuelists;
+    Array<SubFixtureChannel*> swoppableChannels;
+    Array<Cuelist*> swoppedCuelists;
 
     double now;
-    bool updateIsRunning = false;
+    bool updateCuesIsRunning = false;
+    bool updateCuelistsIsRunning = false;
+    bool updateCarouselsIsRunning = false;
+    bool updateEffectsIsRunning = false;
+    bool updateProgrammersIsRunning = false;
+    bool updateChannelsIsRunning = false;
+    bool loadingIsRunning = false;
 
     void run() override;
     void registerSubFixture(SubFixture* f, int id);

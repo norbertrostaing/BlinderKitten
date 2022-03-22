@@ -334,6 +334,7 @@ var BKEngine::getJSONData()
 
 void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 {
+	Brain::getInstance()->loadingIsRunning = true;
 	Brain::getInstance()->stopThread(1);
 	//ProgressTask* moduleTask = loadingTask->addTask("Modules");
 	ProgressTask* iTask = loadingTask->addTask("Interfaces");
@@ -463,6 +464,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	VirtualFaderColGrid::getInstance()->page = 1;
 	VirtualFaderColGrid::getInstance()->initCells();
 	Brain::getInstance()->clearUpdates();
+	Brain::getInstance()->loadingIsRunning = false;
 	Brain::getInstance()->startThread();
 
 }

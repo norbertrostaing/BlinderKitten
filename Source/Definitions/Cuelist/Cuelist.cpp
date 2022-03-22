@@ -128,6 +128,9 @@ void Cuelist::reorderCues() {
 }
 
 void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
+	if (Brain::getInstance()->loadingIsRunning) {
+		return;
+	}
 	if (p == HTPLevel || p == FlashLevel) {
 		if (p == HTPLevel) {
 			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0) { 
