@@ -490,6 +490,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     if (type == "fixture") {
         Fixture* source = Brain::getInstance()->getFixtureById(id);
         Fixture* target = Brain::getInstance()->getFixtureById(idTo);
+        if (source == nullptr) {return;}
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
@@ -497,6 +498,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     else if (type == "group") {
         Group* source = Brain::getInstance()->getGroupById(id);
         Group* target = Brain::getInstance()->getGroupById(idTo);
+        if (source == nullptr) {return;}
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
@@ -504,6 +506,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     else if (type == "preset") {
         Preset* source = Brain::getInstance()->getPresetById(id);
         Preset* target = Brain::getInstance()->getPresetById(idTo);
+        if (source == nullptr) {return;}
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
@@ -511,6 +514,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     else if (type == "cuelist") {
         Cuelist* source = Brain::getInstance()->getCuelistById(id);
         Cuelist* target = Brain::getInstance()->getCuelistById(idTo);
+        if (source == nullptr) {return;}
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
@@ -518,6 +522,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     else if (type == "effect") {
         Effect* source = Brain::getInstance()->getEffectById(id);
         Effect* target = Brain::getInstance()->getEffectById(idTo);
+        if (source == nullptr) {return;}
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
@@ -525,6 +530,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     else if (type == "carousel") {
         Carousel* source = Brain::getInstance()->getCarouselById(id);
         Carousel* target = Brain::getInstance()->getCarouselById(idTo);
+        if (source == nullptr) {return;}
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
