@@ -87,6 +87,7 @@ public:
     void copyCell(int idFrom, int idTo);
 
     VirtualFaderCol* getVirtualFaderCol(int index, bool create = false);
+    void updateSlidersValues();
 
 
 

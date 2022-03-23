@@ -249,9 +249,10 @@ void VirtualFaderColGrid::fillCells() {
             String targType = vf->getTargetType();
             if (c>=0 && c < cols) {
                 columnLabels[c]->setText(targName, juce::dontSendNotification);
-                for (int n = 0; n < vf->rotaries.items.size() && n < nAbove; n++) {
+                for (int n = 0; n < vf->rotaries.items.size() && n < nRotaries; n++) {
                     VirtualFaderSlider* vs = vf->rotaries.items[n];
                     sliderToVFS.set(rotaries[c]->getRawDataPointer()[n], vs);
+                    // bug ici
                     String text = vs->getBtnText(targType);
                     if (text != "") {
                         rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);
@@ -416,7 +417,30 @@ VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
         vf = VirtualFaderColManager::getInstance()->addItem();
         vf->pageNumber->setValue(page);
         vf->colNumber->setValue(id);
+        vf->fader.targetType->setValueWithData("column");
+        for (int i = 0; i < nRotaries; i++) {
+            VirtualFaderSlider* temp = vf->rotaries.addItem();
+            temp->targetType->setValueWithData("column");
+        }
+        for (int i = 0; i < nAbove; i++) {
+            VirtualFaderButton* temp = vf->aboveButtons.addItem();
+            temp->targetType->setValueWithData("column");
+        }
+        for (int i = 0; i < nBelow; i++) {
+            VirtualFaderButton* temp = vf->belowButtons.addItem();
+            temp->targetType->setValueWithData("column");
+        }
     }
     return vf;
+}
+
+void VirtualFaderColGrid::updateSlidersValues()
+{
+    for (int i = 0; i < cols; i++) {
+        VirtualFaderCol* vfc = columnToVFC.getReference(i);
+        if (vfc != nullptr) {
+            
+        }
+    }
 }
 

@@ -133,7 +133,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == HTPLevel || p == FlashLevel) {
 		if (p == HTPLevel) {
-			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0) { 
+			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
 				go();
 			}
 			else if (autoStop->getValue() && isCuelistOn->getValue() && (float)HTPLevel->getValue() == 0) { 
@@ -141,6 +141,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 			}
 		}
 		pleaseUpdateHTPs = true;
+		lastHTPLevel = p->getValue();
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	if (p == id) {
