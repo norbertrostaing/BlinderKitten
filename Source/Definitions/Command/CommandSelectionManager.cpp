@@ -25,7 +25,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	Brain* b = Brain::getInstance();
 	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();
 	for (int selId = 0; selId < selections.size(); selId++) {
-		Array<std::shared_ptr<SubFixture>> tempSelection;
+		Array<SubFixture*> tempSelection;
 		int idFrom = selections[selId]->valueFrom->getValue();
 		int idThru = selections[selId]->thru->getValue() ? selections[selId]->valueTo->getValue() : idFrom;
 		int mod = idFrom <= idThru ? 1 : -1;
@@ -39,7 +39,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 						int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->getValue() : subFrom;
 						int subMod = subFrom <= subThru ? 1 : -1;
 						for (int subId = subFrom; subId != subThru + subMod; subId = subId + subMod) {
-							std::shared_ptr<SubFixture> s = fixt->getSubFixture(subId);
+							SubFixture* s = fixt->getSubFixture(subId);
 							if (s != nullptr) {
 								tempSelection.add(s);
 							}
@@ -71,7 +71,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		int patternLength = pattern.length();
 		int tempSelectionSize = tempSelection.size();
 		if (selections[selId]->filter->getValue() == "pattern" && patternLength > 0) {
-			Array<std::shared_ptr<SubFixture>> filteredSelection;
+			Array<SubFixture*> filteredSelection;
 			for (int i = 0; i < tempSelection.size(); i++) {
 				int patternIndex = i % patternLength; 
 				if (sym && i >= tempSelectionSize/2) {
@@ -92,7 +92,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				}
 				patternLength *= 2;
 			}
-			Array<std::shared_ptr<SubFixture>> filteredSelection;
+			Array<SubFixture*> filteredSelection;
 			for (int i = 0; i < tempSelection.size(); i++) {
 
 				float patternIndex = 0;
@@ -118,7 +118,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 
 		}
 		else if (selections[selId]->filter->getValue() == "shuffle") {
-			Array<std::shared_ptr<SubFixture>> filteredSelection;
+			Array<SubFixture*> filteredSelection;
 
 			Random r;
 			if ((int)selections[selId]->randomSeed->getValue() == 0) {
@@ -138,7 +138,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 
 		}
 		else if (selections[selId]->filter->getValue() == "random") {
-			Array<std::shared_ptr<SubFixture>> filteredSelection;
+			Array<SubFixture*> filteredSelection;
 
 			Random r;
 			if ((int)selections[selId]->randomSeed->getValue() == 0) {

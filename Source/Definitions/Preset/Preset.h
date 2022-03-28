@@ -40,7 +40,7 @@ public:
     HashMap<FixtureType*, HashMap<String, HashMap<ChannelType*, float>*>*> computedSubFixtureTypeValues;
     HashMap<ChannelType*, float> computedUniversalValues;
 
-    HashMap<ChannelType*, float>* getSubFixtureValues(std::shared_ptr<SubFixture> f);
+    HashMap<ChannelType*, float>* getSubFixtureValues(SubFixture* f);
 
     BaseManager<PresetSubFixtureValues> subFixtureValues;
     String getTypeString() const override { return objectType; }

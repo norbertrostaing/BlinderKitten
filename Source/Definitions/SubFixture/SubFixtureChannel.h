@@ -39,7 +39,7 @@ public:
     ChannelType* parentParamDefinition = nullptr;
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
     Fixture* parentFixture = nullptr;
-    std::shared_ptr<SubFixture> parentSubFixture = nullptr;
+    SubFixture* parentSubFixture = nullptr;
 
     void writeValue(float v);
 

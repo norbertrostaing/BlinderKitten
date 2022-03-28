@@ -58,6 +58,18 @@ Preset::Preset(var params) :
 Preset::~Preset()
 {
 	Brain::getInstance()->unregisterPreset(this);
+	for (auto it = computedSubFixtureValues.begin(); it != computedSubFixtureValues.end(); it.next()) {
+		it.getValue()->~HashMap();
+	}
+	for (auto it = computedFixtureTypeValues.begin(); it != computedFixtureTypeValues.end(); it.next()) {
+		it.getValue()->~HashMap();
+	}
+	for (auto it = computedSubFixtureTypeValues.begin(); it != computedSubFixtureTypeValues.end(); it.next()) {
+		for (auto it2 = it.getValue()->begin(); it2 != it.getValue()->end(); it2.next()) {
+			it2.getValue()->~HashMap();
+		}
+		it.getValue()->~HashMap();
+	}
 }
 
 void Preset::onContainerParameterChangedInternal(Parameter* p) {
@@ -82,7 +94,7 @@ void Preset::computeValues() {
 	for (int commandIndex = 0; commandIndex < fixtValues.size(); commandIndex++) {
 		PresetSubFixtureValues* fixtVal = fixtValues[commandIndex];
 		Fixture* fixt = nullptr;
-		std::shared_ptr<SubFixture> subFixt = nullptr;
+		SubFixture* subFixt = nullptr;
 		FixtureType* type = nullptr;
 		int fixtureId = fixtVal->targetFixtureId->getValue();
 		int subFixtId = fixtVal->targetSubFixtureId->getValue();
@@ -100,10 +112,10 @@ void Preset::computeValues() {
 			float value = values[valIndex] -> paramValue -> getValue();
 			if (param != nullptr) {
 				if (pType >= 1 && subFixt != nullptr) {
-					HashMap<ChannelType*, float>* content = computedSubFixtureValues.getReference(subFixt.get());
+					HashMap<ChannelType*, float>* content = computedSubFixtureValues.getReference(subFixt);
 					if (content == nullptr) {
 						content = new HashMap<ChannelType*, float>();
-						computedSubFixtureValues.set(subFixt.get(), content);
+						computedSubFixtureValues.set(subFixt, content);
 					}
 					content -> set(param, value); 
 				}
@@ -133,7 +145,7 @@ void Preset::computeValues() {
 
 }
 
-HashMap<ChannelType*, float>* Preset::getSubFixtureValues(std::shared_ptr<SubFixture> f) {
+HashMap<ChannelType*, float>* Preset::getSubFixtureValues(SubFixture* f) {
 	HashMap<ChannelType*, float>* values = new HashMap<ChannelType*, float>();
 	for (auto it = computedUniversalValues.begin(); it != computedUniversalValues.end(); it.next()) {
 		values->set(it.getKey(), it.getValue());
@@ -147,8 +159,8 @@ HashMap<ChannelType*, float>* Preset::getSubFixtureValues(std::shared_ptr<SubFix
 		}
 	}
 
-	if (computedSubFixtureValues.contains(f.get())) {
-		HashMap<ChannelType*, float>* FValues = computedSubFixtureValues.getReference(f.get());
+	if (computedSubFixtureValues.contains(f)) {
+		HashMap<ChannelType*, float>* FValues = computedSubFixtureValues.getReference(f);
 		for (auto it = FValues->begin(); it != FValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}

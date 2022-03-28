@@ -61,7 +61,7 @@ void CarouselStep::updateDisplay() {
 }
 
 
-void CarouselStep::computeValues(Array<std::shared_ptr<SubFixture>> SubFixtures) {
+void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 

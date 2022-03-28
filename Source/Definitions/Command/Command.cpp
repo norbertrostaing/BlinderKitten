@@ -75,7 +75,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	selection.computeSelection();
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
-	Array<std::shared_ptr<SubFixture>> SubFixtures = selection.computedSelectedSubFixtures;
+	Array<SubFixture*> SubFixtures = selection.computedSelectedSubFixtures;
 
 	bool delayThru = false;
 	bool delaySym = false;

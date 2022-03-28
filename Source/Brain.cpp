@@ -82,7 +82,6 @@ void Brain::run() {
             }
             cuePoolUpdating.clear();
 
-            while (addingCuelistToUpdate) { wait(1); }
             updateCuelistsIsRunning = true;
             if (cuelistPoolWaiting.size() > 0) {
                 cuelistPoolUpdating.addArray(cuelistPoolWaiting);
@@ -94,7 +93,6 @@ void Brain::run() {
             }
             cuelistPoolUpdating.clear();
 
-            while (addingEffectToUpdate) { wait(1); }
             updateEffectsIsRunning = true;
             effectPoolUpdating.addArray(effectPoolWaiting);
             effectPoolWaiting.clear();
@@ -104,7 +102,6 @@ void Brain::run() {
             }
             effectPoolUpdating.clear();
 
-            while (addingCarouselToUpdate) { wait(1); }
             updateCarouselsIsRunning = true;
             carouselPoolUpdating.addArray(carouselPoolWaiting);
             carouselPoolWaiting.clear();
@@ -114,7 +111,6 @@ void Brain::run() {
             }
             carouselPoolUpdating.clear();
 
-            while (addingProgrammerToUpdate) { wait(1); }
             updateProgrammersIsRunning = true;
             programmerPoolUpdating.addArray(programmerPoolWaiting);
             programmerPoolWaiting.clear();
@@ -124,12 +120,10 @@ void Brain::run() {
             }
             programmerPoolUpdating.clear();
 
-            while(addingChannelToUpdate) {wait(1); }
             updateChannelsIsRunning = true;
             subFixtureChannelPoolUpdating.addArray(subFixtureChannelPoolWaiting);
             subFixtureChannelPoolWaiting.clear();
             updateChannelsIsRunning = false;
-
             for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
                 // bug ici
                 if (!subFixtureChannelPoolUpdating[i]->isDeleted) {
@@ -151,7 +145,7 @@ void Brain::run() {
 
 
 
-void Brain::registerSubFixture(std::shared_ptr<SubFixture> f, int id) {
+void Brain::registerSubFixture(SubFixture* f, int id) {
     int askedId = id;
     if (subFixtures.getReference(id) == f) { return; }
     if (subFixtures.containsValue(f)) {
@@ -172,7 +166,7 @@ void Brain::registerSubFixture(std::shared_ptr<SubFixture> f, int id) {
     }
 }
 
-void Brain::unregisterSubFixture(std::shared_ptr<SubFixture> f) {
+void Brain::unregisterSubFixture(SubFixture* f) {
     if (subFixtures.containsValue(f)) {
         subFixtures.removeValue(f);
     }
@@ -499,60 +493,47 @@ void Brain::unregisterCarousel(Carousel* c) {
 }
 
 void Brain::pleaseUpdate(Cuelist* c) {
-    while (updateCuelistsIsRunning) {wait(1); }
-    addingCuelistToUpdate = true;
+    while (updateCuelistsIsRunning) {wait(5); }
     if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);
     }
-    addingCuelistToUpdate = false;
 }
 
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
-    while (updateChannelsIsRunning) { wait(1); }
-    if (f == nullptr) { return; };
-    if (f->parentParamType == nullptr) { return; };
+    while (updateChannelsIsRunning) { wait(5); }
+    if ( f == nullptr) {return; };
     //bug ici
-    addingChannelToUpdate = true;
     if (!subFixtureChannelPoolWaiting.contains(f)) {
         subFixtureChannelPoolWaiting.add(f);
     }
-    addingChannelToUpdate = false;
 }
 
 void Brain::pleaseUpdate(Cue* c) {
-    while (updateCuesIsRunning) { wait(1); }
-    addingCueToUpdate = true;
+    while (updateCuesIsRunning) { wait(5); }
     if (!cuePoolWaiting.contains(c)) {
         cuePoolWaiting.add(c);
     }
-    addingCueToUpdate = false;
 }
 
 void Brain::pleaseUpdate(Programmer* c) {
-    while (updateProgrammersIsRunning) { wait(1); }
-    addingProgrammerToUpdate = true;
+    while (updateProgrammersIsRunning) { wait(5); }
     if (!programmerPoolWaiting.contains(c)) {
         programmerPoolWaiting.add(c);
     }
-    addingProgrammerToUpdate = false;
 }
 
 void Brain::pleaseUpdate(Effect* f) {
-    while (updateEffectsIsRunning) { wait(1); }
-    addingEffectToUpdate = true;
+    while (updateEffectsIsRunning) { wait(5); }
     if (!effectPoolWaiting.contains(f)) {
         effectPoolWaiting.add(f);
     }
-    addingEffectToUpdate = false;
 }
 
 void Brain::pleaseUpdate(Carousel* f) {
-    while (updateCarouselsIsRunning) { wait(1); }
-    addingCarouselToUpdate = true;
+    while (updateCarouselsIsRunning) { wait(5); }
     if (!carouselPoolWaiting.contains(f)) {
         carouselPoolWaiting.add(f);
     }
-    addingCarouselToUpdate = false;
 }
 
 // utils
@@ -569,7 +550,7 @@ float Brain::symPosition(int index, int nElements) {
     return position;
 }
 
-std::shared_ptr<SubFixture> Brain::getSubFixtureById(int id) {
+SubFixture* Brain::getSubFixtureById(int id) {
     if (subFixtures.contains(id)) {
         return subFixtures.getReference(id);
     }

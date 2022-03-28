@@ -86,7 +86,7 @@ void EffectRow::computeData() {
     if (parentEffect == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         double deltaPos = 0;
-        computedPositions.set(selection.computedSelectedSubFixtures[i].get(), 0);
+        computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
     for (int i = 0; i < paramContainer.items.size(); i++) {
         EffectParam* p = paramContainer.items[i];
@@ -95,7 +95,7 @@ void EffectRow::computeData() {
         if (chanType != nullptr) {
             Array<SubFixtureChannel*> chans;
             for (int fIndex = 0; fIndex < selection.computedSelectedSubFixtures.size(); fIndex++) {
-                std::shared_ptr<SubFixture> f = selection.computedSelectedSubFixtures[fIndex];
+                SubFixture* f = selection.computedSelectedSubFixtures[fIndex];
                 SubFixtureChannel* c = f->channelsMap.getReference(chanType);
                 if (c != nullptr) {
                     chans.add(c);

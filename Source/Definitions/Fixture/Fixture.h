@@ -33,7 +33,7 @@ public:
     void updateName();
     TargetParameter* devTypeParam;
 
-    HashMap<int, std::shared_ptr<SubFixture>> subFixtures;
+    HashMap<int, SubFixture*> subFixtures;
     BaseManager<FixturePatch> patchs;
     String getTypeString() const override { return objectType; }
     Array<SubFixtureChannel*> channels;
@@ -43,8 +43,8 @@ public:
 
     static Fixture* create(var params) { return new Fixture(params); }
 
-    Array<std::shared_ptr<SubFixture>> getAllSubFixtures();
-    std::shared_ptr<SubFixture> getSubFixture(int id);
+    Array<SubFixture*> getAllSubFixtures();
+    SubFixture* getSubFixture(int id);
 
     void selectThis(bool addToSelection=false, bool notify = true);
     void autoName();

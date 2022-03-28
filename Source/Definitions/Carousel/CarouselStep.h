@@ -34,7 +34,7 @@ class CarouselStep:
     Automation curve;
     CommandValueManager values;
 
-    void computeValues(Array<std::shared_ptr<SubFixture>> SubFixtures);
+    void computeValues(Array<SubFixture*> SubFixtures);
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
 
     void onContainerParameterChangedInternal(Parameter*);
