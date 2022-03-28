@@ -33,7 +33,7 @@ public:
     void clear();
     void clearUpdates();
 
-    HashMap<int, SubFixture*>SubFixtures;
+    HashMap<int, SubFixture*>subFixtures;
     HashMap<int, Group*>groups;
     HashMap<int, Fixture*>fixtures;
     HashMap<int, Preset*>presets;
@@ -46,8 +46,8 @@ public:
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
-    Array<SubFixtureChannel*> SubFixtureChannelPoolUpdating;
-    Array<SubFixtureChannel*> SubFixtureChannelPoolWaiting;
+    Array<SubFixtureChannel*> subFixtureChannelPoolUpdating;
+    Array<SubFixtureChannel*> subFixtureChannelPoolWaiting;
     Array<Cue*> cuePoolUpdating;
     Array<Cue*> cuePoolWaiting;
     Array<Programmer*> programmerPoolUpdating;

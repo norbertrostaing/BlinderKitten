@@ -28,7 +28,7 @@ Brain :: ~Brain() {
 
 void Brain::clear()
 {
-    SubFixtures.clear();
+    subFixtures.clear();
     groups.clear();
     fixtures.clear();
     presets.clear();
@@ -40,8 +40,8 @@ void Brain::clear()
     carousels.clear();
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
-    SubFixtureChannelPoolUpdating.clear();
-    SubFixtureChannelPoolWaiting.clear();
+    subFixtureChannelPoolUpdating.clear();
+    subFixtureChannelPoolWaiting.clear();
     cuePoolUpdating.clear();
     cuePoolWaiting.clear();
     programmerPoolUpdating.clear();
@@ -56,8 +56,8 @@ void Brain::clearUpdates()
 {
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
-    SubFixtureChannelPoolUpdating.clear();
-    SubFixtureChannelPoolWaiting.clear();
+    subFixtureChannelPoolUpdating.clear();
+    subFixtureChannelPoolWaiting.clear();
     cuePoolUpdating.clear();
     cuePoolWaiting.clear();
     programmerPoolUpdating.clear();
@@ -121,15 +121,16 @@ void Brain::run() {
             programmerPoolUpdating.clear();
 
             updateChannelsIsRunning = true;
-            SubFixtureChannelPoolUpdating.addArray(SubFixtureChannelPoolWaiting);
-            SubFixtureChannelPoolWaiting.clear();
+            subFixtureChannelPoolUpdating.addArray(subFixtureChannelPoolWaiting);
+            subFixtureChannelPoolWaiting.clear();
             updateChannelsIsRunning = false;
-            for (int i = 0; i < SubFixtureChannelPoolUpdating.size(); i++) {
-                if (!SubFixtureChannelPoolUpdating[i]->isDeleted) {
-                    SubFixtureChannelPoolUpdating[i]->updateVal(now);
+            for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
+                // bug ici
+                if (!subFixtureChannelPoolUpdating[i]->isDeleted) {
+                    subFixtureChannelPoolUpdating[i]->updateVal(now);
                 }
             }
-            SubFixtureChannelPoolUpdating.clear();
+            subFixtureChannelPoolUpdating.clear();
 
             //double delta = Time::getMillisecondCounterHiRes() - now;
             //LOG(delta);
@@ -146,28 +147,28 @@ void Brain::run() {
 
 void Brain::registerSubFixture(SubFixture* f, int id) {
     int askedId = id;
-    if (SubFixtures.getReference(id) == f) { return; }
-    if (SubFixtures.containsValue(f)) {
-        SubFixtures.removeValue(f);
+    if (subFixtures.getReference(id) == f) { return; }
+    if (subFixtures.containsValue(f)) {
+        subFixtures.removeValue(f);
     }
     bool idIsOk = false;
     while (!idIsOk) {
-        if (SubFixtures.contains(id) && SubFixtures.getReference(id) != nullptr) {
+        if (subFixtures.contains(id) && subFixtures.getReference(id) != nullptr) {
             id++;
         }
         else {
             idIsOk = true;
         }
     }
-    SubFixtures.set(id, f);
+    subFixtures.set(id, f);
     f->subId =id;
     if (id != askedId) {
     }
 }
 
 void Brain::unregisterSubFixture(SubFixture* f) {
-    if (SubFixtures.containsValue(f)) {
-        SubFixtures.removeValue(f);
+    if (subFixtures.containsValue(f)) {
+        subFixtures.removeValue(f);
     }
 }
 
@@ -501,8 +502,9 @@ void Brain::pleaseUpdate(Cuelist* c) {
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
     while (updateChannelsIsRunning) { wait(5); }
     if ( f == nullptr) {return; };
-    if (!SubFixtureChannelPoolWaiting.contains(f)) {
-        SubFixtureChannelPoolWaiting.add(f);
+    //bug ici
+    if (!subFixtureChannelPoolWaiting.contains(f)) {
+        subFixtureChannelPoolWaiting.add(f);
     }
 }
 
@@ -549,8 +551,8 @@ float Brain::symPosition(int index, int nElements) {
 }
 
 SubFixture* Brain::getSubFixtureById(int id) {
-    if (SubFixtures.contains(id)) {
-        return SubFixtures.getReference(id);
+    if (subFixtures.contains(id)) {
+        return subFixtures.getReference(id);
     }
     else {
         return nullptr;

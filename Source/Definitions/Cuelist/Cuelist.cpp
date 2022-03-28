@@ -33,7 +33,7 @@ Cuelist::Cuelist(var params) :
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
 
-	id = addIntParameter("ID", "Id of this Cuelist", 1, 1);
+	id = addIntParameter("ID", "Id of this Cuelist", params.getProperty("id", 1), 1);
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	updateName();
 
