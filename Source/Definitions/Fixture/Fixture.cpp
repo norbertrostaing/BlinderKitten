@@ -119,16 +119,16 @@ void Fixture::checkChildrenSubFixtures() {
 	// clean of unused SubFixtures
 	// should probabely clean subfixture brain updates
 	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
-		it.getValue()->~SubFixture();
+		it.getValue().reset();
 	}
 	subFixtures.clear();
 
 	for (int i = 0; i < chans.size(); i++) {
 		FixtureTypeChannel* c = dynamic_cast<FixtureTypeChannel*>(chans[i].get());
 		int subId = c->subFixtureId->getValue();
-		SubFixture* subFixt = subFixtures.getReference(subId);
+		std::shared_ptr<SubFixture> subFixt = subFixtures.getReference(subId);
 		if (subFixt == nullptr) {
-			subFixt = new SubFixture();
+			subFixt.reset(new SubFixture());
 			subFixtures.set(subId, subFixt);
 			subFixt->subId = subId;
 		}
@@ -174,8 +174,8 @@ void Fixture::updateName() {
 }
 
 
-Array<SubFixture*> Fixture::getAllSubFixtures() {
-	Array<SubFixture*> ret;
+Array<std::shared_ptr<SubFixture>> Fixture::getAllSubFixtures() {
+	Array<std::shared_ptr<SubFixture>> ret;
 	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
 		if (it.getValue() != nullptr) {
 			ret.add(it.getValue());
@@ -184,7 +184,7 @@ Array<SubFixture*> Fixture::getAllSubFixtures() {
 	return ret;
 }
 
-SubFixture* Fixture::getSubFixture(int id) {
+std::shared_ptr<SubFixture> Fixture::getSubFixture(int id) {
 	return subFixtures.getReference(id);
 }
 

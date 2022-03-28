@@ -66,7 +66,7 @@ void CarouselRow::computeData() {
     if (parentCarousel == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         double deltaPos = 0;
-        computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
+        computedPositions.set(selection.computedSelectedSubFixtures[i].get(), 0);
     }
 
     float totalDuration = 0;

@@ -21,7 +21,7 @@ public:
     CommandSelectionManager();
     ~CommandSelectionManager();
 
-    Array<SubFixture*> computedSelectedSubFixtures;
+    Array<std::shared_ptr<SubFixture>> computedSelectedSubFixtures;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);
     Array<ChannelType *> getControllableChannelsTypes();

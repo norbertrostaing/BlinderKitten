@@ -33,7 +33,7 @@ public:
     void clear();
     void clearUpdates();
 
-    HashMap<int, SubFixture*>subFixtures;
+    HashMap<int, std::shared_ptr<SubFixture>>subFixtures;
     HashMap<int, Group*>groups;
     HashMap<int, Fixture*>fixtures;
     HashMap<int, Preset*>presets;
@@ -67,11 +67,17 @@ public:
     bool updateEffectsIsRunning = false;
     bool updateProgrammersIsRunning = false;
     bool updateChannelsIsRunning = false;
+    bool addingCueToUpdate = false;
+    bool addingCuelistToUpdate = false;
+    bool addingCarouselToUpdate = false;
+    bool addingEffectToUpdate = false;
+    bool addingProgrammerToUpdate = false;
+    bool addingChannelToUpdate = false;
     bool loadingIsRunning = false;
 
     void run() override;
-    void registerSubFixture(SubFixture* f, int id);
-    void unregisterSubFixture(SubFixture* f);
+    void registerSubFixture(std::shared_ptr<SubFixture> f, int id);
+    void unregisterSubFixture(std::shared_ptr<SubFixture> f);
     void registerFixture(Fixture* f, int id, bool swap = false);
     void unregisterFixture(Fixture* f);
     void registerGroup(Group* f, int id, bool swap = false);
@@ -100,7 +106,7 @@ public:
 
     //void updateChannel(SubFixtureChannel* fc);
 
-    SubFixture* getSubFixtureById(int id);
+    std::shared_ptr<SubFixture> getSubFixtureById(int id);
     Fixture* getFixtureById(int id);
     Group* getGroupById(int id);
     Preset* getPresetById(int id);
