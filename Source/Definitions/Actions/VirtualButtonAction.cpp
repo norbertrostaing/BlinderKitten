@@ -48,7 +48,6 @@ void VirtualButtonAction::setValueInternal(var value)
         if ((int)target->pageNumber->getValue() == page && (int)target->rowNumber->getValue() == row && (int)target->colNumber->getValue() == col) {
             switch (actionType) {
             case VB_PRESS:
-                LOG("COUCOUUUUUUU");
                 if (val >0) {
                     target->pressed();
                 } else {

@@ -64,7 +64,7 @@ void VirtualFaderAction::setValueInternal(var value)
         }
     }
 
-    LOG("looking for page " + String(page) + ", col" + String(col) + ", number " + String(number) + "");
+    //LOG("looking for page " + String(page) + ", col" + String(col) + ", number " + String(number) + "");
     for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
         VirtualFaderCol* vfc = VirtualFaderColManager::getInstance()->items[i];
 

@@ -252,7 +252,6 @@ void VirtualFaderColGrid::fillCells() {
                 for (int n = 0; n < vf->rotaries.items.size() && n < nRotaries; n++) {
                     VirtualFaderSlider* vs = vf->rotaries.items[n];
                     sliderToVFS.set(rotaries[c]->getRawDataPointer()[n], vs);
-                    // bug ici
                     String text = vs->getBtnText(targType);
                     if (text != "") {
                         rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);

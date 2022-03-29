@@ -121,7 +121,7 @@ void VirtualButtonGrid::fillCells() {
             int r = vb->rowNumber->getValue();
             int c = vb->colNumber->getValue();
             String btnText = vb->getBtnText();
-            if (r != 0 && c != 0 && r < rows && c < cols) {
+            if (r != 0 && c != 0 && r <= rows && c <= cols) {
                 int index = ((r-1)*cols)+(c-1);
                 gridButtons[index]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
                 gridButtons[index]->setButtonText(btnText);
