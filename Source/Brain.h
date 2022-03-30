@@ -44,10 +44,10 @@ public:
     HashMap<int, Effect*>effects;
     HashMap<int, Carousel*>carousels;
 
-    Array<Cuelist*> cuelistPoolUpdating;
-    Array<Cuelist*> cuelistPoolWaiting;
-    Array<SubFixtureChannel*> subFixtureChannelPoolUpdating;
-    Array<SubFixtureChannel*> subFixtureChannelPoolWaiting;
+    std::vector<Cuelist*> cuelistPoolUpdating;
+    std::vector<Cuelist*> cuelistPoolWaiting;
+    std::vector<SubFixtureChannel*> subFixtureChannelPoolUpdating;
+    std::vector<SubFixtureChannel*> subFixtureChannelPoolWaiting;
     Array<Cue*> cuePoolUpdating;
     Array<Cue*> cuePoolWaiting;
     Array<Programmer*> programmerPoolUpdating;

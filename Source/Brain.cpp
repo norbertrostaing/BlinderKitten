@@ -84,12 +84,14 @@ void Brain::run() {
 
             updateCuelistsIsRunning = true;
             if (cuelistPoolWaiting.size() > 0) {
-                cuelistPoolUpdating.addArray(cuelistPoolWaiting);
+                for (int i = 0; i < cuelistPoolWaiting.size(); i++) {
+                    cuelistPoolUpdating.push_back(cuelistPoolWaiting.at(i));
+                }
                 cuelistPoolWaiting.clear();
             }
             updateCuelistsIsRunning = false;
             for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
-                cuelistPoolUpdating.getReference(i)->update();
+                cuelistPoolUpdating.at(i)->update();
             }
             cuelistPoolUpdating.clear();
 
@@ -121,13 +123,15 @@ void Brain::run() {
             programmerPoolUpdating.clear();
 
             updateChannelsIsRunning = true;
-            subFixtureChannelPoolUpdating.addArray(subFixtureChannelPoolWaiting);
+            for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
+                subFixtureChannelPoolUpdating.push_back(subFixtureChannelPoolWaiting.at(i));
+            }
             subFixtureChannelPoolWaiting.clear();
             updateChannelsIsRunning = false;
             for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
                 // bug ici
-                if (subFixtureChannelPoolUpdating.getReference(i) != nullptr && !subFixtureChannelPoolUpdating.getReference(i)->isDeleted) {
-                    subFixtureChannelPoolUpdating.getReference(i)->updateVal(now);
+                if (subFixtureChannelPoolUpdating.at(i) != nullptr && !subFixtureChannelPoolUpdating.at(i)->isDeleted) {
+                    subFixtureChannelPoolUpdating.at(i)->updateVal(now);
                 }
             }
             subFixtureChannelPoolUpdating.clear();
@@ -496,8 +500,10 @@ void Brain::unregisterCarousel(Carousel* c) {
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
     while (updateCuelistsIsRunning) {wait(5); }
-    if (!cuelistPoolWaiting.contains(c)) {
-        cuelistPoolWaiting.add(c);
+    if (std::find(cuelistPoolWaiting.begin(), cuelistPoolWaiting.end(), c) != cuelistPoolWaiting.end()) {
+    }
+    else {
+        cuelistPoolWaiting.push_back(c);
     }
 }
 
@@ -506,8 +512,10 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
     while (updateChannelsIsRunning) { wait(5); }
     if (f == nullptr) { return; };
     //bug ici
-    if (!subFixtureChannelPoolWaiting.contains(f)) {
-        subFixtureChannelPoolWaiting.add(f);
+    if (std::find(subFixtureChannelPoolWaiting.begin(), subFixtureChannelPoolWaiting.end(), f) != subFixtureChannelPoolWaiting.end()) {
+    }
+    else {
+        subFixtureChannelPoolWaiting.push_back(f);
     }
 }
 
