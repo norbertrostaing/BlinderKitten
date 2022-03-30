@@ -27,6 +27,7 @@ public:
     bool isDeleted = false;
 
     ChannelType* channelType;
+    String objectType = "SubFixtureChannel";
     String resolution;
     float defaultValue = 0;
     float value = 0;

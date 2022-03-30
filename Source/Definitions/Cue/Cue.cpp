@@ -86,6 +86,8 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 }
 
 void Cue::computeValues() {
+	if (isComputing) {return;}
+	isComputing = true;
 	maxTiming = 0;
 	computedValues.clear();
 	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
@@ -100,6 +102,7 @@ void Cue::computeValues() {
 			}
 		}
 	}
+	isComputing = false;
 }
 
 void Cue::go() {

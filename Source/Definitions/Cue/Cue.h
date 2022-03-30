@@ -33,6 +33,7 @@ public:
     double TSAutoFollowEnd;
 
     Trigger* goBtn;
+    bool isComputing = false;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
 

@@ -152,6 +152,7 @@ void Carousel::pleaseComputeIfRunning() {
 }
 
 void Carousel::computeData() {
+	if (computing) {return;}
 	computed = true;
 	computing = true;
 	chanToCarouselRow.clear();
@@ -160,8 +161,10 @@ void Carousel::computeData() {
 	}
 	if (isOn) {
 		for (auto it = chanToCarouselRow.begin(); it != chanToCarouselRow.end(); it.next()) {
-			it.getKey()->carouselOnTopOfStack(this);
-			Brain::getInstance()->pleaseUpdate(it.getKey());
+			if (it.getKey() != nullptr) {
+				it.getKey()->carouselOnTopOfStack(this);
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
 		}
 		Brain::getInstance()->pleaseUpdate(this);
 	}

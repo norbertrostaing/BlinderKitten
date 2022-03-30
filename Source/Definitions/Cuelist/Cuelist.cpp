@@ -33,7 +33,8 @@ Cuelist::Cuelist(var params) :
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
 
-	id = addIntParameter("ID", "Id of this Cuelist", params.getProperty("id", 1), 1);
+	id = addIntParameter("ID", "Id of this Cuelist", params.getProperty("ID", 1), 1);
+
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	updateName();
 
@@ -401,8 +402,8 @@ void Cuelist::goRandom() {
 	Array<Cue*> allowedCues;
 
 	for (int i = 0; i< childCues.size(); i++) {
-		if (childCues[i]!=cueA && childCues[i]->canBeRandomlyCalled->getValue()) {
-			allowedCues.add(childCues[i]);
+		if (childCues.getReference(i) !=cueA && childCues[i]->canBeRandomlyCalled->getValue()) {
+			allowedCues.add(childCues.getReference(i));
 		}
 	}
 
