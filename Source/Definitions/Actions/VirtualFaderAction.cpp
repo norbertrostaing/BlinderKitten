@@ -46,7 +46,7 @@ void VirtualFaderAction::setValueInternal(var value)
     }
     int col = colNumber->getValue();
     int page = pageNumber->getValue();
-    if (page == 0) {
+    if (page == 0 || page == VirtualFaderColGrid::getInstance()->page) {
         page = VirtualFaderColGrid::getInstance()->page;
         if (actionType == VF_FADER) {
             if (col <= VirtualFaderColGrid::getInstance()->cols) {
