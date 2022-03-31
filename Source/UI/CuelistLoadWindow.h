@@ -29,6 +29,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void closeWindow();
+    bool windowOpened = false;
+
     OwnedArray<TextButton> buttons;
     Cuelist* currentTarget = nullptr;
 

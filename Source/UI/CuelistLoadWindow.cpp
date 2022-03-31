@@ -62,7 +62,9 @@ void CuelistLoadWindow::fillButtons(Cuelist* c) {
 void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
 {   
     triggerGo = triggerGoWhenSelected;
+    closeWindow();
     fillButtons(c);
+    setSize(810, 610);
     resized();
     DialogWindow::showDialog("Load next cue for "+c->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
 }
@@ -76,5 +78,9 @@ void CuelistLoadWindow::buttonClicked(Button* b)
             currentTarget->go();
         }
     }
-    b->findParentComponentOfClass<DialogWindow>()->exitModalState(0);
+    closeWindow();
+}
+
+void CuelistLoadWindow::closeWindow() {
+    findParentComponentOfClass<DialogWindow>()->exitModalState(0);
 }

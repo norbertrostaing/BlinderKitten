@@ -278,6 +278,9 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 				p->processUserInput("enter");
 			}
 		}
+		else if (p->userCanPressNumber) {
+			
+		}
 	} 
 	else if (type == "fixture") {
 		p->checkCurrentUserCommand();
@@ -289,6 +292,9 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 		}
 		else if (p->currentUserCommand->userCanHaveAnotherCommand) {
 			p->processUserInput("fixture");
+			p->processUserInput(String(id));
+		}
+		else if (p->currentUserCommand->lastTarget == "selectionThru") {
 			p->processUserInput(String(id));
 		}
 		else if (p->currentUserCommand->userCanPressPlusOrMinus) {

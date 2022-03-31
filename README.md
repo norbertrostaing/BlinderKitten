@@ -9,6 +9,8 @@ BlinkderKitten is actually not a production software but just a personnal learni
 
 Please check the [online documentation](https://norbertrostaing.gitbook.io/blinderkitten/).
 
+You can also join the [discord server](https://discord.gg/4RKYHQDn) to ask questions and report bugs.
+
 
 ## How does it work ?
 BlinderKitten uses some differents objects to help you create wonderful shows :

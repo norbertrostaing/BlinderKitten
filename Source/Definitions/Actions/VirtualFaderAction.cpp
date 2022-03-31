@@ -50,14 +50,18 @@ void VirtualFaderAction::setValueInternal(var value)
         page = VirtualFaderColGrid::getInstance()->page;
         if (actionType == VF_FADER) {
             if (col <= VirtualFaderColGrid::getInstance()->cols) {
-                VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val);
+                if (VirtualFaderColGrid::getInstance()->faders[col - 1]->getValue() != val) {
+                    VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val);
+                }
             }
             return;
         }
         else if (actionType == VF_ENCODER) {
             if (col <= VirtualFaderColGrid::getInstance()->cols) {
                 if (number < VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->size()) {
-                    VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->getRawDataPointer()[number]->setValue(val);
+                    if (VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->getRawDataPointer()[number]->getValue() != val) {
+                        VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->getRawDataPointer()[number]->setValue(val);
+                    }
                 }
             }
             return;
