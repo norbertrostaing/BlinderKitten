@@ -1,26 +1,26 @@
 {
   "mainLayout": {
     "type": 1,
-    "width": 1920,
-    "height": 997,
+    "width": 2048,
+    "height": 1069,
     "direction": 2,
     "shifters": [
       {
         "type": 1,
-        "width": 1920,
-        "height": 997,
+        "width": 2048,
+        "height": 1069,
         "direction": 1,
         "shifters": [
           {
             "type": 1,
-            "width": 605,
-            "height": 997,
+            "width": 574,
+            "height": 1069,
             "direction": 2,
             "shifters": [
               {
                 "type": 0,
-                "width": 605,
-                "height": 237,
+                "width": 574,
+                "height": 218,
                 "currentContent": "Input Panel",
                 "tabs": [
                   {
@@ -41,40 +41,41 @@
                 ]
               },
               {
-                "type": 1,
-                "width": 605,
-                "height": 479,
-                "direction": 1,
-                "shifters": [
+                "type": 0,
+                "width": 574,
+                "height": 152,
+                "currentContent": "Encoders",
+                "tabs": [
                   {
-                    "type": 0,
-                    "width": 299,
-                    "height": 479,
-                    "currentContent": "Fixtures",
-                    "tabs": [
-                      {
-                        "name": "Fixtures"
-                      }
-                    ]
-                  },
-                  {
-                    "type": 0,
-                    "width": 300,
-                    "height": 479,
-                    "currentContent": "Groups",
-                    "tabs": [
-                      {
-                        "name": "Groups"
-                      }
-                    ]
+                    "name": "Encoders"
                   }
                 ]
               },
               {
                 "type": 0,
-                "width": 605,
-                "height": 267,
-                "currentContent": "Presets",
+                "width": 574,
+                "height": 387,
+                "currentContent": "Group Grid",
+                "tabs": [
+                  {
+                    "name": "Fixtures"
+                  },
+                  {
+                    "name": "Groups"
+                  },
+                  {
+                    "name": "Fixture Grid"
+                  },
+                  {
+                    "name": "Group Grid"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 574,
+                "height": 294,
+                "currentContent": "Preset Grid",
                 "tabs": [
                   {
                     "name": "Presets"
@@ -84,6 +85,9 @@
                   },
                   {
                     "name": "Timing Presets"
+                  },
+                  {
+                    "name": "Preset Grid"
                   }
                 ]
               }
@@ -91,21 +95,21 @@
           },
           {
             "type": 1,
-            "width": 1309,
-            "height": 997,
+            "width": 1468,
+            "height": 1069,
             "direction": 1,
             "shifters": [
               {
                 "type": 1,
-                "width": 654,
-                "height": 997,
+                "width": 596,
+                "height": 1069,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 654,
-                    "height": 694,
-                    "currentContent": "Cuelists",
+                    "width": 596,
+                    "height": 358,
+                    "currentContent": "Cuelist Grid",
                     "tabs": [
                       {
                         "name": "Cuelists"
@@ -115,41 +119,69 @@
                       },
                       {
                         "name": "Carousels"
+                      },
+                      {
+                        "name": "Cuelist Grid"
+                      },
+                      {
+                        "name": "Effect Grid"
+                      },
+                      {
+                        "name": "Carousel Grid"
                       }
                     ]
                   },
                   {
                     "type": 0,
-                    "width": 654,
-                    "height": 125,
-                    "currentContent": "Encoders",
+                    "width": 596,
+                    "height": 310,
+                    "currentContent": "Virtual buttons grid",
                     "tabs": [
                       {
-                        "name": "Encoders"
+                        "name": "Virtual buttons grid"
                       }
                     ]
                   },
                   {
                     "type": 0,
-                    "width": 654,
-                    "height": 166,
-                    "currentContent": "Logger",
+                    "width": 596,
+                    "height": 389,
+                    "currentContent": "Virtual faders grid",
                     "tabs": [
                       {
-                        "name": "Logger"
+                        "name": "Virtual faders grid"
                       }
                     ]
                   }
                 ]
               },
               {
-                "type": 0,
-                "width": 648,
-                "height": 997,
-                "currentContent": "Inspector",
-                "tabs": [
+                "type": 1,
+                "width": 866,
+                "height": 1069,
+                "direction": 2,
+                "shifters": [
                   {
-                    "name": "Inspector"
+                    "type": 0,
+                    "width": 866,
+                    "height": 810,
+                    "currentContent": "Inspector",
+                    "tabs": [
+                      {
+                        "name": "Inspector"
+                      }
+                    ]
+                  },
+                  {
+                    "type": 0,
+                    "width": 866,
+                    "height": 253,
+                    "currentContent": "Logger",
+                    "tabs": [
+                      {
+                        "name": "Logger"
+                      }
+                    ]
                   }
                 ]
               }
