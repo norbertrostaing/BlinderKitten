@@ -140,14 +140,20 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		else if (selections[selId]->filter->getValue() == "random") {
 			Array<SubFixture*> filteredSelection;
 
+			int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
+
 			Random r;
 			if ((int)selections[selId]->randomSeed->getValue() == 0) {
 				r.setSeedRandomly();
+				if (tempSelection.size() - selections[selId]->lastRandom.size() > to) {
+					for (int i = 0; i < selections[selId]->lastRandom.size(); i++) {
+						tempSelection.removeAllInstancesOf(selections[selId]->lastRandom[i]);
+					}
+				}
 			}
 			else {
 				r.setSeed((int)selections[selId]->randomSeed->getValue());
 			}
-			int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
 			for (int i = 0; i< to; i++) {
 				int randIndex = r.nextInt(tempSelection.size());
 				filteredSelection.add(tempSelection[randIndex]);
@@ -155,6 +161,8 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 
 			tempSelection = filteredSelection;
+			selections[selId]->lastRandom.clear();
+			selections[selId]->lastRandom.addArray(filteredSelection);
 		}
 
 		if (selections[selId]->plusOrMinus->getValue() == "add") {

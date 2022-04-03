@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Definitions/SubFixture/SubFixture.h"
 
 class CommandSelection:
     public BaseItem,
@@ -38,6 +39,8 @@ class CommandSelection:
     BoolParameter* symmetry;
     IntParameter* randomSeed;
     IntParameter* randomNumber;
+
+    Array<SubFixture*> lastRandom;
 
     void updateDisplay();
 

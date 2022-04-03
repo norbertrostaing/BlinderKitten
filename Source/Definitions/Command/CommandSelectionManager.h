@@ -25,4 +25,5 @@ public:
     void computeSelection();
     void computeSelection(Array<int> groupHistory);
     Array<ChannelType *> getControllableChannelsTypes();
+
 };
