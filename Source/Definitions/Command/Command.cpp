@@ -51,6 +51,10 @@ Command::Command(var params) :
 Command::~Command()
 {
 	toDelete = true;
+	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
+		delete it.getValue();
+	}
+	computedValues.clear();
 }
 
 void Command::updateDisplay() {
@@ -73,6 +77,11 @@ void Command::computeValues() {
 void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
 	selection.computeSelection();
+	
+	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
+		delete it.getValue();
+	}
+
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 	Array<SubFixture*> SubFixtures = selection.computedSelectedSubFixtures;
@@ -247,10 +256,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			}
 
 			if (valuesFrom != nullptr) {
-				valuesFrom->~HashMap();
+				delete valuesFrom;
 			}
 			if (valuesTo != nullptr) {
-				valuesTo->~HashMap();
+				delete valuesTo;
 			}
 		}
 	}

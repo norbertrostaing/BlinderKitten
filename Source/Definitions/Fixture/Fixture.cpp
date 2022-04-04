@@ -65,7 +65,8 @@ Fixture::~Fixture()
 	Brain::getInstance()->unregisterFixture(this);
 	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
 		if (it.getValue()!= nullptr) {
-			it.getValue()->~SubFixture();
+			//it.getValue()->~SubFixture();
+			delete it.getValue();
 		}
 	}
 }
@@ -119,7 +120,8 @@ void Fixture::checkChildrenSubFixtures() {
 	// clean of unused SubFixtures
 	// should probabely clean subfixture brain updates
 	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
-		it.getValue()->~SubFixture();
+		//it.getValue()->~SubFixture();
+		delete it.getValue();
 	}
 	subFixtures.clear();
 

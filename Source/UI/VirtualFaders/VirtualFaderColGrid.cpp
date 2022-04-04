@@ -289,6 +289,7 @@ void VirtualFaderColGrid::fillCells() {
         }
     }
     resized();
+    updateSlidersValues();
 }
 
 void VirtualFaderColGrid::buttonClicked(juce::Button* button) {
@@ -436,9 +437,30 @@ VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
 void VirtualFaderColGrid::updateSlidersValues()
 {
     for (int i = 0; i < cols; i++) {
-        VirtualFaderCol* vfc = columnToVFC.getReference(i);
+        VirtualFaderCol* vfc = columnToVFC.getReference(i+1);
+        String colTargetType = "";
+        int colTargetId = 0;
+
         if (vfc != nullptr) {
-            
+            colTargetType = vfc->getTargetType();
+            colTargetId = vfc->targetId->getValue();
+        }
+
+        VirtualFaderSlider* s = sliderToVFS.getReference(faders[i]);
+        float v = 0;
+        if (s != nullptr) {
+            v = s->getTargetValue(colTargetType, colTargetId);
+        }
+        faders[i]->setValue(v, juce::dontSendNotification);
+
+        for (int r = 0; r < nRotaries; r++) {
+            VirtualFaderSlider* s = sliderToVFS.getReference(rotaries[i]->getRawDataPointer()[r]);
+            float v = 0;
+            if (s != nullptr) {
+                v = s->getTargetValue(colTargetType, colTargetId);
+            }
+            rotaries[i]->getRawDataPointer()[r]->setValue(v, juce::dontSendNotification);
+
         }
     }
 }

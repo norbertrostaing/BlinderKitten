@@ -83,10 +83,11 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 			if (isOn && (float)sizeValue->getValue() == 0) {
 				stop();
 			}
-			else if(!isOn && (float)sizeValue->getValue() > 0) {
+			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
 				start();
 			}
 		}
+		lastSize = p->getValue();
 	}
 }
 

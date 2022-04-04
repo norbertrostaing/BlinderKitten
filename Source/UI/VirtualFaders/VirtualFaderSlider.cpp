@@ -83,6 +83,46 @@ void VirtualFaderSlider::updateDisplay() {
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
+float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
+{
+	String targType = targetType->getValue();
+	int targId = targetId->getValue();
+
+	if (targType == "column") {
+		targType = colTargetType;
+		targId = colTargetId;
+	}
+
+	if (targId == 0) { return 0; }
+
+	if (targType == "cuelist") {
+		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+		if (targ != nullptr) {
+			String action = cuelistAction->getValue();
+			if (action == "htplevel") { return targ->HTPLevel->getValue(); }
+			if (action == "flashlevel") { return targ->FlashLevel->getValue(); }
+		}
+	}
+	else if (targType == "effect") {
+		Effect* targ = Brain::getInstance()->getEffectById(targId);
+		if (targ != nullptr) {
+			String action = effectAction->getValue();
+			if (action == "size") { return targ->sizeValue->getValue(); }
+			if (action == "speed") { return targ->speed->getValue(); }
+		}
+	}
+	else if (targType == "carousel") {
+		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+		if (targ != nullptr) {
+			String action = carouselAction->getValue();
+			if (action == "size") { return targ->sizeValue->getValue(); }
+			if (action == "speed") { return targ->speed->getValue(); }
+		}
+	}
+	return 0;
+
+}
+
 void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
 	int targId = targetId->getValue();

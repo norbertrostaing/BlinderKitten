@@ -69,6 +69,8 @@ public:
     bool updateChannelsIsRunning = false;
     bool loadingIsRunning = false;
 
+    bool virtualFadersNeedUpdate = false;
+
     void run() override;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);

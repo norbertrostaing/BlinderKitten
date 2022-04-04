@@ -11,6 +11,8 @@
 
 #include "Brain.h"
 #include "Definitions/ChannelValue.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
+
 juce_ImplementSingleton(Brain);
 
 Brain::Brain() :
@@ -151,6 +153,12 @@ void Brain::run() {
                 }
             }
             subFixtureChannelPoolUpdating.clear();
+
+            if (virtualFadersNeedUpdate) {
+                virtualFadersNeedUpdate = false;
+                VirtualFaderColGrid::getInstance()->updateSlidersValues();
+                
+            }
 
             //double delta = Time::getMillisecondCounterHiRes() - now;
             //LOG(delta);

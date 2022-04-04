@@ -133,6 +133,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		//return;
 	}
 	if (p == HTPLevel || p == FlashLevel) {
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
 		if (p == HTPLevel) {
 			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
 				go();

@@ -42,6 +42,7 @@ public:
     BoolParameter* autoStartAndStop;
     FloatParameter* speed;
     FloatParameter* sizeValue;
+    float lastSize = 0;
     BaseManager<EffectRow> values;
 
     FloatParameter* currentPosition;
