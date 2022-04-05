@@ -39,6 +39,8 @@ void SubFixtureChannel::writeValue(float v) {
 	v= jmin((float)1, v);
 	v= jmax((float)0, v);
 
+	value = v;
+
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();
@@ -98,6 +100,10 @@ void SubFixtureChannel::updateVal(double now) {
 	}
 	for (int i = 0; i < programmerStack.size(); i++) {
 		newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
+	}
+
+	for (int i = 0; i < trackerStack.size(); i++) {
+		newValue = trackerStack.getReference(i)->applyToChannel(this, newValue, now);
 	}
 
 	for (int i = 0; i < carouselStack.size(); i++) {
@@ -191,6 +197,19 @@ void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
 void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
 	while (carouselStack.indexOf(f) >= 0) {
 		carouselStack.removeAllInstancesOf(f);
+	}
+}
+
+void SubFixtureChannel::trackerOnTopOfStack(Tracker* f) {
+	while (trackerStack.indexOf(f) >= 0) {
+		trackerStack.removeAllInstancesOf(f);
+	}
+	trackerStack.add(f);
+}
+
+void SubFixtureChannel::trackerOutOfStack(Tracker* f) {
+	while (trackerStack.indexOf(f) >= 0) {
+		trackerStack.removeAllInstancesOf(f);
 	}
 }
 

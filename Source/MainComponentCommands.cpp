@@ -9,6 +9,7 @@
  */
  #include "MainComponent.h"
  #include "UserInputManager.h"
+ #include "Definitions/Assistant/Assistant.h"
 
 namespace BlinderKittenCommandId
 {
@@ -49,6 +50,8 @@ namespace BlinderKittenCommandId
 	static const int keyCue = 0x60305;
 	static const int keyEffect = 0x60306;
 	static const int keyCarousel = 0x60307;
+	static const int keyTracker= 0x60308;
+	static const int keyAssistant = 0x60309;
 
 
 	static const int key1 = 0x60401;
@@ -224,7 +227,17 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case BlinderKittenCommandId::keyCarousel:
 		result.setInfo("Carousel", "", "Direct Commands", 0);
-		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::ctrlModifier);
+		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::noModifiers);
+		break;
+
+	case BlinderKittenCommandId::keyTracker:
+		result.setInfo("Tracker", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("t").getKeyCode(), ModifierKeys::noModifiers);
+		break;
+
+	case BlinderKittenCommandId::keyAssistant:
+		result.setInfo("Assistant", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::noModifiers);
 		break;
 
 
@@ -329,6 +342,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		BlinderKittenCommandId::keyCopy,
 		BlinderKittenCommandId::keyDelete,
 
+		BlinderKittenCommandId::keyAssistant,
 		BlinderKittenCommandId::keyFixture,
 		BlinderKittenCommandId::keyGroup,
 		BlinderKittenCommandId::keyPreset,
@@ -336,6 +350,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		BlinderKittenCommandId::keyCue,
 		BlinderKittenCommandId::keyEffect,
 		BlinderKittenCommandId::keyCarousel,
+		BlinderKittenCommandId::keyTracker,
 
 		BlinderKittenCommandId::key1,
 		BlinderKittenCommandId::key2,
@@ -477,6 +492,8 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	}
 	break;
 
+	case BlinderKittenCommandId::keyAssistant: {Assistant::getInstance()->selectThis(); }break;
+
 	case BlinderKittenCommandId::keyFixture: {	UserInputManager::getInstance()->processInput("Fixture"); }break;
 	case BlinderKittenCommandId::keyGroup: {	UserInputManager::getInstance()->processInput("Group"); }break;
 	case BlinderKittenCommandId::keyPreset: {	UserInputManager::getInstance()->processInput("Preset"); }break;
@@ -484,6 +501,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::keyCue: {		UserInputManager::getInstance()->processInput("Cue"); }break;
 	case BlinderKittenCommandId::keyEffect: {	UserInputManager::getInstance()->processInput("Effect"); }break;
 	case BlinderKittenCommandId::keyCarousel: {	UserInputManager::getInstance()->processInput("Carousel"); }break;
+	case BlinderKittenCommandId::keyTracker: {	UserInputManager::getInstance()->processInput("Tracker"); }break;
 
 	case BlinderKittenCommandId::keyClear: {	UserInputManager::getInstance()->processInput("Clear"); }break;
 	case BlinderKittenCommandId::keyBackspace: {UserInputManager::getInstance()->processInput("Backspace"); }break;

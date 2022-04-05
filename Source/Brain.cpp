@@ -40,6 +40,7 @@ void Brain::clear()
     timingPresets.clear();
     effects.clear();
     carousels.clear();
+    trackers.clear();
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
     subFixtureChannelPoolUpdating.clear();
@@ -52,6 +53,8 @@ void Brain::clear()
     effectPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
+    trackerPoolUpdating.clear();
+    trackerPoolWaiting.clear();
 }
 
 void Brain::clearUpdates()
@@ -68,6 +71,8 @@ void Brain::clearUpdates()
     effectPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
+    trackerPoolUpdating.clear();
+    trackerPoolWaiting.clear();
 
 }
 
@@ -126,6 +131,19 @@ void Brain::run() {
                 carouselPoolUpdating.at(i)->update(now);
             }
             carouselPoolUpdating.clear();
+
+            updateTrackersIsRunning = true;
+            if (trackerPoolWaiting.size() > 0) {
+                for (int i = 0; i < trackerPoolWaiting.size(); i++) {
+                    trackerPoolUpdating.push_back(trackerPoolWaiting.at(i));
+                }
+                trackerPoolWaiting.clear();
+            }
+            updateTrackersIsRunning = false;
+            for (int i = 0; i < trackerPoolUpdating.size(); i++) {
+                trackerPoolUpdating.at(i)->update(now);
+            }
+            trackerPoolUpdating.clear();
 
             updateProgrammersIsRunning = true;
             if (programmerPoolWaiting.size() > 0) {
@@ -521,6 +539,42 @@ void Brain::unregisterCarousel(Carousel* c) {
     }
 }
 
+void Brain::registerTracker(Tracker* p, int id, bool swap) {
+    int askedId = id;
+    if (trackers.getReference(id) == p) { return; }
+    if (trackers.containsValue(p)) {
+        trackers.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (trackers.contains(id) && trackers.getReference(id) != nullptr) {
+            Tracker* presentItem = trackers.getReference(id);
+            unregisterTracker(p);
+            registerTracker(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (trackers.contains(id) && trackers.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    trackers.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterTracker(Tracker* c) {
+    if (trackers.containsValue(c)) {
+        trackers.removeValue(c);
+    }
+}
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
     while (updateCuelistsIsRunning) {wait(5); }
@@ -574,6 +628,15 @@ void Brain::pleaseUpdate(Carousel* f) {
     if (std::find(carouselPoolWaiting.begin(), carouselPoolWaiting.end(), f) != carouselPoolWaiting.end()) {}
     else {
         carouselPoolWaiting.push_back(f);
+    }
+}
+
+void Brain::pleaseUpdate(Tracker* f) {
+    if (f == nullptr || f->objectType != "Tracker") { return; }
+    while (updateTrackersIsRunning) { wait(5); }
+    if (std::find(trackerPoolWaiting.begin(), trackerPoolWaiting.end(), f) != trackerPoolWaiting.end()) {}
+    else {
+        trackerPoolWaiting.push_back(f);
     }
 }
 
@@ -675,6 +738,15 @@ Effect* Brain::getEffectById(int id) {
 Carousel* Brain::getCarouselById(int id) {
     if (carousels.contains(id)) {
         return carousels.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+Tracker* Brain::getTrackerById(int id) {
+    if (trackers.contains(id)) {
+        return trackers.getReference(id);
     }
     else {
         return nullptr;

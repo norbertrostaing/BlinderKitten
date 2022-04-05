@@ -40,6 +40,10 @@
                 file="Source/UI/GridView/PresetGridView.cpp"/>
           <FILE id="BXrKtJ" name="PresetGridView.h" compile="0" resource="0"
                 file="Source/UI/GridView/PresetGridView.h"/>
+          <FILE id="w9e99U" name="TrackerGridView.cpp" compile="1" resource="0"
+                file="Source/UI/GridView/TrackerGridView.cpp"/>
+          <FILE id="BstrRn" name="TrackerGridView.h" compile="0" resource="0"
+                file="Source/UI/GridView/TrackerGridView.h"/>
         </GROUP>
         <GROUP id="{DE55AD18-F1DB-71A0-45E6-09BF8140287E}" name="VirtualButtons">
           <FILE id="RAt7pp" name="VirtualButton.cpp" compile="1" resource="0"
@@ -541,6 +545,22 @@
                 file="Source/Definitions/TimingPreset/TimingPresetManagerUI.cpp"/>
           <FILE id="khpHjA" name="TimingPresetManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/TimingPreset/TimingPresetManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{5CD35BA7-CDE1-C739-92F7-9BFAAC80F198}" name="Tracker">
+          <FILE id="YiiRFU" name="Tracker.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/Tracker.cpp"/>
+          <FILE id="Tjih4p" name="Tracker.h" compile="0" resource="0" file="Source/Definitions/Tracker/Tracker.h"/>
+          <FILE id="nGINF7" name="TrackerManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Tracker/TrackerManager.cpp"/>
+          <FILE id="FIhnob" name="TrackerManager.h" compile="0" resource="0"
+                file="Source/Definitions/Tracker/TrackerManager.h"/>
+          <FILE id="FZFtPe" name="TrackerManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Tracker/TrackerManagerUI.cpp"/>
+          <FILE id="VhGBdL" name="TrackerManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Tracker/TrackerManagerUI.h"/>
+          <FILE id="wP4i7h" name="TrackerRow.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/TrackerRow.cpp"/>
+          <FILE id="wMO64M" name="TrackerRow.h" compile="0" resource="0" file="Source/Definitions/Tracker/TrackerRow.h"/>
+          <FILE id="acmCCC" name="TrackerStep.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/TrackerStep.cpp"/>
+          <FILE id="ROeLBp" name="TrackerStep.h" compile="0" resource="0" file="Source/Definitions/Tracker/TrackerStep.h"/>
         </GROUP>
         <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
               file="Source/Definitions/ChannelValue.cpp"/>

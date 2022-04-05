@@ -14,6 +14,7 @@
 #include "Definitions/TimingPreset/TimingPresetManagerUI.h"
 #include "Definitions/Effect/EffectManagerUI.h"
 #include "Definitions/Carousel/CarouselManagerUI.h"
+#include "Definitions/Tracker/TrackerManagerUI.h"
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
@@ -24,6 +25,7 @@
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
+#include "UI/GridView/TrackerGridView.h"
 
 #include "UI/VirtualButtons/VirtualButtonManagerUI.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
@@ -108,6 +110,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Programmers", &ProgrammerManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effects", &EffectManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Trackers", &TrackerManagerUI::create));
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Input Panel", &InputPanelUI::create));
@@ -117,6 +120,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelist Grid", &CuelistGridViewUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effect Grid", &EffectGridViewUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousel Grid", &CarouselGridViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Tracker Grid", &TrackerGridViewUI::create));
 
     // ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons", &VirtualButtonManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual buttons grid", &VirtualButtonGridUI::create));
