@@ -237,7 +237,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case BlinderKittenCommandId::keyAssistant:
 		result.setInfo("Assistant", "", "Direct Commands", 0);
-		result.addDefaultKeypress(KeyPress::createFromDescription("c").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::createFromDescription("a").getKeyCode(), ModifierKeys::noModifiers);
 		break;
 
 

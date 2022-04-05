@@ -237,6 +237,9 @@
                 file="Source/Definitions/Actions/InputPanelAction.cpp"/>
           <FILE id="vw8Ohs" name="InputPanelAction.h" compile="0" resource="0"
                 file="Source/Definitions/Actions/InputPanelAction.h"/>
+          <FILE id="t8mECB" name="TrackerAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/TrackerAction.cpp"/>
+          <FILE id="u3i5o8" name="TrackerAction.h" compile="0" resource="0" file="Source/Definitions/Actions/TrackerAction.h"/>
           <FILE id="f7okso" name="VirtualButtonAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/VirtualButtonAction.cpp"/>
           <FILE id="CHLzi3" name="VirtualButtonAction.h" compile="0" resource="0"

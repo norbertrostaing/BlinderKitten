@@ -30,6 +30,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	targetType->addOption("Cuelist", "cuelist");
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
+	targetType->addOption("Tracker", "tracker");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	cuelistAction = addEnumParameter("Cuelist action", "");
@@ -43,6 +44,9 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	carouselAction = addEnumParameter("Carousel Action", "");
 	carouselAction->addOption("Size", "size");
 	carouselAction->addOption("Speed", "speed");
+
+	trackerAction = addEnumParameter("Carousel Action", "");
+	trackerAction->addOption("Size", "size");
 
 	updateDisplay();
 	updateName();
@@ -79,6 +83,7 @@ void VirtualFaderSlider::updateDisplay() {
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
+	trackerAction->hideInEditor = targType != "tracker";
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -117,6 +122,13 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 			String action = carouselAction->getValue();
 			if (action == "size") { return targ->sizeValue->getValue(); }
 			if (action == "speed") { return targ->speed->getValue(); }
+		}
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			if (action == "size") { return targ->sizeValue->getValue(); }
 		}
 	}
 	return 0;
@@ -158,6 +170,13 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 			if (action == "speed") { targ->speed->setValue(value); }
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			if (action == "size") { targ->sizeValue->setValue(value); }
+		}
+	}
 
 }
 
@@ -188,6 +207,13 @@ void VirtualFaderSlider::released() {
 			// if (action == "start") { targ->start(); }
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			// if (action == "start") { targ->start(); }
+		}
+	}
 
 }
 
@@ -205,6 +231,9 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		}
 		else if (targType == "carousel") {
 			action = carouselAction->getValue();
+		}
+		else if (targType == "tracker") {
+			action = trackerAction->getValue();
 		}
 
 		return action;
@@ -230,6 +259,13 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		else if (targType == "carousel") {
 			Carousel* targ = Brain::getInstance()->getCarouselById(targId);
 			action = carouselAction->getValue();
+			if (targ != nullptr) {
+				text = targ->userName->getValue();
+			}
+		}
+		else if (targType == "tracker") {
+			Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+			action = trackerAction->getValue();
 			if (targ != nullptr) {
 				text = targ->userName->getValue();
 			}

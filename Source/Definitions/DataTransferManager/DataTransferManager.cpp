@@ -30,6 +30,8 @@
 #include "../Effect/Effect.h"
 #include "../Carousel/CarouselManager.h"
 #include "../Carousel/Carousel.h"
+#include "../Tracker/TrackerManager.h"
+#include "../Tracker/Tracker.h"
 #include "../Fixture/FixtureManager.h"
 #include "../Fixture/Fixture.h"
 
@@ -48,6 +50,7 @@
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
+#include "UI/GridView/TrackerGridView.h"
 
 
 
@@ -63,6 +66,7 @@ DataTransferManager::DataTransferManager() :
     sourceType->addOption("Cuelist", "cuelist");
     sourceType->addOption("Effect", "effect");
     sourceType->addOption("Carousel", "carousel");
+    sourceType->addOption("Tracker", "tracker");
     sourceType->addOption("Programmer", "programmer");
     sourceType->addOption("Virtual Button", "virtualbutton");
     sourceType->addOption("Virtual Fader", "virtualfadercol");
@@ -74,6 +78,7 @@ DataTransferManager::DataTransferManager() :
     targetType->addOption("Cuelist", "cuelist");
     targetType->addOption("Effect", "effect");
     targetType->addOption("Carousel", "carousel");
+    targetType->addOption("Tracker", "tracker");
     targetType->addOption("Programmer", "programmer");
     targetType->addOption("Virtual Button", "virtualbutton");
     targetType->addOption("Virtual Fader", "virtualfadercol");
@@ -355,6 +360,88 @@ void DataTransferManager::execute() {
             }
         }
     }
+    else if (srcType == "tracker") {
+        if (trgType == "tracker") {
+            valid = true;
+            Tracker* src = Brain::getInstance()->getTrackerById(sId);
+            Tracker* trg = Brain::getInstance()->getTrackerById(tId);
+            if (trg == nullptr) {
+                trg = TrackerManager::getInstance()->addItemFromData(src->getJSONData());
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
+            }
+        }
+        else if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("tracker");
+            trg->selectThis();
+        }
+        else if (trgType == "virtualfadercol") {
+            valid = true;
+            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("tracker");
+            trg->selectThis();
+            trg->fader.targetType->setValueWithData("column");
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nRotaries; i++) {
+                VirtualFaderSlider* t = trg->rotaries.addItem();
+                t->targetType->setValueWithData("column");
+            }
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nAbove; i++) {
+                VirtualFaderButton* t = trg->aboveButtons.addItem();
+                t->targetType->setValueWithData("column");
+            }
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nBelow; i++) {
+                VirtualFaderButton* t = trg->belowButtons.addItem();
+                t->targetType->setValueWithData("column");
+            }
+        }
+    }
+    else if (srcType == "tracker") {
+        if (trgType == "tracker") {
+            valid = true;
+            Tracker* src = Brain::getInstance()->getTrackerById(sId);
+            Tracker* trg = Brain::getInstance()->getTrackerById(tId);
+            if (trg == nullptr) {
+                trg = TrackerManager::getInstance()->addItemFromData(src->getJSONData());
+                src->id->setValue(sId);
+                trg->id->setValue(tId);
+                trg->userName->setValue(src->userName->getValue());
+                trg->selectThis();
+            }
+        }
+        else if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("tracker");
+            trg->selectThis();
+        }
+        else if (trgType == "virtualfadercol") {
+            valid = true;
+            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+            trg->targetId->setValue(sId);
+            trg->targetType->setValueWithData("tracker");
+            trg->selectThis();
+            trg->fader.targetType->setValueWithData("column");
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nRotaries; i++) {
+                VirtualFaderSlider* t = trg->rotaries.addItem();
+                t->targetType->setValueWithData("column");
+            }
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nAbove; i++) {
+                VirtualFaderButton* t = trg->aboveButtons.addItem();
+                t->targetType->setValueWithData("column");
+            }
+            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nBelow; i++) {
+                VirtualFaderButton* t = trg->belowButtons.addItem();
+                t->targetType->setValueWithData("column");
+            }
+        }
+    }
     else if (srcType == "preset") {
         if (trgType == "preset") {
             valid = true;
@@ -445,6 +532,11 @@ void DataTransferManager::editObject(String type, int id) {
         if (target == nullptr) { target = CarouselManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
     }
+    else if (type == "tracker") {
+        Tracker* target = Brain::getInstance()->getTrackerById(id);
+        if (target == nullptr) { target = TrackerManager::getInstance()->addItem(); target->id->setValue(id); }
+        target->selectThis();
+    }
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->editCell(id);
     }
@@ -476,7 +568,11 @@ void DataTransferManager::deleteObject(String type, int id) {
     }
     else if (type == "carousel") {
         Carousel* target = Brain::getInstance()->getCarouselById(id);
-        if (target != nullptr) { CarouselManager::getInstance()->removeItem(target); CarouselGridView::getInstance()->updateCells();}
+        if (target != nullptr) { CarouselManager::getInstance()->removeItem(target); CarouselGridView::getInstance()->updateCells(); }
+    }
+    else if (type == "tracker") {
+        Tracker* target = Brain::getInstance()->getTrackerById(id);
+        if (target != nullptr) { TrackerManager::getInstance()->removeItem(target); TrackerGridView::getInstance()->updateCells(); }
     }
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->deleteCell(id);
@@ -530,7 +626,15 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
     else if (type == "carousel") {
         Carousel* source = Brain::getInstance()->getCarouselById(id);
         Carousel* target = Brain::getInstance()->getCarouselById(idTo);
-        if (source == nullptr) {return;}
+        if (source == nullptr) { return; }
+        if (target != nullptr) { target->id->setValue(99999999); }
+        source->id->setValue(idTo);
+        if (target != nullptr) { target->id->setValue(id); }
+    }
+    else if (type == "tracker") {
+        Tracker* source = Brain::getInstance()->getTrackerById(id);
+        Tracker* target = Brain::getInstance()->getTrackerById(idTo);
+        if (source == nullptr) { return; }
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }

@@ -32,6 +32,7 @@ VirtualButton::VirtualButton(var params) :
 	targetType->addOption("Cuelist", "cuelist");
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
+	targetType->addOption("Tracker", "tracker");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	cuelistAction = addEnumParameter("Cuelist action", "");
@@ -52,6 +53,10 @@ VirtualButton::VirtualButton(var params) :
 	carouselAction->addOption("Start", "start");
 	carouselAction->addOption("Stop", "stop");
 	carouselAction->addOption("Tap tempo", "taptempo");
+
+	trackerAction = addEnumParameter("Carousel Action", "");
+	trackerAction->addOption("Start", "start");
+	trackerAction->addOption("Stop", "stop");
 
 	// id = addIntParameter("ID", "ID of this VirtualButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualButton","New VirtualButton");
@@ -80,6 +85,7 @@ void VirtualButton::updateDisplay() {
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
+	trackerAction->hideInEditor = targType != "tracker";
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -120,6 +126,14 @@ void VirtualButton::pressed() {
 			if (action == "taptempo") { targ->tapTempo(); }
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			if (action == "start") { targ->start(); }
+			if (action == "stop") { targ->stop(); }
+		}
+	}
 
 }
 
@@ -150,6 +164,13 @@ void VirtualButton::released() {
 			// if (action == "start") { targ->start(); }
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			// if (action == "start") { targ->start(); }
+		}
+	}
 
 }
 
@@ -177,6 +198,13 @@ String VirtualButton::getBtnText() {
 	else if(targType == "carousel") {
 		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
 		action = carouselAction->getValue();
+		if (targ != nullptr) {
+			text = targ->userName->getValue();
+		}
+	}
+	else if(targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		action = trackerAction->getValue();
 		if (targ != nullptr) {
 			text = targ->userName->getValue();
 		}
