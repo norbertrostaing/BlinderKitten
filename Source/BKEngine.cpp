@@ -36,7 +36,7 @@
 #include "./Definitions/CurvePreset/CurvePresetManager.h"
 #include "./Definitions/Effect/EffectManager.h"
 #include "./Definitions/Carousel/CarouselManager.h"
-#include "./Definitions/Tracker/TrackerManager.h"
+#include "./Definitions/Mapper/MapperManager.h"
 
 #include "./Definitions/DataTransferManager/DataTransferManager.h"
 #include "./Definitions/Fixture/FixtureMultiEditor.h"
@@ -61,7 +61,7 @@
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
-#include "UI/GridView/TrackerGridView.h"
+#include "UI/GridView/MapperGridView.h"
 
 #include "UI/VirtualButtons/VirtualButtonManager.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
@@ -130,7 +130,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(CurvePresetManager::getInstance());
 	addChildControllableContainer(TimingPresetManager::getInstance());
 	addChildControllableContainer(CarouselManager::getInstance());
-	addChildControllableContainer(TrackerManager::getInstance());
+	addChildControllableContainer(MapperManager::getInstance());
 	addChildControllableContainer(EffectManager::getInstance());
 
 	addChildControllableContainer(VirtualButtonManager::getInstance());
@@ -145,7 +145,7 @@ BKEngine::BKEngine() :
 	CuelistGridView::getInstance()->engine = this;
 	EffectGridView::getInstance()->engine = this;
 	CarouselGridView::getInstance()->engine = this;
-	TrackerGridView::getInstance()->engine = this;
+	MapperGridView::getInstance()->engine = this;
 
 	VirtualButtonGrid::getInstance()->engine = this;
 	VirtualButtonGrid::getInstance()->initCells();
@@ -202,7 +202,7 @@ BKEngine::~BKEngine()
 
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
-	TrackerManager::deleteInstance();
+	MapperManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();
 	CommandManager::deleteInstance();
@@ -250,7 +250,7 @@ void BKEngine::clearInternal()
 
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();
-	TrackerManager::getInstance()->clear();
+	MapperManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
 	CarouselManager::getInstance()->clear();
 	ProgrammerManager::getInstance()->clear();
@@ -273,7 +273,7 @@ void BKEngine::clearInternal()
 	CuelistGridView::getInstance()->updateCells();
 	EffectGridView::getInstance()->updateCells();
 	CarouselGridView::getInstance()->updateCells();
-	TrackerGridView::getInstance()->updateCells();
+	MapperGridView::getInstance()->updateCells();
 	Brain::getInstance()->startThread();
 
 
@@ -325,8 +325,8 @@ var BKEngine::getJSONData()
 	var carData = CarouselManager::getInstance()->getJSONData();
 	if (!carData.isVoid() && carData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, carData);
 
-	var tData = TrackerManager::getInstance()->getJSONData();
-	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(TrackerManager::getInstance()->shortName, tData);
+	var tData = MapperManager::getInstance()->getJSONData();
+	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(MapperManager::getInstance()->shortName, tData);
 
 	var vbData = VirtualButtonManager::getInstance()->getJSONData();
 	if (!vbData.isVoid() && vbData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, vbData);
@@ -365,7 +365,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
 	ProgressTask* fxTask = loadingTask->addTask("Effects");
 	ProgressTask* carTask = loadingTask->addTask("Carousels");
-	ProgressTask* trackTask = loadingTask->addTask("Trackers");
+	ProgressTask* trackTask = loadingTask->addTask("Mappers");
 	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
 	ProgressTask* vfTask = loadingTask->addTask("Virtual faders");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
@@ -443,7 +443,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	carTask->end();
 
 	trackTask->start();
-	TrackerManager::getInstance()->loadJSONData(data.getProperty(TrackerManager::getInstance()->shortName, var()));
+	MapperManager::getInstance()->loadJSONData(data.getProperty(MapperManager::getInstance()->shortName, var()));
 	trackTask->setProgress(1);
 	trackTask->end();
 
@@ -478,7 +478,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	CuelistGridView::getInstance()->updateCells();
 	EffectGridView::getInstance()->updateCells();
 	CarouselGridView::getInstance()->updateCells();
-	TrackerGridView::getInstance()->updateCells();
+	MapperGridView::getInstance()->updateCells();
 
 	VirtualButtonGrid::getInstance()->page = 1;
 	VirtualButtonGrid::getInstance()->initCells();
@@ -538,7 +538,7 @@ void BKEngine::importMochi(File f) {
 	CurvePresetManager::getInstance()->addItemsFromData(data.getProperty(CurvePresetManager::getInstance()->shortName, var()));
 	TimingPresetManager::getInstance()->addItemsFromData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
 	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
-	TrackerManager::getInstance()->addItemsFromData(data.getProperty(TrackerManager::getInstance()->shortName, var()));
+	MapperManager::getInstance()->addItemsFromData(data.getProperty(MapperManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
 	VirtualFaderColManager::getInstance()->addItemsFromData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
@@ -549,7 +549,7 @@ void BKEngine::importMochi(File f) {
 	CuelistGridView::getInstance()->updateCells();
 	EffectGridView::getInstance()->updateCells();
 	CarouselGridView::getInstance()->updateCells();
-	TrackerGridView::getInstance()->updateCells();
+	MapperGridView::getInstance()->updateCells();
 }
 
 void BKEngine::exportSelection()
@@ -568,7 +568,7 @@ void BKEngine::exportSelection()
 	data.getDynamicObject()->setProperty(CurvePresetManager::getInstance()->shortName, CurvePresetManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, TimingPresetManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, CarouselManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(TrackerManager::getInstance()->shortName, TrackerManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(MapperManager::getInstance()->shortName, MapperManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, VirtualFaderColManager::getInstance()->getExportSelectionData());
@@ -598,7 +598,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 		CuelistGridView::getInstance()->resized();
 		EffectGridView::getInstance()->resized();
 		CarouselGridView::getInstance()->resized();
-		TrackerGridView::getInstance()->resized();
+		MapperGridView::getInstance()->resized();
 	}
 	else if (p == virtualButtonGridCols || p == virtualButtonGridRows) {
 		VirtualButtonGrid::getInstance()->initCells();

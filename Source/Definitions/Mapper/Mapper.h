@@ -12,16 +12,16 @@
 #pragma once
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
-#include "TrackerRow.h"
-class TrackerStep;
+#include "MapperRow.h"
+class MapperStep;
 class SubFixtureChannel;
 
-class Tracker :
+class Mapper :
     public BaseItem
 {
 public:
-    Tracker(var params = var());
-    virtual ~Tracker();
+    Mapper(var params = var());
+    virtual ~Mapper();
 
     String objectType;
     var objectData;
@@ -33,7 +33,7 @@ public:
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void updateName();
 
-    BoolParameter* isTrackerOn;
+    BoolParameter* isMapperOn;
     bool isOn = false;
 
     Trigger* startBtn;
@@ -42,9 +42,9 @@ public:
     BoolParameter* autoStartAndStop;
     FloatParameter* sizeValue;
     float lastSize = 0;
-    BaseManager<TrackerRow> rows;
+    BaseManager<MapperRow> rows;
 
-    HashMap<SubFixtureChannel*, Array<TrackerRow*>*> chanToTrackerRow;
+    HashMap<SubFixtureChannel*, Array<MapperRow*>*> chanToMapperRow;
 
     String getTypeString() const override { return objectType; }
 
@@ -58,6 +58,6 @@ public:
     void stop();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 
-    static Tracker* create(var params) { return new Tracker(params); }
+    static Mapper* create(var params) { return new Mapper(params); }
     
 };

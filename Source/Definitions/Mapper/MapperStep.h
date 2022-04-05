@@ -16,12 +16,12 @@ class SubFixtureChannel;
 class SubFixture;
 class ChannelValue;
 
-class TrackerStep:
+class MapperStep:
     public BaseItem
 {
     public:
-    TrackerStep(var params = var());
-    ~TrackerStep();
+    MapperStep(var params = var());
+    ~MapperStep();
 
     String objectType;
     var objectData;

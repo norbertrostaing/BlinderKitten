@@ -40,7 +40,7 @@ void Brain::clear()
     timingPresets.clear();
     effects.clear();
     carousels.clear();
-    trackers.clear();
+    mappers.clear();
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
     subFixtureChannelPoolUpdating.clear();
@@ -53,8 +53,8 @@ void Brain::clear()
     effectPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
-    trackerPoolUpdating.clear();
-    trackerPoolWaiting.clear();
+    mapperPoolUpdating.clear();
+    mapperPoolWaiting.clear();
 }
 
 void Brain::clearUpdates()
@@ -71,8 +71,8 @@ void Brain::clearUpdates()
     effectPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
-    trackerPoolUpdating.clear();
-    trackerPoolWaiting.clear();
+    mapperPoolUpdating.clear();
+    mapperPoolWaiting.clear();
 
 }
 
@@ -132,18 +132,18 @@ void Brain::run() {
             }
             carouselPoolUpdating.clear();
 
-            updateTrackersIsRunning = true;
-            if (trackerPoolWaiting.size() > 0) {
-                for (int i = 0; i < trackerPoolWaiting.size(); i++) {
-                    trackerPoolUpdating.push_back(trackerPoolWaiting.at(i));
+            updateMappersIsRunning = true;
+            if (mapperPoolWaiting.size() > 0) {
+                for (int i = 0; i < mapperPoolWaiting.size(); i++) {
+                    mapperPoolUpdating.push_back(mapperPoolWaiting.at(i));
                 }
-                trackerPoolWaiting.clear();
+                mapperPoolWaiting.clear();
             }
-            updateTrackersIsRunning = false;
-            for (int i = 0; i < trackerPoolUpdating.size(); i++) {
-                trackerPoolUpdating.at(i)->update(now);
+            updateMappersIsRunning = false;
+            for (int i = 0; i < mapperPoolUpdating.size(); i++) {
+                mapperPoolUpdating.at(i)->update(now);
             }
-            trackerPoolUpdating.clear();
+            mapperPoolUpdating.clear();
 
             updateProgrammersIsRunning = true;
             if (programmerPoolWaiting.size() > 0) {
@@ -539,29 +539,29 @@ void Brain::unregisterCarousel(Carousel* c) {
     }
 }
 
-void Brain::registerTracker(Tracker* p, int id, bool swap) {
+void Brain::registerMapper(Mapper* p, int id, bool swap) {
     int askedId = id;
-    if (trackers.getReference(id) == p) { return; }
-    if (trackers.containsValue(p)) {
-        trackers.removeValue(p);
+    if (mappers.getReference(id) == p) { return; }
+    if (mappers.containsValue(p)) {
+        mappers.removeValue(p);
     }
     bool idIsOk = false;
     if (swap && p->registeredId != 0) {
-        if (trackers.contains(id) && trackers.getReference(id) != nullptr) {
-            Tracker* presentItem = trackers.getReference(id);
-            unregisterTracker(p);
-            registerTracker(presentItem, p->registeredId, false);
+        if (mappers.contains(id) && mappers.getReference(id) != nullptr) {
+            Mapper* presentItem = mappers.getReference(id);
+            unregisterMapper(p);
+            registerMapper(presentItem, p->registeredId, false);
         }
     }
     while (!idIsOk) {
-        if (trackers.contains(id) && trackers.getReference(id) != nullptr) {
+        if (mappers.contains(id) && mappers.getReference(id) != nullptr) {
             id++;
         }
         else {
             idIsOk = true;
         }
     }
-    trackers.set(id, p);
+    mappers.set(id, p);
     p->id->setValue(id);
     p->registeredId = id;
     if (id != askedId) {
@@ -569,9 +569,9 @@ void Brain::registerTracker(Tracker* p, int id, bool swap) {
 }
 
 
-void Brain::unregisterTracker(Tracker* c) {
-    if (trackers.containsValue(c)) {
-        trackers.removeValue(c);
+void Brain::unregisterMapper(Mapper* c) {
+    if (mappers.containsValue(c)) {
+        mappers.removeValue(c);
     }
 }
 
@@ -631,12 +631,12 @@ void Brain::pleaseUpdate(Carousel* f) {
     }
 }
 
-void Brain::pleaseUpdate(Tracker* f) {
-    if (f == nullptr || f->objectType != "Tracker") { return; }
-    while (updateTrackersIsRunning) { wait(5); }
-    if (std::find(trackerPoolWaiting.begin(), trackerPoolWaiting.end(), f) != trackerPoolWaiting.end()) {}
+void Brain::pleaseUpdate(Mapper* f) {
+    if (f == nullptr || f->objectType != "Mapper") { return; }
+    while (updateMappersIsRunning) { wait(5); }
+    if (std::find(mapperPoolWaiting.begin(), mapperPoolWaiting.end(), f) != mapperPoolWaiting.end()) {}
     else {
-        trackerPoolWaiting.push_back(f);
+        mapperPoolWaiting.push_back(f);
     }
 }
 
@@ -744,9 +744,9 @@ Carousel* Brain::getCarouselById(int id) {
     }
 }
 
-Tracker* Brain::getTrackerById(int id) {
-    if (trackers.contains(id)) {
-        return trackers.getReference(id);
+Mapper* Brain::getMapperById(int id) {
+    if (mappers.contains(id)) {
+        return mappers.getReference(id);
     }
     else {
         return nullptr;

@@ -1,36 +1,36 @@
 /*
   ==============================================================================
 
-    TrackerAction.cpp
+    MapperAction.cpp
     Created: 3 Feb 2022 10:15:35pm
     Author:  No
 
   ==============================================================================
 */
 
-#include "TrackerAction.h"
-#include "../Tracker/Tracker.h"
+#include "MapperAction.h"
+#include "../Mapper/Mapper.h"
 #include "../../Brain.h"
 
-TrackerAction::TrackerAction(var params) :
+MapperAction::MapperAction(var params) :
     Action(params)
 {
     actionType = (ActionType)(int)params.getProperty("actionType", TRK_START);
 
-    targetId = addIntParameter("Tracker ID", "Id oth the target Tracker", 0, 0);
+    targetId = addIntParameter("Mapper ID", "Id oth the target Mapper", 0, 0);
 
 }
 
-TrackerAction::~TrackerAction()
+MapperAction::~MapperAction()
 {
 }
 
-void TrackerAction::triggerInternal()
+void MapperAction::triggerInternal()
 {
 }
 
-void TrackerAction::setValueInternal(var value) {
-    Tracker* target = Brain::getInstance()->getTrackerById(targetId->getValue());
+void MapperAction::setValueInternal(var value) {
+    Mapper* target = Brain::getInstance()->getMapperById(targetId->getValue());
     if (target == nullptr) return;
 
     float val = value;

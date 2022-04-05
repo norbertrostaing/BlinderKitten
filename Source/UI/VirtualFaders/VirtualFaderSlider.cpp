@@ -30,7 +30,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	targetType->addOption("Cuelist", "cuelist");
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
-	targetType->addOption("Tracker", "tracker");
+	targetType->addOption("Mapper", "mapper");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	cuelistAction = addEnumParameter("Cuelist action", "");
@@ -45,8 +45,8 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	carouselAction->addOption("Size", "size");
 	carouselAction->addOption("Speed", "speed");
 
-	trackerAction = addEnumParameter("Carousel Action", "");
-	trackerAction->addOption("Size", "size");
+	mapperAction = addEnumParameter("Carousel Action", "");
+	mapperAction->addOption("Size", "size");
 
 	updateDisplay();
 	updateName();
@@ -83,7 +83,7 @@ void VirtualFaderSlider::updateDisplay() {
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
-	trackerAction->hideInEditor = targType != "tracker";
+	mapperAction->hideInEditor = targType != "mapper";
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -124,10 +124,10 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 			if (action == "speed") { return targ->speed->getValue(); }
 		}
 	}
-	else if (targType == "tracker") {
-		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+	else if (targType == "mapper") {
+		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
-			String action = trackerAction->getValue();
+			String action = mapperAction->getValue();
 			if (action == "size") { return targ->sizeValue->getValue(); }
 		}
 	}
@@ -170,10 +170,10 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 			if (action == "speed") { targ->speed->setValue(value); }
 		}
 	}
-	else if (targType == "tracker") {
-		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+	else if (targType == "mapper") {
+		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
-			String action = trackerAction->getValue();
+			String action = mapperAction->getValue();
 			if (action == "size") { targ->sizeValue->setValue(value); }
 		}
 	}
@@ -207,10 +207,10 @@ void VirtualFaderSlider::released() {
 			// if (action == "start") { targ->start(); }
 		}
 	}
-	else if (targType == "tracker") {
-		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+	else if (targType == "mapper") {
+		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
-			String action = trackerAction->getValue();
+			String action = mapperAction->getValue();
 			// if (action == "start") { targ->start(); }
 		}
 	}
@@ -232,8 +232,8 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		else if (targType == "carousel") {
 			action = carouselAction->getValue();
 		}
-		else if (targType == "tracker") {
-			action = trackerAction->getValue();
+		else if (targType == "mapper") {
+			action = mapperAction->getValue();
 		}
 
 		return action;
@@ -263,9 +263,9 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 				text = targ->userName->getValue();
 			}
 		}
-		else if (targType == "tracker") {
-			Tracker* targ = Brain::getInstance()->getTrackerById(targId);
-			action = trackerAction->getValue();
+		else if (targType == "mapper") {
+			Mapper* targ = Brain::getInstance()->getMapperById(targId);
+			action = mapperAction->getValue();
 			if (targ != nullptr) {
 				text = targ->userName->getValue();
 			}

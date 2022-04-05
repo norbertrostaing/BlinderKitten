@@ -8,21 +8,21 @@
   ==============================================================================
 */
 
-#include "TrackerManagerUI.h"
-#include "TrackerManager.h"
+#include "MapperManagerUI.h"
+#include "MapperManager.h"
 
 
 
-TrackerManagerUI::TrackerManagerUI(const String & contentName) :
-	BaseManagerShapeShifterUI(contentName, TrackerManager::getInstance())
+MapperManagerUI::MapperManagerUI(const String & contentName) :
+	BaseManagerShapeShifterUI(contentName, MapperManager::getInstance())
 {
-	addItemText = "Add new Tracker";
-	noItemText = "Trackers are a mix between sequence and effect !";
+	addItemText = "Add new Mapper";
+	noItemText = "Mappers are a mix between sequence and effect !";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();
 }
 
-TrackerManagerUI::~TrackerManagerUI()
+MapperManagerUI::~MapperManagerUI()
 {
 }

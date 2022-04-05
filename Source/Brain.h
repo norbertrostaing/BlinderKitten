@@ -22,7 +22,7 @@
 #include "Definitions/TimingPreset/TimingPreset.h"
 #include "Definitions/Effect/Effect.h"
 #include "Definitions/Carousel/Carousel.h"
-#include "Definitions/Tracker/Tracker.h"
+#include "Definitions/Mapper/Mapper.h"
 
 class Brain :
     public Thread
@@ -44,7 +44,7 @@ public:
     HashMap<int, TimingPreset*>timingPresets;
     HashMap<int, Effect*>effects;
     HashMap<int, Carousel*>carousels;
-    HashMap<int, Tracker*>trackers;
+    HashMap<int, Mapper*>mappers;
 
     std::vector<Cuelist*> cuelistPoolUpdating;
     std::vector<Cuelist*> cuelistPoolWaiting;
@@ -58,8 +58,8 @@ public:
     std::vector<Effect*> effectPoolWaiting;
     std::vector<Carousel*> carouselPoolUpdating;
     std::vector<Carousel*> carouselPoolWaiting;
-    std::vector<Tracker*> trackerPoolUpdating;
-    std::vector<Tracker*> trackerPoolWaiting;
+    std::vector<Mapper*> mapperPoolUpdating;
+    std::vector<Mapper*> mapperPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
     Array<Cuelist*> swoppedCuelists;
@@ -68,7 +68,7 @@ public:
     bool updateCuesIsRunning = false;
     bool updateCuelistsIsRunning = false;
     bool updateCarouselsIsRunning = false;
-    bool updateTrackersIsRunning = false;
+    bool updateMappersIsRunning = false;
     bool updateEffectsIsRunning = false;
     bool updateProgrammersIsRunning = false;
     bool updateChannelsIsRunning = false;
@@ -97,8 +97,8 @@ public:
     void unregisterEffect(Effect* p);
     void registerCarousel(Carousel* p, int id, bool swap = false);
     void unregisterCarousel(Carousel* p);
-    void registerTracker(Tracker* p, int id, bool swap = false);
-    void unregisterTracker(Tracker* p);
+    void registerMapper(Mapper* p, int id, bool swap = false);
+    void unregisterMapper(Mapper* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(SubFixtureChannel* f);
@@ -106,7 +106,7 @@ public:
     void pleaseUpdate(Programmer* p);
     void pleaseUpdate(Effect* f);
     void pleaseUpdate(Carousel* c);
-    void pleaseUpdate(Tracker* c);
+    void pleaseUpdate(Mapper* c);
 
     //void updateChannel(SubFixtureChannel* fc);
 
@@ -120,7 +120,7 @@ public:
     TimingPreset* getTimingPresetById(int id);
     Effect* getEffectById(int id);
     Carousel* getCarouselById(int id);
-    Tracker* getTrackerById(int id);
+    Mapper* getMapperById(int id);
 
     void swoppedCuelist(Cuelist* c);
     void unswoppedCuelist(Cuelist* c);

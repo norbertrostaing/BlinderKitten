@@ -12,12 +12,12 @@
 #include "JuceHeader.h"
 #include"../../Common/Action/Action.h"
 
-class TrackerAction :
+class MapperAction :
     public Action
 {
 public:
-    TrackerAction(var params = var());
-    ~TrackerAction();
+    MapperAction(var params = var());
+    ~MapperAction();
 
     enum ActionType { TRK_START, TRK_STOP, TRK_SIZE};
     ActionType actionType;
@@ -27,6 +27,6 @@ public:
     void triggerInternal() override;
     void setValueInternal(var value);
 
-    static TrackerAction* create(var params) { return new TrackerAction(params); }
+    static MapperAction* create(var params) { return new MapperAction(params); }
 
 };

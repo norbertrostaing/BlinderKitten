@@ -8,17 +8,17 @@
   ==============================================================================
 */
 
-#include "TrackerStep.h"
+#include "MapperStep.h"
 #include "../ChannelFamily/ChannelFamilyManager.h"
-#include "Tracker.h"
+#include "Mapper.h"
 #include "../ChannelValue.h"
 #include "../SubFixture/SubFixtureChannel.h"
 #include "../Preset/Preset.h"
 #include "../../Brain.h"
 
-TrackerStep::TrackerStep(var params) :
-    BaseItem(params.getProperty("name", "TrackerStep")),
-    objectType(params.getProperty("type", "TrackerStep").toString()),
+MapperStep::MapperStep(var params) :
+    BaseItem(params.getProperty("name", "MapperStep")),
+    objectType(params.getProperty("type", "MapperStep").toString()),
     objectData(params)
 {
     saveAndLoadRecursiveData = true;
@@ -49,20 +49,20 @@ TrackerStep::TrackerStep(var params) :
     updateDisplay();
 };
 
-TrackerStep::~TrackerStep()
+MapperStep::~MapperStep()
 {
 };
 
 
-void TrackerStep::onContainerParameterChangedInternal(Parameter* c) {
+void MapperStep::onContainerParameterChangedInternal(Parameter* c) {
 }
 
-void TrackerStep::updateDisplay() {
+void MapperStep::updateDisplay() {
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 
-void TrackerStep::computeValues(Array<SubFixture*> SubFixtures) {
+void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 

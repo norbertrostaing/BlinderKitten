@@ -9,19 +9,19 @@
 */
 
 #pragma once
-#include "Tracker.h"
+#include "Mapper.h"
 
-class TrackerManager :
-    public BaseManager<Tracker>
+class MapperManager :
+    public BaseManager<Mapper>
 {
 public:
-    juce_DeclareSingleton(TrackerManager, true);
+    juce_DeclareSingleton(MapperManager, true);
 
-    TrackerManager();
-    ~TrackerManager();
+    MapperManager();
+    ~MapperManager();
 
-    void addItemInternal(Tracker* o, var data) override;
-    void removeItemInternal(Tracker* o) override;
+    void addItemInternal(Mapper* o, var data) override;
+    void removeItemInternal(Mapper* o) override;
 
     void onContainerParameterChanged(Parameter* p) override;
 

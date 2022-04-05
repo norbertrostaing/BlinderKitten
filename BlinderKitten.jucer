@@ -36,14 +36,14 @@
           <FILE id="FCSyGj" name="GroupGridView.cpp" compile="1" resource="0"
                 file="Source/UI/GridView/GroupGridView.cpp"/>
           <FILE id="PZHaJI" name="GroupGridView.h" compile="0" resource="0" file="Source/UI/GridView/GroupGridView.h"/>
+          <FILE id="oXATfh" name="MapperGridView.cpp" compile="1" resource="0"
+                file="Source/UI/GridView/MapperGridView.cpp"/>
+          <FILE id="xvMVdR" name="MapperGridView.h" compile="0" resource="0"
+                file="Source/UI/GridView/MapperGridView.h"/>
           <FILE id="QwkOQm" name="PresetGridView.cpp" compile="1" resource="0"
                 file="Source/UI/GridView/PresetGridView.cpp"/>
           <FILE id="BXrKtJ" name="PresetGridView.h" compile="0" resource="0"
                 file="Source/UI/GridView/PresetGridView.h"/>
-          <FILE id="w9e99U" name="TrackerGridView.cpp" compile="1" resource="0"
-                file="Source/UI/GridView/TrackerGridView.cpp"/>
-          <FILE id="BstrRn" name="TrackerGridView.h" compile="0" resource="0"
-                file="Source/UI/GridView/TrackerGridView.h"/>
         </GROUP>
         <GROUP id="{DE55AD18-F1DB-71A0-45E6-09BF8140287E}" name="VirtualButtons">
           <FILE id="RAt7pp" name="VirtualButton.cpp" compile="1" resource="0"
@@ -237,9 +237,9 @@
                 file="Source/Definitions/Actions/InputPanelAction.cpp"/>
           <FILE id="vw8Ohs" name="InputPanelAction.h" compile="0" resource="0"
                 file="Source/Definitions/Actions/InputPanelAction.h"/>
-          <FILE id="t8mECB" name="TrackerAction.cpp" compile="1" resource="0"
-                file="Source/Definitions/Actions/TrackerAction.cpp"/>
-          <FILE id="u3i5o8" name="TrackerAction.h" compile="0" resource="0" file="Source/Definitions/Actions/TrackerAction.h"/>
+          <FILE id="V2ilC6" name="MapperAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/MapperAction.cpp"/>
+          <FILE id="j4489w" name="MapperAction.h" compile="0" resource="0" file="Source/Definitions/Actions/MapperAction.h"/>
           <FILE id="f7okso" name="VirtualButtonAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/VirtualButtonAction.cpp"/>
           <FILE id="CHLzi3" name="VirtualButtonAction.h" compile="0" resource="0"
@@ -499,6 +499,21 @@
           <FILE id="tiMbY8" name="InterfaceManager.h" compile="0" resource="0"
                 file="Source/Definitions/Interface/InterfaceManager.h"/>
         </GROUP>
+        <GROUP id="{6FE974D1-50A6-DCC6-1CDA-3B78BFE1813D}" name="Mapper">
+          <FILE id="DofpmX" name="Mapper.cpp" compile="1" resource="0" file="Source/Definitions/Mapper/Mapper.cpp"/>
+          <FILE id="lPNzg3" name="Mapper.h" compile="0" resource="0" file="Source/Definitions/Mapper/Mapper.h"/>
+          <FILE id="ylgIux" name="MapperManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Mapper/MapperManager.cpp"/>
+          <FILE id="F65VaN" name="MapperManager.h" compile="0" resource="0" file="Source/Definitions/Mapper/MapperManager.h"/>
+          <FILE id="tBpayj" name="MapperManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Mapper/MapperManagerUI.cpp"/>
+          <FILE id="DxV7sg" name="MapperManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Mapper/MapperManagerUI.h"/>
+          <FILE id="zsUxQt" name="MapperRow.cpp" compile="1" resource="0" file="Source/Definitions/Mapper/MapperRow.cpp"/>
+          <FILE id="OzH61g" name="MapperRow.h" compile="0" resource="0" file="Source/Definitions/Mapper/MapperRow.h"/>
+          <FILE id="tNtpI4" name="MapperStep.cpp" compile="1" resource="0" file="Source/Definitions/Mapper/MapperStep.cpp"/>
+          <FILE id="BxRgPo" name="MapperStep.h" compile="0" resource="0" file="Source/Definitions/Mapper/MapperStep.h"/>
+        </GROUP>
         <GROUP id="{D80DCD01-3855-E92F-D247-63A965E80BAF}" name="Preset">
           <FILE id="gEniAr" name="Preset.cpp" compile="1" resource="0" file="Source/Definitions/Preset/Preset.cpp"/>
           <FILE id="k3EDt4" name="Preset.h" compile="0" resource="0" file="Source/Definitions/Preset/Preset.h"/>
@@ -548,22 +563,6 @@
                 file="Source/Definitions/TimingPreset/TimingPresetManagerUI.cpp"/>
           <FILE id="khpHjA" name="TimingPresetManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/TimingPreset/TimingPresetManagerUI.h"/>
-        </GROUP>
-        <GROUP id="{5CD35BA7-CDE1-C739-92F7-9BFAAC80F198}" name="Tracker">
-          <FILE id="YiiRFU" name="Tracker.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/Tracker.cpp"/>
-          <FILE id="Tjih4p" name="Tracker.h" compile="0" resource="0" file="Source/Definitions/Tracker/Tracker.h"/>
-          <FILE id="nGINF7" name="TrackerManager.cpp" compile="1" resource="0"
-                file="Source/Definitions/Tracker/TrackerManager.cpp"/>
-          <FILE id="FIhnob" name="TrackerManager.h" compile="0" resource="0"
-                file="Source/Definitions/Tracker/TrackerManager.h"/>
-          <FILE id="FZFtPe" name="TrackerManagerUI.cpp" compile="1" resource="0"
-                file="Source/Definitions/Tracker/TrackerManagerUI.cpp"/>
-          <FILE id="VhGBdL" name="TrackerManagerUI.h" compile="0" resource="0"
-                file="Source/Definitions/Tracker/TrackerManagerUI.h"/>
-          <FILE id="wP4i7h" name="TrackerRow.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/TrackerRow.cpp"/>
-          <FILE id="wMO64M" name="TrackerRow.h" compile="0" resource="0" file="Source/Definitions/Tracker/TrackerRow.h"/>
-          <FILE id="acmCCC" name="TrackerStep.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/TrackerStep.cpp"/>
-          <FILE id="ROeLBp" name="TrackerStep.h" compile="0" resource="0" file="Source/Definitions/Tracker/TrackerStep.h"/>
         </GROUP>
         <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
               file="Source/Definitions/ChannelValue.cpp"/>

@@ -11,19 +11,19 @@
 #pragma once
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
-#include "TrackerStep.h"
+#include "MapperStep.h"
 
-class TrackerRow:
+class MapperRow:
     public BaseItem
 {
     public:
-    TrackerRow(var params = var());
-    ~TrackerRow();
+    MapperRow(var params = var());
+    ~MapperRow();
 
     String objectType;
     var objectData;
 
-    BaseManager<TrackerStep> paramContainer;
+    BaseManager<MapperStep> paramContainer;
 
     TargetParameter* followedChannel;
 

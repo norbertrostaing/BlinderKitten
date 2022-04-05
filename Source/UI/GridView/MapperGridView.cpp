@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TrackerGridView.cpp
+    MapperGridView.cpp
     Created: 19 Feb 2022 12:19:42am
     Author:  No
 
@@ -9,38 +9,38 @@
 */
 
 #include <JuceHeader.h>
-#include "TrackerGridView.h"
+#include "MapperGridView.h"
 #include "Brain.h"
-#include "Definitions/Tracker/Tracker.h"
-#include "Definitions/Tracker/TrackerManager.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/Mapper/MapperManager.h"
 
 //==============================================================================
-TrackerGridViewUI::TrackerGridViewUI(const String& contentName):
-    ShapeShifterContent(TrackerGridView::getInstance(), contentName)
+MapperGridViewUI::MapperGridViewUI(const String& contentName):
+    ShapeShifterContent(MapperGridView::getInstance(), contentName)
 {
     
 }
 
-TrackerGridViewUI::~TrackerGridViewUI()
+MapperGridViewUI::~MapperGridViewUI()
 {
 }
 
-juce_ImplementSingleton(TrackerGridView);
+juce_ImplementSingleton(MapperGridView);
 
-TrackerGridView::TrackerGridView()
+MapperGridView::MapperGridView()
 {
     numberOfCells = 200;
-    targetType = "Tracker";
+    targetType = "Mapper";
 
 }
 
-TrackerGridView::~TrackerGridView()
+MapperGridView::~MapperGridView()
 {
 }
 
-void TrackerGridView::updateCells() {
+void MapperGridView::updateCells() {
     for (int i = 0; i < numberOfCells; i++) {
-        Tracker* g = Brain::getInstance()->getTrackerById(i+1);
+        Mapper* g = Brain::getInstance()->getMapperById(i+1);
         if (g != nullptr) {
             gridButtons[i]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
             gridButtons[i]->setButtonText(String(i + 1) + "\n"+g->userName->getValue().toString());

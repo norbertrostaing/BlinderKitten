@@ -27,7 +27,7 @@ public:
     EnumParameter * cuelistAction;
     EnumParameter * effectAction;
     EnumParameter* carouselAction;
-    EnumParameter* trackerAction;
+    EnumParameter* mapperAction;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();

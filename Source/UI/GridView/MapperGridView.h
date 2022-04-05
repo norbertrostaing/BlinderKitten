@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    TrackerGridView.h
+    MapperGridView.h
     Created: 19 Feb 2022 12:19:42am
     Author:  No
 
@@ -15,30 +15,30 @@
 //==============================================================================
 /*
 */
-class TrackerGridViewUI : public ShapeShifterContent
+class MapperGridViewUI : public ShapeShifterContent
 {
 public:
-    TrackerGridViewUI(const String& contentName);
-    ~TrackerGridViewUI();
+    MapperGridViewUI(const String& contentName);
+    ~MapperGridViewUI();
 
-    static TrackerGridViewUI* create(const String& name) { return new TrackerGridViewUI(name); }
+    static MapperGridViewUI* create(const String& name) { return new MapperGridViewUI(name); }
 
 
 };
 
 
-class TrackerGridView  : 
+class MapperGridView  : 
     public GridView
 {
 public:
-    juce_DeclareSingleton(TrackerGridView, true);
-    TrackerGridView();
-    ~TrackerGridView() override;
+    juce_DeclareSingleton(MapperGridView, true);
+    MapperGridView();
+    ~MapperGridView() override;
     
     void updateCells() override;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TrackerGridView)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MapperGridView)
 };
 
 

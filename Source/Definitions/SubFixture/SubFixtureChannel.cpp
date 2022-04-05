@@ -101,8 +101,8 @@ void SubFixtureChannel::updateVal(double now) {
 		newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
 	}
 
-	for (int i = 0; i < trackerStack.size(); i++) {
-		newValue = trackerStack.getReference(i)->applyToChannel(this, newValue, now);
+	for (int i = 0; i < mapperStack.size(); i++) {
+		newValue = mapperStack.getReference(i)->applyToChannel(this, newValue, now);
 	}
 
 	for (int i = 0; i < carouselStack.size(); i++) {
@@ -199,16 +199,16 @@ void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
 	}
 }
 
-void SubFixtureChannel::trackerOnTopOfStack(Tracker* f) {
-	while (trackerStack.indexOf(f) >= 0) {
-		trackerStack.removeAllInstancesOf(f);
+void SubFixtureChannel::mapperOnTopOfStack(Mapper* f) {
+	while (mapperStack.indexOf(f) >= 0) {
+		mapperStack.removeAllInstancesOf(f);
 	}
-	trackerStack.add(f);
+	mapperStack.add(f);
 }
 
-void SubFixtureChannel::trackerOutOfStack(Tracker* f) {
-	while (trackerStack.indexOf(f) >= 0) {
-		trackerStack.removeAllInstancesOf(f);
+void SubFixtureChannel::mapperOutOfStack(Mapper* f) {
+	while (mapperStack.indexOf(f) >= 0) {
+		mapperStack.removeAllInstancesOf(f);
 	}
 }
 

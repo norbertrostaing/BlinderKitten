@@ -9,45 +9,45 @@
 */
 
 #include "JuceHeader.h"
-#include "Tracker.h"
+#include "Mapper.h"
 #include "../Command/CommandSelectionManager.h"
 #include "../SubFixture/SubFixtureChannel.h"
 #include "../../Brain.h"
-#include "TrackerManager.h"
+#include "MapperManager.h"
 #include "../CurvePreset/CurvePreset.h"
 #include "../ChannelValue.h"
-#include "UI/GridView/TrackerGridView.h"
+#include "UI/GridView/MapperGridView.h"
 
-Tracker::Tracker(var params) :
-	BaseItem(params.getProperty("name", "Tracker")),
-	objectType(params.getProperty("type", "Tracker").toString()),
+Mapper::Mapper(var params) :
+	BaseItem(params.getProperty("name", "Mapper")),
+	objectType(params.getProperty("type", "Mapper").toString()),
 	objectData(params),
 	rows("Rows")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
 
-	itemDataType = "Tracker";
+	itemDataType = "Mapper";
 
-	id = addIntParameter("ID", "ID of this Tracker", 1, 1);
-	userName = addStringParameter("Name", "Name of this Tracker", "New Tracker");
+	id = addIntParameter("ID", "ID of this Mapper", 1, 1);
+	userName = addStringParameter("Name", "Name of this Mapper", "New Mapper");
 	updateName();
 
-	isTrackerOn = addBoolParameter("is ON", "Enable or disable this Tracker",false);
-	isTrackerOn->isControllableFeedbackOnly;
-	isTrackerOn->setEnabled(false);
+	isMapperOn = addBoolParameter("is ON", "Enable or disable this Mapper",false);
+	isMapperOn->isControllableFeedbackOnly;
+	isMapperOn->setEnabled(false);
 	isOn = false;
 
-	startBtn = addTrigger("Start", "Start this Tracker");
-	stopBtn = addTrigger("Stop", "Stop this Tracker");
+	startBtn = addTrigger("Start", "Start this Mapper");
+	stopBtn = addTrigger("Stop", "Stop this Mapper");
 
-	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Tracker when size is modified", false);
-	sizeValue = addFloatParameter("Size", "Master of this Tracker", 1, 0, 1);
+	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Mapper when size is modified", false);
+	sizeValue = addFloatParameter("Size", "Master of this Mapper", 1, 0, 1);
 
 	rows.selectItemWhenCreated = false;
 	addChildControllableContainer(&rows);
 
-	Brain::getInstance()->registerTracker(this, id->getValue());
+	Brain::getInstance()->registerMapper(this, id->getValue());
 
 	if (params.isVoid()) {
 		rows.addItem();
@@ -55,23 +55,23 @@ Tracker::Tracker(var params) :
 
 }
 
-Tracker::~Tracker()
+Mapper::~Mapper()
 {
-	Brain::getInstance()->unregisterTracker(this);
+	Brain::getInstance()->unregisterMapper(this);
 }
 
-void Tracker::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+void Mapper::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
 	pleaseComputeIfRunning();
 }
 
 
-void Tracker::onContainerParameterChangedInternal(Parameter* p) {
+void Mapper::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerTracker(this, id->getValue(), true);
+		Brain::getInstance()->registerMapper(this, id->getValue(), true);
 	}
 	if (p == userName || p == id) {
 		updateName();
-		TrackerGridView::getInstance()->updateCells();
+		MapperGridView::getInstance()->updateCells();
 	}
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {
@@ -86,7 +86,7 @@ void Tracker::onContainerParameterChangedInternal(Parameter* p) {
 	}
 }
 
-void Tracker::triggerTriggered(Trigger* t) {
+void Mapper::triggerTriggered(Trigger* t) {
 	if (t == startBtn) {
 		start();
 	}
@@ -96,23 +96,23 @@ void Tracker::triggerTriggered(Trigger* t) {
 	else {}
 }
 
-void Tracker::start() {
+void Mapper::start() {
 	isOn = true;
-	isTrackerOn->setValue(true);
+	isMapperOn->setValue(true);
 	computeData();
 }
 
-void Tracker::stop() {
+void Mapper::stop() {
 	isOn = false;
-	isTrackerOn->setValue(false);
-	for (auto it = chanToTrackerRow.begin(); it != chanToTrackerRow.end(); it.next()) {
+	isMapperOn->setValue(false);
+	for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 		if (it.getKey() != nullptr) {
-			it.getKey()->trackerOutOfStack(this);
+			it.getKey()->mapperOutOfStack(this);
 		}
 	}
 }
 
-void Tracker::update(double now) {
+void Mapper::update(double now) {
 	if (computed == false) {
 		computeData();
 	}
@@ -121,25 +121,25 @@ void Tracker::update(double now) {
 	}
 }
 
-void Tracker::pleaseComputeIfRunning() {
+void Mapper::pleaseComputeIfRunning() {
 	if (isOn) {
 		computed = false;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 }
 
-void Tracker::computeData() {
+void Mapper::computeData() {
 	if (computing) {return;}
 	computed = true;
 	computing = true;
-	chanToTrackerRow.clear();
+	chanToMapperRow.clear();
 	for (int i = 0; i < rows.items.size(); i++) {
 		rows.items[i]->computeData();
 	}
 	if (isOn) {
-		for (auto it = chanToTrackerRow.begin(); it != chanToTrackerRow.end(); it.next()) {
+		for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 			if (it.getKey() != nullptr) {
-				it.getKey()->trackerOnTopOfStack(this);
+				it.getKey()->mapperOnTopOfStack(this);
 				Brain::getInstance()->pleaseUpdate(it.getKey());
 			}
 		}
@@ -148,23 +148,23 @@ void Tracker::computeData() {
 	computing = false;
 }
 
-float Tracker::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
-	if (!chanToTrackerRow.contains(fc)) {return currentVal; }
+float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
+	if (!chanToMapperRow.contains(fc)) {return currentVal; }
 	if (computing) { return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	float calcValue = currentVal;
-	Array<TrackerRow*>* activeRows = chanToTrackerRow.getReference(fc);
+	Array<MapperRow*>* activeRows = chanToMapperRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
-		TrackerRow * r = activeRows->getReference(rId);
+		MapperRow * r = activeRows->getReference(rId);
 		
 		ChannelType* chanType = dynamic_cast<ChannelType*>(r->followedChannel->targetContainer.get());
 		if (chanType != nullptr) {
 			SubFixtureChannel* followedChan = fc->parentSubFixture->channelsMap.getReference(chanType);
 			if (followedChan != nullptr) {
 				double offset = followedChan->value;
-				TrackerStep* toApply = nullptr;
+				MapperStep* toApply = nullptr;
 				for (int stepId = 0; stepId < r->paramContainer.items.size(); stepId++) {
-					TrackerStep* step = r->paramContainer.items[stepId];
+					MapperStep* step = r->paramContainer.items[stepId];
 					if (step->relativeStartPosition <= offset) {
 						toApply = step;
 					}
@@ -208,10 +208,10 @@ float Tracker::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 }
 
 
-void Tracker::updateName() {
+void Mapper::updateName() {
 	String n = userName->getValue();
 	if (parentContainer != nullptr) {
-		dynamic_cast<TrackerManager*>(parentContainer.get())->reorderItems();
+		dynamic_cast<MapperManager*>(parentContainer.get())->reorderItems();
 	}
 	setNiceName(String((int)id->getValue()) + " - " + n);
 }

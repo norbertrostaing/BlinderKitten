@@ -1,5 +1,5 @@
-#include "Tracker.h"
-#include "TrackerManager.h"
+#include "Mapper.h"
+#include "MapperManager.h"
 
 /*
   ==============================================================================
@@ -11,38 +11,38 @@
   ==============================================================================
 */
 
-juce_ImplementSingleton(TrackerManager);
+juce_ImplementSingleton(MapperManager);
 
-int compare(Tracker* A, Tracker* B) {
+int compare(Mapper* A, Mapper* B) {
     return (int)A->id->getValue() - (int)B->id->getValue();
 }
 
-TrackerManager::TrackerManager() :
-    BaseManager("Tracker")
+MapperManager::MapperManager() :
+    BaseManager("Mapper")
     {
-    itemDataType = "Tracker";
+    itemDataType = "Mapper";
     selectItemWhenCreated = true;
     comparator.compareFunc = compare;
 }
 
-TrackerManager::~TrackerManager()
+MapperManager::~MapperManager()
 {
     // stopThread(1000);
 }
 
 
-void TrackerManager::addItemInternal(Tracker* o, var data)
+void MapperManager::addItemInternal(Mapper* o, var data)
 {
     reorderItems();
 }
 
-void TrackerManager::removeItemInternal(Tracker* o)
+void MapperManager::removeItemInternal(Mapper* o)
 {
     // o->removeObjectListener(this);
 }
 
 
-void TrackerManager::onContainerParameterChanged(Parameter* p)
+void MapperManager::onContainerParameterChanged(Parameter* p)
 {
    // if (p == lockUI) for (auto& i : items) i->isUILocked->setValue(lockUI->boolValue());
 }

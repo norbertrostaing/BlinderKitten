@@ -71,7 +71,7 @@ Programmer::Programmer(var params) :
 	cliParamAType->addOption("Cuelist", "cuelist");
 	cliParamAType->addOption("Effect", "effect");
 	cliParamAType->addOption("Carousel", "carousel");
-	cliParamAType->addOption("Tracker", "tracker");
+	cliParamAType->addOption("Mapper", "mapper");
 	cliParamAType->addOption("Virtual button", "virtualbutton");
 	cliParamAType->addOption("Virtual fader", "virtualfadercol");
 	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param",0,0);
@@ -83,7 +83,7 @@ Programmer::Programmer(var params) :
 	cliParamBType->addOption("Cuelist", "cuelist");
 	cliParamBType->addOption("Effect", "effect");
 	cliParamBType->addOption("Carousel", "carousel");
-	cliParamBType->addOption("Tracker", "tracker");
+	cliParamBType->addOption("Mapper", "mapper");
 	cliParamBType->addOption("Virtual button", "virtualbutton");
 	cliParamBType->addOption("Virtual fader", "virtualfadercol");
 	cliParamBId = cliContainer.addIntParameter("Param B ID", "second object id for copy, move", 0, 0);
@@ -326,7 +326,7 @@ void Programmer::processUserInput(String s) {
 				LOGERROR("not allowed");
 			}
 		}
-		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel" || s == "tracker" || s == "virtualbutton" || s == "virtualfadercol") {
+		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel" || s == "mapper" || s == "virtualbutton" || s == "virtualfadercol") {
 			if (userCanPressTargetType) {
 				dynamic_cast<EnumParameter*>(currentUserTargetType)->setValueWithData(s);
 			}
