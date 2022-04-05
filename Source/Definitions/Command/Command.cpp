@@ -78,8 +78,9 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
 	selection.computeSelection();
 	
+	computedValues.clear();
 	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
-		delete it.getValue();
+		//delete it.getValue();
 	}
 
 	computedValues.clear();

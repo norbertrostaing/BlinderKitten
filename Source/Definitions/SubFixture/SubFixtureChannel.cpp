@@ -96,7 +96,6 @@ void SubFixtureChannel::updateVal(double now) {
 			cv->isOverWritten = true;
 			Brain::getInstance()->pleaseUpdate(cuelistStack.getReference(i));
 		}
-
 	}
 	for (int i = 0; i < programmerStack.size(); i++) {
 		newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);

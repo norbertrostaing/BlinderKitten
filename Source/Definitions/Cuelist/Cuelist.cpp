@@ -284,7 +284,7 @@ void Cuelist::go(Cue* c) {
 		}
 		c->go();
 	}
-
+	
 	if (trackingType == "none" || c == nullptr || needRebuildTracking) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			if (!newActiveValues.contains(it.getKey())) {
@@ -315,6 +315,14 @@ void Cuelist::go(Cue* c) {
 					temp->startValue = temp->value;
 					temp->isEnded = false;
 
+					LOG("OK");
+					LOG(temp->TSInit );
+					LOG(temp->TSStart );
+					LOG(temp->TSEnd );
+
+					LOG(temp->endValue );
+					LOG(temp->startValue );
+
 					activeValues.set(it.getKey(), temp);
 					Brain::getInstance()->pleaseUpdate(it.getKey());
 				}
@@ -322,7 +330,7 @@ void Cuelist::go(Cue* c) {
 			}
 		}
 	}
-
+	
 	for (auto it = newActiveValues.begin(); it != newActiveValues.end(); it.next()) {
 		activeValues.set(it.getKey(), it.getValue());
 	}
@@ -451,7 +459,7 @@ void Cuelist::update() {
 	}
 	if (!isUseFul) {
 		kill(false);
-	}
+	} 
 
 	if (wannaOffFlash) {
 		bool canStopFlash = true;
@@ -528,8 +536,8 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	float valueTo = currentVal;
 	float outIsOff = false;
 	// comportement OK, calcul de valeurs nok
-
-	if (cv->startValue >= 0) { 
+	
+	if (cv->startValue >= 0) {
 		valueFrom = cv->startValue; 
 	}
 	if (cv->endValue >= 0) { 
