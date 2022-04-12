@@ -1,4 +1,4 @@
-![BlinderKitten](http://tuveuxvoirunephotodemonchat.fr/blinderKittenHeader.png)
+![BlinderKitten](https://raw.githubusercontent.com/norbertrostaing/BlinderKitten/main/Ressources/icon.png)
 
 # BlinderKitten
 
@@ -28,9 +28,8 @@ Each fixture can have multiple **Subfixtures** in the case you have the same par
 ## How to test it
 
 ### By downloading it
-You can find the latest build [here](https://github.com/norbertrostaing/BlinderKitten/tree/main/Binaries/App). You'll have to download blinderKitten.exe and servus.dll and place them in a new folder on your computer.
-You can download fixtures.tar.gz and decompress it to import fixtures in your show.
-blinderKitten.pdb is useful only for debugging, you don't need it.
+You can find the latest build [here](https://github.com/norbertrostaing/BlinderKitten/blob/main/BlinderKitten.zip?raw=true). You'll have to export files and place them in a new folder on your computer.
+Zip file contains some fixtures in fixtures.targ.gz
 
 ### By compiling it yourself
 Clone BlinderKitten with --recursive options to integrate organicUI module
