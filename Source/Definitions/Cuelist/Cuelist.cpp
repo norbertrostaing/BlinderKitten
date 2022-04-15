@@ -120,6 +120,7 @@ Cuelist::Cuelist(var params) :
 
 Cuelist::~Cuelist()
 {
+	kill(true);
 	Brain::getInstance()->unregisterCuelist(this);
 }
 
@@ -314,14 +315,6 @@ void Cuelist::go(Cue* c) {
 					temp->endValue = -1;
 					temp->startValue = temp->value;
 					temp->isEnded = false;
-
-					LOG("OK");
-					LOG(temp->TSInit );
-					LOG(temp->TSStart );
-					LOG(temp->TSEnd );
-
-					LOG(temp->endValue );
-					LOG(temp->startValue );
 
 					activeValues.set(it.getKey(), temp);
 					Brain::getInstance()->pleaseUpdate(it.getKey());

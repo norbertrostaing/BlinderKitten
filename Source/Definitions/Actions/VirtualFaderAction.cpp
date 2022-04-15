@@ -48,6 +48,7 @@ void VirtualFaderAction::setValueInternal(var value)
     int page = pageNumber->getValue();
     if (page == 0 || page == VirtualFaderColGrid::getInstance()->page) {
         page = VirtualFaderColGrid::getInstance()->page;
+        const MessageManagerLock mmLock;
         if (actionType == VF_FADER) {
             if (col <= VirtualFaderColGrid::getInstance()->cols) {
                 if (VirtualFaderColGrid::getInstance()->faders[col - 1]->getValue() != val) {

@@ -436,6 +436,8 @@ VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
 
 void VirtualFaderColGrid::updateSlidersValues()
 {
+    const MessageManagerLock mmLock;
+
     for (int i = 0; i < cols; i++) {
         VirtualFaderCol* vfc = columnToVFC.getReference(i+1);
         String colTargetType = "";
