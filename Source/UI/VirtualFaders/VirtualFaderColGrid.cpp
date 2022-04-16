@@ -327,6 +327,7 @@ void VirtualFaderColGrid::sliderValueChanged(Slider* slider) {
 void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
     int col = buttonColumnIndex.getReference(t);
     //// UserInputManager::getInstance()->gridViewCellPressed("VirtualFaderCol", index);
+    const MessageManagerLock mmLock;
     Programmer* p = UserInputManager::getInstance()->getProgrammer();
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
@@ -350,6 +351,7 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
 
 void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
     int col = buttonColumnIndex.getReference(t);
+    const MessageManagerLock mmLock;
     //// UserInputManager::getInstance()->gridViewCellPressed("VirtualFaderCol", index);
     Programmer* p = UserInputManager::getInstance()->getProgrammer();
     VirtualFaderCol* vfc = columnToVFC.getReference(col);
