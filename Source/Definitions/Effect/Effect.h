@@ -13,6 +13,8 @@
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
 #include "EffectRow.h"
+#include "Definitions/Multiplicator/MultiplicatorLinkManager.h"
+
 class EffectParam;
 class SubFixtureChannel;
 
@@ -55,6 +57,9 @@ public:
     Trigger* tapTempoBtn;
     IntParameter* beatPerCycle;
 
+    MultiplicatorLinkManager speedMult;
+    MultiplicatorLinkManager sizeMult;
+    float currentSizeMult = 1;
 
     String getTypeString() const override { return objectType; }
 

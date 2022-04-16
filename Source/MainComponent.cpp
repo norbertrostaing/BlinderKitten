@@ -15,6 +15,7 @@
 #include "Definitions/Effect/EffectManagerUI.h"
 #include "Definitions/Carousel/CarouselManagerUI.h"
 #include "Definitions/Mapper/MapperManagerUI.h"
+#include "Definitions/Multiplicator/MultiplicatorManagerUI.h"
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
@@ -111,6 +112,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Effects", &EffectManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Mappers", &MapperManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Multiplicators", &MultiplicatorManagerUI::create));
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Input Panel", &InputPanelUI::create));

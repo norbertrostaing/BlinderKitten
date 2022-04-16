@@ -21,7 +21,9 @@ Effect::Effect(var params) :
 	BaseItem(params.getProperty("name", "Effect")),
 	objectType(params.getProperty("type", "Effect").toString()),
 	objectData(params),
-	values("Curves")
+	values("Curves"),
+	speedMult("Speed multiplicators"),
+	sizeMult("Speed multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -51,6 +53,8 @@ Effect::Effect(var params) :
 	tapTempoBtn = addTrigger("Tap tempo", "");
 
 	values.selectItemWhenCreated = false;
+	addChildControllableContainer(&speedMult);
+	addChildControllableContainer(&sizeMult);
 	addChildControllableContainer(&values);
 
 	Brain::getInstance()->registerEffect(this, id->getValue());
@@ -127,9 +131,12 @@ void Effect::update(double now) {
 	}
 	if (isOn) {
 		Brain::getInstance()->pleaseUpdate(this);
+		currentSizeMult = sizeMult.getValue();
 		double deltaTime = now - TSLastUpdate;
 		TSLastUpdate = now;
 		double currentSpeed = speed->getValue();
+		float speedMultVal = speedMult.getValue();
+		currentSpeed *= speedMultVal;
 		if (speed != 0) {
 			double duration = 60000. / currentSpeed;
 			double delta = deltaTime / duration;
@@ -213,20 +220,23 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			value -= (float)row->curveOrigin->getValue();
 		}
 
+		float size = sizeValue->getValue();
+		size *= currentSizeMult;
+
 		if (p->effectMode->getValue() == "relative") {
-			value *= (double)sizeValue->getValue();
+			value *= (double)size;
 			value *= (double)p->curveSize->getValue();
 			currentVal = currentVal + value;
 		}
 		else if(p->effectMode->getValue() == "absolute") {
-			value *= (double)sizeValue->getValue();
+			value *= (double)size;
 			value *= (double)p->curveSize->getValue();
 			currentVal = (float)p->baseValue->getValue() + value;
 		}
 		else if(p->effectMode->getValue() == "attractive") {
 			value *= (double)p->curveSize->getValue();
 			value = (float)p->baseValue->getValue() + value;
-			currentVal = jmap((float)sizeValue->getValue(),currentVal,value);
+			currentVal = jmap((float)size,currentVal,value);
 		}
 
 

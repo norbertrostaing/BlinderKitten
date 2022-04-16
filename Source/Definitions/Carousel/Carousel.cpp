@@ -22,7 +22,9 @@ Carousel::Carousel(var params) :
 	BaseItem(params.getProperty("name", "Carousel")),
 	objectType(params.getProperty("type", "Carousel").toString()),
 	objectData(params),
-	rows("Rows")
+	rows("Rows"),
+	speedMult("Speed multiplicators"),
+	sizeMult("Speed multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -51,6 +53,8 @@ Carousel::Carousel(var params) :
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "");
 
+	addChildControllableContainer(&speedMult);
+	addChildControllableContainer(&sizeMult);
 	rows.selectItemWhenCreated = false;
 	addChildControllableContainer(&rows);
 
@@ -130,9 +134,12 @@ void Carousel::update(double now) {
 	}
 	if (isOn) {
 		Brain::getInstance()->pleaseUpdate(this);
+		currentSizeMult = sizeMult.getValue();
 		double deltaTime = now - TSLastUpdate;
 		TSLastUpdate = now;
 		double currentSpeed = speed->getValue();
+		float speedMultVal = speedMult.getValue();
+		currentSpeed *= speedMultVal;
 		if (speed != 0) {
 			double duration = 60000. / currentSpeed;
 			double delta = deltaTime / duration;
@@ -224,6 +231,8 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	}
 
 	float s = sizeValue->getValue();
+	s *= currentSizeMult;
+	if (s>1) {s = 1;}
 	if (fc->isHTP) {
 		calcValue *= s;
 		currentVal = jmax(calcValue, currentVal);

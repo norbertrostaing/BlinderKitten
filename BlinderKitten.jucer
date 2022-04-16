@@ -514,6 +514,27 @@
           <FILE id="tNtpI4" name="MapperStep.cpp" compile="1" resource="0" file="Source/Definitions/Mapper/MapperStep.cpp"/>
           <FILE id="BxRgPo" name="MapperStep.h" compile="0" resource="0" file="Source/Definitions/Mapper/MapperStep.h"/>
         </GROUP>
+        <GROUP id="{7A9EF611-C0FA-5D83-AF5B-C65FCAC46BB4}" name="Multiplicator">
+          <FILE id="UvVObP" name="Multiplicator.cpp" compile="1" resource="0"
+                file="Source/Definitions/Multiplicator/Multiplicator.cpp"/>
+          <FILE id="jiqPk3" name="Multiplicator.h" compile="0" resource="0" file="Source/Definitions/Multiplicator/Multiplicator.h"/>
+          <FILE id="Kn7HnF" name="MultiplicatorLink.cpp" compile="1" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorLink.cpp"/>
+          <FILE id="Kc8lLd" name="MultiplicatorLink.h" compile="0" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorLink.h"/>
+          <FILE id="fsX9rm" name="MultiplicatorLinkManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorLinkManager.cpp"/>
+          <FILE id="i5udzX" name="MultiplicatorLinkManager.h" compile="0" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorLinkManager.h"/>
+          <FILE id="U6xmo7" name="MultiplicatorManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorManager.cpp"/>
+          <FILE id="JNzKzp" name="MultiplicatorManager.h" compile="0" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorManager.h"/>
+          <FILE id="uF5lKj" name="MultiplicatorManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorManagerUI.cpp"/>
+          <FILE id="Wg5YCs" name="MultiplicatorManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Multiplicator/MultiplicatorManagerUI.h"/>
+        </GROUP>
         <GROUP id="{D80DCD01-3855-E92F-D247-63A965E80BAF}" name="Preset">
           <FILE id="gEniAr" name="Preset.cpp" compile="1" resource="0" file="Source/Definitions/Preset/Preset.cpp"/>
           <FILE id="k3EDt4" name="Preset.h" compile="0" resource="0" file="Source/Definitions/Preset/Preset.h"/>

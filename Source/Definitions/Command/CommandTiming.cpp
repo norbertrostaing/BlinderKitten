@@ -13,7 +13,9 @@
 
 CommandTiming::CommandTiming(var params) :
 	ControllableContainer("Timing"),
-	objectData(params)
+	objectData(params),
+	delayMult("Delay multiplicators"),
+	fadeMult("Fade multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
@@ -75,6 +77,10 @@ CommandTiming::CommandTiming(var params) :
 	addChildControllableContainer(&curveFade);
 	addChildControllableContainer(&curveDelayRepart);
 	addChildControllableContainer(&curveFadeRepart);
+
+	addChildControllableContainer(&delayMult);
+	addChildControllableContainer(&fadeMult);
+
 	updateDisplay();
 }
 

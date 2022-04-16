@@ -106,28 +106,32 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	if (timingMode == "preset") {
 		TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timing.presetId->getValue());
 		if (tp != nullptr) {
+			float delayMult = tp->delayMult.getValue();
+			float fadeMult = tp->fadeMult.getValue();
 			delayThru = tp->thruDelay->getValue();
 			delaySym = tp->symmetryDelay->getValue();
-			delayFrom = (float)tp->delayFrom->getValue() * 1000;
-			delayTo = (float)tp->delayTo->getValue() * 1000;
+			delayFrom = (float)tp->delayFrom->getValue() * 1000 * delayMult;
+			delayTo = (float)tp->delayTo->getValue() * 1000 * delayMult;
 			fadeThru = tp->thruFade->getValue();
 			fadeSym = tp->symmetryFade->getValue();
-			fadeFrom = (float)tp->fadeFrom->getValue() * 1000;
-			fadeTo = (float)tp->fadeTo->getValue() * 1000;
+			fadeFrom = (float)tp->fadeFrom->getValue() * 1000 * fadeMult;
+			fadeTo = (float)tp->fadeTo->getValue() * 1000 * fadeMult;
 			fadeCurve = &tp->curveFade;
 			fadeRepartCurve = &tp->curveFadeRepart;
 			delayRepartCurve = &tp->curveDelayRepart;
 		}
 	}
 	else if (timingMode == "raw"){
+		float delayMult = timing.delayMult.getValue();
+		float fadeMult = timing.fadeMult.getValue();
 		delayThru = timing.thruDelay->getValue();
 		delaySym = timing.symmetryDelay->getValue();
-		delayFrom = (float)timing.delayFrom->getValue() * 1000;
-		delayTo = (float)timing.delayTo->getValue() * 1000;
+		delayFrom = (float)timing.delayFrom->getValue() * 1000 * delayMult;
+		delayTo = (float)timing.delayTo->getValue() * 1000 * delayMult;
 		fadeThru = timing.thruFade->getValue();
 		fadeSym = timing.symmetryFade->getValue();
-		fadeFrom = (float)timing.fadeFrom->getValue() * 1000;
-		fadeTo = (float)timing.fadeTo->getValue() * 1000;
+		fadeFrom = (float)timing.fadeFrom->getValue() * 1000 * fadeMult;
+		fadeTo = (float)timing.fadeTo->getValue() * 1000 * fadeMult;
 		fadeCurve = &timing.curveFade;
 		fadeRepartCurve = &timing.curveFadeRepart;
 		delayRepartCurve = &timing.curveDelayRepart;

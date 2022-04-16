@@ -55,6 +55,10 @@ public:
     Trigger* tapTempoBtn;
     IntParameter* beatPerCycle;
 
+    MultiplicatorLinkManager speedMult;
+    MultiplicatorLinkManager sizeMult;
+    float currentSizeMult = 1;
+
     String getTypeString() const override { return objectType; }
 
     void triggerTriggered(Trigger* t);

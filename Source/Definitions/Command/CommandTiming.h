@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Definitions/Multiplicator/MultiplicatorLinkManager.h"
 
 class CommandTiming :
     public ControllableContainer
@@ -39,6 +40,9 @@ public:
     Automation curveFade;
     Automation curveDelayRepart;
     Automation curveFadeRepart;
+
+    MultiplicatorLinkManager delayMult;
+    MultiplicatorLinkManager fadeMult;
 
     // String getTypeString() const override { return objectType; }
     void parameterValueChanged(Parameter* p);

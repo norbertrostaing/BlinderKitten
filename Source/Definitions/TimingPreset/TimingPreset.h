@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Definitions/Multiplicator/MultiplicatorLinkManager.h"
 
 // #include "../Command/CommandSelectionManager.h"
 class CommandSelectionManager;
@@ -43,6 +44,9 @@ public:
     Automation curveFade;
     Automation curveDelayRepart;
     Automation curveFadeRepart;
+
+    MultiplicatorLinkManager delayMult;
+    MultiplicatorLinkManager fadeMult;
 
     void updateDisplay();
 

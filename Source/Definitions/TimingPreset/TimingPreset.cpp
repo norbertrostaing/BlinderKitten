@@ -17,7 +17,9 @@
 TimingPreset::TimingPreset(var params) :
 	BaseItem(params.getProperty("name", "TimingPreset")),
 	objectType(params.getProperty("type", "TimingPreset").toString()),
-	objectData(params)
+	objectData(params),
+	delayMult("Delay multiplicators"),
+	fadeMult("Fade multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -27,7 +29,6 @@ TimingPreset::TimingPreset(var params) :
 	id = addIntParameter("ID", "ID of this timing preset", 1, 1);
 	userName = addStringParameter("Name", "Name of this timing preset", "New timing preset");
 	updateName();
-
 
 	delayFrom = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
 	thruDelay = addBoolParameter("Thru delay", "Do you want to apply multiples delays ?", false);
@@ -78,6 +79,9 @@ TimingPreset::TimingPreset(var params) :
 	addChildControllableContainer(&curveFade);
 	addChildControllableContainer(&curveDelayRepart);
 	addChildControllableContainer(&curveFadeRepart);
+
+	addChildControllableContainer(&delayMult);
+	addChildControllableContainer(&fadeMult);
 
 	Brain::getInstance()->registerTimingPreset(this, id->getValue());
 	updateDisplay();
