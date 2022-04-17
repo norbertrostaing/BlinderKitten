@@ -61,6 +61,15 @@ InputPanel::InputPanel()
     addAndMakeVisible(btnEnter); btnEnter.setButtonText("Enter"); btnEnter.addListener(this);
     addAndMakeVisible(btnAssistant); btnAssistant.setButtonText("Assistant"); btnAssistant.addListener(this);
 
+    addAndMakeVisible(grandMaster); 
+    grandMaster.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    grandMaster.setRange(0, 1);
+    grandMaster.setValue(1, juce::dontSendNotification);
+    grandMaster.setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+    grandMaster.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
+    grandMaster.addListener(this);
+    grandMaster.setWantsKeyboardFocus(false);
+
 
 }
 
@@ -151,9 +160,18 @@ void InputPanel::resized()
     btnBackspace.setBounds  (1 * sm + p2, 4 * r, sm, h);
     btnEnter.setBounds      (2 * sm + p2, 4 * r, sm*2, h);
 
-
+    grandMaster.setBounds   (0 * lg + p3, 4 * r, lg, h);
 
 
     // This method is where you should set the bounds of any child
     // components that your component contains..
+}
+
+void InputPanel::sliderValueChanged(Slider* slider)
+{
+    if (slider == &grandMaster) {
+        Brain::getInstance()->grandMasterChanged();
+    }
+    //UserInputManager::getInstance()->encoderValueChanged(index, slider->getValue());
+
 }

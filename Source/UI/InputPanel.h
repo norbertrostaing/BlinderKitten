@@ -29,7 +29,8 @@ public:
 
 class InputPanel  : public 
     juce::Component,
-    juce::Button::Listener
+    juce::Button::Listener,
+    juce::Slider::Listener
 {
 public:
     juce_DeclareSingleton(InputPanel, true);
@@ -69,9 +70,12 @@ public:
     TextButton btnDelete;
     TextButton btnAssistant;
 
+    Slider grandMaster;
+
     void paint (juce::Graphics&) override;
     void resized() override;
     void buttonClicked(juce::Button* button) override;
+    void sliderValueChanged(Slider* slider) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputPanel)

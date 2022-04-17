@@ -19,7 +19,7 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS };
+    enum ActionType { IP_PRESS, IP_GM };
     ActionType actionType;
     EnumParameter* targetButton;
 

@@ -156,6 +156,12 @@ void Fixture::checkChildrenSubFixtures() {
 				chan -> parentFixtureTypeChannel = c;
 				chan -> parentFixture = this;
 				chan -> parentSubFixture = subFixt;
+				
+				if (param->reactGM->getValue()) {
+					chan->reactToGrandMaster = true;
+					Brain::getInstance()->grandMasterChannels.add(chan);
+				}
+
 				if (c->killedBySWOP->getValue()) {
 					chan->swopKillable = true;
 					Brain::getInstance()->swoppableChannels.add(chan);

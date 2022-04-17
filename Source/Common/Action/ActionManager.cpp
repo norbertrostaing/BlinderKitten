@@ -78,6 +78,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Below Button Press", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_BELOWBUTTON));
 
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Button Press", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Grand Master", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_GM));
 
 }
 

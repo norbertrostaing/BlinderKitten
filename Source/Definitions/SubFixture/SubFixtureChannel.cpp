@@ -20,6 +20,7 @@
 #include "../Programmer/Programmer.h"
 #include "../Effect/Effect.h"
 #include "../ChannelValue.h"
+#include "UI/InputPanel.h"
 
 SubFixtureChannel::SubFixtureChannel()
 {
@@ -33,6 +34,7 @@ SubFixtureChannel::SubFixtureChannel()
 SubFixtureChannel::~SubFixtureChannel()
 {
 	//isDeleted = true;
+	Brain::getInstance()->grandMasterChannels.removeAllInstancesOf(this);
 }
 
 void SubFixtureChannel::writeValue(float v) {
@@ -129,6 +131,11 @@ void SubFixtureChannel::updateVal(double now) {
 				}
 			}
 		}
+	}
+
+	if (reactToGrandMaster) {
+		double gm = InputPanel::getInstance()->grandMaster.getValue();
+		newValue *= gm;
 	}
 
 	writeValue(newValue);

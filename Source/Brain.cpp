@@ -640,6 +640,13 @@ void Brain::pleaseUpdate(Mapper* f) {
     }
 }
 
+void Brain::grandMasterChanged()
+{
+    for (int i = 0; i < grandMasterChannels.size(); i++) {
+        pleaseUpdate(grandMasterChannels[i]);
+    }
+}
+
 // utils
 
 float Brain::symPosition(int index, int nElements) {

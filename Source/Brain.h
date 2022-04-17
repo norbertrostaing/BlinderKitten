@@ -62,6 +62,7 @@ public:
     std::vector<Mapper*> mapperPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
+    Array<SubFixtureChannel*> grandMasterChannels;
     Array<Cuelist*> swoppedCuelists;
 
     double now;
@@ -107,6 +108,8 @@ public:
     void pleaseUpdate(Effect* f);
     void pleaseUpdate(Carousel* c);
     void pleaseUpdate(Mapper* c);
+
+    void grandMasterChanged();
 
     //void updateChannel(SubFixtureChannel* fc);
 
