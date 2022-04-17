@@ -17,6 +17,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/VirtualButtonAction.h"
 #include "Definitions/Actions/VirtualFaderAction.h"
 #include "Definitions/Actions/InputPanelAction.h"
+#include "Definitions/Actions/MultiplicatorAction.h"
 
 ActionFactory::ActionFactory()
 {
@@ -61,6 +62,9 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Start", &MapperAction::create)->addParam("actionType", MapperAction::TRK_START));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Stop", &MapperAction::create)->addParam("actionType", MapperAction::TRK_STOP));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Size", &MapperAction::create)->addParam("actionType", MapperAction::TRK_SIZE));
+
+    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
+    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
 
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Button Press", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PRESS));
 

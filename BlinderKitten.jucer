@@ -240,6 +240,10 @@
           <FILE id="V2ilC6" name="MapperAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/MapperAction.cpp"/>
           <FILE id="j4489w" name="MapperAction.h" compile="0" resource="0" file="Source/Definitions/Actions/MapperAction.h"/>
+          <FILE id="cvjtKj" name="MultiplicatorAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/MultiplicatorAction.cpp"/>
+          <FILE id="C5M6jw" name="MultiplicatorAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/MultiplicatorAction.h"/>
           <FILE id="f7okso" name="VirtualButtonAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/VirtualButtonAction.cpp"/>
           <FILE id="CHLzi3" name="VirtualButtonAction.h" compile="0" resource="0"

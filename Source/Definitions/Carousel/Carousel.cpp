@@ -24,7 +24,7 @@ Carousel::Carousel(var params) :
 	objectData(params),
 	rows("Rows"),
 	speedMult("Speed multiplicators"),
-	sizeMult("Speed multiplicators")
+	sizeMult("Size multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;

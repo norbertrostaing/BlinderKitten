@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
 #include "CarouselRow.h"
+#include "Definitions/Multiplicator/MultiplicatorLinkManager.h"
 class CarouselStep;
 class SubFixtureChannel;
 

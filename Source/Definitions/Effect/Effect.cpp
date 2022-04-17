@@ -23,7 +23,7 @@ Effect::Effect(var params) :
 	objectData(params),
 	values("Curves"),
 	speedMult("Speed multiplicators"),
-	sizeMult("Speed multiplicators")
+	sizeMult("Size multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
