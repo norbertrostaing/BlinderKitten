@@ -38,6 +38,7 @@ VirtualButton::VirtualButton(var params) :
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("Go", "go");
 	cuelistAction->addOption("Off", "off");
+	cuelistAction->addOption("Toggle", "toggle");
 	cuelistAction->addOption("Flash", "flash");
 	cuelistAction->addOption("Swop", "swop");
 	cuelistAction->addOption("Load", "load");
@@ -47,16 +48,19 @@ VirtualButton::VirtualButton(var params) :
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
 	effectAction->addOption("Stop", "stop");
+	effectAction->addOption("Toggle", "toggle");
 	effectAction->addOption("Tap tempo", "taptempo");
 
 	carouselAction = addEnumParameter("Carousel Action", "");
 	carouselAction->addOption("Start", "start");
 	carouselAction->addOption("Stop", "stop");
+	carouselAction->addOption("Toggle", "toggle");
 	carouselAction->addOption("Tap tempo", "taptempo");
 
-	mapperAction = addEnumParameter("Carousel Action", "");
+	mapperAction = addEnumParameter("Mapper Action", "");
 	mapperAction->addOption("Start", "start");
 	mapperAction->addOption("Stop", "stop");
+	mapperAction->addOption("Toggle", "toggle");
 
 	// id = addIntParameter("ID", "ID of this VirtualButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualButton","New VirtualButton");
@@ -101,6 +105,13 @@ void VirtualButton::pressed() {
 			String action = cuelistAction->getValue();
 			if (action == "go") { targ->go(); }
 			if (action == "off") { targ->off(); }
+			if (action == "toggle") { 
+				if (targ->isCuelistOn->getValue()) {
+					targ->off(); 
+				} else {
+					targ->go();
+				}
+			}
 			if (action == "load") { targ->showLoad(); }
 			if (action == "loadandgo") { targ->showLoadAndGo(); }
 			if (action == "flash") { targ->flash(true, false, false); }
@@ -114,6 +125,14 @@ void VirtualButton::pressed() {
 			String action = effectAction->getValue();
 			if (action == "start") { targ->start(); }
 			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
 			if (action == "taptempo") { targ->tapTempo(); }
 		}
 	}
@@ -123,6 +142,14 @@ void VirtualButton::pressed() {
 			String action = carouselAction->getValue();
 			if (action == "start") { targ->start(); }
 			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
 			if (action == "taptempo") { targ->tapTempo(); }
 		}
 	}
@@ -132,6 +159,14 @@ void VirtualButton::pressed() {
 			String action = mapperAction->getValue();
 			if (action == "start") { targ->start(); }
 			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
 		}
 	}
 

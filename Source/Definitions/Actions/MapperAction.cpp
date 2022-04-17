@@ -49,6 +49,17 @@ void MapperAction::setValueInternal(var value) {
         }
         break;
 
+    case TRK_TOGGLE:
+        if (val > 0) {
+            if (target->isOn) {
+                target->stop();
+            }
+            else {
+                target->start();
+            }
+        }
+        break;
+
     case TRK_SIZE:
         target->sizeValue->setValue(val);
         break;

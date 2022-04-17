@@ -52,6 +52,17 @@ void EffectAction::setValueInternal(var value) {
         }
         break;
 
+    case FX_TOGGLE:
+        if (val > 0) {
+            if (target->isOn) {
+                target->stop();
+            }
+            else {
+                target->start();
+            }
+        }
+        break;
+
     case FX_TAPTEMPO:
         if (val > 0) {
             target->tapTempo();

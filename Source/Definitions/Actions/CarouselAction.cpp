@@ -52,6 +52,17 @@ void CarouselAction::setValueInternal(var value) {
         }
         break;
 
+    case CAR_TOGGLE:
+        if (val > 0) {
+            if (target->isOn) {
+                target->stop();
+            }
+            else {
+                target->start();
+            }
+        }
+        break;
+
     case CAR_TAPTEMPO:
         if (val > 0) {
             target->tapTempo();

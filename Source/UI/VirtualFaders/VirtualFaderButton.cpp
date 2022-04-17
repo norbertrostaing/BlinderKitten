@@ -36,6 +36,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("Go", "go");
 	cuelistAction->addOption("Off", "off");
+	cuelistAction->addOption("Toggle", "toggle");
 	cuelistAction->addOption("Flash", "flash");
 	cuelistAction->addOption("Load", "load");
 	cuelistAction->addOption("Loadn and Go", "loadandgo");
@@ -45,16 +46,19 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
 	effectAction->addOption("Stop", "stop");
+	effectAction->addOption("Toggle", "toggle");
 	effectAction->addOption("Tap tempo", "taptempo");
 
 	carouselAction = addEnumParameter("Carousel Action", "");
 	carouselAction->addOption("Start", "start");
 	carouselAction->addOption("Stop", "stop");
+	carouselAction->addOption("Toggle", "toggle");
 	carouselAction->addOption("Tap tempo", "taptempo");
 
 	mapperAction = addEnumParameter("Mapper Action", "");
 	mapperAction->addOption("Start", "start");
 	mapperAction->addOption("Stop", "stop");
+	mapperAction->addOption("Toggle", "toggle");
 
 	// id = addIntParameter("ID", "ID of this VirtualFaderButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualFaderButton","New VirtualFaderButton");
@@ -108,6 +112,14 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 			String action = cuelistAction->getValue();
 			if (action == "go") { targ->go(); }
 			if (action == "off") { targ->off(); }
+			if (action == "toggle") {
+				if (targ->isCuelistOn->getValue()) {
+					targ->off();
+				}
+				else {
+					targ->go();
+				}
+			}
 			if (action == "flash") { targ->flash(true, false, false); }
 			if (action == "load") { targ->showLoad(); }
 			if (action == "loadandgo") { targ->showLoadAndGo(); }
@@ -121,6 +133,14 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 			String action = effectAction->getValue();
 			if (action == "start") { targ->start(); }
 			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
 			if (action == "taptempo") { targ->tapTempo(); }
 		}
 	}
@@ -130,6 +150,14 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 			String action = carouselAction->getValue();
 			if (action == "start") { targ->start(); }
 			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
 			if (action == "taptempo") { targ->tapTempo(); }
 		}
 	}
@@ -139,6 +167,14 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 			String action = mapperAction->getValue();
 			if (action == "start") { targ->start(); }
 			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
 		}
 	}
 }

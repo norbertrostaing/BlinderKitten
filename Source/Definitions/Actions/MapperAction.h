@@ -19,7 +19,7 @@ public:
     MapperAction(var params = var());
     ~MapperAction();
 
-    enum ActionType { TRK_START, TRK_STOP, TRK_SIZE};
+    enum ActionType { TRK_START, TRK_STOP, TRK_SIZE, TRK_TOGGLE};
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;

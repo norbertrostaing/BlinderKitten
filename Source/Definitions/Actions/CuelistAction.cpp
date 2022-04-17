@@ -56,6 +56,17 @@ void CuelistAction::setValueInternal(var value) {
         }
         break;
 
+    case CL_TOGGLE:
+        if (val > 0) {
+            if (target->isCuelistOn->getValue()) {
+                target->off();
+            }
+            else {
+                target->go();
+            }
+        }
+        break;
+
     case CL_LOAD:
         if (val > 0) {
             target->showLoad();

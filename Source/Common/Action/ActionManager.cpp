@@ -44,6 +44,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFF));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Toggle", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Load", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LOAD));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Load and Go", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LOADANDGO));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "HTP Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_HTPLEVEL));
@@ -51,20 +52,23 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Toggle", &EffectAction::create)->addParam("actionType", EffectAction::FX_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
 
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Toggle", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Size", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED));
 
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Start", &MapperAction::create)->addParam("actionType", MapperAction::TRK_START));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Stop", &MapperAction::create)->addParam("actionType", MapperAction::TRK_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Toggle", &MapperAction::create)->addParam("actionType", MapperAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Size", &MapperAction::create)->addParam("actionType", MapperAction::TRK_SIZE));
 
-    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
-    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
+    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
+    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
 
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Button Press", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PRESS));
 

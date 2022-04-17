@@ -225,6 +225,7 @@ void Cuelist::go(Cue* c) {
 	}
 	else {
 		wannaOff = true;
+		Brain::getInstance()->pleaseUpdate(this);
 	}
 
 	HashMap<SubFixtureChannel*, ChannelValue*> newActiveValues;
