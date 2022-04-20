@@ -50,6 +50,16 @@ Command::Command(var params) :
 
 Command::~Command()
 {
+	if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+		Command* targetCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
+		if (targetCommand == this) {
+			UserInputManager::getInstance()->getProgrammer()->currentUserCommand = nullptr;
+		}
+	}
+	if (UserInputManager::getInstance()->targetCommand == this) {
+		UserInputManager::getInstance()->targetCommand = nullptr;
+	}
+
 	toDelete = true;
 	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 		delete it.getValue();
