@@ -34,6 +34,8 @@ public:
     void clear();
     void clearUpdates();
 
+    CriticalSection brainUpdate;
+
     HashMap<int, SubFixture*>subFixtures;
     HashMap<int, Group*>groups;
     HashMap<int, Fixture*>fixtures;
