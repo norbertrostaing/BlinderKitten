@@ -651,7 +651,8 @@
                        defines="JUCE_DISABLE_ASSERTIONS=1"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        binaryPath="Binaries/" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
-                       defines="JUCE_DISABLE_ASSERTIONS=1"/>
+                       defines="JUCE_DISABLE_ASSERTIONS=1" alwaysGenerateDebugSymbols="1"
+                       debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="C:\repos\JUCE\modules"/>
