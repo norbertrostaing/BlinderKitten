@@ -97,50 +97,61 @@ void Task::updateDisplay() {
 	mapperAction->hideInEditor = targType != "mapper";
 
 	if (targType == "cuelist") {
-		if (effectAction->getValue() == "htplevel") {
+		if (cuelistAction->getValue() == "htplevel") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
 		}
-		else if (effectAction->getValue() == "flashlevel") {
+		else if (cuelistAction->getValue() == "flashlevel") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
 		}
 		else {
+			fade->hideInEditor = true;
 			targetValue->hideInEditor = true;
 		}
 	}
 	else if (targType == "effect") {
 		if (effectAction->getValue() == "size") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
 		}
 		else if (effectAction->getValue() == "speed") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, INT32_MAX);
 		}
 		else {
+			fade->hideInEditor = true;
 			targetValue->hideInEditor = true;
 		}
 	}
 	else if (targType == "carousel") {
 		if (carouselAction->getValue() == "size") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
 		}
 		else if (carouselAction->getValue() == "speed") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, INT32_MAX);
 		}
 		else {
+			fade->hideInEditor = true;
 			targetValue->hideInEditor = true;
 		}
 	}
 	else if (targType == "mapper") {
 		if (mapperAction->getValue() == "size") {
+			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
 		}
 		else {
+			fade->hideInEditor = true;
 			targetValue->hideInEditor = true;
 		}
 	}

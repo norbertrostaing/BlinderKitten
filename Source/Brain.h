@@ -23,6 +23,8 @@
 #include "Definitions/Effect/Effect.h"
 #include "Definitions/Carousel/Carousel.h"
 #include "Definitions/Mapper/Mapper.h"
+#include "Definitions/RunningTask.h"
+#include "Definitions/Cue/Task.h"
 
 class Brain :
     public Thread
@@ -73,6 +75,7 @@ public:
     bool updateEffectsIsRunning = false;
     bool updateProgrammersIsRunning = false;
     bool updateChannelsIsRunning = false;
+    bool updateTasksIsRunning = false;
     bool loadingIsRunning = false;
 
     bool virtualFadersNeedUpdate = false;
@@ -130,4 +133,11 @@ public:
     bool isSwopping = false;
 
     static float symPosition(int index, int nElements);
+
+    OwnedArray<RunningTask> runningTasks;
+    void startTask(Task* t, double startTime);
+
+
+
+
 };

@@ -596,6 +596,8 @@
         <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
               file="Source/Definitions/ChannelValue.cpp"/>
         <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>
+        <FILE id="BLcpnE" name="RunningTask.cpp" compile="1" resource="0" file="Source/Definitions/RunningTask.cpp"/>
+        <FILE id="WrbLDu" name="RunningTask.h" compile="0" resource="0" file="Source/Definitions/RunningTask.h"/>
       </GROUP>
       <FILE id="wUdtwZ" name="BKEngine.cpp" compile="1" resource="0" file="Source/BKEngine.cpp"/>
       <FILE id="pF2hTW" name="BKEngine.h" compile="0" resource="0" file="Source/BKEngine.h"/>

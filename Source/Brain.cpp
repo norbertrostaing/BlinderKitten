@@ -661,6 +661,33 @@ float Brain::symPosition(int index, int nElements) {
     return position;
 }
 
+void Brain::startTask(Task* t, double startTime)
+{
+    while (updateTasksIsRunning) { wait(5); }
+    RunningTask* rt = runningTasks.add(new RunningTask());
+    rt->targetType = t->targetType->getValue();
+    rt->targetId = t->targetId->getValue();
+    if (rt->targetType == "cuelist") {
+        rt->actionType = t->cuelistAction->getValue();
+    }
+    else if (rt->targetType == "effect") {
+        rt->actionType = t->effectAction->getValue();
+    }
+    else if (rt->targetType == "carousel") {
+        rt->actionType = t->carouselAction->getValue();
+    }
+    else if (rt->targetType == "mapper") {
+        rt->actionType = t->mapperAction->getValue();
+    }
+    rt->fade = (double)t->fade->getValue() * 1000;
+    rt->delay= (double)t->fade->getValue() * 1000;
+
+    rt->TSInit = startTime;
+    rt->TSStart = startTime + rt->delay;
+    rt->TSEnd = startTime + rt->delay + rt->fade;
+    rt->isEnded = false;
+}
+
 SubFixture* Brain::getSubFixtureById(int id) {
     if (subFixtures.contains(id)) {
         return subFixtures.getReference(id);
