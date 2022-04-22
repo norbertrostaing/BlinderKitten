@@ -18,6 +18,7 @@ Cue::Cue(var params) :
 	objectType(params.getProperty("type", "Cue").toString()),
 	objectData(params),
 	commands("Commands"),
+	tasks("Tasks"),
 	timingContainer("Timing")
 {
 	saveAndLoadRecursiveData = true;
@@ -38,6 +39,7 @@ Cue::Cue(var params) :
 	goBtn = addTrigger("GO", "trigger this cue");
 
 	commands.selectItemWhenCreated = false;
+	tasks.selectItemWhenCreated = false;
 
 	htpInDelay = timingContainer.addFloatParameter("HTP in delay", "Default delay for HTP rising values",0,0);
 	htpOutDelay = timingContainer.addFloatParameter("HTP out delay", "Default delay for HTP falling values", 0, 0);
@@ -51,6 +53,7 @@ Cue::Cue(var params) :
 	addChildControllableContainer(&timingContainer);
 
 	addChildControllableContainer(&commands);
+	addChildControllableContainer(&tasks);
 
 	if (params.isVoid()) {
 		commands.addItem();

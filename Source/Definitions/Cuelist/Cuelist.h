@@ -44,7 +44,7 @@ public:
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
-    float lastHTPLevel =0;
+    float lastHTPLevel = -1;
     FloatParameter* FlashLevel;
     FloatParameter* LTPLevel;
     bool pleaseUpdateHTPs = false;

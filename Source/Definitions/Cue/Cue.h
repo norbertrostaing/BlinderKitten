@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "../Command/Command.h"
+#include "Task.h"
 
 class Cue:
     public BaseItem
@@ -23,6 +24,7 @@ public:
     var objectData;
 
     BaseManager<Command> commands;
+    BaseManager<Task> tasks;
     FloatParameter* id;
 
     EnumParameter* autoFollow = nullptr;

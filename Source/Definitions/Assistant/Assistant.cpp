@@ -17,8 +17,8 @@
 #include "Definitions/Cue/Cue.h"
 #include "Definitions/Preset/Preset.h"
 #include "Definitions/TimingPreset/TimingPreset.h"
-#include "Definitions/Command/CommandValueManager.h";
-#include "Definitions/Command/CommandValue.h";
+#include "Definitions/Command/CommandValueManager.h"
+#include "Definitions/Command/CommandValue.h"
 #include "Definitions/Interface/InterfaceManager.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "Definitions/FixtureType/FixtureTypeManager.h"
