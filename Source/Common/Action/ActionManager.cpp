@@ -55,12 +55,16 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Toggle", &EffectAction::create)->addParam("actionType", EffectAction::FX_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Double Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_DOUBLESPEED));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Half Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_HALFSPEED));
 
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Toggle", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Size", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Double Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_DOUBLESPEED));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Half Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_HALFSPEED));
 
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Start", &MapperAction::create)->addParam("actionType", MapperAction::TRK_START));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Stop", &MapperAction::create)->addParam("actionType", MapperAction::TRK_STOP));

@@ -10,6 +10,7 @@
 #include "JuceHeader.h"
 #include "Assistant.h"
 #include "Brain.h"
+#include "Definitions/Group/GroupManager.h"
 #include "Definitions/Group/Group.h"
 #include "Definitions/Cuelist/CuelistManager.h"
 #include "Definitions/Cuelist/Cuelist.h"
@@ -200,6 +201,13 @@ void Assistant::patchFixtures()
         }
     }
 
+    if (amount > 1) {
+        Group* g = GroupManager::getInstance()->addItem();
+        g->userName->setValue(name);
+        g->selection.items[0]->valueFrom->setValue(firstId);
+        g->selection.items[0]->thru->setValue(true);
+        g->selection.items[0]->valueTo->setValue(firstId+amount-1);
+    }
 }
 
 void Assistant::createPalette()

@@ -249,51 +249,61 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	case BlinderKittenCommandId::key1:
 		result.setInfo("Key 1", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("1").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad1, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key2:
 		result.setInfo("Key 2", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("2").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad2, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key3:
 		result.setInfo("Key 3", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("3").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad3, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key4:
 		result.setInfo("Key 4", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("4").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad4, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key5:
 		result.setInfo("Key 5", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("5").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad5, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key6:
 		result.setInfo("Key 6", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("6").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad6, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key7:
 		result.setInfo("Key 7", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("7").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad7, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key8:
 		result.setInfo("Key 8", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("8").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad8, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key9:
 		result.setInfo("Key 9", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("9").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad9, ModifierKeys::noModifiers);
 		break;
 
 	case BlinderKittenCommandId::key0:
 		result.setInfo("Key 0", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("0").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::numberPad0, ModifierKeys::noModifiers);
 		break;
 
 	case 0x40004: // bypass deleteing item with backspace 

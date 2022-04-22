@@ -77,5 +77,17 @@ void EffectAction::setValueInternal(var value) {
         val *= (float)maxSpeed->getValue();
         target->speed->setValue(val);
         break;
+
+    case FX_DOUBLESPEED:
+        if (val > 0) {
+            target->speed->setValue((double)target->speed->getValue()*2);
+        }
+        break;
+
+    case FX_HALFSPEED:
+        if (val > 0) {
+            target->speed->setValue((double)target->speed->getValue()/2);
+        }
+        break;
     }
 }

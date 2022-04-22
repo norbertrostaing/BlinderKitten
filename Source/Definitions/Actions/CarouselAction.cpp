@@ -77,5 +77,18 @@ void CarouselAction::setValueInternal(var value) {
         val *= (float)maxSpeed->getValue();
         target->speed->setValue(val);
         break;
+
+    case CAR_DOUBLESPEED:
+        if (val > 0) {
+            target->speed->setValue((double)target->speed->getValue() * 2);
+        }
+        break;
+
+    case CAR_HALFSPEED:
+        if (val > 0) {
+            target->speed->setValue((double)target->speed->getValue() / 2);
+        }
+        break;
+
     }
 }

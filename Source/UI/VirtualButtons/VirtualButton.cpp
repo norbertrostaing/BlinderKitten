@@ -50,12 +50,16 @@ VirtualButton::VirtualButton(var params) :
 	effectAction->addOption("Stop", "stop");
 	effectAction->addOption("Toggle", "toggle");
 	effectAction->addOption("Tap tempo", "taptempo");
+	effectAction->addOption("Double Speed", "doublespeed");
+	effectAction->addOption("Half Speed", "halfspeed");
 
 	carouselAction = addEnumParameter("Carousel Action", "");
 	carouselAction->addOption("Start", "start");
 	carouselAction->addOption("Stop", "stop");
 	carouselAction->addOption("Toggle", "toggle");
 	carouselAction->addOption("Tap tempo", "taptempo");
+	carouselAction->addOption("Double Speed", "doublespeed");
+	carouselAction->addOption("Half Speed", "halfspeed");
 
 	mapperAction = addEnumParameter("Mapper Action", "");
 	mapperAction->addOption("Start", "start");
@@ -134,6 +138,8 @@ void VirtualButton::pressed() {
 				}
 			}
 			if (action == "taptempo") { targ->tapTempo(); }
+			if (action == "doublespeed") { targ->speed->setValue((double)targ->speed->getValue() * 2); }
+			if (action == "halfspeed") { targ->speed->setValue((double)targ->speed->getValue() / 2); }
 		}
 	}
 	else if (targType == "carousel") {
@@ -151,6 +157,8 @@ void VirtualButton::pressed() {
 				}
 			}
 			if (action == "taptempo") { targ->tapTempo(); }
+			if (action == "doublespeed") { targ->speed->setValue((double)targ->speed->getValue() * 2); }
+			if (action == "halfspeed") { targ->speed->setValue((double)targ->speed->getValue() / 2); }
 		}
 	}
 	else if (targType == "mapper") {
