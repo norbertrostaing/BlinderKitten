@@ -328,8 +328,6 @@
           <FILE id="xpazKJ" name="CueManager.h" compile="0" resource="0" file="Source/Definitions/Cue/CueManager.h"/>
           <FILE id="sQo59H" name="Task.cpp" compile="1" resource="0" file="Source/Definitions/Cue/Task.cpp"/>
           <FILE id="vo1zgV" name="Task.h" compile="0" resource="0" file="Source/Definitions/Cue/Task.h"/>
-          <FILE id="PudI7u" name="TaskManager.cpp" compile="1" resource="0" file="Source/Definitions/Cue/TaskManager.cpp"/>
-          <FILE id="hJsuki" name="TaskManager.h" compile="0" resource="0" file="Source/Definitions/Cue/TaskManager.h"/>
         </GROUP>
         <GROUP id="{57C6A31A-43FE-AB43-241D-751BB97A3999}" name="Cuelist">
           <FILE id="O6nYdI" name="Cuelist.cpp" compile="1" resource="0" file="Source/Definitions/Cuelist/Cuelist.cpp"/>

@@ -685,6 +685,9 @@ void Brain::startTask(Task* t, double startTime)
     rt->TSInit = startTime;
     rt->TSStart = startTime + rt->delay;
     rt->TSEnd = startTime + rt->delay + rt->fade;
+
+    rt->startValue = 0;
+    rt->endValue = t->targetValue->getValue();
     rt->isEnded = false;
 }
 
