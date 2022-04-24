@@ -68,19 +68,14 @@ public:
     Array<Cuelist*> swoppedCuelists;
 
     double now;
-    bool updateCuesIsRunning = false;
-    bool updateCuelistsIsRunning = false;
-    bool updateCarouselsIsRunning = false;
-    bool updateMappersIsRunning = false;
-    bool updateEffectsIsRunning = false;
-    bool updateProgrammersIsRunning = false;
-    bool updateChannelsIsRunning = false;
-    bool updateTasksIsRunning = false;
     bool loadingIsRunning = false;
 
     bool virtualFadersNeedUpdate = false;
 
     void run() override;
+    void brainLoop();
+
+    CriticalSection usingCollections;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);
     void registerFixture(Fixture* f, int id, bool swap = false);

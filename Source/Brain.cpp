@@ -30,6 +30,7 @@ Brain :: ~Brain() {
 
 void Brain::clear()
 {
+    ScopedLock lock(usingCollections);
     subFixtures.clear();
     groups.clear();
     fixtures.clear();
@@ -59,6 +60,7 @@ void Brain::clear()
 
 void Brain::clearUpdates()
 {
+    ScopedLock lock(usingCollections);
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
     subFixtureChannelPoolUpdating.clear();
@@ -78,118 +80,110 @@ void Brain::clearUpdates()
 
 void Brain::run() {
     while(!threadShouldExit()) {
-        try {
-            now = Time::getMillisecondCounterHiRes();
-            updateCuesIsRunning = true;
-            if (cuePoolWaiting.size() > 0) {
-                for (int i = 0; i < cuePoolWaiting.size(); i++) {
-                    cuePoolUpdating.push_back(cuePoolWaiting.at(i));
-                }
-                cuePoolWaiting.clear();
-            }
-            updateCuesIsRunning = false;
-            for (int i = 0; i < cuePoolUpdating.size(); i++) {
-                cuePoolUpdating.at(i)->update(now);
-            }
-            cuePoolUpdating.clear();
-
-            updateCuelistsIsRunning = true;
-            if (cuelistPoolWaiting.size() > 0) {
-                for (int i = 0; i < cuelistPoolWaiting.size(); i++) {
-                    cuelistPoolUpdating.push_back(cuelistPoolWaiting.at(i));
-                }
-                cuelistPoolWaiting.clear();
-            }
-            updateCuelistsIsRunning = false;
-            for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
-                cuelistPoolUpdating.at(i)->update();
-            }
-            cuelistPoolUpdating.clear();
-
-            updateEffectsIsRunning = true;
-            if (effectPoolWaiting.size() > 0) {
-                for (int i = 0; i < effectPoolWaiting.size(); i++) {
-                    effectPoolUpdating.push_back(effectPoolWaiting.at(i));
-                }
-                effectPoolWaiting.clear();
-            }
-            updateEffectsIsRunning = false;
-            for (int i = 0; i < effectPoolUpdating.size(); i++) {
-                effectPoolUpdating.at(i)->update(now);
-            }
-            effectPoolUpdating.clear();
-
-            updateCarouselsIsRunning = true;
-            if (carouselPoolWaiting.size() > 0) {
-                for (int i = 0; i < carouselPoolWaiting.size(); i++) {
-                    carouselPoolUpdating.push_back(carouselPoolWaiting.at(i));
-                }
-                carouselPoolWaiting.clear();
-            }
-            updateCarouselsIsRunning = false;
-            for (int i = 0; i < carouselPoolUpdating.size(); i++) {
-                carouselPoolUpdating.at(i)->update(now);
-            }
-            carouselPoolUpdating.clear();
-
-            updateMappersIsRunning = true;
-            if (mapperPoolWaiting.size() > 0) {
-                for (int i = 0; i < mapperPoolWaiting.size(); i++) {
-                    mapperPoolUpdating.push_back(mapperPoolWaiting.at(i));
-                }
-                mapperPoolWaiting.clear();
-            }
-            updateMappersIsRunning = false;
-            for (int i = 0; i < mapperPoolUpdating.size(); i++) {
-                mapperPoolUpdating.at(i)->update(now);
-            }
-            mapperPoolUpdating.clear();
-
-            updateProgrammersIsRunning = true;
-            if (programmerPoolWaiting.size() > 0) {
-                for (int i = 0; i < programmerPoolWaiting.size(); i++) {
-                    programmerPoolUpdating.push_back(programmerPoolWaiting.at(i));
-                }
-                programmerPoolWaiting.clear();
-            }
-            updateProgrammersIsRunning = false;
-            for (int i = 0; i < programmerPoolUpdating.size(); i++) {
-                programmerPoolUpdating.at(i)->update(now);
-            }
-            programmerPoolUpdating.clear();
-
-            updateChannelsIsRunning = true;
-            for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
-                subFixtureChannelPoolUpdating.push_back(subFixtureChannelPoolWaiting.at(i));
-            }
-            subFixtureChannelPoolWaiting.clear();
-            updateChannelsIsRunning = false;
-            for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
-                // bug ici
-                if (subFixtureChannelPoolUpdating.at(i) != nullptr && !subFixtureChannelPoolUpdating.at(i)->isDeleted) {
-                    subFixtureChannelPoolUpdating.at(i)->updateVal(now);
-                }
-            }
-            subFixtureChannelPoolUpdating.clear();
-
-            if (virtualFadersNeedUpdate) {
-                virtualFadersNeedUpdate = false;
-                VirtualFaderColGrid::getInstance()->updateSlidersValues();
-                
-            }
-
-            //double delta = Time::getMillisecondCounterHiRes() - now;
-            //LOG(delta);
-        }
-        catch (...) {
-            LOG("maow");
-            // ...
-        }
+        brainLoop();
         wait(10);
     }
 }
 
+void Brain::brainLoop() {
+    now = Time::getMillisecondCounterHiRes();
+    if (cuePoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < cuePoolWaiting.size(); i++) {
+            cuePoolUpdating.push_back(cuePoolWaiting.at(i));
+        }
+        cuePoolWaiting.clear();
+    }
+    for (int i = 0; i < cuePoolUpdating.size(); i++) {
+        cuePoolUpdating.at(i)->update(now);
+    }
+    cuePoolUpdating.clear();
 
+    if (cuelistPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < cuelistPoolWaiting.size(); i++) {
+            cuelistPoolUpdating.push_back(cuelistPoolWaiting.at(i));
+        }
+        cuelistPoolWaiting.clear();
+    }
+    for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
+        cuelistPoolUpdating.at(i)->update();
+    }
+    cuelistPoolUpdating.clear();
+
+    if (effectPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < effectPoolWaiting.size(); i++) {
+            effectPoolUpdating.push_back(effectPoolWaiting.at(i));
+        }
+        effectPoolWaiting.clear();
+    }
+    for (int i = 0; i < effectPoolUpdating.size(); i++) {
+        effectPoolUpdating.at(i)->update(now);
+    }
+    effectPoolUpdating.clear();
+
+    if (carouselPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < carouselPoolWaiting.size(); i++) {
+            carouselPoolUpdating.push_back(carouselPoolWaiting.at(i));
+        }
+        carouselPoolWaiting.clear();
+    }
+    for (int i = 0; i < carouselPoolUpdating.size(); i++) {
+        carouselPoolUpdating.at(i)->update(now);
+    }
+    carouselPoolUpdating.clear();
+
+    if (mapperPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < mapperPoolWaiting.size(); i++) {
+            mapperPoolUpdating.push_back(mapperPoolWaiting.at(i));
+        }
+        mapperPoolWaiting.clear();
+    }
+    for (int i = 0; i < mapperPoolUpdating.size(); i++) {
+        mapperPoolUpdating.at(i)->update(now);
+    }
+    mapperPoolUpdating.clear();
+
+    if (programmerPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < programmerPoolWaiting.size(); i++) {
+            programmerPoolUpdating.push_back(programmerPoolWaiting.at(i));
+        }
+        programmerPoolWaiting.clear();
+    }
+    for (int i = 0; i < programmerPoolUpdating.size(); i++) {
+        programmerPoolUpdating.at(i)->update(now);
+    }
+    programmerPoolUpdating.clear();
+
+    {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
+            subFixtureChannelPoolUpdating.push_back(subFixtureChannelPoolWaiting.at(i));
+        }
+    }
+    subFixtureChannelPoolWaiting.clear();
+    for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
+        // bug ici
+        if (subFixtureChannelPoolUpdating.at(i) != nullptr && !subFixtureChannelPoolUpdating.at(i)->isDeleted) {
+            subFixtureChannelPoolUpdating.at(i)->updateVal(now);
+        }
+    }
+    subFixtureChannelPoolUpdating.clear();
+
+    if (virtualFadersNeedUpdate) {
+        virtualFadersNeedUpdate = false;
+        VirtualFaderColGrid::getInstance()->updateSlidersValues();
+
+    }
+
+    //double delta = Time::getMillisecondCounterHiRes() - now;
+    //LOG(delta);
+
+}
 
 void Brain::registerSubFixture(SubFixture* f, int id) {
     int askedId = id;
@@ -577,7 +571,7 @@ void Brain::unregisterMapper(Mapper* c) {
 
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
-    while (updateCuelistsIsRunning) {wait(5); }
+    ScopedLock lock(usingCollections);
     if (std::find(cuelistPoolWaiting.begin(), cuelistPoolWaiting.end(), c) != cuelistPoolWaiting.end()) {
     }
     else {
@@ -587,7 +581,7 @@ void Brain::pleaseUpdate(Cuelist* c) {
 
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if (f == nullptr || f->objectType != "SubFixtureChannel") { return; }
-    while (updateChannelsIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     if (f == nullptr) { return; };
     if (std::find(subFixtureChannelPoolWaiting.begin(), subFixtureChannelPoolWaiting.end(), f) != subFixtureChannelPoolWaiting.end()) {}
     else {
@@ -597,7 +591,7 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
 
 void Brain::pleaseUpdate(Cue* c) {
     if (c == nullptr || c->objectType != "Cue") { return; }
-    while (updateCuesIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     if (std::find(cuePoolWaiting.begin(), cuePoolWaiting.end(), c) != cuePoolWaiting.end()) {}
     else {
         cuePoolWaiting.push_back(c);
@@ -606,7 +600,7 @@ void Brain::pleaseUpdate(Cue* c) {
 
 void Brain::pleaseUpdate(Programmer* c) {
     if (c == nullptr || c->objectType != "Programmer") { return; }
-    while (updateProgrammersIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     if (std::find(programmerPoolWaiting.begin(), programmerPoolWaiting.end(), c) != programmerPoolWaiting.end()) {}
     else {
         programmerPoolWaiting.push_back(c);
@@ -615,7 +609,7 @@ void Brain::pleaseUpdate(Programmer* c) {
 
 void Brain::pleaseUpdate(Effect* f) {
     if (f == nullptr || f->objectType != "Effect") { return; }
-    while (updateEffectsIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     if (std::find(effectPoolWaiting.begin(), effectPoolWaiting.end(), f) != effectPoolWaiting.end()) {}
     else {
         effectPoolWaiting.push_back(f);
@@ -624,7 +618,7 @@ void Brain::pleaseUpdate(Effect* f) {
 
 void Brain::pleaseUpdate(Carousel* f) {
     if (f == nullptr || f->objectType != "Carousel") { return; }
-    while (updateCarouselsIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     if (std::find(carouselPoolWaiting.begin(), carouselPoolWaiting.end(), f) != carouselPoolWaiting.end()) {}
     else {
         carouselPoolWaiting.push_back(f);
@@ -633,7 +627,7 @@ void Brain::pleaseUpdate(Carousel* f) {
 
 void Brain::pleaseUpdate(Mapper* f) {
     if (f == nullptr || f->objectType != "Mapper") { return; }
-    while (updateMappersIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     if (std::find(mapperPoolWaiting.begin(), mapperPoolWaiting.end(), f) != mapperPoolWaiting.end()) {}
     else {
         mapperPoolWaiting.push_back(f);
@@ -663,7 +657,7 @@ float Brain::symPosition(int index, int nElements) {
 
 void Brain::startTask(Task* t, double startTime)
 {
-    while (updateTasksIsRunning) { wait(5); }
+    ScopedLock lock(usingCollections);
     RunningTask* rt = runningTasks.add(new RunningTask());
     rt->targetType = t->targetType->getValue();
     rt->targetId = t->targetId->getValue();
@@ -689,6 +683,7 @@ void Brain::startTask(Task* t, double startTime)
     rt->startValue = 0;
     rt->endValue = t->targetValue->getValue();
     rt->isEnded = false;
+
 }
 
 SubFixture* Brain::getSubFixtureById(int id) {
