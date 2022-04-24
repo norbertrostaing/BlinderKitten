@@ -109,13 +109,16 @@ void Cue::computeValues() {
 }
 
 void Cue::go() {
+	double now = Brain::getInstance()->now;
 	if (autoFollow->getValue() == "immediate") {
-		double now = Brain::getInstance()->now;
 
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
 		TSAutoFollowEnd = now + (delay*1000);
 		Brain::getInstance()->pleaseUpdate(this);
+	}
+	for (int i = 0; i < tasks.items.size(); i++) {
+		Brain::getInstance()->startTask(tasks.items[i], now);
 	}
 }
 

@@ -174,6 +174,18 @@ void Brain::brainLoop() {
     }
     subFixtureChannelPoolUpdating.clear();
 
+    {
+        for (int i = 0; i < runningTasks.size(); i++) {
+            runningTasks[i]->update(now);
+        }
+        ScopedLock lock(usingCollections);
+        for (int i = runningTasks.size() - 1; i >= 0; i--) {
+            if (runningTasks[i]->isEnded) {
+                runningTasks.remove(i);
+            }
+        }
+    }
+
     if (virtualFadersNeedUpdate) {
         virtualFadersNeedUpdate = false;
         VirtualFaderColGrid::getInstance()->updateSlidersValues();
@@ -658,31 +670,87 @@ float Brain::symPosition(int index, int nElements) {
 void Brain::startTask(Task* t, double startTime)
 {
     ScopedLock lock(usingCollections);
-    RunningTask* rt = runningTasks.add(new RunningTask());
-    rt->targetType = t->targetType->getValue();
-    rt->targetId = t->targetId->getValue();
-    if (rt->targetType == "cuelist") {
-        rt->actionType = t->cuelistAction->getValue();
-    }
-    else if (rt->targetType == "effect") {
-        rt->actionType = t->effectAction->getValue();
-    }
-    else if (rt->targetType == "carousel") {
-        rt->actionType = t->carouselAction->getValue();
-    }
-    else if (rt->targetType == "mapper") {
-        rt->actionType = t->mapperAction->getValue();
-    }
-    rt->fade = (double)t->fade->getValue() * 1000;
-    rt->delay= (double)t->fade->getValue() * 1000;
 
-    rt->TSInit = startTime;
-    rt->TSStart = startTime + rt->delay;
-    rt->TSEnd = startTime + rt->delay + rt->fade;
+    String actionType = "";
+    String targetType = t->targetType->getValue();
+    int targetId = t->targetId->getValue();
+    bool valid = false;
+    double startValue = 0;
+    double endValue = 1;
+    if (targetType == "cuelist") {
+        actionType = t->cuelistAction->getValue();
+        Cuelist* target = getCuelistById(targetId);
+        if (target != nullptr) {
+            valid = true;
+            if (actionType == "htplevel") {
+                startValue = target->HTPLevel->getValue();
+                endValue = t->targetValue->getValue();
+            } else if (actionType == "flashLevel") {
+                startValue = target->FlashLevel->getValue();
+                endValue = t->targetValue->getValue();
+            }
+        }
+    }
+    else if (targetType == "effect") {
+        actionType = t->effectAction->getValue();
+        Effect* target = getEffectById(targetId);
+        if (target != nullptr) {
+            valid = true;
+            if (actionType == "size") {
+                startValue = target->sizeValue->getValue();
+                endValue = t->targetValue->getValue();
+            }
+            else if (actionType == "speed") {
+                startValue = target->speed->getValue();
+                endValue = t->targetValue->getValue();
+            }
+        }
+    }
+    else if (targetType == "carousel") {
+        actionType = t->carouselAction->getValue();
+        Carousel* target = getCarouselById(targetId);
+        if (target != nullptr) {
+            valid = true;
+            if (actionType == "size") {
+                startValue = target->sizeValue->getValue();
+                endValue = t->targetValue->getValue();
+            }
+            else if (actionType == "speed") {
+                startValue = target->speed->getValue();
+                endValue = t->targetValue->getValue();
+            }
+        }
+    }
+    else if (targetType == "mapper") {
+        actionType = t->mapperAction->getValue();
+        Mapper* target = getMapperById(targetId);
+        if (target != nullptr) {
+            valid = true;
+            if (actionType == "size") {
+                startValue = target->sizeValue->getValue();
+                endValue = t->targetValue->getValue();
+            }
+        }
+    }
 
-    rt->startValue = 0;
-    rt->endValue = t->targetValue->getValue();
-    rt->isEnded = false;
+    if (valid) {
+        RunningTask* rt = runningTasks.add(new RunningTask());
+        rt->actionType = actionType;
+        rt->targetType = targetType;
+        rt->targetId = targetId;
+
+        rt->delay = (double)t->delay->getValue() * 1000;
+        rt->fade = (double)t->fade->getValue() * 1000;
+
+        rt->TSInit = startTime;
+        rt->TSStart = startTime + rt->delay;
+        rt->TSEnd = startTime + rt->delay + rt->fade;
+
+        rt->startValue = startValue;
+        rt->endValue = endValue;
+        rt->isEnded = false;
+        LOG(rt->endValue);
+    }
 
 }
 

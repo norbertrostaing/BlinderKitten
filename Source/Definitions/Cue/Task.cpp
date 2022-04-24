@@ -10,6 +10,7 @@
 
 #include "JuceHeader.h"
 #include "Task.h"
+#include "Brain.h"
 
 Task::Task(var params) :
 	BaseItem(params.getProperty("name", "Task")),
@@ -35,11 +36,6 @@ Task::Task(var params) :
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("Go", "go");
 	cuelistAction->addOption("Off", "off");
-	cuelistAction->addOption("Toggle", "toggle");
-	cuelistAction->addOption("Flash", "flash");
-	cuelistAction->addOption("Swop", "swop");
-	cuelistAction->addOption("Load", "load");
-	cuelistAction->addOption("Load and Go", "loadandgo");
 	cuelistAction->addOption("Go random", "gorandom");
 	cuelistAction->addOption("HTP Level", "htplevel");
 	cuelistAction->addOption("Flash Level", "flashlevel");
@@ -47,8 +43,6 @@ Task::Task(var params) :
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
 	effectAction->addOption("Stop", "stop");
-	effectAction->addOption("Toggle", "toggle");
-	effectAction->addOption("Tap tempo", "taptempo");
 	effectAction->addOption("Double Speed", "doublespeed");
 	effectAction->addOption("Half Speed", "halfspeed");
 	effectAction->addOption("Set Size", "size");
@@ -109,6 +103,7 @@ void Task::updateDisplay() {
 		}
 		else {
 			fade->hideInEditor = true;
+			fade->setValue(0);
 			targetValue->hideInEditor = true;
 		}
 	}
@@ -125,6 +120,7 @@ void Task::updateDisplay() {
 		}
 		else {
 			fade->hideInEditor = true;
+			fade->setValue(0);
 			targetValue->hideInEditor = true;
 		}
 	}
@@ -141,6 +137,7 @@ void Task::updateDisplay() {
 		}
 		else {
 			fade->hideInEditor = true;
+			fade->setValue(0);
 			targetValue->hideInEditor = true;
 		}
 	}
@@ -152,6 +149,7 @@ void Task::updateDisplay() {
 		}
 		else {
 			fade->hideInEditor = true;
+			fade->setValue(0);
 			targetValue->hideInEditor = true;
 		}
 	}
@@ -166,4 +164,92 @@ void Task::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	if (!enabled->boolValue()) return;
 }
 
+
+void Task::triggerGivenTask(String targetType, int targetId, String action, double value)
+{
+	if (targetType == "cuelist") {
+		Cuelist* target = Brain::getInstance()->getCuelistById(targetId);
+		if (target != nullptr) {
+			if (action == "go" && value == 1) {
+				target->go();
+			}
+			else if (action == "off" && value == 1) {
+				target->off();
+			}
+			else if (action == "gorandom" && value == 1) {
+				target->goRandom();
+			}
+			else if (action == "htplevel") {
+				target->setHTPLevel(value);
+			}
+			else if (action == "flashlevel") {
+				target->setFlashLevel(value);
+			}
+		}
+	}
+	else if (targetType == "effect") {
+		Effect* target = Brain::getInstance()->getEffectById(targetId);
+		if (target != nullptr) {
+			if (action == "start" && value == 1) {
+				target->start();
+			}
+			else if (action == "stop" && value == 1) {
+				target->stop();
+			}
+			else if (action == "doublespeed" && value == 1) {
+				target->speed->setValue((double)target->speed->getValue() * 2);
+			}
+			else if (action == "halfspeed" && value == 1) {
+				target->speed->setValue((double)target->speed->getValue() / 2);
+			}
+			else if (action == "size") {
+				target->sizeValue->setValue(value);
+			}
+			else if (action == "speed") {
+				target->speed->setValue(value);
+			}
+		}
+	}
+	else if (targetType == "carousel") {
+		Carousel* target = Brain::getInstance()->getCarouselById(targetId);
+		if (target != nullptr) {
+			if (action == "start" && value == 1) {
+				target->start();
+			}
+			else if (action == "stop" && value == 1) {
+				target->stop();
+			}
+			else if (action == "doublespeed" && value == 1) {
+				target->speed->setValue((double)target->speed->getValue() * 2);
+			}
+			else if (action == "halfspeed" && value == 1) {
+				target->speed->setValue((double)target->speed->getValue() / 2);
+			}
+			else if (action == "size") {
+				target->sizeValue->setValue(value);
+			}
+			else if (action == "speed") {
+				target->speed->setValue(value);
+			}
+		}
+	}
+	else if (targetType == "mapper") {
+		Mapper* target = Brain::getInstance()->getMapperById(targetId);
+		if (target != nullptr) {
+			if (action == "start" && value == 1) {
+				target->start();
+			}
+			else if (action == "stop" && value == 1) {
+				target->stop();
+			}
+			else if (action == "size") {
+				target->sizeValue->setValue(value);
+			}
+		}
+	}
+	else {
+		LOG("coucou");
+
+	}
+}
 

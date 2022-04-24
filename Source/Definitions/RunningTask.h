@@ -20,8 +20,8 @@ public:
     float delay=0;
     float fade=0;
 
-    float startValue = -1;
-    float endValue = -1;
+    double startValue = -1;
+    double endValue = -1;
 
     int64 TSInit = 0;
     int64 TSStart = 0;
@@ -33,4 +33,7 @@ public:
     String targetType = "";
     int targetId = 0;
     String actionType = "";
+
+    void update(double now);
+    void trigger(double value = 1);
 };
