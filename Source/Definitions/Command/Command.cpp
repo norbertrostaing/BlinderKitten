@@ -76,14 +76,9 @@ void Command::computeValues() {
 
 void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
+	computedValues.getLock().enter();
+	computedValues.clear();
 	selection.computeSelection();
-	
-	computedValues.clear();
-	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
-		//delete it.getValue();
-	}
-
-	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 	Array<SubFixture*> SubFixtures = selection.computedSelectedSubFixtures;
 
@@ -268,6 +263,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			}
 		}
 	}
+	computedValues.getLock().exit();
 }
 
 void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) {

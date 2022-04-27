@@ -131,6 +131,7 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
 
 
 void DataTransferManager::execute() {
+    const MessageManagerLock mmLock;
     String srcType = sourceType->getValue();
     String trgType = targetType->getValue();
     bool valid = false;
@@ -138,6 +139,8 @@ void DataTransferManager::execute() {
     int tId = targetUserId->getValue();
     if (srcType == "programmer") {
         Programmer* source = Brain::getInstance()->getProgrammerById(sourceId->getValue());
+        ScopedLock lock(source->computing);
+
         if (source == nullptr) { LOG("Invalid Programmer ID"); return; }
         if (trgType == "group") {
             valid = true;

@@ -30,6 +30,8 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
 
+    CriticalSection computing;
+
     EnumParameter* editionMode;
     FloatParameter* releaseTime;
     Trigger* goBtn;

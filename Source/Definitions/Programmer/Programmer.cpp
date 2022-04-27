@@ -149,16 +149,23 @@ void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 
 void Programmer::computeValues() {
 	maxTiming = 0;
+	computedValues.getLock().enter();
 	computedValues.clear();
 	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
 		cs[i]->computeValues();
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
+		cs[i]->computedValues.getLock().enter();
+
 		for (auto it = cs[i]->computedValues.begin(); it != cs[i]->computedValues.end(); it.next()) {
 			SubFixtureChannel* fc = it.getKey();
-			computedValues.set(fc, it.getValue());
+			if (fc != nullptr) {
+				computedValues.set(fc, it.getValue());
+			}
 		}
+		cs[i]->computedValues.getLock().exit();
 	}
+	computedValues.getLock().exit();
 }
 
 void Programmer::go() {
@@ -174,6 +181,7 @@ void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 }
 
 void Programmer::render(double now) {
+	ScopedLock lock(computing);
 	release(now);
 	computeValues();
 	String mode = editionMode->getValue();
