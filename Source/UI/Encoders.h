@@ -47,6 +47,7 @@ public:
     Label commandLine;
     TextButton btnMode;
 
+    TextButton encoderRangeBtn;
     TextButton littleMoveLeftBtn;
     TextButton littleMoveRightBtn;
     TextButton bigMoveLeftBtn;
@@ -57,15 +58,18 @@ public:
     int encodersOffset = 0;
     int mode = 0;
 
+
     void paint (juce::Graphics&) override;
     void resized() override;
-    void updateContent();
     void sliderValueChanged(Slider* slider) override;
     void buttonClicked (Button*);
     void updateFilters();
     void updateEncoders();
     void updateModeButton();
+    void updateRangeButton();
     void updateContentWithCommand(Command* c);
+
+    int encoderRange = 0;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Encoders)

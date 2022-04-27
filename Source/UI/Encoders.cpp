@@ -57,6 +57,11 @@ Encoders::Encoders():
     littleMoveRightBtn.setButtonText(">");
     littleMoveRightBtn.setWantsKeyboardFocus(false);
 
+    addAndMakeVisible(&encoderRangeBtn);
+    encoderRangeBtn.addListener(this);
+    encoderRangeBtn.setButtonText("0-1");
+    encoderRangeBtn.setWantsKeyboardFocus(false);
+
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
         addAndMakeVisible(s);
@@ -112,11 +117,12 @@ void Encoders::resized()
    
     commandLine.setBounds(0,22,windowW, 20);
 
-    btnMode.setBounds(windowW - btnValueWidth, 0, 40, 20);
-    bigMoveRightBtn.setBounds(windowW - btnValueWidth-(1*btnWidth), 0, btnWidth, 20);
-    littleMoveRightBtn.setBounds(windowW - btnValueWidth - (2 * btnWidth), 0, btnWidth, 20);
-    littleMoveLeftBtn.setBounds(windowW - btnValueWidth - (3 * btnWidth), 0, btnWidth, 20);
-    bigMoveLeftBtn.setBounds(windowW - btnValueWidth - (4 * btnWidth),0, btnWidth,20);
+    btnMode.setBounds(windowW - (1 * btnValueWidth), 0, btnValueWidth, 20);
+    encoderRangeBtn.setBounds(windowW - (2 * btnValueWidth), 0, btnValueWidth, 20);
+    bigMoveRightBtn.setBounds(windowW - (2 * btnValueWidth) - (1 * btnWidth), 0, btnWidth, 20);
+    littleMoveRightBtn.setBounds(windowW - (2 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
+    littleMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
+    bigMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
 
     if (windowH > windowW) { // portrait
         float w = 120;
@@ -145,13 +151,20 @@ void Encoders::resized()
 void Encoders::sliderValueChanged(Slider* slider)
 {   
     int index = encoders.indexOf(slider)+encodersOffset;
-    UserInputManager::getInstance()->encoderValueChanged(index, slider->getValue());
-    
+    double v = slider->getValue();
+    if (encoderRange == 1) { v /= 100.; }
+    else if (encoderRange == 2) { v /= 255.; }
+
+    UserInputManager::getInstance()->encoderValueChanged(index, v);
 }
 
 void Encoders::buttonClicked(Button* b) {
-    if (b == &btnMode) {
-        mode = (mode+1) % 2;
+    if (b == &encoderRangeBtn) {
+        encoderRange = (encoderRange + 1) % 3;
+        updateRangeButton();
+    }
+    else if (b == &btnMode) {
+        mode = (mode + 1) % 2;
         updateModeButton();
     }
     else if (b == &bigMoveLeftBtn) {
@@ -187,6 +200,27 @@ void Encoders::updateModeButton() {
     updateEncoders();
 }
 
+void Encoders::updateRangeButton() {
+    double min = 0;
+    double max = 1;
+    if (encoderRange == 0) {
+        encoderRangeBtn.setButtonText("0-1");
+        max = 1;
+    }
+    else if (encoderRange == 1) {
+        encoderRangeBtn.setButtonText("%");
+        max = 100;
+    }
+    else if (encoderRange == 2) {
+        encoderRangeBtn.setButtonText("255");
+        max = 255;
+    }
+    for (int i = 0; i < nEncoders; i++) {
+        encoders[i]->setRange(min, max);
+    }
+    updateEncoders();
+}
+
 void Encoders::updateFilters() {
     // add buttons to filter types of channels by family
 }
@@ -218,6 +252,8 @@ void Encoders::updateEncoders() {
                 float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
                 if (v >= 0) {
                     encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                    if (encoderRange == 1) { v *= 100; }
+                    else if (encoderRange == 2) { v *= 255; }
                     encoders[i]->setValue(v, juce::dontSendNotification);
                 }
             }
@@ -244,6 +280,8 @@ void Encoders::updateContentWithCommand(Command* c) {
                     int channelId = ci + encodersOffset;
                     if (channels[channelId] == ct) {
                         float v = c->getChannelValue(channels[channelId], mode == 1);
+                        if (encoderRange == 1) { v *= 100; }
+                        else if (encoderRange == 2) { v *= 255; }
                         Encoders::getInstance()->encoders[ci]->setValue(v, juce::sendNotification);
                         Encoders::getInstance()->encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                     }
