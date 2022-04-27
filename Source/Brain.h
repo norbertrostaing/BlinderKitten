@@ -107,6 +107,8 @@ public:
     void pleaseUpdate(Carousel* c);
     void pleaseUpdate(Mapper* c);
 
+    void updateAllChannels();
+
     void grandMasterChanged();
 
     //void updateChannel(SubFixtureChannel* fc);

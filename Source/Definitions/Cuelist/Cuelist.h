@@ -44,10 +44,11 @@ public:
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
+    FloatParameter* LTPLevel;
     float lastHTPLevel = -1;
     FloatParameter* FlashLevel;
-    FloatParameter* LTPLevel;
     bool pleaseUpdateHTPs = false;
+    bool pleaseUpdateLTPs = false;
     bool wannaOff = false;
     EnumParameter* tracking;
     EnumParameter* endAction;
@@ -109,6 +110,7 @@ public:
     void renumberCues();
 
     void setHTPLevel(float level);
+    void setLTPLevel(float level);
     void setFlashLevel(float level);
 
     void showLoad();

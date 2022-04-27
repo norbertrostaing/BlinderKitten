@@ -36,6 +36,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("HTP Level", "htplevel");
 	cuelistAction->addOption("Flash Level", "flashlevel");
+	cuelistAction->addOption("LTP Level", "ltplevel");
 
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Size", "size");
@@ -106,6 +107,7 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") { return targ->HTPLevel->getValue(); }
 			if (action == "flashlevel") { return targ->FlashLevel->getValue(); }
+			if (action == "ltplevel") { return targ->LTPLevel->getValue(); }
 		}
 	}
 	else if (targType == "effect") {
@@ -152,6 +154,7 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") { targ->HTPLevel->setValue(value); }
 			if (action == "flashlevel") { targ->FlashLevel->setValue(value); }
+			if (action == "ltplevel") { targ->LTPLevel->setValue(value); }
 		}
 	}
 	else if (targType == "effect") {

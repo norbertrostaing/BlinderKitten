@@ -73,7 +73,7 @@ Cuelist::Cuelist(var params) :
 
 	HTPLevel = addFloatParameter("HTP Level", "Level master for HTP channels of this sequence", 1, 0, 1);
 	FlashLevel = addFloatParameter("Flash Level", "Flash/swop level master for HTP channels of this sequence", 1, 0, 1);
-	// LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
+	LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
 
 	isCuelistOn = addBoolParameter("is On", "Is this cuelist on ?", false);
 	isCuelistOn->isControllableFeedbackOnly = true;
@@ -139,7 +139,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 			if (autoStart->getValue() && !isCuelistOn->getValue() && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
 				go();
 			}
-			else if (autoStop->getValue() && isCuelistOn->getValue() && (float)HTPLevel->getValue() == 0) { 
+			else if (autoStop->getValue() && isCuelistOn->getValue() && (float)HTPLevel->getValue() == 0) {
 				off();
 			}
 		}
@@ -147,6 +147,12 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		lastHTPLevel = p->getValue();
 		Brain::getInstance()->pleaseUpdate(this);
 	}
+	if (p == LTPLevel) {
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+		pleaseUpdateLTPs = true;
+		Brain::getInstance()->pleaseUpdate(this);
+	}
+
 	if (p == id) {
 		Brain::getInstance()->registerCuelist(this, id->getValue(), true);
 	}
@@ -433,6 +439,9 @@ void Cuelist::update() {
 	if (pleaseUpdateHTPs) {
 		updateHTPs();
 	}
+	if (pleaseUpdateLTPs) {
+		updateLTPs();
+	}
 	float tempPosition = 1;
 	float isUseFul = false;
 	float isOverWritten = true;
@@ -539,6 +548,9 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		if (HTP) {
 			valueTo *= faderLevel;
 		}
+		else {
+			valueTo *= (double)LTPLevel->getValue();
+		}
 	}
 	else {
 		outIsOff= true;
@@ -615,6 +627,7 @@ void Cuelist::updateHTPs() {
 }
 
 void Cuelist::updateLTPs() {
+	pleaseUpdateLTPs = false;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		SubFixtureChannel* chan = it.getKey();
 		if (chan != nullptr && !chan->isHTP) {
@@ -643,6 +656,10 @@ void Cuelist::setHTPLevel(float level) {
 
 void Cuelist::setFlashLevel(float level) {
 	FlashLevel->setValue(level);
+}
+
+void Cuelist::setLTPLevel(float level) {
+	LTPLevel->setValue(level);
 }
 
 void Cuelist::showLoad()

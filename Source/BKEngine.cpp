@@ -502,6 +502,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	Brain::getInstance()->loadingIsRunning = false;
 	Brain::getInstance()->startThread();
 
+	Brain::getInstance()->updateAllChannels();	
 }
 
 void BKEngine::childStructureChanged(ControllableContainer* cc)

@@ -83,6 +83,10 @@ void CuelistAction::setValueInternal(var value) {
         target->setHTPLevel(val);
         break;
 
+    case CL_LTPLEVEL:
+        target->setLTPLevel(val);
+        break;
+
     case CL_FLASH:
         if (val > 0) {
             target->flash(true, false);

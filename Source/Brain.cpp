@@ -592,7 +592,7 @@ void Brain::pleaseUpdate(Cuelist* c) {
 }
 
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
-    if (f == nullptr || f->objectType != "SubFixtureChannel") { return; }
+    if (f == nullptr || f ->isDeleted || f->objectType != "SubFixtureChannel") { return; }
     ScopedLock lock(usingCollections);
     if (f == nullptr) { return; };
     if (std::find(subFixtureChannelPoolWaiting.begin(), subFixtureChannelPoolWaiting.end(), f) != subFixtureChannelPoolWaiting.end()) {}
@@ -684,6 +684,9 @@ void Brain::startTask(Task* t, double startTime)
             valid = true;
             if (actionType == "htplevel") {
                 startValue = target->HTPLevel->getValue();
+                endValue = t->targetValue->getValue();
+            } else if (actionType == "ltplevel") {
+                startValue = target->LTPLevel->getValue();
                 endValue = t->targetValue->getValue();
             } else if (actionType == "flashLevel") {
                 startValue = target->FlashLevel->getValue();
@@ -873,5 +876,18 @@ void Brain::unswoppedCuelist(Cuelist* c) {
     isSwopping = swoppedCuelists.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
+    }
+}
+
+
+void Brain::updateAllChannels() {
+    for (auto it = fixtures.begin(); it != fixtures.end(); it.next()) {
+        Fixture* fixt = it.getValue();
+        for (auto it2 = fixt->subFixtures.begin(); it2 != fixt->subFixtures.end(); it2.next()) {
+            SubFixture* subFixt = it2.getValue();
+            for (auto it3 = subFixt->channelsMap.begin(); it3 != subFixt->channelsMap.end(); it3.next()) {
+                pleaseUpdate(it3.getValue());
+            }
+        }
     }
 }

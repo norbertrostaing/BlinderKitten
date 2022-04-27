@@ -39,6 +39,7 @@ Task::Task(var params) :
 	cuelistAction->addOption("Go random", "gorandom");
 	cuelistAction->addOption("HTP Level", "htplevel");
 	cuelistAction->addOption("Flash Level", "flashlevel");
+	cuelistAction->addOption("LTP Level", "ltplevel");
 
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
@@ -92,6 +93,11 @@ void Task::updateDisplay() {
 
 	if (targType == "cuelist") {
 		if (cuelistAction->getValue() == "htplevel") {
+			fade->hideInEditor = false;
+			targetValue->hideInEditor = false;
+			targetValue->setRange(0, 1);
+		}
+		else if (cuelistAction->getValue() == "ltplevel") {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
@@ -181,6 +187,9 @@ void Task::triggerGivenTask(String targetType, int targetId, String action, doub
 			}
 			else if (action == "htplevel") {
 				target->setHTPLevel(value);
+			}
+			else if (action == "ltplevel") {
+				target->setLTPLevel(value);
 			}
 			else if (action == "flashlevel") {
 				target->setFlashLevel(value);

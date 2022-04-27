@@ -299,6 +299,9 @@ void Assistant::createMasters()
         if (g != nullptr) {
             Cuelist* cl = CuelistManager::getInstance()->addItem();
             cl->userName->setValue("Master "+g->userName->getValue().toString());
+            cl->autoStart->setValue(true);
+            cl->autoStop->setValue(true);
+            cl->HTPLevel->setValue(0);
             cl->deselectThis();
             Cue* c = cl->cues.items[0];
             c->setNiceName("Master");
