@@ -868,11 +868,12 @@ void Brain::swoppedCuelist(Cuelist* c) {
 }
 
 void Brain::unswoppedCuelist(Cuelist* c) {
-    
-    while (swoppedCuelists.indexOf(c) >= 0) {
-        swoppedCuelists.removeAllInstancesOf(c);
+    {
+        ScopedLock lock(Brain::getInstance()->usingCollections);
+        while (swoppedCuelists.indexOf(c) >= 0) {
+            swoppedCuelists.removeAllInstancesOf(c);
+        }
     }
-
     isSwopping = swoppedCuelists.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));

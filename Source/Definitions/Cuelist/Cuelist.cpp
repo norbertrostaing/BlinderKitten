@@ -373,7 +373,7 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 		}
 
 		if (flashingCue != nullptr) {
-			// set a flash tag to on ?
+			ScopedLock locK(Brain::getInstance()->usingCollections);
 			flashingCue->computeValues();
 			for (auto it = flashingCue->computedValues.begin(); it != flashingCue->computedValues.end(); it.next()) {
 				ChannelValue* temp = it.getValue();

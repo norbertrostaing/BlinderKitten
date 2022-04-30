@@ -310,16 +310,20 @@ void DataTransferManager::execute() {
         else if (trgType == "virtualbutton") {
             valid = true;
             VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("effect");
-            trg->selectThis();
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("effect");
+                trg->selectThis();
+            }
         }
         else if (trgType == "virtualfadercol") {
             valid = true;
             VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("effect");
-            trg->selectThis();
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("effect");
+                trg->selectThis();
+            }
         }
     }
     else if (srcType == "carousel") {

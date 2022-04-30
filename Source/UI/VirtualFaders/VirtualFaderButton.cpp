@@ -71,6 +71,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 
 VirtualFaderButton::~VirtualFaderButton()
 {
+	VirtualFaderColGrid::getInstance()->buttonToVFB.removeValue(this);
 }
 
 void VirtualFaderButton::updateName() {

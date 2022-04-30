@@ -55,6 +55,8 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 
 VirtualFaderSlider::~VirtualFaderSlider()
 {
+	VirtualFaderColGrid::getInstance()->sliderToVFS.removeValue(this);
+
 }
 
 void VirtualFaderSlider::updateName() {
