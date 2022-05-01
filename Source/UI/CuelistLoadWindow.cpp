@@ -12,6 +12,8 @@
 #include "CuelistLoadWindow.h"
 
 #include "Definitions//Cuelist/Cuelist.h"
+#include "UserInputManager.h"
+
 juce_ImplementSingleton(CuelistLoadWindow);
 
 
@@ -50,6 +52,7 @@ void CuelistLoadWindow::resized()
 
 void CuelistLoadWindow::fillButtons(Cuelist* c) {
     currentTarget = c;
+    // bug ici ! quand load une cuelist, rajouter un lock ?
     buttons.clear();
     for (int i = 0; i < c->cues.items.size(); i++) {
         TextButton *temp = new TextButton();
@@ -61,12 +64,16 @@ void CuelistLoadWindow::fillButtons(Cuelist* c) {
 
 void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
 {   
-    triggerGo = triggerGoWhenSelected;
-    closeWindow();
-    fillButtons(c);
-    setSize(810, 610);
-    resized();
-    DialogWindow::showDialog("Load next cue for "+c->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
+    double now = Time::getMillisecondCounterHiRes();
+    if (UserInputManager::getInstance()->lastCuelistLoadWindowTS + 500 < now) {
+        UserInputManager::getInstance()->lastCuelistLoadWindowTS = now;
+        triggerGo = triggerGoWhenSelected;
+        closeWindow();
+        fillButtons(c);
+        setSize(810, 610);
+        resized();
+        DialogWindow::showDialog("Load next cue for " + c->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
+    }
 }
 
 void CuelistLoadWindow::buttonClicked(Button* b)

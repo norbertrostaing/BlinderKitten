@@ -54,4 +54,6 @@ public:
     static float backspaceOnFloat(var);
     void gridViewCellPressed(String type, int id);
 
+    double lastCuelistLoadWindowTS = 0;
+
 };
