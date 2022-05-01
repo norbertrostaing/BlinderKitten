@@ -60,7 +60,7 @@ void VirtualFaderCol::updateName() {
 
 void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
 	VirtualFaderColGrid::getInstance()->fillCells();
-	if (c == targetType || c == targetId) {
+	if (c == targetType) {
 		updateDisplay();
 	}
 }
@@ -68,7 +68,6 @@ void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
 void VirtualFaderCol::updateDisplay() {
 	String targType = targetType->getValue();
 
-	targetId->deselectThis();
 	for (int i = 0; i < rotaries.items.size(); i++) { rotaries.items[i]->updateDisplay(); }
 	for (int i = 0; i < aboveButtons.items.size(); i++) { aboveButtons.items[i]->updateDisplay(); }
 	fader.updateDisplay();

@@ -42,6 +42,9 @@ public:
 
     HashMap<ChannelType*, float>* getSubFixtureValues(SubFixture* f);
 
+    Trigger* loadToProgrammerBtn;
+    void triggerTriggered(Trigger* t) override;
+
     BaseManager<PresetSubFixtureValues> subFixtureValues;
     String getTypeString() const override { return objectType; }
 
@@ -49,4 +52,6 @@ public:
 
     void computeValues();
     void updateDisplay();
+
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 };

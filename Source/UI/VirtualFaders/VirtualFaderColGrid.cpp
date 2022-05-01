@@ -207,6 +207,7 @@ void VirtualFaderColGrid::initCells() {
 
 void VirtualFaderColGrid::fillCells() {
 
+    const MessageManagerLock mmLock;
     buttonToVFB.clear();
     sliderToVFS.clear();
     columnToVFC.clear();

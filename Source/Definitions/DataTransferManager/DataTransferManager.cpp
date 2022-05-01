@@ -408,51 +408,10 @@ void DataTransferManager::execute() {
             }
         }
     }
-    else if (srcType == "mapper") {
-        if (trgType == "mapper") {
-            valid = true;
-            Mapper* src = Brain::getInstance()->getMapperById(sId);
-            Mapper* trg = Brain::getInstance()->getMapperById(tId);
-            if (trg == nullptr) {
-                trg = MapperManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(sId);
-                trg->id->setValue(tId);
-                trg->userName->setValue(src->userName->getValue());
-                trg->selectThis();
-            }
-        }
-        else if (trgType == "virtualbutton") {
-            valid = true;
-            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("mapper");
-            trg->selectThis();
-        }
-        else if (trgType == "virtualfadercol") {
-            valid = true;
-            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("mapper");
-            trg->selectThis();
-            trg->fader.targetType->setValueWithData("column");
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nRotaries; i++) {
-                VirtualFaderSlider* t = trg->rotaries.addItem();
-                t->targetType->setValueWithData("column");
-            }
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nAbove; i++) {
-                VirtualFaderButton* t = trg->aboveButtons.addItem();
-                t->targetType->setValueWithData("column");
-            }
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nBelow; i++) {
-                VirtualFaderButton* t = trg->belowButtons.addItem();
-                t->targetType->setValueWithData("column");
-            }
-        }
-    }
     else if (srcType == "preset") {
-        if (trgType == "preset") {
+    Preset* src = Brain::getInstance()->getPresetById(sId);
+    if (trgType == "preset") {
             valid = true;
-            Preset* src = Brain::getInstance()->getPresetById(sId);
             Preset* trg = Brain::getInstance()->getPresetById(tId);
             if (trg == nullptr) {
                 trg = PresetManager::getInstance()->addItemFromData(src->getJSONData());
@@ -460,6 +419,18 @@ void DataTransferManager::execute() {
                 trg->id->setValue(tId);
                 trg->userName->setValue(src->userName->getValue());
                 trg->selectThis();
+            }
+        }
+        else if (trgType == "programmer") {
+            valid = false;
+
+            Programmer* targ = Brain::getInstance()->getProgrammerById(tId);
+
+            if (targ != nullptr && src != nullptr) {
+                for (int iFixtVal = 0; iFixtVal < src->subFixtureValues.items.size(); iFixtVal++) {
+                    // ... 
+
+                }
             }
         }
     }
