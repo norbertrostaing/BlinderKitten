@@ -18,6 +18,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/VirtualFaderAction.h"
 #include "Definitions/Actions/InputPanelAction.h"
 #include "Definitions/Actions/MultiplicatorAction.h"
+#include "Definitions/Actions/TapTempoMultiple.h"
 
 ActionFactory::ActionFactory()
 {
@@ -84,6 +85,9 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Button Press", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_PRESS));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Grand Master", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_GM));
+
+    defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
+    defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Carousel", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CAR));
 
 }
 
