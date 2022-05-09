@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-OSCInputEditor::OSCInputEditor(EnablingControllableContainer* cc, bool isRoot) :
-    EnablingControllableContainerEditor(cc, isRoot)
+OSCInputEditor::OSCInputEditor(Array<ControllableContainer*> cc, bool isRoot) :
+    EnablingControllableContainerEditor(Inspectable::getArrayAs<ControllableContainer, EnablingControllableContainer>(cc), isRoot)
 {
     StringArray ips = NetworkHelpers::getLocalIPs();
     ipLabel.setText("IPs : " + ips.joinIntoString(","), dontSendNotification);

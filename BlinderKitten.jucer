@@ -148,7 +148,6 @@
           <FILE id="p5TaSq" name="DMXManager.h" compile="0" resource="0" file="Source/Common/DMX/DMXManager.h"/>
         </GROUP>
         <GROUP id="{A9950D55-FDA6-0102-954D-87415568A2FE}" name="Helpers">
-          <FILE id="eIxSbS" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/Common/Helpers/PerlinNoise.hpp"/>
           <FILE id="MTpiYY" name="SceneHelpers.cpp" compile="0" resource="0"
                 file="Source/Common/Helpers/SceneHelpers.cpp"/>
           <FILE id="Tv7ke4" name="SceneHelpers.h" compile="0" resource="0" file="Source/Common/Helpers/SceneHelpers.h"/>

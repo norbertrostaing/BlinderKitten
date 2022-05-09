@@ -14,7 +14,7 @@ class OSCInputEditor :
     public EnablingControllableContainerEditor
 {
 public:
-    OSCInputEditor(EnablingControllableContainer* cc, bool isRoot);
+    OSCInputEditor(Array<ControllableContainer*> cc, bool isRoot);
     ~OSCInputEditor();
 
 
@@ -22,5 +22,5 @@ public:
     Label ipLabel;
 
 
-    static InspectableEditor * create(ControllableContainer* cc, bool isRoot ) { return new OSCInputEditor((EnablingControllableContainer*)cc, isRoot); }
+    static InspectableEditor * create(bool isRoot, Array<ControllableContainer*>cc ) { return new OSCInputEditor(cc, isRoot); }
 };

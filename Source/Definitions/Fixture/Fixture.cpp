@@ -201,8 +201,8 @@ void Fixture::selectThis(bool addToSelection, bool notify) {
 	BaseItem::selectThis(addToSelection, notify);
 	if (addToSelection) {
 		InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent);
-		inspectorUI->inspector->setCurrentInspectable(FixtureMultiEditor::getInstance());
-		// inspectorUI->inspector->vp.setViewedComponent(FixtureMultiEditor::getInstance()->getEditor(true), false);
+		// multi fixture edition disabled organic ui update
+		inspectorUI->inspector->setCurrentInspectables(FixtureMultiEditor::getInstance());
 	}
 }
 

@@ -33,7 +33,6 @@
 #include "DMX/device/DMXEnttecProDevice.h"
 #include "DMX/device/DMXOpenUSBDevice.h"
 
-#include "Helpers/PerlinNoise.hpp"
 #include "Helpers/SceneHelpers.h"
 
 #include "MIDI/MIDIDevice.h"

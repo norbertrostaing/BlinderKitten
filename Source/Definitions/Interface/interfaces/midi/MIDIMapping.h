@@ -39,5 +39,5 @@ public:
     void handleCC(int channel, int number, int value);
     void handleValue(int value);
 
-    InspectableEditor* getEditorInternal(bool isRoot) override;
+    InspectableEditor* getEditorInternal(bool isRoot);
 };
