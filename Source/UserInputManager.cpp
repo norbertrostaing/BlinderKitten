@@ -136,6 +136,7 @@ void UserInputManager::commandSelectionChanged(Command* c) {
 	targetCommand = getProgrammer()->currentUserCommand;
 	Encoders::getInstance()->channels.clear();
 	if (c == targetCommand && c != nullptr) {
+		Encoders::getInstance()->channels.clear();
 		targetCommand->selection.computeSelection();
 		Array<ChannelType* >chans = targetCommand->selection.getControllableChannelsTypes();
 	

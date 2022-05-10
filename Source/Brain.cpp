@@ -86,6 +86,16 @@ void Brain::run() {
 }
 
 void Brain::brainLoop() {
+
+
+    if (pleaseClearProgrammer) {
+        pleaseClearProgrammer = false;
+        if (Programmer* p = getProgrammerById(1)) {
+            p->clearCurrent();
+        }
+    }
+
+
     now = Time::getMillisecondCounterHiRes();
     if (cuePoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
@@ -192,13 +202,6 @@ void Brain::brainLoop() {
 
     }
 
-
-    if (pleaseClearProgrammer) {
-        pleaseClearProgrammer = false;
-        if (Programmer* p = getProgrammerById(1)) {
-            p->clearCurrent();
-        }
-    }
     //double delta = Time::getMillisecondCounterHiRes() - now;
     //LOG(delta);
 

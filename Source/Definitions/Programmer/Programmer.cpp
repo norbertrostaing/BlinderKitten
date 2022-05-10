@@ -12,8 +12,8 @@
 pour enregistrer, il faut un objet recoder
 l'appui sur le bouton rec fait apparaitre le formulaire d'enregistrement dans l'inspecteur
 comme pour le moduleManager de chataigne : 		CommunityModuleManager::getInstance()->selectThis();
-il faudrait que le formulaire soit pré rempli genre 
-- programmer source => id du programmeur 
+il faudrait que le formulaire soit pré rempli genre
+- programmer source => id du programmeur
 - type de cible (group, preset, cuelist)
 - type d'écriture : remplacer, merge...
 - filtre de paramType pour les presets
@@ -38,7 +38,7 @@ Programmer::Programmer(var params) :
 	nameCanBeChangedByUser = false;
 	editorIsCollapsed = false;
 	itemDataType = "Programmer";
-	
+
 	id = addIntParameter("ID", "Id of this Programmer", 1, 1);
 	userName = addStringParameter("Name", "Name of this programmer", "New programmer");
 	updateName();
@@ -48,7 +48,7 @@ Programmer::Programmer(var params) :
 	editionMode->addOption("Timed", "timed");
 	editionMode->addOption("Blind", "blind");
 
-	releaseTime = addFloatParameter("Release time", "Fade time when release values",0,0);
+	releaseTime = addFloatParameter("Release time", "Fade time when release values", 0, 0);
 
 	goBtn = addTrigger("GO", "trigger this Programmer");
 	releaseBtn = addTrigger("Release", "release this programmer");
@@ -74,7 +74,7 @@ Programmer::Programmer(var params) :
 	cliParamAType->addOption("Mapper", "mapper");
 	cliParamAType->addOption("Virtual button", "virtualbutton");
 	cliParamAType->addOption("Virtual fader", "virtualfadercol");
-	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param",0,0);
+	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param", 0, 0);
 
 	cliParamBType = cliContainer.addEnumParameter("Param B type", "second object type");
 	cliParamBType->addOption("None", "");
@@ -124,7 +124,7 @@ void Programmer::triggerTriggered(Trigger* t) {
 		clearAll();
 	}
 	if (t == recBtn) {
-		DataTransferManager::getInstance()->sourceId ->setValue(id->getValue());
+		DataTransferManager::getInstance()->sourceId->setValue(id->getValue());
 		DataTransferManager::getInstance()->sourceType->setValue("Programmer");
 		DataTransferManager::getInstance()->selectThis();
 	}
@@ -197,12 +197,12 @@ void Programmer::render(double now) {
 			}
 			temp->TSInit = now;
 			if (mode == "timed") {
-				temp->TSStart = now + (temp->delay );
-				temp->TSEnd = temp->TSStart + (temp->fade );
+				temp->TSStart = now + (temp->delay);
+				temp->TSEnd = temp->TSStart + (temp->fade);
 				temp->isEnded = false;
 			}
 			else {
-				temp->TSStart = now ;
+				temp->TSStart = now;
 				temp->TSEnd = now;
 				temp->isEnded = true;
 			}
@@ -225,7 +225,7 @@ void Programmer::release(double now) {
 
 		temp->TSInit = now;
 		temp->TSStart = now;
-		temp->TSEnd = now +  fadeTime;
+		temp->TSEnd = now + fadeTime;
 
 		temp->endValue = -1;
 		temp->startValue = temp->value;
@@ -274,7 +274,7 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 		}
 	}
 	else {
-		float totTime = (cv->delay + cv->fade) ;
+		float totTime = (cv->delay + cv->fade);
 		if (totTime > 0) {
 			cv->currentPosition = (now - cv->TSInit) / (totTime);
 		}
@@ -311,7 +311,7 @@ void Programmer::updateName() {
 }
 
 
-void Programmer :: clearAll() {
+void Programmer::clearAll() {
 	release();
 	commands.clear();
 	commands.addItem();
@@ -320,8 +320,12 @@ void Programmer :: clearAll() {
 void Programmer::clearCurrent() {
 	const MessageManagerLock mmLock;
 
-	if (commands.items.size() > 0 && currentUserCommand != nullptr) {
-		commands.removeItem(currentUserCommand);
+	if (commands.items.size() == 1) {
+		commands.items[0]->values.clear();
+		commands.items[0]->selection.clear();
+	}
+	else if (commands.items.size() > 1 && currentUserCommand != nullptr) {
+		commands.removeItem(currentUserCommand, false, false);
 	}
 	if (commands.items.size() == 0) {
 		currentUserCommand = nullptr;
@@ -343,7 +347,7 @@ void Programmer::processUserInput(String s) {
 		String action = cliActionType->getValue();
 		if (s.containsOnly("1234567890")) {
 			if (userCanPressNumber) {
-				String val = currentUserTargetId -> getValue().toString();
+				String val = currentUserTargetId->getValue().toString();
 				val += s;
 				currentUserTargetId->setValue(val.getIntValue());
 			}
@@ -394,7 +398,7 @@ void Programmer::processUserInput(String s) {
 		}
 		else if (s == "edit") {
 			if (userCanPressAction) {
-				cliActionType->setValueWithData(s); 
+				cliActionType->setValueWithData(s);
 			}
 			else {
 				LOGERROR("not allowed");
@@ -408,9 +412,9 @@ void Programmer::processUserInput(String s) {
 				LOGERROR("not allowed");
 			}
 		}
-		
-	UserInputManager::getInstance() -> updateCommandLine();
-	return;
+
+		UserInputManager::getInstance()->updateCommandLine();
+		return;
 	}
 
 	if (s == "record" || s == "copy" || s == "edit" || s == "delete") {
@@ -498,7 +502,7 @@ String Programmer::getTextCommand() {
 	if (cliActionType->getValue() != "") {
 		txts = getCliAsTexts();
 	}
-	else if (currentUserCommand == nullptr) {return "";}
+	else if (currentUserCommand == nullptr) { return ""; }
 	else {
 		txts = currentUserCommand->getCommandAsTexts();
 	}
@@ -513,7 +517,7 @@ String Programmer::getTextCommand() {
 
 void Programmer::runCliCommand() {
 	getCliAsTexts();
-	if (!userCanPressGo) {LOGERROR("Invalid command"); return;}
+	if (!userCanPressGo) { LOGERROR("Invalid command"); return; }
 	String action = cliActionType->getValue();
 	String targetType = cliParamAType->getValue();
 	int targetId = cliParamAId->getValue();
@@ -537,7 +541,7 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");
 		DataTransferManager::getInstance()->execute();
 
-		
+
 	}
 	else if (action == "move") {
 		DataTransferManager::getInstance()->moveObject(targetType, targetId, (int)cliParamBId->getValue());
@@ -613,7 +617,7 @@ void Programmer::userCantPress() {
 void Programmer::resetCli() {
 	cliActionType->setValueWithData("");
 	cliParamAType->setValueWithData("");
-	cliParamBType ->setValueWithData("");
+	cliParamBType->setValueWithData("");
 	cliParamAId->setValue(0);
 	cliParamBId->setValue(0);
 }
@@ -629,5 +633,5 @@ void Programmer::checkCurrentUserCommand() {
 		else {
 			currentUserCommand = commands.addItem();
 		}
-	} 
+	}
 }
