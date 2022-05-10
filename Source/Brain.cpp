@@ -192,6 +192,13 @@ void Brain::brainLoop() {
 
     }
 
+
+    if (pleaseClearProgrammer) {
+        pleaseClearProgrammer = false;
+        if (Programmer* p = getProgrammerById(1)) {
+            p->clearCurrent();
+        }
+    }
     //double delta = Time::getMillisecondCounterHiRes() - now;
     //LOG(delta);
 

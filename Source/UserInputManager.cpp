@@ -134,10 +134,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 
 void UserInputManager::commandSelectionChanged(Command* c) {
 	targetCommand = getProgrammer()->currentUserCommand;
-	if (c == targetCommand) {
+	Encoders::getInstance()->channels.clear();
+	if (c == targetCommand && c != nullptr) {
 		targetCommand->selection.computeSelection();
 		Array<ChannelType* >chans = targetCommand->selection.getControllableChannelsTypes();
-		Encoders::getInstance()->channels.clear();
 	
 		int currentIndex = 0;
 

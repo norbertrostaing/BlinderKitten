@@ -71,6 +71,7 @@ public:
     void release(double now = 0);
     void go();
     void clearAll();
+    void clearCurrent();
 
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 

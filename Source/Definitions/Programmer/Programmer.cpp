@@ -317,6 +317,23 @@ void Programmer :: clearAll() {
 	commands.addItem();
 }
 
+void Programmer::clearCurrent() {
+	const MessageManagerLock mmLock;
+
+	if (commands.items.size() > 0 && currentUserCommand != nullptr) {
+		commands.removeItem(currentUserCommand);
+	}
+	if (commands.items.size() == 0) {
+		currentUserCommand = nullptr;
+	}
+	else {
+		currentUserCommand = commands.items.getLast();
+	}
+	Brain::getInstance()->pleaseUpdate(this);
+	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
+	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
+}
+
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
 	// LOG(s);
@@ -403,16 +420,7 @@ void Programmer::processUserInput(String s) {
 	checkCurrentUserCommand();
 	currentUserCommand->getCommandAsTexts();
 	if (s == "clear") {
-		if (commands.items.size() > 0 && currentUserCommand != nullptr) {
-			commands.removeItem(currentUserCommand);
-		}
-		if (commands.items.size() == 0) {
-			commands.addItem();
-		}
-		currentUserCommand = commands.items.getLast();
-		Brain::getInstance()->pleaseUpdate(this);
-		UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
-		UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
+		Brain::getInstance()->pleaseClearProgrammer = true;
 	}
 	else if (s == "+" || s == "-") {
 		if (currentUserCommand->userCanPressPlusOrMinus) {

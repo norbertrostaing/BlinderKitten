@@ -134,7 +134,7 @@ public:
     OwnedArray<RunningTask> runningTasks;
     void startTask(Task* t, double startTime);
 
-
+    bool pleaseClearProgrammer = false;
 
 
 };

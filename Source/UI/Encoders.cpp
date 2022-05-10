@@ -271,6 +271,9 @@ void Encoders::updateEncoders() {
 }
 
 void Encoders::updateContentWithCommand(Command* c) {
+    if (c == nullptr) {
+        return;
+    }
     for (int i = 0; i < c->values.items.size(); i++) {
         CommandValue* cv = c->values.items[i];
         if (cv->presetOrValue->getValue() == "value") {
