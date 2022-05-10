@@ -218,7 +218,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 void UserInputManager::updateCommandLine() {
 	String txt = getProgrammer()->getTextCommand();
 	Encoders::getInstance()->commandLine.setText(txt, juce::dontSendNotification);
-	Encoders::getInstance()->resized();
+	Encoders::getInstance()->repaint();
 }
 
 String UserInputManager::toUserText(String s) {

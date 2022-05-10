@@ -95,7 +95,6 @@ void Encoders::paint (juce::Graphics& g)
 
 void Encoders::resized()
 {
-
     float scale = 1;
     if (engine != nullptr && engine->encodersScale != nullptr) {
         scale = engine->encodersScale->getValue();
@@ -266,7 +265,7 @@ void Encoders::updateEncoders() {
         }
         labels[i]->repaint();
     }
-    resized();
+    repaint();
 
 }
 
