@@ -177,7 +177,7 @@ void Programmer::update(double now) {
 }
 
 void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
-	Brain::getInstance()->pleaseUpdate(this);
+	// Brain::getInstance()->pleaseUpdate(this);
 }
 
 void Programmer::render(double now) {
@@ -340,8 +340,7 @@ void Programmer::clearCurrent() {
 
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
-	// LOG(s);
-
+	const MessageManagerLock mmLock;
 	if (cliActionType->getValue() != "") {
 		getCliAsTexts();
 		String action = cliActionType->getValue();

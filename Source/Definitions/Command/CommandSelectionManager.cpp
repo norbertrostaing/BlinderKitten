@@ -21,6 +21,7 @@ void CommandSelectionManager::computeSelection() {
 }
 
 void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
+	ScopedLock lock(commputing);
 	computedSelectedSubFixtures.clear();
 	Brain* b = Brain::getInstance();
 	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();

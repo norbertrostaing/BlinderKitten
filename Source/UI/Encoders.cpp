@@ -263,9 +263,9 @@ void Encoders::updateEncoders() {
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
             encoders[i]->setValue(0, juce::dontSendNotification);
         }
-        labels[i]->repaint();
+        //labels[i]->repaint();
     }
-    repaint();
+    //repaint();
 
 }
 
