@@ -177,7 +177,7 @@ void Programmer::update(double now) {
 }
 
 void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
-	// Brain::getInstance()->pleaseUpdate(this);
+	Brain::getInstance()->pleaseUpdate(this);
 }
 
 void Programmer::render(double now) {
@@ -189,7 +189,6 @@ void Programmer::render(double now) {
 		for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
-				// ChannelValue* current = activeValues.getReference(it.getKey());
 				temp->startValue = it.getKey()->value;
 			}
 			else {
