@@ -1,0 +1,3173 @@
+{
+  "channelFamilies": null,
+  "fixtureType": null,
+  "fixture": null,
+  "group": null,
+  "preset": [
+    {
+      "parameters": [
+        {
+          "value": 1,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Red",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "1 - Red",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 2,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Vermillon",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "2 - Vermillon",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 3,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Orange",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "3 - Orange",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 4,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Amber",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "4 - Amber",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 5,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Yellow",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "5 - Yellow",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 6,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Lime",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "6 - Lime",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 7,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Chartreuse",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "7 - Chartreuse",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 8,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Leaf Green",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "8 - Leaf Green",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 11,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Green",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "11 - Green",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 12,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Malachite",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "12 - Malachite",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 13,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Emerald",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "13 - Emerald",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 14,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Turquoise",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "14 - Turquoise",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 15,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Cyan",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "15 - Cyan",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 16,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Cerulean",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "16 - Cerulean",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 17,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Azure",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "17 - Azure",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 18,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Cobalt",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "18 - Cobalt",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 21,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Blue",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "21 - Blue",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 22,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Hyacinth",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "22 - Hyacinth",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 23,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Violet",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "23 - Violet",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 24,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Purple",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "24 - Purple",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 25,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Magenta",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "25 - Magenta",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 26,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Crimson",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "26 - Crimson",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 27,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Pink",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "27 - Pink",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 28,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Scarlet",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "28 - Scarlet",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.25,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.75,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 31,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Cold white",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "31 - Cold white",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    },
+    {
+      "parameters": [
+        {
+          "value": 32,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "Warm white",
+          "controlAddress": "/name"
+        },
+        {
+          "value": "Same Channels type",
+          "controlAddress": "/type"
+        }
+      ],
+      "niceName": "32 - Warm white",
+      "editorIsCollapsed": true,
+      "containers": {
+        "subfixtures": {
+          "items": [
+            {
+              "niceName": "SubFixture Value",
+              "containers": {
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/red",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/green",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 1",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/blue",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.800000011920929,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 2",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/cyan",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value 3",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/magenta",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.0,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 4",
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/color/channelTypes/yellow",
+                          "controlAddress": "/channelType"
+                        },
+                        {
+                          "value": 0.2000000029802322,
+                          "controlAddress": "/value"
+                        }
+                      ],
+                      "niceName": "Value 5",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Preset"
+    }
+  ],
+  "command": null,
+  "cuelist": null,
+  "programmer": null,
+  "curvePreset": null,
+  "timingPreset": null,
+  "carousel": null,
+  "effect": null,
+  "virtualButton": null,
+  "virtualFaderCol": null
+}
