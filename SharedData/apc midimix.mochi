@@ -1,0 +1,2935 @@
+{
+  "interfaces": [
+    {
+      "parameters": [
+        {
+          "value": true,
+          "controlAddress": "/enabled"
+        },
+        {
+          "value": false,
+          "controlAddress": "/logIncoming"
+        },
+        {
+          "value": false,
+          "controlAddress": "/logOutgoing"
+        },
+        {
+          "value": [
+            "",
+            ""
+          ],
+          "controlAddress": "/device"
+        }
+      ],
+      "niceName": "APC MidiMix",
+      "containers": {
+        "mappings": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": true,
+                  "controlAddress": "/enabled"
+                },
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 16,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 24,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 28,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 46,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 50,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 54,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 58,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 1 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 17,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 21,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 25,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 29,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 47,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 51,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 55,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 59,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 2 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": "/fxMoveSize",
+                          "controlAddress": "/multiplicator"
+                        }
+                      ],
+                      "niceName": "Set Mult Value",
+                      "type": "Set Mult Value"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 22,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 26,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 30,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 52,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 56,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 60,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Rota ligne 3 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 10,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 13,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 16,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 19,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 22,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 9,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 12,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 15,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 21,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Note",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 24,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 19,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 23,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 27,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 31,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 49,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 57,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 61,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/page"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 62,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/outputRange"
+                }
+              ],
+              "niceName": "Fader col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "MIDI"
+    }
+  ],
+  "channelFamilies": null,
+  "fixtureType": null,
+  "fixture": null,
+  "group": null,
+  "preset": null,
+  "command": null,
+  "cuelist": null,
+  "programmer": null,
+  "curvePreset": null,
+  "timingPreset": null,
+  "carousel": null,
+  "mapper": null,
+  "multiplicators": null,
+  "effect": null,
+  "virtualButton": null,
+  "virtualFaderCol": null
+}
