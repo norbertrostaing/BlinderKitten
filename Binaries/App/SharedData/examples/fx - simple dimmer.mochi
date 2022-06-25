@@ -1,0 +1,304 @@
+{
+  "interfaces": null,
+  "channelFamilies": null,
+  "fixtureType": null,
+  "fixture": null,
+  "group": null,
+  "preset": null,
+  "command": null,
+  "cuelist": null,
+  "programmer": null,
+  "curvePreset": null,
+  "timingPreset": null,
+  "carousel": null,
+  "mapper": null,
+  "multiplicators": null,
+  "effect": [
+    {
+      "parameters": [
+        {
+          "value": 1,
+          "hexMode": false,
+          "controlAddress": "/id"
+        },
+        {
+          "value": "sin dimmer",
+          "controlAddress": "/name"
+        },
+        {
+          "value": false,
+          "controlAddress": "/isON"
+        },
+        {
+          "value": true,
+          "controlAddress": "/autoStart_Stop"
+        },
+        {
+          "value": 0.0,
+          "controlAddress": "/size"
+        },
+        {
+          "value": 30.0,
+          "controlAddress": "/speed"
+        }
+      ],
+      "niceName": "1 - sin dimmer",
+      "containers": {
+        "speedMultiplicators": {
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "sizeMultiplicators": {
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "curves": {
+          "items": [
+            {
+              "niceName": "EffectRow",
+              "containers": {
+                "curve": {
+                  "parameters": [
+                    {
+                      "value": "Drawed",
+                      "controlAddress": "/curveType"
+                    }
+                  ],
+                  "containers": {
+                    "curve": {
+                      "parameters": [
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/length"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/viewValueRange"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/range",
+                          "enabled": true
+                        }
+                      ],
+                      "containers": {
+                        "key": {
+                          "parameters": [
+                            {
+                              "value": 0.5,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Sine",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    1.003062844276428,
+                                    0.4750000238418579
+                                  ],
+                                  "controlAddress": "/frequencyAmplitude"
+                                }
+                              ]
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        "key1": {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 0.5,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Sine",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    1.0,
+                                    0.25
+                                  ],
+                                  "controlAddress": "/frequencyAmplitude"
+                                }
+                              ]
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      },
+                      "items": [
+                        {
+                          "parameters": [
+                            {
+                              "value": 0.5,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Sine",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    1.003062844276428,
+                                    0.4750000238418579
+                                  ],
+                                  "controlAddress": "/frequencyAmplitude"
+                                }
+                              ]
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 0.5,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Sine",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    1.0,
+                                    0.25
+                                  ],
+                                  "controlAddress": "/frequencyAmplitude"
+                                }
+                              ]
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      ],
+                      "viewOffset": [
+                        0,
+                        0
+                      ],
+                      "viewZoom": 1.0
+                    }
+                  }
+                },
+                "selections": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "Group",
+                          "controlAddress": "/targetType"
+                        },
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/id"
+                        },
+                        {
+                          "value": "Shuffle",
+                          "controlAddress": "/filter"
+                        },
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/seed"
+                        }
+                      ],
+                      "niceName": "Selection",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                },
+                "parameters": {
+                  "containers": {
+                    "param": {
+                      "parameters": [
+                        {
+                          "value": "/dimmer/channelTypes/intensity",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Param",
+                      "type": "BaseItem"
+                    }
+                  },
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "/dimmer/channelTypes/intensity",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Param",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Effect"
+    }
+  ],
+  "virtualButton": null,
+  "virtualFaderCol": null
+}

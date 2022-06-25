@@ -1,0 +1,428 @@
+{
+  "interfaces": null,
+  "channelFamilies": null,
+  "fixtureType": null,
+  "fixture": null,
+  "group": null,
+  "preset": null,
+  "command": null,
+  "cuelist": null,
+  "programmer": null,
+  "curvePreset": null,
+  "timingPreset": null,
+  "carousel": [
+    {
+      "parameters": [
+        {
+          "value": "fly out",
+          "controlAddress": "/name"
+        },
+        {
+          "value": false,
+          "controlAddress": "/isON"
+        },
+        {
+          "value": true,
+          "controlAddress": "/autoStart_Stop"
+        },
+        {
+          "value": 0.0,
+          "controlAddress": "/size"
+        },
+        {
+          "value": 18.30197525024414,
+          "controlAddress": "/speed"
+        },
+        {
+          "value": 7,
+          "hexMode": false,
+          "controlAddress": "/beatByCycles"
+        }
+      ],
+      "niceName": "1 - fly out",
+      "containers": {
+        "speedMultiplicators": {
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "sizeMultiplicators": {
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "rows": {
+          "items": [
+            {
+              "niceName": "CarouselRow",
+              "containers": {
+                "selections": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "Group",
+                          "controlAddress": "/targetType"
+                        },
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/id"
+                        },
+                        {
+                          "value": "Shuffle",
+                          "controlAddress": "/filter"
+                        },
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/seed"
+                        }
+                      ],
+                      "niceName": "Selection",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                },
+                "steps": {
+                  "items": [
+                    {
+                      "niceName": "CarouselStep",
+                      "containers": {
+                        "automation": {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/length"
+                            },
+                            {
+                              "value": [
+                                0.0,
+                                1.0
+                              ],
+                              "controlAddress": "/viewValueRange"
+                            },
+                            {
+                              "value": [
+                                0.0,
+                                1.0
+                              ],
+                              "controlAddress": "/range",
+                              "enabled": true
+                            }
+                          ],
+                          "containers": {
+                            "key": {
+                              "parameters": [
+                                {
+                                  "value": "Linear",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            },
+                            "key1": {
+                              "parameters": [
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/position"
+                                },
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/value"
+                                },
+                                {
+                                  "value": "Bezier",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key 1",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            }
+                          },
+                          "items": [
+                            {
+                              "parameters": [
+                                {
+                                  "value": "Linear",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            },
+                            {
+                              "parameters": [
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/position"
+                                },
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/value"
+                                },
+                                {
+                                  "value": "Bezier",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key 1",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            }
+                          ],
+                          "viewOffset": [
+                            0,
+                            0
+                          ],
+                          "viewZoom": 1.0
+                        },
+                        "commandValue": {
+                          "items": [
+                            {
+                              "parameters": [
+                                {
+                                  "value": "/dimmer/channelTypes/intensity",
+                                  "controlAddress": "/channelType"
+                                },
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/value"
+                                }
+                              ],
+                              "niceName": "Value",
+                              "type": "BaseItem"
+                            },
+                            {
+                              "parameters": [
+                                {
+                                  "value": "/position/channelTypes/tilt",
+                                  "controlAddress": "/channelType"
+                                },
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/value"
+                                }
+                              ],
+                              "niceName": "Value 1",
+                              "type": "BaseItem"
+                            }
+                          ],
+                          "viewOffset": [
+                            0,
+                            0
+                          ],
+                          "viewZoom": 1.0
+                        }
+                      },
+                      "type": "BaseItem"
+                    },
+                    {
+                      "parameters": [
+                        {
+                          "value": 0.5,
+                          "controlAddress": "/stepDuration"
+                        },
+                        {
+                          "value": 0.0,
+                          "controlAddress": "/fade"
+                        }
+                      ],
+                      "niceName": "CarouselStep 1",
+                      "containers": {
+                        "automation": {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/length"
+                            },
+                            {
+                              "value": [
+                                0.0,
+                                1.0
+                              ],
+                              "controlAddress": "/viewValueRange"
+                            },
+                            {
+                              "value": [
+                                0.0,
+                                1.0
+                              ],
+                              "controlAddress": "/range",
+                              "enabled": true
+                            }
+                          ],
+                          "containers": {
+                            "key": {
+                              "parameters": [
+                                {
+                                  "value": "Linear",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            },
+                            "key1": {
+                              "parameters": [
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/position"
+                                },
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/value"
+                                },
+                                {
+                                  "value": "Bezier",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key 1",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            }
+                          },
+                          "items": [
+                            {
+                              "parameters": [
+                                {
+                                  "value": "Linear",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            },
+                            {
+                              "parameters": [
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/position"
+                                },
+                                {
+                                  "value": 1.0,
+                                  "controlAddress": "/value"
+                                },
+                                {
+                                  "value": "Bezier",
+                                  "controlAddress": "/easingType"
+                                }
+                              ],
+                              "niceName": "Key 1",
+                              "containers": {
+                                "easing": {
+                                }
+                              },
+                              "type": "Key"
+                            }
+                          ],
+                          "viewOffset": [
+                            0,
+                            0
+                          ],
+                          "viewZoom": 1.0
+                        },
+                        "commandValue": {
+                          "items": [
+                            {
+                              "parameters": [
+                                {
+                                  "value": "/dimmer/channelTypes/intensity",
+                                  "controlAddress": "/channelType"
+                                },
+                                {
+                                  "value": 0.0,
+                                  "controlAddress": "/value"
+                                }
+                              ],
+                              "niceName": "Value",
+                              "type": "BaseItem"
+                            },
+                            {
+                              "parameters": [
+                                {
+                                  "value": "/position/channelTypes/tilt",
+                                  "controlAddress": "/channelType"
+                                },
+                                {
+                                  "value": 0.5,
+                                  "controlAddress": "/value"
+                                }
+                              ],
+                              "niceName": "Value 1",
+                              "type": "BaseItem"
+                            }
+                          ],
+                          "viewOffset": [
+                            0,
+                            0
+                          ],
+                          "viewZoom": 1.0
+                        }
+                      },
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "Carousel"
+    }
+  ],
+  "mapper": null,
+  "multiplicators": null,
+  "effect": null,
+  "virtualButton": null,
+  "virtualFaderCol": null
+}
