@@ -35,7 +35,7 @@ public:
     FixtureGridView();
     ~FixtureGridView() override;
 
-    int numberOfCells = 600;
+    int numberOfCells = 0;
     HashMap<int, TextButton*> hashMapButtons;
     int fixtIdMax = 0;
     void initArrays() override;
