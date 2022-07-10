@@ -45,6 +45,7 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    virtual void initArrays();
 
     int numberOfCells = 200;
     String targetType;

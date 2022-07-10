@@ -31,16 +31,10 @@ GridView::GridView():
     scroll(true),
     ScrollBar::Listener()
 {
+    initArrays();
     addMouseListener(this, true);
     addAndMakeVisible(scroll);
     scroll.addListener(this);
-    for (int i = 0; i < numberOfCells; i++) {
-        TextButton* b = new TextButton();
-        gridButtons.add(b);
-        b->addListener(this);
-        addAndMakeVisible(b);
-    }
-
     resized();
 
 
@@ -50,6 +44,15 @@ GridView::GridView():
 
 GridView::~GridView()
 {
+}
+
+void GridView::initArrays() {
+    for (int i = 0; i < numberOfCells; i++) {
+        TextButton* b = new TextButton();
+        gridButtons.add(b);
+        b->addListener(this);
+        addAndMakeVisible(b);
+    }
 }
 
 void GridView::paint (juce::Graphics& g)

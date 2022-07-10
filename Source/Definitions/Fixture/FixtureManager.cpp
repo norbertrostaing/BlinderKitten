@@ -1,5 +1,6 @@
 #include "Fixture.h"
 #include "FixtureManager.h"
+#include "UI/GridView/FixtureGridView.h"
 
 juce_ImplementSingleton(FixtureManager);
 
@@ -23,11 +24,15 @@ FixtureManager::~FixtureManager()
 void FixtureManager::addItemInternal(Fixture* o, var data)
 {
     reorderItems();
+    FixtureGridView::getInstance()->updateCells();
+
 }
 
 void FixtureManager::removeItemInternal(Fixture* o)
 {
     // o->removeObjectListener(this);
+    FixtureGridView::getInstance()->updateCells();
+
 }
 
 

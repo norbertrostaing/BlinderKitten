@@ -21,7 +21,6 @@ public:
     FixtureGridViewUI(const String& contentName);
     ~FixtureGridViewUI();
 
-    int numberOfCells = 5000;
     static FixtureGridViewUI* create(const String& name) { return new FixtureGridViewUI(name); }
 
 
@@ -36,7 +35,13 @@ public:
     FixtureGridView();
     ~FixtureGridView() override;
 
+    int numberOfCells = 600;
+    HashMap<int, TextButton*> hashMapButtons;
+    int fixtIdMax = 0;
+    void initArrays() override;
+    void resized() override;
     void updateCells() override;
+    void buttonClicked(juce::Button* button) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FixtureGridView)
