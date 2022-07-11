@@ -475,6 +475,7 @@ void DataTransferManager::execute() {
 
 
 void DataTransferManager::editObject(String type, int id) {
+    const MessageManagerLock mmLock;
     if (type == "fixture") {
         Fixture* f = Brain::getInstance()->getFixtureById(id);
         //if (f == nullptr) { f = new Fixture(); f->id->setValue(id); }
