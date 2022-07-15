@@ -10,19 +10,21 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "FixturePatchCorrection.h"
 
-class FixturePatch:
+class FixturePatchCorrection:
     public BaseItem
 {
     public:
-    FixturePatch(var params = var());
-    ~FixturePatch();
+    FixturePatchCorrection(var params = var());
+    ~FixturePatchCorrection();
 
-    String objectType;
     var objectData;
+    String objectType;
 
-    TargetParameter* targetInterface;
-    IntParameter* address;
-    BaseManager<FixturePatchCorrection> corrections;
+    TargetParameter* channelType;
+    BoolParameter* invertChannel;
+    FloatParameter* offsetValue;
+    Automation curve;
+
+
 };

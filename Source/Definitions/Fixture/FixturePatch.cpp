@@ -22,6 +22,11 @@ FixturePatch::FixturePatch(var params) :
     targetInterface->maxDefaultSearchLevel = 0;
 
     address = addIntParameter("Address", "Address of this Fixture, 0 means unpatched", 0, 0, 512);
+
+	corrections.selectItemWhenCreated = false;
+	addChildControllableContainer(&patchs);
+
+
 	/*curve->editorIsCollapsed = true;
 	curve->setNiceName("Response curve");
 	curve->allowKeysOutside = false;
