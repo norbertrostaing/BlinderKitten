@@ -902,3 +902,16 @@ void Brain::updateAllChannels() {
         }
     }
 }
+
+void Brain::goAllLoadedCuelists() {
+    for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
+        Cuelist* c = it.getValue();
+        Cue* cueB = dynamic_cast<Cue*>(c->nextCue->targetContainer.get());
+        if (cueB != nullptr) {
+            c->go();
+        }
+        else if ((int)c->nextCueId->getValue() > 0) {
+            c->go();
+        }
+    }
+}

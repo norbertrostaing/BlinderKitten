@@ -17,7 +17,9 @@ CuelistAction::CuelistAction(var params) :
 {
     actionType = (ActionType)(int)params.getProperty("actionType", CL_GO);
 
-    cuelistId = addIntParameter("Cuelist ID", "Id oth the target cuelist",0,0);
+    if (actionType != CL_GOALLLOADED) {
+        cuelistId = addIntParameter("Cuelist ID", "Id oth the target cuelist", 0, 0);
+    }
 }
 
 CuelistAction::~CuelistAction()
@@ -31,6 +33,10 @@ void CuelistAction::triggerInternal()
 }
 
 void CuelistAction::setValueInternal(var value) {
+    if (actionType == CL_GOALLLOADED) {
+        Brain::getInstance()->goAllLoadedCuelists();
+        return;
+    }
     Cuelist* target = Brain::getInstance()->getCuelistById(cuelistId->getValue());
     if (target == nullptr) return;
 

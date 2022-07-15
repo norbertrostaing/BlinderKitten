@@ -136,5 +136,5 @@ public:
 
     bool pleaseClearProgrammer = false;
 
-
+    void goAllLoadedCuelists();
 };
