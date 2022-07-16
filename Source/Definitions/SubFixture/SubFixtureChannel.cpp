@@ -41,7 +41,6 @@ void SubFixtureChannel::writeValue(float v) {
 	v= jmin((float)1, v);
 	v= jmax((float)0, v);
 
-	value = v;
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 
@@ -50,18 +49,36 @@ void SubFixtureChannel::writeValue(float v) {
 		String chanRes = parentFixtureTypeChannel->resolution->getValue();
 		Array<FixturePatch*> patchs = parentFixture->patchs.getItemsWithType<FixturePatch>();
 		for (int i = 0; i < patchs.size(); i++) {
+			value = v;
+
 			DMXInterface* out = dynamic_cast<DMXInterface*>(patchs.getReference(i)->targetInterface->targetContainer.get());
 			if (out != nullptr) {
-				int address = patchs.getReference(i)->address->getValue();
+				FixturePatch* patch = patchs.getReference(i);
+				int address = patch->address->getValue();
+
+				for (int i = 0; i < patch->corrections.items.size(); i++) {
+					FixturePatchCorrection* c = patch->corrections.items[i];
+					if (c->isOn && (int)c->subFixtureId->getValue() == subFixtureId && dynamic_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
+						if (c->invertChannel->getValue()) {
+							value = 1 - value;
+						}
+						value = value + (float)c->offsetValue->getValue();
+						value = jmin((float)1, value);
+						value = jmax((float)0, value);
+						value = c->curve.getValueAtPosition(value);
+					}
+				}
+
+
 				if (address > 0) {
 					address += (deltaAdress);
 					if (chanRes == "8bits") {
-						int val = floor(256.0 * v);
+						int val = floor(256.0 * value);
 						val = val > 255 ? 255 : val;
 						out->sendDMXValue(address, val);
 					}
 					else if (chanRes == "16bits") {
-						int val = floor(65535.0 * v);
+						int val = floor(65535.0 * value);
 						val = value > 65535 ? 65535 : val;
 						int valueA = val / 256;
 						int valueB = val % 256;

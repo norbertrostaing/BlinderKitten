@@ -22,9 +22,13 @@ class FixturePatchCorrection:
     String objectType;
 
     TargetParameter* channelType;
+    IntParameter* subFixtureId;
     BoolParameter* invertChannel;
     FloatParameter* offsetValue;
     Automation curve;
 
+    bool isOn = false;
+
+    void onContainerParameterChangedInternal(Parameter* p);
 
 };

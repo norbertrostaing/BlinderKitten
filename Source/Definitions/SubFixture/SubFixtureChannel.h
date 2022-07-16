@@ -43,6 +43,7 @@ public:
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
     Fixture* parentFixture = nullptr;
     SubFixture* parentSubFixture = nullptr;
+    int subFixtureId = 0;
 
     void writeValue(float v);
 

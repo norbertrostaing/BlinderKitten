@@ -395,6 +395,10 @@
           <FILE id="zH1Lqd" name="FixturePatch.cpp" compile="1" resource="0"
                 file="Source/Definitions/Fixture/FixturePatch.cpp"/>
           <FILE id="ZheeuP" name="FixturePatch.h" compile="0" resource="0" file="Source/Definitions/Fixture/FixturePatch.h"/>
+          <FILE id="aHamSm" name="FixturePatchCorrection.cpp" compile="1" resource="0"
+                file="Source/Definitions/Fixture/FixturePatchCorrection.cpp"/>
+          <FILE id="ewWOys" name="FixturePatchCorrection.h" compile="0" resource="0"
+                file="Source/Definitions/Fixture/FixturePatchCorrection.h"/>
         </GROUP>
         <GROUP id="{E085C61F-8028-E2EB-ADB4-64DE163A396C}" name="FixtureType">
           <FILE id="N9RdkS" name="FixtureType.cpp" compile="1" resource="0" file="Source/Definitions/FixtureType/FixtureType.cpp"/>

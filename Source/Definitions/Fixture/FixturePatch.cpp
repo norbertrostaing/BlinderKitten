@@ -15,6 +15,7 @@
 FixturePatch::FixturePatch(var params) :
 	BaseItem(params.getProperty("name", "Patch")),
 	objectType(params.getProperty("type", "FixturePatch").toString()),
+	corrections("Corrections"),
 	objectData(params)
 {
     targetInterface = addTargetParameter("Interface", "output interface", InterfaceManager::getInstance());
@@ -24,7 +25,7 @@ FixturePatch::FixturePatch(var params) :
     address = addIntParameter("Address", "Address of this Fixture, 0 means unpatched", 0, 0, 512);
 
 	corrections.selectItemWhenCreated = false;
-	addChildControllableContainer(&patchs);
+	addChildControllableContainer(&corrections);
 
 
 	/*curve->editorIsCollapsed = true;

@@ -156,6 +156,7 @@ void Fixture::checkChildrenSubFixtures() {
 				chan -> parentFixtureTypeChannel = c;
 				chan -> parentFixture = this;
 				chan -> parentSubFixture = subFixt;
+				chan -> subFixtureId = subId;
 				
 				if (param->reactGM->getValue()) {
 					chan->reactToGrandMaster = true;
