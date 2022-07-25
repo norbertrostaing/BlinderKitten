@@ -41,6 +41,7 @@ public:
 
     Trigger* loadBtn;
     Trigger* loadAndGoBtn;
+    Trigger* loadRandomBtn;
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
@@ -115,6 +116,7 @@ public:
 
     void showLoad();
     void showLoadAndGo();
+    void loadRandom();
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

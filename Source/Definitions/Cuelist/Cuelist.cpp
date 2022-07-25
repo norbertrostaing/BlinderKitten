@@ -60,6 +60,7 @@ Cuelist::Cuelist(var params) :
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
 	loadBtn = addTrigger("Load", "Choose next cue");
 	loadAndGoBtn = addTrigger("Load and go", "Choose a cue");
+	loadRandomBtn = addTrigger("Load Random", "Load a random cue");
 	// flashOnBtn = addTrigger("Flash ON", "release flash");
 	// flashOffBtn = addTrigger("flash Off", "press flash");
 	// swopOnBtn = addTrigger("Swop ON", "press swop");
@@ -196,10 +197,14 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	else if (t == loadAndGoBtn) {
 		showLoadAndGo();
 	}
+	else if (t == loadRandomBtn) {
+		loadRandom();
+	}
 	else {}
 }
 
 void Cuelist::go(Cue* c) {
+	const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();;
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
@@ -686,5 +691,22 @@ void Cuelist::renumberCues() {
 	temp.addArray(cues.items);
 	for (int i = 0; i < temp.size(); i++) {
 		temp[i]->id->setValue(i+1);
+	}
+}
+
+void Cuelist::loadRandom() {
+	Array<Cue*> childCues = cues.getItemsWithType<Cue>();
+	Array<Cue*> allowedCues;
+
+	for (int i = 0; i < childCues.size(); i++) {
+		if (childCues.getReference(i) != cueA && childCues[i]->canBeRandomlyCalled->getValue()) {
+			allowedCues.add(childCues.getReference(i));
+		}
+	}
+
+	int s = allowedCues.size();
+	if (s > 0) {
+		int r = rand() % s;
+		nextCue->setValueFromTarget(allowedCues[r]);
 	}
 }

@@ -134,7 +134,6 @@ void UserInputManager::processMessage(const OSCMessage& m)
 
 void UserInputManager::commandSelectionChanged(Command* c) {
 	targetCommand = getProgrammer()->currentUserCommand;
-	Encoders::getInstance()->channels.clear();
 	if (c == targetCommand && c != nullptr) {
 		Encoders::getInstance()->channels.clear();
 		targetCommand->selection.computeSelection();

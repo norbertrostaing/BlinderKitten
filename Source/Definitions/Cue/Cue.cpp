@@ -124,7 +124,7 @@ void Cue::go() {
 
 void Cue::update(double now) {
 	if (TSAutoFollowEnd != 0 && now < TSAutoFollowEnd) {
-		if (TSAutoFollowEnd - TSAutoFollowStart > 200) {
+		if (TSAutoFollowEnd - TSAutoFollowStart > 10) {
 			float remaining = TSAutoFollowEnd - now;
 			autoFollowCountDown->setValue(remaining);
 		}
