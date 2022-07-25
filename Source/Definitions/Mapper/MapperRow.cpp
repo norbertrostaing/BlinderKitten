@@ -62,11 +62,11 @@ void MapperRow::computeData() {
     Mapper* parentMapper = dynamic_cast<Mapper*>(parentContainer->parentContainer.get());
     if (parentMapper == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
-        double deltaPos = 0;
+        //double deltaPos = 0;
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
 
-    float totalDuration = 0;
+    // float totalDuration = 0;
     float currentPosition = 0;
 
     for (int i = 0; i < paramContainer.items.size(); i++) {
@@ -90,12 +90,12 @@ void MapperRow::computeData() {
     }
 
     float nLimit = selection.computedSelectedSubFixtures.size();
-    int sizeWing = nLimit;
+    //int sizeWing = nLimit;
 
     Array<SubFixtureChannel*> targetChannels;
 
     for (int i = 1; i <= paramContainer.items.size(); i++) {
-        MapperStep* currentStep = paramContainer.items[i%paramContainer.items.size()];
+        //MapperStep* currentStep = paramContainer.items[i%paramContainer.items.size()];
         MapperStep* previousStep = paramContainer.items[i-1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();

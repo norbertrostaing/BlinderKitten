@@ -121,7 +121,7 @@ void InputPanel::resized()
     int lg = 120;
     int p2 = 2*lg + margin;
     int p3 = p2 + (4 * sm) + margin;
-    int mid = (p3 + lg)/2;
+    // int mid = (p3 + lg)/2;
 
     int tot = p3+lg;
     int firstLineMargin = (tot-(3*lg))/2;

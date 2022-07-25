@@ -279,9 +279,9 @@ void VirtualFaderColGrid::fillCells() {
                 for (int n = 0; n < vf->belowButtons.items.size() && n < nBelow; n++) {
                     VirtualFaderButton* vb = vf->belowButtons.items[n];
                     buttonToVFB.set(belowButtons[c]->getRawDataPointer()[n], vb);
-                    String text = vb->getBtnText(targType);
-                    if (text != "") {
-                        belowButtons[c]->getRawDataPointer()[n]->setButtonText(text);
+                    String btnText = vb->getBtnText(targType);
+                    if (btnText != "") {
+                        belowButtons[c]->getRawDataPointer()[n]->setButtonText(btnText);
                         belowButtons[c]->getRawDataPointer()[n]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
                     }
                 }
@@ -354,7 +354,7 @@ void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
     int col = buttonColumnIndex.getReference(t);
     const MessageManagerLock mmLock;
     //// UserInputManager::getInstance()->gridViewCellPressed("VirtualFaderCol", index);
-    Programmer* p = UserInputManager::getInstance()->getProgrammer();
+    //Programmer* p = UserInputManager::getInstance()->getProgrammer();
     VirtualFaderCol* vfc = columnToVFC.getReference(col);
     if (vfc != nullptr) {
         VirtualFaderButton* vb = buttonToVFB.getReference(t);
@@ -459,8 +459,8 @@ void VirtualFaderColGrid::updateSlidersValues()
         faders[i]->setValue(v, juce::dontSendNotification);
 
         for (int r = 0; r < nRotaries; r++) {
-            VirtualFaderSlider* s = sliderToVFS.getReference(rotaries[i]->getRawDataPointer()[r]);
-            float v = 0;
+            s = sliderToVFS.getReference(rotaries[i]->getRawDataPointer()[r]);
+            v = 0;
             if (s != nullptr) {
                 v = s->getTargetValue(colTargetType, colTargetId);
             }

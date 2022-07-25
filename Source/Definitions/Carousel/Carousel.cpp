@@ -196,7 +196,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		offset = fmodf(offset, 1);
 		
 		CarouselStep* toApply = nullptr;
-		float stepSize = 0;
+		
 		for (int stepId = 0; stepId < r->paramContainer.items.size(); stepId++) {
 			CarouselStep* step = r->paramContainer.items[stepId];
 			if (step->relativeStartPosition <= offset) {

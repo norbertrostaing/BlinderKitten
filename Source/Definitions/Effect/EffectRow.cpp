@@ -85,7 +85,7 @@ void EffectRow::computeData() {
     Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
     if (parentEffect == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
-        double deltaPos = 0;
+        //double deltaPos = 0;
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
     for (int i = 0; i < paramContainer.items.size(); i++) {
@@ -131,7 +131,7 @@ void EffectRow::onControllableFeedbackUpdate( ControllableContainer* cc, Control
 }
 
 void EffectRow::updateDisplay() {
-    bool curveIsPreset = curvePresetOrValue->getValue() == "preset";
+    //bool curveIsPreset = curvePresetOrValue->getValue() == "preset";
     String mode = curvePresetOrValue->getValue().toString();
     presetId->hideInEditor = !(mode == "preset");
     curve.hideInEditor = !(mode == "drawed");

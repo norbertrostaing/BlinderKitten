@@ -56,8 +56,8 @@ void SubFixtureChannel::writeValue(float v) {
 				FixturePatch* patch = patchs.getReference(i);
 				int address = patch->address->getValue();
 
-				for (int i = 0; i < patch->corrections.items.size(); i++) {
-					FixturePatchCorrection* c = patch->corrections.items[i];
+				for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
+					FixturePatchCorrection* c = patch->corrections.items[iCorr];
 					if (c->isOn && (int)c->subFixtureId->getValue() == subFixtureId && dynamic_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
 						if (c->invertChannel->getValue()) {
 							value = 1 - value;

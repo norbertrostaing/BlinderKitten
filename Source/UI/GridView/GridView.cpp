@@ -83,7 +83,7 @@ void GridView::resized()
     int x = 0;
     int y = -1;
     int maxY = 0;
-    int currentX = 0;
+    //int currentX = 0;
     int lastValidId = 0;
     for (int i = 0; i < numberOfCells; i++) {
         if (completeGridMode) {

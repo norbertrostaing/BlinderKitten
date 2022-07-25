@@ -378,7 +378,7 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 			for (auto it = flashingCue->computedValues.begin(); it != flashingCue->computedValues.end(); it.next()) {
 				ChannelValue* temp = it.getValue();
 				if (flashingValues.contains(it.getKey())) {
-					ChannelValue* current = flashingValues.getReference(it.getKey());
+					// ChannelValue* current = flashingValues.getReference(it.getKey());
 					temp->startValue = it.getKey()->value;
 				}
 				else {

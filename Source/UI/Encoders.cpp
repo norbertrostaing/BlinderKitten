@@ -109,8 +109,8 @@ void Encoders::resized()
     // components that your component contains..
     int windowH = getHeight();
     int windowW = getWidth();
-    int x = 0;
-    int y = 0;
+    //int x = 0;
+    //int y = 0;
     int btnWidth = 30;
     int btnValueWidth = 40;
    
@@ -138,7 +138,7 @@ void Encoders::resized()
         float w = 60;
         float h = 60;
         for (int i = 0; i < 10; i++) {
-            int encoderId = i + encodersOffset;
+            // int encoderId = i + encodersOffset;
             encoders[i]->setBounds(i*w, 60, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
             labels[i]->setBounds(i*w, 80, 60, 20);

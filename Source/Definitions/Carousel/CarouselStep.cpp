@@ -65,10 +65,6 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 
-	Automation* fadeCurve;
-	Automation* fadeRepartCurve;
-	Automation* delayRepartCurve;
-
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
 		bool symValues = cv->symmetry->getValue();

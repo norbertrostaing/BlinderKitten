@@ -75,7 +75,7 @@ void CarouselRow::computeData() {
     Carousel* parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
     if (parentCarousel == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
-        double deltaPos = 0;
+        //double deltaPos = 0;
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
 
@@ -111,7 +111,7 @@ void CarouselRow::computeData() {
     Array<SubFixtureChannel*> targetChannels;
 
     for (int i = 1; i <= paramContainer.items.size(); i++) {
-        CarouselStep* currentStep = paramContainer.items[i%paramContainer.items.size()];
+        //CarouselStep* currentStep = paramContainer.items[i%paramContainer.items.size()];
         CarouselStep* previousStep = paramContainer.items[i-1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();

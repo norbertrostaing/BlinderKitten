@@ -193,8 +193,8 @@ Array<SubFixture*> Fixture::getAllSubFixtures() {
 	return ret;
 }
 
-SubFixture* Fixture::getSubFixture(int id) {
-	return subFixtures.getReference(id);
+SubFixture* Fixture::getSubFixture(int subId) {
+	return subFixtures.getReference(subId);
 }
 
 
