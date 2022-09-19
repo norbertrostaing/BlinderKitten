@@ -124,24 +124,24 @@ void Encoders::resized()
     bigMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
 
     if (windowH > windowW) { // portrait
-        float w = 120;
-        float h = 60;
+        float w = 57;
+        float h = 57;
         for (int i = 0; i < 10; i++) {
             encoders[i]->setBounds(0, i*h, w, h);
-            encoders[i]->setTextBoxStyle(Slider::TextBoxRight, false, 44, 20);
-            labels[i]->setBounds(60, i * h, 60, 20);
+            encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
+            labels[i]->setBounds(0, i * h, w, 20);
             labels[i]->setJustificationType(1);
 
         }
     }
     else {
-        float w = 60;
-        float h = 60;
+        float w = 57;
+        float h = 57;
         for (int i = 0; i < 10; i++) {
             // int encoderId = i + encodersOffset;
             encoders[i]->setBounds(i*w, 60, w, h);
             encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
-            labels[i]->setBounds(i*w, 80, 60, 20);
+            labels[i]->setBounds(i*w, 80, w, 20);
             labels[i]->setJustificationType(36);
         }
     }
