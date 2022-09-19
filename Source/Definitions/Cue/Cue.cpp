@@ -26,7 +26,11 @@ Cue::Cue(var params) :
 	itemDataType = "Cue";
 	
 	id = addFloatParameter("ID", "Id of this cue", 0, 0);
-	
+
+	goText = addStringParameter("Go text", "Fill here the action on stage needed for the cue", "");
+	cueText = addStringParameter("Cue text", "What's happening during this cue ?", "");
+	cueText->multiline = true;
+
 	autoFollow = addEnumParameter("Auto Follow", "Does the cuelist stops the execution of the cuelist or auto triggers the next one");
 	autoFollow->addOption("Wait for go", "none");
 	autoFollow->addOption("End of transitions", "auto");

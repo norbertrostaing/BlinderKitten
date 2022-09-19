@@ -38,6 +38,11 @@ Cuelist::Cuelist(var params) :
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	updateName();
 
+	currentCueName = addStringParameter("Current Cue", "Current Cue name", "", false);
+	currentCueText = addStringParameter("Current Cue Text", "What's happening during this cue ?", "", false);
+	currentCueText->multiline = true;
+	nextCueGo = addStringParameter("Next Go", "action needed to go to next cue", "", false);
+
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
 	endAction->addOption("Off", "off");
 	endAction->addOption("Loop", "loop");
@@ -230,6 +235,7 @@ void Cuelist::go(Cue* c) {
 	cueB = nullptr;
 	nextCue->resetValue();
 	nextCueId->resetValue();
+	fillTexts();
 	if (c != nullptr) {
 		isCuelistOn->setValue(true);
 		wannaOff = false;
@@ -513,6 +519,7 @@ void Cuelist::autoLoadCueB() {
 			}
 		}
 	}
+	fillTexts();
 }
 
 float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flashvalues) {
@@ -653,6 +660,7 @@ void Cuelist::kill(bool forceRefreshChannels) {
 	cueA = nullptr;
 	cueB = nullptr;
 	isCuelistOn->setValue(false);
+	fillTexts();
 }
 
 void Cuelist::setHTPLevel(float level) {
@@ -708,5 +716,50 @@ void Cuelist::loadRandom() {
 	if (s > 0) {
 		int r = rand() % s;
 		nextCue->setValueFromTarget(allowedCues[r]);
+		fillTexts();
 	}
+}
+
+void Cuelist::fillTexts() {
+	if (cueA != nullptr) {
+		currentCueName->setValue(cueA->niceName);
+		currentCueText->setValue(cueA->cueText->getValue());
+	}
+	else {
+		currentCueName->setValue("");
+		currentCueText->setValue("");
+	}
+	Cue* n = getNextCue();
+	if (n) {
+		nextCueGo->setValue(n->goText->getValue());
+	}
+	else {
+		nextCueGo->setValue("");
+	}
+
+}
+
+Cue* Cuelist::getNextCue() {
+	bool valid = false;
+	if (cueA == nullptr) {
+		if (cues.getItemsWithType<Cue>().size() > 0) {
+			return cues.getItemsWithType<Cue>()[0];
+		}
+	}
+	else {
+		Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
+		for (int i = 1; i < currentCues.size() && !valid; i++) {
+			if (currentCues[i - 1] == cueA) {
+				return currentCues[i];
+			}
+		}
+		String end = endAction->getValue();
+		if (end == "loop") {
+			return currentCues[0];
+		}
+		else {
+			return nullptr;
+		}
+	}
+
 }

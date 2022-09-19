@@ -30,6 +30,10 @@ public:
     StringParameter* userName;
     void updateName();
 
+    StringParameter* currentCueName;
+    StringParameter* currentCueText;
+    StringParameter* nextCueGo;
+
     Trigger* goBtn;
     Trigger* goRandomBtn;
     Trigger* flashOnBtn;
@@ -117,6 +121,9 @@ public:
     void showLoad();
     void showLoadAndGo();
     void loadRandom();
+
+    void fillTexts();
+    Cue* getNextCue();
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

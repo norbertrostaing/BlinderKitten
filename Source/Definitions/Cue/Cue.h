@@ -27,6 +27,9 @@ public:
     BaseManager<Task> tasks;
     FloatParameter* id;
 
+    StringParameter* cueText;
+    StringParameter* goText;
+
     EnumParameter* autoFollow = nullptr;
     FloatParameter* autoFollowTiming;
     FloatParameter* autoFollowCountDown;
