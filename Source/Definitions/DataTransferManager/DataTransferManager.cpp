@@ -98,9 +98,9 @@ DataTransferManager::DataTransferManager() :
     presetCopyMode->addOption("Replace", "replace");
 
     cuelistCopyMode = addEnumParameter("Cuelist merge mode", "Cuelist record mode");
-    cuelistCopyMode->addOption("Add new cue", "add");
     cuelistCopyMode->addOption("Update current cue", "update");
     cuelistCopyMode->addOption("Replace current cue", "replace");
+    cuelistCopyMode->addOption("Add new cue", "add");
 
     go = addTrigger("Transfer Data", "Run the data transfer");
     updateDisplay();
@@ -246,7 +246,7 @@ void DataTransferManager::execute() {
                 targetCue = target->cueA;
                 if (targetCue == nullptr) {
                     targetCue = target->cues.items[0];
-                    if (targetCue == nullptr){
+                    if (targetCue == nullptr) {
                         targetCue = target->cues.addItem();
                         targetCue->commands.clear();
                     }
