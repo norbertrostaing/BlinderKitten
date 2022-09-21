@@ -35,6 +35,7 @@ public:
     StringParameter* nextCueGo;
 
     Trigger* goBtn;
+    Trigger* goBackBtn;
     Trigger* goRandomBtn;
     Trigger* flashOnBtn;
     Trigger* flashOffBtn;
@@ -91,6 +92,7 @@ public:
 
     void go(Cue* c);
     void go();
+    void goBack();
     void goRandom();
     void flash(bool on, bool timing, bool swop = false);
     bool isFlashing;

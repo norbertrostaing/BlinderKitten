@@ -60,6 +60,7 @@ Cuelist::Cuelist(var params) :
 	autoStop = addBoolParameter("Auto stop", "Stops the cuelist if HTP level is set to 0", false);
 
 	goBtn = addTrigger("GO", "Trigger next cue");
+	goBackBtn = addTrigger("GO back", "Trigger previous cue");
 	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
@@ -171,6 +172,9 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 void Cuelist::triggerTriggered(Trigger* t) {
 	if (t == goBtn) {
 		go();
+	}
+	else if (t == goBackBtn) {
+		goBack();
 	}
 	else if (t == goRandomBtn) {
 		goRandom();
@@ -363,6 +367,19 @@ void Cuelist::go() {
 		autoLoadCueB();
 	}
 	go(cueB);
+}
+
+void Cuelist::goBack() {
+	if (cueA == nullptr) {
+		return;
+	}
+	Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
+	for (int i = 0; i < currentCues.size()-1; i++) {
+		if (currentCues[i + 1] == cueA) {
+			go(currentCues[i]);
+			return;
+		}
+	}
 }
 
 void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
