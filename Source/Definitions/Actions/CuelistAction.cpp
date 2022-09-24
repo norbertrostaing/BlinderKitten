@@ -50,6 +50,12 @@ void CuelistAction::setValueInternal(var value) {
         }
         break;
 
+    case CL_GOBACK:
+        if (val > 0) {
+            target->goBack();
+        }
+        break;
+
     case CL_GORANDOM:
         if (val > 0) {
             target->go();

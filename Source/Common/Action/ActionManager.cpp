@@ -42,6 +42,7 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go All Loaded", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOALLLOADED));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go back", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOBACK));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go random", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GORANDOM));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP));
