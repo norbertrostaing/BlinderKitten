@@ -150,7 +150,7 @@ void Cue::endTransition() {
 			double now = Brain::getInstance()->now;
 			TSAutoFollowStart = now;
 			float delay = autoFollowTiming->getValue();
-			TSAutoFollowEnd = now + delay;
+			TSAutoFollowEnd = now + (delay*1000);
 			Brain::getInstance()->pleaseUpdate(this);
 		}
 	}

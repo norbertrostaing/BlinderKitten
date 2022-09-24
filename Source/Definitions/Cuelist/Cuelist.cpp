@@ -25,6 +25,7 @@ Cuelist::Cuelist(var params) :
 	BaseItem(params.getProperty("name", "Cuelist")),
 	objectType(params.getProperty("type", "Cuelist").toString()),
 	objectData(params),
+	conductorInfos("Conductor infos"),
 	offFadeCurve(),
 	cues()
 {
@@ -38,10 +39,13 @@ Cuelist::Cuelist(var params) :
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	updateName();
 
-	currentCueName = addStringParameter("Current Cue", "Current Cue name", "", false);
-	currentCueText = addStringParameter("Current Cue Text", "What's happening during this cue ?", "", false);
+
+	currentCueName = conductorInfos.addStringParameter("Current cue", "Current Cue name", "", false);
+	currentCueText = conductorInfos.addStringParameter("Current cue text", "What's happening during this cue ?", "", false);
 	currentCueText->multiline = true;
-	nextCueGo = addStringParameter("Next Go", "action needed to go to next cue", "", false);
+	nextCueGo = conductorInfos.addStringParameter("Next go", "action needed to go to next cue", "", false);
+	nextCueName = conductorInfos.addStringParameter("Next Cue", "Next cue name", "", false);
+	addChildControllableContainer(&conductorInfos);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
 	endAction->addOption("Off", "off");
@@ -284,7 +288,8 @@ void Cuelist::go(Cue* c) {
 				ChannelValue * current = activeValues.getReference(it.getKey());
 				if (it.getKey()->isHTP) {
 					if (current != nullptr) {
-						temp->startValue = current->endValue;
+						double fader = HTPLevel->getValue();
+						temp->startValue = current->endValue*fader;
 					}
 					else {
 						temp->startValue = 0;
@@ -749,9 +754,11 @@ void Cuelist::fillTexts() {
 	Cue* n = getNextCue();
 	if (n) {
 		nextCueGo->setValue(n->goText->getValue());
+		nextCueName->setValue(n->niceName);
 	}
 	else {
 		nextCueGo->setValue("");
+		nextCueName->setValue("");
 	}
 
 }

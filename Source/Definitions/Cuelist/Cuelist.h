@@ -29,10 +29,12 @@ public:
     int registeredId = 0;
     StringParameter* userName;
     void updateName();
-
+    
+    ControllableContainer conductorInfos;
     StringParameter* currentCueName;
     StringParameter* currentCueText;
     StringParameter* nextCueGo;
+    StringParameter* nextCueName;
 
     Trigger* goBtn;
     Trigger* goBackBtn;
