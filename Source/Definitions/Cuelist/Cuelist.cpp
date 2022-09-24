@@ -122,6 +122,8 @@ Cuelist::Cuelist(var params) :
 	cues.comparator.compareFunc = &sortCues;
 	reorderCues();
 
+	fillTexts();
+
 	if (params.isVoid()) {
 		cues.addItem();
 	}
