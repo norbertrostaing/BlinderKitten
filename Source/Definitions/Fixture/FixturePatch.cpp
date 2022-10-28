@@ -21,6 +21,7 @@ FixturePatch::FixturePatch(var params) :
     targetInterface = addTargetParameter("Interface", "output interface", InterfaceManager::getInstance());
     targetInterface->targetType = TargetParameter::CONTAINER;
     targetInterface->maxDefaultSearchLevel = 0;
+	saveAndLoadRecursiveData = true;
 
     address = addIntParameter("Address", "Address of this Fixture, 0 means unpatched", 0, 0, 512);
 

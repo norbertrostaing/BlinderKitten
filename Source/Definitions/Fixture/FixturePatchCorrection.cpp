@@ -50,6 +50,9 @@ FixturePatchCorrection::~FixturePatchCorrection()
 
 
 void FixturePatchCorrection::onContainerParameterChangedInternal(Parameter* p) {
+	if (Brain::getInstance()->loadingIsRunning) {
+		return; // bug au load
+	}
 	Fixture* f = dynamic_cast<Fixture*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
 	SubFixture* sf = f->subFixtures.getReference(subFixtureId->getValue());
 	if (sf == nullptr) { return; }

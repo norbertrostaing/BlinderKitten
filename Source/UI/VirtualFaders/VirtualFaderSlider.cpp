@@ -107,7 +107,10 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
-			if (action == "htplevel") { return targ->HTPLevel->getValue(); }
+			if (action == "htplevel") { 
+				FloatParameter* t = targ->HTPLevel;
+				return t->getValue(); 
+			}
 			if (action == "flashlevel") { return targ->FlashLevel->getValue(); }
 			if (action == "ltplevel") { return targ->LTPLevel->getValue(); }
 		}
