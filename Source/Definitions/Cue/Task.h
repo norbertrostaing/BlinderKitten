@@ -24,6 +24,8 @@ public:
 
     EnumParameter* targetType;
     IntParameter* targetId;
+    BoolParameter* targetThru;
+    IntParameter* targetIdTo;
 
     EnumParameter* cuelistAction;
     EnumParameter* effectAction;

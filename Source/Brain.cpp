@@ -683,86 +683,102 @@ void Brain::startTask(Task* t, double startTime)
 
     String actionType = "";
     String targetType = t->targetType->getValue();
-    int targetId = t->targetId->getValue();
-    bool valid = false;
-    double startValue = 0;
-    double endValue = 1;
-    if (targetType == "cuelist") {
-        actionType = t->cuelistAction->getValue();
-        Cuelist* target = getCuelistById(targetId);
-        if (target != nullptr) {
-            valid = true;
-            if (actionType == "htplevel") {
-                startValue = target->HTPLevel->getValue();
-                endValue = t->targetValue->getValue();
-            } else if (actionType == "ltplevel") {
-                startValue = target->LTPLevel->getValue();
-                endValue = t->targetValue->getValue();
-            } else if (actionType == "flashLevel") {
-                startValue = target->FlashLevel->getValue();
-                endValue = t->targetValue->getValue();
-            }
+    Array<int> targetIds;
+
+    if (t->targetThru->getValue()) {
+        int tId = t -> targetId -> getValue();
+        int tIdTo = t -> targetIdTo -> getValue();
+        int from = jmin(tId, tIdTo);
+        int to = jmax(tId, tIdTo);
+        for (int i = from; i <= to; i++) {
+            targetIds.add(i);
         }
     }
-    else if (targetType == "effect") {
-        actionType = t->effectAction->getValue();
-        Effect* target = getEffectById(targetId);
-        if (target != nullptr) {
-            valid = true;
-            if (actionType == "size") {
-                startValue = target->sizeValue->getValue();
-                endValue = t->targetValue->getValue();
-            }
-            else if (actionType == "speed") {
-                startValue = target->speed->getValue();
-                endValue = t->targetValue->getValue();
+    else {
+        targetIds.add(t->targetId->getValue());
+    }
+    for (int i = 0; i < targetIds.size(); i++) {
+        bool valid = false;
+        double startValue = 0;
+        double endValue = 1;
+        int targetId = targetIds[i];
+        if (targetType == "cuelist") {
+            actionType = t->cuelistAction->getValue();
+            Cuelist* target = getCuelistById(targetId);
+            if (target != nullptr) {
+                valid = true;
+                if (actionType == "htplevel") {
+                    startValue = target->HTPLevel->getValue();
+                    endValue = t->targetValue->getValue();
+                } else if (actionType == "ltplevel") {
+                    startValue = target->LTPLevel->getValue();
+                    endValue = t->targetValue->getValue();
+                } else if (actionType == "flashLevel") {
+                    startValue = target->FlashLevel->getValue();
+                    endValue = t->targetValue->getValue();
+                }
             }
         }
-    }
-    else if (targetType == "carousel") {
-        actionType = t->carouselAction->getValue();
-        Carousel* target = getCarouselById(targetId);
-        if (target != nullptr) {
-            valid = true;
-            if (actionType == "size") {
-                startValue = target->sizeValue->getValue();
-                endValue = t->targetValue->getValue();
-            }
-            else if (actionType == "speed") {
-                startValue = target->speed->getValue();
-                endValue = t->targetValue->getValue();
-            }
-        }
-    }
-    else if (targetType == "mapper") {
-        actionType = t->mapperAction->getValue();
-        Mapper* target = getMapperById(targetId);
-        if (target != nullptr) {
-            valid = true;
-            if (actionType == "size") {
-                startValue = target->sizeValue->getValue();
-                endValue = t->targetValue->getValue();
+        else if (targetType == "effect") {
+            actionType = t->effectAction->getValue();
+            Effect* target = getEffectById(targetId);
+            if (target != nullptr) {
+                valid = true;
+                if (actionType == "size") {
+                    startValue = target->sizeValue->getValue();
+                    endValue = t->targetValue->getValue();
+                }
+                else if (actionType == "speed") {
+                    startValue = target->speed->getValue();
+                    endValue = t->targetValue->getValue();
+                }
             }
         }
-    }
+        else if (targetType == "carousel") {
+            actionType = t->carouselAction->getValue();
+            Carousel* target = getCarouselById(targetId);
+            if (target != nullptr) {
+                valid = true;
+                if (actionType == "size") {
+                    startValue = target->sizeValue->getValue();
+                    endValue = t->targetValue->getValue();
+                }
+                else if (actionType == "speed") {
+                    startValue = target->speed->getValue();
+                    endValue = t->targetValue->getValue();
+                }
+            }
+        }
+        else if (targetType == "mapper") {
+            actionType = t->mapperAction->getValue();
+            Mapper* target = getMapperById(targetId);
+            if (target != nullptr) {
+                valid = true;
+                if (actionType == "size") {
+                    startValue = target->sizeValue->getValue();
+                    endValue = t->targetValue->getValue();
+                }
+            }
+        }
 
-    if (valid) {
-        RunningTask* rt = runningTasks.add(new RunningTask());
-        rt->actionType = actionType;
-        rt->targetType = targetType;
-        rt->targetId = targetId;
+        if (valid) {
+            RunningTask* rt = runningTasks.add(new RunningTask());
+            rt->actionType = actionType;
+            rt->targetType = targetType;
+            rt->targetId = targetId;
 
-        rt->delay = (double)t->delay->getValue() * 1000;
-        rt->fade = (double)t->fade->getValue() * 1000;
+            rt->delay = (double)t->delay->getValue() * 1000;
+            rt->fade = (double)t->fade->getValue() * 1000;
 
-        rt->TSInit = startTime;
-        rt->TSStart = startTime + rt->delay;
-        rt->TSEnd = startTime + rt->delay + rt->fade;
+            rt->TSInit = startTime;
+            rt->TSStart = startTime + rt->delay;
+            rt->TSEnd = startTime + rt->delay + rt->fade;
 
-        rt->startValue = startValue;
-        rt->endValue = endValue;
-        rt->isEnded = false;
-        LOG(rt->endValue);
+            rt->startValue = startValue;
+            rt->endValue = endValue;
+            rt->isEnded = false;
+            LOG(rt->endValue);
+        }
     }
 
 }

@@ -32,6 +32,8 @@ Task::Task(var params) :
 	targetType->addOption("Mapper", "mapper");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
+	targetThru = addBoolParameter("target Thru", "multiple targets ?", false);
+	targetIdTo = addIntParameter("Target ID To", "", 0, 0);
 
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("Go", "go");
@@ -78,13 +80,16 @@ Task::~Task()
 }
 
 void Task::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction) {
+	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction || c == targetThru) {
 		updateDisplay();
 	}
 }
 
 void Task::updateDisplay() {
 	String targType = targetType->getValue();
+
+	targetIdTo->hideInEditor = !targetThru->getValue();
+
 
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
