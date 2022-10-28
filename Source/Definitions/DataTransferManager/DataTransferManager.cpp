@@ -267,9 +267,13 @@ void DataTransferManager::execute() {
 
 
     else if (srcType == "cuelist") {
+        Cuelist* src = Brain::getInstance()->getCuelistById(sId);
+        if (src == nullptr) {
+            LOGERROR("Cuelist " + String(sId) + " doesn't exist !");
+            return;
+        }
         if (trgType == "cuelist") {
             valid = true;
-            Cuelist* src = Brain::getInstance()->getCuelistById(sId);
             Cuelist* trg = Brain::getInstance()->getCuelistById(tId);
             if (trg == nullptr) {
                 trg = CuelistManager::getInstance()->addItemFromData(src->getJSONData());
@@ -295,9 +299,13 @@ void DataTransferManager::execute() {
         }
     }
     else if (srcType == "effect") {
+        Effect* src = Brain::getInstance()->getEffectById(sId);
+        if (src == nullptr) {
+            LOGERROR("Effect " + String(sId) + " doesn't exist !");
+            return;
+        }
         if (trgType == "effect") {
             valid = true;
-            Effect* src = Brain::getInstance()->getEffectById(sId);
             Effect* trg = Brain::getInstance()->getEffectById(tId);
             if (trg == nullptr) {
                 trg = EffectManager::getInstance()->addItemFromData(src->getJSONData());
@@ -327,9 +335,14 @@ void DataTransferManager::execute() {
         }
     }
     else if (srcType == "carousel") {
+        Carousel* src = Brain::getInstance()->getCarouselById(sId);
+        if (src == nullptr) {
+            LOGERROR("Carousel " + String(sId) + " doesn't exist !");
+            return;
+        }
+
         if (trgType == "carousel") {
             valid = true;
-            Carousel* src = Brain::getInstance()->getCarouselById(sId);
             Carousel* trg = Brain::getInstance()->getCarouselById(tId);
             if (trg == nullptr) {
                 trg = CarouselManager::getInstance()->addItemFromData(src->getJSONData());
