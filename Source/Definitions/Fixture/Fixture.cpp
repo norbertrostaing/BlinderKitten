@@ -107,6 +107,8 @@ void Fixture::applyPatchs() {
 void Fixture::checkChildrenSubFixtures() {
 	if (devTypeParam == nullptr) { return; }
 
+	const MessageManagerLock mmLock;
+
 	FixtureType* t = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
 	if (t== nullptr) {
 		return ;
