@@ -112,6 +112,12 @@ void VirtualFaderColGrid::resized()
 
 }
 
+void VirtualFaderColGrid::goToPage(int n) {
+    page = jmax(1, n);
+    fillCells();
+}
+
+
 void VirtualFaderColGrid::initCells() {
     if (engine == nullptr ) { return; }
     // gridButtons.clear();

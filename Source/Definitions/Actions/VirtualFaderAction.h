@@ -19,11 +19,12 @@ public:
     VirtualFaderAction(var params);
     ~VirtualFaderAction();
 
-    enum ActionType { VF_FADER, VF_ENCODER, VF_ABOVEBUTTON, VF_BELOWBUTTON};
+    enum ActionType { VF_FADER, VF_ENCODER, VF_ABOVEBUTTON, VF_BELOWBUTTON, VF_PAGEUP, VF_PAGEDOWN, VF_GOTOPAGE};
     ActionType actionType;
     IntParameter* pageNumber;
     IntParameter* colNumber;
     IntParameter* elementNumber;
+    IntParameter* goToPageId;
 
     void triggerInternal() override;
     void setValueInternal(var value);

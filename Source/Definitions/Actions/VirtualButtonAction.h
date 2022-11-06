@@ -19,11 +19,12 @@ public:
     VirtualButtonAction(var params);
     ~VirtualButtonAction();
 
-    enum ActionType { VB_PRESS };
+    enum ActionType { VB_PRESS, VB_PAGEUP, VB_PAGEDOWN, VB_GOTOPAGE };
     ActionType actionType;
     IntParameter* pageNumber;
     IntParameter* rowNumber;
     IntParameter* colNumber;
+    IntParameter* goToPageId;
 
     void triggerInternal() override;
     void setValueInternal(var value);

@@ -67,6 +67,8 @@ public:
     void moveCell(int idFrom, int idTo);
     void copyCell(int idFrom, int idTo);
 
+    void goToPage(int n);
+
     VirtualButton* getVirtualButton(int index, bool create = false);
 
 

@@ -79,11 +79,18 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
 
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Button Press", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Page Up", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PAGEUP));
+    defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Page Down", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PAGEDOWN));
+    defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Go To Page", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_GOTOPAGE));
+
 
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Encoder Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ENCODER));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Above Button Press", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ABOVEBUTTON));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Fader Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_FADER));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Below Button Press", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_BELOWBUTTON));
+    defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Virtual Faders Page Up", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_PAGEUP));
+    defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Virtual Faders Page Down", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_PAGEDOWN));
+    defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Virtual Faders Go To Page", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_GOTOPAGE));
 
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Button Press", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_PRESS));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Grand Master", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_GM));

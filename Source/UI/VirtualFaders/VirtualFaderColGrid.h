@@ -89,6 +89,8 @@ public:
     VirtualFaderCol* getVirtualFaderCol(int index, bool create = false);
     void updateSlidersValues();
 
+    void goToPage(int n);
+
 
 
 private:

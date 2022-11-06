@@ -19,11 +19,18 @@ VirtualFaderAction::VirtualFaderAction(var params) :
     Action(params)
 {
     actionType = (ActionType)(int)params.getProperty("actionType", VF_FADER);
-
-    pageNumber = addIntParameter("Page", "Target Page 0 means current page", 0,0);
-    colNumber = addIntParameter("Column", "", 1,1);
-    if (actionType != VF_FADER) {
-        elementNumber = addIntParameter("Number", "", 1, 1);
+    
+    if (actionType == VF_GOTOPAGE) {
+        goToPageId = addIntParameter("Target page", "go to this page", 1, 1);
+    }
+    else if (actionType == VF_PAGEUP || actionType == VF_PAGEDOWN) {
+    }
+    else {
+        pageNumber = addIntParameter("Page", "Target Page 0 means current page", 0,0);
+        colNumber = addIntParameter("Column", "", 1,1);
+        if (actionType != VF_FADER) {
+            elementNumber = addIntParameter("Number", "", 1, 1);
+        }
     }
 }
 
@@ -40,6 +47,25 @@ void VirtualFaderAction::setValueInternal(var value)
 {
     float val = value;
     int number = 0;
+    if (actionType == VF_PAGEUP) {
+        if (val > 0) {
+            VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page + 1);
+        }
+        return;
+    }
+    else if(actionType == VF_PAGEDOWN) {
+        if (val > 0) {
+            VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page - 1);
+        }
+        return;
+    }
+    else if (actionType == VF_GOTOPAGE) {
+        if (val > 0) {
+            VirtualFaderColGrid::getInstance()->goToPage(goToPageId->getValue());
+        }
+        return;
+    }
+
     if (actionType != VF_FADER) {
         number = elementNumber->getValue();
         number -= 1;
@@ -118,4 +144,5 @@ void VirtualFaderAction::setValueInternal(var value)
             }
         }
     }
+    
 }
