@@ -526,7 +526,8 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->targetUserId->setValue(targetId);
 		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
-		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");
+		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "add" : "update");
+		String test = DataTransferManager::getInstance()->cuelistCopyMode->getValue();
 		DataTransferManager::getInstance()->execute();
 	}
 	else if (action == "copy") {
@@ -536,7 +537,7 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->targetUserId->setValue((int)cliParamBId->getValue());
 		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
-		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "record" : "update");
+		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "add" : "update");
 		DataTransferManager::getInstance()->execute();
 
 
