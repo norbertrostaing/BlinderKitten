@@ -527,7 +527,6 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "add" : "update");
-		String test = DataTransferManager::getInstance()->cuelistCopyMode->getValue();
 		DataTransferManager::getInstance()->execute();
 	}
 	else if (action == "copy") {

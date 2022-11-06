@@ -220,6 +220,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						float position = float(indexFixt) / float(SubFixtures.size() - 1);
 						if (delaySym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						position = timing.curveDelayRepart.getValueAtPosition(position);
+						position = delayRepartCurve->getValueAtPosition(position);
 						delay = jmap(position, delayFrom, delayTo);
 					}
 					finalValue->delay = delay;
@@ -246,6 +247,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						float position = float(indexFixt) / float(SubFixtures.size() - 1);
 						if (fadeSym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						position = timing.curveFadeRepart.getValueAtPosition(position);
+						position = fadeRepartCurve->getValueAtPosition(position);
 						fade = jmap(position, fadeFrom, fadeTo);
 					}
 					finalValue->fade = fade;
