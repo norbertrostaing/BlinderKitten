@@ -36,6 +36,17 @@ public:
     StringParameter* nextCueGo;
     StringParameter* nextCueName;
 
+    ControllableContainer chaserOptions;
+    BoolParameter* isChaser;
+    EnumParameter* chaserDirection;
+    FloatParameter* chaserSpeed;
+    FloatParameter* chaserInFade;
+    FloatParameter* chaserOutFade;
+    double chaserStepDuration = 1000;
+    double chaserFadeInDuration = 0;
+    double chaserFadeOutDuration = 0;
+    int chaserIsGoingBackward = false;
+
     Trigger* goBtn;
     Trigger* goBackBtn;
     Trigger* goRandomBtn;
@@ -112,6 +123,7 @@ public:
 
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
     void updateHTPs();
     void updateLTPs();
@@ -128,6 +140,8 @@ public:
 
     void fillTexts();
     Cue* getNextCue();
+
+    Cue* getNextChaserCue();
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

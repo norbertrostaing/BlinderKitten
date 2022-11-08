@@ -163,6 +163,7 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 
 void Assistant::patchFixtures()
 {
+    const MessageManagerLock mmLock;
     FixtureType* fixtureType = dynamic_cast<FixtureType*>(patcherFixtureType->targetContainer.get());
     int amount = patcherAmount->getValue();
     String name = patcherName->getValue();
