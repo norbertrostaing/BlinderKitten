@@ -115,7 +115,6 @@ void Cue::computeValues() {
 void Cue::go() {
 	double now = Brain::getInstance()->now;
 	if (autoFollow->getValue() == "immediate") {
-
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
 		TSAutoFollowEnd = now + (delay*1000);

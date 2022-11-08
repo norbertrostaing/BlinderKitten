@@ -26,6 +26,7 @@ Cuelist::Cuelist(var params) :
 	objectType(params.getProperty("type", "Cuelist").toString()),
 	objectData(params),
 	conductorInfos("Conductor infos"),
+	chaserOptions("Chaser options"),
 	offFadeCurve(),
 	cues()
 {
@@ -39,13 +40,23 @@ Cuelist::Cuelist(var params) :
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	updateName();
 
-
 	currentCueName = conductorInfos.addStringParameter("Current cue", "Current Cue name", "", false);
 	currentCueText = conductorInfos.addStringParameter("Current cue text", "What's happening during this cue ?", "", false);
 	currentCueText->multiline = true;
 	nextCueGo = conductorInfos.addStringParameter("Next go", "action needed to go to next cue", "", false);
 	nextCueName = conductorInfos.addStringParameter("Next Cue", "Next cue name", "", false);
 	addChildControllableContainer(&conductorInfos);
+
+	isChaser = chaserOptions.addBoolParameter("Is Chaser", "Turn this cuelist in a wonderful chaser", false);
+	chaserDirection = chaserOptions.addEnumParameter("Direction", "");
+	chaserDirection->addOption("Normal", "normal");
+	chaserDirection->addOption("Reverse", "reverse");
+	chaserDirection->addOption("Bounce", "bounce");
+	chaserDirection->addOption("Random", "random");
+	chaserSpeed = chaserOptions.addFloatParameter("Speed", "in GO / minutes", 60,1);
+	chaserInFade = chaserOptions.addFloatParameter("In fade", "Fade for incoming steps",0,0,1);
+	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values", 0, 0, 1);
+	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
 	endAction->addOption("Off", "off");
@@ -218,6 +229,23 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	else {}
 }
 
+void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+	if (c == chaserSpeed) {
+		chaserStepDuration = 60000/(double)chaserSpeed->getValue();
+		chaserFadeInDuration = chaserStepDuration * (double)chaserInFade->getValue();
+		chaserFadeOutDuration = chaserStepDuration * (double)chaserOutFade->getValue();;
+
+	}
+	else if (c == chaserInFade) {
+		chaserFadeInDuration = chaserStepDuration * (double)chaserInFade->getValue();
+	}
+	else if (c == chaserOutFade) {
+		chaserFadeOutDuration = chaserStepDuration * (double)chaserOutFade->getValue();;
+	}
+	
+}
+
+
 void Cuelist::go(Cue* c) {
 	const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();;
@@ -256,7 +284,7 @@ void Cuelist::go(Cue* c) {
 	}
 
 	HashMap<SubFixtureChannel*, ChannelValue*> newActiveValues;
-	
+
 	if (needRebuildTracking) {
 		for (int i = 0; i <= nextIndex-1; i++) {
 			Cue* tempCue = cues.items[i];
@@ -304,10 +332,17 @@ void Cuelist::go(Cue* c) {
 			else {
 				temp->startValue = -1;
 			}
-			temp->TSInit = now;
-			temp->TSStart = now + (temp->delay);
-			temp->TSEnd = temp -> TSStart + (temp->fade );
-			temp -> isEnded = false;
+			if (isChaser->getValue()) {
+				temp->TSInit = now;
+				temp->TSStart = now;
+				temp->TSEnd = temp->TSStart + chaserFadeInDuration;
+			}
+			else {
+				temp->TSInit = now;
+				temp->TSStart = now + (temp->delay);
+				temp->TSEnd = temp->TSStart + (temp->fade);
+			}
+			temp->isEnded = false;
 			newActiveValues.set(it.getKey(), temp);
 			it.getKey()->cuelistOnTopOfStack(this);
 			Brain::getInstance()->pleaseUpdate(it.getKey());
@@ -322,7 +357,10 @@ void Cuelist::go(Cue* c) {
 				if (temp != nullptr) {
 					float fadeTime = 0;
 					float delay = 0;
-					if (c == nullptr) {
+					if (isChaser) {
+						fadeTime = chaserFadeOutDuration;
+					}
+					else if (c == nullptr) {
 						fadeTime = (float)offFade->getValue() * 1000;
 						temp->fadeCurve = &offFadeCurve;
 					}
@@ -340,7 +378,6 @@ void Cuelist::go(Cue* c) {
 					temp->TSInit = now;
 					temp->TSStart = now + delay;
 					temp->TSEnd = now + fadeTime + delay;
-
 					temp->endValue = -1;
 					temp->startValue = temp->value;
 					temp->isEnded = false;
@@ -357,6 +394,12 @@ void Cuelist::go(Cue* c) {
 		activeValues.set(it.getKey(), it.getValue());
 	}
 
+	if (isChaser->getValue() && c != nullptr) {
+		c->TSAutoFollowStart = now;
+		c->TSAutoFollowEnd = now + (chaserStepDuration);
+		Brain::getInstance()->pleaseUpdate(c);
+
+	}
 	return ;
 }
 
@@ -371,10 +414,16 @@ void Cuelist::go() {
 		}
 	}
 	if (cueB == nullptr) {
-		autoLoadCueB();
+		if (isChaser->getValue()) {
+			cueB = getNextChaserCue();
+		}
+		else {
+			autoLoadCueB();
+		}
 	}
 	go(cueB);
 }
+
 
 void Cuelist::goBack() {
 	if (cueA == nullptr) {
@@ -789,3 +838,76 @@ Cue* Cuelist::getNextCue() {
 	}
 
 }
+
+Cue* Cuelist::getNextChaserCue() {
+	bool valid = false;
+	if (cues.getItemsWithType<Cue>().size() == 0) {
+		return nullptr;
+	}
+	if (cues.getItemsWithType<Cue>().size() == 1) {
+		return cues.getItemsWithType<Cue>()[0];
+	}
+
+	if (chaserDirection->getValueData() == "random") {
+		Array<Cue*> childCues = cues.getItemsWithType<Cue>();
+		Array<Cue*> allowedCues;
+
+		for (int i = 0; i < childCues.size(); i++) {
+			if (childCues.getReference(i) != cueA) {
+				allowedCues.add(childCues.getReference(i));
+			}
+		}
+
+		int s = allowedCues.size();
+		if (s > 0) {
+			int r = rand() % s;
+			return allowedCues[r];
+		}
+	}
+
+	if (cueA == nullptr) {
+		if (chaserIsGoingBackward) {
+			return cues.getItemsWithType<Cue>()[cues.getItemsWithType<Cue>().size()-1];
+		}
+		else {
+			return cues.getItemsWithType<Cue>()[0];
+		}
+	}
+	else {
+		Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
+		if (chaserIsGoingBackward || chaserDirection->getValueData() == "reverse") {
+			for (int i = 1; i < currentCues.size() && !valid; i++) {
+				if (currentCues[i] == cueA) {
+					return currentCues[i-1];
+				}
+			}
+		}
+		else {
+			for (int i = 1; i < currentCues.size() && !valid; i++) {
+				if (currentCues[i - 1] == cueA) {
+					return currentCues[i];
+				}
+			}
+		}
+		
+		if (chaserDirection->getValueData() == "normal") {
+			return cues.getItemsWithType<Cue>()[0];
+		}
+		else if (chaserDirection->getValueData() == "reverse") {
+			return cues.getItemsWithType<Cue>()[cues.getItemsWithType<Cue>().size() - 1];
+		}
+		else if (chaserDirection->getValueData() == "bounce") {
+			if (chaserIsGoingBackward) {
+				chaserIsGoingBackward = false;
+				return cues.getItemsWithType<Cue>()[1];
+			}
+			else {
+				chaserIsGoingBackward = true;
+				return cues.getItemsWithType<Cue>()[cues.getItemsWithType<Cue>().size() - 2];
+			}
+		}
+		return nullptr;
+	}
+
+}
+
