@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "FixtureTypeChannel.h"
 #include "FixtureTypeChannelManager.h"
+#include "FixtureTypeVirtualChannelManager.h"
 
 class FixtureType:
     public BaseItem
@@ -24,9 +25,12 @@ public:
     var objectData;
     
     FixtureTypeChannelManager chansManager;
+    FixtureTypeVirtualChannelManager virtualChansManager;
     String getTypeString() const override { return objectType; }
 
     static FixtureType* create(var params) { return new FixtureType(params); }
+    void afterLoadJSONDataInternal();
+    void updateVirtualLists();
 
 };
 

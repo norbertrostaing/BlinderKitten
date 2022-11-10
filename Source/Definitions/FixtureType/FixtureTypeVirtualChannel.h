@@ -11,12 +11,12 @@
 #pragma once
 #include "JuceHeader.h"
 
-class FixtureTypeChannel:
+class FixtureTypeVirtualChannel:
     public BaseItem
 {
     public:
-    FixtureTypeChannel(var params = var());
-    ~FixtureTypeChannel();
+    FixtureTypeVirtualChannel(var params = var());
+    ~FixtureTypeVirtualChannel();
 
     String objectType;
     var objectData;
@@ -27,10 +27,7 @@ class FixtureTypeChannel:
     IntParameter* subFixtureId;
     FloatParameter* defaultValue;
     BoolParameter* killedBySWOP;
-    EnumParameter* resolution;
     EnumParameter* fadeOrSnap;
-    IntParameter* dmxDelta;
-    TargetParameter* virtualMaster;
     void onContainerParameterChangedInternal(Parameter* p);
 
 };

@@ -27,7 +27,7 @@ public:
     virtual ~SubFixtureChannel();
     bool isDeleted = false;
 
-    ChannelType* channelType;
+    ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
     String resolution;
     float defaultValue = 0;
@@ -46,6 +46,9 @@ public:
     int subFixtureId = 0;
 
     void writeValue(float v);
+
+    Array<SubFixtureChannel*> virtualChildren;
+    SubFixtureChannel* virtualMaster = nullptr;
 
     Array<Cuelist*> cuelistStack;
     Array<Programmer*> programmerStack;

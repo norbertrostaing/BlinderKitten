@@ -22,13 +22,15 @@
 #include "../ChannelValue.h"
 #include "UI/InputPanel.h"
 
-SubFixtureChannel::SubFixtureChannel()
+SubFixtureChannel::SubFixtureChannel():
+	virtualChildren()
 {
 	cuelistStack.clear();
 	programmerStack.clear();
 	effectStack.clear();
 	carouselStack.clear();
 	cuelistFlashStack.clear();
+	virtualChildren.clear();
 }
 
 SubFixtureChannel::~SubFixtureChannel()
@@ -41,6 +43,17 @@ void SubFixtureChannel::writeValue(float v) {
 	v= jmin((float)1, v);
 	v= jmax((float)0, v);
 
+	if (virtualChildren.size() > 0) {
+		value = v;
+		for (int i = 0; i < virtualChildren.size(); i++) {
+			Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
+		}
+		return;
+	}
+
+	if (virtualMaster != nullptr) {
+		v *= virtualMaster->value;
+	}
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 

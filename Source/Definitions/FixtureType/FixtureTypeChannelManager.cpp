@@ -54,6 +54,11 @@ void FixtureTypeChannelManager::askForMoveAfter(BaseItem* c) {
 
 void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data) {
 	calcDmxChannels();
+	if (parentContainer != nullptr && !Brain::getInstance()->loadingIsRunning) {
+		FixtureType* ft = dynamic_cast<FixtureType* >(parentContainer.get());
+		ft->updateVirtualLists();
+	}
+
 }
 void FixtureTypeChannelManager::askForRemoveBaseItem(BaseItem* item) {
 	BaseManager::askForRemoveBaseItem(item);

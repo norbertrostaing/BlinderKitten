@@ -419,6 +419,14 @@
                 file="Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp"/>
           <FILE id="NzoqJA" name="FixtureTypeManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/FixtureType/FixtureTypeManagerUI.h"/>
+          <FILE id="JXp7CW" name="FixtureTypeVirtualChannel.cpp" compile="1"
+                resource="0" file="Source/Definitions/FixtureType/FixtureTypeVirtualChannel.cpp"/>
+          <FILE id="YRt4Hn" name="FixtureTypeVirtualChannel.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeVirtualChannel.h"/>
+          <FILE id="m5fmr4" name="FixtureTypeVirtualChannelManager.cpp" compile="1"
+                resource="0" file="Source/Definitions/FixtureType/FixtureTypeVirtualChannelManager.cpp"/>
+          <FILE id="m8duwb" name="FixtureTypeVirtualChannelManager.h" compile="0"
+                resource="0" file="Source/Definitions/FixtureType/FixtureTypeVirtualChannelManager.h"/>
         </GROUP>
         <GROUP id="{8FBBC202-46A1-5C6A-F171-296B517ED469}" name="Group">
           <FILE id="D4h4qs" name="Group.cpp" compile="1" resource="0" file="Source/Definitions/Group/Group.cpp"/>
