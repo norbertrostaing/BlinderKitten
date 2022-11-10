@@ -54,8 +54,9 @@ Cuelist::Cuelist(var params) :
 	chaserDirection->addOption("Bounce", "bounce");
 	chaserDirection->addOption("Random", "random");
 	chaserSpeed = chaserOptions.addFloatParameter("Speed", "in GO / minutes", 60,1);
-	chaserInFade = chaserOptions.addFloatParameter("In fade", "Fade for incoming steps",0,0,1);
-	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values", 0, 0, 1);
+	chaserInFade = chaserOptions.addFloatParameter("In fade", "Fade for incoming steps, not in seconds, but in number of steps !",0,0,1);
+	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values, not in seconds, but in number of steps !", 0, 0);
+	chaserRunXTimes = chaserOptions.addFloatParameter("Run X times", "number of cycles of the chaser, 0 mean infinite",0,0);
 	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
@@ -251,6 +252,29 @@ void Cuelist::go(Cue* c) {
 	double now = Time::getMillisecondCounterHiRes();;
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
+	} 
+
+
+	if ((float)chaserRunXTimes->getValue() > 0) {
+		if (cueA == nullptr && isChaser->getValue()) {
+			if (chaserDirection->getValueData() == "bounce" && cues.items.size()>1) {
+				int nItems = cues.items.size();
+				nItems = (nItems*2)-2;
+				chaserRemainingSteps = round((float)chaserRunXTimes->getValue() * nItems);
+			}
+			else {
+				chaserRemainingSteps = round((float)chaserRunXTimes->getValue() * cues.items.size());
+				chaserRemainingSteps-=1;
+			}
+		}
+		else if (chaserRemainingSteps <= 0 && !wannaOff) {
+			wannaOff = true;
+			c = nullptr;
+		}
+		else {
+			chaserRemainingSteps -= 1;
+		}
+
 	}
 
 	bool needRebuildTracking = false;
@@ -354,7 +378,7 @@ void Cuelist::go(Cue* c) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			if (!newActiveValues.contains(it.getKey())) {
 				ChannelValue* temp = it.getValue();
-				if (temp != nullptr) {
+				if (temp != nullptr && temp->endValue != -1) {
 					float fadeTime = 0;
 					float delay = 0;
 					if (isChaser) {
@@ -866,7 +890,7 @@ Cue* Cuelist::getNextChaserCue() {
 	}
 
 	if (cueA == nullptr) {
-		if (chaserIsGoingBackward) {
+		if (chaserIsGoingBackward || chaserDirection->getValueData() == "reverse") {
 			return cues.getItemsWithType<Cue>()[cues.getItemsWithType<Cue>().size()-1];
 		}
 		else {

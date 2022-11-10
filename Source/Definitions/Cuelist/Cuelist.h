@@ -42,10 +42,13 @@ public:
     FloatParameter* chaserSpeed;
     FloatParameter* chaserInFade;
     FloatParameter* chaserOutFade;
+    FloatParameter* chaserRunXTimes;
+
     double chaserStepDuration = 1000;
     double chaserFadeInDuration = 0;
     double chaserFadeOutDuration = 0;
     int chaserIsGoingBackward = false;
+    int chaserRemainingSteps = 0;
 
     Trigger* goBtn;
     Trigger* goBackBtn;
