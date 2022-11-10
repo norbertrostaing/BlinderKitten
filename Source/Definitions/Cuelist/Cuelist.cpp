@@ -57,6 +57,32 @@ Cuelist::Cuelist(var params) :
 	chaserInFade = chaserOptions.addFloatParameter("In fade", "Fade for incoming steps, not in seconds, but in number of steps !",0,0,1);
 	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values, not in seconds, but in number of steps !", 0, 0);
 	chaserRunXTimes = chaserOptions.addFloatParameter("Run X times", "number of cycles of the chaser, 0 mean infinite",0,0);
+
+	chaserFadeInCurve.allowKeysOutside = false;
+	chaserFadeInCurve.setNiceName("In curve");
+	chaserFadeInCurve.isSelectable = false;
+	chaserFadeInCurve.length->setValue(1);
+	chaserFadeInCurve.addKey(0, 0, false);
+	chaserFadeInCurve.items[0]->easingType->setValueWithData(Easing::LINEAR);
+	chaserFadeInCurve.addKey(1, 1, false);
+	chaserFadeInCurve.selectItemWhenCreated = false;
+	chaserFadeInCurve.editorCanBeCollapsed = true;
+	chaserFadeInCurve.editorIsCollapsed = true;
+	chaserOptions.addChildControllableContainer(&chaserFadeInCurve);
+
+	chaserFadeOutCurve.allowKeysOutside = false;
+	chaserFadeOutCurve.setNiceName("Out curve");
+	chaserFadeOutCurve.isSelectable = false;
+	chaserFadeOutCurve.length->setValue(1);
+	chaserFadeOutCurve.addKey(0, 0, false);
+	chaserFadeOutCurve.items[0]->easingType->setValueWithData(Easing::LINEAR);
+	chaserFadeOutCurve.addKey(1, 1, false);
+	chaserFadeOutCurve.selectItemWhenCreated = false;
+	chaserFadeOutCurve.editorCanBeCollapsed = true;
+	chaserFadeOutCurve.editorIsCollapsed = true;
+	chaserOptions.addChildControllableContainer(&chaserFadeOutCurve);
+
+	chaserOptions.saveAndLoadRecursiveData = true;
 	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
@@ -360,6 +386,7 @@ void Cuelist::go(Cue* c) {
 				temp->TSInit = now;
 				temp->TSStart = now;
 				temp->TSEnd = temp->TSStart + chaserFadeInDuration;
+				temp->fadeCurve = &chaserFadeInCurve;
 			}
 			else {
 				temp->TSInit = now;
@@ -383,6 +410,7 @@ void Cuelist::go(Cue* c) {
 					float delay = 0;
 					if (isChaser) {
 						fadeTime = chaserFadeOutDuration;
+						temp->fadeCurve = &chaserFadeOutCurve;
 					}
 					else if (c == nullptr) {
 						fadeTime = (float)offFade->getValue() * 1000;

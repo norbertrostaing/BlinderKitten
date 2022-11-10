@@ -43,6 +43,8 @@ public:
     FloatParameter* chaserInFade;
     FloatParameter* chaserOutFade;
     FloatParameter* chaserRunXTimes;
+    Automation chaserFadeInCurve;
+    Automation chaserFadeOutCurve;
 
     double chaserStepDuration = 1000;
     double chaserFadeInDuration = 0;
