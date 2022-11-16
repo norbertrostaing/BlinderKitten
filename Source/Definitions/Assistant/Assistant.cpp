@@ -213,6 +213,7 @@ void Assistant::patchFixtures()
 
 void Assistant::createPalette()
 {
+    const MessageManagerLock mmLock;
     int groupId = paletteGroupId->getValue();
     int presetFrom = paletteFirstPresetId->getValue();
     int presetTo = paletteLastPresetId->getValue();
@@ -274,6 +275,7 @@ void Assistant::createPalette()
 
 void Assistant::createMasters()
 {
+    const MessageManagerLock mmLock;
     LOG("Start creating Masters, please wait...");
     int firstGroupId = masterFirstGroupId->getValue();
     int lastGroupId = masterLastGroupId->getValue();
@@ -321,6 +323,7 @@ void Assistant::createMasters()
 
 void Assistant::createMidiMappings()
 {
+    const MessageManagerLock mmLock;
     MIDIInterface* targetInterface = dynamic_cast<MIDIInterface*>(midiMapperTargetInterface->targetContainer.get());
     bool changeInterfaceName = false;
 

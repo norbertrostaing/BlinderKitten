@@ -40,7 +40,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	cuelistAction->addOption("Toggle", "toggle");
 	cuelistAction->addOption("Flash", "flash");
 	cuelistAction->addOption("Load", "load");
-	cuelistAction->addOption("Loadn and Go", "loadandgo");
+	cuelistAction->addOption("Load and Go", "loadandgo");
 	cuelistAction->addOption("Swop", "swop");
 	cuelistAction->addOption("Go random", "gorandom");
 

@@ -401,14 +401,14 @@ void Cuelist::go(Cue* c) {
 		c->go();
 	}
 	
-	if (trackingType == "none" || c == nullptr || needRebuildTracking) {
+	if (trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue()) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			if (!newActiveValues.contains(it.getKey())) {
 				ChannelValue* temp = it.getValue();
-				if (temp != nullptr && temp->endValue != -1) {
+				if (temp != nullptr && temp -> endValue != -1) {
 					float fadeTime = 0;
 					float delay = 0;
-					if (isChaser) {
+					if (isChaser->getValue()) {
 						fadeTime = chaserFadeOutDuration;
 						temp->fadeCurve = &chaserFadeOutCurve;
 					}
@@ -434,7 +434,7 @@ void Cuelist::go(Cue* c) {
 					temp->startValue = temp->value;
 					temp->isEnded = false;
 
-					activeValues.set(it.getKey(), temp);
+					newActiveValues.set(it.getKey(), temp);
 					Brain::getInstance()->pleaseUpdate(it.getKey());
 				}
 
