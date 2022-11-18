@@ -45,12 +45,16 @@ public:
     FloatParameter* chaserRunXTimes;
     Automation chaserFadeInCurve;
     Automation chaserFadeOutCurve;
+    FloatParameter* chaserStepPerTap;
+    Trigger* chaserTapTempo;
 
     double chaserStepDuration = 1000;
     double chaserFadeInDuration = 0;
     double chaserFadeOutDuration = 0;
     int chaserIsGoingBackward = false;
     int chaserRemainingSteps = 0;
+    void tapTempo();
+    double lastTapTempo;
 
     Trigger* goBtn;
     Trigger* goBackBtn;

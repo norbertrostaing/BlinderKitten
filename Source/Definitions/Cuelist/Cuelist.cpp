@@ -57,6 +57,8 @@ Cuelist::Cuelist(var params) :
 	chaserInFade = chaserOptions.addFloatParameter("In fade", "Fade for incoming steps, not in seconds, but in number of steps !",0,0,1);
 	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values, not in seconds, but in number of steps !", 0, 0);
 	chaserRunXTimes = chaserOptions.addFloatParameter("Run X times", "number of cycles of the chaser, 0 mean infinite",0,0);
+	chaserStepPerTap = chaserOptions.addFloatParameter("Step per hits", "Number of steps per tap tempo hit",1,0.001);
+	chaserTapTempo = chaserOptions.addTrigger("Tap tempo", "");
 
 	chaserFadeInCurve.allowKeysOutside = false;
 	chaserFadeInCurve.setNiceName("In curve");
@@ -268,6 +270,9 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	}
 	else if (c == chaserOutFade) {
 		chaserFadeOutDuration = chaserStepDuration * (double)chaserOutFade->getValue();;
+	}
+	else if (c == chaserTapTempo) {
+		tapTempo();
 	}
 	
 }
@@ -963,3 +968,13 @@ Cue* Cuelist::getNextChaserCue() {
 
 }
 
+void Cuelist::tapTempo() {
+	double now = Time::getMillisecondCounterHiRes();
+	double delta = now - lastTapTempo;
+	lastTapTempo = now;
+	if (delta < 3000) {
+		delta = delta / (int)chaserStepPerTap->getValue();
+		double cpm = 60000. / delta;
+		chaserSpeed->setValue(cpm);
+	}
+}
