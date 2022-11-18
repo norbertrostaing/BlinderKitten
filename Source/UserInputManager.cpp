@@ -44,10 +44,42 @@ void UserInputManager::processInput(String s) {
 void UserInputManager::processMessage(const OSCMessage& m)
 {
 	StringArray aList;
-	aList.addTokens(m.getAddressPattern().toString(), "/", "\"");
+	String address = m.getAddressPattern().toString().toLowerCase();
+	LOG(address);
+	aList.addTokens(m.getAddressPattern().toString().toLowerCase(), "/", "\"");
 	if (aList.size() < 3) return;
 
-	String firstWord = aList[1].toLowerCase();
+	/*
+	cuelist
+		go
+		goBack
+		goRandom
+		off
+		kill
+		load
+		flash
+		swop
+		loadandgo
+		loadrandom
+		htpLevel
+		ltplevel
+		flashLevel
+		taptempo
+	effect
+		start
+		stop
+		speed
+		size
+		tap tempo
+	carousel
+		start
+		stop
+		speed
+		size
+		tap tempo
+	*/
+
+	String firstWord = aList[1];
 	if (firstWord == "key") {
 		processInput(aList[2]);
 	}
@@ -56,18 +88,91 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		Cuelist* target = Brain::getInstance()->getCuelistById(targetNumber);
 		if (target != nullptr) {
 			String action = aList[3].toLowerCase();
-			if (action == "go") {
-				target->go();
+			if (action == "go") { target->go(); }
+			else if (action == "goback") { target->goBack(); }
+			else if (action == "gorandom") { target->goRandom(); }
+			else if (action == "off") { target->off(); }
+			else if (action == "kill") { target->kill(); }
+			else if (action == "load") { target->showLoad(); }
+			else if (action == "loadandgo") { target->showLoadAndGo(); }
+			else if (action == "loadrandom") { target->loadRandom(); }
+			else if (action == "taptempo") { target->tapTempo(); }
+			else if (action == "flash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false, false);
+				}
+				else {
+					target->flash(false, false, false);
+				}
 			}
-			else if (action == "gorandom") {
-				target->goRandom();
+			else if (action == "swop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false, true);
+				}
+				else {
+					target->flash(false, false, true);
+				}
 			}
-			else if (action == "off") {
-				target->off();
+			else if (action == "htplevel" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->HTPLevel->setValue(val);
+			}
+			else if (action == "ltplevel" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->LTPLevel->setValue(val);
+			}
+			else if (action == "flashlevel" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->FlashLevel->setValue(val);
+			}
+
+		}
+		else {
+			LOGWARNING("Cuelist " + String(targetNumber) + " doesn't exist");
+		}
+	}
+	else if (firstWord == "effect" && aList.size() > 3) {
+		int targetNumber = (int)((var)aList[2]);
+		Effect* target = Brain::getInstance()->getEffectById(targetNumber);
+		if (target != nullptr) {
+			String action = aList[3].toLowerCase();
+				if (action == "start") { target->start(); }
+			else if (action == "stop") { target->stop(); }
+			else if (action == "taptempo") { target->tapTempo(); }
+			else if (action == "size" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->sizeValue->setValue(val);
+			}
+			else if (action == "speed" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->speed->setValue(val);
+				}
+		}
+		else {
+			LOGWARNING("Effect " + String(targetNumber) + " doesn't exist");
+		}
+	}
+	else if (firstWord == "carousel" && aList.size() > 3) {
+		int targetNumber = (int)((var)aList[2]);
+		Carousel* target = Brain::getInstance()->getCarouselById(targetNumber);
+		if (target != nullptr) {
+			String action = aList[3].toLowerCase();
+			if (action == "start") { target->start(); }
+			else if (action == "stop") { target->stop(); }
+			else if (action == "taptempo") { target->tapTempo(); }
+			else if (action == "size" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->sizeValue->setValue(val);
+			}
+			else if (action == "speed" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->speed->setValue(val);
 			}
 		}
 		else {
-			LOGWARNING("Cuelist "+String(targetNumber)+ " doesn't exist");
+			LOGWARNING("Carousel " + String(targetNumber) + " doesn't exist");
 		}
 	}
 
