@@ -390,7 +390,7 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 	else if (type == "fixture") {
 		p->checkCurrentUserCommand();
 		p->getTextCommand();
-		String test = p->currentUserCommand->userCanHaveAnotherCommand ? "oui" : "non";
+		//String test = p->currentUserCommand->userCanHaveAnotherCommand ? "oui" : "non";
 		if (p->currentUserCommand->userCanPressSelectionType) {
 			p->processUserInput("fixture");
 			p->processUserInput(String(id));
@@ -425,6 +425,13 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 		p->getTextCommand();;
 		if (p->currentUserCommand->userCanPressSelectionType) {
 			p->processUserInput("group");
+			p->processUserInput(String(id));
+		}
+		else if (p->currentUserCommand->userCanHaveAnotherCommand) {
+			p->processUserInput("group");
+			p->processUserInput(String(id));
+		}
+		else if (p->currentUserCommand->lastTarget == "selectionThru") {
 			p->processUserInput(String(id));
 		}
 		else if (p->currentUserCommand->userCanPressPlusOrMinus) {
