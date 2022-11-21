@@ -102,13 +102,13 @@ void EffectRow::computeData() {
                 }
             }
             int totWings= p->wings->getValue();
-            int sizeWing = chans.size()/totWings;
+            float sizeWing = chans.size()/totWings;
             int nBuddying = p->buddying->getValue();
             float nLimit = chans.size();
 
             for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
                 int nWing = chanIndex/sizeWing;
-                double offset = (chanIndex - (chanIndex%nBuddying)) / nLimit;
+                double offset = (chanIndex - (chanIndex%nBuddying)) / sizeWing;
                 if (nWing % 2 == 1) {
                     offset = -offset;
                 }
