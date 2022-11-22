@@ -23,6 +23,8 @@
 #include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
 #include "Definitions/ChannelFamily/ChannelFamily.h"
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "Definitions/Fixture/FixtureManager.h"
+#include "Definitions/Fixture/Fixture.h"
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 
@@ -367,7 +369,6 @@ float UserInputManager::backspaceOnFloat(var v) {
 	}
 	else {
 		s = s.substring(0, s.length() - 1);
-		//LOG(s);
 		return s.getFloatValue();
 	}
 }
@@ -422,7 +423,7 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 		}
 	}	else if (type == "group") {
 		p->checkCurrentUserCommand();
-		p->getTextCommand();;
+		p->getTextCommand();
 		if (p->currentUserCommand->userCanPressSelectionType) {
 			p->processUserInput("group");
 			p->processUserInput(String(id));
@@ -479,4 +480,23 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			trg->selectThis();
 		}
 	}
+}
+
+void UserInputManager::testPreset(Preset* p)
+{
+	if (p == nullptr) { return; }
+	Programmer* prg = getProgrammer();
+	if (prg == nullptr) { return; }
+	int fixtMax = 1;
+	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
+		int id = FixtureManager::getInstance()->items[i]->id->getValue();
+		fixtMax = jmax(fixtMax, id);
+	}
+	prg->clearAll();
+	processInput("Fixture");
+	processInput("1");
+	processInput("Thru");
+	processInput(String(fixtMax));
+	processInput("Preset");
+	processInput(p->id->getValue());
 }

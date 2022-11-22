@@ -34,6 +34,7 @@ public:
 
     TargetParameter* devTypeParam;
     EnumParameter* presetType;
+    Trigger* testMeButton;
 
     HashMap<SubFixture*, HashMap<ChannelType*, float>*> computedSubFixtureValues;
     HashMap<FixtureType*, HashMap<ChannelType*, float>*> computedFixtureTypeValues;

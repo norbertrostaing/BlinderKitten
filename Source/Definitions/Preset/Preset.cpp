@@ -41,6 +41,7 @@ Preset::Preset(var params) :
 	presetExplain += "- Same channels : preset applies to all SubFixtures with same channels\n\n";
 	
 	loadToProgrammerBtn = addTrigger("Load", "Load fixtures values in the programmer (values with fixture ID 0 are not called)");
+	testMeButton = addTrigger("Test me", "call any fixture possible with this preset");
 
 	presetType = addEnumParameter("Type", presetExplain);
 	presetType->addOption("SubFixture", 1);
@@ -206,6 +207,9 @@ void Preset::triggerTriggered(Trigger* t)
 		DataTransferManager::getInstance()->targetType->setValueWithData("programmer");
 		DataTransferManager::getInstance()->targetUserId->setValue(1);
 		DataTransferManager::getInstance()->selectThis();
+	}
+	if (t == testMeButton) {
+		UserInputManager::getInstance()->testPreset(this);
 	}
 }
 

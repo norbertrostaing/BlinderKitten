@@ -15,6 +15,7 @@ class Programmer;
 class Command;
 class ChannelType;
 class Programmer;
+class Preset;
 
 //#include "Definitions/Programmer/Programmer.h"
 
@@ -56,4 +57,5 @@ public:
 
     double lastCuelistLoadWindowTS = 0;
 
+    void testPreset(Preset* p);
 };
