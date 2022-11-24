@@ -33,6 +33,7 @@ class EffectRow:
     FloatParameter* chaserFade;
     IntParameter* chaserBuddying;
     FloatParameter* speed;
+    EnumParameter* direction;
 
     CommandSelectionManager selection;
 

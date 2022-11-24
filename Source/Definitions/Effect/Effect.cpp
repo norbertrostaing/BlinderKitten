@@ -184,11 +184,30 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		EffectRow* row = dynamic_cast<EffectRow*>(p->parentContainer->parentContainer.get());
 
 		double offset = totalElapsed*(double)row->speed->getValue();
+		double deltaOffset = p->subFixtureChannelOffsets.getReference(fc);
+		while (offset < 0) {
+			offset += 1;
+		}
+		if (row->direction->getValueData() == "bounce") {
+			offset = fmodf(offset, 2);
+			if (offset > 1) {
+				offset = 2 - offset;
+			}
+		}
+		else if (row->direction->getValueData() == "backward") {
+			offset = fmodf(offset, 1);
+			offset = 1 - offset;
+		}
+		else {
+			offset = fmodf(offset, 1);
+		}
 		offset += p->subFixtureChannelOffsets.getReference(fc);
 		while (offset < 0) {
 			offset += 1;
 		}
 		offset = fmodf(offset, 1);
+		LOG("Offset " + String(deltaOffset * 10) + " : " + String(offset));
+
 		float value = 0;
 		String mode = row->curvePresetOrValue->getValue().toString();
 		if (mode == "chaser") {

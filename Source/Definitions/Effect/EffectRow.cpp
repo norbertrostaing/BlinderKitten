@@ -26,6 +26,10 @@ EffectRow::EffectRow(var params) :
 
     saveAndLoadRecursiveData = true;
     speed = curveContainer.addFloatParameter("Speed", "Effect of this Curve, relative to the effect speed", 1, 0);
+    direction = curveContainer.addEnumParameter("Direction", "");
+    direction->addOption("Forward", "forward");
+    direction->addOption("Backward", "backward");
+    direction->addOption("Bounce", "bounce");
     curvePresetOrValue = curveContainer.addEnumParameter("Curve Type", "Use a preset curve or draw it here ?");
     curvePresetOrValue->addOption("Drawed", "drawed");
     curvePresetOrValue->addOption("Preset", "preset");
