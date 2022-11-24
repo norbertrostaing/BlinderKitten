@@ -206,7 +206,6 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			offset += 1;
 		}
 		offset = fmodf(offset, 1);
-		LOG("Offset " + String(deltaOffset * 10) + " : " + String(offset));
 
 		float value = 0;
 		String mode = row->curvePresetOrValue->getValue().toString();
