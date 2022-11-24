@@ -90,13 +90,39 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		Cuelist* target = Brain::getInstance()->getCuelistById(targetNumber);
 		if (target != nullptr) {
 			String action = aList[3].toLowerCase();
-			if (action == "go") { target->go(); }
+			if (action == "go") { 
+				if (aList.size() > 4) {
+					float targetCue = (float)((var)aList[4]);
+					target->nextCueId->setValue(targetCue);
+					target->go();
+				}
+				else {
+					target->go();
+				}
+			}
 			else if (action == "goback") { target->goBack(); }
 			else if (action == "gorandom") { target->goRandom(); }
 			else if (action == "off") { target->off(); }
 			else if (action == "kill") { target->kill(); }
-			else if (action == "load") { target->showLoad(); }
-			else if (action == "loadandgo") { target->showLoadAndGo(); }
+			else if (action == "load") { 
+				if (aList.size() > 4) {
+					float targetCue = (float)((var)aList[4]);
+					target->nextCueId->setValue(targetCue);
+				}
+				else {
+					target->showLoad();
+				}
+			}
+			else if (action == "loadandgo") { 
+				if (aList.size() > 4) {
+					float targetCue = (float)((var)aList[4]);
+					target->nextCueId->setValue(targetCue);
+					target->go();
+				}
+				else {
+					target->showLoadAndGo();
+				}
+			}
 			else if (action == "loadrandom") { target->loadRandom(); }
 			else if (action == "taptempo") { target->tapTempo(); }
 			else if (action == "flash" && m.size() > 0) {
