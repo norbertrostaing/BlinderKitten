@@ -341,7 +341,7 @@ void Brain::unregisterPreset(Preset* p) {
 
 void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
     int askedId = id;
-    LOG("register Cuelist");
+    //LOG("register Cuelist");
     if (cuelists.getReference(id) == p) { return; }
     if (cuelists.containsValue(p)) {
         cuelists.removeValue(p);
