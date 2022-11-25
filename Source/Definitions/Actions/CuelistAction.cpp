@@ -120,6 +120,18 @@ void CuelistAction::setValueInternal(var value) {
     case CL_FLASHLEVEL:
         target->setFlashLevel(val);
         break;
+
+    case CL_CHASERSPEED:
+        target->setChaserSpeed(val);
+        break;
+
+    case CL_CHASERTAPTEMPO:
+        if (val > 0) {
+            target->tapTempo();
+        }
+        break;
+
+
     }
 
 

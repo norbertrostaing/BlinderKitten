@@ -53,6 +53,8 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "HTP Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_HTPLEVEL));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASHLEVEL));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "LTP Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LTPLEVEL));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Chaser Speed", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_CHASERSPEED));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Chaser Tap tempo", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_CHASERTAPTEMPO));
 
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));

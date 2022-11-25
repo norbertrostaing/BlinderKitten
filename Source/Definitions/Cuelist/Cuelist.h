@@ -142,6 +142,7 @@ public:
     void setHTPLevel(float level);
     void setLTPLevel(float level);
     void setFlashLevel(float level);
+    void setChaserSpeed(float level);
 
     void showLoad();
     void showLoadAndGo();

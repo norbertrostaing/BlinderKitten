@@ -805,6 +805,10 @@ void Cuelist::setLTPLevel(float level) {
 	LTPLevel->setValue(level);
 }
 
+void Cuelist::setChaserSpeed(float level) {
+	chaserSpeed->setValue(level);
+}
+
 void Cuelist::showLoad()
 {
 	CuelistLoadWindow::getInstance()->loadCuelist(this, false);
