@@ -29,8 +29,8 @@ void ConductorInfos::paint (juce::Graphics& g)
     if (engine == nullptr) { return; }
     g.fillAll(juce::Colours::black);   // clear the background
 
-    int targetId = engine->conductorCuelistId->getValue();
-    Cuelist* target = Brain::getInstance()->getCuelistById(targetId);
+    int targetCueId = engine->conductorCuelistId->getValue();
+    Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
     if (target == nullptr) {
         g.drawText("Cuelist 1 doesn't exist", getLocalBounds(), juce::Justification::centred, true);
         return;
