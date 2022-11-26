@@ -149,6 +149,7 @@ void DataTransferManager::execute() {
                 target = GroupManager::getInstance()->addItem(new Group());
                 target->id->setValue(tId);
                 target->setNiceName("Group " + String(int(target->id->getValue())));
+                target->selection.clear(); // erase data
             }
 
             if (groupCopyMode->getValue() == "replace") {
