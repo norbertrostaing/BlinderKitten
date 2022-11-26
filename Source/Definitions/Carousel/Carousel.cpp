@@ -63,6 +63,9 @@ Carousel::Carousel(var params) :
 	if (params.isVoid()) {
 		rows.addItem();
 	}
+	if (!Brain::getInstance()->loadingIsRunning) {
+		CarouselGridView::getInstance()->updateCells();
+	}
 
 }
 

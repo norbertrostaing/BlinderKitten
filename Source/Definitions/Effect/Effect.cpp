@@ -61,6 +61,9 @@ Effect::Effect(var params) :
 	if (params.isVoid()) {
 		values.addItem();
 	}
+	if (!Brain::getInstance()->loadingIsRunning) {
+		EffectGridView::getInstance()->updateCells();
+	}
 
 }
 

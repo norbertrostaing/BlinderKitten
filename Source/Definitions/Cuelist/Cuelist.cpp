@@ -169,6 +169,9 @@ Cuelist::Cuelist(var params) :
 	}
 
 	Brain::getInstance()->registerCuelist(this, id->getValue());
+	if (!Brain::getInstance()->loadingIsRunning) {
+		CuelistGridView::getInstance()->updateCells();
+	}
 }
 
 Cuelist::~Cuelist()
