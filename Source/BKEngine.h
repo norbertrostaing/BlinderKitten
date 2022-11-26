@@ -43,6 +43,12 @@ public:
 	IntParameter* virtualFaderSize;
 	IntParameter* virtualFaderBelow;
 
+	ControllableContainer conductorInfosContainer;
+	IntParameter* conductorCuelistId;
+	IntParameter* conductorTitleSize;
+	IntParameter* conductorTextSize;
+
+
 	void clearInternal() override;
 
 	var getJSONData() override;

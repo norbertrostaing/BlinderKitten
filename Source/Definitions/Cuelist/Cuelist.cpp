@@ -15,6 +15,7 @@
 #include "CuelistManager.h"
 #include "UI/CuelistLoadWindow.h"
 #include "UI/GridView/CuelistGridView.h"
+#include "UI/ConductorInfos.h"
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
@@ -875,7 +876,9 @@ void Cuelist::fillTexts() {
 		nextCueGo->setValue("");
 		nextCueName->setValue("");
 	}
-
+	if ((int)id->getValue() == 1) {
+		ConductorInfos::getInstance()->repaint();
+	}
 }
 
 Cue* Cuelist::getNextCue() {

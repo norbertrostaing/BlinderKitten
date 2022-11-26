@@ -70,12 +70,15 @@
 #include "UI/VirtualFaders/VirtualFaderColManager.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
+#include "UI/ConductorInfos.h"
+
 #include "UserInputManager.h"
 
 ControllableContainer* getAppSettings();
 
 BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
+	conductorInfosContainer("Conductor infos Settings"),
 	virtualParamsContainer("Virtual Playbacks Settings"),
 	uiParamsContainer("UI Settings")
 	//defaultBehaviors("Test"),
@@ -88,6 +91,7 @@ BKEngine::BKEngine() :
 	//init here
 	Engine::mainEngine = this;
 
+	GlobalSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 
@@ -115,7 +119,14 @@ BKEngine::BKEngine() :
 	gridCols->addParameterListener(this);
 	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
 	gridScale->addParameterListener(this);
-	encoderBigNumber = addIntParameter("Encoder big offset", "Offset of encoders when << or >> pressed",4,2);
+	encoderBigNumber = uiParamsContainer.addIntParameter("Encoder big offset", "Offset of encoders when << or >> pressed",4,2);
+
+	conductorCuelistId = conductorInfosContainer.addIntParameter("Conductor ID", "ID of the conductor cuelist", 1, 1);
+	conductorCuelistId->addParameterListener(this);
+	conductorTitleSize = conductorInfosContainer.addIntParameter("Main font size", "Text size of cue names and go action", 21, 1);;
+	conductorTitleSize->addParameterListener(this);
+	conductorTextSize = conductorInfosContainer.addIntParameter("Text font size", "text size of cue content", 14, 1);;
+	conductorTextSize->addParameterListener(this);
 
 
 	mainBrain = Brain::getInstance();
@@ -154,6 +165,9 @@ BKEngine::BKEngine() :
 
 	VirtualFaderColGrid::getInstance()->engine = this;
 	VirtualFaderColGrid::getInstance()->initCells();
+
+	ConductorInfos::getInstance()->engine = this;
+
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
 	// getAppSettings()->addChildControllableContainer(&defaultBehaviors);
@@ -621,5 +635,8 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	}
 	else if (p == virtualFaderCols || p == virtualFaderRotary || p == virtualFaderAbove || p == virtualFaderSize || p == virtualFaderBelow) {
 		VirtualFaderColGrid::getInstance()->initCells();
+	}
+	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize) {
+		ConductorInfos::getInstance()->repaint();
 	}
 }
