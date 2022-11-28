@@ -29,7 +29,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
 	
-	sender.bindToPort(0);
+	sender.bindToPort(6454);
 
 	setupReceiver();
 }
