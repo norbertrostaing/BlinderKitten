@@ -25,10 +25,11 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
 	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
 
-	
+	discoverNodesIP = addStringParameter("Discover IP", "Find nodes on this IP", "2.255.255.255");
+	findNodesBtn = addTrigger("Find nodes", "find artnet nodes");
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
-	
+
 	sender.bindToPort(6454);
 
 	setupReceiver();
@@ -39,6 +40,11 @@ DMXArtNetDevice::~DMXArtNetDevice()
 	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(200);
+}
+
+void DMXArtNetDevice::triggerTriggered(Trigger* t)
+{
+	if (t == findNodesBtn) { sendArtPoll(); }
 }
 
 void DMXArtNetDevice::setupReceiver()
@@ -107,6 +113,12 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 
 	sender.write(remoteHost->stringValue(), remotePort->intValue(), artnetPacket, 530);
 }
+
+void DMXArtNetDevice::sendArtPoll()
+{
+	sender.write(discoverNodesIP->stringValue(), 6454, artPollPacket, 18);
+}
+
 void DMXArtNetDevice::endLoadFile()
 {
 	Engine::mainEngine->removeEngineListener(this);
@@ -154,9 +166,29 @@ void DMXArtNetDevice::run()
 					setDMXValuesIn(dmxDataLength, receiveBuffer + DMX_HEADER_LENGTH);
 				}
 			}
+			else if (opcode == 0x2000)
+			{
+			}
+			else if (opcode == POLLRESPONSE_OPCODE)
+			{
+				String ip = "";
+				ip += String(receiveBuffer[10]) + ".";
+				ip += String(receiveBuffer[11]) + ".";
+				ip += String(receiveBuffer[12]) + ".";
+				ip += String(receiveBuffer[13]);
+
+				String shortName = "";
+				bool continueName = true;
+				for (int i = 0; i < 18 && continueName; i++) {
+					char c = char(receiveBuffer[i + 26]);
+					if ((int)c == 0) {continueName = false;}
+					else { shortName += c; }
+				}
+				LOG("node replied ! "+ip+ " : "+shortName);
+			}
 			else
 			{
-				DBG("ArtNet OpCode not handled : " << opcode << "( 0x" << String::toHexString(opcode) << ")");
+				LOG("ArtNet OpCode not handled : " << opcode << "( 0x" << String::toHexString(opcode) << ")");
 			}
 		}
 		else
