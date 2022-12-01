@@ -98,7 +98,7 @@ Assistant::Assistant() :
     asciiDimmerChannel->maxDefaultSearchLevel = 2;
     asciiCuelistId = asciiCC.addIntParameter("Main Sequence ID", "Sequence to export or to import in", 1, 1);
     importAsciiBtn = asciiCC.addTrigger("Import", "Click to import a file");
-    exportAsciiBtn = asciiCC.addTrigger("Export", "Click to export selected cuelist in file");
+    //exportAsciiBtn = asciiCC.addTrigger("Export", "Click to export selected cuelist in file");
 
 
     updateDisplay();
@@ -481,6 +481,7 @@ void Assistant::importAscii()
             {
                 currentPrimary = words[0];
                 currentSecondary = words[0];
+                // ajouter ici une verif si l'objet d'avant est clean (subs, groupes)
             }
             else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB") 
             {
