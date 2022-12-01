@@ -16,6 +16,7 @@
 #include "Definitions/Cuelist/Cuelist.h"
 #include "Definitions/Cue/Cue.h"
 #include "Definitions/Preset/Preset.h"
+#include "Definitions/Preset/PresetManager.h"
 #include "Definitions/TimingPreset/TimingPreset.h"
 #include "Definitions/Command/CommandValueManager.h"
 #include "Definitions/Command/CommandValue.h"
@@ -27,9 +28,9 @@
 #include "Definitions/Actions/CuelistAction.h"
 #include "Definitions/Actions/EffectAction.h"
 #include "Definitions/Actions/CarouselAction.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManager.h"
 
 juce_ImplementSingleton(Assistant)
-
 
 Assistant::Assistant() :
 	BaseItem("Offline Lighting General Assistant"),
@@ -37,6 +38,7 @@ Assistant::Assistant() :
     paletteMakerCC("Palette maker"),
     masterMakerCC("Masters maker"),
     midiMapperCC("Midi mappings"),
+    asciiCC("ASCII import / export"),
     Thread("Assistant")
 {
     updateDisplay(); 
@@ -83,6 +85,21 @@ Assistant::Assistant() :
     midiMapperTargetId = midiMapperCC.addIntParameter("Target ID","",0,0);
     midiMapperPageNumber = midiMapperCC.addIntParameter("Page number","0 means current page",0,0);
     midiMapperBtn = midiMapperCC.addTrigger("Create Mappings", "Create mappings for desired target");
+
+    addChildControllableContainer(&asciiCC);
+    asciiPatch = asciiCC.addBoolParameter("Patchs", "Do you want to import or export patch ?", true);
+    asciiGroups = asciiCC.addBoolParameter("Groups", "Do you want to import or export groups ?", true);
+    asciiGroupValuesAsPreset = asciiCC.addBoolParameter("Groups as presets", "If checked, the values stored in GROUP commands will be saved as new presets", true);
+    asciiCues = asciiCC.addBoolParameter("Cues", "Do you want to import or export cues ?", true);
+    asciiSubs = asciiCC.addBoolParameter("Subs", "Do you want to import or export subs ?", true);
+    asciiRespectCueNumbers = asciiCC.addBoolParameter("Respect cue number", "If checked, the cues will be ordered by cue ID, if not, they will be ordered by step number", true);
+    asciiDimmerChannel = asciiCC.addTargetParameter("Intensity Channel", "Channel used as intensity for ascii import/export", ChannelFamilyManager::getInstance());
+    asciiDimmerChannel->targetType = TargetParameter::CONTAINER;
+    asciiDimmerChannel->maxDefaultSearchLevel = 2;
+    asciiCuelistId = asciiCC.addIntParameter("Main Sequence ID", "Sequence to export or to import in", 1, 1);
+    importAsciiBtn = asciiCC.addTrigger("Import", "Click to import a file");
+    exportAsciiBtn = asciiCC.addTrigger("Export", "Click to export selected cuelist in file");
+
 
     updateDisplay();
 }
@@ -158,6 +175,12 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
     }
     else if (c == midiMapperTargetType) {
         updateDisplay();
+    }
+    else if (c == importAsciiBtn) {
+        importAscii();
+    }
+    else if (c == exportAsciiBtn) {
+        exportAscii();
     }
 }
 
@@ -400,6 +423,311 @@ void Assistant::createMidiMappings()
 
     }
     targetInterface->selectThis();
+}
+
+void Assistant::importAscii()
+{
+    const MessageManagerLock mmLock;
+    FileChooser fc("Import an ASCII file", File::getCurrentWorkingDirectory(), "*.asc");
+    if (!fc.browseForFileToOpen()) return;
+    File f = fc.getResult();
+    String content = f.loadFileAsString();
+
+    StringArray lines = StringArray::fromLines(content);
+
+    String currentPrimary = "";
+    String currentSecondary = "";
+
+    int mainCuelistId = asciiCuelistId->getValue();
+
+    Array<DMXInterface*> universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
+    Cuelist* cuelist = nullptr;
+    if (asciiCues) {
+        cuelist = Brain::getInstance()->getCuelistById(mainCuelistId);
+        if (cuelist == nullptr) {
+            cuelist = CuelistManager::getInstance()->addItem();
+        }
+        cuelist->kill();
+        cuelist->cues.clear();
+        cuelist->userName->setValue("ASCII Cuelist");
+    }
+    Cue* currentCue = nullptr;
+    Group* currentGroup = nullptr;
+    Preset* currentPreset = nullptr;
+    Cuelist* currentSub = nullptr;
+    Cue* currentSubCue = nullptr;
+
+
+    for (int i = 0; i < lines.size(); i++) {
+        String line = lines[i];
+        String originalLine = line;
+        line = line.replaceCharacters(" ,/;<=>@", "        ").trim();
+        while (line.indexOf("  ") != -1) {
+            line = line.replace("  ", " ");
+        }
+        if (line == "") {
+            // empty line
+        }
+        else if (line.startsWith("!")) {
+            // comment
+        }
+        else {
+            StringArray words = StringArray::fromTokens(line.toUpperCase(), " ", "");
+            int currentWord = 1;
+            if (words[0] == "ENDDATA") {
+                return;
+            }
+            else if (words[0] == "CLEAR" || words[0] == "CONSOLE" || words[0] == "IDENT" || words[0] == "MANUFACTURER" || words[0] == "PATCH" || words[0] == "SET")
+            {
+                currentPrimary = words[0];
+                currentSecondary = words[0];
+            }
+            else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB") 
+            {
+                currentPrimary = words[0];
+                currentSecondary = words[0];
+            }
+            else if (words[0] == "CHAN" || words[0] == "DOWN" || words[0] == "FOLLOWON" || words[0] == "LINK" || words[0] == "PART" || words[0] == "TEXT" || words[0] == "UP") 
+            {
+                currentSecondary = words[0];
+            }
+            else if (words[0].startsWith("$$"))
+            {
+                currentSecondary = words[0];
+            }
+            else if (words[0].startsWith("$"))
+            {
+                currentPrimary = words[0];
+                currentSecondary = words[0];
+            }
+            else {
+                currentSecondary = "";
+            }
+            
+            if (currentPrimary == "PATCH" && currentSecondary == "PATCH" && asciiPatch->getValue()) {
+                for (int iWord = 2; iWord < words.size()-2; iWord+=3) {
+                    int channel = words[iWord].getIntValue();
+                    int address = words[iWord + 1].getIntValue();
+                    int universe = address/512;
+                    address = address%512;
+                    float level = asciiLevelToFloat(words[iWord + 2]);
+                    if (channel > 0) {
+                        Fixture* fixt = Brain::getInstance()->getFixtureById(channel);
+                        if (fixt == nullptr) {
+                            fixt = FixtureManager::getInstance()->addItem();
+                            fixt->id->setValue(channel);
+                        }
+
+                        while (universes.size() <= universe) {
+                            InterfaceManager::getInstance()->addItem(new DMXInterface());
+                            universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
+                        }
+                        DMXInterface* targetInterface = universes[universe];
+                        FixturePatch* p = fixt->patchs.addItem();
+                        p->targetInterface->setTarget(targetInterface);
+                        p->address->setValue(address);
+                    }
+                }
+            }
+            else if (currentPrimary == "CUE" && asciiCues->getValue()) {
+                if (currentSecondary == "CUE") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, CUE word must have an id in parameter");
+                    }
+                    currentCue = cuelist->cues.addItem();
+                    String cueName = "Cue " + words[1];
+                    currentCue->setNiceName(cueName);
+                    currentCue->commands.clear();
+                    if (asciiRespectCueNumbers->getValue()) {
+                        currentCue->id->setValue(words[1].getFloatValue());
+                    }
+                }
+                else if (currentSecondary == "TEXT") {
+                    String text = originalLine.trim().substring(5);
+                    currentCue->cueText->setValue(text);
+                }
+                else if (currentSecondary == "FOLLOWON") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, UP word must have at least one parameter");
+                    }
+                    currentCue->autoFollow->setValueWithData("Immediate");
+                    currentCue->autoFollowTiming->setValue(words[1].getFloatValue());
+                }
+                else if (currentSecondary == "UP") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, UP word must have at least one parameter");
+                    }
+                    float fade = words[1].getFloatValue();
+                    currentCue->htpInFade->setValue(fade);
+                    currentCue->ltpFade->setValue(fade);
+                    if (words.size() > 2) {
+                        float delay = words[2].getFloatValue();
+                        currentCue->htpInDelay->setValue(delay);
+                        currentCue->ltpDelay->setValue(delay);
+                    }
+                }
+                else if (currentSecondary == "DOWN") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, DOWN word must have at least one parameter");
+                    }
+                    float fade = words[1].getFloatValue();
+                    currentCue->htpOutFade->setValue(fade);
+                    if (words.size() > 2) {
+                        float delay = words[2].getFloatValue();
+                        currentCue->htpOutDelay->setValue(delay);
+                    }
+                }
+                else if (currentSecondary == "CHAN") {
+                    for (int iChan = 1; iChan < words.size() - 1; iChan += 2) {
+                        int fixt = words[iChan].getIntValue();
+                        float level = asciiLevelToFloat(words[iChan + 1]);
+                        Command* com = currentCue->commands.addItem();
+                        com->selection.items[0]->valueFrom->setValue(fixt);
+                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
+                        com->values.items[0]->valueFrom->setValue(level);
+                    }
+                }
+            }
+            else if (currentPrimary == "SUB" && asciiSubs->getValue()) {
+                if (currentSecondary == "SUB") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, SUB word must have an id in parameter");
+                    }
+                    int subId = words[1].getIntValue();
+                    if (subId == mainCuelistId) {
+                        mainCuelistId++;
+                        while (Brain::getInstance()->getCuelistById(mainCuelistId) != nullptr) {
+                            mainCuelistId++;
+                        }
+                        cuelist->id->setValue(mainCuelistId);
+                    }
+
+                    currentSub = Brain::getInstance()->getCuelistById(subId);
+                    if (currentSub == nullptr) {
+                        currentSub = CuelistManager::getInstance()->addItem();
+                        currentSub->id->setValue(subId);
+                    }
+                    currentSub->cues.clear();
+                    currentSubCue = currentSub->cues.addItem();
+                    currentSubCue->commands.clear();
+                    String subName = "Sub " + words[1];
+                    currentSub->userName->setValue(subName);
+                }
+                else if (currentSecondary == "TEXT") {
+                    String text = originalLine.trim().substring(5);
+                    currentSub->userName->setValue(text);
+                }
+                else if (currentSecondary == "DOWN") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, DOWN word must have at least one parameter");
+                    }
+                    float fade = words[1].getFloatValue();
+                    currentSubCue->htpOutFade->setValue(fade);
+                    if (words.size() > 2) {
+                        float delay = words[2].getFloatValue();
+                        currentSubCue->htpOutDelay->setValue(delay);
+                    }
+                }
+                else if (currentSecondary == "CHAN") {
+                    for (int iChan = 1; iChan < words.size() - 1; iChan += 2) {
+                        int fixt = words[iChan].getIntValue();
+                        float level = asciiLevelToFloat(words[iChan + 1]);
+                        Command* com = currentSubCue->commands.addItem();
+                        com->selection.items[0]->valueFrom->setValue(fixt);
+                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
+                        com->values.items[0]->valueFrom->setValue(level);
+                    }
+                }
+            }
+            else if (currentPrimary == "GROUP" && asciiGroups->getValue() || asciiGroupValuesAsPreset->getValue()) {
+                if (currentSecondary == "GROUP") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, GROUP word must have an id in parameter");
+                    }
+                    int groupId = words[1].getIntValue();
+                    if (asciiGroups->getValue()) {
+                        currentGroup = Brain::getInstance()->getGroupById(groupId);
+                        if (currentGroup == nullptr) {
+                            currentGroup = GroupManager::getInstance()->addItem();
+                            currentGroup->id->setValue(groupId);
+                        }
+                        currentGroup->userName->setValue("ASCII Group " + words[1]);
+                        currentGroup->selection.clear();
+                    }
+                    if (asciiGroupValuesAsPreset->getValue()) {
+                        currentPreset = Brain::getInstance()->getPresetById(groupId);
+                        if (currentPreset == nullptr) {
+                            currentPreset = PresetManager::getInstance()->addItem();
+                            currentPreset->id->setValue(groupId);
+                        }
+                        currentPreset->userName->setValue("ASCII Group " + words[1]);
+                        currentPreset->subFixtureValues.clear();
+                    }
+
+                }
+                else if (currentSecondary == "TEXT") {
+                    String text = originalLine.trim().substring(5);
+                    if (currentGroup != nullptr) {
+                        currentGroup->userName->setValue(text);
+                    }
+                    if (currentPreset != nullptr) {
+                        currentPreset->userName->setValue(text);
+                    }
+
+                }
+                else if (currentSecondary == "CHAN") {
+                    for (int iChan = 1; iChan < words.size() - 1; iChan += 2) {
+                        int fixt = words[iChan].getIntValue();
+                        float level = asciiLevelToFloat(words[iChan + 1]);
+                        if (currentGroup != nullptr) {
+                            CommandSelection* s = currentGroup->selection.addItem();
+                            s->valueFrom->setValue(fixt);
+                        }
+                        if (currentPreset != nullptr){
+                            PresetSubFixtureValues * v = currentPreset->subFixtureValues.addItem();
+                            v->targetFixtureId->setValue(fixt);
+                            v->values.items[0]->param->setValue(asciiDimmerChannel->getValue());
+                            v->values.items[0]->paramValue->setValue(level);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                LOG("" + line + " ");
+                LOG(words.size());
+            }
+
+        }
+    }
+
+}
+
+float Assistant::asciiLevelToFloat(String asciiLevel) {
+    float level = 0;
+    if (asciiLevel.startsWith("H") && asciiLevel.length() == 3) {
+        level = asciiLevel.substring(1).getHexValue32() / 255.0;
+    }
+    else if (asciiLevel.startsWith("H") && asciiLevel.length() == 5) {
+        level = asciiLevel.substring(1).getHexValue32() / 65535.0;
+    }
+    else
+    {
+        level = asciiLevel.getIntValue() / 100.0;
+    }
+    return level;
+}
+
+void Assistant::exportAscii()
+{
+    const MessageManagerLock mmLock;
+    FileChooser fc("Select export destination", File::getCurrentWorkingDirectory(), "*.asc");
+    if (fc.browseForFileToSave(true))
+    {
+        File f = fc.getResult();
+        //f.replaceWithText(s);
+    }
+
 }
 
 

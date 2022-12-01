@@ -54,11 +54,24 @@ public:
 	IntParameter* midiMapperPageNumber;
 	Trigger* midiMapperBtn;
 
+	ControllableContainer asciiCC;
+	BoolParameter* asciiPatch;
+	BoolParameter* asciiGroups;
+	BoolParameter* asciiGroupValuesAsPreset;
+	BoolParameter* asciiCues;
+	BoolParameter* asciiSubs;
+	BoolParameter* asciiRespectCueNumbers;
+	IntParameter* asciiCuelistId;
+	TargetParameter* asciiDimmerChannel;
+	Trigger* importAsciiBtn;
+	Trigger* exportAsciiBtn;
+
 
 	bool pleasePatchFixtures = false;
 	bool pleaseCreatePalette = false;
 	bool pleaseCreateMasters = false;
 	bool pleaseCreateMidiMappings = false;
+	bool pleaseImportAscii = false;
 
 	void triggerTriggered(Trigger* t);
 	void onContainerParameterChangedInternal(Parameter* p);
@@ -70,4 +83,8 @@ public:
 	void createMasters();
 	void createMidiMappings();
 
+	void importAscii();
+	void exportAscii();
+
+	float asciiLevelToFloat(String asciiLevel);
 };
