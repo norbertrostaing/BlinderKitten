@@ -34,6 +34,146 @@
       "niceName": "1 - random flash",
       "editorIsCollapsed": true,
       "containers": {
+        "conductorInfos": {
+        },
+        "chaserOptions": {
+          "containers": {
+            "inCurve": {
+              "parameters": [
+                {
+                  "value": 1.0,
+                  "controlAddress": "/length"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/viewValueRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/range",
+                  "enabled": true
+                }
+              ],
+              "editorIsCollapsed": true,
+              "items": [
+                {
+                  "parameters": [
+                    {
+                      "value": "Linear",
+                      "controlAddress": "/easingType"
+                    }
+                  ],
+                  "niceName": "Key",
+                  "containers": {
+                    "easing": {
+                    }
+                  },
+                  "type": "Key"
+                },
+                {
+                  "parameters": [
+                    {
+                      "value": 1.0,
+                      "controlAddress": "/position"
+                    },
+                    {
+                      "value": 1.0,
+                      "controlAddress": "/value"
+                    },
+                    {
+                      "value": "Bezier",
+                      "controlAddress": "/easingType"
+                    }
+                  ],
+                  "niceName": "Key 1",
+                  "containers": {
+                    "easing": {
+                    }
+                  },
+                  "type": "Key"
+                }
+              ],
+              "viewOffset": [
+                0,
+                0
+              ],
+              "viewZoom": 1.0
+            },
+            "outCurve": {
+              "parameters": [
+                {
+                  "value": 1.0,
+                  "controlAddress": "/length"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/viewValueRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    1.0
+                  ],
+                  "controlAddress": "/range",
+                  "enabled": true
+                }
+              ],
+              "editorIsCollapsed": true,
+              "items": [
+                {
+                  "parameters": [
+                    {
+                      "value": "Linear",
+                      "controlAddress": "/easingType"
+                    }
+                  ],
+                  "niceName": "Key",
+                  "containers": {
+                    "easing": {
+                    }
+                  },
+                  "type": "Key"
+                },
+                {
+                  "parameters": [
+                    {
+                      "value": 1.0,
+                      "controlAddress": "/position"
+                    },
+                    {
+                      "value": 1.0,
+                      "controlAddress": "/value"
+                    },
+                    {
+                      "value": "Bezier",
+                      "controlAddress": "/easingType"
+                    }
+                  ],
+                  "niceName": "Key 1",
+                  "containers": {
+                    "easing": {
+                    }
+                  },
+                  "type": "Key"
+                }
+              ],
+              "viewOffset": [
+                0,
+                0
+              ],
+              "viewZoom": 1.0
+            }
+          }
+        },
         "offCurve": {
           "parameters": [
             {
@@ -151,7 +291,7 @@
                   "controlAddress": "/autoFollow"
                 },
                 {
-                  "value": 0.199999988079071,
+                  "value": 0.05000000074505806,
                   "controlAddress": "/autoFollowTiming"
                 }
               ],
