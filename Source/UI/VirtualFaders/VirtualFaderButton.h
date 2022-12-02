@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Common/CommonIncludes.h"
 
 class VirtualFaderButton :
     public BaseItem
@@ -28,6 +29,8 @@ public:
     EnumParameter * effectAction;
     EnumParameter* carouselAction;
     EnumParameter* mapperAction;
+
+    ActionManager actionManager;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();

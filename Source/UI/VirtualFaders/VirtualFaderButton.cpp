@@ -17,7 +17,8 @@
 VirtualFaderButton::VirtualFaderButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderButton")),
 	objectType(params.getProperty("type", "VirtualFaderButton").toString()),
-	objectData(params)
+	objectData(params),
+	actionManager("Generic Actions")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -31,6 +32,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Generic Actions", "actions");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	cuelistAction = addEnumParameter("Cuelist action", "");
@@ -65,6 +67,8 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	mapperAction->addOption("Stop", "stop");
 	mapperAction->addOption("Toggle", "toggle");
 
+	addChildControllableContainer(&actionManager);
+
 	// id = addIntParameter("ID", "ID of this VirtualFaderButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualFaderButton","New VirtualFaderButton");
 	updateDisplay();
@@ -98,11 +102,18 @@ void VirtualFaderButton::updateDisplay() {
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
 
+	actionManager.hideInEditor = targType != "actions";
+	targetId->hideInEditor = targType == "actions";
+
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
+	if (targType == "actions") {
+		actionManager.setValueAll(1);
+		return;
+	}
 	int targId = targetId->getValue();
 	
 	if (targType == "column") {
@@ -192,6 +203,10 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 
 void VirtualFaderButton::released(String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
+	if (targType == "actions") {
+		actionManager.setValueAll(0);
+		return;
+	}
 	int targId = targetId->getValue();
 
 	if (targType == "column") {

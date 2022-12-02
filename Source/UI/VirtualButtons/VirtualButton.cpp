@@ -17,7 +17,8 @@
 VirtualButton::VirtualButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualButton")),
 	objectType(params.getProperty("type", "VirtualButton").toString()),
-	objectData(params)
+	objectData(params),
+	actionManager("Generic Actions")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -33,6 +34,7 @@ VirtualButton::VirtualButton(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Generic Actions", "actions");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	cuelistAction = addEnumParameter("Cuelist action", "");
@@ -67,6 +69,7 @@ VirtualButton::VirtualButton(var params) :
 	mapperAction->addOption("Stop", "stop");
 	mapperAction->addOption("Toggle", "toggle");
 
+	addChildControllableContainer(&actionManager);
 	// id = addIntParameter("ID", "ID of this VirtualButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualButton","New VirtualButton");
 	updateDisplay();
@@ -95,12 +98,19 @@ void VirtualButton::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+	actionManager.hideInEditor = targType != "actions";
+	targetId -> hideInEditor = targType == "actions";
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void VirtualButton::pressed() { 
 	String targType = targetType->getValue();
+	if (targType == "actions") {
+		actionManager.setValueAll(1);
+		return;
+	}
+
 	int targId = targetId->getValue();
 	if (targId == 0) {return;}
 
@@ -184,6 +194,11 @@ void VirtualButton::pressed() {
 
 void VirtualButton::released() { 
 	String targType = targetType->getValue();
+
+	if (targType == "actions") {
+		actionManager.setValueAll(0);
+		return;
+	}
 	int targId = targetId->getValue();
 	if (targId == 0) { return; }
 

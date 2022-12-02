@@ -17,7 +17,8 @@
 VirtualFaderSlider::VirtualFaderSlider(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderSlider")),
 	objectType(params.getProperty("type", "VirtualFaderSlider").toString()),
-	objectData(params)
+	objectData(params),
+	actionManager("Generic Actions")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -31,6 +32,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Generic Actions", "actions");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	cuelistAction = addEnumParameter("Cuelist action", "");
@@ -48,6 +50,8 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 
 	mapperAction = addEnumParameter("Carousel Action", "");
 	mapperAction->addOption("Size", "size");
+
+	addChildControllableContainer(&actionManager);
 
 	updateDisplay();
 	updateName();
@@ -87,6 +91,9 @@ void VirtualFaderSlider::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+
+	actionManager.hideInEditor = targType != "actions";
+	targetId->hideInEditor = targType == "actions";
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -144,6 +151,10 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 
 void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
+	if (targType == "actions") {
+		actionManager.setValueAll(value);
+		return;
+	}
 	int targId = targetId->getValue();
 
 	if (targType == "column") {
