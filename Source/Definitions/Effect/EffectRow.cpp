@@ -94,7 +94,8 @@ void EffectRow::computeData() {
     }
     for (int i = 0; i < paramContainer.items.size(); i++) {
         EffectParam* p = paramContainer.items[i];
-        p -> subFixtureChannelOffsets.clear();
+        p->subFixtureChannelOffsets.clear();
+        p->subFixtureChannelAreWinged.clear();
         ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
         if (chanType != nullptr) {
             Array<SubFixtureChannel*> chans;
@@ -105,20 +106,29 @@ void EffectRow::computeData() {
                     chans.add(c);
                 }
             }
-            int totWings= p->wings->getValue();
-            float sizeWing = chans.size()/totWings;
+            
+            int nWings = p->wings->getValue();
             int nBuddying = p->buddying->getValue();
-            float nLimit = chans.size();
+            int realTot = chans.size()/nBuddying;
+            int wingSize = realTot / nWings;
+            realTot = realTot / nWings;
 
             for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
-                int nWing = chanIndex/sizeWing;
-                double offset = (chanIndex - (chanIndex%nBuddying)) / sizeWing;
+                int realIndex = chanIndex/nBuddying;
+
+                int nWing = chanIndex/wingSize;
+                bool isWinged = false;
                 if (nWing % 2 == 1) {
-                    offset = -offset;
+                    isWinged = true;
+                    realIndex = realIndex%wingSize;
+                    realIndex = wingSize - 1 - realIndex;
                 }
+
+                double offset = realIndex / (double)realTot;
                 offset *= (double)p->elementsSpread->getValue();
                 offset += (double)p->elementsStart->getValue();
                 p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
+                p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
                 if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
                     parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
                 }

@@ -34,8 +34,9 @@ EffectParam::EffectParam(var params) :
     elementsStart = addFloatParameter("First Element position", "Position of the first element, relative to the curve", 0, 0, 1);
     elementsSpread = addFloatParameter("Elements Spread", "Size of distribution", 1, 0);
 
-    wings = addIntParameter("Wings", "A wing repeat the effect but inversed",1,1);
     buddying = addIntParameter("Buddying", "make groups of X following subfixtures with the same value",1,1);
+    wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
+    wingsInvert = addBoolParameter("Invert wings value", "Values on wings are inverted",false);
 
     curveSize = addFloatParameter("Size", "Size of the effect applied to outputs",1,-2,2);
     baseValue = addFloatParameter("Base Value","Base value applied to channels",0,0,1);

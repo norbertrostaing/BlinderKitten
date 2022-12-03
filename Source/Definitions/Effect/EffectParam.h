@@ -29,6 +29,7 @@ class EffectParam:
     
     IntParameter* wings;
     IntParameter* buddying;
+    BoolParameter* wingsInvert;
     
     EnumParameter* effectMode;
     TargetParameter* paramType;
@@ -37,6 +38,7 @@ class EffectParam:
     FloatParameter* baseValue;
 
     HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets;
+    HashMap<SubFixtureChannel*, bool> subFixtureChannelAreWinged;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
