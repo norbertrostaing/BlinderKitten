@@ -26,6 +26,7 @@ public:
     CueManager cues;
 
     IntParameter* id;
+    IntParameter* layerId;
     int registeredId = 0;
     StringParameter* userName;
     void updateName();

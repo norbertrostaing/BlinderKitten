@@ -41,6 +41,7 @@ Programmer::Programmer(var params) :
 
 	id = addIntParameter("ID", "Id of this Programmer", 1, 1);
 	userName = addStringParameter("Name", "Name of this programmer", "New programmer");
+	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
 	updateName();
 
 	editionMode = addEnumParameter("Edition mode", "mode of edition");

@@ -25,6 +25,7 @@ public:
     BaseManager<Command> commands;
 
     IntParameter* id;
+    IntParameter* layerId;
     int registeredId = 0;
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);

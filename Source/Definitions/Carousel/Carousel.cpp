@@ -33,6 +33,7 @@ Carousel::Carousel(var params) :
 
 	id = addIntParameter("ID", "ID of this Carousel", 1, 1);
 	userName = addStringParameter("Name", "Name of this Carousel", "New Carousel");
+	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
 	updateName();
 
 	isCarouselOn = addBoolParameter("is ON", "Enable or disable this Carousel",false);

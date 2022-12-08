@@ -110,39 +110,77 @@ void SubFixtureChannel::writeValue(float v) {
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
 
-	int overWritten = -1;
-	for (int i = 0; i < cuelistStack.size(); i++)
-	{
-		newValue = cuelistStack.getReference(i)->applyToChannel(this, newValue, now);
-		ChannelValue* cv = cuelistStack.getReference(i)->activeValues.getReference(this);
-		if (cv != nullptr && cv->isEnded) {
-			overWritten = i - 1;
-		}
-	}
+	Array<int> layers;
 
-	postCuelistValue = newValue;
-
-	for (int i = 0; i <= overWritten; i++) {
-		ChannelValue* cv = cuelistStack.getReference(i)->activeValues.getReference(this);
-		if (cv != nullptr && !cv->isOverWritten) {
-			cv->isOverWritten = true;
-			Brain::getInstance()->pleaseUpdate(cuelistStack.getReference(i));
-		}
+	for (int i = 0; i < cuelistStack.size(); i++) {
+		layers.addIfNotAlreadyThere(cuelistStack.getReference(i)->layerId->getValue());
 	}
 	for (int i = 0; i < programmerStack.size(); i++) {
-		newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
+		layers.addIfNotAlreadyThere(programmerStack.getReference(i)->layerId->getValue());
 	}
-
 	for (int i = 0; i < mapperStack.size(); i++) {
-		newValue = mapperStack.getReference(i)->applyToChannel(this, newValue, now);
+		layers.addIfNotAlreadyThere(mapperStack.getReference(i)->layerId->getValue());
 	}
-
 	for (int i = 0; i < carouselStack.size(); i++) {
-		newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+		layers.addIfNotAlreadyThere(carouselStack.getReference(i)->layerId->getValue());
+	}
+	for (int i = 0; i < effectStack.size(); i++) {
+		layers.addIfNotAlreadyThere(effectStack.getReference(i)->layerId->getValue());
 	}
 
-	for (int i = 0; i < effectStack.size(); i++) {
-		newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
+	layers.sort();
+
+	for (int l = 0; l< layers.size(); l++)
+		{
+		int currentLayer = layers.getReference(l);
+
+		int overWritten = -1;
+		for (int i = 0; i < cuelistStack.size(); i++)
+		{
+			if ((int)cuelistStack.getReference(i)->layerId->getValue() == currentLayer) {
+				newValue = cuelistStack.getReference(i)->applyToChannel(this, newValue, now);
+				ChannelValue* cv = cuelistStack.getReference(i)->activeValues.getReference(this);
+				if (cv != nullptr && cv->isEnded) {
+					overWritten = i - 1;
+				}
+			}
+		}
+
+		postCuelistValue = newValue;
+
+		for (int i = 0; i <= overWritten; i++) {
+			if ((int)cuelistStack.getReference(i)->layerId->getValue() == currentLayer) {
+					ChannelValue* cv = cuelistStack.getReference(i)->activeValues.getReference(this);
+				if (cv != nullptr && !cv->isOverWritten) {
+					cv->isOverWritten = true;
+					Brain::getInstance()->pleaseUpdate(cuelistStack.getReference(i));
+				}
+			}
+		}
+		for (int i = 0; i < programmerStack.size(); i++) {
+			if ((int)programmerStack.getReference(i)->layerId->getValue() == currentLayer) {
+				newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
+			}
+		}
+
+		for (int i = 0; i < mapperStack.size(); i++) {
+			if ((int)mapperStack.getReference(i)->layerId->getValue() == currentLayer) {
+				newValue = mapperStack.getReference(i)->applyToChannel(this, newValue, now);
+			}
+		}
+
+		for (int i = 0; i < carouselStack.size(); i++) {
+			if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
+				newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+			}
+		}
+
+		for (int i = 0; i < effectStack.size(); i++) {
+			if ((int)effectStack.getReference(i)->layerId->getValue() == currentLayer) {
+				newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
+			}
+		}
+	
 	}
 
 	for (int i = 0; i < cuelistFlashStack.size(); i++)
@@ -172,9 +210,7 @@ void SubFixtureChannel::updateVal(double now) {
 }
 
 void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
-	while (cuelistStack.indexOf(c) >= 0) {
-		cuelistStack.removeAllInstancesOf(c);
-	}
+	cuelistOutOfStack(c);
 	cuelistStack.add(c);
 }
 
@@ -185,9 +221,7 @@ void SubFixtureChannel::cuelistOutOfStack(Cuelist* c) {
 }
 
 void SubFixtureChannel::cuelistOnTopOfFlashStack(Cuelist* c) {
-	while (cuelistFlashStack.indexOf(c) >= 0) {
-		cuelistFlashStack.removeAllInstancesOf(c);
-	}
+	cuelistOutOfFlashStack(c);
 	cuelistFlashStack.add(c);
 }
 
@@ -198,9 +232,7 @@ void SubFixtureChannel::cuelistOutOfFlashStack(Cuelist* c) {
 }
 
 void SubFixtureChannel::programmerOnTopOfStack(Programmer* p) {
-	while (programmerStack.indexOf(p) >= 0) {
-		programmerStack.removeAllInstancesOf(p);
-	}
+	programmerOutOfStack(p);
 	programmerStack.add(p);
 }
 
@@ -211,9 +243,7 @@ void SubFixtureChannel::programmerOutOfStack(Programmer* p) {
 }
 
 void SubFixtureChannel::effectOnTopOfStack(Effect* f) {
-	while (effectStack.indexOf(f) >= 0) {
-		effectStack.removeAllInstancesOf(f);
-	}
+	effectOutOfStack(f);
 	effectStack.add(f);
 }
 
@@ -224,9 +254,7 @@ void SubFixtureChannel::effectOutOfStack(Effect* f) {
 }
 
 void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
-	while (carouselStack.indexOf(f) >= 0) {
-		carouselStack.removeAllInstancesOf(f);
-	}
+	carouselOutOfStack(f);
 	carouselStack.add(f);
 }
 
@@ -237,9 +265,7 @@ void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
 }
 
 void SubFixtureChannel::mapperOnTopOfStack(Mapper* f) {
-	while (mapperStack.indexOf(f) >= 0) {
-		mapperStack.removeAllInstancesOf(f);
-	}
+	mapperOutOfStack(f);
 	mapperStack.add(f);
 }
 

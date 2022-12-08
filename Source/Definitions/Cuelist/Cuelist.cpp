@@ -37,8 +37,8 @@ Cuelist::Cuelist(var params) :
 	itemDataType = "Cuelist";
 
 	id = addIntParameter("ID", "Id of this Cuelist", params.getProperty("ID", 1), 1);
-
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
+	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
 	updateName();
 
 	currentCueName = conductorInfos.addStringParameter("Current cue", "Current Cue name", "", false);

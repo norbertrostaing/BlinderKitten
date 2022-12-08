@@ -31,6 +31,7 @@ Mapper::Mapper(var params) :
 
 	id = addIntParameter("ID", "ID of this Mapper", 1, 1);
 	userName = addStringParameter("Name", "Name of this Mapper", "New Mapper");
+	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
 	updateName();
 
 	isMapperOn = addBoolParameter("is ON", "Enable or disable this Mapper",false);

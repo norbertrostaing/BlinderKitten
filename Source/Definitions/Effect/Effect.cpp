@@ -32,6 +32,7 @@ Effect::Effect(var params) :
 
 	id = addIntParameter("ID", "ID of this Effect", 1, 1);
 	userName = addStringParameter("Name", "Name of this effect", "New effect");
+	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
 	updateName();
 
 	isEffectOn = addBoolParameter("is ON", "Enable or disable this effect",false);

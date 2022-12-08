@@ -29,6 +29,7 @@ public:
     var objectData;
 
     IntParameter* id;
+    IntParameter* layerId;
     int registeredId = 0;
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
