@@ -159,19 +159,19 @@ void Assistant::triggerTriggered(Trigger* t) {
 void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
     if ((Trigger*)c == patcherBtn) {
         pleasePatchFixtures = true;
-        startThread(1);
+        startThread();
     }
     else if ((Trigger*)c == paletteBtn) {
         pleaseCreatePalette = true;
-        startThread(1);
+        startThread();
     }
     else if ((Trigger*)c == masterBtn) {
         pleaseCreateMasters = true;
-        startThread(1);
+        startThread();
     }
     else if ((Trigger*)c == midiMapperBtn) {
         pleaseCreateMidiMappings = true;
-        startThread(1);
+        startThread();
     }
     else if (c == midiMapperTargetType) {
         updateDisplay();
