@@ -79,3 +79,13 @@ void ChannelFamilyManager::importData(var data)
     }
 }
 
+void ChannelFamilyManager::updateOrderedElements()
+{
+    orderedElements.clear();
+    for (int iFam = 0; iFam < items.size(); iFam++) {
+        for (int iType = 0; iType < items[iFam]->definitions.items.size(); iType++) {
+            orderedElements.add(items[iFam]->definitions.items[iType]);
+        }
+    }
+}
+

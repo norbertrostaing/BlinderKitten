@@ -11,12 +11,22 @@
 #include "JuceHeader.h"
 #include "Preset.h"
 #include "PresetValue.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManager.h"
 #include "../ChannelFamily/ChannelType/ChannelType.h"
 #include "../../Brain.h"
 #include "PresetManager.h"
 #include "UI/GridView/PresetGridView.h"
 #include "UserInputManager.h"
 #include "Definitions/DataTransferManager/DataTransferManager.h"
+
+int comparePresetContent(PresetSubFixtureValues* A, PresetSubFixtureValues* B) {
+	if (A->targetFixtureId->getValue() == B->targetFixtureId->getValue()) {
+		return (int)A->targetSubFixtureId->getValue() - (int)B->targetSubFixtureId->getValue();
+	}
+	else {
+		return (int)A->targetFixtureId->getValue() - (int)B->targetFixtureId->getValue();
+	}
+}
 
 Preset::Preset(var params) :
 	BaseItem(params.getProperty("name", "Preset")),
@@ -40,8 +50,9 @@ Preset::Preset(var params) :
 	presetExplain += "- Fixture type : preset applies only to SubFixtures from the same Fixture type\n\n";
 	presetExplain += "- Same channels : preset applies to all SubFixtures with same channels\n\n";
 	
-	loadToProgrammerBtn = addTrigger("Load", "Load fixtures values in the programmer (values with fixture ID 0 are not called)");
+	//loadToProgrammerBtn = addTrigger("Load", "Load fixtures values in the programmer (values with fixture ID 0 are not called)");
 	testMeButton = addTrigger("Test me", "call any fixture possible with this preset");
+	reOrderButton = addTrigger("Reorder Data", "Re arrange preset data");
 
 	presetType = addEnumParameter("Type", presetExplain);
 	presetType->addOption("SubFixture", 1);
@@ -51,6 +62,7 @@ Preset::Preset(var params) :
 
 	// to add a manager with defined data
 	subFixtureValues.selectItemWhenCreated = false;
+	subFixtureValues.comparator.compareFunc = comparePresetContent;
 	addChildControllableContainer(&subFixtureValues);
 
 	Brain::getInstance()->registerPreset(this, id->getValue());
@@ -211,6 +223,10 @@ void Preset::triggerTriggered(Trigger* t)
 	if (t == testMeButton) {
 		UserInputManager::getInstance()->testPreset(this);
 	}
+	if (t == reOrderButton) {
+		ChannelFamilyManager::getInstance()->updateOrderedElements();
+		reorderPresetContent();
+	}
 }
 
 
@@ -229,3 +245,9 @@ void Preset::updateDisplay()
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
+void Preset::reorderPresetContent() {
+	subFixtureValues.reorderItems();
+	for (int i = 0; i < subFixtureValues.items.size(); i++) {
+		subFixtureValues.items[i]->values.reorderItems();
+	}
+}

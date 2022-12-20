@@ -49,6 +49,9 @@ public:
 
     void importData(var data = var());
 
+    Array<ChannelType*> orderedElements;
+    void updateOrderedElements();
+
     // var getSceneData();
     // void updateSceneData(var& sceneData);
     // void lerpFromSceneData(var startData, var endData, float weight);

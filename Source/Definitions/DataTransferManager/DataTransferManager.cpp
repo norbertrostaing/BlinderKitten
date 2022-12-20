@@ -191,7 +191,6 @@ void DataTransferManager::execute() {
                 ChannelFamily* chanType = dynamic_cast<ChannelFamily*>(chan->channelType->parentContainer->parentContainer.get());
 
                 if (cValue->endValue != -1 && (filter == nullptr || filter == chanType)) {
-
                     int subfixtId = chan->parentSubFixture->subId;
                     int fixtId = dynamic_cast<Fixture*>(chan->parentSubFixture->parentFixture)->id->getValue();
                     PresetSubFixtureValues* pfv = nullptr;
@@ -221,6 +220,7 @@ void DataTransferManager::execute() {
                     }
                     pv->paramValue->setValue(cValue->endValue);
                 }
+            target->reorderPresetContent();
             target->updateDisplay();
             target->selectThis();
             }

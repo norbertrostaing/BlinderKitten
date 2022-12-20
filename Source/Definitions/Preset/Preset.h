@@ -35,6 +35,7 @@ public:
     TargetParameter* devTypeParam;
     EnumParameter* presetType;
     Trigger* testMeButton;
+    Trigger* reOrderButton;
 
     HashMap<SubFixture*, HashMap<ChannelType*, float>*> computedSubFixtureValues;
     HashMap<FixtureType*, HashMap<ChannelType*, float>*> computedFixtureTypeValues;
@@ -54,5 +55,9 @@ public:
     void computeValues();
     void updateDisplay();
 
+    void reorderPresetContent();
+
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+
+
 };
