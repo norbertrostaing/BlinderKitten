@@ -137,4 +137,10 @@ public:
     bool pleaseClearProgrammer = false;
 
     void goAllLoadedCuelists();
+    void killAllCuelists();
+    void offAllCuelists();
+    void stopAllEffects();
+    void stopAllCarousels();
+
+    void resetRandomSeed(int seed);
 };

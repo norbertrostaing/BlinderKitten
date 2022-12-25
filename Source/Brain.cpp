@@ -931,3 +931,40 @@ void Brain::goAllLoadedCuelists() {
         }
     }
 }
+
+void Brain::killAllCuelists()
+{
+    for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
+        Cuelist* c = it.getValue();
+        c->kill();
+    }
+}
+
+void Brain::offAllCuelists()
+{
+    for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
+        Cuelist* c = it.getValue();
+        c->off();
+    }
+}
+
+void Brain::stopAllEffects()
+{
+    for (auto it = effects.begin(); it != effects.end(); it.next()) {
+        Effect* f = it.getValue();
+        f->stop();
+    }
+}
+
+void Brain::stopAllCarousels()
+{
+    for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
+        Carousel* f = it.getValue();
+        f->stop();
+    }
+}
+
+void Brain::resetRandomSeed(int seed)
+{
+    srand(seed);
+}

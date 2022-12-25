@@ -66,6 +66,13 @@ public:
 	Trigger* importAsciiBtn;
 	Trigger* exportAsciiBtn;
 
+	ControllableContainer controlsCC;
+	Trigger* offCuelistsBtn;
+	Trigger* killCuelistsBtn;
+	Trigger* stopEffectsBtn;
+	Trigger* stopCarouselsBtn;
+	IntParameter* randomSeed;
+	Trigger* resetRandomBtn;
 
 	bool pleasePatchFixtures = false;
 	bool pleaseCreatePalette = false;

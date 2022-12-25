@@ -123,7 +123,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 
 			Random r;
 			if ((int)selections[selId]->randomSeed->getValue() == 0) {
-				r.setSeedRandomly();
+				r.setSeed(rand());
 			}
 			else {
 				r.setSeed((int)selections[selId]->randomSeed->getValue());
@@ -145,7 +145,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 
 			Random r;
 			if ((int)selections[selId]->randomSeed->getValue() == 0) {
-				r.setSeedRandomly();
+				r.setSeed(rand());
 				if (tempSelection.size() - selections[selId]->lastRandom.size() > to) {
 					for (int i = 0; i < selections[selId]->lastRandom.size(); i++) {
 						tempSelection.removeAllInstancesOf(selections[selId]->lastRandom[i]);

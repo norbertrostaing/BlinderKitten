@@ -39,6 +39,7 @@ Assistant::Assistant() :
     masterMakerCC("Masters maker"),
     midiMapperCC("Midi mappings"),
     asciiCC("ASCII import / export"),
+    controlsCC("Generic controls"),
     Thread("Assistant")
 {
     updateDisplay(); 
@@ -69,7 +70,8 @@ Assistant::Assistant() :
     masterMakerCC.addChildControllableContainer(&masterValue);
     masterBtn = masterMakerCC.addTrigger("Create Masters", "create a master cuelist for each group with these values");
     addChildControllableContainer(&masterMakerCC);
-    
+
+    /*
     midiMapperTargetInterface = midiMapperCC.addTargetParameter("Midi interface", "Midi interface to connect your new mapping, let empty to create a new one", InterfaceManager::getInstance());
     midiMapperTargetInterface->maxDefaultSearchLevel = 0;
     midiMapperTargetInterface->targetType = TargetParameter::CONTAINER;
@@ -85,6 +87,7 @@ Assistant::Assistant() :
     midiMapperTargetId = midiMapperCC.addIntParameter("Target ID","",0,0);
     midiMapperPageNumber = midiMapperCC.addIntParameter("Page number","0 means current page",0,0);
     midiMapperBtn = midiMapperCC.addTrigger("Create Mappings", "Create mappings for desired target");
+    */
 
     addChildControllableContainer(&asciiCC);
     asciiPatch = asciiCC.addBoolParameter("Patchs", "Do you want to import or export patch ?", true);
@@ -100,6 +103,13 @@ Assistant::Assistant() :
     importAsciiBtn = asciiCC.addTrigger("Import", "Click to import a file");
     //exportAsciiBtn = asciiCC.addTrigger("Export", "Click to export selected cuelist in file");
 
+    addChildControllableContainer(&controlsCC);
+    offCuelistsBtn = controlsCC.addTrigger("Off all cuelists", "");
+    killCuelistsBtn = controlsCC.addTrigger("Kill all cuelists", "");
+    stopEffectsBtn = controlsCC.addTrigger("Stop all effects", "");
+    stopCarouselsBtn = controlsCC.addTrigger("Stop all carousels", "");
+    randomSeed = controlsCC.addIntParameter("Random Seed", "", 0, 0);
+    resetRandomBtn = controlsCC.addTrigger("Reset Random Seed", "");
 
     updateDisplay();
 }
@@ -181,6 +191,21 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
     }
     else if (c == exportAsciiBtn) {
         exportAscii();
+    }
+    else if (c == offCuelistsBtn) {
+        Brain::getInstance()->offAllCuelists();
+    }
+    else if (c == killCuelistsBtn) {
+        Brain::getInstance()->killAllCuelists();
+    }
+    else if (c == stopEffectsBtn) {
+        Brain::getInstance()->stopAllEffects();
+    }
+    else if (c == stopCarouselsBtn) {
+        Brain::getInstance()->stopAllCarousels();
+    }
+    else if (c == resetRandomBtn) {
+        Brain::getInstance()->resetRandomSeed(randomSeed->getValue());
     }
 }
 
@@ -473,7 +498,7 @@ void Assistant::importAscii()
         }
         else {
             StringArray words = StringArray::fromTokens(line.toUpperCase(), " ", "");
-            int currentWord = 1;
+            //int currentWord = 1;
             if (words[0] == "ENDDATA") {
                 return;
             }
@@ -511,7 +536,7 @@ void Assistant::importAscii()
                     int address = words[iWord + 1].getIntValue();
                     int universe = address/512;
                     address = address%512;
-                    float level = asciiLevelToFloat(words[iWord + 2]);
+                    //float level = asciiLevelToFloat(words[iWord + 2]);
                     if (channel > 0) {
                         Fixture* fixt = Brain::getInstance()->getFixtureById(channel);
                         if (fixt == nullptr) {
