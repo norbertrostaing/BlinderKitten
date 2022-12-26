@@ -52,6 +52,10 @@ InputPanelAction::InputPanelAction(var params) :
         targetButton->addOption("Copy", "Copy");
         targetButton->addOption("Delete", "Delete");
     }
+    if (actionType == IP_RANDOMSEED) {
+        randomSeed = addIntParameter("Random Seed", "Initialise all random events with this value",0,0);
+    }
+
 }
 
 InputPanelAction::~InputPanelAction()
@@ -74,10 +78,41 @@ void InputPanelAction::setValueInternal(var value) {
         break;
 
     case IP_GM:
+        {
         const MessageManagerLock mmLock;
         InputPanel::getInstance()->grandMaster.setValue(val);
+        }
         break;
 
+    case IP_OFFCL:
+        if (val > 0) {
+            Brain::getInstance()->offAllCuelists();
+        }
+        break;
+
+    case IP_KILLCL:
+        if (val > 0) {
+            Brain::getInstance()->killAllCuelists();
+        }
+        break;
+
+    case IP_STOPFX:
+        if (val > 0) {
+            Brain::getInstance()->stopAllEffects();
+        }
+        break;
+
+    case IP_STOPCAR:
+        if (val > 0) {
+            Brain::getInstance()->stopAllCarousels();
+        }
+        break;
+
+    case IP_RANDOMSEED:
+        if (val > 0) {
+            Brain::getInstance()->resetRandomSeed(randomSeed->getValue());
+        }
+        break;
     }
 
 }
