@@ -56,7 +56,15 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			for (int id = idFrom; id != idThru + mod; id = id + mod) {
 				if (b->groups.contains(id)) {
 					Group* g = b->groups.getReference(id);
-					if (groupHistory.indexOf(g->id->getValue()) == -1) {
+					int count = 0;
+					int groupId = g->id->getValue();
+					for (int histIndex = 0; histIndex < groupHistory.size(); histIndex++) {
+						if (groupHistory[histIndex] == groupId) {
+							count++;
+						}
+					}
+					//if (groupHistory.indexOf(g->id->getValue()) == -1) {
+					if (count < 10) {
 						groupHistory.add(id);
 						g->selection.computeSelection(groupHistory);
 						tempSelection.addArray(g->selection.computedSelectedSubFixtures);
