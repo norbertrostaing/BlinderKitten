@@ -14,6 +14,7 @@
 #include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
 #include "Definitions/Programmer/Programmer.h"
 #include "Definitions/Command/Command.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManager.h"
 
 //==============================================================================
 EncodersUI::EncodersUI(const String& contentName):
@@ -114,7 +115,7 @@ void Encoders::resized()
     int btnWidth = 30;
     int btnValueWidth = 40;
    
-    commandLine.setBounds(0,22,windowW, 20);
+    commandLine.setBounds(0,40,windowW, 20);
 
     btnMode.setBounds(windowW - (1 * btnValueWidth), 0, btnValueWidth, 20);
     encoderRangeBtn.setBounds(windowW - (2 * btnValueWidth), 0, btnValueWidth, 20);
@@ -123,27 +124,13 @@ void Encoders::resized()
     littleMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
     bigMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
 
-    if (windowH > windowW) { // portrait
-        float w = 57;
-        float h = 57;
-        for (int i = 0; i < 10; i++) {
-            encoders[i]->setBounds(0, i*h, w, h);
-            encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
-            labels[i]->setBounds(0, i * h, w, 20);
-            labels[i]->setJustificationType(1);
-
-        }
-    }
-    else {
-        float w = 57;
-        float h = 57;
-        for (int i = 0; i < 10; i++) {
-            // int encoderId = i + encodersOffset;
-            encoders[i]->setBounds(i*w, 60, w, h);
-            encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
-            labels[i]->setBounds(i*w, 80, w, 20);
-            labels[i]->setJustificationType(36);
-        }
+    float w = 57;
+    float h = 57;
+    for (int i = 0; i < 10; i++) {
+        encoders[i]->setBounds(i*w, 80, w, h);
+        encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
+        labels[i]->setBounds(i*w, 80, w, 20);
+        labels[i]->setJustificationType(36);
     }
 }
 
@@ -183,6 +170,21 @@ void Encoders::buttonClicked(Button* b) {
     else if (b == &littleMoveRightBtn) {
         encodersOffset = jmax(0, encodersOffset + 1);
         updateEncoders();
+    } 
+    else 
+    {
+        // filters
+        int i = filterBtns.indexOf(dynamic_cast<TextButton*>(b));
+        if (i >= 0) {
+            ChannelFamily* target = availableFilters[i];
+            if (selectedFilters.indexOf(target) >= 0) {
+                selectedFilters.removeAllInstancesOf(target);
+            }
+            else {
+                selectedFilters.add(target);
+            }
+            updateChannels();
+        }
     }
 }
 
@@ -222,6 +224,33 @@ void Encoders::updateRangeButton() {
 
 void Encoders::updateFilters() {
     // add buttons to filter types of channels by family
+}
+
+void Encoders::updateFilterBtns()
+{
+    for (int i = 0; i < filterBtns.size(); i++) {
+        removeChildComponent(filterBtns[i]);
+    }
+    filterBtns.clear();
+    if (availableFilters.size() > 0) {
+        float w = getWidth()/availableFilters.size();
+        for (int i = 0; i < availableFilters.size(); i++) {
+            TextButton* t = filterBtns.add(std::make_unique<TextButton>());
+            t->setButtonText(availableFilters[i]->niceName);
+            t->setBounds(i * w, 20, w, 20);
+            t->addListener(this);
+            if (selectedFilters.size() > 0) {
+                if (selectedFilters.indexOf(availableFilters[i]) >= 0) {
+                    t->setColour(TextButton::ColourIds::buttonColourId, Colour(196, 196, 196));
+                    t->setColour(TextButton::ColourIds::textColourOffId, Colour(64, 64, 64));
+                }
+                else {
+                    t->setColour(TextButton::ColourIds::buttonColourId, Colour(64, 64, 64));
+                }
+            }
+            addAndMakeVisible(t);
+        }
+    }
 }
 
 void Encoders::updateEncoders() {
@@ -267,6 +296,44 @@ void Encoders::updateEncoders() {
     }
     //repaint();
 
+}
+
+void Encoders::updateChannels()
+{
+    channels.clear();
+    availableFilters.clear();
+    Command* currentCommand = nullptr;
+    Array<ChannelType* >chans;
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+        currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
+        currentCommand->selection.computeSelection();
+        chans = currentCommand->selection.getControllableChannelsTypes();
+    }
+    
+
+    int currentIndex = 0;
+
+    for (int i = 0; i < ChannelFamilyManager::getInstance()->items.size(); i++) {
+        for (int j = 0; j < ChannelFamilyManager::getInstance()->items[i]->definitions.items.size(); j++) {
+            if (chans.contains(ChannelFamilyManager::getInstance()->items[i]->definitions.items[j])) {
+                if (availableFilters.indexOf(ChannelFamilyManager::getInstance()->items[i]) == -1) {
+                    availableFilters.add(ChannelFamilyManager::getInstance()->items[i]);
+                }
+                if (selectedFilters.size() == 0 || selectedFilters.indexOf(ChannelFamilyManager::getInstance()->items[i]) >= 0) {
+                    channels.set(currentIndex, ChannelFamilyManager::getInstance()->items[i]->definitions.items[j]);
+                    currentIndex++;
+                }
+            }
+        }
+    }
+    for (int i = selectedFilters.size()-1; i >= 0; i--) {
+        ChannelFamily* f = selectedFilters[i];
+        if (availableFilters.indexOf(f) == -1) {
+            selectedFilters.remove(i);
+        }
+    }
+    updateFilterBtns();
+    updateEncoders();
 }
 
 void Encoders::updateContentWithCommand(Command* c) {

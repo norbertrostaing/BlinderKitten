@@ -47,6 +47,10 @@ public:
     Label commandLine;
     TextButton btnMode;
 
+    OwnedArray<TextButton> filterBtns;
+    Array<ChannelFamily*> availableFilters;
+    Array<ChannelFamily*> selectedFilters;
+
     TextButton encoderRangeBtn;
     TextButton littleMoveLeftBtn;
     TextButton littleMoveRightBtn;
@@ -64,7 +68,9 @@ public:
     void sliderValueChanged(Slider* slider) override;
     void buttonClicked (Button*);
     void updateFilters();
+    void updateFilterBtns();
     void updateEncoders();
+    void updateChannels();
     void updateModeButton();
     void updateRangeButton();
     void updateContentWithCommand(Command* c);
