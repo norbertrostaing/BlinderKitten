@@ -78,6 +78,7 @@ public:
     void updateRangeButton();
     void updateEncodersValues();
     void updateCommandLine();
+    void mouseDoubleClick(const MouseEvent &e);
 
     int encoderRange = 0;
 

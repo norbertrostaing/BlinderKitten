@@ -284,10 +284,14 @@ void UserInputManager::commandValueChanged(Command* c) {
 }
 
 void UserInputManager::encoderValueChanged(int index, float newValue) {
+	const MessageManagerLock mmLock;
+	if (Encoders::getInstance()->channels.size() <= index) { return; }
+
 	int mode = Encoders::getInstance()->mode;
+	
 	targetCommand = getProgrammer()->currentUserCommand;
 	if (targetCommand == nullptr) {return;}
-	if (mode < 2) { // bug ici
+	if (mode < 2) { // bug ici ?
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
 			if (targetCommand == nullptr) {
@@ -295,17 +299,22 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 			}
 			CommandValue* t = nullptr;
 			CommandValue* empty = nullptr;
+			int commandIndex = -1;
 			for (int i = 0; t == nullptr && i < targetCommand->values.items.size(); i++) {
 				CommandValue* temp = targetCommand->values.items[i];
 				if (temp->presetOrValue->getValue() == "value") {
 					ChannelType* valCT = dynamic_cast<ChannelType*>(temp->channelType->targetContainer.get());
 					if (valCT == c) {
 						t = temp;
+						commandIndex = i;
 					}
 					else if (empty == nullptr && valCT == nullptr) {
 						empty = temp;
 					}
 				}
+			}
+			if (t == nullptr && newValue == -2) {
+				return;
 			}
 			if (t == nullptr) {
 				if (empty != nullptr) {
@@ -318,7 +327,16 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 			}
 		
 			if (mode == 0) {
-				t->valueFrom->setValue(newValue, false);
+				if (newValue == -2) {
+					t->parentContainer->removeChildControllableContainer(t);
+					targetCommand->values.items.remove(commandIndex);
+					//getProgrammer()->computeValues();
+					getProgrammer()->go();
+					//t->valueFrom->setValue(newValue, false);
+				}
+				else {
+					t->valueFrom->setValue(newValue, false);
+				}
 			}
 			else {
 				if (!t->thru->getValue()) {

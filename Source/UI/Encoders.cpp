@@ -83,6 +83,7 @@ Encoders::Encoders():
         s->setNumDecimalPlacesToDisplay(5);
         s->addListener(this);
         s->setWantsKeyboardFocus(false);
+        s->addMouseListener(this, false);
         encoders.add(s);
 
         Label* l = new Label();
@@ -395,6 +396,17 @@ void Encoders::updateCommandLine()
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         String txt = UserInputManager::getInstance()->getProgrammer()->getTextCommand();
         commandLine.setText(txt, juce::dontSendNotification);
-        //Encoders::getInstance()->repaint();
     }
+}
+
+void Encoders::mouseDoubleClick(const MouseEvent& e)
+{
+    Slider* s = dynamic_cast<Slider* >(e.eventComponent);
+
+    int index = encoders.indexOf(s) + encodersOffset;
+    UserInputManager::getInstance()->encoderValueChanged(index, -2);
+    updateChannels();
+    updateEncoders();
+    updateEncodersValues();
+
 }
