@@ -74,6 +74,9 @@ public:
     void clearAll();
     void clearCurrent();
 
+    void selectNextCommand();
+    void selectPrevCommand();
+
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 
     String getTypeString() const override { return objectType; }

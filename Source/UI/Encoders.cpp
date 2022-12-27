@@ -1,4 +1,4 @@
-/*
+﻿/*
   ==============================================================================
 
     Encoders.cpp
@@ -63,6 +63,16 @@ Encoders::Encoders():
     encoderRangeBtn.setButtonText("0-1");
     encoderRangeBtn.setWantsKeyboardFocus(false);
 
+    addAndMakeVisible(&commandUpBtn);
+    commandUpBtn.addListener(this);
+    commandUpBtn.setButtonText("Com -");
+    commandUpBtn.setWantsKeyboardFocus(false);
+
+    addAndMakeVisible(&commandDownBtn);
+    commandDownBtn.addListener(this);
+    commandDownBtn.setButtonText("Com -");
+    commandDownBtn.setWantsKeyboardFocus(false);
+
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
         addAndMakeVisible(s);
@@ -112,7 +122,7 @@ void Encoders::resized()
     int windowW = getWidth();
     //int x = 0;
     //int y = 0;
-    int btnWidth = 30;
+    int btnWidth = 40;
     int btnValueWidth = 40;
    
     commandLine.setBounds(0,40,windowW, 20);
@@ -123,6 +133,8 @@ void Encoders::resized()
     littleMoveRightBtn.setBounds(windowW - (2 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
     littleMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
     bigMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
+    commandDownBtn.setBounds(windowW - (2 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
+    commandUpBtn.setBounds(windowW - (2 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
 
     float w = 57;
     float h = 57;
@@ -170,7 +182,19 @@ void Encoders::buttonClicked(Button* b) {
     else if (b == &littleMoveRightBtn) {
         encodersOffset = jmax(0, encodersOffset + 1);
         updateEncoders();
-    } 
+    }
+    else if (b == &commandDownBtn) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+        }
+        updateChannels();
+    }
+    else if (b == &commandUpBtn) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->selectPrevCommand();
+        }
+        updateChannels();
+    }
     else 
     {
         // filters
@@ -334,6 +358,7 @@ void Encoders::updateChannels()
     }
     updateFilterBtns();
     updateEncoders();
+    updateCommandLine();
 }
 
 void Encoders::updateEncodersValues() {
@@ -342,24 +367,34 @@ void Encoders::updateEncodersValues() {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
     }
-
-    for (int i = 0; i < currentCommand->values.items.size(); i++) {
-        CommandValue* cv = currentCommand->values.items[i];
-        if (cv->presetOrValue->getValue() == "value") {
-            ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-            if (ct != nullptr) {
-                for (int ci = 0; ci < nEncoders; ci++) {
-                    int channelId = ci + encodersOffset;
-                    if (channels[channelId] == ct) {
-                        float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
-                        if (encoderRange == 1) { v *= 100; }
-                        else if (encoderRange == 2) { v *= 255; }
-                        encoders[ci]->setValue(v, juce::sendNotification);
-                        encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+    if (currentCommand != nullptr) {
+        for (int i = 0; i < currentCommand->values.items.size(); i++) {
+            CommandValue* cv = currentCommand->values.items[i];
+            if (cv->presetOrValue->getValue() == "value") {
+                ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+                if (ct != nullptr) {
+                    for (int ci = 0; ci < nEncoders; ci++) {
+                        int channelId = ci + encodersOffset;
+                        if (channels[channelId] == ct) {
+                            float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
+                            if (encoderRange == 1) { v *= 100; }
+                            else if (encoderRange == 2) { v *= 255; }
+                            encoders[ci]->setValue(v, juce::sendNotification);
+                            encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                        }
                     }
                 }
             }
         }
     }
 
+}
+
+void Encoders::updateCommandLine()
+{
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+        String txt = UserInputManager::getInstance()->getProgrammer()->getTextCommand();
+        commandLine.setText(txt, juce::dontSendNotification);
+        //Encoders::getInstance()->repaint();
+    }
 }

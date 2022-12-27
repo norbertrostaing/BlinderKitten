@@ -50,13 +50,16 @@ public:
     OwnedArray<TextButton> filterBtns;
     Array<ChannelFamily*> availableFilters;
     Array<ChannelFamily*> selectedFilters;
+    Array<ChannelType*> channels;
 
     TextButton encoderRangeBtn;
     TextButton littleMoveLeftBtn;
     TextButton littleMoveRightBtn;
     TextButton bigMoveLeftBtn;
     TextButton bigMoveRightBtn;
-    Array<ChannelType*> channels;
+
+    TextButton commandUpBtn;
+    TextButton commandDownBtn;
 
     int nEncoders = 10;
     int encodersOffset = 0;
@@ -74,6 +77,7 @@ public:
     void updateModeButton();
     void updateRangeButton();
     void updateEncodersValues();
+    void updateCommandLine();
 
     int encoderRange = 0;
 

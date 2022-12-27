@@ -269,7 +269,7 @@ void UserInputManager::commandSelectionChanged(Command* c) {
 	targetCommand = getProgrammer()->currentUserCommand;
 	if (c == targetCommand && c != nullptr) {
 		Encoders::getInstance()->updateChannels();
-		updateCommandLine();
+		Encoders::getInstance()->updateCommandLine();
 	}
 }
 
@@ -279,7 +279,7 @@ void UserInputManager::redrawEncoders() {
 void UserInputManager::commandValueChanged(Command* c) {
 	if (c == getProgrammer() ->currentUserCommand) {
 		Encoders::getInstance()->updateEncodersValues();
-		updateCommandLine();
+		Encoders::getInstance()->updateCommandLine();
 	}
 }
 
@@ -334,9 +334,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 }
 
 void UserInputManager::updateCommandLine() {
-	String txt = getProgrammer()->getTextCommand();
-	Encoders::getInstance()->commandLine.setText(txt, juce::dontSendNotification);
-	Encoders::getInstance()->repaint();
+	Encoders::getInstance()->updateCommandLine();
 }
 
 String UserInputManager::toUserText(String s) {

@@ -338,6 +338,36 @@ void Programmer::clearCurrent() {
 	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 }
 
+void Programmer::selectNextCommand()
+{
+	checkCurrentUserCommand();
+	if (commands.items.size() > 1) {
+		int index = commands.items.indexOf(currentUserCommand);
+		if (index != -1) {
+			index = (index+1)% commands.items.size();
+		}
+		else {
+			index = 0;
+		}
+		currentUserCommand = commands.items[index];
+	}
+}
+
+void Programmer::selectPrevCommand()
+{
+	checkCurrentUserCommand();
+	if (commands.items.size() > 1) {
+		int index = commands.items.indexOf(currentUserCommand);
+		if (index != -1) {
+			index = (commands.items.size() + index - 1) % commands.items.size();
+		}
+		else {
+			index = 0;
+		}
+		currentUserCommand = commands.items[index];
+	}
+}
+
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
 	const MessageManagerLock mmLock;
