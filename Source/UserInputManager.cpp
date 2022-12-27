@@ -278,7 +278,7 @@ void UserInputManager::redrawEncoders() {
 
 void UserInputManager::commandValueChanged(Command* c) {
 	if (c == getProgrammer() ->currentUserCommand) {
-		Encoders::getInstance()->updateContentWithCommand(c);
+		Encoders::getInstance()->updateEncodersValues();
 		updateCommandLine();
 	}
 }

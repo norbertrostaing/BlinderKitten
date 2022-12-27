@@ -129,7 +129,7 @@ void Encoders::resized()
     for (int i = 0; i < 10; i++) {
         encoders[i]->setBounds(i*w, 80, w, h);
         encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
-        labels[i]->setBounds(i*w, 80, w, 20);
+        labels[i]->setBounds(i*w, 60, w, 20);
         labels[i]->setJustificationType(36);
     }
 }
@@ -336,23 +336,26 @@ void Encoders::updateChannels()
     updateEncoders();
 }
 
-void Encoders::updateContentWithCommand(Command* c) {
-    if (c == nullptr) {
-        return;
+void Encoders::updateEncodersValues() {
+    Command* currentCommand = nullptr;
+    Array<ChannelType* >chans;
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+        currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
     }
-    for (int i = 0; i < c->values.items.size(); i++) {
-        CommandValue* cv = c->values.items[i];
+
+    for (int i = 0; i < currentCommand->values.items.size(); i++) {
+        CommandValue* cv = currentCommand->values.items[i];
         if (cv->presetOrValue->getValue() == "value") {
             ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
             if (ct != nullptr) {
                 for (int ci = 0; ci < nEncoders; ci++) {
                     int channelId = ci + encodersOffset;
                     if (channels[channelId] == ct) {
-                        float v = c->getChannelValue(channels[channelId], mode == 1);
+                        float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
                         if (encoderRange == 1) { v *= 100; }
                         else if (encoderRange == 2) { v *= 255; }
-                        Encoders::getInstance()->encoders[ci]->setValue(v, juce::sendNotification);
-                        Encoders::getInstance()->encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                        encoders[ci]->setValue(v, juce::sendNotification);
+                        encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                     }
                 }
             }

@@ -73,7 +73,7 @@ public:
     void updateChannels();
     void updateModeButton();
     void updateRangeButton();
-    void updateContentWithCommand(Command* c);
+    void updateEncodersValues();
 
     int encoderRange = 0;
 
