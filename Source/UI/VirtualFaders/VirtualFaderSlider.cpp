@@ -76,7 +76,7 @@ void VirtualFaderSlider::onContainerParameterChangedInternal(Parameter* c) {
 void VirtualFaderSlider::updateDisplay() {
 	String targType = targetType->getValue();
 
-	targetId->hideInEditor = targType == "column" || targType == "disabled";
+	targetId->hideInEditor = targType == "column" || targType == "disabled" || targType == "actions";
 
 	if (targType == "column" && parentContainer != nullptr && parentContainer -> parentContainer != nullptr) {
 		if (parentContainer->niceName == "Rotaries") {

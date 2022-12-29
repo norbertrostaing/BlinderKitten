@@ -92,7 +92,7 @@ void VirtualFaderButton::onContainerParameterChangedInternal(Parameter* c) {
 void VirtualFaderButton::updateDisplay() {
 	String targType = targetType->getValue();
 	
-	targetId->hideInEditor = targType == "column" || targType == "disabled" ;
+	targetId->hideInEditor = targType == "column" || targType == "disabled" || targType == "actions";
 
 	if (targType == "column" && parentContainer != nullptr) {
 		targType = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get())->targetType->getValue();
@@ -103,7 +103,6 @@ void VirtualFaderButton::updateDisplay() {
 	mapperAction->hideInEditor = targType != "mapper";
 
 	actionManager.hideInEditor = targType != "actions";
-	targetId->hideInEditor = targType == "actions";
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

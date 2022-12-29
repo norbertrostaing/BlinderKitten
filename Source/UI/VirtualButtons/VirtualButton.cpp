@@ -99,7 +99,7 @@ void VirtualButton::updateDisplay() {
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
 	actionManager.hideInEditor = targType != "actions";
-	targetId -> hideInEditor = targType == "actions";
+	targetId->hideInEditor = targType == "disabled" || targType == "actions";
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

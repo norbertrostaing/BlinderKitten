@@ -329,7 +329,7 @@ void Encoders::updateChannels()
     availableFilters.clear();
     Command* currentCommand = nullptr;
     Array<ChannelType* >chans;
-    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
         currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
         currentCommand->selection.computeSelection();
         chans = currentCommand->selection.getControllableChannelsTypes();

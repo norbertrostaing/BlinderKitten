@@ -13,6 +13,9 @@ CommandSelectionManager::CommandSelectionManager() :
 
 CommandSelectionManager::~CommandSelectionManager()
 {
+	computedSelectedSubFixtures.getLock().enter();
+	computedSelectedSubFixtures.clear();
+	computedSelectedSubFixtures.getLock().exit();
 }
 
 void CommandSelectionManager::computeSelection() {
@@ -22,9 +25,10 @@ void CommandSelectionManager::computeSelection() {
 
 void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	ScopedLock lock(commputing);
+	computedSelectedSubFixtures.getLock().enter();
 	computedSelectedSubFixtures.clear();
 	Brain* b = Brain::getInstance();
-	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();
+	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>(); // bug ici
 	for (int selId = 0; selId < selections.size(); selId++) {
 		Array<SubFixture*> tempSelection;
 		int idFrom = selections[selId]->valueFrom->getValue();
@@ -183,10 +187,14 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		else {}
 
 	}
+	computedSelectedSubFixtures.getLock().exit();
+
 }
 
 Array<ChannelType *> CommandSelectionManager::getControllableChannelsTypes() {
 	Array<ChannelType*> chans;
+	ScopedLock lock(commputing);
+	computedSelectedSubFixtures.getLock().enter();
 	for (int i = 0; i < computedSelectedSubFixtures.size(); i++) {
 		for (auto it = computedSelectedSubFixtures[i]->channelsMap.begin(); it != computedSelectedSubFixtures[i]->channelsMap.end(); it.next()) {
 			if (it.getKey()!=nullptr && !chans.contains(it.getKey())) {
@@ -194,5 +202,6 @@ Array<ChannelType *> CommandSelectionManager::getControllableChannelsTypes() {
 			}
 		}
 	}
+	computedSelectedSubFixtures.getLock().exit();
 	return chans;
 }

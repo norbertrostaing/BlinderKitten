@@ -313,26 +313,33 @@ void Programmer::updateName() {
 
 void Programmer::clearAll() {
 	release();
+	computing.enter();
+	currentUserCommand = nullptr;
 	commands.clear();
-	commands.addItem();
+	commands.items.clear();
+	currentUserCommand = commands.addItem();
+	computing.exit();
+	Brain::getInstance()->pleaseUpdate(this);
+	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
+	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 }
 
 void Programmer::clearCurrent() {
+	computing.enter();
 	const MessageManagerLock mmLock;
 
-	if (commands.items.size() == 1) {
-		commands.items[0]->values.clear();
-		commands.items[0]->selection.clear();
-	}
-	else if (commands.items.size() > 1 && currentUserCommand != nullptr) {
+	if (commands.items.size() > 0 && currentUserCommand != nullptr) {
 		commands.removeItem(currentUserCommand, false, false);
+		commands.items.remove(commands.items.indexOf(currentUserCommand));
 	}
+
 	if (commands.items.size() == 0) {
-		currentUserCommand = nullptr;
+		currentUserCommand = nullptr; //commands.addItem();
 	}
 	else {
 		currentUserCommand = commands.items.getLast();
 	}
+	computing.exit();
 	Brain::getInstance()->pleaseUpdate(this);
 	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
 	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);

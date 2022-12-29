@@ -266,11 +266,8 @@ void UserInputManager::processMessage(const OSCMessage& m)
 }
 
 void UserInputManager::commandSelectionChanged(Command* c) {
-	targetCommand = getProgrammer()->currentUserCommand;
-	if (c == targetCommand && c != nullptr) {
-		Encoders::getInstance()->updateChannels();
-		Encoders::getInstance()->updateCommandLine();
-	}
+	Encoders::getInstance()->updateChannels();
+	Encoders::getInstance()->updateCommandLine();
 }
 
 void UserInputManager::redrawEncoders() {
@@ -520,7 +517,7 @@ void UserInputManager::testPreset(Preset* p)
 		int id = FixtureManager::getInstance()->items[i]->id->getValue();
 		fixtMax = jmax(fixtMax, id);
 	}
-	prg->clearAll();
+	// prg->clearAll();
 	processInput("Fixture");
 	processInput("1");
 	processInput("Thru");

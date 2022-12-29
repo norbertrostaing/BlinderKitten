@@ -128,13 +128,13 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		break;
 
 	case BlinderKittenCommandId::exportSelection:
-		result.setInfo("Export Selection", "This will export the current selection as *.lilnut file that can be later imported", "File", result.readOnlyInKeyEditor);
+		result.setInfo("Export Selection", "This will export the current selection as *.mochi file that can be later imported", "File", result.readOnlyInKeyEditor);
 		result.addDefaultKeypress(KeyPress::createFromDescription("s").getKeyCode(), ModifierKeys::altModifier);
 		result.setActive(InspectableSelectionManager::mainSelectionManager->currentInspectables.size() > 0);
 		break;
 
 	case BlinderKittenCommandId::importSelection:
-		result.setInfo("Import...", "This will import a *.lilnut file and add it to the current noisette", "File", result.readOnlyInKeyEditor);
+		result.setInfo("Import...", "This will import a *.mochi file and add it to the current project", "File", result.readOnlyInKeyEditor);
 		result.addDefaultKeypress(KeyPress::createFromDescription("o").getKeyCode(), ModifierKeys::altModifier);
 		break;
 
@@ -450,15 +450,15 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	break;
 
 	case BlinderKittenCommandId::donate:
-		URL("https://www.paypal.me/benkuper").launchInDefaultBrowser();
+		URL("http://blinderkitten.lighting/").launchInDefaultBrowser();
 		break;
 
 	case BlinderKittenCommandId::sponsor:
-		URL("https://github.com/sponsors/benkuper").launchInDefaultBrowser();
+		URL("http://blinderkitten.lighting/").launchInDefaultBrowser();
 		break;
 
 	case BlinderKittenCommandId::gotoWebsite:
-		URL("http://benjamin.kuperberg.fr/chataigne").launchInDefaultBrowser();
+		URL("http://blinderkitten.lighting/").launchInDefaultBrowser();
 		break;
 
 	case BlinderKittenCommandId::gotoDiscord:

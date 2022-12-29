@@ -51,10 +51,13 @@ Command::Command(var params) :
 Command::~Command()
 {
 	toDelete = true;
+	computedValues.getLock().enter();
 	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 		delete it.getValue();
 	}
 	computedValues.clear();
+	computedValues.getLock().exit();
+
 }
 
 void Command::updateDisplay() {
