@@ -659,6 +659,7 @@ void Programmer::resetCli() {
 }
 
 void Programmer::checkCurrentUserCommand() {
+	const MessageManagerLock mmLock;
 	if (currentUserCommand != nullptr && currentUserCommand->toDelete) {
 		currentUserCommand = nullptr;
 	}

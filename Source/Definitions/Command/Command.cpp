@@ -53,9 +53,9 @@ Command::~Command()
 	toDelete = true;
 	computedValues.getLock().enter();
 	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
-		delete it.getValue();
+		//delete it.getValue();
 	}
-	computedValues.clear();
+	//computedValues.clear();
 	computedValues.getLock().exit();
 
 }

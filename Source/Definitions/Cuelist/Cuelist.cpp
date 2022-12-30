@@ -899,11 +899,8 @@ Cue* Cuelist::getNextCue() {
 		if (end == "loop") {
 			return currentCues[0];
 		}
-		else {
-			return nullptr;
-		}
 	}
-
+	return nullptr;
 }
 
 Cue* Cuelist::getNextChaserCue() {

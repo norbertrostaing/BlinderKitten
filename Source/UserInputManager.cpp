@@ -266,8 +266,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 }
 
 void UserInputManager::commandSelectionChanged(Command* c) {
-	Encoders::getInstance()->updateChannels();
-	Encoders::getInstance()->updateCommandLine();
+	if (c == getProgrammer()->currentUserCommand) {
+		Encoders::getInstance()->updateChannels();
+		commandValueChanged(c);
+		}
 }
 
 void UserInputManager::redrawEncoders() {
