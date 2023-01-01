@@ -62,15 +62,14 @@ void CommandSelection::updateDisplay()
     bool isFixture = targetType->getValue() == "fixture";
 
 
-    bool sub = isFixture && subSel->getValue();
-    bool subTh = subThru->getValue();
-
     valueTo -> hideInEditor = !th;
     filter -> hideInEditor = !mult;
     pattern -> hideInEditor = !(mult && pat);
     symmetry -> hideInEditor = !(mult && pat);
 
-    subSel -> hideInEditor = !isFixture;
+    bool sub = subSel->getValue();
+    bool subTh = subThru->getValue();
+
     subFrom -> hideInEditor = !sub;
     subThru->hideInEditor = !sub;
     subTo->hideInEditor = !(sub && subTh);
