@@ -181,6 +181,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				valuesFrom->set(rawChan, cv->valueFrom->getValue());
 				valuesTo->set(rawChan, cv->valueTo->getValue());
 			}
+			else if (cv->presetOrValue->getValue() == "release") {
+				valuesFrom->set(rawChan, -1);
+				valuesTo->set(rawChan, -1);
+			}
 
 			for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
 				SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(it.getKey());

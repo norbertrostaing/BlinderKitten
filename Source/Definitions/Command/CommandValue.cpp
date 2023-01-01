@@ -48,8 +48,9 @@ void CommandValue::updateDisplay()
     bool val = presetOrValue->getValue() == "value";
     bool prst = presetOrValue->getValue() == "preset";
     bool th = thru->getValue();
+    bool rel = presetOrValue->getValue() == "release";
 
-    channelType->hideInEditor = !(val);
+    channelType->hideInEditor = !(val || rel);
     valueFrom->hideInEditor = !val;
     valueTo->hideInEditor = !(th && val);
 

@@ -602,10 +602,10 @@ void Cuelist::update() {
 	if (tempPosition == 1 && cueA != nullptr) {
 		cueA->endTransition();
 	}
-	if (isOverWritten && offIfOverwritten->getValue()) {
+	if (isOverWritten) {
 		isUseFul = false;
 	}
-	if (!isUseFul) {
+	if (!isUseFul && offIfOverwritten->getValue()) {
 		kill(false);
 	} 
 
@@ -784,6 +784,7 @@ void Cuelist::updateLTPs() {
 
 
 void Cuelist::kill(bool forceRefreshChannels) {
+	wannaOff = true;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		SubFixtureChannel* chan = it.getKey();
 		chan->cuelistOutOfStack(this);
@@ -930,7 +931,7 @@ Cue* Cuelist::getNextChaserCue() {
 	}
 
 	if (cueA == nullptr) {
-		if (chaserIsGoingBackward || chaserDirection->getValueData() == "reverse") {
+		if ((chaserIsGoingBackward && chaserDirection->getValueData() == "bounce") || chaserDirection->getValueData() == "reverse") {
 			return cues.getItemsWithType<Cue>()[cues.getItemsWithType<Cue>().size()-1];
 		}
 		else {
@@ -939,7 +940,7 @@ Cue* Cuelist::getNextChaserCue() {
 	}
 	else {
 		Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
-		if (chaserIsGoingBackward || chaserDirection->getValueData() == "reverse") {
+		if ((chaserIsGoingBackward && chaserDirection->getValueData() == "bounce") || chaserDirection->getValueData() == "reverse") {
 			for (int i = 1; i < currentCues.size() && !valid; i++) {
 				if (currentCues[i] == cueA) {
 					return currentCues[i-1];

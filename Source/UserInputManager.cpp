@@ -269,7 +269,7 @@ void UserInputManager::commandSelectionChanged(Command* c) {
 	if (c == getProgrammer()->currentUserCommand) {
 		Encoders::getInstance()->updateChannels();
 		commandValueChanged(c);
-		}
+	}
 }
 
 void UserInputManager::redrawEncoders() {
@@ -285,7 +285,6 @@ void UserInputManager::commandValueChanged(Command* c) {
 void UserInputManager::encoderValueChanged(int index, float newValue) {
 	const MessageManagerLock mmLock;
 	if (Encoders::getInstance()->channels.size() <= index) { return; }
-
 	int mode = Encoders::getInstance()->mode;
 	
 	targetCommand = getProgrammer()->currentUserCommand;
@@ -322,6 +321,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 				}
 				else {
 					t = targetCommand->values.addItem();
+					t->channelType->setValueFromTarget(c);
 				}
 			}
 		

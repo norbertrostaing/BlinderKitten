@@ -777,7 +777,7 @@ void Brain::startTask(Task* t, double startTime)
             rt->startValue = startValue;
             rt->endValue = endValue;
             rt->isEnded = false;
-            LOG(rt->endValue);
+            //LOG(rt->endValue);
         }
     }
 
