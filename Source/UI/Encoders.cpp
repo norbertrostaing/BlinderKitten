@@ -137,6 +137,15 @@ void Encoders::resized()
     commandDownBtn.setBounds(windowW - (2 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
     commandUpBtn.setBounds(windowW - (2 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
 
+
+    if (filterBtns.size() > 0) {
+        float w = getWidth() / filterBtns.size();
+        for (int i = 0; i < filterBtns.size(); i++) {
+            TextButton* t = filterBtns[i];
+            t->setBounds(i * w, 20, w, 20);
+        }
+    }
+
     float w = 57;
     float h = 57;
     for (int i = 0; i < 10; i++) {
