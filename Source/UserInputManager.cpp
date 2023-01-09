@@ -338,10 +338,16 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 				}
 			}
 			else {
-				if (!t->thru->getValue()) {
-					t->thru->setValue(true);
+				if (newValue == -2) {
+					t->thru->setValue(false);
 				}
-				t->valueTo->setValue(newValue, false);
+				else {
+					if (!t->thru->getValue()) {
+						t->thru->setValue(true);
+					}
+					t->valueTo->setValue(newValue, false);
+				}
+
 			}
 		}
 	}

@@ -389,7 +389,7 @@ void Encoders::updateEncodersValues() {
                             float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
                             if (encoderRange == 1) { v *= 100; }
                             else if (encoderRange == 2) { v *= 255; }
-                            encoders[ci]->setValue(v, juce::sendNotification);
+                            encoders[ci]->setValue(v, juce::dontSendNotification);
                             encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                         }
                     }
