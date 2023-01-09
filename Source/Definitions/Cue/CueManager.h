@@ -23,7 +23,10 @@ public:
     void askForMoveBefore(BaseItem*) override;
     void askForMoveAfter(BaseItem*) override;
     void addItemInternal(Cue* c, var data);
+    void askForDuplicateItem(BaseItem* item);
+    void correctCueIds();
+    void setItemIndex(Cue* item, int newIndex, bool addToUndo = true);
+    double calcId(double prev, double next);
 
-    
 
 };
