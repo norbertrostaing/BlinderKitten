@@ -116,7 +116,7 @@ void EffectRow::computeData() {
             for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
                 int realIndex = chanIndex/nBuddying;
 
-                int nWing = chanIndex/wingSize;
+                int nWing = realIndex/wingSize;
                 bool isWinged = false;
                 if (nWing % 2 == 1) {
                     isWinged = true;

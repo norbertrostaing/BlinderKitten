@@ -103,10 +103,11 @@ void CarouselRow::computeData() {
         }
     }
 
-    int totWings = wings->getValue();
+    int nWings = wings->getValue();
     int nBuddying = buddying->getValue();
-    float nLimit = selection.computedSelectedSubFixtures.size();
-    int sizeWing = nLimit / totWings;
+    int realTot = selection.computedSelectedSubFixtures.size() / nBuddying;
+    int wingSize = realTot / nWings;
+    realTot = realTot / nWings;
 
     Array<SubFixtureChannel*> targetChannels;
 
@@ -138,18 +139,22 @@ void CarouselRow::computeData() {
             SubFixtureChannel* chan = it.getKey();
             ChannelValue* cValue = it.getValue();
             if (!subFixtureChannelOffsets.contains(chan)) {
-
                 int chanIndex = selection.computedSelectedSubFixtures.indexOf(chan->parentSubFixture);
-                int nWing = chanIndex / sizeWing;
-                double offset = (chanIndex - (chanIndex % nBuddying)) / nLimit;
+
+                int realIndex = chanIndex / nBuddying;
+
+                int nWing = realIndex / wingSize;
                 if (nWing % 2 == 1) {
-                    offset = -offset;
+                    realIndex = realIndex % wingSize;
+                    realIndex = wingSize - 1 - realIndex;
                 }
+
+                double offset = realIndex / (double)realTot;
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
 
                 // LOG(offset);
-                subFixtureChannelOffsets.set(chan, offset);
+                subFixtureChannelOffsets.set(chan, -offset);
             }
             currentStep->computedValues.getReference(chan)->startValue = cValue->endValue;
         }
