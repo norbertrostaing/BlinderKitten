@@ -54,7 +54,7 @@ Cuelist::Cuelist(var params) :
 	chaserDirection->addOption("Reverse", "reverse");
 	chaserDirection->addOption("Bounce", "bounce");
 	chaserDirection->addOption("Random", "random");
-	chaserSpeed = chaserOptions.addFloatParameter("Speed", "in GO / minutes", 60,1);
+	chaserSpeed = chaserOptions.addFloatParameter("Speed", "in GO / minutes", 60,0.001);
 	chaserInFade = chaserOptions.addFloatParameter("In fade", "Fade for incoming steps, not in seconds, but in number of steps !",0,0,1);
 	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values, not in seconds, but in number of steps !", 0, 0);
 	chaserRunXTimes = chaserOptions.addFloatParameter("Run X times", "number of cycles of the chaser, 0 mean infinite",0,0);
@@ -264,7 +264,7 @@ void Cuelist::triggerTriggered(Trigger* t) {
 
 void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
 	if (c == chaserSpeed) {
-		chaserStepDuration = 60000/(double)chaserSpeed->getValue();
+		chaserStepDuration = 60000.0/(double)chaserSpeed->getValue();
 		chaserFadeInDuration = chaserStepDuration * (double)chaserInFade->getValue();
 		chaserFadeOutDuration = chaserStepDuration * (double)chaserOutFade->getValue();;
 
@@ -981,7 +981,7 @@ void Cuelist::tapTempo() {
 	double delta = now - lastTapTempo;
 	lastTapTempo = now;
 	if (delta < 3000) {
-		delta = delta / (int)chaserStepPerTap->getValue();
+		delta = delta / (double)chaserStepPerTap->getValue();
 		double cpm = 60000. / delta;
 		chaserSpeed->setValue(cpm);
 	}
