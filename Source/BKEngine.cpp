@@ -71,6 +71,7 @@
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 #include "UI/ConductorInfos.h"
+#include "UI/BKColorPicker.h"
 
 #include "UserInputManager.h"
 
@@ -79,6 +80,7 @@ ControllableContainer* getAppSettings();
 BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
 	conductorInfosContainer("Conductor infos Settings"),
+	colorPickerContainer("Color Picker Settings"),
 	virtualParamsContainer("Virtual Playbacks Settings"),
 	uiParamsContainer("UI Settings")
 	//defaultBehaviors("Test"),
@@ -92,6 +94,7 @@ BKEngine::BKEngine() :
 	Engine::mainEngine = this;
 
 	GlobalSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
+	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 
@@ -128,6 +131,29 @@ BKEngine::BKEngine() :
 	conductorTextSize = conductorInfosContainer.addIntParameter("Text font size", "text size of cue content", 14, 1);;
 	conductorTextSize->addParameterListener(this);
 
+	CPRedChannel = colorPickerContainer.addTargetParameter("Red channel", "", ChannelFamilyManager::getInstance());
+	CPRedChannel->targetType = TargetParameter::CONTAINER;
+	CPRedChannel->maxDefaultSearchLevel = 2;
+
+	CPGreenChannel = colorPickerContainer.addTargetParameter("Green channel", "", ChannelFamilyManager::getInstance());
+	CPGreenChannel->targetType = TargetParameter::CONTAINER;
+	CPGreenChannel->maxDefaultSearchLevel = 2;
+
+	CPBlueChannel = colorPickerContainer.addTargetParameter("Blue channel", "", ChannelFamilyManager::getInstance());
+	CPBlueChannel->targetType = TargetParameter::CONTAINER;
+	CPBlueChannel->maxDefaultSearchLevel = 2;
+
+	CPCyanChannel = colorPickerContainer.addTargetParameter("Cyan channel", "", ChannelFamilyManager::getInstance());
+	CPCyanChannel->targetType = TargetParameter::CONTAINER;
+	CPCyanChannel->maxDefaultSearchLevel = 2;
+
+	CPMagentaChannel = colorPickerContainer.addTargetParameter("Magenta channel", "", ChannelFamilyManager::getInstance());
+	CPMagentaChannel->targetType = TargetParameter::CONTAINER;
+	CPMagentaChannel->maxDefaultSearchLevel = 2;
+
+	CPYellowChannel = colorPickerContainer.addTargetParameter("Yellow channel", "", ChannelFamilyManager::getInstance());
+	CPYellowChannel->targetType = TargetParameter::CONTAINER;
+	CPYellowChannel->maxDefaultSearchLevel = 2;
 
 	mainBrain = Brain::getInstance();
 	addChildControllableContainer(InterfaceManager::getInstance());
@@ -167,6 +193,7 @@ BKEngine::BKEngine() :
 	VirtualFaderColGrid::getInstance()->initCells();
 
 	ConductorInfos::getInstance()->engine = this;
+	BKColorPicker::getInstance()->engine = this;
 
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
@@ -294,7 +321,7 @@ void BKEngine::clearInternal()
 	MapperGridView::getInstance()->updateCells();
 	Brain::getInstance()->startThread();
 
-
+	autoFillColorPickerValues();
 }
 
 var BKEngine::getJSONData()
@@ -518,6 +545,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 	Brain::getInstance()->updateAllChannels();
 	Encoders::getInstance()->updateChannels();
+
+	autoFillColorPickerValues();
 }
 
 void BKEngine::childStructureChanged(ControllableContainer* cc)
@@ -580,6 +609,8 @@ void BKEngine::importMochi(File f) {
 	EffectGridView::getInstance()->updateCells();
 	CarouselGridView::getInstance()->updateCells();
 	MapperGridView::getInstance()->updateCells();
+
+	autoFillColorPickerValues();
 }
 
 void BKEngine::exportSelection()
@@ -640,4 +671,14 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize) {
 		ConductorInfos::getInstance()->repaint();
 	}
+}
+
+void BKEngine::autoFillColorPickerValues()
+{
+	CPRedChannel->setValue("/color/channelTypes/red");
+	CPGreenChannel->setValue("/color/channelTypes/green");
+	CPBlueChannel->setValue("/color/channelTypes/blue");
+	CPCyanChannel->setValue("/color/channelTypes/cyan");
+	CPMagentaChannel->setValue("/color/channelTypes/magenta");
+	CPYellowChannel->setValue("/color/channelTypes/yellow");
 }

@@ -292,67 +292,81 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 	if (mode < 2) { // bug ici ?
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
-			if (targetCommand == nullptr) {
-				return;
-			}
-			CommandValue* t = nullptr;
-			CommandValue* empty = nullptr;
-			int commandIndex = -1;
-			for (int i = 0; t == nullptr && i < targetCommand->values.items.size(); i++) {
-				CommandValue* temp = targetCommand->values.items[i];
-				if (temp->presetOrValue->getValue() == "value") {
-					ChannelType* valCT = dynamic_cast<ChannelType*>(temp->channelType->targetContainer.get());
-					if (valCT == c) {
-						t = temp;
-						commandIndex = i;
-					}
-					else if (empty == nullptr && valCT == nullptr) {
-						empty = temp;
-					}
-				}
-			}
-			if (t == nullptr && newValue == -2) {
-				return;
-			}
-			if (t == nullptr) {
-				if (empty != nullptr) {
-					t = empty;
-					t->channelType->setValueFromTarget(c);
-				}
-				else {
-					t = targetCommand->values.addItem();
-					t->channelType->setValueFromTarget(c);
-				}
-			}
-		
-			if (mode == 0) {
-				if (newValue == -2) {
-					t->parentContainer->removeChildControllableContainer(t);
-					targetCommand->values.items.remove(commandIndex);
-					//getProgrammer()->computeValues();
-					getProgrammer()->go();
-					//t->valueFrom->setValue(newValue, false);
-				}
-				else {
-					t->valueFrom->setValue(newValue, false);
-				}
-			}
-			else {
-				if (newValue == -2) {
-					t->thru->setValue(false);
-				}
-				else {
-					if (!t->thru->getValue()) {
-						t->thru->setValue(true);
-					}
-					t->valueTo->setValue(newValue, false);
-				}
-
-			}
+			changeChannelValue(c, newValue);
 		}
 	}
 	else {
 		// timing
+	}
+}
+
+void UserInputManager::changeChannelValue(ChannelType* c, float newValue)
+{
+	targetCommand = getProgrammer()->currentUserCommand;
+	if (targetCommand == nullptr) {
+		return;
+	}
+	if (c == nullptr) {
+		return;
+	}
+	if (Encoders::getInstance()->channels.indexOf(c) == -1) {
+		return;
+	}
+
+	int mode = Encoders::getInstance()->mode;
+	CommandValue* t = nullptr;
+	CommandValue* empty = nullptr;
+	int commandIndex = -1;
+	for (int i = 0; t == nullptr && i < targetCommand->values.items.size(); i++) {
+		CommandValue* temp = targetCommand->values.items[i];
+		if (temp->presetOrValue->getValue() == "value") {
+			ChannelType* valCT = dynamic_cast<ChannelType*>(temp->channelType->targetContainer.get());
+			if (valCT == c) {
+				t = temp;
+				commandIndex = i;
+			}
+			else if (empty == nullptr && valCT == nullptr) {
+				empty = temp;
+			}
+		}
+	}
+	if (t == nullptr && newValue == -2) {
+		return;
+	}
+	if (t == nullptr) {
+		if (empty != nullptr) {
+			t = empty;
+			t->channelType->setValueFromTarget(c);
+		}
+		else {
+			t = targetCommand->values.addItem();
+			t->channelType->setValueFromTarget(c);
+		}
+	}
+
+	if (mode == 0) {
+		if (newValue == -2) {
+			t->parentContainer->removeChildControllableContainer(t);
+			targetCommand->values.items.remove(commandIndex);
+			//getProgrammer()->computeValues();
+			getProgrammer()->go();
+			//t->valueFrom->setValue(newValue, false);
+		}
+		else {
+			t->valueFrom->setValue(newValue, false);
+		}
+	}
+	else {
+		if (newValue == -2) {
+			t->thru->setValue(false);
+		}
+		else {
+			if (!t->thru->getValue()) {
+				t->thru->setValue(true);
+			}
+			t->valueTo->setValue(newValue, false);
+		}
+
 	}
 }
 

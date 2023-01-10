@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   colorpicker_png;
+    const int            colorpicker_pngSize = 129085;
+
     extern const char*   crash_png;
     const int            crash_pngSize = 96417;
 
@@ -18,7 +21,7 @@ namespace BinaryData
     const int            icon_pngSize = 85868;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 3;
+    const int namedResourceListSize = 4;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

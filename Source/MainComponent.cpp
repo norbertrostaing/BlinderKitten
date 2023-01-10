@@ -34,6 +34,7 @@
 #include "UI/VirtualFaders/VirtualFaderColManagerUI.h"
 
 #include "UI/ConductorInfos.h"
+#include "UI/BKColorPicker.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -132,6 +133,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Virtual faders grid", &VirtualFaderColGridUI::create));
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Conductor Infos", &ConductorInfosUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Color Picker", &BKColorPickerUI::create));
 
     OrganicMainContentComponent::init();
 

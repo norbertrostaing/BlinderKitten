@@ -48,6 +48,14 @@ public:
 	IntParameter* conductorTitleSize;
 	IntParameter* conductorTextSize;
 
+	ControllableContainer colorPickerContainer;
+	TargetParameter* CPRedChannel;
+	TargetParameter* CPGreenChannel;
+	TargetParameter* CPBlueChannel;
+	TargetParameter* CPCyanChannel;
+	TargetParameter* CPMagentaChannel;
+	TargetParameter* CPYellowChannel;
+
 
 	void clearInternal() override;
 
@@ -66,4 +74,6 @@ public:
 	void exportSelection();
 
 	void parameterValueChanged(Parameter* p);
+
+	void autoFillColorPickerValues();
 };

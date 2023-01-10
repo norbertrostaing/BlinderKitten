@@ -40,6 +40,7 @@ public:
     void processMessage(const OSCMessage& m) override;
 
     void encoderValueChanged(int index, float absVal);
+    void changeChannelValue(ChannelType* chan, float absVal);
     HashMap<int, ChannelType*> encoderChannels;
 
     void commandSelectionChanged(Command* c);

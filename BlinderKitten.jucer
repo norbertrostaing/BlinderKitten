@@ -5,6 +5,7 @@
               compilerFlagSchemes="NewScheme" headerPath="../../Source" defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;&#10;_ITERATOR_DEBUG_LEVEL=1">
   <MAINGROUP id="K7UlHD" name="BlinderKitten">
     <GROUP id="{64D406CA-52C4-9FE6-20BA-B5AC131530E5}" name="Ressources">
+      <FILE id="p7f1iF" name="colorpicker.png" compile="0" resource="1" file="Ressources/colorpicker.png"/>
       <FILE id="aJlTBc" name="crash.png" compile="0" resource="1" file="Ressources/crash.png"/>
       <FILE id="zdOjkI" name="default.blinderlayout" compile="0" resource="1"
             file="Ressources/default.blinderlayout"/>
@@ -88,6 +89,9 @@
           <FILE id="OiMifk" name="VirtualFaderSlider.h" compile="0" resource="0"
                 file="Source/UI/VirtualFaders/VirtualFaderSlider.h"/>
         </GROUP>
+        <FILE id="qfx9JQ" name="BKColorPicker.cpp" compile="1" resource="0"
+              file="Source/UI/BKColorPicker.cpp"/>
+        <FILE id="wbgqAn" name="BKColorPicker.h" compile="0" resource="0" file="Source/UI/BKColorPicker.h"/>
         <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
         <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
         <FILE id="datAZp" name="ConductorInfos.cpp" compile="1" resource="0"
