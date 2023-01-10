@@ -168,7 +168,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		}
 		else if (selections[selId]->filter->getValue() == "random") {
 			Array<SubFixture*> filteredSelection;
-
+			int nBuddy = selections[selId]->randomBuddy->getValue();
 			int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
 
 			Random r;
@@ -184,9 +184,16 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				r.setSeed((int)selections[selId]->randomSeed->getValue());
 			}
 			for (int i = 0; i< to; i++) {
-				int randIndex = r.nextInt(tempSelection.size());
-				filteredSelection.add(tempSelection[randIndex]);
-				tempSelection.remove(randIndex);
+				int maxIndex = floor(tempSelection.size()/(float)nBuddy);
+				int randIndex = r.nextInt(maxIndex);
+				randIndex *= nBuddy;
+				for (int n = 0; n < nBuddy; n++) {
+					if (randIndex < tempSelection.size()) {
+						filteredSelection.add(tempSelection[randIndex]);
+						tempSelection.remove(randIndex);
+
+					}
+				}
 			}
 
 			tempSelection = filteredSelection;

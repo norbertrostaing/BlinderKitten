@@ -41,6 +41,7 @@ CommandSelection::CommandSelection(var params) :
     symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
     randomSeed = addIntParameter("Seed", "Seed used to generate random, if 0, selection will change each call, if not, the random selection will alway be the same", 0, 0);
     randomNumber = addIntParameter("Number of subfixtures", "Number of subfixtures to take randomly", 1, 1);
+    randomBuddy = addIntParameter("Buddying", "They stay together", 1, 1);
     updateDisplay();
 };
 
@@ -75,7 +76,8 @@ void CommandSelection::updateDisplay()
     subTo->hideInEditor = !(sub && subTh);
 
     randomSeed -> hideInEditor = !randSeed;
-    randomNumber -> hideInEditor = !randNum;
+    randomNumber->hideInEditor = !randNum;
+    randomBuddy ->hideInEditor = !randNum;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

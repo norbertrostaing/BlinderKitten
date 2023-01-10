@@ -39,6 +39,7 @@ class CommandSelection:
     BoolParameter* symmetry;
     IntParameter* randomSeed;
     IntParameter* randomNumber;
+    IntParameter* randomBuddy;
 
     Array<SubFixture*> lastRandom;
 
