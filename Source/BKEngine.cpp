@@ -571,11 +571,17 @@ String BKEngine::getMinimumRequiredFileVersion()
 
 void BKEngine::importSelection()
 {
-	FileChooser fc("Load some mochis", File::getCurrentWorkingDirectory(), "*.mochi");
+	const MessageManagerLock mmLock;
+	FileChooser fc("Load some files", File::getCurrentWorkingDirectory(), "*.mochi,*.gdtf,*.mvr");
 	if (!fc.browseForMultipleFilesToOpen()) return;
 	Array<File> f = fc.getResults();
 	for (int i = 0; i < f.size(); i++) {
-		importMochi(f[i]);
+		if (f[i].hasFileExtension("mochi")) {
+			importMochi(f[i]);
+		}
+		else if (f[i].hasFileExtension("gdtf")) {
+			importGDTF(f[i]);
+		}
 	}
 }
 
@@ -611,6 +617,182 @@ void BKEngine::importMochi(File f) {
 	MapperGridView::getInstance()->updateCells();
 
 	autoFillColorPickerValues();
+}
+
+void BKEngine::importGDTF(File f)
+{
+	ZipFile* archive = new ZipFile(f);
+	int descIndex = archive->getIndexOfFileName("description.xml");
+	if (descIndex == -1) {
+		LOGERROR("the file "+f.getFileName()+" is not a valid GDTF File (no description.xml in the archive)");
+		return;
+	}
+	XmlDocument descriptionXml = archive->createStreamForEntry(descIndex)->readString();
+	auto rootElmt = descriptionXml.getDocumentElement();
+	int nChildren = rootElmt->getNumChildElements();
+	HashMap<int, int> breakOffsets;
+	for (int indexChild = 0; indexChild < nChildren; indexChild++) {
+		auto fixtureTypeNode = rootElmt->getChildElement(indexChild);
+		if (fixtureTypeNode->getTagName().toLowerCase() == "fixturetype") {
+			String fixtureName = "imported ";
+			String manufacturer = "";
+			fixtureName += fixtureTypeNode->getStringAttribute("Name");
+			manufacturer += fixtureTypeNode->getStringAttribute("Manufacturer");
+
+
+			XmlElement* attributesNode = fixtureTypeNode->getChildByName("AttributeDefinitions");
+			if (attributesNode == nullptr) {LOGERROR("import not finished, the fixture has no attributes tag"); }
+			auto attributes = attributesNode->getChildByName("Attributes");
+			HashMap<String, ChannelType*> nameToChannelType;
+			for (int i = 0; i < attributes->getNumChildElements(); i++) {
+				auto attr = attributes->getChildElement(i);
+				String attrName = attr->getStringAttribute("Name");
+				String attrFamilyName = StringArray::fromTokens(attr->getStringAttribute("Feature"), ".", "")[0];
+
+				ChannelFamily* cf = nullptr;
+				ChannelType* ct = nullptr;
+				for (int iFam = 0; iFam < ChannelFamilyManager::getInstance()->items.size(); iFam++) {
+					if (ChannelFamilyManager::getInstance()->items[iFam]->niceName.toLowerCase() == attrFamilyName.toLowerCase()) {
+						cf = ChannelFamilyManager::getInstance()->items[iFam];
+					}
+				}
+				if (cf == nullptr) {
+					cf = ChannelFamilyManager::getInstance()->addItem();
+					cf->setNiceName(attrFamilyName);
+				}
+
+				for (int iChan = 0; iChan < cf->definitions.items.size(); iChan++) {
+					if (cf->definitions.items[iChan]->niceName.toLowerCase() == attrName.toLowerCase()) {
+						ct = cf->definitions.items[iChan];
+					}
+				}
+				if (ct == nullptr) {
+					ct = cf->definitions.addItem();
+					nameToChannelType.set(attrName, ct);
+					if (attrName == "ColorAdd_R") { attrName = "Red"; }
+					if (attrName == "ColorAdd_G") { attrName = "Green"; }
+					if (attrName == "ColorAdd_B") { attrName = "Blue"; }
+					if (attrName == "ColorAdd_W") { attrName = "White"; }
+					if (attrName == "ColorAdd_A") { attrName = "Amber"; }
+					if (attrName == "ColorSub_C") { attrName = "Cyan"; }
+					if (attrName == "ColorSub_M") { attrName = "Magenta"; }
+					if (attrName == "ColorSub_Y") { attrName = "Yellow"; }
+					ct->setNiceName(attrName);
+				}
+			}
+
+			XmlElement* geometriesNode = fixtureTypeNode->getChildByName("Geometries");
+			if (geometriesNode == nullptr) { LOGERROR("import not finished, the fixture has no geometries tag"); }
+			HashMap<String, XmlElement* > mainGeometries;
+			for (int i = 0; i < geometriesNode->getNumChildElements(); i++) {
+				auto mainGeo = geometriesNode->getChildElement(i);
+				String geoName = mainGeo->getStringAttribute("Name");
+				mainGeometries.set(geoName, mainGeo);
+			}
+
+			XmlElement* dmxModesNode = fixtureTypeNode->getChildByName("DMXModes");
+			if (dmxModesNode == nullptr) { LOGERROR("import not finished, the fixture has no DMXModes tag"); }
+			for (int iMode = 0; iMode < dmxModesNode->getNumChildElements(); iMode++) {
+				auto modeNode = dmxModesNode->getChildElement(iMode);
+				String modeName = modeNode->getStringAttribute("Name");
+				FixtureType* ft = FixtureTypeManager::getInstance()->addItem();
+				ft -> setNiceName(fixtureName+" - "+modeName);
+				
+				Array<tempChannel> tempChannels;
+				int maxChannel = 0;
+				auto modeRelations = modeNode->getChildByName("Relations");
+				auto modeChannels = modeNode->getChildByName("DMXChannels");
+				XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
+				Array<String> subFixtureNames;
+				for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
+					auto dmxChannelNode = modeChannels->getChildElement(iChan);
+					auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
+					String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
+					String attribute = logicalChannelNode->getStringAttribute("Attribute");
+					String geometry = dmxChannelNode->getStringAttribute("Geometry");
+					int dmxAdress = 0;
+					int resolution = 0;
+					if (DMXOffset == "") {
+						// virtual
+					}
+					else if (DMXOffset.indexOf(",") != -1) {
+						dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
+						resolution = 2;
+					}
+					else {
+						dmxAdress = DMXOffset.getIntValue();
+						resolution = 1;
+					}
+					Array<geometryBreaks> breaks;
+					
+					getBreakOffset(modeGeometry, geometry, &breaks);
+					if (dmxAdress > 0) {
+						if (breaks.size() > 0) {
+							for (int i = 0; i < breaks.size(); i++) {
+								subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
+								tempChannel tc;
+								tc.attribute = attribute;
+								tc.resolution = resolution;
+								tc.subFixtId = subFixtureNames.indexOf(breaks[i].name)+1;
+								int index = dmxAdress;
+								index += breaks[i].offset;
+								index -= 2;
+								while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+								tempChannels.set(index, tc);
+							}
+						}
+						else {
+							tempChannel tc;
+							tc.attribute = attribute;
+							tc.resolution = resolution;
+							int index = dmxAdress-1;
+							while(tempChannels.size() < index) {tempChannels.add(tempChannel()); }
+							tempChannels.set(index, tc);
+						}
+					}
+				}
+				// got all channels
+				for (int i = 0; i < tempChannels.size(); i++) {
+					if (tempChannels[i].attribute != "") {
+					FixtureTypeChannel* ftc = ft->chansManager.addItem();
+					ftc->channelType->setValueFromTarget(nameToChannelType.getReference(tempChannels[i].attribute));
+					ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+					if (tempChannels[i].resolution == 2) {
+						ftc->resolution->setValue("16bits");
+						}
+					}
+				}
+			}
+			LOG("ok");
+		}
+	}
+	LOG("Import done !");
+}
+
+void BKEngine::getBreakOffset(XmlElement* tag, String geometryName, Array<geometryBreaks>* breaks)
+{
+	if (tag->getTagName() == "Geometry") {
+		for (int i = 0; i < tag->getNumChildElements(); i++) {
+			getBreakOffset(tag->getChildElement(i), geometryName, breaks);
+		}
+	}
+	else if (tag->getTagName() == "GeometryReference" && tag->getStringAttribute("Geometry") == geometryName) {
+		for (int i = 0; i < tag->getNumChildElements(); i++) {
+			auto br = tag->getChildElement(i);
+			if (br->getTagName() == "Break") {
+				geometryBreaks temp;
+				temp.name = tag->getStringAttribute("Name");
+				temp.breakNum = br->getStringAttribute("DMXBreak").getIntValue();
+				temp.offset = br->getStringAttribute("DMXOffset").getIntValue();
+				breaks->add(temp);
+			}
+		}
+	}
+}
+
+void BKEngine::importMVR(File f)
+{
+	LOGWARNING("Keep cool buddy, this is not implemented right now");
 }
 
 void BKEngine::exportSelection()
