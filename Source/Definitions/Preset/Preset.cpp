@@ -195,15 +195,15 @@ HashMap<ChannelType*, float>* Preset::getSubFixtureValues(SubFixture* f) {
 
 	FixtureType* dt = dynamic_cast<FixtureType*>(f->parentFixture->devTypeParam->targetContainer.get());
 	if (computedFixtureTypeValues.contains(dt)) {
-		HashMap<ChannelType*, float>* FixtureValues = computedFixtureTypeValues.getReference(dt);
-		for (auto it = FixtureValues->begin(); it != FixtureValues->end(); it.next()) {
+		HashMap<ChannelType*, float>* fixtureTypeValues = computedFixtureTypeValues.getReference(dt);
+		for (auto it = fixtureTypeValues->begin(); it != fixtureTypeValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}
 	}
 
 	if (computedSubFixtureValues.contains(f)) {
-		HashMap<ChannelType*, float>* FValues = computedSubFixtureValues.getReference(f);
-		for (auto it = FValues->begin(); it != FValues->end(); it.next()) {
+		HashMap<ChannelType*, float>* currentSubFixtureValues = computedSubFixtureValues.getReference(f);
+		for (auto it = currentSubFixtureValues->begin(); it != currentSubFixtureValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}
 	}

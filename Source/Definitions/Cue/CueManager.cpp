@@ -21,6 +21,7 @@ void CueManager::askForMoveBefore(BaseItem* c) {
     c1->id->setValue(c2Id);
     c2->id->setValue(c1Id);
 };
+
 void CueManager::askForMoveAfter(BaseItem* c) {
     BaseManager::askForMoveAfter(c);
     Cue* c1 = (Cue*)c;
@@ -30,6 +31,7 @@ void CueManager::askForMoveAfter(BaseItem* c) {
     c1->id->setValue(c2Id);
     c2->id->setValue(c1Id);
 };
+
 void CueManager::addItemInternal(Cue* c, var data) {
     if ((float)c->id->getValue() != 0) {return;}
     float newId = 1;
@@ -40,11 +42,13 @@ void CueManager::addItemInternal(Cue* c, var data) {
     BaseManager::addItemInternal(c, data);
     c->id->setValue(newId);
 }
+
 void CueManager::askForDuplicateItem(BaseItem* item)
 {
     BaseManager::askForDuplicateItem(item);
     correctCueIds();
 }
+
 void CueManager::correctCueIds()
 {
     for (int i = 1; i < items.size(); i++) {
@@ -102,5 +106,5 @@ double CueManager::calcId(double prev, double next)
     else if (delta >= 0.001) { delta = 0.001; }
     return prev + delta;
 }
-;
+
 
