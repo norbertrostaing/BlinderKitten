@@ -15,6 +15,13 @@
 #include "Brain.h"
  // #include "Module/ModuleIncludes.h"
 
+struct geometryBreaks {
+	String name;
+	int breakNum;
+	int offset;
+};
+
+
 class BKEngine :
 	public Engine
 {
@@ -71,9 +78,22 @@ public:
 
 	void importSelection();
 	void importMochi(File f);
+	void importGDTF(File f);
+	void importMVR(File f);
 	void exportSelection();
+
+	void getBreakOffset(XmlElement* tag, String geometryName, Array<geometryBreaks>* subs);
 
 	void parameterValueChanged(Parameter* p);
 
 	void autoFillColorPickerValues();
 };
+
+struct tempChannel {
+	String attribute = "";
+	String initialFunction = "";
+	int subFixtId = 0;
+	int resolution = 8;
+	int virtualDimmer = -1;
+};
+
