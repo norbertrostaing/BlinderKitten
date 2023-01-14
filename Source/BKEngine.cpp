@@ -701,6 +701,11 @@ void BKEngine::importGDTF(File f)
 				Array<tempChannel> tempChannels;
 				int maxChannel = 0;
 				auto modeRelations = modeNode->getChildByName("Relations");
+				Array<String> getMasterDimmer;
+				HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
+				for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
+					getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
+				}
 				auto modeChannels = modeNode->getChildByName("DMXChannels");
 				XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
 				Array<String> subFixtureNames;
@@ -710,6 +715,7 @@ void BKEngine::importGDTF(File f)
 					String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
 					String attribute = logicalChannelNode->getStringAttribute("Attribute");
 					String geometry = dmxChannelNode->getStringAttribute("Geometry");
+					String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
 					int dmxAdress = 0;
 					int resolution = 0;
 					if (DMXOffset == "") {
@@ -734,6 +740,7 @@ void BKEngine::importGDTF(File f)
 								tc.attribute = attribute;
 								tc.resolution = resolution;
 								tc.subFixtId = subFixtureNames.indexOf(breaks[i].name)+1;
+								tc.initialFunction = initialFunction;
 								int index = dmxAdress;
 								index += breaks[i].offset;
 								index -= 2;
@@ -745,6 +752,7 @@ void BKEngine::importGDTF(File f)
 							tempChannel tc;
 							tc.attribute = attribute;
 							tc.resolution = resolution;
+							tc.initialFunction = initialFunction;
 							int index = dmxAdress-1;
 							while(tempChannels.size() < index) {tempChannels.add(tempChannel()); }
 							tempChannels.set(index, tc);
@@ -754,11 +762,22 @@ void BKEngine::importGDTF(File f)
 				// got all channels
 				for (int i = 0; i < tempChannels.size(); i++) {
 					if (tempChannels[i].attribute != "") {
-					FixtureTypeChannel* ftc = ft->chansManager.addItem();
-					ftc->channelType->setValueFromTarget(nameToChannelType.getReference(tempChannels[i].attribute));
-					ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
-					if (tempChannels[i].resolution == 2) {
-						ftc->resolution->setValue("16bits");
+						FixtureTypeChannel* ftc = ft->chansManager.addItem();
+						ftc->channelType->setValueFromTarget(nameToChannelType.getReference(tempChannels[i].attribute));
+						ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+						if (tempChannels[i].resolution == 2) 
+						{
+							ftc->resolution->setValue("16bits");
+						}
+						if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
+							if (subIdToVirtDimmer.getReference(tempChannels[i].subFixtId) == nullptr) {
+								FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem();
+								subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
+								virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Dimmer"));
+								virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
+								virtDim-> setNiceName("Dimmer "+String(tempChannels[i].subFixtId));
+							}
+							ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
 						}
 					}
 				}

@@ -91,6 +91,7 @@ public:
 
 struct tempChannel {
 	String attribute = "";
+	String initialFunction = "";
 	int subFixtId = 0;
 	int resolution = 8;
 	int virtualDimmer = -1;
