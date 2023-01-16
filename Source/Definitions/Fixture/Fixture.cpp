@@ -33,6 +33,7 @@ Fixture::Fixture(var params) :
 	nameCanBeChangedByUser = false;
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
+	canBeDisabled = false;
 
 	itemDataType = "Fixture";
 	

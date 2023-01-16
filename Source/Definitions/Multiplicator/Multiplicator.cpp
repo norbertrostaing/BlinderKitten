@@ -17,7 +17,8 @@ Multiplicator::Multiplicator(var params) :
 	objectData(params)
 {
 	saveAndLoadRecursiveData = true;
-	
+	canBeDisabled = false;
+
 	editorIsCollapsed = true;
 
 	itemDataType = "Multiplicator";

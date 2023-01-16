@@ -22,6 +22,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
 
 {
     nameCanBeChangedByUser = false;
+    canBeDisabled = false;
     channelType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     channelType -> targetType = TargetParameter::CONTAINER;
     channelType -> maxDefaultSearchLevel = 2;

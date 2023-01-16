@@ -25,6 +25,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
+	canBeDisabled = false;
 
 	itemDataType = "VirtualFaderCol";
 
@@ -43,6 +44,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 	addChildControllableContainer(&aboveButtons);
 	aboveButtons.selectItemWhenCreated = false;
 	addChildControllableContainer(&fader);
+	fader.canBeDisabled = false;
 	belowButtons.selectItemWhenCreated = false;
 	addChildControllableContainer(&belowButtons);
 

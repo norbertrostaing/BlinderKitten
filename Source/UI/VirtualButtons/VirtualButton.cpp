@@ -22,6 +22,7 @@ VirtualButton::VirtualButton(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
+	canBeDisabled = false;
 
 	itemDataType = "VirtualButton";
 

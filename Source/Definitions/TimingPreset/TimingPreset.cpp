@@ -23,6 +23,7 @@ TimingPreset::TimingPreset(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
+	canBeDisabled = false;
 
 	itemDataType = "TimingPreset";
 

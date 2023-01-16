@@ -21,6 +21,7 @@ FixtureType::FixtureType(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
+	canBeDisabled = false;
 
 	itemDataType = "FixtureType";
 	

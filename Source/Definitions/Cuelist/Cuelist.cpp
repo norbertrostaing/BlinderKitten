@@ -35,6 +35,7 @@ Cuelist::Cuelist(var params) :
 	nameCanBeChangedByUser = false;
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
+	canBeDisabled = false;
 
 	id = addIntParameter("ID", "Id of this Cuelist", params.getProperty("ID", 1), 1);
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");

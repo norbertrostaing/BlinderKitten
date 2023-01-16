@@ -26,6 +26,7 @@ ChannelFamily::ChannelFamily(var params) :
 	editorIsCollapsed = true;
 
 	itemDataType = "ChannelFamily";
+	canBeDisabled = false;
 	
 	// definitions->addBaseManagerListener(this);
 

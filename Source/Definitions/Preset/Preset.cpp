@@ -38,6 +38,7 @@ Preset::Preset(var params) :
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
 	nameCanBeChangedByUser = false;
+	canBeDisabled = false;
 
 	itemDataType = "Preset";
 	id = addIntParameter("ID", "ID of this Preset", 1, 1);

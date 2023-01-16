@@ -37,6 +37,7 @@ Programmer::Programmer(var params) :
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
 	editorIsCollapsed = false;
+	canBeDisabled = false;
 	itemDataType = "Programmer";
 
 	id = addIntParameter("ID", "Id of this Programmer", 1, 1);
