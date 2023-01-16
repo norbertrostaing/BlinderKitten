@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Definitions/Interface/InterfaceIncludes.h"
+
 MIDIInterface::MIDIInterface() :
     Interface(getTypeString()),
     inputDevice(nullptr)
@@ -52,18 +54,21 @@ void MIDIInterface::onContainerParameterChangedInternal(Parameter* p)
 
 void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const int &velocity)
 {
+    if (!enabled->boolValue()) {return;}
     if (logIncomingData->boolValue()) NLOG(niceName, "Note On received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
     mappingManager.handleNote(channel, pitch, velocity);
 }
 
 void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const int &velocity)
 {
+    if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Note Off received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
     mappingManager.handleNote(channel, pitch, 0);
 }
 
 void MIDIInterface::controlChangeReceived(const int &channel, const int &number, const int &value)
 {
+    if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Control Change received, channel : " << channel << ", number : " << number << ", value : " << value);
     mappingManager.handleCC(channel, number, value);
 }

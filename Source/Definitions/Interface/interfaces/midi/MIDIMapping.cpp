@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Definitions/Interface/InterfaceIncludes.h"
+
 MIDIMapping::MIDIMapping() :
     BaseItem("MIDI Mapping"),
     isValid(false),
