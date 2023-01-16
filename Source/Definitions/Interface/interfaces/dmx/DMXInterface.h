@@ -26,6 +26,7 @@ public:
     std::unique_ptr<DMXDevice> dmxDevice;
     BoolParameter* dmxConnected;
 
+    std::unique_ptr<ControllableContainer> thruManager;
     BoolParameter * channelTestingMode;
     FloatParameter* channelTestingFlashValue;
 
@@ -40,10 +41,16 @@ public:
     void send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder);
     void send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder);
 
+    void sendDMXValue(int channel, int value, Array<DMXInterface*>callers);
+    void sendDMXValues(int startChannel, Array<int> values, Array<DMXInterface*>callers);
+    void send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder, Array<DMXInterface*>callers);
+    void send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder, Array<DMXInterface*>callers);
+
     void dmxDeviceConnected() override;
     void dmxDeviceDisconnected() override;
 
     void dmxDataInChanged(int numChannels, uint8* values) override;
+    static void createThruControllable(ControllableContainer* cc);
 
     class DMXParams : public ControllableContainer
     {

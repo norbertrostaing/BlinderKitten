@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Definitions/Interface/InterfaceIncludes.h"
+
 DMXInterface::DMXInterface() :
 	Interface(getTypeString())
 {
@@ -25,6 +27,11 @@ DMXInterface::DMXInterface() :
 
 	channelTestingFlashValue = addFloatParameter("Channel Testing Flash Value", "Flash value of channel testing", 1, 0, 1);
 	channelTestingFlashValue->hideInEditor = true;
+
+	thruManager.reset(new ControllableContainer("Pass-through"));
+	thruManager->userCanAddControllables = true;
+	thruManager->customUserCreateControllableFunc = &DMXInterface::createThruControllable;
+	addChildControllableContainer(thruManager.get());
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 
@@ -81,13 +88,49 @@ void DMXInterface::setCurrentDMXDevice(DMXDevice* d)
 
 void DMXInterface::sendDMXValue(int channel, int value)
 {
-	if (!enabled->boolValue() || dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
-	dmxDevice->sendDMXValue(channel, value);
+	sendDMXValue(channel, value, Array<DMXInterface*>());
 }
 
 void DMXInterface::sendDMXValues(int startChannel, Array<int> values)
 {
+	sendDMXValues(startChannel, values, Array<DMXInterface*>());
+}
+
+void DMXInterface::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder)
+{
+	send16BitDMXValue(startChannel, value, byteOrder, Array<DMXInterface*>());
+}
+
+void DMXInterface::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder)
+{
+	send16BitDMXValues(startChannel, values, byteOrder, Array<DMXInterface*>());
+}
+
+void DMXInterface::sendDMXValue(int channel, int value, Array<DMXInterface*>callers)
+{
+	if (callers.contains(this)) {return;}
+	if (!enabled->boolValue() || dmxDevice == nullptr) return;
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
+	dmxDevice->sendDMXValue(channel, value);
+
+	callers.add(this);
+	for (auto& c : thruManager->controllables)
+	{
+		if (TargetParameter* mt = (TargetParameter*)c)
+		{
+			if (!mt->enabled) continue;
+			if (DMXInterface* m = (DMXInterface*)(mt->targetContainer.get()))
+			{
+				m->sendDMXValue(channel, value, callers);
+			}
+		}
+	}
+
+}
+
+void DMXInterface::sendDMXValues(int startChannel, Array<int> values, Array<DMXInterface*>callers)
+{
+	if (callers.contains(this)) { return; }
 	if (!enabled->boolValue() || dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue())
 	{
@@ -102,19 +145,45 @@ void DMXInterface::sendDMXValues(int startChannel, Array<int> values)
 	}
 
 	dmxDevice->sendDMXRange(startChannel, values);
+	callers.add(this);
+	for (auto& c : thruManager->controllables)
+	{
+		if (TargetParameter* mt = (TargetParameter*)c)
+		{
+			if (!mt->enabled) continue;
+			if (DMXInterface* m = (DMXInterface*)(mt->targetContainer.get()))
+			{
+				m->sendDMXValues(startChannel, values, callers);
+			}
+		}
+	}
 }
 
-void DMXInterface::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder)
+void DMXInterface::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder, Array<DMXInterface*>callers)
 {
+	if (callers.contains(this)) { return; }
 	if (!enabled->boolValue() || dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(value));
 	dmxDevice->sendDMXValue(startChannel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
 	dmxDevice->sendDMXValue(startChannel + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
 
+	callers.add(this);
+	for (auto& c : thruManager->controllables)
+	{
+		if (TargetParameter* mt = (TargetParameter*)c)
+		{
+			if (!mt->enabled) continue;
+			if (DMXInterface* m = (DMXInterface*)(mt->targetContainer.get()))
+			{
+				m->send16BitDMXValue(startChannel, value, byteOrder, callers);
+			}
+		}
+	}
 }
 
-void DMXInterface::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder)
+void DMXInterface::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder, Array<DMXInterface*>callers)
 {
+	if (callers.contains(this)) { return; }
 	if (!enabled->boolValue() || dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
 
@@ -129,6 +198,19 @@ void DMXInterface::send16BitDMXValues(int startChannel, Array<int> values, DMXBy
 	}
 
 	dmxDevice->sendDMXRange(startChannel, dmxValues);
+
+	callers.add(this);
+	for (auto& c : thruManager->controllables)
+	{
+		if (TargetParameter* mt = (TargetParameter*)c)
+		{
+			if (!mt->enabled) continue;
+			if (DMXInterface* m = (DMXInterface*)(mt->targetContainer.get()))
+			{
+				m->send16BitDMXValues(startChannel, values, byteOrder, callers);
+			}
+		}
+	}
 }
 
 void DMXInterface::dmxDeviceConnected()
@@ -188,3 +270,15 @@ DMXInterface::DMXParams::DMXParams() :
 	startChannel = addIntParameter("Start Channel", "The first channel to set the values. The values will automatically distributed depending on the object.", 1, 1, 512);
 }
 
+void DMXInterface::createThruControllable(ControllableContainer* cc)
+{
+	TargetParameter* p = new TargetParameter("Output Universe", "Target module to send the raw data to", "");
+	p->setRootContainer(InterfaceManager::getInstance());
+	p->targetType = TargetParameter::CONTAINER;
+	p->maxDefaultSearchLevel = 0;
+	//p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+	p->isRemovableByUser = true;
+	p->canBeDisabledByUser = true;
+	p->saveValueOnly = false;
+	cc->addParameter(p);
+}
