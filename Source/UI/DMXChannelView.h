@@ -9,6 +9,8 @@
 */
 
 #pragma once
+#include "JuceHeader.h"
+#include "Definitions/Interface/InterfaceManager.h"
 
 class DMXInterface;
 class DMXChannelView;
@@ -54,11 +56,13 @@ public:
     Viewport viewport;
     Component channelContainer;
 
-    std::unique_ptr<BoolButtonToggleUI> testingUI;
+    //std::unique_ptr<BoolButtonToggleUI> testingUI;
     std::unique_ptr<FloatSliderUI> flashValue;
 
     ComboBox dmxList;
     OwnedArray<DMXChannelItem> channelItems;
+    Array<DMXChannelItem*> selectedItems;
+    int lastClickedId = 0;
 
     DMXInterface* currentInterface;
 
@@ -69,10 +73,12 @@ public:
     void rebuildDMXList();
     void rebuildChannelItems();
 
-
     void sendDMXValue(int channel, float value);
 
     void newMessage(const InterfaceManager::ManagerEvent& e) override;
+    void clearSelection();
+    void rangeOn(int from, int to);
+    void rangeOff(int from, int to);
 
     // Inherited via Listener
     virtual void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override;

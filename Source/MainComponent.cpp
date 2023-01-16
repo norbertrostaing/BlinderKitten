@@ -35,6 +35,7 @@
 
 #include "UI/ConductorInfos.h"
 #include "UI/BKColorPicker.h"
+#include "UI/DMXChannelView.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -134,6 +135,7 @@ void MainContentComponent::init()
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Conductor Infos", &ConductorInfosUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Color Picker", &BKColorPickerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("DMX Tester", &DMXChannelView::create));
 
     OrganicMainContentComponent::init();
 

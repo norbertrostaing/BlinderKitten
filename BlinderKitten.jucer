@@ -102,6 +102,10 @@
               file="Source/UI/CuelistLoadWindow.cpp"/>
         <FILE id="CgBx6O" name="CuelistLoadWindow.h" compile="0" resource="0"
               file="Source/UI/CuelistLoadWindow.h"/>
+        <FILE id="uUJo9C" name="DMXChannelView.cpp" compile="1" resource="0"
+              file="Source/UI/DMXChannelView.cpp"/>
+        <FILE id="g5wgz6" name="DMXChannelView.h" compile="0" resource="0"
+              file="Source/UI/DMXChannelView.h"/>
         <FILE id="V8gEcE" name="Encoders.cpp" compile="1" resource="0" file="Source/UI/Encoders.cpp"/>
         <FILE id="yt8yKK" name="Encoders.h" compile="0" resource="0" file="Source/UI/Encoders.h"/>
         <FILE id="R1P4dS" name="InputPanel.cpp" compile="1" resource="0" file="Source/UI/InputPanel.cpp"/>
@@ -457,10 +461,6 @@
             </GROUP>
             <GROUP id="{32D9547D-4D1B-0299-175F-49EA5DFA9D89}" name="dmx">
               <GROUP id="{D8DD259E-689D-DECA-3BBF-34F52F186FA9}" name="ui">
-                <FILE id="GhpLvd" name="DMXChannelView.cpp" compile="0" resource="0"
-                      file="Source/Definitions/Interface/interfaces/dmx/ui/DMXChannelView.cpp"/>
-                <FILE id="s87ftp" name="DMXChannelView.h" compile="0" resource="0"
-                      file="Source/Definitions/Interface/interfaces/dmx/ui/DMXChannelView.h"/>
                 <FILE id="Tcu6HH" name="DMXInterfaceUI.cpp" compile="0" resource="0"
                       file="Source/Definitions/Interface/interfaces/dmx/ui/DMXInterfaceUI.cpp"/>
                 <FILE id="WiCp2A" name="DMXInterfaceUI.h" compile="0" resource="0"

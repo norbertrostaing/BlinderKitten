@@ -16,7 +16,6 @@
 #include "InterfaceManager.cpp"
 #include "interfaces/bento/BentoInterface.cpp"
 #include "interfaces/dmx/DMXInterface.cpp"
-#include "interfaces/dmx/ui/DMXChannelView.cpp"
 #include "interfaces/dmx/ui/DMXInterfaceUI.cpp"
 
 #include "interfaces/midi/MIDIMapping.cpp"

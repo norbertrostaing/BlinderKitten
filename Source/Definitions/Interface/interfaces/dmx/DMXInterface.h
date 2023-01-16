@@ -10,7 +10,8 @@
 
 #pragma once
 
-#include "../../Common/CommonIncludes.h"
+//#include "../../Common/CommonIncludes.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
 
 class DMXInterface :
     public Interface,

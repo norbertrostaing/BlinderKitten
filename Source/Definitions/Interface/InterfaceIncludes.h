@@ -28,7 +28,6 @@
 #include "interfaces/serial/SerialInterface.h"
 
 #include "interfaces/dmx/DMXInterface.h"
-#include "interfaces/dmx/ui/DMXChannelView.h"
 #include "interfaces/dmx/ui/DMXInterfaceUI.h"
 
 #include "interfaces/midi/MIDIMapping.h"
