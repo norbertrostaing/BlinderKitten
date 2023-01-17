@@ -968,3 +968,27 @@ void Brain::resetRandomSeed(int seed)
 {
     srand(seed);
 }
+
+void Brain::showWindow(String name)
+{
+    bool done = false;
+    for (int i = 0; i < ShapeShifterManager::getInstance()->openedPanels.size(); i++) {
+        auto panel = ShapeShifterManager::getInstance()->openedPanels[i];
+        for (int j = 0; j < panel->header.tabs.size(); j++) {
+            if (panel->header.tabs[j]->content->contentName == name) {
+                panel->setCurrentContent(name);
+                done = true;
+            }
+        }
+    }
+    if (!done) {
+        for (int i = 0; i < ShapeShifterFactory::getInstance()->defs.size() && !done; i++) {
+            String contentName = ShapeShifterFactory::getInstance()->defs[i]->contentName;
+            if (name == contentName) {
+                ShapeShifterManager::getInstance()->showContent(contentName);
+                done = true;
+            }
+
+        }
+    }
+}

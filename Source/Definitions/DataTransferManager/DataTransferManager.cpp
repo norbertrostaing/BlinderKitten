@@ -504,37 +504,45 @@ void DataTransferManager::editObject(String type, int id) {
         Group* target = Brain::getInstance()->getGroupById(id);
         if (target == nullptr) { target = GroupManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "preset") {
         Preset* target = Brain::getInstance()->getPresetById(id);
         if (target == nullptr) { target = PresetManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "cuelist") {
         Cuelist* target = Brain::getInstance()->getCuelistById(id);
         if (target == nullptr) { target = CuelistManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "effect") {
         Effect* target = Brain::getInstance()->getEffectById(id);
         if (target == nullptr) { target = EffectManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "carousel") {
         Carousel* target = Brain::getInstance()->getCarouselById(id);
         if (target == nullptr) { target = CarouselManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "mapper") {
         Mapper* target = Brain::getInstance()->getMapperById(id);
         if (target == nullptr) { target = MapperManager::getInstance()->addItem(); target->id->setValue(id); }
         target->selectThis();
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "virtualbutton") {
         VirtualButtonGrid::getInstance()->editCell(id);
+        Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "virtualfadercol") {
         VirtualFaderColGrid::getInstance()->editCell(id);
+        Brain::getInstance()->showWindow("Inspector");
     }
 }
 

@@ -143,4 +143,6 @@ public:
     void stopAllCarousels();
 
     void resetRandomSeed(int seed);
+
+    void showWindow(String name);
 };
