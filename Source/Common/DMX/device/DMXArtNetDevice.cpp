@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "../../CommonIncludes.h"
+
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
 	Thread("ArtNetReceive"),
@@ -18,6 +20,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	inputNet = inputCC->addIntParameter("Net", "The net to receive from, from 0 to 15", 0, 0, 127);
 	inputSubnet = inputCC->addIntParameter("Subnet", "The subnet to receive from, from 0 to 15", 0, 0, 15);
 	inputUniverse = inputCC->addIntParameter("Universe", "The Universe to receive from, from 0 to 15", 0, 0, 15);
+	inputCC->enabled->setValue(false);
 
 	remoteHost = outputCC->addStringParameter("Remote Host", "IP to which send the Art-Net to", "127.0.0.1");
 	remotePort = outputCC->addIntParameter("Remote Port", "Local port to receive ArtNet data", 6454, 0, 65535);
