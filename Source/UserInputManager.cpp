@@ -27,6 +27,7 @@
 #include "Definitions/Fixture/Fixture.h"
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
+#include "UI//EncodersMult/EncodersMult.h"
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -39,8 +40,11 @@ UserInputManager::~UserInputManager() {
 }
 
 void UserInputManager::processInput(String s) {
-	
-	getProgrammer()->processUserInput(s);
+	if (EncodersMult::getInstance()->targetCommandManager == nullptr) {
+		EncodersMult::getInstance()->targetChanged();
+	}
+
+	getProgrammer(true)->processUserInput(s);
 }
 
 void UserInputManager::processMessage(const OSCMessage& m)
@@ -265,8 +269,23 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	*/
 }
 
+void UserInputManager::programmerCommandStructureChanged(Programmer* p)
+{
+	if (p == getProgrammer(false)) {
+		EncodersMult::getInstance()->reconstructSubComponents();
+	}
+}
+
+void UserInputManager::programmerCommandValueChanged(Programmer* p)
+{
+	if (p == getProgrammer(false)) {
+		EncodersMult::getInstance()->reconstructNames();
+	}
+}
+
 void UserInputManager::commandSelectionChanged(Command* c) {
-	if (c == getProgrammer()->currentUserCommand) {
+	Programmer* p = getProgrammer(false);
+	if (p != nullptr && p->currentUserCommand == c) {
 		Encoders::getInstance()->updateChannels();
 		commandValueChanged(c);
 	}
@@ -276,7 +295,8 @@ void UserInputManager::redrawEncoders() {
 }
 
 void UserInputManager::commandValueChanged(Command* c) {
-	if (c == getProgrammer() ->currentUserCommand) {
+	Programmer* p = getProgrammer(false);
+	if (p != nullptr && p->currentUserCommand == c) {
 		Encoders::getInstance()->updateEncodersValues();
 		Encoders::getInstance()->updateCommandLine();
 	}
@@ -287,7 +307,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 	if (Encoders::getInstance()->channels.size() <= index) { return; }
 	int mode = Encoders::getInstance()->mode;
 	
-	targetCommand = getProgrammer()->currentUserCommand;
+	targetCommand = getProgrammer(true)->currentUserCommand;
 	if (targetCommand == nullptr) {return;}
 	if (mode < 2) { // bug ici ?
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
@@ -302,7 +322,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 
 void UserInputManager::changeChannelValue(ChannelType* c, float newValue)
 {
-	targetCommand = getProgrammer()->currentUserCommand;
+	targetCommand = getProgrammer(true)->currentUserCommand;
 	if (targetCommand == nullptr) {
 		return;
 	}
@@ -349,7 +369,7 @@ void UserInputManager::changeChannelValue(ChannelType* c, float newValue)
 			t->parentContainer->removeChildControllableContainer(t);
 			targetCommand->values.items.remove(commandIndex);
 			//getProgrammer()->computeValues();
-			getProgrammer()->go();
+			getProgrammer(true)->go();
 			//t->valueFrom->setValue(newValue, false);
 		}
 		else {
@@ -387,10 +407,10 @@ String UserInputManager::toUserText(String s) {
 	return s;
 }
 
-Programmer* UserInputManager::getProgrammer() {
+Programmer* UserInputManager::getProgrammer(bool createIfNotThere) {
 	currentProgrammer = Brain::getInstance()->getProgrammerById(1);
 
-	if (currentProgrammer == nullptr) {
+	if (currentProgrammer == nullptr && createIfNotThere) {
 		currentProgrammer = ProgrammerManager::getInstance()->addItem();
 		currentProgrammer->id->setValue(1);
 	}
@@ -422,7 +442,7 @@ float UserInputManager::backspaceOnFloat(var v) {
 
 void UserInputManager::gridViewCellPressed(String type, int id) {
 	type = type.toLowerCase();
-	Programmer *p = getProgrammer();
+	Programmer *p = getProgrammer(true);
 	if (p->cliActionType->getValue() != "") {
 		if (p->userCanPressTargetType) {
 			p->processUserInput(type);
@@ -532,7 +552,7 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 void UserInputManager::testPreset(Preset* p)
 {
 	if (p == nullptr) { return; }
-	Programmer* prg = getProgrammer();
+	Programmer* prg = getProgrammer(true);
 	if (prg == nullptr) { return; }
 	int fixtMax = 1;
 	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {

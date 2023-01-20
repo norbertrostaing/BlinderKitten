@@ -102,7 +102,7 @@ void Preset::onContainerParameterChangedInternal(Parameter* p) {
 
 
 void Preset::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
-	Programmer* currentProgrammer = UserInputManager::getInstance()->getProgrammer();
+	Programmer* currentProgrammer = UserInputManager::getInstance()->getProgrammer(false);
 	bool programmerNeedRefresh = false;
 	int myId = id->getValue();
 	if (currentProgrammer != nullptr) {

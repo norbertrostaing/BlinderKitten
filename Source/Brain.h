@@ -74,6 +74,7 @@ public:
 
     void run() override;
     void brainLoop();
+    bool skipLoop = false;
 
     CriticalSection usingCollections;
     void registerSubFixture(SubFixture* f, int id);

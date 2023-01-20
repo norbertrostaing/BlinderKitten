@@ -86,7 +86,9 @@ void Brain::run() {
 }
 
 void Brain::brainLoop() {
-
+    if (skipLoop) {
+        return;
+    }
 
     if (pleaseClearProgrammer) {
         pleaseClearProgrammer = false;
@@ -165,7 +167,9 @@ void Brain::brainLoop() {
         programmerPoolWaiting.clear();
     }
     for (int i = 0; i < programmerPoolUpdating.size(); i++) {
-        programmerPoolUpdating.at(i)->update(now);
+        if (!programmerPoolUpdating.at(i)->isDeleted) {
+            programmerPoolUpdating.at(i)->update(now);
+        }
     }
     programmerPoolUpdating.clear();
 

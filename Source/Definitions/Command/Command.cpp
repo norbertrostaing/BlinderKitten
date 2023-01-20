@@ -17,6 +17,8 @@
 #include "../ChannelValue.h"
 #include "../Cue/Cue.h"
 #include "UserInputManager.h"
+#include "CommandManager.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManager.h"
 
 Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),
@@ -29,7 +31,8 @@ Command::Command(var params) :
 	editorIsCollapsed = false;
 	itemDataType = "Command";
 
-	viewCommandBtn = addTrigger("Log command text", "display the textual content of this command in the log windows");
+	//viewCommandBtn = addTrigger("Log command text", "display the textual content of this command in the log windows");
+	explodeSelectionBtn = addTrigger("Explode Selection", "Transform this command in one command per subfixture");
 
 	// to add a manager with defined data
 	//selection = new CommandSelectionManager();
@@ -46,6 +49,7 @@ Command::Command(var params) :
 
 	maxTiming = 0;
 	updateDisplay();
+	listeners.clear();
 }
 
 Command::~Command()
@@ -79,6 +83,7 @@ void Command::computeValues() {
 
 void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
+	isComputing.enter();
 	computedValues.getLock().enter();
 	computedValues.clear();
 	selection.computeSelection();
@@ -273,6 +278,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 		}
 	}
 	computedValues.getLock().exit();
+	isComputing.exit();
 }
 
 void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) {
@@ -280,10 +286,19 @@ void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllab
 		UserInputManager::getInstance()->commandSelectionChanged(this);
 	}
 	else if (&values == cc) {
+		queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableFeedbackUpdate, this));
+
 		UserInputManager::getInstance()->commandValueChanged(this);
 	}
 	else {
 
+	}
+}
+
+void Command::triggerTriggered(Trigger* t)
+{
+	if (t == explodeSelectionBtn) {
+		explodeSelection();
 	}
 }
 
@@ -306,7 +321,7 @@ StringArray Command::getCommandAsTexts() {
 
 	userCanPressSelectionType = true;
 	for (int i = 0; i < selection.items.size(); i++) {
-		CommandSelection *s = selection.items[i];
+		CommandSelection* s = selection.items[i];
 		currentUserSelection = s;
 		if (s->plusOrMinus->getValue() == "-" || words.size() > 0) {
 			words.add(s->plusOrMinus->getValueData());
@@ -462,7 +477,70 @@ StringArray Command::getCommandAsTexts() {
 					}
 				}
 			}
-		} 
+		}
+	}
+
+	return words;
+
+}
+
+StringArray Command::getCommandSelectionAsTexts() {
+	StringArray words;
+	userCantPress();
+	if (selection.items.size() > 0) {
+		currentUserSelection = selection.items[0];
+	}
+	else {
+		currentUserSelection = selection.addItem();
+	}
+
+	if (values.items.size() > 0) {
+		currentUserValue = values.items[0];
+	}
+	else {
+		currentUserValue = values.addItem();
+	}
+
+	userCanPressSelectionType = true;
+	for (int i = 0; i < selection.items.size(); i++) {
+		CommandSelection* s = selection.items[i];
+		if (s->plusOrMinus->getValue() == "-" || words.size() > 0) {
+			words.add(s->plusOrMinus->getValueData());
+		}
+		if (s->targetType->getValueData() == "group") {
+			words.add("grp");
+		}
+		if ((int)s->valueFrom->value > 0) {
+			words.add(s->valueFrom->value);
+			if (s->thru->getValue()) {
+				words.add(">");
+				if ((int)s->valueTo->value > 0) {
+					words.add(s->valueTo->value);
+				}
+				else {
+					return words;
+				}
+			}
+		}
+		else {
+			return words;
+		}
+
+		if (s->subSel->getValue()) {
+			words.add("sub");
+			if ((int)s->subFrom->value > 0) {
+				words.add(s->subFrom->value);
+				if (s->subThru->getValue()) {
+					words.add("thru");
+					if ((int)s->subTo->value > 0) {
+						words.add(s->subTo->value);
+					}
+					else {
+						return words;
+					}
+				}
+			}
+		}
 	}
 
 	return words;
@@ -592,4 +670,42 @@ float Command::getChannelValue(ChannelType* t, bool thru) {
 		}
 	}
 	return val;
+}
+
+void Command::explodeSelection()
+{
+	const MessageManagerLock mmLock;
+	BaseManager<Command>* parentManager = dynamic_cast<BaseManager<Command>*>(parentContainer.get());
+	int index = parentManager->items.indexOf(this)+1;
+	computeValues();
+	computedValues.getLock().enter();
+	isComputing.enter();
+	ChannelFamilyManager::getInstance()->updateOrderedElements();
+	for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
+		SubFixture* sf = selection.computedSelectedSubFixtures[i];
+		Fixture* f = sf->parentFixture;
+		Command* newCommand = parentManager->addItem();
+		newCommand->values.clear();
+		parentManager->setItemIndex(newCommand, index);
+		index++;
+		newCommand->selection.items[0]->valueFrom->setValue(f->id->getValue());
+		if (f->subFixtures.size() > 1) {
+			newCommand->selection.items[0]->subSel->setValue(true);
+			newCommand->selection.items[0]->subFrom->setValue(sf->subId);
+		}
+		for (int idCh = 0; idCh < ChannelFamilyManager::getInstance()->orderedElements.size(); idCh++) {
+			ChannelType* chanType = ChannelFamilyManager::getInstance()->orderedElements[idCh];
+			SubFixtureChannel* chan = sf->channelsMap.getReference(chanType);
+			if (chan != nullptr && computedValues.contains(chan)) {
+				CommandValue* cv = newCommand->values.addItem();
+				cv->channelType->setValueFromTarget(chan->channelType);
+				ChannelValue* chanVal = computedValues.getReference(chan);
+				if (chanVal != nullptr) {
+					cv->valueFrom->setValue(chanVal->endValue);
+				}
+			}
+		}
+	}
+	computedValues.getLock().exit();
+	isComputing.exit();
 }

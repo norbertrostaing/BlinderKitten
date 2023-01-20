@@ -1,4 +1,4 @@
-﻿/*
+/*
   ==============================================================================
 
     Encoders.cpp
@@ -403,7 +403,7 @@ void Encoders::updateEncodersValues() {
 void Encoders::updateCommandLine()
 {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
-        String txt = UserInputManager::getInstance()->getProgrammer()->getTextCommand();
+        String txt = UserInputManager::getInstance()->getProgrammer(true)->getTextCommand();
         commandLine.setText(txt, juce::dontSendNotification);
     }
 }

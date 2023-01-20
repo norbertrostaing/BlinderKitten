@@ -93,7 +93,8 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 }
 
 void Cue::computeValues() {
-	if (isComputing) {return;}
+	csComputing.enter();
+	//if (isComputing) {return;}
 	isComputing = true;
 	maxTiming = 0;
 	computedValues.clear();
@@ -109,6 +110,7 @@ void Cue::computeValues() {
 			}
 		}
 	}
+	csComputing.exit();
 	isComputing = false;
 }
 

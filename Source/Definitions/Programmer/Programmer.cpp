@@ -100,18 +100,19 @@ Programmer::Programmer(var params) :
 	if (params.isVoid()) {
 		commands.addItem();
 	}
+	isDeleted = false;
 	Brain::getInstance()->registerProgrammer(this, id->getValue());
 }
 
 Programmer::~Programmer()
 {
+	isDeleted = true;
 	clearAll();
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		it.getKey()->programmerOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
 	Brain::getInstance()->unregisterProgrammer(this);
-	LOG("delete Programmer");
 }
 
 
@@ -180,6 +181,13 @@ void Programmer::update(double now) {
 
 void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
 	Brain::getInstance()->pleaseUpdate(this);
+	if (c->niceName == "Channel type" || c->niceName == "Thru") {
+		UserInputManager::getInstance()->programmerCommandStructureChanged(this);
+	} 
+	else if (c->niceName != "Value"&& c->niceName != "Value to")
+	{
+		UserInputManager::getInstance()->programmerCommandValueChanged(this);
+	}
 }
 
 void Programmer::render(double now) {
@@ -317,8 +325,8 @@ void Programmer::clearAll() {
 	computing.enter();
 	currentUserCommand = nullptr;
 	commands.clear();
-	commands.items.clear();
-	currentUserCommand = commands.addItem();
+	//commands.items.clear();
+	currentUserCommand = nullptr;
 	computing.exit();
 	Brain::getInstance()->pleaseUpdate(this);
 	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
@@ -330,7 +338,7 @@ void Programmer::clearCurrent() {
 	const MessageManagerLock mmLock;
 
 	if (commands.items.size() > 0 && currentUserCommand != nullptr) {
-		commands.removeItem(currentUserCommand, false, false);
+		commands.removeItem(currentUserCommand, false, true);
 		commands.items.remove(commands.items.indexOf(currentUserCommand));
 	}
 

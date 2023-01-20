@@ -335,7 +335,7 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
     int col = buttonColumnIndex.getReference(t);
     //// UserInputManager::getInstance()->gridViewCellPressed("VirtualFaderCol", index);
     const MessageManagerLock mmLock;
-    Programmer* p = UserInputManager::getInstance()->getProgrammer();
+    Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
             p->processUserInput("VirtualFaderCol");

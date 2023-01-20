@@ -42,6 +42,7 @@ public:
     CommandTiming timing;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    CriticalSection isComputing;
     bool toDelete = false;
 
     String getTypeString() const override { return objectType; }
@@ -54,10 +55,13 @@ public:
     void computeValues(Cuelist* cl, Cue* c);
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
+    void triggerTriggered(Trigger* t);
     static Command* create(var params) { return new Command(params); }
 
     StringArray getCommandAsTexts();
-    Trigger* viewCommandBtn;
+    StringArray getCommandSelectionAsTexts();
+    //Trigger* viewCommandBtn;
+    Trigger* explodeSelectionBtn;
     String formatValue(float f);
 
     bool userCanPressPlusOrMinus = true;
@@ -80,6 +84,8 @@ public:
 
     float getChannelValue(ChannelType* t, bool thru = false);
     String lastTarget = "";
+
+    void explodeSelection();
 
 };
 

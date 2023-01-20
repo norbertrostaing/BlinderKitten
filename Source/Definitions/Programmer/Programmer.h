@@ -30,11 +30,12 @@ public:
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
+    bool isDeleted = false;
 
     CriticalSection computing;
 
     EnumParameter* editionMode;
-    FloatParameter* releaseTime;
+    FloatParameter* releaseTime = nullptr;
     Trigger* goBtn;
     Trigger* releaseBtn;
     Trigger* recBtn;

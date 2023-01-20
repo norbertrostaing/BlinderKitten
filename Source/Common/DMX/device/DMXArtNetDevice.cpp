@@ -28,7 +28,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
 	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
 
-	discoverNodesIP = addStringParameter("Discover IP", "Find nodes on this IP", "2.255.255.255");
+	discoverNodesIP = addStringParameter("Discover IP", "Find nodes on this IP, Input must be enabled to receive responses !", "2.255.255.255");
 	findNodesBtn = addTrigger("Find nodes", "find artnet nodes");
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);

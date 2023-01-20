@@ -41,6 +41,7 @@ public:
     bool isComputing = false;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    CriticalSection csComputing;
 
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p) override;

@@ -54,6 +54,7 @@
 
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
+#include "UI/EncodersMult/EncodersMult.h"
 #include "UI/InputPanel.h"
 
 #include "UI/GridView/FixtureGridView.h"
@@ -177,6 +178,7 @@ BKEngine::BKEngine() :
 
 
 	Encoders::getInstance()->engine = this;
+	//EncodersMult::getInstance()->engine = this;
 	InputPanel::getInstance()->engine = this;
 	FixtureGridView::getInstance()->engine = this;
 	GroupGridView::getInstance()->engine = this;
@@ -233,6 +235,7 @@ BKEngine::~BKEngine()
 
 	// Guider::deleteInstance();
 	Brain::getInstance()->stopThread(100);
+	Brain::getInstance()->clear();
 
 
 	DataTransferManager::deleteInstance();
@@ -243,6 +246,7 @@ BKEngine::~BKEngine()
 	VirtualFaderColManager::deleteInstance();
 	VirtualFaderColGrid::deleteInstance();
 
+	EncodersMult::deleteInstance();
 	MultiplicatorManager::deleteInstance();
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
@@ -289,6 +293,7 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	Brain::getInstance()->skipLoop = true;
 	Brain::getInstance()->stopThread(1);
 	Brain::getInstance()->clear();
 
@@ -298,6 +303,7 @@ void BKEngine::clearInternal()
 	MultiplicatorManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
 	CarouselManager::getInstance()->clear();
+	EncodersMult::getInstance()->clear();
 	ProgrammerManager::getInstance()->clear();
 	CuelistManager::getInstance()->clear();
 	CommandManager::getInstance()->clear();
@@ -319,7 +325,9 @@ void BKEngine::clearInternal()
 	EffectGridView::getInstance()->updateCells();
 	CarouselGridView::getInstance()->updateCells();
 	MapperGridView::getInstance()->updateCells();
+	Brain::getInstance()->clear();
 	Brain::getInstance()->startThread();
+	Brain::getInstance()->skipLoop = false;
 
 	autoFillColorPickerValues();
 }
@@ -544,7 +552,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	Brain::getInstance()->startThread();
 
 	Brain::getInstance()->updateAllChannels();
-	Encoders::getInstance()->updateChannels();
+	//Encoders::getInstance()->updateChannels();
+	//EncodersMult::getInstance()->updateChannels();
 
 	autoFillColorPickerValues();
 }
@@ -853,6 +862,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	}
 	else if (p == encodersScale) {
 		Encoders::getInstance()->resized();
+		//EncodersMult::getInstance()->resized();
 	}
 	else if (p == gridScale || p == gridCols) {
 		FixtureGridView::getInstance()->resized();

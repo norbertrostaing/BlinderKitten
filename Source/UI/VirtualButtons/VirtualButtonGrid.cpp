@@ -160,7 +160,7 @@ void VirtualButtonGrid::buttonStateChanged(juce::Button* button) {
 void VirtualButtonGrid::buttonPressedDown(TextButton* t) {
     int index = gridButtons.indexOf(t) + 1;
     // UserInputManager::getInstance()->gridViewCellPressed("virtualbutton", index);
-    Programmer* p = UserInputManager::getInstance()->getProgrammer();
+    Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
             p->processUserInput("virtualbutton");

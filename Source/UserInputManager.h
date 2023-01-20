@@ -43,6 +43,8 @@ public:
     void changeChannelValue(ChannelType* chan, float absVal);
     HashMap<int, ChannelType*> encoderChannels;
 
+    void programmerCommandStructureChanged(Programmer* p);
+    void programmerCommandValueChanged(Programmer* p);
     void commandSelectionChanged(Command* c);
     void commandValueChanged(Command* c);
 
@@ -50,7 +52,7 @@ public:
     void updateCommandLine();
 
     String toUserText(String s);
-    Programmer* getProgrammer();
+    Programmer* getProgrammer(bool createIfNotThere);
 
     static int backspaceOnInt(var);
     static float backspaceOnFloat(var);
