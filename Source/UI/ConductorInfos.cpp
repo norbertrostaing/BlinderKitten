@@ -57,16 +57,16 @@ void ConductorInfos::paint (juce::Graphics& g)
     g.setColour (juce::Colours::grey);
 
     g.setFont (titleSize);
-    g.drawText(target->currentCueName->getValue(), 0, 0, w, currentCueHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->currentCueName->getValue(), 0, 0, w, currentCueHeight, juce::Justification::centred, true);
 
     g.setFont(textSize);
-    g.drawText(target->currentCueText->getValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->currentCueText->getValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centred, true);
 
     g.setFont(titleSize);
-    g.drawText(target->nextCueGo->getValue(), 0, h-nextCueHeight-nextCueHeight, w, nextCueGoHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->nextCueGo->getValue(), 0, h - nextCueHeight - nextCueHeight, w, nextCueGoHeight, juce::Justification::centred, true);
 
     g.setFont(textSize);
-    g.drawText(target->nextCueName->getValue(), 0, h-nextCueHeight, w, nextCueHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->nextCueName->getValue(), 0, h-nextCueHeight, w, nextCueHeight, juce::Justification::centred, true);
 
 
     //int r = Random::getSystemRandom().nextInt(100);
