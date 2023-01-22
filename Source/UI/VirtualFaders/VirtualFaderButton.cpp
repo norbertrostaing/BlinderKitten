@@ -22,6 +22,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
+	canBeDisabled = false;
 
 	itemDataType = "VirtualFaderButton";
 

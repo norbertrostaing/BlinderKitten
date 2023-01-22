@@ -22,6 +22,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
+	canBeDisabled = false;
 
 	itemDataType = "VirtualFaderSlider";
 
