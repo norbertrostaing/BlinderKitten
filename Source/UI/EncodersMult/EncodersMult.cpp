@@ -20,12 +20,7 @@ EncodersMult::EncodersMult()
 	viewport.setViewedComponent(&cmdContainer);
     viewport.setBounds(0,20,100,100);
     cmdContainer.setSize(200,200);
-    Label* t = new Label();
-    t->setText("cdjslkjsd", juce::dontSendNotification);
-    t->setBounds(0,20,100,20);
-    cmdContainer.addAndMakeVisible(t);
-    //addAndMakeVisible(cmdContainer);
-    test.setText("coucou", juce::dontSendNotification);
+    test.setText("", juce::dontSendNotification);
     test.setBounds(0,0,200,20);
     addAndMakeVisible(test);
 }
@@ -72,7 +67,7 @@ void EncodersMult::resized()
 void EncodersMult::targetChanged()
 {
     if (targetCommandManager != nullptr) {
-        targetCommandManager->removeAsyncManagerListener(this);
+        //targetCommandManager->removeAsyncManagerListener(this);
     }
     Programmer* prog = UserInputManager::getInstance()->getProgrammer(true);
     targetCommandManager = &prog->commands;
@@ -82,7 +77,7 @@ void EncodersMult::targetChanged()
 
 void EncodersMult::reconstructSubComponents()
 {
-    test.setText("Adding sub components", juce::dontSendNotification);
+    //test.setText("", juce::dontSendNotification);
     
     clear();
     if (targetCommandManager != nullptr) {

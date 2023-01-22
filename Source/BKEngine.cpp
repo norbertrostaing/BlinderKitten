@@ -555,10 +555,12 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	Brain::getInstance()->startThread();
 
 	Brain::getInstance()->updateAllChannels();
-	//Encoders::getInstance()->updateChannels();
 	//EncodersMult::getInstance()->updateChannels();
 
 	autoFillColorPickerValues();
+	Encoders::getInstance()->updateChannels();
+	EncodersMult::getInstance()->targetChanged();
+
 }
 
 void BKEngine::childStructureChanged(ControllableContainer* cc)
