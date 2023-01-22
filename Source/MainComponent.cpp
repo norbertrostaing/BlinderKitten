@@ -1,3 +1,4 @@
+#include "JuceHeader.h"
 #include "MainComponent.h"
 #include "BKEngine.h"
 
@@ -101,6 +102,8 @@ void MainComponent::resized()
     // update their positions.
 }
 */
+
+
 void MainContentComponent::init()
 {
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Interfaces", &InterfaceManagerUI::create));
@@ -138,21 +141,20 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Color Picker", &BKColorPickerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("DMX Tester", &DMXChannelView::create));
 
-    /*
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Interfaces", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Channels config", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Fixture Types", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Fixtures", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Groups", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Presets", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Timing Presets", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Curve Presets", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Cuelists", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Programmers", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Effects", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Carousels", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Mappers", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Multiplicators", "lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Interfaces", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Channels config", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Fixture Types", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Fixtures", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Groups", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Presets", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Timing Presets", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Curve Presets", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Cuelists", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Programmers", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Effects", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Carousels", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Mappers", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Multiplicators", "Lists");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Encoders", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Encoders Overview", "Panels");
@@ -164,16 +166,22 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Effect Grid", "Grids");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Carousel Grid", "Grids");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Mapper Grid", "Grids");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual buttons", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual buttons playback", "Panels");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual faders", "lists");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual faders playback", "Panels");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual buttons", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual buttons grid", "Playback");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual faders", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Virtual faders grid", "Playback");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Conductor Infos", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Color Picker", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("DMX Tester", "Panels");
-    */
 
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Outliner", "");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Dashboard", "");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Help", "");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Parrots", "Organic Tools");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("The Detective", "Organic Tools");
 
+    std::sort(ShapeShifterFactory::getInstance()->defs.begin(), ShapeShifterFactory::getInstance()->defs.end(),
+        [](ShapeShifterDefinition* a, ShapeShifterDefinition* b) { return a->contentName < b->contentName; });
 
     OrganicMainContentComponent::init();
 
