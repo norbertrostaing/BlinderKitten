@@ -68,6 +68,7 @@ Programmer::Programmer(var params) :
 
 	cliParamAType = cliContainer.addEnumParameter("Param A type", "What kind of object do you want to target");
 	cliParamAType->addOption("None", "");
+	cliParamAType->addOption("Fixture", "fixture");
 	cliParamAType->addOption("Group", "group");
 	cliParamAType->addOption("Preset", "preset");
 	cliParamAType->addOption("Cuelist", "cuelist");
