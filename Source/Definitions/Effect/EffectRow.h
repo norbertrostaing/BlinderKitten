@@ -38,6 +38,7 @@ class EffectRow:
     CommandSelectionManager selection;
 
     HashMap<SubFixture*, double> computedPositions;
+    CriticalSection isComputing;
 
     void computeData();
 

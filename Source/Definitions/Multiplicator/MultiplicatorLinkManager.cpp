@@ -43,9 +43,12 @@ void MultiplicatorLinkManager::onContainerParameterChanged(Parameter* p)
 float MultiplicatorLinkManager::getValue() {
     float val = 1;
     for (int i = 0; i < items.size(); i++) {
-        Multiplicator* m = dynamic_cast<Multiplicator*>(items[i]->targetMult->targetContainer.get());
-        if (m != nullptr) {
-            val = val * (float)m->multValue->getValue();
+        if (items[i]->enabled->boolValue()) {
+
+            Multiplicator* m = dynamic_cast<Multiplicator*>(items[i]->targetMult->targetContainer.get());
+            if (m != nullptr) {
+                val = val * (float)m->multValue->getValue();
+            }
         }
     }
     return val;

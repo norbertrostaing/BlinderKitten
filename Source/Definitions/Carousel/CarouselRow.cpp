@@ -67,8 +67,13 @@ CarouselRow::~CarouselRow()
 };
 
 void CarouselRow::computeData() {
+    isComputing.enter();
     computedPositions.clear();
     subFixtureChannelOffsets.clear();
+    if (!enabled->boolValue()) {
+        isComputing.exit();
+        return;
+    }
 
     selection.computeSelection();
 
@@ -161,9 +166,7 @@ void CarouselRow::computeData() {
 
     }
 
-
-
-
+    isComputing.exit();
 }
 
 void CarouselRow::onControllableFeedbackUpdate( ControllableContainer* cc, Controllable* c) {

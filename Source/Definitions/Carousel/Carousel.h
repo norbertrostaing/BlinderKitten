@@ -52,6 +52,7 @@ public:
     double totalElapsed;
 
     HashMap<SubFixtureChannel*, Array<CarouselRow*>*> chanToCarouselRow;
+    CriticalSection isComputing;
 
     double lastTapTempo;
     Trigger* tapTempoBtn;

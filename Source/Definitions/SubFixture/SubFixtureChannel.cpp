@@ -62,41 +62,43 @@ void SubFixtureChannel::writeValue(float v) {
 		String chanRes = parentFixtureTypeChannel->resolution->getValue();
 		Array<FixturePatch*> patchs = parentFixture->patchs.getItemsWithType<FixturePatch>();
 		for (int i = 0; i < patchs.size(); i++) {
-			value = v;
+			if (patchs[i]->enabled->boolValue()) {
+				value = v;
 
-			DMXInterface* out = dynamic_cast<DMXInterface*>(patchs.getReference(i)->targetInterface->targetContainer.get());
-			if (out != nullptr) {
-				FixturePatch* patch = patchs.getReference(i);
-				int address = patch->address->getValue();
+				DMXInterface* out = dynamic_cast<DMXInterface*>(patchs.getReference(i)->targetInterface->targetContainer.get());
+				if (out != nullptr) {
+					FixturePatch* patch = patchs.getReference(i);
+					int address = patch->address->getValue();
 
-				for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
-					FixturePatchCorrection* c = patch->corrections.items[iCorr];
-					if (c->isOn && (int)c->subFixtureId->getValue() == subFixtureId && dynamic_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
-						if (c->invertChannel->getValue()) {
-							value = 1 - value;
+					for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
+						FixturePatchCorrection* c = patch->corrections.items[iCorr];
+						if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == subFixtureId && dynamic_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
+							if (c->invertChannel->getValue()) {
+								value = 1 - value;
+							}
+							value = value + (float)c->offsetValue->getValue();
+							value = jmin((float)1, value);
+							value = jmax((float)0, value);
+							value = c->curve.getValueAtPosition(value);
 						}
-						value = value + (float)c->offsetValue->getValue();
-						value = jmin((float)1, value);
-						value = jmax((float)0, value);
-						value = c->curve.getValueAtPosition(value);
 					}
-				}
 
 
-				if (address > 0) {
-					address += (deltaAdress);
-					if (chanRes == "8bits") {
-						int val = floor(256.0 * value);
-						val = val > 255 ? 255 : val;
-						out->sendDMXValue(address, val);
-					}
-					else if (chanRes == "16bits") {
-						int val = floor(65535.0 * value);
-						val = value > 65535 ? 65535 : val;
-						int valueA = val / 256;
-						int valueB = val % 256;
-						out->sendDMXValue(address, valueA);
-						out->sendDMXValue(address + 1, valueB);
+					if (address > 0) {
+						address += (deltaAdress);
+						if (chanRes == "8bits") {
+							int val = floor(256.0 * value);
+							val = val > 255 ? 255 : val;
+							out->sendDMXValue(address, val);
+						}
+						else if (chanRes == "16bits") {
+							int val = floor(65535.0 * value);
+							val = value > 65535 ? 65535 : val;
+							int valueA = val / 256;
+							int valueB = val % 256;
+							out->sendDMXValue(address, valueA);
+							out->sendDMXValue(address + 1, valueB);
+						}
 					}
 				}
 			}

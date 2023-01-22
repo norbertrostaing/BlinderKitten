@@ -84,8 +84,13 @@ EffectRow::~EffectRow()
 };
 
 void EffectRow::computeData() {
+    isComputing.enter();
     computedPositions.clear();
     selection.computeSelection();
+    if (!enabled->boolValue()) {
+        isComputing.exit();
+        return;
+    }
     Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
     if (parentEffect == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
@@ -94,48 +99,51 @@ void EffectRow::computeData() {
     }
     for (int i = 0; i < paramContainer.items.size(); i++) {
         EffectParam* p = paramContainer.items[i];
-        p->subFixtureChannelOffsets.clear();
-        p->subFixtureChannelAreWinged.clear();
-        ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
-        if (chanType != nullptr) {
-            Array<SubFixtureChannel*> chans;
-            for (int fIndex = 0; fIndex < selection.computedSelectedSubFixtures.size(); fIndex++) {
-                SubFixture* f = selection.computedSelectedSubFixtures[fIndex];
-                SubFixtureChannel* c = f->channelsMap.getReference(chanType);
-                if (c != nullptr) {
-                    chans.add(c);
+        if (p->enabled->boolValue()) {
+            p->subFixtureChannelOffsets.clear();
+            p->subFixtureChannelAreWinged.clear();
+            ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
+            if (chanType != nullptr) {
+                Array<SubFixtureChannel*> chans;
+                for (int fIndex = 0; fIndex < selection.computedSelectedSubFixtures.size(); fIndex++) {
+                    SubFixture* f = selection.computedSelectedSubFixtures[fIndex];
+                    SubFixtureChannel* c = f->channelsMap.getReference(chanType);
+                    if (c != nullptr) {
+                        chans.add(c);
+                    }
                 }
-            }
             
-            int nWings = p->wings->getValue();
-            int nBuddying = p->buddying->getValue();
-            int realTot = chans.size()/nBuddying;
-            int wingSize = realTot / nWings;
-            realTot = realTot / nWings;
+                int nWings = p->wings->getValue();
+                int nBuddying = p->buddying->getValue();
+                int realTot = chans.size()/nBuddying;
+                int wingSize = realTot / nWings;
+                realTot = realTot / nWings;
 
-            for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
-                int realIndex = chanIndex/nBuddying;
+                for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
+                    int realIndex = chanIndex/nBuddying;
 
-                int nWing = realIndex/wingSize;
-                bool isWinged = false;
-                if (nWing % 2 == 1) {
-                    isWinged = true;
-                    realIndex = realIndex%wingSize;
-                    realIndex = wingSize - 1 - realIndex;
+                    int nWing = realIndex/wingSize;
+                    bool isWinged = false;
+                    if (nWing % 2 == 1) {
+                        isWinged = true;
+                        realIndex = realIndex%wingSize;
+                        realIndex = wingSize - 1 - realIndex;
+                    }
+
+                    double offset = realIndex / (double)realTot;
+                    offset *= (double)p->elementsSpread->getValue();
+                    offset += (double)p->elementsStart->getValue();
+                    p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
+                    p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
+                    if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
+                        parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
+                    }
+                    parentEffect->chanToFxParam.getReference(chans[chanIndex])->add(p);
                 }
-
-                double offset = realIndex / (double)realTot;
-                offset *= (double)p->elementsSpread->getValue();
-                offset += (double)p->elementsStart->getValue();
-                p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
-                p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
-                if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
-                    parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
-                }
-                parentEffect->chanToFxParam.getReference(chans[chanIndex])->add(p);
             }
         }
     }
+    isComputing.exit();
 }
 
 void EffectRow::onControllableFeedbackUpdate( ControllableContainer* cc, Controllable* c) {

@@ -36,6 +36,7 @@ class CarouselStep:
 
     void computeValues(Array<SubFixture*> SubFixtures);
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    CriticalSection isComputing;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

@@ -62,7 +62,12 @@ void CarouselStep::updateDisplay() {
 
 
 void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
+	isComputing.enter();
 	computedValues.clear();
+	if (!enabled->boolValue()) {
+		isComputing.exit();
+		return;
+	}
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
@@ -143,5 +148,6 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 			}
 		}
 	}
+	isComputing.exit();
 }
 

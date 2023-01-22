@@ -165,6 +165,7 @@ void Carousel::pleaseComputeIfRunning() {
 }
 
 void Carousel::computeData() {
+	isComputing.enter();
 	if (computing) {return;}
 	computed = true;
 	computing = true;
@@ -182,7 +183,7 @@ void Carousel::computeData() {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	computing = false;
-
+	isComputing.exit();
 }
 
 float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {

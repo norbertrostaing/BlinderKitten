@@ -30,6 +30,7 @@ PresetSubFixtureValues::PresetSubFixtureValues(var params) :
     objectData(params),
     values("Values")
 {
+    canBeDisabled = false;
     targetFixtureId = addIntParameter("Fixture ID", "ID of the target Fixture (0 means disabled, used only if preset is in same parameters mode", 0, 0);
     targetSubFixtureId = addIntParameter("SubFixture ID", "ID of the target SubFixture (0 means disabled, used only if preset is in same parameters mode", 0, 0);
 

@@ -84,8 +84,12 @@ void Command::computeValues() {
 void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
 	isComputing.enter();
-	computedValues.getLock().enter();
 	computedValues.clear();
+
+	if (!enabled->boolValue()) {
+		isComputing.exit();
+		return;
+	}
 	selection.computeSelection();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 	Array<SubFixture*> SubFixtures = selection.computedSelectedSubFixtures;
@@ -143,141 +147,142 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
-		bool symValues = cv->symmetry->getValue();
-		Preset* pFrom = nullptr;
-		Preset* pTo = nullptr;
-		if (cv->presetOrValue->getValue() == "preset") {
-			pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue());
-			pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue());
-			if (pFrom != nullptr) {
-				pFrom -> computeValues();
-			}
-			if (pTo != nullptr) {
-				pTo->computeValues();
-			}
-		}
-
-		ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-		for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
-			
-			HashMap<ChannelType*, float>* valuesFrom = new HashMap<ChannelType*, float>();;
-			HashMap<ChannelType*, float>* valuesTo = new HashMap<ChannelType*, float>();;
-			String test = cv->presetOrValue->getValue();
+		if (cv->enabled->boolValue()) {
+			bool symValues = cv->symmetry->getValue();
+			Preset* pFrom = nullptr;
+			Preset* pTo = nullptr;
 			if (cv->presetOrValue->getValue() == "preset") {
+				pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue());
+				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue());
+				if (pFrom != nullptr) {
+					pFrom -> computeValues();
+				}
+				if (pTo != nullptr) {
+					pTo->computeValues();
+				}
+			}
 
-				HashMap<ChannelType*, float>* tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
-				HashMap<ChannelType*, float>* tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
-				if (tempValuesFrom != nullptr) {
-					for (auto it = tempValuesFrom->begin(); it != tempValuesFrom->end(); it.next()) {
-						valuesFrom->set(it.getKey(), it.getValue());
+			ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+			for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
+			
+				HashMap<ChannelType*, float>* valuesFrom = new HashMap<ChannelType*, float>();;
+				HashMap<ChannelType*, float>* valuesTo = new HashMap<ChannelType*, float>();;
+				String test = cv->presetOrValue->getValue();
+				if (cv->presetOrValue->getValue() == "preset") {
+
+					HashMap<ChannelType*, float>* tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+					HashMap<ChannelType*, float>* tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+					if (tempValuesFrom != nullptr) {
+						for (auto it = tempValuesFrom->begin(); it != tempValuesFrom->end(); it.next()) {
+							valuesFrom->set(it.getKey(), it.getValue());
+						}
+						tempValuesFrom->~HashMap();
 					}
-					tempValuesFrom->~HashMap();
-				}
-				if (tempValuesTo != nullptr) {
-					for (auto it = tempValuesTo->begin(); it != tempValuesTo->end(); it.next()) {
-						valuesTo->set(it.getKey(), it.getValue());
+					if (tempValuesTo != nullptr) {
+						for (auto it = tempValuesTo->begin(); it != tempValuesTo->end(); it.next()) {
+							valuesTo->set(it.getKey(), it.getValue());
+						}
+						tempValuesTo->~HashMap();
 					}
-					tempValuesTo->~HashMap();
-				}
 				
-			}
-
-			if (cv->presetOrValue->getValue() == "value") {
-				valuesFrom->set(rawChan, cv->valueFrom->getValue());
-				valuesTo->set(rawChan, cv->valueTo->getValue());
-			}
-			else if (cv->presetOrValue->getValue() == "release") {
-				valuesFrom->set(rawChan, -1);
-				valuesTo->set(rawChan, -1);
-			}
-
-			for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
-				SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(it.getKey());
-
-				float valueFrom = it.getValue();
-				float valueTo = valueFrom;
-				if (valuesTo->contains(it.getKey())) {
-					valueTo = valuesTo->getReference(it.getKey());
 				}
 
-				if (fchan != nullptr) {
-					if (!computedValues.contains(fchan)) {
-						computedValues.set(fchan, new ChannelValue());
-					}
-					ChannelValue* finalValue = computedValues.getReference(fchan);
-					float val = valueFrom;
-					if (cv->thru->getValue() && SubFixtures.size() > 1) {
-						float position = float(indexFixt) / float(SubFixtures.size() - 1);
-						if (symValues) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
-						val = jmap(position, val, valueTo);
-					}
-					finalValue->endValue = val;
-
-					float delay = delayFrom;
-					if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
-						if (!fchan->isHTP) {
-							delay = (float)callingCue->ltpDelay->getValue()*1000.;
-						}
-						else {
-							ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
-							if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
-								delay = (float)callingCue->htpInDelay->getValue() * 1000.;
-							}
-							else {
-								delay = (float)callingCue->htpOutDelay->getValue() * 1000.;
-							}
-						}
-					}
-					else if (delayThru && SubFixtures.size() > 1) {
-						float position = float(indexFixt) / float(SubFixtures.size() - 1);
-						if (delaySym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
-						position = timing.curveDelayRepart.getValueAtPosition(position);
-						position = delayRepartCurve->getValueAtPosition(position);
-						delay = jmap(position, delayFrom, delayTo);
-					}
-					finalValue->delay = delay;
-
-					float fade = fadeFrom;
-					if (fchan->snapOnly) {
-						fade = 0;
-					}
-					else if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
-						if (!fchan->isHTP) {
-							fade = (float)callingCue->ltpFade->getValue() * 1000.;
-						}
-						else {
-							ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
-							if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
-								fade = (float)callingCue->htpInFade->getValue() * 1000.;
-							}
-							else {
-								fade = (float)callingCue->htpOutFade->getValue() * 1000.;
-							}
-						}
-					}
-					else if (fadeThru && SubFixtures.size() > 1) {
-						float position = float(indexFixt) / float(SubFixtures.size() - 1);
-						if (fadeSym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
-						position = timing.curveFadeRepart.getValueAtPosition(position);
-						position = fadeRepartCurve->getValueAtPosition(position);
-						fade = jmap(position, fadeFrom, fadeTo);
-					}
-					finalValue->fade = fade;
-					finalValue->fadeCurve = &timing.curveFade;
-					double tempTiming = (delay + fade);
-					maxTiming = std::max(maxTiming, tempTiming);
+				if (cv->presetOrValue->getValue() == "value") {
+					valuesFrom->set(rawChan, cv->valueFrom->getValue());
+					valuesTo->set(rawChan, cv->valueTo->getValue());
 				}
-			}
+				else if (cv->presetOrValue->getValue() == "release") {
+					valuesFrom->set(rawChan, -1);
+					valuesTo->set(rawChan, -1);
+				}
 
-			if (valuesFrom != nullptr) {
-				delete valuesFrom;
-			}
-			if (valuesTo != nullptr) {
-				delete valuesTo;
+				for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
+					SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(it.getKey());
+
+					float valueFrom = it.getValue();
+					float valueTo = valueFrom;
+					if (valuesTo->contains(it.getKey())) {
+						valueTo = valuesTo->getReference(it.getKey());
+					}
+
+					if (fchan != nullptr) {
+						if (!computedValues.contains(fchan)) {
+							computedValues.set(fchan, new ChannelValue());
+						}
+						ChannelValue* finalValue = computedValues.getReference(fchan);
+						float val = valueFrom;
+						if (cv->thru->getValue() && SubFixtures.size() > 1) {
+							float position = float(indexFixt) / float(SubFixtures.size() - 1);
+							if (symValues) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
+							val = jmap(position, val, valueTo);
+						}
+						finalValue->endValue = val;
+
+						float delay = delayFrom;
+						if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
+							if (!fchan->isHTP) {
+								delay = (float)callingCue->ltpDelay->getValue()*1000.;
+							}
+							else {
+								ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+									delay = (float)callingCue->htpInDelay->getValue() * 1000.;
+								}
+								else {
+									delay = (float)callingCue->htpOutDelay->getValue() * 1000.;
+								}
+							}
+						}
+						else if (delayThru && SubFixtures.size() > 1) {
+							float position = float(indexFixt) / float(SubFixtures.size() - 1);
+							if (delaySym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
+							position = timing.curveDelayRepart.getValueAtPosition(position);
+							position = delayRepartCurve->getValueAtPosition(position);
+							delay = jmap(position, delayFrom, delayTo);
+						}
+						finalValue->delay = delay;
+
+						float fade = fadeFrom;
+						if (fchan->snapOnly) {
+							fade = 0;
+						}
+						else if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
+							if (!fchan->isHTP) {
+								fade = (float)callingCue->ltpFade->getValue() * 1000.;
+							}
+							else {
+								ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+									fade = (float)callingCue->htpInFade->getValue() * 1000.;
+								}
+								else {
+									fade = (float)callingCue->htpOutFade->getValue() * 1000.;
+								}
+							}
+						}
+						else if (fadeThru && SubFixtures.size() > 1) {
+							float position = float(indexFixt) / float(SubFixtures.size() - 1);
+							if (fadeSym) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
+							position = timing.curveFadeRepart.getValueAtPosition(position);
+							position = fadeRepartCurve->getValueAtPosition(position);
+							fade = jmap(position, fadeFrom, fadeTo);
+						}
+						finalValue->fade = fade;
+						finalValue->fadeCurve = &timing.curveFade;
+						double tempTiming = (delay + fade);
+						maxTiming = std::max(maxTiming, tempTiming);
+					}
+				}
+
+				if (valuesFrom != nullptr) {
+					delete valuesFrom;
+				}
+				if (valuesTo != nullptr) {
+					delete valuesTo;
+				}
 			}
 		}
 	}
-	computedValues.getLock().exit();
 	isComputing.exit();
 }
 
@@ -678,7 +683,6 @@ void Command::explodeSelection()
 	BaseManager<Command>* parentManager = dynamic_cast<BaseManager<Command>*>(parentContainer.get());
 	int index = parentManager->items.indexOf(this)+1;
 	computeValues();
-	computedValues.getLock().enter();
 	isComputing.enter();
 	ChannelFamilyManager::getInstance()->updateOrderedElements();
 	for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
@@ -706,6 +710,5 @@ void Command::explodeSelection()
 			}
 		}
 	}
-	computedValues.getLock().exit();
 	isComputing.exit();
 }

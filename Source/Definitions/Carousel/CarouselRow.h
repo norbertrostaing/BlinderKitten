@@ -40,6 +40,7 @@ class CarouselRow:
 
     CommandSelectionManager selection;
 
+    CriticalSection isComputing;
     HashMap<SubFixture*, double> computedPositions;
     HashMap<SubFixtureChannel*,double> subFixtureChannelOffsets;
 

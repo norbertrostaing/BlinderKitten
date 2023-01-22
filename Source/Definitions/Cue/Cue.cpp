@@ -21,6 +21,7 @@ Cue::Cue(var params) :
 	tasks("Tasks"),
 	timingContainer("Timing")
 {
+	canBeDisabled = false;
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
 	itemDataType = "Cue";
@@ -123,7 +124,9 @@ void Cue::go() {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	for (int i = 0; i < tasks.items.size(); i++) {
-		Brain::getInstance()->startTask(tasks.items[i], now);
+		if (tasks.items[i]->enabled->boolValue()) {
+			Brain::getInstance()->startTask(tasks.items[i], now);
+		}
 	}
 }
 

@@ -20,7 +20,7 @@ class CommandSelectionManager :
 public:
     CommandSelectionManager();
     ~CommandSelectionManager();
-    CriticalSection commputing;
+    CriticalSection computing;
     Array<SubFixture*> computedSelectedSubFixtures;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);
