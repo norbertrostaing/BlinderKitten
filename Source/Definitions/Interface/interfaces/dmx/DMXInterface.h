@@ -52,6 +52,8 @@ public:
 
     void dmxDataInChanged(int numChannels, uint8* values) override;
     static void createThruControllable(ControllableContainer* cc);
+    
+    void afterLoadJSONDataInternal() override;
 
     class DMXParams : public ControllableContainer
     {

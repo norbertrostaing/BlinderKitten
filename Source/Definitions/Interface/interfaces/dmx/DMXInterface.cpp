@@ -35,7 +35,6 @@ DMXInterface::DMXInterface() :
 	addChildControllableContainer(thruManager.get());
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
-
 }
 
 DMXInterface::~DMXInterface()
@@ -282,4 +281,25 @@ void DMXInterface::createThruControllable(ControllableContainer* cc)
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;
 	cc->addParameter(p);
+}
+
+void DMXInterface::afterLoadJSONDataInternal()
+{	
+	auto params = thruManager->getAllParameters();
+	for (int i = 0; i < params.size(); i++) {
+		TargetParameter* p = (TargetParameter*)params[i].get();
+		String v = p->ghostValue;
+
+		p->setRootContainer(InterfaceManager::getInstance());
+		p->targetType = TargetParameter::CONTAINER;
+		p->maxDefaultSearchLevel = 0;
+		p->setGhostValue(v);
+
+		if (v != "") {
+			auto t = InterfaceManager::getInstance();
+			if (t != nullptr) {
+				p->setValueFromTarget(t);
+			}
+		}
+	}
 }
