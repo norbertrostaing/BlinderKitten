@@ -1,0 +1,3 @@
+[submodule "Modules/juce_organicui"]
+	path = Modules/juce_organicui
+	url = https://github.com/norbertrostaing/juce_organicui/
