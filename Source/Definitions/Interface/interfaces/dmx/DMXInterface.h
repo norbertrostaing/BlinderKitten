@@ -12,6 +12,7 @@
 
 //#include "../../Common/CommonIncludes.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
+#include "UI/DMXChannelView.h"
 
 class DMXInterface :
     public Interface,
@@ -30,6 +31,7 @@ public:
     std::unique_ptr<ControllableContainer> thruManager;
     BoolParameter * channelTestingMode;
     FloatParameter* channelTestingFlashValue;
+    DMXChannelView* tester = nullptr;
 
     void clearItem() override;
 
@@ -54,6 +56,8 @@ public:
     static void createThruControllable(ControllableContainer* cc);
     
     void afterLoadJSONDataInternal() override;
+
+    void repaintChannels(int chan, int n);
 
     class DMXParams : public ControllableContainer
     {
