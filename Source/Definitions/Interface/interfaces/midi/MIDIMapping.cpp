@@ -26,12 +26,12 @@ MIDIMapping::MIDIMapping() :
     channel = addIntParameter("Channel", "The channel to use for this mapping.", 1, 1, 16);
     pitchOrNumber = addIntParameter("Pitch Or Number", "The pitch (for notes) or number (for controlChange) to use for this mapping.", 0, 0, 127);
     
-    inputRange = addPoint2DParameter("Input Range", "The range to get from input",false);
-    inputRange->setBounds(0, 0, 127, 127);
-    inputRange->setPoint(0, 127);
+    //inputRange = addPoint2DParameter("Input Range", "The range to get from input",false);
+    //inputRange->setBounds(0, 0, 127, 127);
+    //inputRange->setPoint(0, 127);
     
-    outputRange = addPoint2DParameter("Output Range", "The range to remap the value to.",false);
-    outputRange->setPoint(0, 1);
+    //outputRange = addPoint2DParameter("Output Range", "The range to remap the value to.",false);
+    //outputRange->setPoint(0, 1);
 
     learnMode = addBoolParameter("Learn", "When active, this will automatically set the channel and pitch/number to the next incoming message", false);
     learnMode->isSavable = false;
@@ -82,8 +82,10 @@ void MIDIMapping::handleValue(int value)
     if (!enabled->boolValue()) return;
     MappingMode m = mode->getValueDataAsEnum<MappingMode>();
 
-    float minInput = jmin(inputRange->x, inputRange->y);
-    float maxInput = jmax(inputRange->x, inputRange->y);
+    //float minInput = jmin(inputRange->x, inputRange->y);
+    //float maxInput = jmax(inputRange->x, inputRange->y);
+    float minInput = 0;
+    float maxInput = 127;
     float relVal = jmap<float>(jlimit<float>(0, 127, value), 0, 127, 0, 1);
     actionManager.setValueAll(relVal);
     return;
@@ -113,8 +115,10 @@ void MIDIMapping::handleValue(int value)
         }
     }else
     {
-        float minInput = jmin(inputRange->x, inputRange->y);
-        float maxInput = jmax(inputRange->x, inputRange->y);
+        //float minInput = jmin(inputRange->x, inputRange->y);
+        //float maxInput = jmax(inputRange->x, inputRange->y);
+        float minInput = 0;
+        float maxInput = 127;
         float relVal = jmap<float>(jlimit<float>(minInput, maxInput, value), minInput, maxInput, 0, 1);
         if (inputRange->x > inputRange->y) relVal = 1 - relVal;
         float targetVal = jmap<float>(relVal, outputRange->x, outputRange->y);
