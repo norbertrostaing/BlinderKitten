@@ -109,13 +109,14 @@ void EncodersMultCmd::calcSize()
     int w = 50;
     int h = 100;
     int limitX = encodersMulView->viewport.getWidth();
+    if (limitX == 0) {limitX = 300;} // to prevent bug at reload
     int maxX = 0;
     int currentX = 0;
     int currentY = 40;
     for (int i = 0; i < encoders.size(); i++) {
         if (currentX + w > limitX) {
             currentY += h;
-            currentY = 0;
+            currentX = 0;
         }
         encoders[i]->setBounds(currentX, currentY, w, h);
         currentX += w;
