@@ -93,6 +93,7 @@ void DMXChannelView::setCurrentInterface(DMXInterface* i)
 
 	if (currentInterface != nullptr)
 	{
+		currentInterface->tester = this;
 		currentInterface->channelTestingMode->setValue(true);
 		currentInterface->addInspectableListener(this);
 
@@ -101,7 +102,15 @@ void DMXChannelView::setCurrentInterface(DMXInterface* i)
 		flashValue.reset(currentInterface->channelTestingFlashValue->createSlider());
 		addAndMakeVisible(flashValue.get());
 
+		currentInterface->repaintChannels(1,512);
+
 		resized();
+	}
+	else {
+		for (int i = 0; i < 512; i++) {
+			channelItems[i]->value = 0;
+		}
+		repaint();
 	}
 }
 

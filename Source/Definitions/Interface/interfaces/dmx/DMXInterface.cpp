@@ -9,6 +9,7 @@
 */
 
 #include "Definitions/Interface/InterfaceIncludes.h"
+#include "UI/DMXChannelView.h"
 
 DMXInterface::DMXInterface() :
 	Interface(getTypeString())
@@ -112,7 +113,7 @@ void DMXInterface::sendDMXValue(int channel, int value, Array<DMXInterface*>call
 	if (!enabled->boolValue() || dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
 	dmxDevice->sendDMXValue(channel, value);
-
+	repaintChannels(channel, 1);
 	callers.add(this);
 	for (auto& c : thruManager->controllables)
 	{
@@ -145,6 +146,7 @@ void DMXInterface::sendDMXValues(int startChannel, Array<int> values, Array<DMXI
 	}
 
 	dmxDevice->sendDMXRange(startChannel, values);
+	repaintChannels(startChannel, values.size());
 	callers.add(this);
 	for (auto& c : thruManager->controllables)
 	{
@@ -166,6 +168,7 @@ void DMXInterface::send16BitDMXValue(int startChannel, int value, DMXByteOrder b
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(value));
 	dmxDevice->sendDMXValue(startChannel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
 	dmxDevice->sendDMXValue(startChannel + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+	repaintChannels(startChannel, 2);
 
 	callers.add(this);
 	for (auto& c : thruManager->controllables)
@@ -198,6 +201,7 @@ void DMXInterface::send16BitDMXValues(int startChannel, Array<int> values, DMXBy
 	}
 
 	dmxDevice->sendDMXRange(startChannel, dmxValues);
+	repaintChannels(startChannel, dmxValues.size());
 
 	callers.add(this);
 	for (auto& c : thruManager->controllables)
@@ -302,4 +306,19 @@ void DMXInterface::afterLoadJSONDataInternal()
 			}
 		}
 	}
+}
+
+void DMXInterface::repaintChannels(int chan, int n)
+{
+	const MessageManagerLock mmlock;
+	chan = chan-1;
+	if (channelTestingMode->boolValue()) {
+		if (tester != nullptr) {
+			for (int i = 0; i < n; i++) {
+				tester->channelItems[chan+i]->value = dmxDevice->dmxDataOut[chan+i] / 255.;
+				tester->channelItems[chan+i]->repaint();
+			}
+		}
+	}
+
 }
