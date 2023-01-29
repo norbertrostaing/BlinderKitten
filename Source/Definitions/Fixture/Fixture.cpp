@@ -110,6 +110,11 @@ void Fixture::checkChildrenSubFixtures() {
 
 	const MessageManagerLock mmLock;
 
+	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+		delete it.getValue();
+	}
+	subFixtures.clear();
+
 	FixtureType* t = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
 	if (t== nullptr) {
 		return ;
@@ -119,10 +124,6 @@ void Fixture::checkChildrenSubFixtures() {
 
 	// clean of unused SubFixtures
 	// should probabely clean subfixture brain updates
-	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
-		delete it.getValue();
-	}
-	subFixtures.clear();
 
 	// virtual channels !
 	for (int i = 0; i < t->virtualChansManager.items.size(); i++) {
