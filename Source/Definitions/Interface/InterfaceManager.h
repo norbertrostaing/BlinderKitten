@@ -22,4 +22,29 @@ public:
     ~InterfaceManager();
 
     Factory<Interface> factory;
+
+	template <class T>
+	static void showAndGetInterfaceOfType(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)
+	{
+		PopupMenu menu;
+		Array<Interface*> validModules;
+		for (auto& m : InterfaceManager::getInstance()->items)
+		{
+			T* mt = dynamic_cast<T*>(m);
+			if (mt == nullptr) continue;
+			validModules.add(m);
+			menu.addItem(validModules.indexOf(m) + 1, m->niceName);
+		}
+
+		menu.showMenuAsync(PopupMenu::Options(), [validModules, returnFunc](int result)
+			{
+
+				if (result == 0) return;
+		returnFunc(validModules[result - 1]);
+			}
+		);
+	}
+
+
+
 };

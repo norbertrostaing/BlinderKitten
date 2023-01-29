@@ -20,6 +20,7 @@ FixturePatch::FixturePatch(var params) :
 {
     targetInterface = addTargetParameter("Interface", "output interface", InterfaceManager::getInstance());
     targetInterface->targetType = TargetParameter::CONTAINER;
+	targetInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
     targetInterface->maxDefaultSearchLevel = 0;
 	saveAndLoadRecursiveData = true;
 

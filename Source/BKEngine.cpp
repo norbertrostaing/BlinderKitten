@@ -534,9 +534,6 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	//routerTask->setProgress(1);
 	//routerTask->end();
 
-	for (int i = 0; i < InterfaceManager::getInstance()->items.size(); i++) {
-		InterfaceManager::getInstance()->items[i]->afterLoadJSONDataInternal();
-	}
 	FixtureGridView::getInstance()->updateCells();
 	GroupGridView::getInstance()->updateCells();
 	PresetGridView::getInstance()->updateCells();

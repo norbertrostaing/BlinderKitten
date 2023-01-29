@@ -277,10 +277,10 @@ DMXInterface::DMXParams::DMXParams() :
 void DMXInterface::createThruControllable(ControllableContainer* cc)
 {
 	TargetParameter* p = new TargetParameter("Output Universe", "Target module to send the raw data to", "");
-	p->setRootContainer(InterfaceManager::getInstance());
+	//p->setRootContainer(InterfaceManager::getInstance());
 	p->targetType = TargetParameter::CONTAINER;
 	p->maxDefaultSearchLevel = 0;
-	//p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+	p->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
 	p->isRemovableByUser = true;
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;
@@ -289,7 +289,26 @@ void DMXInterface::createThruControllable(ControllableContainer* cc)
 
 void DMXInterface::afterLoadJSONDataInternal()
 {	
-	auto params = thruManager->getAllParameters();
+	Interface::afterLoadJSONDataInternal();
+
+	if (thruManager != nullptr)
+	{
+		//thruManager->loadJSONData(data.getProperty("thru", var()));
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
+			{
+				mt->targetType = TargetParameter::CONTAINER;
+				//mt->setRootContainer(InterfaceManager::getInstance());
+				mt->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
+				mt->isRemovableByUser = true;
+				mt->canBeDisabledByUser = true;
+			}
+		}
+	}
+
+
+	/*auto params = thruManager->getAllParameters();
 	for (int i = 0; i < params.size(); i++) {
 		TargetParameter* p = (TargetParameter*)params[i].get();
 		String v = p->ghostValue;
@@ -305,7 +324,7 @@ void DMXInterface::afterLoadJSONDataInternal()
 				p->setValueFromTarget(t);
 			}
 		}
-	}
+	}*/
 }
 
 void DMXInterface::repaintChannels(int chan, int n)
