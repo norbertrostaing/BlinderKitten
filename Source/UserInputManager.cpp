@@ -273,6 +273,7 @@ void UserInputManager::programmerCommandStructureChanged(Programmer* p)
 {
 	if (p == getProgrammer(false)) {
 		EncodersMult::getInstance()->reconstructSubComponents();
+		Encoders::getInstance()->updateChannels();
 	}
 }
 

@@ -12,11 +12,13 @@
 #include "Cue.h"
 #include "../Cuelist/Cuelist.h"
 #include "../../Brain.h"
+#include "UserInputManager.h"
 
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue")),
 	objectType(params.getProperty("type", "Cue").toString()),
 	objectData(params),
+	actionsContainer("Actions"),
 	commands("Commands"),
 	tasks("Tasks"),
 	timingContainer("Timing")
@@ -41,7 +43,10 @@ Cue::Cue(var params) :
 	autoFollowCountDown->isControllableFeedbackOnly = true;
 
 	canBeRandomlyCalled = addBoolParameter("Random callable", "Can this cue be called by the randomGo of its cuelist ?", true);
-	goBtn = addTrigger("GO", "trigger this cue");
+	goBtn = actionsContainer.addTrigger("GO", "trigger this cue");
+	loadBtn = actionsContainer.addTrigger("Load", "load the content of this cue in programmer");
+	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");
+	mergeBtn = actionsContainer.addTrigger("Merge", "The content of the programmer is added to this cue");
 
 	commands.selectItemWhenCreated = false;
 	tasks.selectItemWhenCreated = false;
@@ -55,6 +60,7 @@ Cue::Cue(var params) :
 
 	timingContainer.editorIsCollapsed = true;
 
+	addChildControllableContainer(&actionsContainer);
 	addChildControllableContainer(&timingContainer);
 
 	addChildControllableContainer(&commands);
@@ -72,11 +78,6 @@ Cue::~Cue()
 
 
 void Cue::triggerTriggered(Trigger* t) {
-	if (t == goBtn) {
-		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-		Cue* temp = this;
-		parentCuelist->go(temp);
-	}
 }
 
 void Cue::onContainerParameterChangedInternal(Parameter* p) {
@@ -89,6 +90,50 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 		if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
 			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 			parentCuelist->reorderCues();
+		}
+	}
+}
+
+void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
+{
+	if (c == goBtn) {
+		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		Cue* temp = this;
+		parentCuelist->go(temp);
+	}
+	else if (c == loadBtn) {
+		const MessageManagerLock mmlock;
+		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+		if (p != nullptr) {
+			p->clearAll();
+			for (int i = 0; i < commands.items.size(); i++) {
+				Command* com = p->commands.addItem();
+				com->loadJSONData(commands.items[i]->getJSONData());
+			}
+
+		p->selectNextCommand();
+		UserInputManager::getInstance()->programmerCommandStructureChanged(p);
+		}
+	}
+	else if (c == replaceBtn) {
+		const MessageManagerLock mmlock;
+		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+		if (p != nullptr) {
+			commands.clear();
+			for (int i = 0; i < p->commands.items.size(); i++) {
+				Command* com = commands.addItem();
+				com->loadJSONData(p->commands.items[i]->getJSONData());
+			}
+		}
+	}
+	else if (c == mergeBtn) {
+		const MessageManagerLock mmlock;
+		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+		if (p != nullptr) {
+			for (int i = 0; i < p->commands.items.size(); i++) {
+				Command* com = commands.addItem();
+				com->loadJSONData(p->commands.items[i]->getJSONData());
+			}
 		}
 	}
 }

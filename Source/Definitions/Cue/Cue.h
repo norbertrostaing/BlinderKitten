@@ -37,7 +37,11 @@ public:
     double TSAutoFollowStart;
     double TSAutoFollowEnd;
 
+    ControllableContainer actionsContainer;
     Trigger* goBtn;
+    Trigger* loadBtn;
+    Trigger* replaceBtn;
+    Trigger* mergeBtn;
     bool isComputing = false;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
@@ -45,6 +49,7 @@ public:
 
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p) override;
+    void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c);
 
     void computeValues();
     void update(double now);
@@ -54,7 +59,7 @@ public:
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }
     double maxTiming = 0;
-    void updateChannels();
+    //void updateChannels();
 
     FloatParameter* htpInDelay;
     FloatParameter* htpOutDelay;
