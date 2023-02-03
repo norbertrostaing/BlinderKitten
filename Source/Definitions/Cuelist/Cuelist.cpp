@@ -16,6 +16,7 @@
 #include "UI/CuelistLoadWindow.h"
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/ConductorInfos.h"
+#include "UserInputManager.h"
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
@@ -755,6 +756,34 @@ void Cuelist::cleanActiveValues() {
 	for (int i = 0; i < temp.size(); i++) {
 		activeValues.remove(temp[i]);
 	}
+}
+
+void Cuelist::insertProgCueBefore(Cue* c)
+{
+	int index = cues.items.indexOf(c);
+	insertProgCueAtIndex(index);
+}
+
+void Cuelist::insertProgCueAfter(Cue* c)
+{
+	int index = cues.items.indexOf(c);
+	insertProgCueAtIndex(index+1);
+}
+
+void Cuelist::insertProgCueAtIndex(int index)
+{
+	const MessageManagerLock mmlock;
+	Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+	if (p != nullptr) {
+		Cue * cue = cues.addItem();
+		cues.setItemIndex(cue, index);
+		cue->commands.clear();
+		for (int i = 0; i < p->commands.items.size(); i++) {
+			Command* com = cue->commands.addItem();
+			com->loadJSONData(p->commands.items[i]->getJSONData());
+		}
+	}
+
 }
 
 void Cuelist::updateHTPs() {

@@ -47,6 +47,8 @@ Cue::Cue(var params) :
 	loadBtn = actionsContainer.addTrigger("Load", "load the content of this cue in programmer");
 	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");
 	mergeBtn = actionsContainer.addTrigger("Merge", "The content of the programmer is added to this cue");
+	createBeforeBtn = actionsContainer.addTrigger("Create Before", "Create a cue before this one with the content of the programmer");
+	createAfterBtn = actionsContainer.addTrigger("Create After", "Create a cue after this one with the content of the programmer");
 
 	commands.selectItemWhenCreated = false;
 	tasks.selectItemWhenCreated = false;
@@ -135,6 +137,14 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 				com->loadJSONData(p->commands.items[i]->getJSONData());
 			}
 		}
+	}
+	else if (c == createBeforeBtn) {
+		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		parentCuelist->insertProgCueBefore(this);
+	}
+	else if (c == createAfterBtn) {
+		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		parentCuelist->insertProgCueAfter(this);
 	}
 }
 

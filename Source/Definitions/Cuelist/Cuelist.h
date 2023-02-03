@@ -135,6 +135,10 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
+    void insertProgCueBefore(Cue* c);
+    void insertProgCueAfter(Cue* c);
+    void insertProgCueAtIndex(int index);
+
     void updateHTPs();
     void updateLTPs();
 

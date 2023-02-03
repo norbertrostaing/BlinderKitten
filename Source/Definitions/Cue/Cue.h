@@ -42,6 +42,8 @@ public:
     Trigger* loadBtn;
     Trigger* replaceBtn;
     Trigger* mergeBtn;
+    Trigger* createAfterBtn;
+    Trigger* createBeforeBtn;
     bool isComputing = false;
 
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
