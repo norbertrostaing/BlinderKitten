@@ -12,6 +12,8 @@
       <FILE id="qTJiMk" name="icon.png" compile="0" resource="1" file="Ressources/icon.png"/>
       <FILE id="AVBqHa" name="kittenLayout.layout" compile="0" resource="0"
             file="Ressources/kittenLayout.layout"/>
+      <FILE id="DesJG4" name="newFileContent.olga" compile="0" resource="1"
+            file="Ressources/newFileContent.olga"/>
     </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
       <GROUP id="{C2CABB5D-DC86-5E72-CD97-9285EFEFA23C}" name="UI">

@@ -4637,6 +4637,63 @@ static const unsigned char temp_binary_data_3[] =
 
 const char* icon_png = (const char*) temp_binary_data_3;
 
+//================== newFileContent.olga ==================
+static const unsigned char temp_binary_data_4[] =
+"{\"metaData\": {\"version\": \"1.0.0\", \"versionNumber\": 65536}, \"projectSettings\": {\"containers\": {\"dashboardSettings\": {\"parameters\": [{\"value\": \"\", \"controlAddress\": \"/showDashboardOnStartup\", \"enabled\": false}]}, \"customDefin"
+"itions\": {}}}, \"dashboardManager\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"parrots\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"layout\": {\"mainLayout\": {\"type\": 1, \"width\": 1920, \"height\": 989, \"direction\": 2, \"shifters\": "
+"[{\"type\": 1, \"width\": 1920, \"height\": 989, \"direction\": 1, \"shifters\": [{\"type\": 1, \"width\": 574, \"height\": 989, \"direction\": 2, \"shifters\": [{\"type\": 0, \"width\": 574, \"height\": 233, \"currentContent\": \"Input Panel\", \"ta"
+"bs\": [{\"name\": \"Interfaces\"}, {\"name\": \"Channels config\"}, {\"name\": \"Fixture Types\"}, {\"name\": \"Programmers\"}, {\"name\": \"Input Panel\"}]}, {\"type\": 0, \"width\": 574, \"height\": 178, \"currentContent\": \"Encoders\", \"tabs\": "
+"[{\"name\": \"Encoders\"}, {\"name\": \"Multiplicators\"}]}, {\"type\": 0, \"width\": 574, \"height\": 267, \"currentContent\": \"Group Grid\", \"tabs\": [{\"name\": \"Fixtures\"}, {\"name\": \"Groups\"}, {\"name\": \"Fixture Grid\"}, {\"name\": \"Gr"
+"oup Grid\"}]}, {\"type\": 0, \"width\": 574, \"height\": 293, \"currentContent\": \"Preset Grid\", \"tabs\": [{\"name\": \"Presets\"}, {\"name\": \"Curve Presets\"}, {\"name\": \"Timing Presets\"}, {\"name\": \"Preset Grid\"}]}]}, {\"type\": 1, \"wid"
+"th\": 1340, \"height\": 989, \"direction\": 1, \"shifters\": [{\"type\": 1, \"width\": 665, \"height\": 989, \"direction\": 2, \"shifters\": [{\"type\": 0, \"width\": 665, \"height\": 313, \"currentContent\": \"Cuelist Grid\", \"tabs\": [{\"name\": \""
+"Cuelists\"}, {\"name\": \"Carousels\"}, {\"name\": \"Effects\"}, {\"name\": \"Cuelist Grid\"}, {\"name\": \"Effect Grid\"}, {\"name\": \"Carousel Grid\"}]}, {\"type\": 0, \"width\": 665, \"height\": 267, \"currentContent\": \"Virtual buttons grid\", "
+"\"tabs\": [{\"name\": \"Virtual buttons grid\"}, {\"name\": \"Virtual buttons\"}, {\"name\": \"Mappers\"}, {\"name\": \"Color Picker\"}, {\"name\": \"Conductor Infos\"}]}, {\"type\": 0, \"width\": 665, \"height\": 396, \"currentContent\": \"Virtual f"
+"aders grid\", \"tabs\": [{\"name\": \"Virtual faders grid\"}, {\"name\": \"Virtual faders\"}]}]}, {\"type\": 1, \"width\": 669, \"height\": 989, \"direction\": 2, \"shifters\": [{\"type\": 0, \"width\": 669, \"height\": 665, \"currentContent\": \"Ins"
+"pector\", \"tabs\": [{\"name\": \"Inspector\"}, {\"name\": \"Encoders Overview\"}, {\"name\": \"DMX Tester\"}]}, {\"type\": 0, \"width\": 669, \"height\": 317, \"currentContent\": \"Logger\", \"tabs\": [{\"name\": \"Logger\"}]}]}]}]}]}, \"windows\": "
+"null}, \"interfaces\": {\"items\": [{\"niceName\": \"DMX Out 1\", \"containers\": {\"pass_through\": {}, \"openDMX\": {\"containers\": {\"output\": {\"owned\": true, \"niceName\": \"Output\"}}}}, \"type\": \"DMX\"}], \"viewOffset\": [0, 0], \"viewZoo"
+"m\": 1.0}, \"fixtureType\": {\"items\": [{\"niceName\": \"Channel\", \"editorIsCollapsed\": true, \"containers\": {\"channels\": {\"items\": [{\"parameters\": [{\"value\": \"/dimmer/channelTypes/intensity\", \"controlAddress\": \"/channelType\"}, {\""
+"value\": true, \"controlAddress\": \"/killedBySWOP\"}, {\"value\": 1, \"hexMode\": false, \"controlAddress\": \"/dmxChannel\"}, {\"value\": \"\", \"controlAddress\": \"/virtualMaster\"}], \"niceName\": \"Channel 1\", \"type\": \"BaseItem\"}], \"viewO"
+"ffset\": [0, 0], \"viewZoom\": 1.0}, \"virtualChannels\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"FixtureType\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"channelFamilies\": {\"items\": [{\"niceName\": \"Dimmer\", \"editorIsCo"
+"llapsed\": true, \"containers\": {\"channelTypes\": {\"items\": [{\"parameters\": [{\"value\": \"Highest Takes Precedence\", \"controlAddress\": \"/channelMode\"}, {\"value\": true, \"controlAddress\": \"/reactToGrandMaster\"}], \"niceName\": \"Inten"
+"sity\", \"type\": \"BaseItem\"}, {\"niceName\": \"Shutter\", \"type\": \"BaseItem\"}, {\"niceName\": \"Strobe\", \"type\": \"BaseItem\"}, {\"niceName\": \"Chase\", \"type\": \"BaseItem\"}, {\"niceName\": \"Dimmer Speed\", \"type\": \"BaseItem\"}, {\""
+"niceName\": \"Chase Speed\", \"type\": \"BaseItem\"}, {\"niceName\": \"Chase Fade\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"ChannelFamily\"}, {\"niceName\": \"Color\", \"editorIsCollapsed\": true, \"contain"
+"ers\": {\"channelTypes\": {\"items\": [{\"niceName\": \"Cyan\", \"type\": \"BaseItem\"}, {\"niceName\": \"Magenta\", \"type\": \"BaseItem\"}, {\"niceName\": \"Yellow\", \"type\": \"BaseItem\"}, {\"niceName\": \"Color\", \"type\": \"BaseItem\"}, {\"ni"
+"ceName\": \"Red\", \"type\": \"BaseItem\"}, {\"niceName\": \"Green\", \"type\": \"BaseItem\"}, {\"niceName\": \"Blue\", \"type\": \"BaseItem\"}, {\"niceName\": \"Amber\", \"type\": \"BaseItem\"}, {\"niceName\": \"Color Macro\", \"type\": \"BaseItem\""
+"}, {\"niceName\": \"Color Speed\", \"type\": \"BaseItem\"}, {\"niceName\": \"Color 1\", \"type\": \"BaseItem\"}, {\"niceName\": \"Color 2\", \"type\": \"BaseItem\"}, {\"niceName\": \"CTC\", \"type\": \"BaseItem\"}, {\"niceName\": \"White\", \"type\":"
+" \"BaseItem\"}, {\"niceName\": \"Color Ctrl\", \"type\": \"BaseItem\"}, {\"niceName\": \"CTO\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"ChannelFamily\"}, {\"niceName\": \"Position\", \"editorIsCollapsed\": t"
+"rue, \"containers\": {\"channelTypes\": {\"items\": [{\"niceName\": \"Pan\", \"type\": \"BaseItem\"}, {\"niceName\": \"Tilt\", \"type\": \"BaseItem\"}, {\"niceName\": \"PT Speed\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}}"
+", \"type\": \"ChannelFamily\"}, {\"niceName\": \"Focus\", \"editorIsCollapsed\": true, \"containers\": {\"channelTypes\": {\"items\": [{\"niceName\": \"Frost\", \"type\": \"BaseItem\"}, {\"niceName\": \"Focus\", \"type\": \"BaseItem\"}, {\"niceName\""
+": \"Zoom\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"ChannelFamily\"}, {\"niceName\": \"Gobo\", \"editorIsCollapsed\": true, \"containers\": {\"channelTypes\": {\"items\": [{\"niceName\": \"Gobo 1\", \"type\""
+": \"BaseItem\"}, {\"niceName\": \"Gobo 2\", \"type\": \"BaseItem\"}, {\"niceName\": \"Gobo 2 Rot\", \"type\": \"BaseItem\"}, {\"niceName\": \"Gobo 1 Rot\", \"type\": \"BaseItem\"}, {\"niceName\": \"Gobo Speed\", \"type\": \"BaseItem\"}], \"viewOffset"
+"\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"ChannelFamily\"}, {\"niceName\": \"Beam\", \"editorIsCollapsed\": true, \"containers\": {\"channelTypes\": {\"items\": [{\"niceName\": \"Iris\", \"type\": \"BaseItem\"}, {\"niceName\": \"Prism\", \"type\":"
+" \"BaseItem\"}, {\"niceName\": \"Prism Rot\", \"type\": \"BaseItem\"}, {\"niceName\": \"Beam Speed\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"ChannelFamily\"}, {\"niceName\": \"Control\", \"editorIsCollapsed"
+"\": true, \"containers\": {\"channelTypes\": {\"items\": [{\"niceName\": \"Ctrl\", \"type\": \"BaseItem\"}, {\"niceName\": \"Reset\", \"type\": \"BaseItem\"}, {\"niceName\": \"Lamp\", \"type\": \"BaseItem\"}, {\"niceName\": \"FX Speed\", \"type\": \""
+"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}}, \"type\": \"ChannelFamily\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"group\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"preset\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"f"
+"ixture\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"command\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"cuelist\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"programmer\": {\"items\": [{\"niceName\": \"1 - New programmer\", \"container"
+"s\": {\"commands\": {\"items\": [{\"niceName\": \"Command\", \"containers\": {\"selections\": {\"items\": [{\"niceName\": \"Selection\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"values\": {\"items\": [{\"parameters\": ["
+"{\"value\": \"\", \"controlAddress\": \"/channelType\"}], \"niceName\": \"Value\", \"type\": \"BaseItem\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"timing\": {\"containers\": {\"fadeCurve\": {\"parameters\": [{\"value\": 1.0, \"controlAddress\""
+": \"/length\"}, {\"value\": [0.0, 1.0], \"controlAddress\": \"/viewValueRange\"}, {\"value\": [0.0, 1.0], \"controlAddress\": \"/range\", \"enabled\": true}], \"editorIsCollapsed\": true, \"hideInEditor\": true, \"containers\": {\"key\": {\"parameter"
+"s\": [{\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key\", \"containers\": {\"easing\": {\"parameters\": [{\"value\": [0.300000011920929, 0.0], \"controlAddress\": \"/anchor1\"}, {\"value\": [-0.300000011920929, 0.0],"
+" \"controlAddress\": \"/anchor2\"}]}}, \"type\": \"Key\"}, \"key1\": {\"parameters\": [{\"value\": 1.0, \"controlAddress\": \"/position\"}, {\"value\": 1.0, \"controlAddress\": \"/value\"}, {\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}"
+"], \"niceName\": \"Key 1\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}}, \"items\": [{\"parameters\": [{\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key\", \"containers\": {\"easing\": {\"parameters\": [{\"v"
+"alue\": [0.300000011920929, 0.0], \"controlAddress\": \"/anchor1\"}, {\"value\": [-0.300000011920929, 0.0], \"controlAddress\": \"/anchor2\"}]}}, \"type\": \"Key\"}, {\"parameters\": [{\"value\": 1.0, \"controlAddress\": \"/position\"}, {\"value\": 1"
+".0, \"controlAddress\": \"/value\"}, {\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key 1\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"delayRepartition\": {\"p"
+"arameters\": [{\"value\": 1.0, \"controlAddress\": \"/length\"}, {\"value\": [0.0, 1.0], \"controlAddress\": \"/viewValueRange\"}, {\"value\": [0.0, 1.0], \"controlAddress\": \"/range\", \"enabled\": true}], \"editorIsCollapsed\": true, \"hideInEdito"
+"r\": true, \"containers\": {\"key\": {\"parameters\": [{\"value\": \"Linear\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}, \"key1\": {\"parameters\": [{\"value\": 1.0, \"controlA"
+"ddress\": \"/position\"}, {\"value\": 1.0, \"controlAddress\": \"/value\"}, {\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key 1\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}}, \"items\": [{\"parameters\": [{"
+"\"value\": \"Linear\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}, {\"parameters\": [{\"value\": 1.0, \"controlAddress\": \"/position\"}, {\"value\": 1.0, \"controlAddress\": \"/"
+"value\"}, {\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key 1\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"fadeRepartition\": {\"parameters\": [{\"value\": 1."
+"0, \"controlAddress\": \"/length\"}, {\"value\": [0.0, 1.0], \"controlAddress\": \"/viewValueRange\"}, {\"value\": [0.0, 1.0], \"controlAddress\": \"/range\", \"enabled\": true}], \"editorIsCollapsed\": true, \"hideInEditor\": true, \"containers\": {"
+"\"key\": {\"parameters\": [{\"value\": \"Linear\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}, \"key1\": {\"parameters\": [{\"value\": 1.0, \"controlAddress\": \"/position\"}, {\""
+"value\": 1.0, \"controlAddress\": \"/value\"}, {\"value\": \"Bezier\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key 1\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}}, \"items\": [{\"parameters\": [{\"value\": \"Linear\", \"cont"
+"rolAddress\": \"/easingType\"}], \"niceName\": \"Key\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}, {\"parameters\": [{\"value\": 1.0, \"controlAddress\": \"/position\"}, {\"value\": 1.0, \"controlAddress\": \"/value\"}, {\"value\": \"Bezie"
+"r\", \"controlAddress\": \"/easingType\"}], \"niceName\": \"Key 1\", \"containers\": {\"easing\": {}}, \"type\": \"Key\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"delayMultiplicators\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"fadeMultip"
+"licators\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}}}}, \"type\": \"Command\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"commandLIne\": {}}, \"type\": \"Programmer\"}], \"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"curvePreset\": {\"viewOff"
+"set\": [0, 0], \"viewZoom\": 1.0}, \"timingPreset\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"effect\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"carousel\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"mapper\": {\"viewOffset\": [0, 0],"
+" \"viewZoom\": 1.0}, \"multiplicators\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"virtualButton\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}, \"virtualFaderCol\": {\"viewOffset\": [0, 0], \"viewZoom\": 1.0}}";
+
+const char* newFileContent_olga = (const char*) temp_binary_data_4;
+
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
@@ -4653,6 +4710,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x6e1d1991:  numBytes = 96417; return crash_png;
         case 0x1512beee:  numBytes = 5978; return default_blinderlayout;
         case 0xd4093963:  numBytes = 85868; return icon_png;
+        case 0x933c1cd9:  numBytes = 11362; return newFileContent_olga;
         default: break;
     }
 
@@ -4665,7 +4723,8 @@ const char* namedResourceList[] =
     "colorpicker_png",
     "crash_png",
     "default_blinderlayout",
-    "icon_png"
+    "icon_png",
+    "newFileContent_olga"
 };
 
 const char* originalFilenames[] =
@@ -4673,7 +4732,8 @@ const char* originalFilenames[] =
     "colorpicker.png",
     "crash.png",
     "default.blinderlayout",
-    "icon.png"
+    "icon.png",
+    "newFileContent.olga"
 };
 
 const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8);

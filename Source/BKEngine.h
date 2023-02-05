@@ -64,6 +64,8 @@ public:
 	TargetParameter* CPYellowChannel;
 
 
+	void createNewGraphInternal() override;
+
 	void clearInternal() override;
 
 	var getJSONData() override;
@@ -78,6 +80,7 @@ public:
 
 	void importSelection();
 	void importMochi(File f);
+	void importMochi(var data);
 	void importGDTF(File f);
 	void importMVR(File f);
 	void exportSelection();

@@ -1,0 +1,798 @@
+{
+  "interfaces": [
+    {
+      "niceName": "DMX Out 1",
+      "containers": {
+        "pass_through": {
+        },
+        "openDMX": {
+          "containers": {
+            "output": {
+              "owned": true,
+              "niceName": "Output"
+            }
+          }
+        }
+      },
+      "type": "DMX"
+    }
+  ],
+  "channelFamilies": [
+    {
+      "niceName": "Dimmer",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": "Highest Takes Precedence",
+                  "controlAddress": "/channelMode"
+                },
+                {
+                  "value": true,
+                  "controlAddress": "/reactToGrandMaster"
+                }
+              ],
+              "niceName": "Intensity",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Shutter",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Strobe",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Chase",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Dimmer Speed",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Chase Speed",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Chase Fade",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
+      "niceName": "Color",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Cyan",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Magenta",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Yellow",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Red",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Green",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Blue",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Amber",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color Macro",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color Speed",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color 1",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color 2",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "CTC",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "White",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color Ctrl",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "CTO",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
+      "niceName": "Position",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Pan",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Tilt",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "PT Speed",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
+      "niceName": "Focus",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Frost",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Focus",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Zoom",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
+      "niceName": "Beam",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Iris",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Prism",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Prism Rot",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Beam Speed",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
+      "niceName": "Gobo",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Gobo 1",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo 2",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo 2 Rot",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo 1 Rot",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo Speed",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
+      "niceName": "Control",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Ctrl",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Reset",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Lamp",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "FX Speed",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    }
+  ],
+  "fixtureType": [
+    {
+      "niceName": "Channel",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channels": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": "/dimmer/channelTypes/intensity",
+                  "controlAddress": "/channelType"
+                },
+                {
+                  "value": true,
+                  "controlAddress": "/killedBySWOP"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/dmxChannel"
+                },
+                {
+                  "value": "",
+                  "controlAddress": "/virtualMaster"
+                }
+              ],
+              "niceName": "Channel 1",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "virtualChannels": {
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "FixtureType"
+    }
+  ],
+  "fixture": null,
+  "group": null,
+  "preset": null,
+  "command": null,
+  "cuelist": null,
+  "programmer": [
+    {
+      "niceName": "1 - New programmer",
+      "containers": {
+        "commands": {
+          "items": [
+            {
+              "niceName": "Command",
+              "containers": {
+                "selections": {
+                  "items": [
+                    {
+                      "niceName": "Selection",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                },
+                "values": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": "",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
+                      "niceName": "Value",
+                      "type": "BaseItem"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                },
+                "timing": {
+                  "containers": {
+                    "fadeCurve": {
+                      "parameters": [
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/length"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/viewValueRange"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/range",
+                          "enabled": true
+                        }
+                      ],
+                      "editorIsCollapsed": true,
+                      "hideInEditor": true,
+                      "containers": {
+                        "key": {
+                          "parameters": [
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    0.300000011920929,
+                                    0.0
+                                  ],
+                                  "controlAddress": "/anchor1"
+                                },
+                                {
+                                  "value": [
+                                    -0.300000011920929,
+                                    0.0
+                                  ],
+                                  "controlAddress": "/anchor2"
+                                }
+                              ]
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        "key1": {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      },
+                      "items": [
+                        {
+                          "parameters": [
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    0.300000011920929,
+                                    0.0
+                                  ],
+                                  "controlAddress": "/anchor1"
+                                },
+                                {
+                                  "value": [
+                                    -0.300000011920929,
+                                    0.0
+                                  ],
+                                  "controlAddress": "/anchor2"
+                                }
+                              ]
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      ],
+                      "viewOffset": [
+                        0,
+                        0
+                      ],
+                      "viewZoom": 1.0
+                    },
+                    "delayRepartition": {
+                      "parameters": [
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/length"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/viewValueRange"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/range",
+                          "enabled": true
+                        }
+                      ],
+                      "editorIsCollapsed": true,
+                      "hideInEditor": true,
+                      "containers": {
+                        "key": {
+                          "parameters": [
+                            {
+                              "value": "Linear",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        "key1": {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      },
+                      "items": [
+                        {
+                          "parameters": [
+                            {
+                              "value": "Linear",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      ],
+                      "viewOffset": [
+                        0,
+                        0
+                      ],
+                      "viewZoom": 1.0
+                    },
+                    "fadeRepartition": {
+                      "parameters": [
+                        {
+                          "value": 1.0,
+                          "controlAddress": "/length"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/viewValueRange"
+                        },
+                        {
+                          "value": [
+                            0.0,
+                            1.0
+                          ],
+                          "controlAddress": "/range",
+                          "enabled": true
+                        }
+                      ],
+                      "editorIsCollapsed": true,
+                      "hideInEditor": true,
+                      "containers": {
+                        "key": {
+                          "parameters": [
+                            {
+                              "value": "Linear",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        "key1": {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      },
+                      "items": [
+                        {
+                          "parameters": [
+                            {
+                              "value": "Linear",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        },
+                        {
+                          "parameters": [
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/position"
+                            },
+                            {
+                              "value": 1.0,
+                              "controlAddress": "/value"
+                            },
+                            {
+                              "value": "Bezier",
+                              "controlAddress": "/easingType"
+                            }
+                          ],
+                          "niceName": "Key 1",
+                          "containers": {
+                            "easing": {
+                            }
+                          },
+                          "type": "Key"
+                        }
+                      ],
+                      "viewOffset": [
+                        0,
+                        0
+                      ],
+                      "viewZoom": 1.0
+                    },
+                    "delayMultiplicators": {
+                      "viewOffset": [
+                        0,
+                        0
+                      ],
+                      "viewZoom": 1.0
+                    },
+                    "fadeMultiplicators": {
+                      "viewOffset": [
+                        0,
+                        0
+                      ],
+                      "viewZoom": 1.0
+                    }
+                  }
+                }
+              },
+              "type": "Command"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "commandLIne": {
+        }
+      },
+      "type": "Programmer"
+    }
+  ],
+  "curvePreset": null,
+  "timingPreset": null,
+  "carousel": null,
+  "mapper": null,
+  "multiplicators": null,
+  "effect": null,
+  "virtualButton": null,
+  "virtualFaderCol": null
+}

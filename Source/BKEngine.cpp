@@ -285,6 +285,14 @@ BKEngine::~BKEngine()
 }
 
 
+void BKEngine::createNewGraphInternal()
+{
+	ProgressTask* loadTask = addTask("loading");
+	loadTask->start();
+	loadJSONData(JSON::parse(BinaryData::newFileContent_olga), loadTask);
+	loadTask->end();
+}
+
 void BKEngine::clearInternal()
 {
 	//clear
@@ -598,7 +606,11 @@ void BKEngine::importSelection()
 
 void BKEngine::importMochi(File f) {
 	var data = JSON::parse(f);
+	importMochi(data);
+}
 
+void BKEngine::importMochi(var data)
+{
 	if (!data.isObject()) return;
 
 	InterfaceManager::getInstance()->addItemsFromData(data.getProperty(InterfaceManager::getInstance()->shortName, var()));
