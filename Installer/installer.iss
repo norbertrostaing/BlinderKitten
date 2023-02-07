@@ -29,7 +29,7 @@ DisableProgramGroupPage=yes
 OutputDir=C:\repos\BlinderKitten\Installer
 OutputBaseFilename=BlinderKittenInstaller
 SetupIconFile=C:\repos\BlinderKitten\Installer\icon.ico
-Compression=lzma
+Compression=zip
 SolidCompression=yes
 WizardStyle=modern
 
