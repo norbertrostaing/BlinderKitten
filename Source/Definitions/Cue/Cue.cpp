@@ -197,7 +197,7 @@ void Cue::update(double now) {
 		TSAutoFollowEnd = 0;
 		autoFollowCountDown->setValue(0);
 		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-		if (!parentCuelist->wannaOff) {
+		if (!parentCuelist->wannaOff && parentCuelist->cueA == this) {
 			parentCuelist->go();
 		}
 	}

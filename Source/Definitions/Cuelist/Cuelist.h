@@ -66,6 +66,7 @@ public:
     Trigger* swopOffBtn;
     Trigger* offBtn;
     Trigger* killBtn;
+    Trigger* toggleBtn;
 
     Trigger* loadBtn;
     Trigger* loadAndGoBtn;
@@ -93,6 +94,7 @@ public:
     FloatParameter* offFade;
     HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
     HashMap<SubFixtureChannel*, ChannelValue*> flashingValues;
+    CriticalSection isComputing;
 
     TargetParameter* currentCue;
     TargetParameter* nextCue;
@@ -113,14 +115,19 @@ public:
 
     String getTypeString() const override { return objectType; }
 
+    void userGo(Cue* c);
+    void userGo();
     void go(Cue* c);
     void go();
     void goBack();
     void goRandom();
     void flash(bool on, bool timing, bool swop = false);
-    bool isFlashing;
-    bool isSwopping;
+    bool userPressedGo = false;
+    bool isFlashing = false;
+    bool isSwopping = false;
     bool wannaOffFlash = false;
+
+    void toggle();
 
     void off();
     void kill(bool forceRefreshChannels = true);

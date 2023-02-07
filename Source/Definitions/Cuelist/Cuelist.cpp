@@ -111,6 +111,7 @@ Cuelist::Cuelist(var params) :
 	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
+	toggleBtn = addTrigger("Toggle", "Turns on and off the cuelist");
 	loadBtn = addTrigger("Load", "Choose next cue");
 	loadAndGoBtn = addTrigger("Load and go", "Choose a cue");
 	loadRandomBtn = addTrigger("Load Random", "Load a random cue");
@@ -196,7 +197,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
 		if (p == HTPLevel && !Brain::getInstance()->loadingIsRunning) {
 			if (autoStart->getValue() && cueA == nullptr && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
-				go();
+				userGo();
 			}
 			else if (autoStop->getValue() && cueA!=nullptr && (float)HTPLevel->getValue() == 0) {
 				off();
@@ -223,7 +224,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 
 void Cuelist::triggerTriggered(Trigger* t) {
 	if (t == goBtn) {
-		go();
+		userGo();
 	}
 	else if (t == goBackBtn) {
 		goBack();
@@ -284,9 +285,28 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 }
 
 
+void Cuelist::userGo(Cue* c)
+{
+	userPressedGo = true;
+	if (isChaser->boolValue() && cueA != nullptr) {
+		cueA->TSAutoFollowEnd = 0;
+	}
+	go(c);
+}
+
+void Cuelist::userGo()
+{
+	userPressedGo = true;
+	if (isChaser->boolValue() && cueA != nullptr) {
+		cueA->TSAutoFollowEnd = 0;
+	}
+	go();
+}
+
 void Cuelist::go(Cue* c) {
 	const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();;
+	isComputing.enter();
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	} 
@@ -350,6 +370,7 @@ void Cuelist::go(Cue* c) {
 		for (int i = 0; i <= nextIndex-1; i++) {
 			Cue* tempCue = cues.items[i];
 			tempCue->computeValues();
+			tempCue->csComputing.enter();
 			for (auto it = tempCue->computedValues.begin(); it != tempCue->computedValues.end(); it.next()) {
 				ChannelValue* temp = it.getValue();
 				if (newActiveValues.contains(it.getKey())) {
@@ -367,12 +388,14 @@ void Cuelist::go(Cue* c) {
 				it.getKey()->cuelistOnTopOfStack(this);
 				Brain::getInstance()->pleaseUpdate(it.getKey());
 			}
+			tempCue->csComputing.exit();
 			tempCue->go();
 		}
 	}
 
 	if (c != nullptr) {
 		c->computeValues();
+		c->csComputing.enter();
 		for (auto it = c->computedValues.begin(); it != c->computedValues.end(); it.next()) {
 			ChannelValue* temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
@@ -409,6 +432,7 @@ void Cuelist::go(Cue* c) {
 			it.getKey()->cuelistOnTopOfStack(this);
 			Brain::getInstance()->pleaseUpdate(it.getKey());
 		}
+		c->csComputing.exit();
 		c->go();
 	}
 	
@@ -463,6 +487,7 @@ void Cuelist::go(Cue* c) {
 		Brain::getInstance()->pleaseUpdate(c);
 
 	}
+	isComputing.exit();
 	return ;
 }
 
@@ -495,13 +520,51 @@ void Cuelist::goBack() {
 	Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
 	for (int i = 0; i < currentCues.size()-1; i++) {
 		if (currentCues[i + 1] == cueA) {
-			go(currentCues[i]);
+			userGo(currentCues[i]);
 			return;
 		}
 	}
 }
 
 void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
+	if (!isComputing.tryEnter()) {return;}
+	if (setOn) {
+		isFlashing = true;
+		if (cueA == nullptr) {
+			go();
+		}
+		if (swop) {
+			isSwopping = true;
+			Brain::getInstance()->swoppedCuelist(this);
+		}
+		if (cueA != nullptr) {
+			cueA->csComputing.enter();
+			for (auto it = cueA->computedValues.begin(); it != cueA->computedValues.end(); it.next()) {
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
+			cueA->csComputing.exit();
+		}
+	}
+	else {
+		isFlashing = false;
+		if (swop) {
+			isSwopping = false;
+			Brain::getInstance()->unswoppedCuelist(this);
+		}
+		if (cueA != nullptr) {
+			cueA->csComputing.enter();
+			for (auto it = cueA->computedValues.begin(); it != cueA->computedValues.end(); it.next()) {
+				Brain::getInstance()->pleaseUpdate(it.getKey());
+			}
+			cueA->csComputing.exit();
+		}
+		if (!userPressedGo) {
+			kill();
+		}
+	}
+	isComputing.exit();
+	/*
+	
 	if (setOn) {
 		isFlashing = true;
 		double now = Time::getMillisecondCounterHiRes();
@@ -550,6 +613,7 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 		}
 		Brain::getInstance()->pleaseUpdate(this);
 	}
+	*/
 }
 
 
@@ -566,7 +630,17 @@ void Cuelist::goRandom() {
 	int s = allowedCues.size();
 	if (s > 0) {
 		int r = rand()%s;
-		go(allowedCues[r]);
+		userGo(allowedCues[r]);
+	}
+}
+
+void Cuelist::toggle()
+{
+	if (cueA == nullptr) {
+		userGo();
+	}
+	else {
+		off();
 	}
 }
 
@@ -592,11 +666,13 @@ void Cuelist::update() {
 	float tempPosition = 1;
 	float isUseFul = false;
 	float isOverWritten = true;
+	bool isEnded = true;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		ChannelValue* cv = it.getValue();
 		if (cv != nullptr) {
 			tempPosition = jmin(tempPosition, cv->currentPosition);
 			isUseFul = isUseFul || cv->endValue != -1 || !cv->isEnded;
+			isEnded = isEnded && cv->isEnded;
 			isOverWritten = isOverWritten && cv->isOverWritten;
 		}
 	}
@@ -610,6 +686,9 @@ void Cuelist::update() {
 	if (!isUseFul && offIfOverwritten->getValue()) {
 		kill(false);
 	} 
+	if (isEnded && wannaOff) {
+		kill(false);
+	}
 
 	if (wannaOffFlash) {
 		bool canStopFlash = true;
@@ -658,7 +737,7 @@ void Cuelist::autoLoadCueB() {
 	fillTexts();
 }
 
-float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flashvalues) {
+float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flashValues) {
 	float val = currentVal;
 	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
 	
@@ -667,15 +746,15 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	float localValue = 0;
 	ChannelValue* cv;
 	float faderLevel = 0;
-	if (flashvalues) {
-		if (!flashingValues.contains(fc)) { return currentVal; }
-		cv = flashingValues.getReference(fc);
-		faderLevel = (float)FlashLevel->getValue();
+	cv = activeValues.getReference(fc);
+	if (!activeValues.contains(fc)) {return currentVal;}
+
+	faderLevel = (float)HTPLevel->getValue();
+
+	if (isFlashing) {
+		faderLevel = jmax(faderLevel,(float)FlashLevel->getValue());
 	}
 	else {
-		if (!activeValues.contains(fc)) { return currentVal; }
-		cv = activeValues.getReference(fc);
-		faderLevel = (float)HTPLevel->getValue();
 	}
 
 	if (cv == nullptr) {
@@ -703,7 +782,10 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	else {
 		outIsOff= true;
 	}
-	if (cv -> TSStart > now) {
+	if (flashValues) {
+		localValue = valueTo;
+	}
+	else if (cv -> TSStart > now) {
 		localValue = valueFrom; 
 		keepUpdate = true;
 	}
@@ -824,6 +906,7 @@ void Cuelist::kill(bool forceRefreshChannels) {
 	}
 	cueA = nullptr;
 	cueB = nullptr;
+	userPressedGo = false;
 	isCuelistOn->setValue(false);
 	fillTexts();
 }

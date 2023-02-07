@@ -329,10 +329,10 @@ void DMXInterface::afterLoadJSONDataInternal()
 
 void DMXInterface::repaintChannels(int chan, int n)
 {
-	const MessageManagerLock mmlock;
 	chan = chan-1;
 	if (channelTestingMode->boolValue()) {
 		if (tester != nullptr) {
+			const MessageManagerLock mmlock;
 			for (int i = 0; i < n; i++) {
 				tester->channelItems[chan+i]->value = dmxDevice->dmxDataOut[chan+i] / 255.;
 				tester->channelItems[chan+i]->repaint();

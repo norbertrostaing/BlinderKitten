@@ -56,6 +56,7 @@ void Brain::clear()
     carouselPoolWaiting.clear();
     mapperPoolUpdating.clear();
     mapperPoolWaiting.clear();
+    swoppableChannels.clear();
 }
 
 void Brain::clearUpdates()
@@ -75,7 +76,6 @@ void Brain::clearUpdates()
     carouselPoolWaiting.clear();
     mapperPoolUpdating.clear();
     mapperPoolWaiting.clear();
-
 }
 
 void Brain::run() {
@@ -888,26 +888,28 @@ Mapper* Brain::getMapperById(int id) {
 
 
 void Brain::swoppedCuelist(Cuelist* c) {
+    usingCollections.enter();
     if (!swoppedCuelists.contains(c)) {
         swoppedCuelists.add(c);
     }
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
+    usingCollections.exit();
     isSwopping = true;
 }
 
 void Brain::unswoppedCuelist(Cuelist* c) {
-    {
-        ScopedLock lock(Brain::getInstance()->usingCollections);
-        while (swoppedCuelists.indexOf(c) >= 0) {
-            swoppedCuelists.removeAllInstancesOf(c);
-        }
+    usingCollections.enter();
+    while (swoppedCuelists.indexOf(c) >= 0) {
+        swoppedCuelists.removeAllInstancesOf(c);
     }
     isSwopping = swoppedCuelists.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
+    usingCollections.exit();
+
 }
 
 

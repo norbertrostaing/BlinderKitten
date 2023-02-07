@@ -36,7 +36,10 @@ SubFixtureChannel::SubFixtureChannel():
 SubFixtureChannel::~SubFixtureChannel()
 {
 	//isDeleted = true;
+	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->grandMasterChannels.removeAllInstancesOf(this);
+	Brain::getInstance()->swoppableChannels.removeAllInstancesOf(this);
+	Brain::getInstance()->usingCollections.exit();
 }
 
 void SubFixtureChannel::writeValue(float v) {
@@ -131,6 +134,8 @@ void SubFixtureChannel::updateVal(double now) {
 	}
 
 	layers.sort();
+	
+	bool checkSwop = Brain::getInstance()->isSwopping && swopKillable;
 
 	for (int l = 0; l< layers.size(); l++)
 		{
@@ -139,11 +144,14 @@ void SubFixtureChannel::updateVal(double now) {
 		int overWritten = -1;
 		for (int i = 0; i < cuelistStack.size(); i++)
 		{
-			if ((int)cuelistStack.getReference(i)->layerId->getValue() == currentLayer) {
-				newValue = cuelistStack.getReference(i)->applyToChannel(this, newValue, now);
-				ChannelValue* cv = cuelistStack.getReference(i)->activeValues.getReference(this);
-				if (cv != nullptr && cv->isEnded) {
-					overWritten = i - 1;
+			Cuelist* c = cuelistStack.getReference(i);
+			if ((int)c->layerId->getValue() == currentLayer) {
+				if (!checkSwop || c->isSwopping) {
+					newValue = c->applyToChannel(this, newValue, now);
+					ChannelValue* cv = c->activeValues.getReference(this);
+					if (cv != nullptr && cv->isEnded) {
+						overWritten = i - 1;
+					}
 				}
 			}
 		}
@@ -187,9 +195,10 @@ void SubFixtureChannel::updateVal(double now) {
 
 	for (int i = 0; i < cuelistFlashStack.size(); i++)
 	{
-		newValue = cuelistFlashStack.getReference(i)->applyToChannel(this, newValue, now, true);
+		// newValue = cuelistFlashStack.getReference(i)->applyToChannel(this, newValue, now, true);
 	}
 
+	/*
 
 	if (swopKillable) {
 		if (Brain::getInstance()->isSwopping) {
@@ -202,7 +211,7 @@ void SubFixtureChannel::updateVal(double now) {
 			}
 		}
 	}
-
+	*/
 	if (reactToGrandMaster) {
 		double gm = InputPanel::getInstance()->grandMaster.getValue();
 		newValue *= gm;

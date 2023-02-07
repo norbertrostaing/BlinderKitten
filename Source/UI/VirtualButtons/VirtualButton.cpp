@@ -119,16 +119,10 @@ void VirtualButton::pressed() {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
-			if (action == "go") { targ->go(); }
+			if (action == "go") { targ->userGo(); }
 			if (action == "goback") { targ->goBack(); }
 			if (action == "off") { targ->off(); }
-			if (action == "toggle") { 
-				if (targ->isCuelistOn->getValue()) {
-					targ->off(); 
-				} else {
-					targ->go();
-				}
-			}
+			if (action == "toggle") { targ->toggle();}
 			if (action == "load") { targ->showLoad(); }
 			if (action == "loadandgo") { targ->showLoadAndGo(); }
 			if (action == "flash") { targ->flash(true, false, false); }

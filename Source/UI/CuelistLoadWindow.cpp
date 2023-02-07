@@ -83,7 +83,7 @@ void CuelistLoadWindow::buttonClicked(Button* b)
         currentTarget->nextCue->setValueFromTarget(currentTarget->cues.items[index]);
         currentTarget->fillTexts();
         if (triggerGo) {
-            currentTarget->go();
+            currentTarget->userGo();
         }
     }
     closeWindow();

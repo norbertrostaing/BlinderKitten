@@ -98,17 +98,18 @@ void UserInputManager::processMessage(const OSCMessage& m)
 				if (aList.size() > 4) {
 					float targetCue = (float)((var)aList[4]);
 					target->nextCueId->setValue(targetCue);
-					target->go();
+					target->userGo();
 				}
 				else {
-					target->go();
+					target->userGo();
 				}
 			}
 			else if (action == "goback") { target->goBack(); }
 			else if (action == "gorandom") { target->goRandom(); }
 			else if (action == "off") { target->off(); }
 			else if (action == "kill") { target->kill(); }
-			else if (action == "load") { 
+			else if (action == "toggle") { target->toggle(); }
+			else if (action == "load") {
 				if (aList.size() > 4) {
 					float targetCue = (float)((var)aList[4]);
 					target->nextCueId->setValue(targetCue);
@@ -121,7 +122,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 				if (aList.size() > 4) {
 					float targetCue = (float)((var)aList[4]);
 					target->nextCueId->setValue(targetCue);
-					target->go();
+					target->userGo();
 				}
 				else {
 					target->showLoadAndGo();
