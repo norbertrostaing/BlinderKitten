@@ -65,28 +65,28 @@ jobs:
           echo "pdb-name=$PKGNAME.pdb" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
         working-directory: ./Binaries/CI/App
 #
-#      - name: Upload
-#        uses: ./.github/actions/upload
-#        with:
-#          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
-#          url: ${{ secrets.UPLOADURL }}
-#          pass: ${{ secrets.UPLOADPASS }}
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
 #
-#      - name: Rename PDB
-#        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
-#        id: rename_pdb
-#        shell: powershell
-#        run: |
-#          Rename-Item -Path "./${{ env.ProjectName }}.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
-#        working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
+      - name: Rename PDB
+        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
+        id: rename_pdb
+        shell: powershell
+        run: |
+          Rename-Item -Path "./${{ env.ProjectName }}.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
+        working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
 #
-#      - name: Upload PDB
-#        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
-#        uses: ./.github/actions/upload
-#        with:
-#          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
-#          url: ${{ secrets.PDBUPLOADURL }}
-#          pass: ${{ secrets.UPLOADPASS }}
+      - name: Upload PDB
+        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
+          url: ${{ secrets.PDBUPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
 #
 #  osx:
 #    # if: false # tmp disable
