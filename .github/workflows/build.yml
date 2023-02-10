@@ -13,7 +13,7 @@ jobs:
       matrix:
         include:
         - arch: win-x64
-          buildFolder: "VisualStudio2022_CI"
+          buildFolder: "VisualStudio2022"
           installerName: install
 
 #        - arch: win7-x64
