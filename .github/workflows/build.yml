@@ -1,0 +1,313 @@
+on: [push]
+
+env:
+  ProjectName: BlinderKitten
+  PackagesVersion: 1.2.10
+#
+jobs:
+  windows:
+    name: Windows
+    # if: false # always skip job
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        include:
+        - arch: win-x64
+          buildFolder: "VisualStudio2022_CI"
+          installerName: install
+
+#        - arch: win7-x64
+#          buildFolder: "VisualStudio2022_Win7CI"
+#          installerName: installWin7
+#
+      fail-fast: false
+#
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+#
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+#
+      - name: Set Variables
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: ${{ matrix.arch }}
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+#
+      - name: Force 64-bit Linker
+        shell: powershell
+        run: |
+          cmd.exe /c "call `"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat`" && set > %temp%\vcvars.txt"
+          Get-Content "$env:temp\vcvars.txt" | Foreach-Object { if ($_ -match "^(.*?)=(.*)$") { Set-Content "env:\$($matches[1])" $matches[2] }}
+     #
+      - name: Build
+        run:  msbuild "Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.sln" /p:PreferredToolArchitecture=x64 /m /verbosity:normal /p:Configuration=${{ steps.set_variables.outputs.config }}
+#
+      - name: Create Package
+        id: create_package
+        shell: powershell
+        run: |
+          Set-Variable -Name "PKGNAME" -Value "${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}"
+          Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
+          7z e deps.zip -aoa
+          &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
+          echo "pkg-name=$PKGNAME.exe" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          echo "pdb-name=$PKGNAME.pdb" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+        working-directory: ./Binaries/CI/App
+#
+#      - name: Upload
+#        uses: ./.github/actions/upload
+#        with:
+#          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
+#          url: ${{ secrets.UPLOADURL }}
+#          pass: ${{ secrets.UPLOADPASS }}
+#
+#      - name: Rename PDB
+#        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
+#        id: rename_pdb
+#        shell: powershell
+#        run: |
+#          Rename-Item -Path "./${{ env.ProjectName }}.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
+#        working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
+#
+#      - name: Upload PDB
+#        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
+#        uses: ./.github/actions/upload
+#        with:
+#          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
+#          url: ${{ secrets.PDBUPLOADURL }}
+#          pass: ${{ secrets.UPLOADPASS }}
+#
+#  osx:
+#    # if: false # tmp disable
+#    name: OSX
+#    runs-on: macos-latest
+#
+#    steps:
+#      - name: Checkout repo
+#        uses: actions/checkout@v2
+#        with:
+#          submodules: 'recursive'
+#
+#      - name: Checkout JUCE
+#        uses: actions/checkout@v2
+#        with:
+#          repository: benkuper/JUCE
+#          ref: develop-local
+#          path: JUCE
+#
+#      - name: Set Suffix
+#        id: set_variables
+#        uses: ./.github/actions/set-suffix
+#        with:
+#          os: 'osx'
+#
+#      - name: Download Packages 
+#        run: |
+#          curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
+#          hdiutil mount Packages.dmg
+#          sudo installer -pkg "/Volumes/Packages ${{ env.PackagesVersion }}/Install Packages.pkg" -target /
+#          hdiutil detach "/Volumes/Packages ${{ env.PackagesVersion }}/"
+#
+#      - name: Build
+#        uses: sersoft-gmbh/xcodebuild-action@v1.3
+#        with:
+#          project: Builds/MacOSX_CI/${{ env.ProjectName }}.xcodeproj
+#          destination: platform=macOS
+#          jobs: 2
+#          action: build
+#          configuration: Release
+#          use-xcpretty: true
+#
+#      - name: Create Package
+#        id: create_package
+#        run:  |
+#          packagesbuild ${{ env.ProjectName }}.pkgproj
+#          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
+#          mv ${{ env.ProjectName }}.pkg $PKGNAME
+#          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+#        working-directory: ./Package
+#
+#      - name: Upload
+#        uses: ./.github/actions/upload
+#        with:
+#          pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
+#          url: ${{ secrets.UPLOADURL }}
+#          pass: ${{ secrets.UPLOADPASS }}
+          #
+#  linux:
+#    # if: false # tmp disable
+#
+#    name: Linux
+#    runs-on: ubuntu-22.04
+#
+#    steps:
+#      - name: Checkout repo
+#        uses: actions/checkout@v2
+#        with:
+#          submodules: 'recursive'
+#
+#      - name: Checkout JUCE
+#        uses: actions/checkout@v2
+#        with:
+#          repository: benkuper/JUCE
+#          ref: develop-local
+#          path: JUCE
+#
+#      - name: Set Suffix
+#        id: set_variables
+#        uses: ./.github/actions/set-suffix
+#        with:
+#          os: 'x64'
+#
+#      - name: Installing dependencies
+#        id: install_deps
+#        #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
+#        run: |
+#          sudo apt-get update
+#          echo "Installing JUCE lib dependencies and extra tools"
+          #sudo apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+#          sudo apt-get install -qy curl
+#
+#          cd ${{ github.workspace }}
+#          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+#          chmod a+x appimagetool-x86_64.AppImage
+#
+#      # - name: Start SSH via ngrok
+#      #   uses: P3TERX/ssh2actions@main
+#      #   with:
+#      #     mode: ngrok
+#      #   env:
+#      #     # After sign up on the https://ngrok.com
+#      #     # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+#      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          #
+#      #     # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+#      #     # You can find this server region here: https://ngrok.com/docs#global-locations
+#      #     NGROK_REGION: us
+#
+#      #     # This password you will use when authorizing via SSH
+#      #     SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+#
+#      - name: Build
+#        run: |
+#          cd ${{ github.workspace }}/Builds/LinuxMakefile
+#          make -j2 CONFIG=Release
+#
+#      - name: Create AppImage
+#        id: create_package
+#        run: |
+#          mkdir -p ${{ env.ProjectName }}.AppDir/usr/bin/
+#          cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
+#
+#          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
+#          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+#          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
+#        working-directory: ./Builds/LinuxMakefile
+#
+#      - name: Upload
+#        uses: ./.github/actions/upload
+#        with:
+#          pkg-name: ./Builds/LinuxMakefile/${{ steps.create_package.outputs.pkg-name }}
+#          url: ${{ secrets.UPLOADURL }}
+#          pass: ${{ secrets.UPLOADPASS }}
+  #
+#  raspberrypi:
+#    # if: false # tmp disable
+#
+#    name: Raspberry Pi
+#    runs-on: ubuntu-22.04
+#    strategy:
+#      matrix:
+#        include:
+#        - arch: armhf
+#          cpu: arm1176 #suitable for all Pi versions
+#          base_image: raspios_lite:2021-05-07 
+#          cpu_info: raspberrypi_zero_w
+#          buildFolder: "Raspberry"
+#          buildConfig: "Release"
+          #
+#        - arch: aarch64
+#          cpu: cortex-a53
+#          base_image: raspios_lite_arm64:2022-04-04
+#          cpu_info: raspberrypi_zero2_w_arm64_w
+#          buildFolder: "Raspberry64"
+#          buildConfig: "Release"
+#
+#      fail-fast: false
+#
+#    steps:
+#      - name: Checkout repo
+#        uses: actions/checkout@v2
+#        with:
+#          submodules: 'recursive'
+#
+#      - name: Checkout JUCE
+#        uses: actions/checkout@v2
+#        with:
+#          repository: benkuper/JUCE
+#          ref: develop-local
+#          path: JUCE
+#
+#      - name: Set Suffix
+#        id: set_variables
+#        uses: ./.github/actions/set-suffix
+#        with:
+#          os: ${{ matrix.arch }}
+#
+#      - name: Download and prepare AppImage
+#        run: |
+#          sudo apt-get update
+#          sudo apt-get install libfuse2 # required on ubuntu 22.04
+#
+#          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+#          chmod a+x appimagetool-x86_64.AppImage
+#
+#          echo "Downloading AppImage runtime for ${{ matrix.arch }}"
+#          wget "https://github.com/AppImage/AppImageKit/releases/download/13/runtime-${{ matrix.arch }}"
+#
+#          mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
+#        working-directory: ${{ github.workspace }}
+#
+#      - name: Install dependencies and build
+#        id: build
+#        uses: pguyot/arm-runner-action@v2
+#        with:
+#          image_additional_mb: 2048
+#          base_image: ${{ matrix.base_image }}
+#          cpu: ${{ matrix.cpu }}
+#          copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
+#          copy_artifact_dest: Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
+#          commands: |
+#            apt-get update
+#            echo "Installing JUCE lib dependencies and extra tools"
+            #apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+#            apt-get install -qy curl
+#
+#            cd Builds/${{ matrix.buildFolder }}
+#            make -j2 CONFIG=${{ matrix.buildConfig }}
+#
+#      - name: Create AppImage
+#        id: create_package
+#        run: |
+#          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
+#          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+#          ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
+#        working-directory: ./Builds/${{ matrix.buildFolder }}
+#
+#      - name: Upload
+#        uses: ./.github/actions/upload
+#        with:
+#          pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.outputs.pkg-name }}
+#          url: ${{ secrets.UPLOADURL }}
+#          pass: ${{ secrets.UPLOADPASS }}
