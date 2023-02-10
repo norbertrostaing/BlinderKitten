@@ -1,4 +1,5 @@
 Binaries/Debug
-Builds
 workFile_autosave
 SharedData/captureStudent_autosave/
+.vs
+Builds/*/x64
