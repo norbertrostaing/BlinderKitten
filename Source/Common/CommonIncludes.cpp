@@ -21,10 +21,10 @@
 #include "ComponentSelector/ComponentSelector.cpp"
 #include "ComponentSelector/ui/ComponentSelectorUI.cpp"
 
-//#include "Serial/lib/cobs/cobs.cpp"
-//#include "Serial/SerialDevice.cpp"
-//#include "Serial/SerialDeviceParameter.cpp"
-//#include "Serial/SerialManager.cpp"
+#include "Serial/lib/cobs/cobs.cpp"
+#include "Serial/SerialDevice.cpp"
+#include "Serial/SerialDeviceParameter.cpp"
+#include "Serial/SerialManager.cpp"
 
 #include "DMX/device/DMXDevice.cpp"
 #include "DMX/device/DMXSerialDevice.cpp"
