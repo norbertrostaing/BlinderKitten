@@ -77,7 +77,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				}
 				if (selections[selId]->subSel->getValue()) {
 					int subFrom = selections[selId]->subFrom->getValue();
-					int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->getValue() : subFrom;
+					int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->intValue() : subFrom;
 					int subMod = subFrom <= subThru ? 1 : -1;
 					Array<SubFixture*> tempSelectionFiltered;
 					for (int subId = subFrom; subId != subThru + subMod; subId = subId + subMod) {
