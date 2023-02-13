@@ -10,7 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
-#include "ChannelType\ChannelType.h"
+#include "ChannelType/ChannelType.h"
 
 class ChannelFamily :
     public BaseItem
