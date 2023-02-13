@@ -60,7 +60,7 @@ void FixtureGridView::updateCells() {
         TextButton* b = new TextButton();
         hashMapButtons.set(id, b);
         b->addListener(this);
-        b->setButtonText(String(id)+" "+f->userName->getValue());
+        b->setButtonText(String(id)+" "+(String)f->userName->getValue());
         addAndMakeVisible(b);
     }
     resized();
