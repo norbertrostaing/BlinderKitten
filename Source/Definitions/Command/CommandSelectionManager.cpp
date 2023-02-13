@@ -32,7 +32,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 		if (selections[selId]->enabled->boolValue()) {
 			Array<SubFixture*> tempSelection;
 			int idFrom = selections[selId]->valueFrom->getValue();
-			int idThru = selections[selId]->thru->getValue() ? selections[selId]->valueTo->getValue() : idFrom;
+			int idThru = selections[selId]->thru->getValue() ? selections[selId]->valueTo->intValue() : idFrom;
 			int mod = idFrom <= idThru ? 1 : -1;
 
 			if (selections[selId]->targetType->getValue() == "fixture") {
@@ -41,7 +41,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 						Fixture* fixt = b->fixtures.getReference(id);
 						if (selections[selId]->subSel->getValue()) {
 							int subFrom = selections[selId]->subFrom->getValue();
-							int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->getValue() : subFrom;
+							int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->intValue() : subFrom;
 							int subMod = subFrom <= subThru ? 1 : -1;
 							for (int subId = subFrom; subId != subThru + subMod; subId = subId + subMod) {
 								SubFixture* s = fixt->getSubFixture(subId);
@@ -56,7 +56,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					}
 				}
 			}
-			else if (selections[selId]->targetType->getValue() == "group") {
+			else if (selections[selId]->targetType->stringValue() == "group") {
 				for (int id = idFrom; id != idThru + mod; id = id + mod) {
 					if (b->groups.contains(id)) {
 						Group* g = b->groups.getReference(id);
