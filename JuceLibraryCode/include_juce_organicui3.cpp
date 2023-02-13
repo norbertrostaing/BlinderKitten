@@ -5,4 +5,5 @@
 
 */
 
+#include "AppConfig.h"
 #include <juce_organicui/juce_organicui3.cpp>
