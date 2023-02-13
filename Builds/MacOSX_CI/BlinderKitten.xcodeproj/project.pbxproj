@@ -53,6 +53,7 @@
 		38A3D6D06C81EBFA7788A911 /* mainIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 6933650B77D659B0B5FE18D4; };
 		39E71231B33F362F3F967C2D /* Accelerate.framework */ = {isa = PBXBuildFile; fileRef = 0FD847117AE94AE23F120811; };
 		3C5DBA8143DF7805A9B3F392 /* ChannelType.cpp */ = {isa = PBXBuildFile; fileRef = F36C770D7FD18EE19D2812C4; };
+		3F4DBCCBA94C87C71B791BA3 /* SDL2.framework */ = {isa = PBXBuildFile; fileRef = AD71152DF33D2CF6D1958824; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4083F74DE8FD44775572F5AB /* CommandValue.cpp */ = {isa = PBXBuildFile; fileRef = 457FF6F5D6FEF09FD7A96BEB; };
 		412ABFC882BE7CECCCBD8123 /* EffectGridView.cpp */ = {isa = PBXBuildFile; fileRef = 80FAD0782C385AF0B5AC86A1; };
 		4171C0B5BAE18B415F3009FC /* include_juce_organicui4.cpp */ = {isa = PBXBuildFile; fileRef = 5902880D8C6266E7A543E631; };
@@ -173,6 +174,20 @@
 		FB298395462FBA9AFF2D22E3 /* VirtualButton.cpp */ = {isa = PBXBuildFile; fileRef = D2C729583028F64B5519FA2C; };
 		FC0FCA9105E87941C073B155 /* Task.cpp */ = {isa = PBXBuildFile; fileRef = 8085FCC7884FFB62D8A17AC0; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1EFE5A7DF78AF69043643390 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F4DBCCBA94C87C71B791BA3,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0035ABB06ECA7EDCAB496C6A /* DMXEnttecProDevice.h */ /* DMXEnttecProDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXEnttecProDevice.h; path = ../../Source/Common/DMX/device/DMXEnttecProDevice.h; sourceTree = SOURCE_ROOT; };
@@ -436,6 +451,7 @@
 		ACC8C4CAEF466CD7AD25550C /* OSCInputEditor.cpp */ /* OSCInputEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSCInputEditor.cpp; path = ../../Source/Definitions/Interface/interfaces/osc/ui/OSCInputEditor.cpp; sourceTree = SOURCE_ROOT; };
 		ACF41B21590E56F7D8292C0E /* Interface.cpp */ /* Interface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Interface.cpp; path = ../../Source/Definitions/Interface/Interface.cpp; sourceTree = SOURCE_ROOT; };
 		AD561ABAED2745E121CE95A7 /* Fixture.cpp */ /* Fixture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Fixture.cpp; path = ../../Source/Definitions/Fixture/Fixture.cpp; sourceTree = SOURCE_ROOT; };
+		AD71152DF33D2CF6D1958824 /* SDL2.framework */ /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../External/sdl/lib/osx/SDL2.framework; sourceTree = "<group>"; };
 		AD861E96EB2578CD4E903BF6 /* FixtureMultiEditor.h */ /* FixtureMultiEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureMultiEditor.h; path = ../../Source/Definitions/Fixture/FixtureMultiEditor.h; sourceTree = SOURCE_ROOT; };
 		AED5F19D85468BD94B808BB9 /* FixtureTypeManagerUI.cpp */ /* FixtureTypeManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeManagerUI.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		AF0ACD9868DA66DDB69479BF /* SerialInterface.cpp */ /* SerialInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialInterface.cpp; path = ../../Source/Definitions/Interface/interfaces/serial/SerialInterface.cpp; sourceTree = SOURCE_ROOT; };
@@ -582,6 +598,7 @@
 				95CC2B9FB1CA57C47ADE5FC8,
 				22BD2032445DFD50718DB3F0,
 				77074B6B4BC78CC9957A6AC6,
+				3F4DBCCBA94C87C71B791BA3,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1353,6 +1370,7 @@
 				FC1C1685A486AC1E9558F20A,
 				F90CBF302738DAB7A626F836,
 				E6100648C258327C6238CE1B,
+				AD71152DF33D2CF6D1958824,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1484,6 +1502,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF98C0F645906810C84A8F59;
 			buildPhases = (
+				1EFE5A7DF78AF69043643390,
 				0880CA070DD4964DA1272846,
 				9331EEEE4B92B920CE6590E5,
 				83DD2494ED336214866A7AC0,
@@ -1774,6 +1793,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_ARCHS = "x86_64 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1827,6 +1847,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source";
 				OTHER_LDFLAGS = "-lServus -lhidapi -weak_framework Metal -weak_framework MetalKit";
@@ -1848,6 +1869,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
 				EXCLUDED_ARCHS = "x86_64 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1901,6 +1923,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
