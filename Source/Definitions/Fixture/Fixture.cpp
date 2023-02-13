@@ -26,8 +26,8 @@ Fixture::Fixture(var params) :
 	BaseItem(params.getProperty("name", "Fixture")),
 	objectType(params.getProperty("type", "Fixture").toString()),
 	objectData(params),
-	patchs("Patch"),
 	devTypeParam(),
+	patchs("Patch"),
 	subFixtures()
 {
 	nameCanBeChangedByUser = false;
