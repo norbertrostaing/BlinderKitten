@@ -1824,6 +1824,7 @@
 					"$(SRCROOT)/../../../JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../Source/Definitions",
 					"$(SRCROOT)/../../External/serial/include",
 					"$(SRCROOT)/../../External/servus/include",
 					"$(SRCROOT)/../../External/dnssd/include",
@@ -1838,7 +1839,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
 				OTHER_LDFLAGS = "-lServus -lhidapi -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
@@ -1887,6 +1888,7 @@
 					"$(SRCROOT)/../../../JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../Source/Definitions",
 					"$(SRCROOT)/../../External/serial/include",
 					"$(SRCROOT)/../../External/servus/include",
 					"$(SRCROOT)/../../External/dnssd/include",
@@ -1907,7 +1909,7 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
 				OTHER_LDFLAGS = "-lServus -lhidapi -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
