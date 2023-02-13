@@ -32,8 +32,6 @@
 #include <mach/mach.h>
 #endif
 
-#include "serial/impl/unix.h"
-
 #ifndef TIOCINQ
 #ifdef FIONREAD
 #define TIOCINQ FIONREAD
