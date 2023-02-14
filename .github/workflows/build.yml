@@ -136,7 +136,8 @@ jobs:
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
           mv ${{ env.ProjectName }}.pkg $PKGNAME
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-        working-directory: ./Package
+        #working-directory: ./Package
+        working-directory: Package
 #
       - name: Upload
         uses: ./.github/actions/upload
