@@ -9,7 +9,7 @@
 			<array>
 				<dict>
 					<key>APPLICATION_ID</key>
-					<string>norbertrostaing.BlinderKitten</string>
+					<string>norbertrostaing.Chataigne</string>
 					<key>STATE</key>
 					<true/>
 				</dict>
@@ -43,7 +43,7 @@
 									<key>CHILDREN</key>
 									<array/>
 									<key>GID</key>
-									<integer>80</integer>
+									<integer>0</integer>
 									<key>PATH</key>
 									<string>../Builds/MacOSX_CI/build/Release/BlinderKitten.app</string>
 									<key>PATH_TYPE</key>
@@ -604,13 +604,13 @@
 									<integer>1</integer>
 								</dict>
 								<key>PACKAGE_UUID</key>
-								<string>B89BAF20-89BF-40EC-AB94-B32D27EE7017</string>
+								<string>B89BAF20-89BF-40EC-AB94-B32D27EE7016</string>
 								<key>TITLE</key>
 								<array/>
 								<key>TYPE</key>
 								<integer>0</integer>
 								<key>UUID</key>
-								<string>54ADBA0F-8A82-44FE-BE82-3086DBE95506</string>
+								<string>54ADBA0F-8A82-44FE-BE82-3086DBE95505</string>
 							</dict>
 						</array>
 						<key>REMOVED</key>
