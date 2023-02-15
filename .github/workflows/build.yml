@@ -129,6 +129,9 @@ jobs:
           configuration: Release
           use-xcpretty: true
 #
+      - name: testDir 
+        run: ls -R
+        
       - name: Create Package
         id: create_package
         run:  |
@@ -136,12 +139,12 @@ jobs:
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
           mv ${{ env.ProjectName }}.pkg $PKGNAME
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-        #working-directory: ./Package
-#
+        working-directory: ./Package
+
       - name: Upload
         uses: ./.github/actions/upload
         with:
-          pkg-name: ./${{ steps.create_package.outputs.pkg-name }}
+          pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 #
