@@ -393,6 +393,7 @@
 		9271C3B7673C7065479A8FC3 /* serial.cc */ /* serial.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = serial.cc; path = ../../Source/Common/Serial/lib/serial/serial.cc; sourceTree = SOURCE_ROOT; };
 		92CC2C39B6818D9CC2136A46 /* FixtureTypeManager.h */ /* FixtureTypeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureTypeManager.h; path = ../../Source/Definitions/FixtureType/FixtureTypeManager.h; sourceTree = SOURCE_ROOT; };
 		9322864C164D79E104A69C95 /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
+		933098DD43E30CA3A9FC632D /* juce_audio_devices */ /* juce_audio_devices */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_devices; path = ../../JUCE/modules/juce_audio_devices; sourceTree = SOURCE_ROOT; };
 		93624562952E2E40C55493CC /* ZeroconfManager.cpp */ /* ZeroconfManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ZeroconfManager.cpp; path = ../../Source/Common/Zeroconf/ZeroconfManager.cpp; sourceTree = SOURCE_ROOT; };
 		9362DF124D2A10895F674F08 /* juce_graphics */ /* juce_graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_graphics; path = ../../JUCE/modules/juce_graphics; sourceTree = SOURCE_ROOT; };
 		93F674CBB8C87BB5140AAE26 /* DMXChannelView.h */ /* DMXChannelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXChannelView.h; path = ../../Source/UI/DMXChannelView.h; sourceTree = SOURCE_ROOT; };
@@ -419,7 +420,6 @@
 		A5F3FC80002070EBA7109057 /* IOBluetooth.framework */ /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 		A6D4ADF61F9674662AF2D750 /* MapperStep.h */ /* MapperStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapperStep.h; path = ../../Source/Definitions/Mapper/MapperStep.h; sourceTree = SOURCE_ROOT; };
 		A71171115E9F935BE79A2D97 /* include_juce_organicui2b.cpp */ /* include_juce_organicui2b.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui2b.cpp; path = ../../JuceLibraryCode/include_juce_organicui2b.cpp; sourceTree = SOURCE_ROOT; };
-		A76A0F34DDC327DE50A60121 /* juce_audio_devices */ /* juce_audio_devices */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_devices; path = ../../../JUCE/modules/juce_audio_devices; sourceTree = SOURCE_ROOT; };
 		A7CB1C5A633570CE502446DC /* Assistant.cpp */ /* Assistant.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Assistant.cpp; path = ../../Source/Definitions/Assistant/Assistant.cpp; sourceTree = SOURCE_ROOT; };
 		A806443E94242A6B551B178E /* GroupManagerUI.h */ /* GroupManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupManagerUI.h; path = ../../Source/Definitions/Group/GroupManagerUI.h; sourceTree = SOURCE_ROOT; };
 		A831009F804916189F1C51BA /* EffectParam.cpp */ /* EffectParam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectParam.cpp; path = ../../Source/Definitions/Effect/EffectParam.cpp; sourceTree = SOURCE_ROOT; };
@@ -1436,7 +1436,7 @@
 			isa = PBXGroup;
 			children = (
 				BDA98EBCD1120FDE23D13B2C,
-				A76A0F34DDC327DE50A60121,
+				933098DD43E30CA3A9FC632D,
 				2F540F176B952F498BAC68A0,
 				DD54EEB4980A62663DB01445,
 				62DC17785A70BDB1F0D4A0B4,
@@ -1802,7 +1802,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../../JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../Source",
 					"$(SRCROOT)/../../Source/Definitions",
@@ -1818,7 +1817,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
 				OTHER_LDFLAGS = "-lServus -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
@@ -1864,7 +1863,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../../JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../Source",
 					"$(SRCROOT)/../../Source/Definitions",
@@ -1885,7 +1883,7 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
 				OTHER_LDFLAGS = "-lServus -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
