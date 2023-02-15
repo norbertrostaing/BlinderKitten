@@ -148,169 +148,169 @@ jobs:
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 #
-#  linux:
-#    # if: false # tmp disable
+  linux:
+    # if: false # tmp disable
+
+    name: Linux
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: 'x64'
+
+      - name: Installing dependencies
+        id: install_deps
+        #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
+        run: |
+          sudo apt-get update
+          echo "Installing JUCE lib dependencies and extra tools"
+          sudo apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+          sudo apt-get install -qy curl
+
+          cd ${{ github.workspace }}
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          chmod a+x appimagetool-x86_64.AppImage
 #
-#    name: Linux
-#    runs-on: ubuntu-22.04
+      # - name: Start SSH via ngrok
+      #   uses: P3TERX/ssh2actions@main
+      #   with:
+      #     mode: ngrok
+      #   env:
+      #     # After sign up on the https://ngrok.com
+      #     # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+         #
+      #     # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+      #     # You can find this server region here: https://ngrok.com/docs#global-locations
+      #     NGROK_REGION: us
+
+      #     # This password you will use when authorizing via SSH
+      #     SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+
+      - name: Build
+        run: |
+          cd ${{ github.workspace }}/Builds/LinuxMakefile
+          make -j2 CONFIG=Release
+
+      - name: Create AppImage
+        id: create_package
+        run: |
+          mkdir -p ${{ env.ProjectName }}.AppDir/usr/bin/
+          cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
+
+          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
+        working-directory: ./Builds/LinuxMakefile
 #
-#    steps:
-#      - name: Checkout repo
-#        uses: actions/checkout@v2
-#        with:
-#          submodules: 'recursive'
-#
-#      - name: Checkout JUCE
-#        uses: actions/checkout@v2
-#        with:
-#          repository: benkuper/JUCE
-#          ref: develop-local
-#          path: JUCE
-#
-#      - name: Set Suffix
-#        id: set_variables
-#        uses: ./.github/actions/set-suffix
-#        with:
-#          os: 'x64'
-#
-#      - name: Installing dependencies
-#        id: install_deps
-#        #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
-#        run: |
-#          sudo apt-get update
-#          echo "Installing JUCE lib dependencies and extra tools"
-          #sudo apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
-#          sudo apt-get install -qy curl
-#
-#          cd ${{ github.workspace }}
-#          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
-#          chmod a+x appimagetool-x86_64.AppImage
-#
-#      # - name: Start SSH via ngrok
-#      #   uses: P3TERX/ssh2actions@main
-#      #   with:
-#      #     mode: ngrok
-#      #   env:
-#      #     # After sign up on the https://ngrok.com
-#      #     # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-#      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/LinuxMakefile/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
+
+  raspberrypi:
+    # if: false # tmp disable
+
+    name: Raspberry Pi
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        include:
+        - arch: armhf
+          cpu: arm1176 #suitable for all Pi versions
+          base_image: raspios_lite:2021-05-07 
+          cpu_info: raspberrypi_zero_w
+          buildFolder: "Raspberry"
+          buildConfig: "Release"
           #
-#      #     # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
-#      #     # You can find this server region here: https://ngrok.com/docs#global-locations
-#      #     NGROK_REGION: us
-#
-#      #     # This password you will use when authorizing via SSH
-#      #     SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-#
-#      - name: Build
-#        run: |
-#          cd ${{ github.workspace }}/Builds/LinuxMakefile
-#          make -j2 CONFIG=Release
-#
-#      - name: Create AppImage
-#        id: create_package
-#        run: |
-#          mkdir -p ${{ env.ProjectName }}.AppDir/usr/bin/
-#          cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
-#
-#          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
-#          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-#          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
-#        working-directory: ./Builds/LinuxMakefile
-#
-#      - name: Upload
-#        uses: ./.github/actions/upload
-#        with:
-#          pkg-name: ./Builds/LinuxMakefile/${{ steps.create_package.outputs.pkg-name }}
-#          url: ${{ secrets.UPLOADURL }}
-#          pass: ${{ secrets.UPLOADPASS }}
-  #
-#  raspberrypi:
-#    # if: false # tmp disable
-#
-#    name: Raspberry Pi
-#    runs-on: ubuntu-22.04
-#    strategy:
-#      matrix:
-#        include:
-#        - arch: armhf
-#          cpu: arm1176 #suitable for all Pi versions
-#          base_image: raspios_lite:2021-05-07 
-#          cpu_info: raspberrypi_zero_w
-#          buildFolder: "Raspberry"
-#          buildConfig: "Release"
-          #
-#        - arch: aarch64
-#          cpu: cortex-a53
-#          base_image: raspios_lite_arm64:2022-04-04
-#          cpu_info: raspberrypi_zero2_w_arm64_w
-#          buildFolder: "Raspberry64"
-#          buildConfig: "Release"
-#
-#      fail-fast: false
-#
-#    steps:
-#      - name: Checkout repo
-#        uses: actions/checkout@v2
-#        with:
-#          submodules: 'recursive'
-#
-#      - name: Checkout JUCE
-#        uses: actions/checkout@v2
-#        with:
-#          repository: benkuper/JUCE
-#          ref: develop-local
-#          path: JUCE
-#
-#      - name: Set Suffix
-#        id: set_variables
-#        uses: ./.github/actions/set-suffix
-#        with:
-#          os: ${{ matrix.arch }}
-#
-#      - name: Download and prepare AppImage
-#        run: |
-#          sudo apt-get update
-#          sudo apt-get install libfuse2 # required on ubuntu 22.04
-#
-#          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
-#          chmod a+x appimagetool-x86_64.AppImage
-#
-#          echo "Downloading AppImage runtime for ${{ matrix.arch }}"
-#          wget "https://github.com/AppImage/AppImageKit/releases/download/13/runtime-${{ matrix.arch }}"
-#
-#          mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
-#        working-directory: ${{ github.workspace }}
-#
-#      - name: Install dependencies and build
-#        id: build
-#        uses: pguyot/arm-runner-action@v2
-#        with:
-#          image_additional_mb: 2048
-#          base_image: ${{ matrix.base_image }}
-#          cpu: ${{ matrix.cpu }}
-#          copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
-#          copy_artifact_dest: Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
-#          commands: |
-#            apt-get update
-#            echo "Installing JUCE lib dependencies and extra tools"
-            #apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
-#            apt-get install -qy curl
-#
-#            cd Builds/${{ matrix.buildFolder }}
-#            make -j2 CONFIG=${{ matrix.buildConfig }}
-#
-#      - name: Create AppImage
-#        id: create_package
-#        run: |
-#          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
-#          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-#          ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
-#        working-directory: ./Builds/${{ matrix.buildFolder }}
-#
-#      - name: Upload
-#        uses: ./.github/actions/upload
-#        with:
-#          pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.outputs.pkg-name }}
-#          url: ${{ secrets.UPLOADURL }}
-#          pass: ${{ secrets.UPLOADPASS }}
+        - arch: aarch64
+          cpu: cortex-a53
+          base_image: raspios_lite_arm64:2022-04-04
+          cpu_info: raspberrypi_zero2_w_arm64_w
+          buildFolder: "Raspberry64"
+          buildConfig: "Release"
+
+      fail-fast: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: ${{ matrix.arch }}
+
+      - name: Download and prepare AppImage
+        run: |
+          sudo apt-get update
+          sudo apt-get install libfuse2 # required on ubuntu 22.04
+
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          chmod a+x appimagetool-x86_64.AppImage
+
+          echo "Downloading AppImage runtime for ${{ matrix.arch }}"
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/runtime-${{ matrix.arch }}"
+
+          mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
+        working-directory: ${{ github.workspace }}
+
+      - name: Install dependencies and build
+        id: build
+        uses: pguyot/arm-runner-action@v2
+        with:
+          image_additional_mb: 2048
+          base_image: ${{ matrix.base_image }}
+          cpu: ${{ matrix.cpu }}
+          copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
+          copy_artifact_dest: Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
+          commands: |
+            apt-get update
+            echo "Installing JUCE lib dependencies and extra tools"
+            apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+            apt-get install -qy curl
+
+            cd Builds/${{ matrix.buildFolder }}
+            make -j2 CONFIG=${{ matrix.buildConfig }}
+
+      - name: Create AppImage
+        id: create_package
+        run: |
+          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
+        working-directory: ./Builds/${{ matrix.buildFolder }}
+
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
