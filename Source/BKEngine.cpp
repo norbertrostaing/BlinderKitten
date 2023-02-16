@@ -45,7 +45,7 @@
 #include "./Common/MIDI/MIDIDevice.h"
 #include "./Common/MIDI/MIDIManager.h"
 #include "./Common/DMX/DMXManager.h"
-#include "./Common/DMX/Device/DMXDevice.h"
+#include "./Common/DMX/device/DMXDevice.h"
 #include "./Common/Serial/SerialDevice.h"
 #include "./Common/Serial/SerialManager.h"
 
