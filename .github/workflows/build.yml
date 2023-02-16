@@ -226,7 +226,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   raspberrypi:
-    if: false # tmp disable
+    #if: false # tmp disable
 
     name: Raspberry Pi
     runs-on: ubuntu-22.04
@@ -239,7 +239,7 @@ jobs:
           cpu_info: raspberrypi_zero_w
           buildFolder: "Raspberry"
           buildConfig: "Release"
-          #
+          
         - arch: aarch64
           cpu: cortex-a53
           base_image: raspios_lite_arm64:2022-04-04
@@ -305,7 +305,7 @@ jobs:
         run: |
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
+          ARCH=${{ matrix.arch }} ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/${{ matrix.buildFolder }}
 
       - name: Upload
