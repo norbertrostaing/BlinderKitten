@@ -802,7 +802,7 @@
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/Raspberry" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1"
+    <LINUX_MAKE targetFolder="Builds/Raspberry" extraDefs="LINK_PLATFORM_LINUX=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;atomic"
                 smallIcon="qTJiMk" bigIcon="qTJiMk">
@@ -830,7 +830,7 @@
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1"
+    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="LINK_PLATFORM_LINUX=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;atomic"
                 smallIcon="qTJiMk" bigIcon="qTJiMk">
