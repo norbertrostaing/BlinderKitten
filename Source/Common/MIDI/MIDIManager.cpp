@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "MainIncludes.h"
+#include "mainIncludes.h"
 
 juce_ImplementSingleton(MIDIManager)
 
