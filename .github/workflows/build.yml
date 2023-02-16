@@ -226,7 +226,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   raspberrypi:
-    # if: false # tmp disable
+    if: false # tmp disable
 
     name: Raspberry Pi
     runs-on: ubuntu-22.04
