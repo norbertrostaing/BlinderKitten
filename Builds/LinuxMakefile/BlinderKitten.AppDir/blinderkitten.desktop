@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=BlinderKitten
+Exec=BlinderKitten
+Icon=blinderkitten
+Type=Application
+Categories=AudioVideo;Art;
+Comment=Free lighting software without restrictions
+Comment[fr]=Logiciel gratui de lumière sans restrictions
+MimeType=text/blinderkitten;
+Name[en]=BlinderKitten
+Terminal=false
+StartupNotify=true
+NoDisplay=false
+Name[en_US]=blinderkitten.desktop
