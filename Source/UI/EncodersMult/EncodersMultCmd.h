@@ -46,6 +46,7 @@ public:
     void calcSize();
 
     void sliderValueChanged(Slider* slider) override;
+   
     void newMessage(const ContainerAsyncEvent& e) override;
     void buttonClicked(Button* b);
 };

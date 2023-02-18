@@ -54,6 +54,7 @@ void EncodersMultCmd::resetCommand(Command* c)
 void EncodersMultCmd::commandContentChanged()
 {
     const MessageManagerLock mmLock;
+    channels.clear();
     for (int i = encoders.size(); i >= 0; i--) {
         encoders.remove(i); // maybe kill some things ?
     }
@@ -63,6 +64,7 @@ void EncodersMultCmd::commandContentChanged()
             if (cv->presetOrValue->getValue() == "value") {
                 ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
                 if (ct != nullptr) {
+                    channels.add(ct);
                     FloatSliderUI* f = cv->valueFrom->createSlider();
                     encoders.add(f);
                     f->orientation = FloatSliderUI::VERTICAL;
