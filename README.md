@@ -28,8 +28,7 @@ Each fixture can have multiple **Subfixtures** in the case you have the same par
 ## How to test it
 
 ### By downloading it
-You can find the latest build [here](https://github.com/norbertrostaing/BlinderKitten/blob/main/BlinderKitten.zip?raw=true). You'll have to export files and place them in a new folder on your computer.
-Zip file contains some fixtures in fixtures.targ.gz
+You can find the latest build [here](http://blinderkitten.lighting/#where).
 
 ### By compiling it yourself
 Clone BlinderKitten with --recursive options to integrate organicUI module
