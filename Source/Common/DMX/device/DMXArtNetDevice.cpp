@@ -34,7 +34,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
 
 	sender.bindToPort(6454);
-
+	sendDataAtStartup();
 	setupReceiver();
 }
 
@@ -132,6 +132,7 @@ void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Co
 {
 	DMXDevice::onControllableFeedbackUpdate(cc, c);
 	if (c == inputCC->enabled || c == localPort) setupReceiver();
+	sendDataAtStartup();
 }
 
 void DMXArtNetDevice::run()
@@ -199,4 +200,9 @@ void DMXArtNetDevice::run()
 			sleep(10); //100fps
 		}
 	}
+}
+
+void DMXArtNetDevice::sendDataAtStartup()
+{
+	DMXDevice::sendDMXValue(1, dmxDataOut[0]);
 }

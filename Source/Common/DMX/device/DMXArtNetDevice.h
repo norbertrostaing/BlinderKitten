@@ -66,5 +66,7 @@ public:
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	
 	void run() override;
+
+	void sendDataAtStartup();
 };
 
