@@ -39,7 +39,7 @@ void MultiplicatorAction::triggerInternal()
 {
 }
 
-void MultiplicatorAction::setValueInternal(var value) {
+void MultiplicatorAction::setValueInternal(var value, String origin) {
     Multiplicator* target = dynamic_cast<Multiplicator*>(targetMult->targetContainer.get());
     if (target == nullptr) return;
 

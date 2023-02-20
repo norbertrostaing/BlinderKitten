@@ -10,6 +10,8 @@
 
 juce_ImplementSingleton(ActionFactory);
 
+#include "Common/CommonIncludes.h"
+
 #include "Definitions/Actions/CuelistAction.h"
 #include "Definitions/Actions/EffectAction.h"
 #include "Definitions/Actions/CarouselAction.h"
@@ -125,4 +127,9 @@ void ActionManager::triggerAll()
 void ActionManager::setValueAll(var value)
 {
     for (auto& i : items) i->setValue(value);
+}
+
+void ActionManager::setValueAll(var value, String origin)
+{
+    for (auto& i : items) i->setValue(value, origin);
 }

@@ -24,7 +24,7 @@ public:
     IntParameter* cuelistId;
 
     void triggerInternal() override;
-    void setValueInternal(var value);
+    void setValueInternal(var value, String origin);
 
     static CuelistAction* create(var params) { return new CuelistAction(params); }
 

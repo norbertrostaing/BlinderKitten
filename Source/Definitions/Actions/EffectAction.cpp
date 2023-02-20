@@ -32,7 +32,7 @@ void EffectAction::triggerInternal()
 {
 }
 
-void EffectAction::setValueInternal(var value) {
+void EffectAction::setValueInternal(var value, String origin) {
     Effect* target = Brain::getInstance()->getEffectById(targetId->getValue());
     if (target == nullptr) return;
 
@@ -41,19 +41,19 @@ void EffectAction::setValueInternal(var value) {
     switch (actionType)
     {
     case FX_START:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->start();
         }
         break;
 
     case FX_STOP:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->stop();
         }
         break;
 
     case FX_TOGGLE:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             if (target->isOn) {
                 target->stop();
             }
@@ -64,13 +64,16 @@ void EffectAction::setValueInternal(var value) {
         break;
 
     case FX_TAPTEMPO:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->tapTempo();
         }
         break;
 
     case FX_SIZE:
-        target->sizeValue->setValue(val);
+        if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+            target->nextSizeController = origin;
+            target->sizeValue->setValue(val);
+        }
         break;
 
     case FX_SPEED:
@@ -79,13 +82,13 @@ void EffectAction::setValueInternal(var value) {
         break;
 
     case FX_DOUBLESPEED:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->speed->setValue((double)target->speed->getValue()*2);
         }
         break;
 
     case FX_HALFSPEED:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->speed->setValue((double)target->speed->getValue()/2);
         }
         break;

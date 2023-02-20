@@ -29,7 +29,7 @@ void MapperAction::triggerInternal()
 {
 }
 
-void MapperAction::setValueInternal(var value) {
+void MapperAction::setValueInternal(var value, String origin) {
     Mapper* target = Brain::getInstance()->getMapperById(targetId->getValue());
     if (target == nullptr) return;
 

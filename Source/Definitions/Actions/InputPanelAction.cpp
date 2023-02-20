@@ -66,7 +66,7 @@ void InputPanelAction::triggerInternal()
 {
 }
 
-void InputPanelAction::setValueInternal(var value) {
+void InputPanelAction::setValueInternal(var value, String origin) {
     float val = value;
 
     switch (actionType)

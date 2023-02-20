@@ -43,7 +43,7 @@ void VirtualFaderAction::triggerInternal()
     //if (target == nullptr) return;
 }
 
-void VirtualFaderAction::setValueInternal(var value)
+void VirtualFaderAction::setValueInternal(var value, String origin)
 {
     float val = value;
     int number = 0;

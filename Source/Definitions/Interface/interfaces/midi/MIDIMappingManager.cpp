@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Interface/InterfaceIncludes.h"
+
 MIDIMappingManager::MIDIMappingManager() :
     BaseManager("Mappings")
 {
@@ -17,12 +19,12 @@ MIDIMappingManager::~MIDIMappingManager()
 {
 }
 
-void MIDIMappingManager::handleNote(int channel, int pitch, int velocity)
+void MIDIMappingManager::handleNote(int channel, int pitch, int velocity, String origin)
 {
-    for (auto& i : items) i->handleNote(channel, pitch, velocity);
+    for (auto& i : items) i->handleNote(channel, pitch, velocity, origin);
 }
 
-void MIDIMappingManager::handleCC(int channel, int number, int value)
+void MIDIMappingManager::handleCC(int channel, int number, int value, String origin)
 {
-    for (auto& i : items) i->handleCC(channel, number, value);
+    for (auto& i : items) i->handleCC(channel, number, value, origin);
 }

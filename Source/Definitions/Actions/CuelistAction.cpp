@@ -32,7 +32,7 @@ void CuelistAction::triggerInternal()
     if (target == nullptr) return;
 }
 
-void CuelistAction::setValueInternal(var value) {
+void CuelistAction::setValueInternal(var value, String origin) {
     if (actionType == CL_GOALLLOADED) {
         Brain::getInstance()->goAllLoadedCuelists();
         return;
@@ -45,31 +45,31 @@ void CuelistAction::setValueInternal(var value) {
     switch (actionType)
     {
     case CL_GO:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->go();
         }
         break;
 
     case CL_GOBACK:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->goBack();
         }
         break;
 
     case CL_GORANDOM:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->go();
         }
         break;
 
     case CL_OFF:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->off();
         }
         break;
 
     case CL_TOGGLE:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             if (target->isCuelistOn->getValue()) {
                 target->off();
             }
@@ -80,27 +80,33 @@ void CuelistAction::setValueInternal(var value) {
         break;
 
     case CL_LOAD:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->showLoad();
         }
         break;
 
     case CL_LOADANDGO:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->showLoadAndGo();
         }
         break;
 
     case CL_HTPLEVEL:
-        target->setHTPLevel(val);
+        if (target->currentHTPLevelController == origin || abs(target->HTPLevel->floatValue() - val) < 0.05) {
+            target->nextHTPLevelController = origin;
+            target->HTPLevel->setValue(val);
+        }
         break;
 
     case CL_LTPLEVEL:
-        target->setLTPLevel(val);
+        if (target->currentLTPLevelController == origin || abs(target->LTPLevel->floatValue() - val) < 0.05) {
+            target->nextLTPLevelController = origin;
+            target->LTPLevel->setValue(val);
+        }
         break;
 
     case CL_FLASH:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->flash(true, false);
         }
         else {
@@ -109,7 +115,7 @@ void CuelistAction::setValueInternal(var value) {
         break;
 
     case CL_SWOP:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->flash(true, false, true);
         }
         else {
@@ -118,7 +124,10 @@ void CuelistAction::setValueInternal(var value) {
         break;
 
     case CL_FLASHLEVEL:
-        target->setFlashLevel(val);
+        if (target->currentFlashLevelController == origin || abs(target->FlashLevel->floatValue() - val) < 0.05) {
+            target->nextFlashLevelController = origin;
+            target->FlashLevel->setValue(val);
+        }
         break;
 
     case CL_CHASERSPEED:
@@ -126,7 +135,7 @@ void CuelistAction::setValueInternal(var value) {
         break;
 
     case CL_CHASERTAPTEMPO:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->tapTempo();
         }
         break;

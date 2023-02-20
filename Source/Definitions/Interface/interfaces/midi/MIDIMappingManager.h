@@ -17,6 +17,6 @@ public:
     MIDIMappingManager();
     ~MIDIMappingManager();
 
-    void handleNote(int channel, int pitch, int velocity);
-    void handleCC(int channel, int number, int value);
+    void handleNote(int channel, int pitch, int velocity, String origin);
+    void handleCC(int channel, int number, int value, String origin);
 };

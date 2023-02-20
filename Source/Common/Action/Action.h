@@ -18,12 +18,15 @@ public:
     virtual ~Action();
 
     String typeString;
+    var previousValue = 0;
 
     void trigger();
     virtual void triggerInternal() {}
 
     void setValue(var value);
-    virtual void setValueInternal(var value) {}
+    void setValue(var value, String origin);
+    virtual void setValueInternal(var value) {setValueInternal(value, "unknown"); }
+    virtual void setValueInternal(var value, String origin) {}
 
     String getTypeString() const override { return typeString; }
 };

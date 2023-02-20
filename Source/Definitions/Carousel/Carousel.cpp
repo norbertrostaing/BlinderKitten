@@ -99,6 +99,8 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 			}
 		}
 		lastSize = p->getValue();
+		currentSizeController = nextSizeController;
+		nextSizeController = "";
 	}
 }
 

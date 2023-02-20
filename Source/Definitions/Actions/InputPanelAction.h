@@ -26,7 +26,7 @@ public:
 
 
     void triggerInternal() override;
-    void setValueInternal(var value);
+    void setValueInternal(var value, String origin);
 
     static InputPanelAction* create(var params) { return new InputPanelAction(params); }
 

@@ -27,7 +27,7 @@ public:
     IntParameter* goToPageId;
 
     void triggerInternal() override;
-    void setValueInternal(var value);
+    void setValueInternal(var value, String origin);
 
     static VirtualFaderAction* create(var params) { return new VirtualFaderAction(params); }
 

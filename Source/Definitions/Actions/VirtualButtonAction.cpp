@@ -39,7 +39,7 @@ void VirtualButtonAction::triggerInternal()
     //if (target == nullptr) return;
 }
 
-void VirtualButtonAction::setValueInternal(var value)
+void VirtualButtonAction::setValueInternal(var value, String origin)
 {
     float val = value;
     if (actionType == VB_PAGEUP && val >0) {

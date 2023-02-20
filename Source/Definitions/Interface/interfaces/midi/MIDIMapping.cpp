@@ -17,8 +17,8 @@ MIDIMapping::MIDIMapping() :
 {
     saveAndLoadRecursiveData = true;
 
-    mode = addEnumParameter("Mode", "Set the mode of this mapping.");
-    mode->addOption("Continuous", CONTINUOUS)->addOption("Trigger", TRIGGER)->addOption("On / Off", ONOFF)->addOption("Toggle", TOGGLE);
+    // mode = addEnumParameter("Mode", "Set the mode of this mapping.");
+    // mode->addOption("Continuous", CONTINUOUS)->addOption("Trigger", TRIGGER)->addOption("On / Off", ONOFF)->addOption("Toggle", TOGGLE);
     
     midiType = addEnumParameter("Type", "Sets the type to check");
     midiType->addOption("Note", NOTE)->addOption("Control Change", CONTROLCHANGE);
@@ -46,7 +46,7 @@ MIDIMapping::~MIDIMapping()
 {
 }
 
-void MIDIMapping::handleNote(int channel, int pitch, int velocity)
+void MIDIMapping::handleNote(int channel, int pitch, int velocity, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -59,10 +59,10 @@ void MIDIMapping::handleNote(int channel, int pitch, int velocity)
 
     if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return;
     if (pitchOrNumber->intValue() != pitch) return;
-    handleValue(velocity);
+    handleValue(velocity, origin);
 }
 
-void MIDIMapping::handleCC(int channel, int number, int value)
+void MIDIMapping::handleCC(int channel, int number, int value, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -74,22 +74,20 @@ void MIDIMapping::handleCC(int channel, int number, int value)
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return;
     if (pitchOrNumber->intValue() != number) return;
-    handleValue(value);
+    handleValue(value, origin);
 }
 
-void MIDIMapping::handleValue(int value)
+void MIDIMapping::handleValue(int value, String origin)
 {
     if (!enabled->boolValue()) return;
-    MappingMode m = mode->getValueDataAsEnum<MappingMode>();
+    // m = mode->getValueDataAsEnum<MappingMode>();
 
     //float minInput = jmin(inputRange->x, inputRange->y);
     //float maxInput = jmax(inputRange->x, inputRange->y);
-    float minInput = 0;
-    float maxInput = 127;
     float relVal = jmap<float>(jlimit<float>(0, 127, value), 0, 127, 0, 1);
-    actionManager.setValueAll(relVal);
+    actionManager.setValueAll(relVal, origin);
     return;
-
+    /*
     if (m != CONTINUOUS)
     {
         bool isInRange = value >= inputRange->x && value <= inputRange->y;
@@ -124,6 +122,7 @@ void MIDIMapping::handleValue(int value)
         float targetVal = jmap<float>(relVal, outputRange->x, outputRange->y);
         actionManager.setValueAll(targetVal);
     }
+    */
 }
 
 InspectableEditor* MIDIMapping::getEditorInternal(bool isRoot)

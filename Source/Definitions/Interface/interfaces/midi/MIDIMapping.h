@@ -35,9 +35,9 @@ public:
 
     ActionManager actionManager;
 
-    void handleNote(int channel, int pitch, int velocity);
-    void handleCC(int channel, int number, int value);
-    void handleValue(int value);
+    void handleNote(int channel, int pitch, int velocity, String origin);
+    void handleCC(int channel, int number, int value, String origin);
+    void handleValue(int value, String origin);
 
     InspectableEditor* getEditorInternal(bool isRoot);
 };

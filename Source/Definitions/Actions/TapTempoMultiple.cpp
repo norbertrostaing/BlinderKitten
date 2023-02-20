@@ -30,7 +30,7 @@ void TapTempoMultiple::triggerInternal()
 {
 }
 
-void TapTempoMultiple::setValueInternal(var value) {
+void TapTempoMultiple::setValueInternal(var value, String origin) {
     if ((float)value == 1) {
         int from = targetIdFrom->getValue();
         int to = targetIdTo->getValue();

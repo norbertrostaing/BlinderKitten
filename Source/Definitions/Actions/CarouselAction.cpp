@@ -32,28 +32,30 @@ void CarouselAction::triggerInternal()
 {
 }
 
-void CarouselAction::setValueInternal(var value) {
+void CarouselAction::setValueInternal(var value, String origin) {
     Carousel* target = Brain::getInstance()->getCarouselById(targetId->getValue());
     if (target == nullptr) return;
 
     float val = value;
+    bool valid = false;
+    float delta = 1;
 
     switch (actionType)
     {
     case CAR_START:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->start();
         }
         break;
 
     case CAR_STOP:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->stop();
         }
         break;
 
     case CAR_TOGGLE:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             if (target->isOn) {
                 target->stop();
             }
@@ -64,13 +66,16 @@ void CarouselAction::setValueInternal(var value) {
         break;
 
     case CAR_TAPTEMPO:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->tapTempo();
         }
         break;
 
     case CAR_SIZE:
-        target->sizeValue->setValue(val);
+        if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+            target->nextSizeController = origin;
+            target->sizeValue->setValue(val);
+        }
         break;
 
     case CAR_SPEED:
@@ -79,13 +84,13 @@ void CarouselAction::setValueInternal(var value) {
         break;
 
     case CAR_DOUBLESPEED:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->speed->setValue((double)target->speed->getValue() * 2);
         }
         break;
 
     case CAR_HALFSPEED:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->speed->setValue((double)target->speed->getValue() / 2);
         }
         break;

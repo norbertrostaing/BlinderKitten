@@ -25,7 +25,7 @@ public:
     IntParameter* targetIdTo;
 
     void triggerInternal() override;
-    void setValueInternal(var value);
+    void setValueInternal(var value, String origin);
 
     static TapTempoMultiple* create(var params) { return new TapTempoMultiple(params); }
 

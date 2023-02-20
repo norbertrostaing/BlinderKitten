@@ -77,6 +77,13 @@ public:
     FloatParameter* LTPLevel;
     float lastHTPLevel = -1;
     FloatParameter* FlashLevel;
+    String currentHTPLevelController = "";
+    String currentLTPLevelController = "";
+    String currentFlashLevelController = "";
+    String nextHTPLevelController = "";
+    String nextLTPLevelController = "";
+    String nextFlashLevelController = "";
+
     bool pleaseUpdateHTPs = false;
     bool pleaseUpdateLTPs = false;
     bool wannaOff = false;

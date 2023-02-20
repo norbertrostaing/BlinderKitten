@@ -45,6 +45,8 @@ public:
     BoolParameter* autoStartAndStop;
     FloatParameter* speed;
     FloatParameter* sizeValue;
+    String currentSizeController = "";
+    String nextSizeController = "";
     float lastSize = 0;
     BaseManager<EffectRow> values;
 

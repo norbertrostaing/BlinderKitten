@@ -213,6 +213,19 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 
+	if (p == HTPLevel) {
+		currentHTPLevelController = nextHTPLevelController;
+		nextHTPLevelController = "";
+	}
+	if (p == LTPLevel) {
+		currentLTPLevelController = nextLTPLevelController;
+		nextLTPLevelController = "";
+	}
+	if (p == FlashLevel) {
+		currentFlashLevelController = nextFlashLevelController;
+		nextFlashLevelController = "";
+	}
+
 	if (p == id) {
 		Brain::getInstance()->registerCuelist(this, id->getValue(), true);
 	}

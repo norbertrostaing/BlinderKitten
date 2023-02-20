@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include "Common/CommonIncludes.h"
 
 Action::Action(var params) :
     BaseItem(params.getProperty("type","Action").toString())
@@ -30,4 +31,13 @@ void Action::setValue(var value)
 {
     if (!enabled->boolValue()) return;
     setValueInternal(value);
+    previousValue = value;
 }
+
+void Action::setValue(var value, String origin)
+{
+    if (!enabled->boolValue()) return;
+    setValueInternal(value, origin);
+    previousValue = value;
+}
+

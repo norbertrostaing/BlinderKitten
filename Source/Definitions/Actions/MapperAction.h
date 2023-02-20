@@ -25,7 +25,7 @@ public:
     FloatParameter* maxSpeed;
 
     void triggerInternal() override;
-    void setValueInternal(var value);
+    void setValueInternal(var value, String origin);
 
     static MapperAction* create(var params) { return new MapperAction(params); }
 
