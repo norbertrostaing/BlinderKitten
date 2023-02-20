@@ -16,10 +16,10 @@ jobs:
           buildFolder: "VisualStudio2022_CI"
           installerName: install
 
-#        - arch: win7-x64
-#          buildFolder: "VisualStudio2022_Win7CI"
-#          installerName: installWin7
-#
+        - arch: win7-x64
+          buildFolder: "VisualStudio2022_Win7CI"
+          installerName: installWin7
+
       fail-fast: false
 #
     steps:
