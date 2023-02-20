@@ -99,6 +99,10 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 		lastSize = p->getValue();
 		currentSizeController = nextSizeController;
 		nextSizeController = "";
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+	}
+	if (p == speed) {
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
 	}
 }
 

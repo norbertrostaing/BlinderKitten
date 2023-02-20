@@ -153,7 +153,7 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId) {
 	String targType = targetType->getValue();
 	if (targType == "actions") {
-		actionManager.setValueAll(value);
+		actionManager.setValueAll(value, "VirtualFaders");
 		return;
 	}
 	int targId = targetId->getValue();
@@ -169,16 +169,36 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
-			if (action == "htplevel") { targ->HTPLevel->setValue(value); }
-			if (action == "flashlevel") { targ->FlashLevel->setValue(value); }
-			if (action == "ltplevel") { targ->LTPLevel->setValue(value); }
+			if (action == "htplevel") { 
+				if (targ->currentHTPLevelController == "VirtualFaders" || abs(targ->HTPLevel->floatValue() - value) < 0.05) {
+					targ->nextHTPLevelController = "VirtualFaders";
+					targ->HTPLevel->setValue(value);
+				}
+			}
+			if (action == "flashlevel") { 
+				if (targ->currentLTPLevelController == "VirtualFaders" || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
+					targ->nextLTPLevelController = "VirtualFaders";
+					targ->LTPLevel->setValue(value);
+				}
+			}
+			if (action == "ltplevel") { 
+				if (targ->currentFlashLevelController == "VirtualFaders" || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
+					targ->nextFlashLevelController = "VirtualFaders";
+					targ->FlashLevel->setValue(value);
+				}
+			}
 		}
 	}
 	else if (targType == "effect") {
 		Effect* targ = Brain::getInstance()->getEffectById(targId);
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
-			if (action == "size") { targ->sizeValue->setValue(value); }
+			if (action == "size") { 
+				if (targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+					targ->nextSizeController = "VirtualFaders";
+					targ->sizeValue->setValue(value);
+				}
+			}
 			if (action == "speed") { targ->speed->setValue(value); }
 		}
 	}
@@ -186,7 +206,12 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
-			if (action == "size") { targ->sizeValue->setValue(value); }
+			if (action == "size") { 
+				if (targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+					targ->nextSizeController = "VirtualFaders";
+					targ->sizeValue->setValue(value);
+				}
+			}
 			if (action == "speed") { targ->speed->setValue(value); }
 		}
 	}
@@ -194,7 +219,12 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
-			if (action == "size") { targ->sizeValue->setValue(value); }
+			if (action == "size") { 
+				if (targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+					targ->nextSizeController = "VirtualFaders";
+					targ->sizeValue->setValue(value);
+				}
+			}
 		}
 	}
 

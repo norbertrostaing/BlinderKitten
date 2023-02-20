@@ -363,21 +363,10 @@ void DataTransferManager::execute() {
         else if (trgType == "virtualfadercol") {
             valid = true;
             VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("carousel");
-            trg->selectThis();
-            trg->fader.targetType->setValueWithData("column");
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nRotaries; i++) {
-                VirtualFaderSlider* t = trg->rotaries.addItem();
-                t->targetType->setValueWithData("column");
-            }
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nAbove; i++) {
-                VirtualFaderButton* t = trg->aboveButtons.addItem();
-                t->targetType->setValueWithData("column");
-            }
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nBelow; i++) {
-                VirtualFaderButton* t = trg->belowButtons.addItem();
-                t->targetType->setValueWithData("column");
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("carousel");
+                trg->selectThis();
             }
         }
     }
@@ -404,21 +393,10 @@ void DataTransferManager::execute() {
         else if (trgType == "virtualfadercol") {
             valid = true;
             VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("mapper");
-            trg->selectThis();
-            trg->fader.targetType->setValueWithData("column");
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nRotaries; i++) {
-                VirtualFaderSlider* t = trg->rotaries.addItem();
-                t->targetType->setValueWithData("column");
-            }
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nAbove; i++) {
-                VirtualFaderButton* t = trg->aboveButtons.addItem();
-                t->targetType->setValueWithData("column");
-            }
-            for (int i = 0; i < VirtualFaderColGrid::getInstance()->nBelow; i++) {
-                VirtualFaderButton* t = trg->belowButtons.addItem();
-                t->targetType->setValueWithData("column");
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("mapper");
+                trg->selectThis();
             }
         }
     }

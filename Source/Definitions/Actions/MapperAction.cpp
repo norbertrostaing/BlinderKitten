@@ -38,19 +38,19 @@ void MapperAction::setValueInternal(var value, String origin) {
     switch (actionType)
     {
     case TRK_START:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->start();
         }
         break;
 
     case TRK_STOP:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             target->stop();
         }
         break;
 
     case TRK_TOGGLE:
-        if (val > 0) {
+        if (val > 0 && (float)previousValue == 0) {
             if (target->isOn) {
                 target->stop();
             }
@@ -61,7 +61,10 @@ void MapperAction::setValueInternal(var value, String origin) {
         break;
 
     case TRK_SIZE:
-        target->sizeValue->setValue(val);
+        if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+            target->nextSizeController = origin;
+            target->sizeValue->setValue(val);
+        }
         break;
 
     }
