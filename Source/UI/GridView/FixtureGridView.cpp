@@ -40,11 +40,15 @@ FixtureGridView::~FixtureGridView()
 }
 
 void FixtureGridView::initArrays() {
+    cs.enter();
     hashMapButtons.clear();
+    cs.exit();
+
 }
 
 
 void FixtureGridView::updateCells() {
+    cs.enter();
     validCells.clear();
     for (auto it = hashMapButtons.begin(); it != hashMapButtons.end(); it.next()) {
         it.getValue()->~TextButton();
@@ -63,6 +67,7 @@ void FixtureGridView::updateCells() {
         b->setButtonText(String(id)+" "+f->userName->stringValue());
         addAndMakeVisible(b);
     }
+    cs.exit();
     resized();
 }
 
@@ -117,11 +122,13 @@ void FixtureGridView::resized()
 }
 
 void FixtureGridView::buttonClicked(juce::Button* button) {
+    cs.enter();
     for (auto it = hashMapButtons.begin(); it != hashMapButtons.end(); it.next()) {
         if (it.getValue() == button) {
             cellClicked(it.getKey());
             return;
         }
     }
+    cs.exit();
 
 }

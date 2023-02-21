@@ -37,6 +37,7 @@ public:
 
     int numberOfCells = 0;
     HashMap<int, TextButton*> hashMapButtons;
+    CriticalSection cs;
     int fixtIdMax = 0;
     void initArrays() override;
     void resized() override;

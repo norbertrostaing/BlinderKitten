@@ -47,6 +47,7 @@ public:
 
     void writeValue(float v);
 
+    CriticalSection cs;
     Array<SubFixtureChannel*> virtualChildren;
     SubFixtureChannel* virtualMaster = nullptr;
 

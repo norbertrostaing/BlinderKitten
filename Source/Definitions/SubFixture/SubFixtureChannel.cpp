@@ -25,21 +25,25 @@
 SubFixtureChannel::SubFixtureChannel():
 	virtualChildren()
 {
+	cs.enter();
 	cuelistStack.clear();
 	programmerStack.clear();
 	effectStack.clear();
 	carouselStack.clear();
 	cuelistFlashStack.clear();
 	virtualChildren.clear();
+	cs.exit();
 }
 
 SubFixtureChannel::~SubFixtureChannel()
 {
 	//isDeleted = true;
+	cs.enter();
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->grandMasterChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->swoppableChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
+	cs.exit();
 }
 
 void SubFixtureChannel::writeValue(float v) {
@@ -115,6 +119,7 @@ void SubFixtureChannel::writeValue(float v) {
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
 
+	cs.enter();
 	Array<int> layers;
 
 	for (int i = 0; i < cuelistStack.size(); i++) {
@@ -217,6 +222,7 @@ void SubFixtureChannel::updateVal(double now) {
 		newValue *= gm;
 	}
 
+	cs.exit();
 	writeValue(newValue);
 }
 
