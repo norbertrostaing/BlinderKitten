@@ -27,6 +27,8 @@
 
 #include "interfaces/serial/SerialInterface.h"
 
+#include "interfaces/dmx/DMXMapping.h"
+#include "interfaces/dmx/DMXMappingManager.h"
 #include "interfaces/dmx/DMXInterface.h"
 #include "interfaces/dmx/ui/DMXInterfaceUI.h"
 

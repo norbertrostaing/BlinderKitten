@@ -237,6 +237,9 @@ BKEngine::~BKEngine()
 	Brain::getInstance()->stopThread(100);
 	Brain::getInstance()->clear();
 
+	ArtnetSocket::getInstance()->stopThread(100);
+
+
 
 	DataTransferManager::deleteInstance();
 	FixtureMultiEditor::deleteInstance();

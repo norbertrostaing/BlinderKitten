@@ -13,6 +13,7 @@
 //#include "../../Common/CommonIncludes.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/DMXChannelView.h"
+#include "DMXMappingManager.h"
 
 class DMXInterface :
     public Interface,
@@ -32,6 +33,8 @@ public:
     BoolParameter * channelTestingMode;
     FloatParameter* channelTestingFlashValue;
     DMXChannelView* tester = nullptr;
+
+    DMXMappingManager mappingManager;
 
     void clearItem() override;
 
@@ -58,6 +61,8 @@ public:
     void afterLoadJSONDataInternal() override;
 
     void repaintChannels(int chan, int n);
+
+    void dmxChannelInChanged(int num, uint8 val) override;
 
     class DMXParams : public ControllableContainer
     {

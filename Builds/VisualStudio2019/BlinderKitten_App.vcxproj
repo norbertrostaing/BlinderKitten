@@ -324,6 +324,12 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXInterface.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMapping.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMappingManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3347,6 +3353,8 @@
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\bento\BentoInterface.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\ui\DMXInterfaceUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXInterface.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMapping.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMappingManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIInterface.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIMapping.h"/>

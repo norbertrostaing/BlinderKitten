@@ -179,6 +179,7 @@
 		0045918DF61ECD39837E8523 /* PresetSubFixtureValues.cpp */ /* PresetSubFixtureValues.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PresetSubFixtureValues.cpp; path = ../../Source/Definitions/Preset/PresetSubFixtureValues.cpp; sourceTree = SOURCE_ROOT; };
 		00936410B35AFA2ADFC2CFFD /* TimingPreset.cpp */ /* TimingPreset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimingPreset.cpp; path = ../../Source/Definitions/TimingPreset/TimingPreset.cpp; sourceTree = SOURCE_ROOT; };
 		00BBE1E1036E9CCD36A3CB65 /* VirtualFaderCol.cpp */ /* VirtualFaderCol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderCol.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderCol.cpp; sourceTree = SOURCE_ROOT; };
+		00C5FAB31A160F715F1FAA4E /* DMXMappingManager.h */ /* DMXMappingManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXMappingManager.h; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXMappingManager.h; sourceTree = SOURCE_ROOT; };
 		014EDAA820EA34A7242D76BE /* DMXOpenUSBDevice.cpp */ /* DMXOpenUSBDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXOpenUSBDevice.cpp; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.cpp; sourceTree = SOURCE_ROOT; };
 		0254FB5DA30F23B792FE49F9 /* juce_data_structures */ /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = ../../JUCE/modules/juce_data_structures; sourceTree = SOURCE_ROOT; };
 		025DFB1C358D7BF47E8B105A /* ProgrammerManager.cpp */ /* ProgrammerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProgrammerManager.cpp; path = ../../Source/Definitions/Programmer/ProgrammerManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -193,6 +194,7 @@
 		057F2CB0E802728D25A3B09F /* FixtureTypeVirtualChannel.cpp */ /* FixtureTypeVirtualChannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeVirtualChannel.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeVirtualChannel.cpp; sourceTree = SOURCE_ROOT; };
 		05CCB08C1EB2783DCDD6DD81 /* CarouselManagerUI.h */ /* CarouselManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CarouselManagerUI.h; path = ../../Source/Definitions/Carousel/CarouselManagerUI.h; sourceTree = SOURCE_ROOT; };
 		0613D01E75FCE992624A213C /* VirtualButtonManager.h */ /* VirtualButtonManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualButtonManager.h; path = ../../Source/UI/VirtualButtons/VirtualButtonManager.h; sourceTree = SOURCE_ROOT; };
+		06CE97A9D26E59D31845791D /* DMXMapping.cpp */ /* DMXMapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXMapping.cpp; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXMapping.cpp; sourceTree = SOURCE_ROOT; };
 		071EBBB4C88BFE39504D7F04 /* MultiplicatorLink.h */ /* MultiplicatorLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplicatorLink.h; path = ../../Source/Definitions/Multiplicator/MultiplicatorLink.h; sourceTree = SOURCE_ROOT; };
 		0766753EB670E3B77D8BAC59 /* Task.h */ /* Task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Task.h; path = ../../Source/Definitions/Cue/Task.h; sourceTree = SOURCE_ROOT; };
 		0853D55BBDEEFC447790246B /* FixtureMultiEditor.cpp */ /* FixtureMultiEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureMultiEditor.cpp; path = ../../Source/Definitions/Fixture/FixtureMultiEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -201,6 +203,7 @@
 		0AA865940BE55464C3F7A3C3 /* Main.h */ /* Main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Main.h; path = ../../Source/Main.h; sourceTree = SOURCE_ROOT; };
 		0C9CF4CE3A64B44249A70CEE /* TimingPreset.h */ /* TimingPreset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimingPreset.h; path = ../../Source/Definitions/TimingPreset/TimingPreset.h; sourceTree = SOURCE_ROOT; };
 		0CF95BF9EA353E702AB27B56 /* DMXInterface.h */ /* DMXInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXInterface.h; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXInterface.h; sourceTree = SOURCE_ROOT; };
+		0E3586120C07F6EBA38E525A /* DMXMappingManager.cpp */ /* DMXMappingManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXMappingManager.cpp; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXMappingManager.cpp; sourceTree = SOURCE_ROOT; };
 		0E6A745B3C95316A09A16D22 /* MultiplicatorAction.h */ /* MultiplicatorAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplicatorAction.h; path = ../../Source/Definitions/Actions/MultiplicatorAction.h; sourceTree = SOURCE_ROOT; };
 		0F27EF75B60D8C63BBCA2A70 /* DataTransferManager.cpp */ /* DataTransferManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DataTransferManager.cpp; path = ../../Source/Definitions/DataTransferManager/DataTransferManager.cpp; sourceTree = SOURCE_ROOT; };
 		0FD847117AE94AE23F120811 /* Accelerate.framework */ /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -347,6 +350,7 @@
 		7157545FC52CE7114A90AF0B /* MapperGridView.cpp */ /* MapperGridView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperGridView.cpp; path = ../../Source/UI/GridView/MapperGridView.cpp; sourceTree = SOURCE_ROOT; };
 		71BA9BB2DF123B273E9F2C14 /* GroupManager.cpp */ /* GroupManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GroupManager.cpp; path = ../../Source/Definitions/Group/GroupManager.cpp; sourceTree = SOURCE_ROOT; };
 		7277EF38C546554465660410 /* MIDIMapping.cpp */ /* MIDIMapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIMapping.cpp; path = ../../Source/Definitions/Interface/interfaces/midi/MIDIMapping.cpp; sourceTree = SOURCE_ROOT; };
+		730739037940A2973797AA62 /* DMXMapping.h */ /* DMXMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXMapping.h; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXMapping.h; sourceTree = SOURCE_ROOT; };
 		73F9DFB3556EDCD24CEEFE6A /* include_juce_data_structures.mm */ /* include_juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_data_structures.mm; path = ../../JuceLibraryCode/include_juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
 		7443C228FD8855FA3BA8E1E5 /* VirtualFaderButton.h */ /* VirtualFaderButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualFaderButton.h; path = ../../Source/UI/VirtualFaders/VirtualFaderButton.h; sourceTree = SOURCE_ROOT; };
 		74526EB172026A49BD8ED506 /* ChannelFamilyManagerUI.h */ /* ChannelFamilyManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelFamilyManagerUI.h; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.h; sourceTree = SOURCE_ROOT; };
@@ -1396,6 +1400,10 @@
 				59A8C7E0D98CA2A25FD96662,
 				CC1CE49F52EC304B621F9215,
 				0CF95BF9EA353E702AB27B56,
+				06CE97A9D26E59D31845791D,
+				730739037940A2973797AA62,
+				0E3586120C07F6EBA38E525A,
+				00C5FAB31A160F715F1FAA4E,
 			);
 			name = dmx;
 			sourceTree = "<group>";

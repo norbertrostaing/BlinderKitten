@@ -59,6 +59,7 @@ public:
 		virtual void dmxDeviceConnected() {}
 		virtual void dmxDeviceDisconnected() {}
 		virtual void dmxDataInChanged(int /*numChannels*/, uint8* /*values*/) {}
+		virtual void dmxChannelInChanged(int /*channelId*/, uint8 /*value*/) {}
 	};
 
 	ListenerList<DMXDeviceListener> dmxDeviceListeners;

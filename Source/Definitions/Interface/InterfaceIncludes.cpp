@@ -15,6 +15,10 @@
 #include "Interface.cpp"
 #include "InterfaceManager.cpp"
 #include "interfaces/bento/BentoInterface.cpp"
+
+
+#include "interfaces/dmx/DMXMapping.cpp"
+#include "interfaces/dmx/DMXMappingManager.cpp"
 #include "interfaces/dmx/DMXInterface.cpp"
 #include "interfaces/dmx/ui/DMXInterfaceUI.cpp"
 

@@ -488,6 +488,12 @@
               <FILE id="z4K4UI" name="DMXInterface.cpp" compile="0" resource="0"
                     file="Source/Definitions/Interface/interfaces/dmx/DMXInterface.cpp"/>
               <FILE id="kjyxm8" name="DMXInterface.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/dmx/DMXInterface.h"/>
+              <FILE id="OAbQUf" name="DMXMapping.cpp" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/dmx/DMXMapping.cpp"/>
+              <FILE id="qs733H" name="DMXMapping.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/dmx/DMXMapping.h"/>
+              <FILE id="z52R71" name="DMXMappingManager.cpp" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/dmx/DMXMappingManager.cpp"/>
+              <FILE id="AGizUy" name="DMXMappingManager.h" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/dmx/DMXMappingManager.h"/>
             </GROUP>
             <GROUP id="{C1B2A321-1BB5-5AA9-04F4-AB93AC1948BA}" name="midi">
               <GROUP id="{F63416C3-897F-C4D3-F9EF-2BBA446CCAC0}" name="ui">

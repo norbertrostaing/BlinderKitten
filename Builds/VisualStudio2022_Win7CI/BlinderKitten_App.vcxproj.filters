@@ -1327,6 +1327,12 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXInterface.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMapping.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMappingManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi\ui</Filter>
     </ClCompile>
@@ -4852,6 +4858,12 @@
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXInterface.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMapping.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMappingManager.h">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\dmx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.h">

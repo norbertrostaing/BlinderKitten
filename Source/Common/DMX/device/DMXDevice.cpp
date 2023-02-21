@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include "Common/CommonIncludes.h"
 
 DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	ControllableContainer(name),
@@ -83,7 +84,13 @@ void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 
 void DMXDevice::setDMXValuesIn(int numChannels, uint8* values)
 {
-	for (int i = 0; i < numChannels && i < 512; ++i) dmxDataIn[i] = values[i];
+	for (int i = 0; i < numChannels && i < 512; ++i) 
+	{
+		if (dmxDataIn[i] != values[i]) {
+			dmxDeviceListeners.call(&DMXDeviceListener::dmxChannelInChanged, i+1, values[i]);
+		}
+		dmxDataIn[i] = values[i];
+	}
 	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, numChannels, values);
 }
 

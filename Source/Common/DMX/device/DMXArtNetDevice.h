@@ -17,39 +17,53 @@
 #define DMX_HEADER_LENGTH 18
 #define MAX_PACKET_LENGTH DMX_HEADER_LENGTH+NUM_CHANNELS
 
+class ArtnetSocket :
+	public Thread 
+{
+	public:
+	juce_DeclareSingleton(ArtnetSocket, true);
+	ArtnetSocket();
+	~ArtnetSocket();
+
+	uint8 artnetPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
+	uint8 artPollPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x20,  0, PROTOCOL_VERSION };
+	uint8 receiveBuffer[MAX_PACKET_LENGTH];
+
+	void run() override;
+	std::unique_ptr<DatagramSocket> socket;
+	uint8 sequenceNumber;
+	void selectSocketPort();
+	void sendArtPoll(String ip);
+
+};
+
 class DMXArtNetDevice :
 	public DMXDevice,
-	public EngineListener,
-	public Thread //receiving
-{
+	public EngineListener{
 public:
 	DMXArtNetDevice();
 	~DMXArtNetDevice();
 
 	//EnumParameter * networkInterface;
 
-	IntParameter* localPort;
+//	IntParameter* localPort;
 	IntParameter* inputNet;
 	IntParameter* inputSubnet;
 	IntParameter* inputUniverse;
 	//StringParameter * nodeName;
 
 	StringParameter* remoteHost;
-	IntParameter * remotePort;
+//	IntParameter * remotePort;
 	IntParameter* outputNet;
 	IntParameter* outputSubnet;
 	IntParameter* outputUniverse;
+	BoolParameter* forceSrcPort;
 
 	StringParameter* discoverNodesIP;
 	Trigger* findNodesBtn;
 
-	std::unique_ptr<DatagramSocket> receiver;
-	DatagramSocket sender;
-
-	uint8 sequenceNumber;
 	uint8 artnetPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
-	uint8 artPollPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x20,  0, PROTOCOL_VERSION };
-	uint8 receiveBuffer[MAX_PACKET_LENGTH];
+	uint8 sequenceNumber;
 
 	void triggerTriggered(Trigger* t);
 
@@ -65,8 +79,6 @@ public:
 
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	
-	void run() override;
-
 	void sendDataAtStartup();
 };
 
