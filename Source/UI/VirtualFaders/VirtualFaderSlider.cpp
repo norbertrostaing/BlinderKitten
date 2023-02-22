@@ -170,19 +170,19 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") { 
-				if (targ->currentHTPLevelController == "VirtualFaders" || abs(targ->HTPLevel->floatValue() - value) < 0.05) {
+				if (true) {//targ->currentHTPLevelController == "VirtualFaders" || abs(targ->HTPLevel->floatValue() - value) < 0.05) {
 					targ->nextHTPLevelController = "VirtualFaders";
 					targ->HTPLevel->setValue(value);
 				}
 			}
 			if (action == "flashlevel") { 
-				if (targ->currentLTPLevelController == "VirtualFaders" || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
+				if (true) {//targ->currentLTPLevelController == "VirtualFaders" || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
 					targ->nextLTPLevelController = "VirtualFaders";
 					targ->LTPLevel->setValue(value);
 				}
 			}
 			if (action == "ltplevel") { 
-				if (targ->currentFlashLevelController == "VirtualFaders" || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
+				if (true) {//targ->currentFlashLevelController == "VirtualFaders" || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
 					targ->nextFlashLevelController = "VirtualFaders";
 					targ->FlashLevel->setValue(value);
 				}
@@ -194,7 +194,7 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
 			if (action == "size") { 
-				if (targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+				if (true) {//targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
 					targ->nextSizeController = "VirtualFaders";
 					targ->sizeValue->setValue(value);
 				}
@@ -207,7 +207,7 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
 			if (action == "size") { 
-				if (targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+				if (true) {//targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
 					targ->nextSizeController = "VirtualFaders";
 					targ->sizeValue->setValue(value);
 				}
@@ -220,7 +220,7 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
 			if (action == "size") { 
-				if (targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+				if (true) {//targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
 					targ->nextSizeController = "VirtualFaders";
 					targ->sizeValue->setValue(value);
 				}
