@@ -180,13 +180,14 @@ void Brain::brainLoop() {
         }
     }
     subFixtureChannelPoolWaiting.clear();
+    usingCollections.enter();
     for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
-        // bug ici
         if (subFixtureChannelPoolUpdating.at(i) != nullptr && !subFixtureChannelPoolUpdating.at(i)->isDeleted) {
             subFixtureChannelPoolUpdating.at(i)->updateVal(now);
         }
     }
     subFixtureChannelPoolUpdating.clear();
+    usingCollections.exit();
 
     {
         for (int i = 0; i < runningTasks.size(); i++) {
