@@ -30,7 +30,8 @@ class EffectParam:
     IntParameter* wings;
     IntParameter* buddying;
     BoolParameter* wingsInvert;
-    
+    BoolParameter* wingsSoloCenterDisable;
+
     EnumParameter* effectMode;
     TargetParameter* paramType;
     FloatParameter* curveSize;
@@ -39,6 +40,7 @@ class EffectParam:
 
     HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets;
     HashMap<SubFixtureChannel*, bool> subFixtureChannelAreWinged;
+    HashMap<SubFixtureChannel*, bool> subFixtureChannelAreCentered;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

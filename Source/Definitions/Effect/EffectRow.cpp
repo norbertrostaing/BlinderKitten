@@ -102,6 +102,7 @@ void EffectRow::computeData() {
         if (p->enabled->boolValue()) {
             p->subFixtureChannelOffsets.clear();
             p->subFixtureChannelAreWinged.clear();
+            p->subFixtureChannelAreCentered.clear();
             ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
             if (chanType != nullptr) {
                 Array<SubFixtureChannel*> chans;
@@ -116,18 +117,26 @@ void EffectRow::computeData() {
                 int nWings = p->wings->getValue();
                 int nBuddying = p->buddying->getValue();
                 int realTot = chans.size()/nBuddying;
-                int wingSize = realTot / nWings;
-                realTot = realTot / nWings;
+                float wingSize = realTot / (float)nWings;
+                realTot = ceil(realTot / (float)nWings);
+                int roundedWingSize = round(wingSize);
+                int flooredWingSize = floor(wingSize);
+
 
                 for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
                     int realIndex = chanIndex/nBuddying;
 
                     int nWing = realIndex/wingSize;
                     bool isWinged = false;
+                    bool isCentered = false;
                     if (nWing % 2 == 1) {
                         isWinged = true;
-                        realIndex = realIndex%wingSize;
+                        realIndex = realIndex % roundedWingSize;
                         realIndex = wingSize - 1 - realIndex;
+                    }
+                    else if (realIndex == flooredWingSize && wingSize > realIndex) {
+                        isCentered = true;
+                        LOG(realIndex);
                     }
 
                     double offset = realIndex / (double)realTot;
@@ -135,6 +144,7 @@ void EffectRow::computeData() {
                     offset += (double)p->elementsStart->getValue();
                     p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
                     p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
+                    p->subFixtureChannelAreCentered.set(chans[chanIndex], isCentered);
                     if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
                         parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
                     }

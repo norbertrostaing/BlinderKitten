@@ -36,7 +36,8 @@ EffectParam::EffectParam(var params) :
 
     buddying = addIntParameter("Buddying", "make groups of X following subfixtures with the same value",1,1);
     wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
-    wingsInvert = addBoolParameter("Invert wings value", "Values on wings are inverted",false);
+    wingsInvert = addBoolParameter("Invert wings value", "Values on wings are inverted", false);
+    wingsSoloCenterDisable = addBoolParameter("Disable wings centered solo value", "Disable value for fixtures on the symetry axis", false);
 
     curveSize = addFloatParameter("Size", "Size of the effect applied to outputs",1,-2,2);
     baseValue = addFloatParameter("Base Value","Base value applied to channels",0,0,1);

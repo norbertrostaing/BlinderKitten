@@ -250,6 +250,9 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			if (p->wingsInvert->getValue() && p->subFixtureChannelAreWinged.getReference(fc)) {
 				value = -value;
 			}
+			if (p->wingsSoloCenterDisable->getValue() && p->subFixtureChannelAreCentered.getReference(fc)) {
+				value = 0;
+			}
 		}
 
 		float size = sizeValue->getValue();
