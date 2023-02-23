@@ -183,30 +183,33 @@ void SubFixtureChannel::updateVal(double now) {
 				}
 			}
 		}
-		for (int i = 0; i < programmerStack.size(); i++) {
-			if ((int)programmerStack.getReference(i)->layerId->getValue() == currentLayer) {
-				newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
+		if (!checkSwop) {
+
+			for (int i = 0; i < programmerStack.size(); i++) {
+				if ((int)programmerStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
+			}
+
+			for (int i = 0; i < mapperStack.size(); i++) {
+				if ((int)mapperStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = mapperStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
+			}
+
+			for (int i = 0; i < carouselStack.size(); i++) {
+				if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
+			}
+
+			for (int i = 0; i < effectStack.size(); i++) {
+				if ((int)effectStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
 			}
 		}
 
-		for (int i = 0; i < mapperStack.size(); i++) {
-			if ((int)mapperStack.getReference(i)->layerId->getValue() == currentLayer) {
-				newValue = mapperStack.getReference(i)->applyToChannel(this, newValue, now);
-			}
-		}
-
-		for (int i = 0; i < carouselStack.size(); i++) {
-			if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
-				newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
-			}
-		}
-
-		for (int i = 0; i < effectStack.size(); i++) {
-			if ((int)effectStack.getReference(i)->layerId->getValue() == currentLayer) {
-				newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
-			}
-		}
-	
 	}
 
 	for (int i = 0; i < cuelistFlashStack.size(); i++)
