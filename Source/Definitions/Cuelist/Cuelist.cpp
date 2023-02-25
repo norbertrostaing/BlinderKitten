@@ -29,7 +29,9 @@ Cuelist::Cuelist(var params) :
 	objectData(params),
 	conductorInfos("Conductor infos"),
 	chaserOptions("Chaser options"),
+	chaserGenContainer("Regenerate Chaser"),
 	offFadeCurve(),
+	chaseGenValue(),
 	cues()
 {
 	saveAndLoadRecursiveData = true;
@@ -88,6 +90,18 @@ Cuelist::Cuelist(var params) :
 	chaserOptions.addChildControllableContainer(&chaserFadeOutCurve);
 
 	chaserOptions.saveAndLoadRecursiveData = true;
+
+	chaseGenGroup = chaserGenContainer.addIntParameter("Group ID", "Group used to generate chaser",0,0);
+	chaseGenBuddying = chaserGenContainer.addIntParameter("Buddying", "fixtures are so friends they can't leave each other", 1, 1);
+	chaseGenBlocks = chaserGenContainer.addIntParameter("Blocks", "Repetitions of the chaser",1,1);
+	chaseGenWings = chaserGenContainer.addIntParameter("Wings", "repetitions, but symmetrical",1,1);
+	chaserGenButton = chaserGenContainer.addTrigger("Regenerate", "Be careful, this will erase current content");
+	chaserGenContainer.addChildControllableContainer(&chaseGenValue);
+	chaserGenContainer.editorIsCollapsed = true;
+	chaserOptions.addChildControllableContainer(&chaserGenContainer);
+	chaserGenContainer.saveAndLoadRecursiveData = true;
+	chaseGenValue.saveAndLoadRecursiveData = true;
+
 	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
@@ -293,6 +307,9 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	}
 	else if (c == chaserTapTempo) {
 		tapTempo();
+	}
+	else if (c == chaserGenButton) {
+		autoCreateChaser();
 	}
 	
 }
@@ -1098,6 +1115,86 @@ Cue* Cuelist::getNextChaserCue() {
 			}
 		}
 		return nullptr;
+	}
+
+}
+
+void Cuelist::autoCreateChaser()
+{
+// here we go
+	const MessageManagerLock mmlock;
+	int nBuddy = chaseGenBuddying->intValue();
+	int nBlocks = chaseGenBlocks->intValue();
+	int nWings = chaseGenWings->intValue();
+
+	int groupId = chaseGenGroup->intValue();
+
+	Group* g = Brain::getInstance()->getGroupById(groupId);
+	if (g == nullptr) {
+		LOGERROR("you must specify a valid group ID");
+		return;
+	}
+	g->selection.computeSelection();
+	Array<SubFixture*> subfixtures = g->selection.computedSelectedSubFixtures;
+	Array<Array<SubFixture*>*> blocks;
+	int nsubFixtures = subfixtures.size();
+
+	if (nsubFixtures == 0) {
+		LOGERROR("your group is empty !");
+		return;
+	}
+	int maxSize = 0;
+	int maxBlock = 0;
+	for (int i = 0; i < subfixtures.size(); i++) {
+		int wingId = i*nWings/nsubFixtures;
+		int blockId = i*(nWings*nBlocks) / nsubFixtures;
+
+		while (blocks.size() - 1 < blockId) { blocks.add(new Array<SubFixture*>()); }
+		if (wingId % 2 == 1) {
+			blocks[blockId]->insert(0, subfixtures[i]);
+		}
+		else {
+			blocks[blockId]->add(subfixtures[i]);
+		}
+		maxSize = jmax(maxSize, blocks[blockId]->size());
+		maxBlock = jmax(maxBlock, blockId);
+	}
+
+	int currentBuddy = nBuddy;
+	Cue* currentCue = nullptr;
+	kill();
+	cues.clear();
+	CommandSelectionManager* csm = nullptr;
+	for (int i = 0; i < maxSize; i++) {
+		if (currentBuddy == nBuddy) {
+			currentCue = cues.addItem();
+			currentCue->commands.items[0]->values.loadJSONData(chaseGenValue.getJSONData());
+			currentCue->setNiceName("empty");
+			csm = & currentCue->commands.items[0]->selection;
+			csm->clear();
+			currentBuddy = 0;
+		}
+		currentBuddy++;
+		for (int b = 0; b <= maxBlock; b++) {
+			if (blocks[b]->size() > i) {
+				SubFixture* sf = blocks[b]->getRawDataPointer()[i];
+				CommandSelection* cs = csm->addItem();
+				String name = "";
+				cs-> valueFrom ->setValue( sf->parentFixture->id->intValue() );
+				name = sf->parentFixture->id->stringValue();
+				if (sf->parentFixture->subFixtures.size() > 1) {
+					cs->subSel->setValue(true);
+					cs->subFrom->setValue(sf->subId);
+					name += "."+String(sf->subId);
+				}
+				if (currentCue->niceName == "empty") {
+					currentCue->setNiceName(name);
+				}
+				else {
+					currentCue->setNiceName(currentCue->niceName +" + "+name);
+				}
+			}
+		}
 	}
 
 }

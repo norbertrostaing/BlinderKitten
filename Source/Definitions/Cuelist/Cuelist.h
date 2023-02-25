@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "../Cue/Cue.h"
 #include "../Cue/CueManager.h"
+#include "Definitions/Command/CommandValueManager.h"
 
 class Cuelist:
     public BaseItem
@@ -48,6 +49,14 @@ public:
     Automation chaserFadeOutCurve;
     FloatParameter* chaserStepPerTap;
     Trigger* chaserTapTempo;
+
+    ControllableContainer chaserGenContainer;
+    IntParameter* chaseGenGroup;
+    CommandValueManager chaseGenValue;
+    IntParameter* chaseGenBuddying;
+    IntParameter* chaseGenBlocks;
+    IntParameter* chaseGenWings;
+    Trigger* chaserGenButton;
 
     double chaserStepDuration = 1000;
     double chaserFadeInDuration = 0;
@@ -171,6 +180,8 @@ public:
     Cue* getNextCue();
 
     Cue* getNextChaserCue();
+
+    void autoCreateChaser();
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 
