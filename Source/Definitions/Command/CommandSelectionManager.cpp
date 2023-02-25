@@ -27,7 +27,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	ScopedLock lock(computing);
 	computedSelectedSubFixtures.clear();
 	Brain* b = Brain::getInstance();
-	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>(); // bug ici
+	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();
 	for (int selId = 0; selId < selections.size(); selId++) {
 		if (selections[selId]->enabled->boolValue()) {
 			Array<SubFixture*> tempSelection;
@@ -99,7 +99,16 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			bool sym = selections[selId]->symmetry->getValue();
 			int patternLength = pattern.length();
 			int tempSelectionSize = tempSelection.size();
-			if (selections[selId]->filter->getValue() == "pattern" && patternLength > 0) {
+
+			if (selections[selId]->filter->getValue() == "reverse") {
+				Array<SubFixture*> temp;
+				temp.addArray(tempSelection);
+				tempSelection.clear();
+				for (int i = temp.size()-1; i >= 0; i--) {
+					tempSelection.add(temp[i]);
+				}
+			}
+			else if (selections[selId]->filter->getValue() == "pattern" && patternLength > 0) {
 				Array<SubFixture*> filteredSelection;
 				for (int i = 0; i < tempSelection.size(); i++) {
 					int patternIndex = i % patternLength; 

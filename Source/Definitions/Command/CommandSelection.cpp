@@ -33,6 +33,7 @@ CommandSelection::CommandSelection(var params) :
 
     filter = addEnumParameter("Filter", "What kind of filter do yuo want to apply to selection ?");
     filter->addOption("None", "none");
+    filter->addOption("Reverse", "reverse");
     filter->addOption("Divide", "divide");
     filter->addOption("Pattern", "pattern");
     filter->addOption("Shuffle", "shuffle");
@@ -64,9 +65,9 @@ void CommandSelection::updateDisplay()
 
 
     valueTo -> hideInEditor = !th;
-    filter -> hideInEditor = !mult;
-    pattern -> hideInEditor = !(mult && pat);
-    symmetry -> hideInEditor = !(mult && pat);
+    filter -> hideInEditor = false;
+    pattern -> hideInEditor = !(pat);
+    symmetry -> hideInEditor = !(pat);
 
     bool sub = subSel->getValue();
     bool subTh = subThru->getValue();
