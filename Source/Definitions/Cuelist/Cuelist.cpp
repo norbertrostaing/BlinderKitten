@@ -1020,7 +1020,7 @@ void Cuelist::fillTexts() {
 		nextCueGo->setValue("");
 		nextCueName->setValue("");
 	}
-	if ((int)id->getValue() == 1) {
+	if ((int)id->getValue() == ConductorInfos::getInstance()->engine->conductorCuelistId->intValue()) {
 		ConductorInfos::getInstance()->repaint();
 	}
 }
