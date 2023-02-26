@@ -102,73 +102,73 @@ void Brain::brainLoop() {
     if (cuePoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < cuePoolWaiting.size(); i++) {
-            cuePoolUpdating.push_back(cuePoolWaiting.at(i));
+            cuePoolUpdating.add(cuePoolWaiting[i]);
         }
         cuePoolWaiting.clear();
     }
     for (int i = 0; i < cuePoolUpdating.size(); i++) {
-        cuePoolUpdating.at(i)->update(now);
+        cuePoolUpdating[i]->update(now);
     }
     cuePoolUpdating.clear();
 
     if (cuelistPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < cuelistPoolWaiting.size(); i++) {
-            cuelistPoolUpdating.push_back(cuelistPoolWaiting.at(i));
+            cuelistPoolUpdating.add(cuelistPoolWaiting[i]);
         }
         cuelistPoolWaiting.clear();
     }
     for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
-        cuelistPoolUpdating.at(i)->update();
+        cuelistPoolUpdating[i]->update();
     }
     cuelistPoolUpdating.clear();
 
     if (effectPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < effectPoolWaiting.size(); i++) {
-            effectPoolUpdating.push_back(effectPoolWaiting.at(i));
+            effectPoolUpdating.add(effectPoolWaiting[i]);
         }
         effectPoolWaiting.clear();
     }
     for (int i = 0; i < effectPoolUpdating.size(); i++) {
-        effectPoolUpdating.at(i)->update(now);
+        effectPoolUpdating[i]->update(now);
     }
     effectPoolUpdating.clear();
 
     if (carouselPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < carouselPoolWaiting.size(); i++) {
-            carouselPoolUpdating.push_back(carouselPoolWaiting.at(i));
+            carouselPoolUpdating.add(carouselPoolWaiting[i]);
         }
         carouselPoolWaiting.clear();
     }
     for (int i = 0; i < carouselPoolUpdating.size(); i++) {
-        carouselPoolUpdating.at(i)->update(now);
+        carouselPoolUpdating[i]->update(now);
     }
     carouselPoolUpdating.clear();
 
     if (mapperPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < mapperPoolWaiting.size(); i++) {
-            mapperPoolUpdating.push_back(mapperPoolWaiting.at(i));
+            mapperPoolUpdating.add(mapperPoolWaiting[i]);
         }
         mapperPoolWaiting.clear();
     }
     for (int i = 0; i < mapperPoolUpdating.size(); i++) {
-        mapperPoolUpdating.at(i)->update(now);
+        mapperPoolUpdating[i]->update(now);
     }
     mapperPoolUpdating.clear();
 
     if (programmerPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < programmerPoolWaiting.size(); i++) {
-            programmerPoolUpdating.push_back(programmerPoolWaiting.at(i));
+            programmerPoolUpdating.add(programmerPoolWaiting[i]);
         }
         programmerPoolWaiting.clear();
     }
     for (int i = 0; i < programmerPoolUpdating.size(); i++) {
-        if (!programmerPoolUpdating.at(i)->isDeleted) {
-            programmerPoolUpdating.at(i)->update(now);
+        if (!programmerPoolUpdating[i]->isDeleted) {
+            programmerPoolUpdating[i]->update(now);
         }
     }
     programmerPoolUpdating.clear();
@@ -176,14 +176,14 @@ void Brain::brainLoop() {
     {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
-            subFixtureChannelPoolUpdating.push_back(subFixtureChannelPoolWaiting.at(i));
+            subFixtureChannelPoolUpdating.add(subFixtureChannelPoolWaiting[i]);
         }
     }
     subFixtureChannelPoolWaiting.clear();
     usingCollections.enter();
     for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
-        if (subFixtureChannelPoolUpdating.at(i) != nullptr && !subFixtureChannelPoolUpdating.at(i)->isDeleted) {
-            subFixtureChannelPoolUpdating.at(i)->updateVal(now);
+        if (subFixtureChannelPoolUpdating[i] != nullptr && !subFixtureChannelPoolUpdating[i]->isDeleted) {
+            subFixtureChannelPoolUpdating[i]->updateVal(now);
         }
     }
     subFixtureChannelPoolUpdating.clear();
@@ -602,7 +602,7 @@ void Brain::pleaseUpdate(Cuelist* c) {
     if (std::find(cuelistPoolWaiting.begin(), cuelistPoolWaiting.end(), c) != cuelistPoolWaiting.end()) {
     }
     else {
-        cuelistPoolWaiting.push_back(c);
+        cuelistPoolWaiting.add(c);
     }
 }
 
@@ -612,7 +612,7 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if (f == nullptr) { return; };
     if (std::find(subFixtureChannelPoolWaiting.begin(), subFixtureChannelPoolWaiting.end(), f) != subFixtureChannelPoolWaiting.end()) {}
     else {
-        subFixtureChannelPoolWaiting.push_back(f);
+        subFixtureChannelPoolWaiting.add(f);
     }
 }
 
@@ -621,7 +621,7 @@ void Brain::pleaseUpdate(Cue* c) {
     ScopedLock lock(usingCollections);
     if (std::find(cuePoolWaiting.begin(), cuePoolWaiting.end(), c) != cuePoolWaiting.end()) {}
     else {
-        cuePoolWaiting.push_back(c);
+        cuePoolWaiting.add(c);
     }
 }
 
@@ -630,7 +630,7 @@ void Brain::pleaseUpdate(Programmer* c) {
     ScopedLock lock(usingCollections);
     if (std::find(programmerPoolWaiting.begin(), programmerPoolWaiting.end(), c) != programmerPoolWaiting.end()) {}
     else {
-        programmerPoolWaiting.push_back(c);
+        programmerPoolWaiting.add(c);
     }
 }
 
@@ -639,7 +639,7 @@ void Brain::pleaseUpdate(Effect* f) {
     ScopedLock lock(usingCollections);
     if (std::find(effectPoolWaiting.begin(), effectPoolWaiting.end(), f) != effectPoolWaiting.end()) {}
     else {
-        effectPoolWaiting.push_back(f);
+        effectPoolWaiting.add(f);
     }
 }
 
@@ -648,7 +648,7 @@ void Brain::pleaseUpdate(Carousel* f) {
     ScopedLock lock(usingCollections);
     if (std::find(carouselPoolWaiting.begin(), carouselPoolWaiting.end(), f) != carouselPoolWaiting.end()) {}
     else {
-        carouselPoolWaiting.push_back(f);
+        carouselPoolWaiting.add(f);
     }
 }
 
@@ -657,7 +657,7 @@ void Brain::pleaseUpdate(Mapper* f) {
     ScopedLock lock(usingCollections);
     if (std::find(mapperPoolWaiting.begin(), mapperPoolWaiting.end(), f) != mapperPoolWaiting.end()) {}
     else {
-        mapperPoolWaiting.push_back(f);
+        mapperPoolWaiting.add(f);
     }
 }
 

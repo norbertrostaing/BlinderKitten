@@ -72,6 +72,15 @@ Effect::Effect(var params) :
 Effect::~Effect()
 {
 	Brain::getInstance()->unregisterEffect(this);
+	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->effectPoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->effectPoolUpdating.removeAllInstancesOf(this);
+	Brain::getInstance()->usingCollections.exit();
+	for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
+		SubFixtureChannel* sfc = it.getKey();
+		sfc->effectOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(sfc);
+	}
 }
 
 void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
@@ -168,8 +177,7 @@ void Effect::pleaseComputeIfRunning() {
 }
 
 void Effect::computeData() {
-	computed = true;
-	computing = true;
+	isComputing.enter();
 	chanToFxParam.clear();
 	for (int i = 0; i < values.items.size(); i++) {
 		values.items[i]->computeData();
@@ -181,14 +189,14 @@ void Effect::computeData() {
 		}
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	computing = false;
+	isComputing.exit();
 
 }
 
 float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToFxParam.contains(fc)) {return currentVal; }
-	if (computing) { return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
+	isComputing.enter();
 	Array<EffectParam*>* params = chanToFxParam.getReference(fc);
 	for (int i = 0; i < params->size(); i++) {
 		EffectParam* p = params->getReference(i);
@@ -276,6 +284,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 
 
 	}
+	isComputing.exit();
 	return currentVal;
 }
 

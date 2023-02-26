@@ -46,6 +46,20 @@ EffectParam::EffectParam(var params) :
 
 EffectParam::~EffectParam()
 {
+    if (parentContainer != nullptr
+        && parentContainer->parentContainer != nullptr
+        && parentContainer->parentContainer->parentContainer != nullptr
+        && parentContainer->parentContainer->parentContainer->parentContainer != nullptr
+        ) {
+        Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
+        parentEffect->isComputing.enter();
+        for (auto it = parentEffect->chanToFxParam.begin(); it != parentEffect->chanToFxParam.end(); it.next()) {
+            it.getValue()->removeAllInstancesOf(this);
+        }
+        parentEffect->isComputing.exit();
+    }
+
+
 };
 
 

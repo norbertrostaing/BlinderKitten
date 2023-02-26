@@ -42,16 +42,8 @@ SubFixtureChannel::~SubFixtureChannel()
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->grandMasterChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->swoppableChannels.removeAllInstancesOf(this);
-	for (int i = Brain::getInstance()->subFixtureChannelPoolWaiting.size() - 1; i >= 0; i--) {
-		if (Brain::getInstance()->subFixtureChannelPoolWaiting[i] == this) {
-			Brain::getInstance()->subFixtureChannelPoolWaiting[i] = nullptr;
-		}
-	}
-	for (int i = Brain::getInstance()->subFixtureChannelPoolUpdating.size() - 1; i >= 0; i--) {
-		if (Brain::getInstance()->subFixtureChannelPoolUpdating[i] == this) {
-			Brain::getInstance()->subFixtureChannelPoolUpdating[i] = nullptr;
-		}
-	}
+	Brain::getInstance()->subFixtureChannelPoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->subFixtureChannelPoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
 
 	cs.exit();

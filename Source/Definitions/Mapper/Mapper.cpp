@@ -59,6 +59,16 @@ Mapper::Mapper(var params) :
 Mapper::~Mapper()
 {
 	Brain::getInstance()->unregisterMapper(this);
+	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->mapperPoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->mapperPoolUpdating.removeAllInstancesOf(this);
+	Brain::getInstance()->usingCollections.exit();
+	for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
+		SubFixtureChannel* sfc = it.getKey();
+		sfc->mapperOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(sfc);
+	}
+
 }
 
 void Mapper::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {

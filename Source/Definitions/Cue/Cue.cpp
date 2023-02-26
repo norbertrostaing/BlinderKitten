@@ -76,6 +76,11 @@ Cue::Cue(var params) :
 Cue::~Cue()
 {
 //	LOG("delete cue");
+	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->cuePoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->cuePoolUpdating.removeAllInstancesOf(this);
+	Brain::getInstance()->usingCollections.exit();
+
 }
 
 
