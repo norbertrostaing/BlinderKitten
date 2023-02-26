@@ -170,21 +170,21 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") { 
-				if (true) {//targ->currentHTPLevelController == "VirtualFaders" || abs(targ->HTPLevel->floatValue() - value) < 0.05) {
+				if (true) {
 					targ->nextHTPLevelController = "VirtualFaders";
 					targ->HTPLevel->setValue(value);
 				}
 			}
 			if (action == "flashlevel") { 
-				if (true) {//targ->currentLTPLevelController == "VirtualFaders" || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
+				if (true) {
 					targ->nextLTPLevelController = "VirtualFaders";
-					targ->LTPLevel->setValue(value);
+					targ->FlashLevel->setValue(value);
 				}
 			}
 			if (action == "ltplevel") { 
-				if (true) {//targ->currentFlashLevelController == "VirtualFaders" || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
+				if (true) {
 					targ->nextFlashLevelController = "VirtualFaders";
-					targ->FlashLevel->setValue(value);
+					targ->LTPLevel->setValue(value);
 				}
 			}
 		}
