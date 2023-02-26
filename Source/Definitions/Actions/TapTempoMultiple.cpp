@@ -39,12 +39,19 @@ void TapTempoMultiple::setValueInternal(var value, String origin) {
         int last = jmax(from, to);
 
         for (int i = first; i <= last; i++) {
-            if (actionType == TAPTEMPO_FX) {
+            if (actionType == TAPTEMPO_CUELIST) {
+                Cuelist* t = Brain::getInstance()->getCuelistById(i);
+                if (t != nullptr) {
+                    t->tapTempo();
+                }
+            }
+            else if (actionType == TAPTEMPO_FX) {
                 Effect* t = Brain::getInstance()->getEffectById(i);
                 if (t != nullptr) {
                     t->tapTempo();
                 }
-            } else if (actionType == TAPTEMPO_CAR) {
+            }
+            else if (actionType == TAPTEMPO_CAR) {
                 Carousel* t = Brain::getInstance()->getCarouselById(i);
                 if (t != nullptr) {
                     t->tapTempo();
