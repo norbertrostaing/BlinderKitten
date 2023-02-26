@@ -31,7 +31,7 @@ jobs:
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
-          repository: benkuper/JUCE
+          repository: norbertrostaing/JUCE
           ref: develop-local
           path: JUCE
 #
@@ -102,7 +102,7 @@ jobs:
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
-          repository: benkuper/JUCE
+          repository: norbertrostaing/JUCE
           ref: develop-local
           path: JUCE
 #
@@ -163,7 +163,7 @@ jobs:
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
-          repository: benkuper/JUCE
+          repository: norbertrostaing/JUCE
           ref: develop-local
           path: JUCE
 
@@ -258,7 +258,7 @@ jobs:
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
-          repository: benkuper/JUCE
+          repository: norbertrostaing/JUCE
           ref: develop-local
           path: JUCE
 
