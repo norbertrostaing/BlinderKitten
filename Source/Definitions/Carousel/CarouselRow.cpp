@@ -55,14 +55,15 @@ CarouselRow::CarouselRow(var params) :
 CarouselRow::~CarouselRow()
 {
     if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
-        LOG("");
         Carousel* parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
+        parentCarousel->isComputing.enter();
         for (auto it = parentCarousel->chanToCarouselRow.begin(); it != parentCarousel->chanToCarouselRow.end(); it.next()) {
             it.getValue()->removeAllInstancesOf(this);
         }
         if (parentCarousel->isOn) {
             parentCarousel->pleaseComputeIfRunning();
         }
+        parentCarousel->isComputing.exit();
     }
 };
 

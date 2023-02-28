@@ -196,6 +196,20 @@ Cuelist::~Cuelist()
 {
 	kill(true);
 	Brain::getInstance()->unregisterCuelist(this);
+	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->cuelistPoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->cuelistPoolUpdating.removeAllInstancesOf(this);
+	for (int i = 0; i < cues.items.size(); i++) {
+		Brain::getInstance()->cuePoolWaiting.removeAllInstancesOf(cues.items[i]);
+		Brain::getInstance()->cuePoolUpdating.removeAllInstancesOf(cues.items[i]);
+	}
+	Brain::getInstance()->usingCollections.exit();
+	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		SubFixtureChannel* sfc = it.getKey();
+		sfc->cuelistOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(sfc);
+	}
+
 }
 
 void Cuelist::reorderCues() {

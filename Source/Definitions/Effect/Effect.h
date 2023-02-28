@@ -55,6 +55,7 @@ public:
     double totalElapsed;
 
     HashMap<SubFixtureChannel*, Array<EffectParam*>*> chanToFxParam;
+    CriticalSection isComputing;
 
     double lastTapTempo;
     Trigger* tapTempoBtn;

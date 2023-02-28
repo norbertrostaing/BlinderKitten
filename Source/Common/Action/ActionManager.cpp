@@ -104,6 +104,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Stop All Carousels", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_STOPCAR));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Reset random Seed", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_RANDOMSEED));
 
+    defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Carousel", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CAR));
 

@@ -19,7 +19,7 @@ public:
     TapTempoMultiple(var params = var());
     ~TapTempoMultiple();
 
-    enum ActionType { TAPTEMPO_FX, TAPTEMPO_CAR };
+    enum ActionType { TAPTEMPO_CUELIST, TAPTEMPO_FX, TAPTEMPO_CAR };
     ActionType actionType;
     IntParameter* targetIdFrom;
     IntParameter* targetIdTo;

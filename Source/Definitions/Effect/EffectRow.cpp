@@ -91,6 +91,10 @@ void EffectRow::computeData() {
         isComputing.exit();
         return;
     }
+    if (parentContainer == nullptr || parentContainer->parentContainer == nullptr ) {
+        isComputing.exit();
+        return;
+    }
     Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
     if (parentEffect == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {

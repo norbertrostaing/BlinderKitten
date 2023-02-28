@@ -74,6 +74,16 @@ Carousel::Carousel(var params) :
 Carousel::~Carousel()
 {
 	Brain::getInstance()->unregisterCarousel(this);
+	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->carouselPoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->carouselPoolUpdating.removeAllInstancesOf(this);
+	Brain::getInstance()->usingCollections.exit();
+	for (auto it = chanToCarouselRow.begin(); it != chanToCarouselRow.end(); it.next()) {
+		SubFixtureChannel* sfc = it.getKey();
+		sfc->carouselOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(sfc);
+	}
+
 }
 
 void Carousel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
@@ -194,8 +204,8 @@ void Carousel::computeData() {
 
 float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToCarouselRow.contains(fc)) {return currentVal; }
-	if (computing) { return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
+	isComputing.enter();
 	float calcValue = currentVal;
 	Array<CarouselRow*>* activeRows = chanToCarouselRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
@@ -252,6 +262,8 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	else {
 		currentVal = jmap(s, currentVal, calcValue);
 	}
+
+	isComputing.exit();
 
 	return currentVal;
 }

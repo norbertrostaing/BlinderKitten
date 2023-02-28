@@ -48,20 +48,20 @@ public:
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
 
-    std::vector<Cuelist*> cuelistPoolUpdating;
-    std::vector<Cuelist*> cuelistPoolWaiting;
-    std::vector<SubFixtureChannel*> subFixtureChannelPoolUpdating;
-    std::vector<SubFixtureChannel*> subFixtureChannelPoolWaiting;
-    std::vector<Cue*> cuePoolUpdating;
-    std::vector<Cue*> cuePoolWaiting;
-    std::vector<Programmer*> programmerPoolUpdating;
-    std::vector<Programmer*> programmerPoolWaiting;
-    std::vector<Effect*> effectPoolUpdating;
-    std::vector<Effect*> effectPoolWaiting;
-    std::vector<Carousel*> carouselPoolUpdating;
-    std::vector<Carousel*> carouselPoolWaiting;
-    std::vector<Mapper*> mapperPoolUpdating;
-    std::vector<Mapper*> mapperPoolWaiting;
+    Array<Cuelist*> cuelistPoolUpdating;
+    Array<Cuelist*> cuelistPoolWaiting;
+    Array<SubFixtureChannel*> subFixtureChannelPoolUpdating;
+    Array<SubFixtureChannel*> subFixtureChannelPoolWaiting;
+    Array<Cue*> cuePoolUpdating;
+    Array<Cue*> cuePoolWaiting;
+    Array<Programmer*> programmerPoolUpdating;
+    Array<Programmer*> programmerPoolWaiting;
+    Array<Effect*> effectPoolUpdating;
+    Array<Effect*> effectPoolWaiting;
+    Array<Carousel*> carouselPoolUpdating;
+    Array<Carousel*> carouselPoolWaiting;
+    Array<Mapper*> mapperPoolUpdating;
+    Array<Mapper*> mapperPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
     Array<SubFixtureChannel*> grandMasterChannels;
