@@ -599,9 +599,7 @@ void Brain::unregisterMapper(Mapper* c) {
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
     ScopedLock lock(usingCollections);
-    if (std::find(cuelistPoolWaiting.begin(), cuelistPoolWaiting.end(), c) != cuelistPoolWaiting.end()) {
-    }
-    else {
+    if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);
     }
 }
@@ -610,8 +608,7 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if (f == nullptr || f ->isDeleted || f->objectType != "SubFixtureChannel") { return; }
     ScopedLock lock(usingCollections);
     if (f == nullptr) { return; };
-    if (std::find(subFixtureChannelPoolWaiting.begin(), subFixtureChannelPoolWaiting.end(), f) != subFixtureChannelPoolWaiting.end()) {}
-    else {
+    if (!subFixtureChannelPoolWaiting.contains(f)) {
         subFixtureChannelPoolWaiting.add(f);
     }
 }
@@ -619,8 +616,7 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
 void Brain::pleaseUpdate(Cue* c) {
     if (c == nullptr || c->objectType != "Cue") { return; }
     ScopedLock lock(usingCollections);
-    if (std::find(cuePoolWaiting.begin(), cuePoolWaiting.end(), c) != cuePoolWaiting.end()) {}
-    else {
+    if (!cuePoolWaiting.contains(c)) {
         cuePoolWaiting.add(c);
     }
 }
@@ -628,8 +624,7 @@ void Brain::pleaseUpdate(Cue* c) {
 void Brain::pleaseUpdate(Programmer* c) {
     if (c == nullptr || c->objectType != "Programmer") { return; }
     ScopedLock lock(usingCollections);
-    if (std::find(programmerPoolWaiting.begin(), programmerPoolWaiting.end(), c) != programmerPoolWaiting.end()) {}
-    else {
+    if (!programmerPoolWaiting.contains(c)) {
         programmerPoolWaiting.add(c);
     }
 }
@@ -637,8 +632,7 @@ void Brain::pleaseUpdate(Programmer* c) {
 void Brain::pleaseUpdate(Effect* f) {
     if (f == nullptr || f->objectType != "Effect") { return; }
     ScopedLock lock(usingCollections);
-    if (std::find(effectPoolWaiting.begin(), effectPoolWaiting.end(), f) != effectPoolWaiting.end()) {}
-    else {
+    if (!effectPoolWaiting.contains(f)) {
         effectPoolWaiting.add(f);
     }
 }
@@ -646,8 +640,7 @@ void Brain::pleaseUpdate(Effect* f) {
 void Brain::pleaseUpdate(Carousel* f) {
     if (f == nullptr || f->objectType != "Carousel") { return; }
     ScopedLock lock(usingCollections);
-    if (std::find(carouselPoolWaiting.begin(), carouselPoolWaiting.end(), f) != carouselPoolWaiting.end()) {}
-    else {
+    if (!carouselPoolWaiting.contains(f)) {
         carouselPoolWaiting.add(f);
     }
 }
@@ -655,8 +648,7 @@ void Brain::pleaseUpdate(Carousel* f) {
 void Brain::pleaseUpdate(Mapper* f) {
     if (f == nullptr || f->objectType != "Mapper") { return; }
     ScopedLock lock(usingCollections);
-    if (std::find(mapperPoolWaiting.begin(), mapperPoolWaiting.end(), f) != mapperPoolWaiting.end()) {}
-    else {
+    if (!mapperPoolWaiting.contains(f)) {
         mapperPoolWaiting.add(f);
     }
 }
