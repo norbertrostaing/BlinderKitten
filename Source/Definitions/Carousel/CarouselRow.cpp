@@ -112,8 +112,10 @@ void CarouselRow::computeData() {
     int nWings = wings->getValue();
     int nBuddying = buddying->getValue();
     int realTot = selection.computedSelectedSubFixtures.size() / nBuddying;
-    int wingSize = realTot / nWings;
-    realTot = realTot / nWings;
+    float wingSize = realTot / (float)nWings;
+    realTot = ceil(realTot / (float)nWings);
+    int roundedWingSize = round(wingSize);
+    int flooredWingSize = floor(wingSize);
 
     Array<SubFixtureChannel*> targetChannels;
 
@@ -146,19 +148,17 @@ void CarouselRow::computeData() {
             ChannelValue* cValue = it.getValue();
             if (!subFixtureChannelOffsets.contains(chan)) {
                 int chanIndex = selection.computedSelectedSubFixtures.indexOf(chan->parentSubFixture);
-
                 int realIndex = chanIndex / nBuddying;
 
                 int nWing = realIndex / wingSize;
                 if (nWing % 2 == 1) {
-                    realIndex = realIndex % wingSize;
+                    realIndex = realIndex % roundedWingSize;
                     realIndex = wingSize - 1 - realIndex;
                 }
 
                 double offset = realIndex / (double)realTot;
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
-
                 // LOG(offset);
                 subFixtureChannelOffsets.set(chan, -offset);
             }
