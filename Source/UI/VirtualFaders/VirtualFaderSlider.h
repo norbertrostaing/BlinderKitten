@@ -28,6 +28,7 @@ public:
     EnumParameter * effectAction;
     EnumParameter* carouselAction;
     EnumParameter* mapperAction;
+    FloatParameter* maxSpeed;
 
     ActionManager actionManager;
 
@@ -36,7 +37,7 @@ public:
     void updateDisplay();
     float getTargetValue(String colTargetType, int colTargetId);
 
-    void moved(float value, String colTargetType, int colTargetId);
+    void moved(float value, String colTargetType, int colTargetId, String origin);
     void released();
     String getBtnText(String columnType);
 

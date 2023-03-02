@@ -40,6 +40,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	cuelistAction->addOption("HTP Level", "htplevel");
 	cuelistAction->addOption("Flash Level", "flashlevel");
 	cuelistAction->addOption("LTP Level", "ltplevel");
+	cuelistAction->addOption("Chaser Speed", "speed");
 
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Size", "size");
@@ -48,6 +49,8 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	carouselAction = addEnumParameter("Carousel Action", "");
 	carouselAction->addOption("Size", "size");
 	carouselAction->addOption("Speed", "speed");
+
+	maxSpeed = addFloatParameter("Max Speed","Speed when your fader is up high",600,0);
 
 	mapperAction = addEnumParameter("Carousel Action", "");
 	mapperAction->addOption("Size", "size");
@@ -68,7 +71,7 @@ void VirtualFaderSlider::updateName() {
 }
 
 void VirtualFaderSlider::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType) {
+	if (c == targetType || c == cuelistAction || c == carouselAction || c == effectAction) {
 		updateDisplay();
 	}
 	VirtualFaderColGrid::getInstance()->fillCells();
@@ -96,6 +99,13 @@ void VirtualFaderSlider::updateDisplay() {
 	actionManager.hideInEditor = targType != "actions";
 	targetId->hideInEditor = targType == "actions";
 
+	bool needSpeed = false;
+	needSpeed = needSpeed || (targType == "cuelist" && cuelistAction->getValue() == "speed");
+	needSpeed = needSpeed || (targType == "effect" && effectAction->getValue() == "speed");
+	needSpeed = needSpeed || (targType == "carousel" && carouselAction->getValue() == "speed");
+
+	maxSpeed -> hideInEditor = !needSpeed;
+
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
@@ -121,6 +131,15 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 			}
 			if (action == "flashlevel") { return targ->FlashLevel->getValue(); }
 			if (action == "ltplevel") { return targ->LTPLevel->getValue(); }
+			if (action == "speed") {
+				float maxSpeedVal = maxSpeed->floatValue();
+				if (maxSpeedVal > 0) {
+					return targ->chaserSpeed->floatValue() / maxSpeedVal;
+				}
+				else {
+					return 0;
+				}
+			}
 		}
 	}
 	else if (targType == "effect") {
@@ -128,7 +147,15 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
 			if (action == "size") { return targ->sizeValue->getValue(); }
-			if (action == "speed") { return targ->speed->getValue(); }
+			if (action == "speed") {
+				float maxSpeedVal = maxSpeed->floatValue();
+				if (maxSpeedVal > 0) {
+					return targ->speed->floatValue() / maxSpeedVal;
+				}
+				else {
+					return 0;
+				}
+			}
 		}
 	}
 	else if (targType == "carousel") {
@@ -136,7 +163,15 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
 			if (action == "size") { return targ->sizeValue->getValue(); }
-			if (action == "speed") { return targ->speed->getValue(); }
+			if (action == "speed") {
+				float maxSpeedVal = maxSpeed->floatValue();
+				if (maxSpeedVal > 0) {
+					return targ->speed->floatValue() / maxSpeedVal;
+				}
+				else {
+					return 0;
+				}
+			}
 		}
 	}
 	else if (targType == "mapper") {
@@ -150,7 +185,7 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 
 }
 
-void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId) {
+void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId, String origin) {
 	String targType = targetType->getValue();
 	if (targType == "actions") {
 		actionManager.setValueAll(value, "VirtualFaders");
@@ -170,22 +205,25 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") { 
-				if (true) {
-					targ->nextHTPLevelController = "VirtualFaders";
+				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - value) < 0.05) {
+					targ->nextHTPLevelController = origin;
 					targ->HTPLevel->setValue(value);
 				}
 			}
 			if (action == "flashlevel") { 
-				if (true) {
-					targ->nextLTPLevelController = "VirtualFaders";
+				if (origin == "" || targ->currentFlashLevelController == origin || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
+					targ->nextLTPLevelController = origin;
 					targ->FlashLevel->setValue(value);
 				}
 			}
 			if (action == "ltplevel") { 
-				if (true) {
-					targ->nextFlashLevelController = "VirtualFaders";
+				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
+					targ->nextFlashLevelController = origin;
 					targ->LTPLevel->setValue(value);
 				}
+			}
+			if (action == "speed") {
+				targ->chaserSpeed->setValue(value*maxSpeed->floatValue());
 			}
 		}
 	}
@@ -194,12 +232,14 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
 			if (action == "size") { 
-				if (true) {//targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
-					targ->nextSizeController = "VirtualFaders";
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+					targ->nextSizeController = origin;
 					targ->sizeValue->setValue(value);
 				}
 			}
-			if (action == "speed") { targ->speed->setValue(value); }
+			if (action == "speed") {
+				targ->speed->setValue(value * maxSpeed->floatValue());
+			}
 		}
 	}
 	else if (targType == "carousel") {
@@ -207,12 +247,14 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
 			if (action == "size") { 
-				if (true) {//targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
-					targ->nextSizeController = "VirtualFaders";
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+					targ->nextSizeController = origin;
 					targ->sizeValue->setValue(value);
 				}
 			}
-			if (action == "speed") { targ->speed->setValue(value); }
+			if (action == "speed") {
+				targ->speed->setValue(value * maxSpeed->floatValue());
+			}
 		}
 	}
 	else if (targType == "mapper") {
@@ -220,8 +262,8 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
 			if (action == "size") { 
-				if (true) {//targ->currentSizeController == "VirtualFaders" || abs(targ->sizeValue->floatValue() - value) < 0.05) {
-					targ->nextSizeController = "VirtualFaders";
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - value) < 0.05) {
+					targ->nextSizeController = origin;
 					targ->sizeValue->setValue(value);
 				}
 			}
@@ -326,5 +368,10 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		}
 		return text;
 	}
+}
+
+bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
+{
+	return false;
 }
 

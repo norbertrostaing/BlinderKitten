@@ -104,7 +104,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
             case VF_ENCODER:
                 if (vfc->rotaries.items.size() > number) {
                     VirtualFaderSlider* vb = vfc->rotaries.items[number];
-                    vb->moved(value,vfc->targetType->getValue(), vfc->targetId->getValue());
+                    vb->moved(value,vfc->targetType->getValue(), vfc->targetId->getValue(), origin);
                 }
 
                 break;
@@ -125,7 +125,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
 
             case VF_FADER: {
                 VirtualFaderSlider* vb = &vfc->fader;
-                vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue());
+                vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue(), origin);
                 break;
             }
             case VF_BELOWBUTTON:
