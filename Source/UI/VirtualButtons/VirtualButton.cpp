@@ -49,6 +49,8 @@ VirtualButton::VirtualButton(var params) :
 	cuelistAction->addOption("Load and Go", "loadandgo");
 	cuelistAction->addOption("Go random", "gorandom");
 
+	cueId = addFloatParameter("Cue ID", "Insert here the id of the cue you want to load, -1 will prompt the cue choose window", -1,-1);
+
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
 	effectAction->addOption("Stop", "stop");
@@ -86,7 +88,7 @@ void VirtualButton::updateName() {
 }
 
 void VirtualButton::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType) {
+	if (c == targetType || c == cuelistAction) {
 		updateDisplay();
 	}
 	VirtualButtonGrid::getInstance()->fillCells();
@@ -101,6 +103,11 @@ void VirtualButton::updateDisplay() {
 	mapperAction->hideInEditor = targType != "mapper";
 	actionManager.hideInEditor = targType != "actions";
 	targetId->hideInEditor = targType == "disabled" || targType == "actions";
+
+	bool isLoad = targType == "cuelist";
+	isLoad = isLoad && (cuelistAction->getValue() == "load" || cuelistAction->getValue() == "loadandgo");
+
+	cueId->hideInEditor = !isLoad;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -123,8 +130,24 @@ void VirtualButton::pressed() {
 			if (action == "goback") { targ->goBack(); }
 			if (action == "off") { targ->off(); }
 			if (action == "toggle") { targ->toggle();}
-			if (action == "load") { targ->showLoad(); }
-			if (action == "loadandgo") { targ->showLoadAndGo(); }
+			if (action == "load") { 
+				float targetCue = cueId->floatValue();
+				if (targetCue == -1) {
+					targ->showLoad();
+				} else {
+					targ->nextCueId->setValue(targetCue);
+				}
+			}
+			if (action == "loadandgo") {
+				float targetCue = cueId->floatValue();
+				if (targetCue == -1) {
+					targ->showLoadAndGo();
+				}
+				else {
+					targ->nextCueId->setValue(targetCue);
+					targ->userGo();
+				}
+			}
 			if (action == "flash") { targ->flash(true, false, false); }
 			if (action == "swop") { targ->flash(true, false, true); }
 			if (action == "gorandom") { targ->goRandom(); }

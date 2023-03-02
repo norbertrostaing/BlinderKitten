@@ -29,6 +29,7 @@ public:
     EnumParameter * effectAction;
     EnumParameter* carouselAction;
     EnumParameter* mapperAction;
+    FloatParameter* cueId;
 
     ActionManager actionManager;
 
