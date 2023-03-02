@@ -48,6 +48,8 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 	belowButtons.selectItemWhenCreated = false;
 	addChildControllableContainer(&belowButtons);
 
+	fader.parentColumn = this;
+
 	updateDisplay();
 	updateName();
 	

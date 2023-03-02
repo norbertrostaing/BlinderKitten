@@ -12,6 +12,8 @@
 #include "JuceHeader.h"
 #include "Common/CommonIncludes.h"
 
+class VirtualFaderCol;
+
 class VirtualFaderSlider :
     public BaseItem
 {
@@ -31,6 +33,7 @@ public:
     FloatParameter* maxSpeed;
 
     ActionManager actionManager;
+    VirtualFaderCol* parentColumn = nullptr;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
@@ -42,6 +45,8 @@ public:
     String getBtnText(String columnType);
 
     String getTypeString() const override { return objectType; }
+    bool checkParentColumn();
+    bool isAllowedToMove(String origin, float newValue);
 
     static VirtualFaderSlider* create(var params) { return new VirtualFaderSlider(params); }
 };

@@ -10,6 +10,7 @@
 
 #include "JuceHeader.h"
 #include "VirtualFaderSlider.h"
+#include "VirtualFaderCol.h"
 #include "VirtualFaderColManager.h"
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
@@ -187,6 +188,10 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 
 void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId, String origin) {
 	String targType = targetType->getValue();
+	if (!isAllowedToMove(origin, value)) {
+		LOG("not allowed " << origin);
+		return;
+	}
 	if (targType == "actions") {
 		actionManager.setValueAll(value, "VirtualFaders");
 		return;
@@ -370,8 +375,104 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 	}
 }
 
+bool VirtualFaderSlider::checkParentColumn()
+{
+	if (parentColumn == nullptr) {
+		parentColumn = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get());
+	}
+	return parentColumn != nullptr;
+}
+
 bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 {
+	String targType = targetType->getValue();
+	if (targType == "actions") {
+		return true;
+	}
+
+	if (!checkParentColumn()) {
+		return false;
+	}
+
+	int targId = targetId->getValue();
+
+	if (targType == "column") {
+		targType = parentColumn->targetType->getValue();
+		targId = parentColumn->targetId->intValue();
+	}
+
+	if (targType == "disabled") { return true; }
+	if (targId == 0) { return true; }
+
+	if (targType == "cuelist") {
+		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+		if (targ != nullptr) {
+			String action = cuelistAction->getValue();
+			if (action == "htplevel") {
+				// LOG(targ->currentHTPLevelController << " " << origin);
+				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "flashlevel") {
+				if (origin == "" || targ->currentFlashLevelController == origin || abs(targ->FlashLevel->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "ltplevel") {
+				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "speed") {
+				return true;
+			}
+		}
+		else {return true;}
+	}
+	else if (targType == "effect") {
+		Effect* targ = Brain::getInstance()->getEffectById(targId);
+		if (targ != nullptr) {
+			String action = effectAction->getValue();
+			if (action == "size") {
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "speed") {
+				return true;
+			}
+		}
+		else { return true; }
+	}
+	else if (targType == "carousel") {
+		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+		if (targ != nullptr) {
+			String action = carouselAction->getValue();
+			if (action == "size") {
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "speed") {
+				return true;
+			}
+		}
+		else { return true; }
+	}
+	else if (targType == "mapper") {
+		Mapper* targ = Brain::getInstance()->getMapperById(targId);
+		if (targ != nullptr) {
+			String action = mapperAction->getValue();
+			if (action == "size") {
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+		}
+		else { return true; }
+	}
+
 	return false;
 }
 
