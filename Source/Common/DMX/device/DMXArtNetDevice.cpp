@@ -226,7 +226,6 @@ void ArtnetSocket::run()
 					int subnet = (receiveBuffer[14] >> 4) & 0xF;
 					int net = receiveBuffer[15] & 0x7F;
 
-					LOG("universe " << universe);
 					for (auto& i : InterfaceManager::getInstance()->items)
 					{
 						DMXInterface* inter = dynamic_cast<DMXInterface*>(i);
