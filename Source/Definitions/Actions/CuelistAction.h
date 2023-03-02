@@ -23,6 +23,7 @@ public:
     ActionType actionType;
     IntParameter* cuelistId;
     FloatParameter* cueId;
+    FloatParameter* maxSpeed;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin);
