@@ -155,6 +155,9 @@ void EncodersMultCmd::buttonClicked(Button* b)
     else if (b == &deleteBtn) 
     {
         if (targetCommand != nullptr) {
+            if (targetCommand == UserInputManager::getInstance()->targetCommand) {
+                UserInputManager::getInstance()->targetCommand = nullptr;
+            }
             encodersMulView->targetCommandManager->removeItem(targetCommand);
         }
 

@@ -71,7 +71,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 						if (count < 10) {
 							groupHistory.add(id);
 							g->selection.computeSelection(groupHistory);
+							g->selection.computing.enter();
 							tempSelection.addArray(g->selection.computedSelectedSubFixtures);
+							g->selection.computing.exit();
 						}
 					}
 				}

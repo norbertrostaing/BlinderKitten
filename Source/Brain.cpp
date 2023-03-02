@@ -178,8 +178,8 @@ void Brain::brainLoop() {
         for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
             subFixtureChannelPoolUpdating.add(subFixtureChannelPoolWaiting[i]);
         }
+        subFixtureChannelPoolWaiting.clear();
     }
-    subFixtureChannelPoolWaiting.clear();
     usingCollections.enter();
     for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
         if (subFixtureChannelPoolUpdating[i] != nullptr && !subFixtureChannelPoolUpdating[i]->isDeleted) {
@@ -894,9 +894,7 @@ void Brain::swoppedCuelist(Cuelist* c) {
 
 void Brain::unswoppedCuelist(Cuelist* c) {
     usingCollections.enter();
-    while (swoppedCuelists.indexOf(c) >= 0) {
-        swoppedCuelists.removeAllInstancesOf(c);
-    }
+    swoppedCuelists.removeAllInstancesOf(c);
     isSwopping = swoppedCuelists.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));

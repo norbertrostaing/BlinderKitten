@@ -591,7 +591,7 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 	}
 	else {
 		isFlashing = false;
-		if (swop) {
+		if (swop || isSwopping) {
 			isSwopping = false;
 			Brain::getInstance()->unswoppedCuelist(this);
 		}
