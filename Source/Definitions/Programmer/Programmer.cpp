@@ -670,9 +670,6 @@ void Programmer::resetCli() {
 
 void Programmer::checkCurrentUserCommand() {
 	const MessageManagerLock mmLock;
-	if (currentUserCommand != nullptr && currentUserCommand->toDelete) {
-		currentUserCommand = nullptr;
-	}
 	if (currentUserCommand == nullptr) {
 		if (commands.items.size() > 0) {
 			currentUserCommand = commands.items[0];
@@ -680,5 +677,8 @@ void Programmer::checkCurrentUserCommand() {
 		else {
 			currentUserCommand = commands.addItem();
 		}
+	}
+	if (UserInputManager::getInstance()->getProgrammer(false) == this) {
+		UserInputManager::getInstance()->targetCommand = currentUserCommand;
 	}
 }

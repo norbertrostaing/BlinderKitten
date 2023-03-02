@@ -12,6 +12,7 @@
 #include "Definitions/Programmer/Programmer.h"
 #include "EncodersMultCmd.h"
 #include "EncodersMult.h"
+#include "UI/Encoders.h"
 #include "Definitions/Command/Command.h"
 
 
@@ -156,9 +157,17 @@ void EncodersMultCmd::buttonClicked(Button* b)
     {
         if (targetCommand != nullptr) {
             if (targetCommand == UserInputManager::getInstance()->targetCommand) {
-                UserInputManager::getInstance()->targetCommand = nullptr;
+                if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand == targetCommand) {
+                    UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+                }
+                if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand == targetCommand) {
+                    UserInputManager::getInstance()->currentProgrammer->currentUserCommand = nullptr;
+                    UserInputManager::getInstance()->targetCommand = nullptr;
+                }
             }
             encodersMulView->targetCommandManager->removeItem(targetCommand);
+            UserInputManager::getInstance()->currentProgrammer->checkCurrentUserCommand();
+            Encoders::getInstance()->updateChannels();
         }
 
     }

@@ -270,6 +270,12 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	*/
 }
 
+void UserInputManager::programmerCommandStructureChanged()
+{
+	EncodersMult::getInstance()->reconstructSubComponents();
+	Encoders::getInstance()->updateChannels();
+}
+
 void UserInputManager::programmerCommandStructureChanged(Programmer* p)
 {
 	if (p == getProgrammer(false)) {
