@@ -48,7 +48,7 @@ Carousel::Carousel(var params) :
 	currentPosition = addFloatParameter("Current Position", "Actual position of the Carousel",0,0,1);
 	currentPosition->isControllableFeedbackOnly = true;
 
-	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Carousel when size is modified", false);
+	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Carousel when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Carousel", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this Carousel in cycles/minutes", 5, 0);
 

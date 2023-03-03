@@ -42,7 +42,7 @@ Mapper::Mapper(var params) :
 	startBtn = addTrigger("Start", "Start this Mapper");
 	stopBtn = addTrigger("Stop", "Stop this Mapper");
 
-	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Mapper when size is modified", false);
+	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Mapper when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Mapper", 1, 0, 1);
 
 	rows.selectItemWhenCreated = false;
