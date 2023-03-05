@@ -33,20 +33,25 @@ void CuelistLoadWindow::paint (juce::Graphics& g)
 
 void CuelistLoadWindow::resized()
 {
-    int x = 0;
-    int y = 0; 
+    int x = 10;
+    int y = -1; 
     int w = getWidth()/5;
     int h = 40;
 
+    if (cueIds.size() == 0) {return;}
+
+    float prevId = cueIds[0];
     for (int i = 0; i < buttons.size(); i++) {
-        TextButton* b = buttons[i];
-        b->setBounds(x*w, y*h, w, h);
-        b->addListener(this);
-        x++; 
-        if (x >= 5) {
+        float id = cueIds[i];
+        x++;
+        if (x >= 5 || prevId + 1 < id) {
             y++;
             x = 0;
         }
+        TextButton* b = buttons[i];
+        b->setBounds(x*w, y*h, w, h);
+        b->addListener(this);
+        prevId = id;
     }
 }
 
@@ -54,11 +59,13 @@ void CuelistLoadWindow::fillButtons(Cuelist* c) {
     currentTarget = c;
     // bug ici ! quand load une cuelist, rajouter un lock ?
     buttons.clear();
+    cueIds.clear();
     for (int i = 0; i < c->cues.items.size(); i++) {
         TextButton *temp = new TextButton();
         temp->setButtonText(c->cues.items[i]->niceName);
         addAndMakeVisible(temp);
         buttons.add(temp);
+        cueIds.add(c->cues.items[i]->id->floatValue());
     }
 }
 

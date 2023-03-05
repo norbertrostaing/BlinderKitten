@@ -301,6 +301,7 @@ void Assistant::createPalette()
             String name = p->userName->getValue().toString();
             Cue* c = cl->cues.addItem();
             c->setNiceName(name);
+            c->id->setValue(i);
             c->commands.items[0]->selection.items[0]->targetType->setValueWithKey("Group");
             c->commands.items[0]->selection.items[0]->valueFrom->setValue(groupId);
             c->commands.items[0]->values.items[0]->presetOrValue->setValueWithKey("Preset");

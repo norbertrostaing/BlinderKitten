@@ -33,6 +33,7 @@ public:
     bool windowOpened = false;
 
     OwnedArray<TextButton> buttons;
+    Array<float> cueIds;
     Cuelist* currentTarget = nullptr;
 
     TextButton exitBtn;
