@@ -49,8 +49,9 @@ class DMXChannelView :
     public Inspectable::InspectableListener
 {
 public:
+    juce_DeclareSingleton(DMXChannelView, true);
 
-    DMXChannelView(const String &name);
+    DMXChannelView();
     ~DMXChannelView();
 
     Viewport viewport;
@@ -87,6 +88,6 @@ public:
 
     void inspectableDestroyed(Inspectable* i) override;
 
-    static DMXChannelView* create(const String& name) { return new DMXChannelView(name); }
+    static DMXChannelView* create(const String& name) { return new DMXChannelView(); }
 
 };

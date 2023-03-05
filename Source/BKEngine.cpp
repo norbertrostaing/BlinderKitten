@@ -75,6 +75,7 @@
 #include "UI/BKColorPicker.h"
 
 #include "UserInputManager.h"
+#include "UI/DMXChannelView.h"
 
 ControllableContainer* getAppSettings();
 
@@ -237,6 +238,8 @@ BKEngine::~BKEngine()
 	Brain::getInstance()->stopThread(100);
 	Brain::getInstance()->clear();
 
+	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+
 	ArtnetSocket::getInstance()->stopThread(100);
 
 
@@ -307,6 +310,8 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->skipLoop = true;
 	Brain::getInstance()->stopThread(1);
 	Brain::getInstance()->clear();
+
+	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
 
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();

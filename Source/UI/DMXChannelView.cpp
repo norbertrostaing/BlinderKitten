@@ -11,8 +11,8 @@
 #include "DMXChannelView.h"
 #include "Definitions/Interface/interfaces/dmx/DMXInterface.h"
 
-DMXChannelView::DMXChannelView(const String& name) :
-	ShapeShifterContentComponent(name),
+DMXChannelView::DMXChannelView() :
+	ShapeShifterContentComponent("DMX Tester"),
 	currentInterface(nullptr),
 	//testingUI(nullptr),
 	flashValue(nullptr)
@@ -36,6 +36,9 @@ DMXChannelView::~DMXChannelView()
 	if (InterfaceManager::getInstanceWithoutCreating()) InterfaceManager::getInstance()->removeAsyncManagerListener(this);
 	setCurrentInterface(nullptr);
 }
+
+juce_ImplementSingleton(DMXChannelView);
+
 
 void DMXChannelView::resized()
 {
