@@ -111,6 +111,7 @@ void DMXInterface::send16BitDMXValues(int startChannel, Array<int> values, DMXBy
 
 void DMXInterface::sendDMXValue(int channel, int value, Array<DMXInterface*>callers)
 {
+	if (channel<1 || channel> 512) {return;}
 	if (callers.contains(this)) {return;}
 	if (!enabled->boolValue() || dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
