@@ -239,6 +239,7 @@ BKEngine::~BKEngine()
 	Brain::getInstance()->clear();
 
 	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+	DMXChannelView::deleteInstance();
 
 	ArtnetSocket::getInstance()->stopThread(100);
 
