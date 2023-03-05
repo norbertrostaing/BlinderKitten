@@ -107,13 +107,20 @@ Programmer::Programmer(var params) :
 
 Programmer::~Programmer()
 {
+	Brain::getInstance()->unregisterProgrammer(this);
+	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->programmerPoolWaiting.removeAllInstancesOf(this);
+	Brain::getInstance()->programmerPoolUpdating.removeAllInstancesOf(this);
+	Brain::getInstance()->usingCollections.exit();
+
+	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		SubFixtureChannel* sfc = it.getKey();
+		sfc->programmerOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(sfc);
+	}
+
 	isDeleted = true;
 	clearAll();
-	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		it.getKey()->programmerOutOfStack(this);
-		Brain::getInstance()->pleaseUpdate(it.getKey());
-	}
-	Brain::getInstance()->unregisterProgrammer(this);
 }
 
 
