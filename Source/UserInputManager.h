@@ -43,6 +43,7 @@ public:
     void changeChannelValue(ChannelType* chan, float absVal);
     HashMap<int, ChannelType*> encoderChannels;
 
+    void programmerCommandStructureChanged();
     void programmerCommandStructureChanged(Programmer* p);
     void programmerCommandValueChanged(Programmer* p);
     void commandSelectionChanged(Command* c);

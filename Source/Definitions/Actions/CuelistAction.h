@@ -22,6 +22,8 @@ public:
     enum ActionType { CL_GO, CL_GOBACK, CL_OFF, CL_HTPLEVEL, CL_LTPLEVEL, CL_FLASH, CL_SWOP, CL_LOAD, CL_LOADANDGO, CL_FLASHLEVEL, CL_GORANDOM, CL_TOGGLE, CL_GOALLLOADED, CL_CHASERSPEED, CL_CHASERTAPTEMPO};
     ActionType actionType;
     IntParameter* cuelistId;
+    FloatParameter* cueId;
+    FloatParameter* maxSpeed;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin);

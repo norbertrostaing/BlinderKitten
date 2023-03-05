@@ -140,7 +140,6 @@ void EffectRow::computeData() {
                     }
                     else if (realIndex == flooredWingSize && wingSize > realIndex) {
                         isCentered = true;
-                        LOG(realIndex);
                     }
 
                     double offset = realIndex / (double)realTot;

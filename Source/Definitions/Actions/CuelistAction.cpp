@@ -20,6 +20,12 @@ CuelistAction::CuelistAction(var params) :
     if (actionType != CL_GOALLLOADED) {
         cuelistId = addIntParameter("Cuelist ID", "Id oth the target cuelist", 0, 0);
     }
+    if (actionType == CL_LOAD || actionType == CL_LOADANDGO) {
+        cueId = addFloatParameter("Cue ID", "Insert here the id of the cue you want to load, -1 will prompt the cue choose window", -1, -1);
+    }
+    if (actionType == CL_CHASERSPEED) {
+        maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
+    }
 }
 
 CuelistAction::~CuelistAction()
@@ -81,13 +87,26 @@ void CuelistAction::setValueInternal(var value, String origin) {
 
     case CL_LOAD:
         if (val > 0 && (float)previousValue == 0) {
-            target->showLoad();
+            float targetCue = cueId->floatValue();
+            if (targetCue == -1) {
+                target->showLoad();
+            }
+            else {
+                target->nextCueId->setValue(targetCue);
+            }
         }
         break;
 
     case CL_LOADANDGO:
         if (val > 0 && (float)previousValue == 0) {
-            target->showLoadAndGo();
+            float targetCue = cueId->floatValue();
+            if (targetCue == -1) {
+                target->showLoadAndGo();
+            }
+            else {
+                target->nextCueId->setValue(targetCue);
+                target->userGo();
+            }
         }
         break;
 
@@ -103,6 +122,10 @@ void CuelistAction::setValueInternal(var value, String origin) {
             target->nextLTPLevelController = origin;
             target->LTPLevel->setValue(val);
         }
+        break;
+
+    case CL_CHASERSPEED:
+        target->chaserSpeed->setValue(val*maxSpeed->floatValue());
         break;
 
     case CL_FLASH:
@@ -128,10 +151,6 @@ void CuelistAction::setValueInternal(var value, String origin) {
             target->nextFlashLevelController = origin;
             target->FlashLevel->setValue(val);
         }
-        break;
-
-    case CL_CHASERSPEED:
-        target->setChaserSpeed(val);
         break;
 
     case CL_CHASERTAPTEMPO:

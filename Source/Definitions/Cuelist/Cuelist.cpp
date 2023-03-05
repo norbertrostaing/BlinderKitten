@@ -117,8 +117,8 @@ Cuelist::Cuelist(var params) :
 
 	loopTracking = addBoolParameter("Loop Tracking", "Do you want tracking keeps values when coming back to start after loop ?", false);
 
-	autoStart = addBoolParameter("Auto start", "Starts the cuelist if HTP level is set to a different value than 0", false);
-	autoStop = addBoolParameter("Auto stop", "Stops the cuelist if HTP level is set to 0", false);
+	autoStart = addBoolParameter("Auto start", "Starts the cuelist if HTP level is set to a different value than 0", true);
+	autoStop = addBoolParameter("Auto stop", "Stops the cuelist if HTP level is set to 0", true);
 
 	goBtn = addTrigger("GO", "Trigger next cue");
 	goBackBtn = addTrigger("GO back", "Trigger previous cue");
@@ -591,7 +591,7 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 	}
 	else {
 		isFlashing = false;
-		if (swop) {
+		if (swop || isSwopping) {
 			isSwopping = false;
 			Brain::getInstance()->unswoppedCuelist(this);
 		}

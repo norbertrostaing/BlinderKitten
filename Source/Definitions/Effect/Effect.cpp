@@ -47,7 +47,7 @@ Effect::Effect(var params) :
 	currentPosition = addFloatParameter("Current Position", "Actual position of the effect",0,0,1);
 	currentPosition->isControllableFeedbackOnly = true;
 
-	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", false);
+	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Effect", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this effect in cycles/minutes", 5, 0);
 

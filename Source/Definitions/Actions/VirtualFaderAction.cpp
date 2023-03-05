@@ -72,13 +72,24 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
     }
     int col = colNumber->getValue();
     int page = pageNumber->getValue();
+
+    if (page == 0) {
+        page = VirtualFaderColGrid::getInstance()->page;
+    }
+
+    bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
+    /*
+    page = -1;
     if (page == 0 || page == VirtualFaderColGrid::getInstance()->page) {
         page = VirtualFaderColGrid::getInstance()->page;
         const MessageManagerLock mmLock;
         if (actionType == VF_FADER) {
             if (col <= VirtualFaderColGrid::getInstance()->cols) {
-                if (VirtualFaderColGrid::getInstance()->faders[col - 1]->getValue() != val) {
-                    VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val);
+                VirtualFaderSlider* vfs = VirtualFaderColGrid::getInstance()->sliderToVFS.getReference(VirtualFaderColGrid::getInstance()->faders[col - 1]);
+                if (vfs == nullptr || vfs->isAllowedToMove(origin, value)) {
+                    if (VirtualFaderColGrid::getInstance()->faders[col - 1]->getValue() != val) {
+                        VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val, juce::dontSendNotification);
+                    }
                 }
             }
             return;
@@ -95,6 +106,8 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
         }
     }
 
+    page = 1;
+    */
     //LOG("looking for page " + String(page) + ", col" + String(col) + ", number " + String(number) + "");
     for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
         VirtualFaderCol* vfc = VirtualFaderColManager::getInstance()->items[i];
@@ -104,7 +117,12 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
             case VF_ENCODER:
                 if (vfc->rotaries.items.size() > number) {
                     VirtualFaderSlider* vb = vfc->rotaries.items[number];
-                    vb->moved(value,vfc->targetType->getValue(), vfc->targetId->getValue());
+                    if (vb->isAllowedToMove(origin, value)) {
+                        vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue(), origin);
+                        if (currentPage && VirtualFaderColGrid::getInstance()->rotaries.size() > col && VirtualFaderColGrid::getInstance()->rotaries[col-1]->size() > number) {
+                            VirtualFaderColGrid::getInstance()->rotaries[col - 1]->getRawDataPointer()[number]->setValue(val, juce::dontSendNotification);
+                        }
+                    }
                 }
 
                 break;
@@ -125,7 +143,12 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
 
             case VF_FADER: {
                 VirtualFaderSlider* vb = &vfc->fader;
-                vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue());
+                if (vb->isAllowedToMove(origin, value)) {
+                    vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue(), origin);
+                    if (currentPage && VirtualFaderColGrid::getInstance()->faders.size()>col) {
+                        VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val, juce::dontSendNotification);
+                    }
+                }
                 break;
             }
             case VF_BELOWBUTTON:

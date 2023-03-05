@@ -20,7 +20,7 @@ CarouselAction::CarouselAction(var params) :
     targetId = addIntParameter("Carousel ID", "Id oth the target Carousel", 0, 0);
 
     if (actionType == CAR_SPEED) {
-        maxSpeed = addFloatParameter("Max Speed","Max speed of the Carousel",1,1);
+        maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
     }
 }
 

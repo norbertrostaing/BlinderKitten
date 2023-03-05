@@ -653,10 +653,31 @@ void BKEngine::importGDTF(File f)
 		LOGERROR("the file "+f.getFileName()+" is not a valid GDTF File (no description.xml in the archive)");
 		return;
 	}
+
+	HashMap<String, String> changedNames;
+	changedNames.set( "Dimmer", "Intensity");
+	changedNames.set( "ColorAdd_R", "Red");
+	changedNames.set( "ColorAdd_G", "Green");
+	changedNames.set( "ColorAdd_B", "Blue");
+	changedNames.set( "ColorAdd_W", "White");
+	changedNames.set( "ColorAdd_A", "Amber");
+	changedNames.set( "ColorSub_C", "Cyan");
+	changedNames.set( "ColorSub_M", "Magenta");
+	changedNames.set( "ColorSub_Y", "Yellow");
+
 	XmlDocument descriptionXml = archive->createStreamForEntry(descIndex)->readString();
 	auto rootElmt = descriptionXml.getDocumentElement();
 	int nChildren = rootElmt->getNumChildElements();
 	HashMap<int, int> breakOffsets;
+	HashMap<String, ChannelType*> nameToChannelType;
+
+	for (int iFam = 0; iFam < ChannelFamilyManager::getInstance()->items.size(); iFam++) {
+		for (int iChan = 0; iChan < ChannelFamilyManager::getInstance()->items[iFam]->definitions.items.size(); iChan++) {
+			ChannelType* ct = ChannelFamilyManager::getInstance()->items[iFam]->definitions.items[iChan];
+			nameToChannelType.set(ct->niceName, ct);
+		}
+	}
+
 	for (int indexChild = 0; indexChild < nChildren; indexChild++) {
 		auto fixtureTypeNode = rootElmt->getChildElement(indexChild);
 		if (fixtureTypeNode->getTagName().toLowerCase() == "fixturetype") {
@@ -665,45 +686,38 @@ void BKEngine::importGDTF(File f)
 			fixtureName += fixtureTypeNode->getStringAttribute("Name");
 			manufacturer += fixtureTypeNode->getStringAttribute("Manufacturer");
 
-
 			XmlElement* attributesNode = fixtureTypeNode->getChildByName("AttributeDefinitions");
 			if (attributesNode == nullptr) {LOGERROR("import not finished, the fixture has no attributes tag"); }
 			auto attributes = attributesNode->getChildByName("Attributes");
-			HashMap<String, ChannelType*> nameToChannelType;
 			for (int i = 0; i < attributes->getNumChildElements(); i++) {
 				auto attr = attributes->getChildElement(i);
 				String attrName = attr->getStringAttribute("Name");
+				if (changedNames.contains(attrName)) {attrName = changedNames.getReference(attrName); }
 				String attrFamilyName = StringArray::fromTokens(attr->getStringAttribute("Feature"), ".", "")[0];
 
-				ChannelFamily* cf = nullptr;
-				ChannelType* ct = nullptr;
-				for (int iFam = 0; iFam < ChannelFamilyManager::getInstance()->items.size(); iFam++) {
-					if (ChannelFamilyManager::getInstance()->items[iFam]->niceName.toLowerCase() == attrFamilyName.toLowerCase()) {
-						cf = ChannelFamilyManager::getInstance()->items[iFam];
+				if (!nameToChannelType.contains(attrName)) {
+					ChannelFamily* cf = nullptr;
+					ChannelType* ct = nullptr;
+					for (int iFam = 0; iFam < ChannelFamilyManager::getInstance()->items.size(); iFam++) {
+						if (ChannelFamilyManager::getInstance()->items[iFam]->niceName.toLowerCase() == attrFamilyName.toLowerCase()) {
+							cf = ChannelFamilyManager::getInstance()->items[iFam];
+						}
 					}
-				}
-				if (cf == nullptr) {
-					cf = ChannelFamilyManager::getInstance()->addItem();
-					cf->setNiceName(attrFamilyName);
-				}
+					if (cf == nullptr) {
+						cf = ChannelFamilyManager::getInstance()->addItem();
+						cf->setNiceName(attrFamilyName);
+					}
 
-				for (int iChan = 0; iChan < cf->definitions.items.size(); iChan++) {
-					if (cf->definitions.items[iChan]->niceName.toLowerCase() == attrName.toLowerCase()) {
-						ct = cf->definitions.items[iChan];
+					for (int iChan = 0; iChan < cf->definitions.items.size(); iChan++) {
+						if (cf->definitions.items[iChan]->niceName.toLowerCase() == attrName.toLowerCase()) {
+							ct = cf->definitions.items[iChan];
+						}
 					}
-				}
-				if (ct == nullptr) {
-					ct = cf->definitions.addItem();
-					nameToChannelType.set(attrName, ct);
-					if (attrName == "ColorAdd_R") { attrName = "Red"; }
-					if (attrName == "ColorAdd_G") { attrName = "Green"; }
-					if (attrName == "ColorAdd_B") { attrName = "Blue"; }
-					if (attrName == "ColorAdd_W") { attrName = "White"; }
-					if (attrName == "ColorAdd_A") { attrName = "Amber"; }
-					if (attrName == "ColorSub_C") { attrName = "Cyan"; }
-					if (attrName == "ColorSub_M") { attrName = "Magenta"; }
-					if (attrName == "ColorSub_Y") { attrName = "Yellow"; }
-					ct->setNiceName(attrName);
+					if (ct == nullptr) {
+						ct = cf->definitions.addItem();
+						nameToChannelType.set(attrName, ct);
+						ct->setNiceName(attrName);
+					}
 				}
 			}
 
@@ -789,7 +803,10 @@ void BKEngine::importGDTF(File f)
 				for (int i = 0; i < tempChannels.size(); i++) {
 					if (tempChannels[i].attribute != "") {
 						FixtureTypeChannel* ftc = ft->chansManager.addItem();
-						ftc->channelType->setValueFromTarget(nameToChannelType.getReference(tempChannels[i].attribute));
+						String attrName = tempChannels[i].attribute;
+						if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
+
+						ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
 						ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
 						if (tempChannels[i].resolution == 2) 
 						{

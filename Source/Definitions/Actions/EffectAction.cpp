@@ -20,7 +20,7 @@ EffectAction::EffectAction(var params) :
     targetId = addIntParameter("Effect ID", "Id oth the target effect", 0, 0);
 
     if (actionType == FX_SPEED) {
-        maxSpeed = addFloatParameter("Max Speed","Max speed of the effect",1,1);
+        maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
     }
 }
 

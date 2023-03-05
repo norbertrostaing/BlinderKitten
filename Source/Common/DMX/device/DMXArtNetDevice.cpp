@@ -222,9 +222,9 @@ void ArtnetSocket::run()
 				if (opcode == DMX_OPCODE)
 				{
 					//int sequence = artnetPacket[12];
-					int universe = artnetPacket[14] & 0xF;
-					int subnet = (artnetPacket[14] >> 4) & 0xF;
-					int net = artnetPacket[15] & 0x7F;
+					int universe = receiveBuffer[14] & 0xF;
+					int subnet = (receiveBuffer[14] >> 4) & 0xF;
+					int net = receiveBuffer[15] & 0x7F;
 
 					for (auto& i : InterfaceManager::getInstance()->items)
 					{
