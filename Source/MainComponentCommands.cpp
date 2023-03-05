@@ -143,12 +143,12 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case BlinderKittenCommandId::keyBackspace:
 		result.setInfo("backspace", "", "Direct Commands", 0);
-		result.addDefaultKeypress(KeyPress::createFromDescription("backspace").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::createFromDescription("backspace").getKeyCode(), ModifierKeys::ctrlModifier);
 		break;
 
 	case BlinderKittenCommandId::keyClear:
 		result.setInfo("Clear", "", "Direct Commands", 0);
-		result.addDefaultKeypress(KeyPress::createFromDescription("backspace").getKeyCode(), ModifierKeys::ctrlModifier);
+		result.addDefaultKeypress(KeyPress::createFromDescription("backspace").getKeyCode(), ModifierKeys::shiftModifier);
 		break;
 
 	case BlinderKittenCommandId::keyEnter:

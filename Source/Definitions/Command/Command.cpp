@@ -454,32 +454,24 @@ StringArray Command::getCommandAsTexts() {
 				userCantPress();
 				userCanPressValue = true;
 				currentUserTarget = v->valueFrom;
-				if ((float)v->valueFrom->value > 0) {
-					words.add(formatValue(v->valueFrom->value));
-					lastTarget = "valueRawFrom";
+				userCanPressValueType = true;
+				words.add(formatValue(v->valueFrom->value));
+				lastTarget = "valueRawFrom";
+				userCanPressTimingType = true;
+				userCanPressThru = true;
+				currentUserThru = v->thru;
+				userCanHaveAnotherCommand = true;
+				if (v->thru->getValue()) {
+					words.add("thru");
+					//lastTarget = "valueRawThru";
+					userCantPress();
+					currentUserTarget = v->valueFrom;
+					words.add(formatValue(v->valueTo->value));
+					lastTarget = "valueRawTo";
+					userCanPressValue = true;
 					userCanPressValueType = true;
 					userCanPressTimingType = true;
-					userCanPressThru = true;
-					currentUserThru = v->thru;
 					userCanHaveAnotherCommand = true;
-					if (v->thru->getValue()) {
-						words.add("thru");
-						lastTarget = "valueRawThru";
-						userCantPress();
-						userCanPressValue = true;
-						currentUserTarget = v->valueFrom;
-						if ((float)v->valueTo->value > 0) {
-							words.add(formatValue(v->valueTo->value));
-							lastTarget = "valueRawTo";
-							userCanPressValue = true;
-							userCanPressValueType = true;
-							userCanPressTimingType = true;
-							userCanHaveAnotherCommand = true;
-						}
-						else {
-							return words;
-						}
-					}
 				}
 			}
 		}
