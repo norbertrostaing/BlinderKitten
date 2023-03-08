@@ -83,6 +83,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		speed
 		size
 		tap tempo
+	mapper
+		start
+		stop
+		size
 	*/
 
 	String firstWord = aList[1];
@@ -206,6 +210,22 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		}
 		else {
 			LOGWARNING("Carousel " + String(targetNumber) + " doesn't exist");
+		}
+	}
+	else if (firstWord == "mapper" && aList.size() > 3) {
+		int targetNumber = (int)((var)aList[2]);
+		Mapper* target = Brain::getInstance()->getMapperById(targetNumber);
+		if (target != nullptr) {
+			String action = aList[3].toLowerCase();
+			if (action == "start") { target->start(); }
+			else if (action == "stop") { target->stop(); }
+			else if (action == "size" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->sizeValue->setValue(val);
+			}
+		}
+		else {
+			LOGWARNING("Mapper " + String(targetNumber) + " doesn't exist");
 		}
 	}
 
