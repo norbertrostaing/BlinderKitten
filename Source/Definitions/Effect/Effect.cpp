@@ -177,6 +177,7 @@ void Effect::pleaseComputeIfRunning() {
 }
 
 void Effect::computeData() {
+	//LOG("computing");
 	isComputing.enter();
 	chanToFxParam.clear();
 	for (int i = 0; i < values.items.size(); i++) {
@@ -190,6 +191,7 @@ void Effect::computeData() {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	isComputing.exit();
+	computed = true;
 
 }
 
