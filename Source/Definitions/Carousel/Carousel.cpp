@@ -227,8 +227,8 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		}
 
 		if (toApply == nullptr) {
-			LOG("miaou !");
-			LOG(offset);
+//			LOG("miaou !");
+//			LOG(offset);
 			return currentVal;
 		}
 		ChannelValue* cVal = toApply->computedValues.getReference(fc); 
