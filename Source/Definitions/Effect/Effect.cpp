@@ -183,6 +183,8 @@ void Effect::computeData() {
 	for (int i = 0; i < values.items.size(); i++) {
 		values.items[i]->computeData();
 	}
+	isComputing.exit();
+	computed = true;
 	if (isOn) {
 		for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
 			it.getKey()->effectOnTopOfStack(this);
@@ -190,8 +192,6 @@ void Effect::computeData() {
 		}
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	isComputing.exit();
-	computed = true;
 
 }
 
