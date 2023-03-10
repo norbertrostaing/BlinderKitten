@@ -221,13 +221,13 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	if (Brain::getInstance()->loadingIsRunning) {
 		//return;
 	}
-	if (p == HTPLevel || p == FlashLevel) {
+	if (p == HTPLevel) {
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
-		if (p == HTPLevel && !Brain::getInstance()->loadingIsRunning) {
+		if (!Brain::getInstance()->loadingIsRunning) {
 			if (autoStart->getValue() && cueA == nullptr && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
 				userGo();
 			}
-			else if (autoStop->getValue() && cueA!=nullptr && (float)HTPLevel->getValue() == 0) {
+			else if (autoStop->getValue() && cueA != nullptr && (float)HTPLevel->getValue() == 0) {
 				off();
 			}
 		}
@@ -235,9 +235,23 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		lastHTPLevel = p->getValue();
 		Brain::getInstance()->pleaseUpdate(this);
 	}
+	if (p == FlashLevel) {
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+		pleaseUpdateHTPs = true;
+		Brain::getInstance()->pleaseUpdate(this);
+	}
 	if (p == LTPLevel) {
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
+		if (!Brain::getInstance()->loadingIsRunning) {
+			if (autoStart->getValue() && cueA == nullptr && (float)LTPLevel->getValue() != 0 && lastLTPLevel == 0) {
+				userGo();
+			}
+			else if (autoStop->getValue() && cueA != nullptr && (float)LTPLevel->getValue() == 0) {
+				off();
+			}
+		}
 		pleaseUpdateLTPs = true;
+		lastLTPLevel = p->getValue();
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 
