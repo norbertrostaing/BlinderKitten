@@ -11,6 +11,8 @@
 #pragma once
 #include "JuceHeader.h"
 #include "Common/CommonIncludes.h"
+//#include "VirtualFaderCol.h"
+class VirtualFaderCol;
 
 class VirtualFaderButton :
     public BaseItem
@@ -32,16 +34,18 @@ public:
     FloatParameter* cueId;
 
     ActionManager actionManager;
+    VirtualFaderCol* parentColumn = nullptr;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
     void updateDisplay();
 
-    void pressed(String colTargetType, int colTargetId);
-    void released(String colTargetType, int colTargetId);
+    void pressed();
+    void released();
     String getBtnText(String columnType);
 
-    String getTypeString() const override { return objectType; }
+    bool checkParentColumn();
 
+    String getTypeString() const override { return objectType; };
     static VirtualFaderButton* create(var params) { return new VirtualFaderButton(params); }
 };

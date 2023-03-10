@@ -68,7 +68,6 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
 
     if (actionType != VF_FADER) {
         number = elementNumber->getValue();
-        number -= 1;
     }
     int col = colNumber->getValue();
     int page = pageNumber->getValue();
@@ -78,6 +77,27 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
     }
 
     bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
+
+
+    switch (actionType) {
+    case VF_ROTARY:
+        VirtualFaderColManager::getInstance()->setRotaryValue(page, col, number, val, origin);
+        break;
+
+    case VF_ABOVEBUTTON:
+        VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, number, val, origin);
+       break;
+
+    case VF_FADER: {
+        VirtualFaderColManager::getInstance()->setFaderValue(page, col, val, origin);
+        break;
+    }
+    case VF_BELOWBUTTON:
+        VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, number, val, origin);
+        break;
+    }
+
+
     /*
     page = -1;
     if (page == 0 || page == VirtualFaderColGrid::getInstance()->page) {
@@ -94,7 +114,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
             }
             return;
         }
-        else if (actionType == VF_ENCODER) {
+        else if (actionType == VF_ROTARY) {
             if (col <= VirtualFaderColGrid::getInstance()->cols) {
                 if (number < VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->size()) {
                     if (VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->getRawDataPointer()[number]->getValue() != val) {
@@ -109,6 +129,9 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
     page = 1;
     */
     //LOG("looking for page " + String(page) + ", col" + String(col) + ", number " + String(number) + "");
+
+
+    /*
     for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
         VirtualFaderCol* vfc = VirtualFaderColManager::getInstance()->items[i];
 
@@ -131,10 +154,10 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
                 if (vfc->aboveButtons.items.size() > number) {
                     VirtualFaderButton* vb = vfc->aboveButtons.items[number];
                     if (val > 0) {
-                        vb->pressed(vfc->targetType->getValue(), vfc->targetId->getValue());
+                        vb->pressed();
                     }
                     else {
-                        vb->released(vfc->targetType->getValue(), vfc->targetId->getValue());
+                        vb->released();
                     }
 
                 }
@@ -155,10 +178,10 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
                 if (vfc->belowButtons.items.size() > number) {
                     VirtualFaderButton* vb = vfc->belowButtons.items[number];
                     if (val > 0) {
-                        vb->pressed(vfc->targetType->getValue(), vfc->targetId->getValue());
+                        vb->pressed();
                     }
                     else {
-                        vb->released(vfc->targetType->getValue(), vfc->targetId->getValue());
+                        vb->released();
                     }
 
                 }
@@ -166,6 +189,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
                 break;
             }
         }
-    }
+        */
+    
     
 }

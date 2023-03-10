@@ -88,7 +88,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Go To Page", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_GOTOPAGE));
 
 
-    defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Encoder Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ENCODER));
+    defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Encoder Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ROTARY));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Above Button Press", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ABOVEBUTTON));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Fader Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_FADER));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Below Button Press", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_BELOWBUTTON));

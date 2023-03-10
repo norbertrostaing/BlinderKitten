@@ -33,20 +33,21 @@ public:
     FloatParameter* maxSpeed;
 
     ActionManager actionManager;
-    VirtualFaderCol* parentColumn = nullptr;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
     void updateDisplay();
-    float getTargetValue(String colTargetType, int colTargetId);
+    float getTargetValue();
 
-    void moved(float value, String colTargetType, int colTargetId, String origin);
+    void moved(float value, String origin);
     void released();
     String getBtnText(String columnType);
 
     String getTypeString() const override { return objectType; }
-    bool checkParentColumn();
     bool isAllowedToMove(String origin, float newValue);
+
+    VirtualFaderCol* parentColumn = nullptr;
+    bool checkParentColumn();
 
     static VirtualFaderSlider* create(var params) { return new VirtualFaderSlider(params); }
 };

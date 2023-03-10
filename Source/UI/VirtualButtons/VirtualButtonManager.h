@@ -25,6 +25,10 @@ public:
 
     void onContainerParameterChanged(Parameter* p) override;
 
+    HashMap<String, VirtualButton*> library;
+    CriticalSection usingLibrary;
+    void reconstructLibrary();
     // static int sort(VirtualButton* A, VirtualButton* B) {return (int)A->id->getValue() - (int)B->id->getValue();};
 
+    void setButtonValue(int page, int col, int row, float value, String origin);
 };

@@ -28,6 +28,10 @@
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI//EncodersMult/EncodersMult.h"
+#include "UI/VirtualButtons/VirtualButtonManager.h"
+#include "UI/VirtualFaders/VirtualFaderColManager.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -51,7 +55,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 {
 	StringArray aList;
 	String address = m.getAddressPattern().toString().toLowerCase();
-	//LOG(address);
+	LOG(address);
 	aList.addTokens(m.getAddressPattern().toString().toLowerCase(), "/", "\"");
 	if (aList.size() < 3) return;
 
@@ -87,6 +91,16 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		start
 		stop
 		size
+
+	virtbutton page col row
+	virtabove page col row
+	virtbelow page col row
+	virtfader page col row
+	virtrotary page col row
+
+	
+		/vfader/3/rotary/2
+		/vbutton/4/5
 	*/
 
 	String firstWord = aList[1];
@@ -228,6 +242,72 @@ void UserInputManager::processMessage(const OSCMessage& m)
 			LOGWARNING("Mapper " + String(targetNumber) + " doesn't exist");
 		}
 	}
+
+	// PAS DU TOUT OPTI CA !!!
+	else if (firstWord == "virtbutton" && aList.size() > 3) {
+		int page = VirtualButtonGrid::getInstance()->page;
+		int col = (int)((var)aList[2]);
+		int row = (int)((var)aList[3]);
+		int value = OSCHelpers::getFloatArg(m[0]);
+		if (aList.size() == 5) {
+			page = (int)((var)aList[2]);
+			col = (int)((var)aList[3]);
+			row = (int)((var)aList[4]);
+		}
+		VirtualButtonManager::getInstance()->setButtonValue(page, col, row, value, "");
+	}
+
+	else if (firstWord == "virtabove" && aList.size() > 3) {
+		int page = VirtualFaderColGrid::getInstance()->page;
+		int col = (int)((var)aList[2]);
+		int row = (int)((var)aList[3]);
+		int value = OSCHelpers::getFloatArg(m[0]);
+		if (aList.size() == 5) {
+			page = (int)((var)aList[2]);
+			col = (int)((var)aList[3]);
+			row = (int)((var)aList[4]);
+		}
+		VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, row, value, "");
+	}
+
+	else if (firstWord == "virtbelow" && aList.size() > 3) {
+		int page = VirtualFaderColGrid::getInstance()->page;
+		int col = (int)((var)aList[2]);
+		int row = (int)((var)aList[3]);
+		int value = OSCHelpers::getFloatArg(m[0]);
+		if (aList.size() == 5) {
+			page = (int)((var)aList[2]);
+			col = (int)((var)aList[3]);
+			row = (int)((var)aList[4]);
+		}
+		VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, row, value, "");
+	}
+
+	else if (firstWord == "virtrotary" && aList.size() > 3) {
+		int page = VirtualFaderColGrid::getInstance()->page;
+		int col = (int)((var)aList[2]);
+		int row = (int)((var)aList[3]);
+		int value = OSCHelpers::getFloatArg(m[0]);
+		if (aList.size() == 5) {
+			page = (int)((var)aList[2]);
+			col = (int)((var)aList[3]);
+			row = (int)((var)aList[4]);
+		}
+		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "");
+	}
+
+	else if (firstWord == "virtfader" && aList.size() > 3) {
+		int page = VirtualFaderColGrid::getInstance()->page;
+		int col = (int)((var)aList[2]);
+		int value = OSCHelpers::getFloatArg(m[0]);
+		if (aList.size() == 5) {
+			page = (int)((var)aList[2]);
+			col = (int)((var)aList[3]);
+		}
+		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "");
+	}
+
+
 
 	/*
 	if (aList[1] == "model")

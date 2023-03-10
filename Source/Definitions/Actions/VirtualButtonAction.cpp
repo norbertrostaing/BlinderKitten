@@ -60,6 +60,14 @@ void VirtualButtonAction::setValueInternal(var value, String origin)
             page = VirtualButtonGrid::getInstance()->page;
         }
 
+        if (val > 0) {
+            VirtualButtonManager::getInstance()->setButtonValue(page, col, row, 1, origin);
+        }
+        else {
+            VirtualButtonManager::getInstance()->setButtonValue(page, col, row, 0, origin);
+        }
+
+        /*
         for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
             VirtualButton* target = VirtualButtonManager::getInstance()->items[i];
             if ((int)target->pageNumber->getValue() == page && (int)target->rowNumber->getValue() == row && (int)target->colNumber->getValue() == col) {
@@ -79,6 +87,7 @@ void VirtualButtonAction::setValueInternal(var value, String origin)
                 }
             }
         }
+        */
     }
 
 }

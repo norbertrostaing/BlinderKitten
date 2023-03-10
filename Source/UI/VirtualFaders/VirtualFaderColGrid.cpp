@@ -326,7 +326,7 @@ void VirtualFaderColGrid::sliderValueChanged(Slider* slider) {
     if (vfc != nullptr) {
         VirtualFaderSlider* vf = sliderToVFS.getReference(slider);
         if (vf != nullptr) {
-            vf->moved(slider->getValue(), vfc->targetType->getValue(), vfc->targetId->getValue(), "");
+            vf->moved(slider->getValue(), "");
         }
     }
 }
@@ -350,7 +350,7 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
         if (vfc != nullptr) {
             VirtualFaderButton* vb = buttonToVFB.getReference(t);
             if (vb != nullptr) {
-                vb->pressed(vfc->targetType->getValue(), vfc->targetId->getValue());
+                vb->pressed();
             }
         }
     }
@@ -365,7 +365,7 @@ void VirtualFaderColGrid::buttonPressedUp(TextButton* t) {
     if (vfc != nullptr) {
         VirtualFaderButton* vb = buttonToVFB.getReference(t);
         if (vb != nullptr) {
-            vb->released(vfc->targetType->getValue(), vfc->targetId->getValue());
+            vb->released();
         }
     }
 }
@@ -460,7 +460,7 @@ void VirtualFaderColGrid::updateSlidersValues()
         VirtualFaderSlider* s = sliderToVFS.getReference(faders[i]);
         float v = 0;
         if (s != nullptr) {
-            v = s->getTargetValue(colTargetType, colTargetId);
+            v = s->getTargetValue();
         }
         faders[i]->setValue(v, juce::dontSendNotification);
 
@@ -468,7 +468,7 @@ void VirtualFaderColGrid::updateSlidersValues()
             s = sliderToVFS.getReference(rotaries[i]->getRawDataPointer()[r]);
             v = 0;
             if (s != nullptr) {
-                v = s->getTargetValue(colTargetType, colTargetId);
+                v = s->getTargetValue();
             }
             rotaries[i]->getRawDataPointer()[r]->setValue(v, juce::dontSendNotification);
 

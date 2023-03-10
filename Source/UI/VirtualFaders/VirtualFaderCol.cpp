@@ -14,6 +14,18 @@
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
 
+BaseManagerSlider::BaseManagerSlider(const String& name) : BaseManager(name) {}
+BaseManagerButton::BaseManagerButton(const String& name) : BaseManager(name) {}
+
+void BaseManagerSlider::addItemInternal(VirtualFaderSlider*, var data) { VirtualFaderColManager::getInstance()->reconstructLibraries(); };
+void BaseManagerSlider::removeItemInternal(VirtualFaderSlider*) { VirtualFaderColManager::getInstance()->reconstructLibraries(); };
+void BaseManagerSlider::setItemIndex(VirtualFaderSlider* item, int newIndex, bool addToUndo) { BaseManager::setItemIndex(item, newIndex, addToUndo);  VirtualFaderColManager::getInstance()->reconstructLibraries(); };
+
+void BaseManagerButton::addItemInternal(VirtualFaderButton*, var data) { VirtualFaderColManager::getInstance()->reconstructLibraries(); };
+void BaseManagerButton::removeItemInternal(VirtualFaderButton*) { VirtualFaderColManager::getInstance()->reconstructLibraries(); };
+void BaseManagerButton::setItemIndex(VirtualFaderButton* item, int newIndex, bool addToUndo) { BaseManager::setItemIndex(item, newIndex, addToUndo);  VirtualFaderColManager::getInstance()->reconstructLibraries(); };
+
+
 VirtualFaderCol::VirtualFaderCol(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderCol")),
 	objectType(params.getProperty("type", "VirtualFaderCol").toString()),
@@ -63,10 +75,13 @@ void VirtualFaderCol::updateName() {
 }
 
 void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
-	VirtualFaderColGrid::getInstance()->fillCells();
 	if (c == targetType) {
 		updateDisplay();
 	}
+	if (c == colNumber || c == pageNumber) {
+		VirtualFaderColManager::getInstance()->reconstructLibraries();
+	}
+	VirtualFaderColGrid::getInstance()->fillCells();
 }
 
 void VirtualFaderCol::updateDisplay() {
@@ -140,5 +155,6 @@ void VirtualFaderCol::loadJSONDataInternal(var data) {
 	BaseItem::loadJSONDataInternal(data);
 	updateDisplay();
 }
+
 
 

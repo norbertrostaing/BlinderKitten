@@ -91,6 +91,9 @@ void VirtualButton::onContainerParameterChangedInternal(Parameter* c) {
 	if (c == targetType || c == cuelistAction) {
 		updateDisplay();
 	}
+	if (c == colNumber || c == pageNumber || c == rowNumber) {
+		VirtualButtonManager::getInstance()->reconstructLibrary();
+	}
 	VirtualButtonGrid::getInstance()->fillCells();
 }
 

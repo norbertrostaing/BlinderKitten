@@ -13,6 +13,30 @@
 #include "VirtualFaderButton.h"
 #include "VirtualFaderSlider.h"
 
+class BaseManagerSlider :
+    public BaseManager<VirtualFaderSlider>
+{
+    public:
+    BaseManagerSlider(const String& name);
+    ~BaseManagerSlider() {};
+
+    void addItemInternal(VirtualFaderSlider*, var data);
+    void removeItemInternal(VirtualFaderSlider*);
+    void setItemIndex(VirtualFaderSlider* item, int newIndex, bool addToUndo = true);
+};
+
+class BaseManagerButton :
+    public BaseManager<VirtualFaderButton>
+{
+    public:
+    BaseManagerButton(const String& name);
+    ~BaseManagerButton() {};
+
+    void addItemInternal(VirtualFaderButton*, var data);
+    void removeItemInternal(VirtualFaderButton*);
+    void setItemIndex(VirtualFaderButton* item, int newIndex, bool addToUndo = true);
+};
+
 class VirtualFaderCol :
     public BaseItem
 {
@@ -29,10 +53,10 @@ public:
     EnumParameter * targetType;
     IntParameter * targetId;
 
-    BaseManager<VirtualFaderSlider> rotaries;
-    BaseManager<VirtualFaderButton> aboveButtons;
+    BaseManagerSlider rotaries;
+    BaseManagerButton aboveButtons;
     VirtualFaderSlider fader;
-    BaseManager<VirtualFaderButton> belowButtons;
+    BaseManagerButton belowButtons;
 
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
@@ -47,3 +71,4 @@ public:
     void loadJSONDataInternal(var data) override;
     static VirtualFaderCol* create(var params) { return new VirtualFaderCol(params); }
 };
+

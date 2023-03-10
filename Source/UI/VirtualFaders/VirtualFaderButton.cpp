@@ -115,7 +115,11 @@ void VirtualFaderButton::updateDisplay() {
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
-void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
+void VirtualFaderButton::pressed() {
+	checkParentColumn();
+	if (parentColumn == nullptr) {LOG("this is strange"); return; }
+	String colTargetType = parentColumn->targetType->getValue();
+	int colTargetId = parentColumn->targetId->intValue();
 	String targType = targetType->getValue();
 	if (targType == "actions") {
 		actionManager.setValueAll(1);
@@ -218,7 +222,11 @@ void VirtualFaderButton::pressed(String colTargetType, int colTargetId) {
 	}
 }
 
-void VirtualFaderButton::released(String colTargetType, int colTargetId) {
+void VirtualFaderButton::released() {
+	checkParentColumn();
+	if (parentColumn == nullptr) { LOG("this is strange"); return; }
+	String colTargetType = parentColumn->targetType->getValue();
+	int colTargetId = parentColumn->targetId->intValue();
 	String targType = targetType->getValue();
 	if (targType == "actions") {
 		actionManager.setValueAll(0);
@@ -325,3 +333,12 @@ String VirtualFaderButton::getBtnText(String columnType) {
 		return text;
 	}
 }
+
+bool VirtualFaderButton::checkParentColumn()
+{
+	if (parentColumn == nullptr) {
+		parentColumn = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get());
+	}
+	return parentColumn != nullptr;
+}
+

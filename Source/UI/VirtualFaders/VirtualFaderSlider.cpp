@@ -110,8 +110,12 @@ void VirtualFaderSlider::updateDisplay() {
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
-float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
+float VirtualFaderSlider::getTargetValue()
 {
+	checkParentColumn();
+	if (parentColumn == nullptr) { LOG("this is strange"); return 0; }
+	String colTargetType = parentColumn->targetType->getValue();
+	int colTargetId = parentColumn->targetId->intValue();
 	String targType = targetType->getValue();
 	int targId = targetId->getValue();
 
@@ -186,10 +190,13 @@ float VirtualFaderSlider::getTargetValue(String colTargetType, int colTargetId)
 
 }
 
-void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetId, String origin) {
+void VirtualFaderSlider::moved(float value, String origin) {
+	checkParentColumn();
+	if (parentColumn == nullptr) { LOG("this is strange"); return; }
+	String colTargetType = parentColumn->targetType->getValue();
+	int colTargetId = parentColumn->targetId->intValue();
 	String targType = targetType->getValue();
 	if (!isAllowedToMove(origin, value)) {
-		LOG("not allowed " << origin);
 		return;
 	}
 	if (targType == "actions") {
@@ -217,13 +224,13 @@ void VirtualFaderSlider::moved(float value, String colTargetType, int colTargetI
 			}
 			if (action == "flashlevel") { 
 				if (origin == "" || targ->currentFlashLevelController == origin || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
-					targ->nextLTPLevelController = origin;
+					targ->nextFlashLevelController = origin;
 					targ->FlashLevel->setValue(value);
 				}
 			}
 			if (action == "ltplevel") { 
 				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
-					targ->nextFlashLevelController = origin;
+					targ->nextLTPLevelController = origin;
 					targ->LTPLevel->setValue(value);
 				}
 			}
@@ -378,7 +385,9 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 bool VirtualFaderSlider::checkParentColumn()
 {
 	if (parentColumn == nullptr) {
-		parentColumn = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get());
+		if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
+			parentColumn = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get());
+		}
 	}
 	return parentColumn != nullptr;
 }
