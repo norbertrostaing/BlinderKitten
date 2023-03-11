@@ -35,6 +35,7 @@ EffectParam::EffectParam(var params) :
     elementsSpread = addFloatParameter("Elements Spread", "Size of distribution", 1, 0);
 
     buddying = addIntParameter("Buddying", "make groups of X following subfixtures with the same value",1,1);
+    blocks = addIntParameter("Blocks", "A block repeat the effect, applies before the wings", 1, 1);
     wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
     wingsInvert = addBoolParameter("Invert wings value", "Values on wings are inverted", false);
     wingsSoloCenterDisable = addBoolParameter("Disable wings centered solo value", "Disable value for fixtures on the symetry axis", false);

@@ -27,8 +27,9 @@ class EffectParam:
     FloatParameter* elementsStart;
     FloatParameter* elementsSpread;
     
-    IntParameter* wings;
     IntParameter* buddying;
+    IntParameter* blocks;
+    IntParameter* wings;
     BoolParameter* wingsInvert;
     BoolParameter* wingsSoloCenterDisable;
 

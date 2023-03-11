@@ -119,6 +119,7 @@ void EffectRow::computeData() {
                 }
             
                 int nWings = p->wings->getValue();
+                int nBlocks = p->blocks->getValue();
                 int nBuddying = p->buddying->getValue();
                 int realTot = chans.size()/nBuddying;
                 float wingSize = realTot / (float)nWings;
@@ -141,6 +142,8 @@ void EffectRow::computeData() {
                     else if (realIndex == flooredWingSize && wingSize > realIndex) {
                         isCentered = true;
                     }
+                    realIndex = realIndex*nBlocks;
+                    realIndex = realIndex % roundedWingSize;
 
                     double offset = realIndex / (double)realTot;
                     offset *= (double)p->elementsSpread->getValue();

@@ -29,6 +29,7 @@ class CarouselRow:
     FloatParameter* elementsSpread;
 
     IntParameter* wings;
+    IntParameter* blocks;
     IntParameter* buddying;
     // EnumParameter* curvePresetOrValue;
     // Automation curve;

@@ -30,8 +30,9 @@ CarouselRow::CarouselRow(var params) :
     elementsStart = addFloatParameter("First Element position", "Position of the first element, relative to the curve", 0, 0, 1);
     elementsSpread = addFloatParameter("Elements Spread", "Size of distribution", 1, 0);
 
-    wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
     buddying = addIntParameter("Buddying", "make groups of X following subfixtures with the same value", 1, 1);
+    blocks = addIntParameter("Blocks", "A Block repeat the effect, applies before wings", 1, 1);
+    wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
 
 
     addChildControllableContainer(&selection);
@@ -110,6 +111,7 @@ void CarouselRow::computeData() {
     }
 
     int nWings = wings->getValue();
+    int nBlocks = blocks->getValue();
     int nBuddying = buddying->getValue();
     int realTot = selection.computedSelectedSubFixtures.size() / nBuddying;
     float wingSize = realTot / (float)nWings;
@@ -155,6 +157,8 @@ void CarouselRow::computeData() {
                     realIndex = realIndex % roundedWingSize;
                     realIndex = wingSize - 1 - realIndex;
                 }
+                realIndex = realIndex * nBlocks;
+                realIndex = realIndex % roundedWingSize;
 
                 double offset = realIndex / (double)realTot;
                 offset *= (double)elementsSpread->getValue();
