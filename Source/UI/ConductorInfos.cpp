@@ -32,9 +32,11 @@ void ConductorInfos::paint (juce::Graphics& g)
     int targetCueId = engine->conductorCuelistId->getValue();
     Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
     if (target == nullptr) {
-        g.drawText("Cuelist 1 doesn't exist", getLocalBounds(), juce::Justification::centred, true);
+        g.drawText("Cuelist "+String(targetCueId)+" doesn't exist", getLocalBounds(), juce::Justification::centred, true);
         return;
     }
+
+    Cue* nextCue = target->getNextCue();
 
     float textSize = engine->conductorTextSize->getValue();
     float titleSize = engine->conductorTitleSize->getValue();
@@ -42,10 +44,11 @@ void ConductorInfos::paint (juce::Graphics& g)
     float w = getLocalBounds().getWidth();
     float h = getLocalBounds().getHeight();
 
-    float currentCueHeight = titleSize * 1.5;
-    float nextCueHeight = titleSize * 1.5;
-    float nextCueGoHeight = textSize * 1.5;
+    float currentCueHeight = titleSize +10;
+    float nextCueHeight = textSize +10;
+    float nextCueGoHeight = titleSize +10;
     float currentCueTextHeight = h - currentCueHeight - nextCueHeight - nextCueGoHeight;
+
 
     if (currentCueTextHeight < currentCueHeight) {
         currentCueHeight = h/4;
@@ -54,22 +57,54 @@ void ConductorInfos::paint (juce::Graphics& g)
         currentCueTextHeight = h/4;
     }
 
-    g.setColour (juce::Colours::grey);
+    float timingHeight = nextCueHeight + nextCueGoHeight;
+    float timingElementSize = timingHeight / 3;
+    float timingWidth = timingElementSize * 5;
+
+    g.setColour (engine->conductorCurrentCueColor->getColor());
 
     g.setFont (titleSize);
-    g.drawFittedText(target->currentCueName->getValue(), 0, 0, w, currentCueHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->currentCueName->getValue(), 0, 0, w, currentCueHeight, juce::Justification::centredTop, true);
 
     g.setFont(textSize);
-    g.drawFittedText(target->currentCueText->getValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->currentCueText->getValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centredTop, true);
+
+    g.setColour(engine->conductorNextCueColor->getColor());
+
+    float topNext = h - nextCueHeight - nextCueGoHeight;
 
     g.setFont(titleSize);
-    g.drawFittedText(target->nextCueGo->getValue(), 0, h - nextCueHeight - nextCueHeight, w, nextCueGoHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->nextCueGo->getValue(), 0, topNext, w-timingWidth, nextCueGoHeight, juce::Justification::centredTop, true);
 
     g.setFont(textSize);
-    g.drawFittedText(target->nextCueName->getValue(), 0, h-nextCueHeight, w, nextCueHeight, juce::Justification::centred, true);
+    g.drawFittedText(target->nextCueName->getValue(), 0, h - nextCueHeight, w-timingWidth, nextCueHeight, juce::Justification::centredTop, true);
 
+    if (nextCue != nullptr) {
+        g.setFont(timingElementSize*0.5);
+        g.drawFittedText("Up", w - (3 * timingElementSize), topNext, timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText("Down", w - (2*timingElementSize), topNext, timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText("LTP", w - (1*timingElementSize), topNext, timingElementSize, timingElementSize, juce::Justification::centred, true);
+        //int r = Random::getSystemRandom().nextInt(100);
 
-    //int r = Random::getSystemRandom().nextInt(100);
+        g.drawFittedText("Delay", w - (5 * timingElementSize), topNext+timingElementSize, timingElementSize*2, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText("Fade", w - (5 * timingElementSize), topNext + (2*timingElementSize), timingElementSize*2, timingElementSize, juce::Justification::centred, true);
+
+        float ltpDelay = round(nextCue->ltpDelay->floatValue() * 100) / 100.;
+        float ltpFade = round(nextCue->ltpFade->floatValue() * 100) / 100.;
+        float htpInDelay = round(nextCue->htpInDelay->floatValue() * 100) / 100.;
+        float htpOutDelay = round(nextCue->htpOutDelay->floatValue() * 100) / 100.;
+        float htpInFade = round(nextCue->htpInFade->floatValue() * 100) / 100.;
+        float htpOutFade = round(nextCue->htpOutDelay->floatValue() * 100) / 100.;
+    
+        g.drawFittedText(String(htpInDelay), w - (3 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText(String(htpOutDelay), w - (2 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText(String(ltpDelay), w - (1 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
+
+        g.drawFittedText(String(htpInFade), w - (3 * timingElementSize), topNext + (2*timingElementSize), timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText(String(htpOutFade), w - (2 * timingElementSize), topNext + (2*timingElementSize), timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText(String(ltpFade), w - (1 * timingElementSize), topNext + (2*timingElementSize), timingElementSize, timingElementSize, juce::Justification::centred, true);
+    }
+
 
 
 }

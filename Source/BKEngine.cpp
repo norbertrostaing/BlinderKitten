@@ -132,6 +132,11 @@ BKEngine::BKEngine() :
 	conductorTitleSize->addParameterListener(this);
 	conductorTextSize = conductorInfosContainer.addIntParameter("Text font size", "text size of cue content", 14, 1);;
 	conductorTextSize->addParameterListener(this);
+	conductorCurrentCueColor = conductorInfosContainer.addColorParameter("Current cue color", "Text color for your current cue", Colour(127, 127, 127));
+	conductorCurrentCueColor->addParameterListener(this);
+	conductorNextCueColor = conductorInfosContainer.addColorParameter("Next cue color", "Text color for your next cue", Colour(196, 0, 0));
+	conductorNextCueColor->addParameterListener(this);
+	//conductorCurrentCueColor->addParameterListener(ConductorInfos::getInstance());
 
 	CPRedChannel = colorPickerContainer.addTargetParameter("Red channel", "", ChannelFamilyManager::getInstance());
 	CPRedChannel->targetType = TargetParameter::CONTAINER;
@@ -585,6 +590,9 @@ void BKEngine::childStructureChanged(ControllableContainer* cc)
 void BKEngine::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	if (isClearing || isLoadingFile) return;
+	if (cc == &conductorInfosContainer) {
+		ConductorInfos::getInstance()->repaint();
+	}
 }
 
 void BKEngine::handleAsyncUpdate()
@@ -919,7 +927,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == virtualFaderCols || p == virtualFaderRotary || p == virtualFaderAbove || p == virtualFaderSize || p == virtualFaderBelow) {
 		VirtualFaderColGrid::getInstance()->initCells();
 	}
-	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize) {
+	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor) {
 		ConductorInfos::getInstance()->repaint();
 	}
 }

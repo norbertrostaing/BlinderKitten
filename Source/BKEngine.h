@@ -54,6 +54,8 @@ public:
 	IntParameter* conductorCuelistId;
 	IntParameter* conductorTitleSize;
 	IntParameter* conductorTextSize;
+	ColorParameter* conductorCurrentCueColor;
+	ColorParameter* conductorNextCueColor;
 
 	ControllableContainer colorPickerContainer;
 	TargetParameter* CPRedChannel;
