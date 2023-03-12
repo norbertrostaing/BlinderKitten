@@ -38,7 +38,7 @@ Cue::Cue(var params) :
 	autoFollow->addOption("Wait for go", "none");
 	autoFollow->addOption("End of transitions", "auto");
 	autoFollow->addOption("Immediate", "immediate");
-	autoFollowTiming = addFloatParameter("Auto Follow timing", "Number of seconds before trigger the auto go ", 0, 0);
+	autoFollowTiming = addFloatParameter("Auto Follow delay", "Number of seconds before trigger the auto go ", 0, 0);
 	autoFollowCountDown = addFloatParameter("Auto Follow CountdDown", "Triggers next cue when arrives to 0", 0, 0);
 	autoFollowCountDown->isControllableFeedbackOnly = true;
 
