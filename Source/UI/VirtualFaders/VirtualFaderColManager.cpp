@@ -45,7 +45,6 @@ void VirtualFaderColManager::onContainerParameterChanged(Parameter* p)
 
 void VirtualFaderColManager::reconstructLibraries()
 {
-    LOG("reconstruct");
     usingLibraries.enter();
     for (int i = 0; i < items.size(); i++) {
         VirtualFaderCol* vfc = items[i];
