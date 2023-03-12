@@ -278,7 +278,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			value *= (double)p->curveSize->getValue();
 			currentVal = (float)p->baseValue->getValue() + value;
 		}
-		else if(p->effectMode->getValue() == "attractive") {
+		else if(p->effectMode->getValue() == "attracted") {
 			value *= (double)p->curveSize->getValue();
 			value = (float)p->baseValue->getValue() + value;
 			currentVal = jmap((float)size,currentVal,value);
