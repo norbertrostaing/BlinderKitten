@@ -78,11 +78,15 @@ InputPanel::~InputPanel()
 }
 
 void InputPanel::buttonClicked(juce::Button* button) {
+    ModifierKeys k = ModifierKeys::getCurrentModifiersRealtime();
     if (button == &btnAssistant){
         Assistant::getInstance()->selectThis();
     }
     else if (button == &btnBackspace) {
         UserInputManager::getInstance()->processInput("backspace");
+    }
+    else if (button == &btnClear && k.isShiftDown()) {
+        UserInputManager::getInstance()->processInput("clearall");
     }
     else {
         UserInputManager::getInstance()->processInput(button->getButtonText());

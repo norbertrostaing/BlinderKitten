@@ -476,7 +476,10 @@ void Programmer::processUserInput(String s) {
 	}
 	checkCurrentUserCommand();
 	currentUserCommand->getCommandAsTexts();
-	if (s == "clear") {
+	if (s == "clearall") {
+		clearAll();
+	}
+	else if (s == "clear") {
 		Brain::getInstance()->pleaseClearProgrammer = true;
 	}
 	else if (s == "+" || s == "-") {
