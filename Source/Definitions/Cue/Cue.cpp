@@ -15,7 +15,7 @@
 #include "UserInputManager.h"
 
 Cue::Cue(var params) :
-	BaseItem(params.getProperty("name", "Cue")),
+	BaseItem(params.getProperty("name", "Cue 1")),
 	objectType(params.getProperty("type", "Cue").toString()),
 	objectData(params),
 	actionsContainer("Actions"),
