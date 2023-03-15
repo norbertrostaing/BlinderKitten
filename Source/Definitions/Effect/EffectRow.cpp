@@ -121,7 +121,7 @@ void EffectRow::computeData() {
                 int nWings = p->wings->getValue();
                 int nBlocks = p->blocks->getValue();
                 int nBuddying = p->buddying->getValue();
-                int realTot = chans.size()/nBuddying;
+                int realTot = ceil(chans.size()/(float)nBuddying);
                 float wingSize = realTot / (float)nWings;
                 realTot = ceil(realTot / (float)nWings);
                 int roundedWingSize = round(wingSize);

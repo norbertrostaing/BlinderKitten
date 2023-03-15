@@ -113,7 +113,7 @@ void CarouselRow::computeData() {
     int nWings = wings->getValue();
     int nBlocks = blocks->getValue();
     int nBuddying = buddying->getValue();
-    int realTot = selection.computedSelectedSubFixtures.size() / nBuddying;
+    int realTot = ceil(selection.computedSelectedSubFixtures.size() / (float)nBuddying);
     float wingSize = realTot / (float)nWings;
     realTot = ceil(realTot / (float)nWings);
     int roundedWingSize = round(wingSize);
