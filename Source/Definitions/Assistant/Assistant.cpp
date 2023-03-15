@@ -211,7 +211,6 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 
 void Assistant::patchFixtures()
 {
-    const MessageManagerLock mmLock;
     FixtureType* fixtureType = dynamic_cast<FixtureType*>(patcherFixtureType->targetContainer.get());
     int amount = patcherAmount->getValue();
     String name = patcherName->getValue();
@@ -224,6 +223,8 @@ void Assistant::patchFixtures()
     if (name == "") { name = fixtureType->niceName; }
 
     LOG("Patching your fixtures, please wait");
+    Brain::getInstance()->usingCollections.enter();
+    const MessageManagerLock mmLock;
     int currentAdress = firstAddress;
 
     for (int i = 0; i < amount; i++) {
@@ -257,6 +258,7 @@ void Assistant::patchFixtures()
         g->selection.items[0]->thru->setValue(true);
         g->selection.items[0]->valueTo->setValue(firstId+amount-1);
     }
+    Brain::getInstance()->usingCollections.exit();
 }
 
 void Assistant::createPalette()
