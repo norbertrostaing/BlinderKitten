@@ -197,6 +197,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				for (int i = 0; i< to; i++) {
 					int maxIndex = floor(tempSelection.size()/(float)nBuddy);
 					int randIndex = r.nextInt(maxIndex);
+					randIndex = r.nextInt(maxIndex);
 					randIndex *= nBuddy;
 					for (int n = 0; n < nBuddy; n++) {
 						if (randIndex < tempSelection.size()) {
