@@ -27,6 +27,7 @@ public:
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
     CommandSelectionManager selection;
 

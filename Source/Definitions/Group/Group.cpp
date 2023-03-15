@@ -14,6 +14,7 @@
 #include "../Command/CommandSelectionManager.h"
 #include "../../Brain.h"
 #include "UI/GridView/GroupGridView.h"
+#include "UserInputManager.h"
 
 Group::Group(var params) :
 	BaseItem(params.getProperty("name", "Group")),
@@ -58,4 +59,29 @@ void Group::onContainerParameterChangedInternal(Parameter* p) {
 		Brain::getInstance()->registerGroup(this, id->getValue(), true);
 	}
 	GroupGridView::getInstance()->updateCells();
+}
+
+
+void Group::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+	Programmer* currentProgrammer = UserInputManager::getInstance()->getProgrammer(false);
+	bool programmerNeedRefresh = false;
+	int myId = id->getValue();
+	if (currentProgrammer != nullptr) {
+		for (int iCommand = 0; iCommand < currentProgrammer->commands.items.size() && !programmerNeedRefresh; iCommand++) {
+			Command* currentCommand = currentProgrammer->commands.items[iCommand];
+			for (int iValue = 0; iValue < currentCommand->selection.items.size() && !programmerNeedRefresh; iValue++) {
+				CommandSelection* cs = currentCommand->selection.items[iValue];
+				if (cs->targetType->getValue() == "group") {
+					int tFromId = cs->valueFrom->getValue();
+					int tToId = cs->valueTo->getValue();
+					if (tFromId == myId) { programmerNeedRefresh = true; }
+					if (tToId == myId) { programmerNeedRefresh = true; }
+				}
+			}
+
+		}
+		if (programmerNeedRefresh) {
+			Brain::getInstance()->pleaseUpdate(currentProgrammer);
+		}
+	}
 }

@@ -97,11 +97,19 @@ void Preset::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == userName || p == id) {
 		updateName();
 	}
+	if (p == presetType) {
+		checkIfProgrammerNeedUpdate();
+	}
 	PresetGridView::getInstance()->updateCells();
 }
 
 
 void Preset::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+	checkIfProgrammerNeedUpdate();
+}
+
+void Preset::checkIfProgrammerNeedUpdate()
+{
 	Programmer* currentProgrammer = UserInputManager::getInstance()->getProgrammer(false);
 	bool programmerNeedRefresh = false;
 	int myId = id->getValue();

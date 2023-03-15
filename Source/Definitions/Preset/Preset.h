@@ -58,6 +58,6 @@ public:
     void reorderPresetContent();
 
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
-
+    void checkIfProgrammerNeedUpdate();
 
 };
