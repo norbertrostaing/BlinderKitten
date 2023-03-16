@@ -14,7 +14,7 @@
 
 
 FixtureTypeVirtualChannel::FixtureTypeVirtualChannel(var params) :
-    BaseItem(params.getProperty("name", "Channel")),
+    BaseItem(params.getProperty("name", "Virt Channel 1")),
     objectType(params.getProperty("type", "FixtureTypeVirtualChannel").toString()),
     objectData(params)
 
