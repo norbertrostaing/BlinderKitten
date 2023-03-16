@@ -95,6 +95,8 @@ BKEngine::BKEngine() :
 	//init here
 	Engine::mainEngine = this;
 
+	GlobalSettings::getInstance()->altScaleFactor->setDefaultValue(0.002);
+
 	GlobalSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
