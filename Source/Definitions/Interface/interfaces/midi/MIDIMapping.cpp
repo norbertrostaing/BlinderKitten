@@ -21,7 +21,7 @@ MIDIMapping::MIDIMapping() :
     // mode->addOption("Continuous", CONTINUOUS)->addOption("Trigger", TRIGGER)->addOption("On / Off", ONOFF)->addOption("Toggle", TOGGLE);
     
     midiType = addEnumParameter("Type", "Sets the type to check");
-    midiType->addOption("Note", NOTE)->addOption("Control Change", CONTROLCHANGE);
+    midiType->addOption("Note", NOTE)->addOption("Control Change", CONTROLCHANGE)->addOption("Pitch wheel", PITCHWHEEL);
 
     channel = addIntParameter("Channel", "The channel to use for this mapping.", 1, 1, 16);
     pitchOrNumber = addIntParameter("Pitch Or Number", "The pitch (for notes) or number (for controlChange) to use for this mapping.", 0, 0, 127);
@@ -59,7 +59,8 @@ void MIDIMapping::handleNote(int channel, int pitch, int velocity, String origin
 
     if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return;
     if (pitchOrNumber->intValue() != pitch) return;
-    handleValue(velocity, origin);
+    float relVal = jmap<float>(jlimit<float>(0, 127, velocity), 0, 127, 0, 1);
+    handleValue(relVal, origin);
 }
 
 void MIDIMapping::handleCC(int channel, int number, int value, String origin)
@@ -74,18 +75,32 @@ void MIDIMapping::handleCC(int channel, int number, int value, String origin)
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return;
     if (pitchOrNumber->intValue() != number) return;
-    handleValue(value, origin);
+    float relVal = jmap<float>(jlimit<float>(0, 127, value), 0, 127, 0, 1);
+    handleValue(relVal, origin);
 }
 
-void MIDIMapping::handleValue(int value, String origin)
+void MIDIMapping::handlePitchWheel(int channel, int value, String origin)
+{
+    if (learnMode->boolValue())
+    {
+        midiType->setValueWithData(PITCHWHEEL);
+        learnMode->setValue(false);
+    }
+
+    if (!enabled->boolValue()) return;
+    if (midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL) return;
+    float relVal = jmap<float>(jlimit<float>(0, 16383, value), 0, 16383, 0, 1);
+    handleValue(relVal, origin);
+}
+
+void MIDIMapping::handleValue(float value, String origin)
 {
     if (!enabled->boolValue()) return;
     // m = mode->getValueDataAsEnum<MappingMode>();
 
     //float minInput = jmin(inputRange->x, inputRange->y);
     //float maxInput = jmax(inputRange->x, inputRange->y);
-    float relVal = jmap<float>(jlimit<float>(0, 127, value), 0, 127, 0, 1);
-    actionManager.setValueAll(relVal, origin);
+    actionManager.setValueAll(value, origin);
     return;
     /*
     if (m != CONTINUOUS)

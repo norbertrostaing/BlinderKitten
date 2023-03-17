@@ -20,7 +20,7 @@ public:
     enum MappingMode{ TRIGGER, ONOFF, TOGGLE, CONTINUOUS };
     EnumParameter * mode;
     
-    enum MidiType { NOTE, CONTROLCHANGE };
+    enum MidiType { NOTE, CONTROLCHANGE, PITCHWHEEL };
     EnumParameter* midiType;
     IntParameter* channel;
     IntParameter* pitchOrNumber;
@@ -37,7 +37,8 @@ public:
 
     void handleNote(int channel, int pitch, int velocity, String origin);
     void handleCC(int channel, int number, int value, String origin);
-    void handleValue(int value, String origin);
+    void handlePitchWheel(int channel, int value, String origin);
+    void handleValue(float value, String origin);
 
     InspectableEditor* getEditorInternal(bool isRoot);
 };

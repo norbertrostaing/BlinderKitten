@@ -72,3 +72,10 @@ void MIDIInterface::controlChangeReceived(const int &channel, const int &number,
     if (logIncomingData->boolValue()) NLOG(niceName, "Control Change received, channel : " << channel << ", number : " << number << ", value : " << value);
     mappingManager.handleCC(channel, number, value, niceName);
 }
+
+void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
+{
+    if (!enabled->boolValue()) { return; }
+    if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
+    mappingManager.handlePitchWheel(channel, value, niceName);
+}

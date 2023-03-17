@@ -28,3 +28,8 @@ void MIDIMappingManager::handleCC(int channel, int number, int value, String ori
 {
     for (auto& i : items) i->handleCC(channel, number, value, origin);
 }
+
+void MIDIMappingManager::handlePitchWheel(int channel, int value, String origin)
+{
+    for (auto& i : items) i->handlePitchWheel(channel, value, origin);
+}
