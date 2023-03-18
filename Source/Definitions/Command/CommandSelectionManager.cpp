@@ -134,8 +134,10 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				}
 				Array<SubFixture*> filteredSelection;
 				for (int i = 0; i < tempSelection.size(); i++) {
-
 					float patternIndex = 0;
+
+					patternIndex = jmap(i,0,tempSelection.size(), 0, patternLength);
+					/*
 					if (i > tempSelectionSize / 2) {
 						patternIndex = (i + 1) * patternLength / float(tempSelectionSize);
 					}
@@ -149,6 +151,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					}
 
 					patternIndex = jmin(int(patternIndex), patternLength - 1);
+					*/
 					char c = pattern[patternIndex];
 					if (c == '1') {
 						filteredSelection.add(tempSelection[i]);

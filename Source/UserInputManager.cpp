@@ -55,7 +55,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 {
 	StringArray aList;
 	String address = m.getAddressPattern().toString().toLowerCase();
-	LOG(address);
+	//LOG(address);
 	aList.addTokens(m.getAddressPattern().toString().toLowerCase(), "/", "\"");
 	if (aList.size() < 3) return;
 
