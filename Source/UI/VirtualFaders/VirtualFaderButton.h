@@ -26,6 +26,7 @@ public:
 
     EnumParameter * targetType;
     IntParameter * targetId;
+    StringParameter* customText;
 
     EnumParameter * cuelistAction;
     EnumParameter * effectAction;

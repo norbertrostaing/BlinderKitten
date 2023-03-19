@@ -37,6 +37,9 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	targetType->addOption("Generic Actions", "actions");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
+
+	customText = addStringParameter("Custom Text", "Write your own text on your fader", "");
+
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("HTP Level", "htplevel");
 	cuelistAction->addOption("Flash Level", "flashlevel");
@@ -322,6 +325,9 @@ void VirtualFaderSlider::released() {
 }
 
 String VirtualFaderSlider::getBtnText(String columnType) {
+	if (customText->stringValue() != "") {
+		return customText->stringValue();
+	}
 	String text = "";
 	String targType = targetType->getValue();
 	String action = "";

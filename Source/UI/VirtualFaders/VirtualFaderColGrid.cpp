@@ -93,7 +93,10 @@ void VirtualFaderColGrid::resized()
         columnLabels[x]->setBounds(coordX, h-20, btnWidth, 20);
         for (int i = 0; i < nRotaries; i++) {
             rotaries[x]->getRawDataPointer()[i]->setBounds(coordX, currentCell * btnHeight, btnWidth, btnHeight);
-            rotaryLabels[x]->getRawDataPointer()[i]->setBounds(coordX, (currentCell+0.25) * btnHeight, btnWidth, btnHeight*0.25);
+            //rotaryLabels[x]->getRawDataPointer()[i]->setBounds(coordX, (currentCell + 0.25) * btnHeight, btnWidth, btnHeight * 0.25);
+            float fontHeight = rotaryLabels[x]->getRawDataPointer()[i]->getFont().getHeight();
+            rotaryLabels[x]->getRawDataPointer()[i]->setBounds(coordX, (currentCell) * btnHeight, btnWidth, fontHeight);
+
             currentCell += 1;
         }
         for (int i = 0; i < nAbove; i++) {
@@ -148,9 +151,10 @@ void VirtualFaderColGrid::initCells() {
         
         Label* mainLabel = new Label();
         addAndMakeVisible(mainLabel);
+        mainLabel->setMinimumHorizontalScale(1.);
         mainLabel->setEditable(false);
         mainLabel->setText("", juce::dontSendNotification);
-        mainLabel->setJustificationType(Justification(36));
+        mainLabel->setJustificationType(juce::Justification::centredTop);
         columnLabels.add(mainLabel);
 
         for (int i = 0; i < nRotaries; i++) {
@@ -165,9 +169,10 @@ void VirtualFaderColGrid::initCells() {
             sliderColumnIndex.set(s, x+1);
             Label * l = new Label();
             addAndMakeVisible(l);
+            l->setMinimumHorizontalScale(1.);
             l->setEditable(false);
             l->setText("", juce::dontSendNotification);
-            l->setJustificationType(Justification(36));
+            l->setJustificationType(juce::Justification::centredTop);
             rotaryLabels[x]->add(l);
 
         }
@@ -192,9 +197,10 @@ void VirtualFaderColGrid::initCells() {
         sliderColumnIndex.set(f, x+1);
         Label* l = new Label();
         addAndMakeVisible(l);
+        l->setMinimumHorizontalScale(1.);
         l->setEditable(false);
         l->setText("", juce::dontSendNotification);
-        l->setJustificationType(Justification(36));
+        l->setJustificationType(juce::Justification::centredTop);
 
         faderLabels.add(l);
 

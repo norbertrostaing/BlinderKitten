@@ -25,6 +25,7 @@ public:
     IntParameter * pageNumber;
     IntParameter * rowNumber;
     IntParameter * colNumber;
+    StringParameter * customText;
 
     EnumParameter * targetType;
     IntParameter * targetId;

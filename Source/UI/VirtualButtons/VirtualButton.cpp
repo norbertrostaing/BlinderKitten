@@ -29,6 +29,7 @@ VirtualButton::VirtualButton(var params) :
 	pageNumber = addIntParameter("Page number", "", 0,0);
 	rowNumber = addIntParameter("Row number", "", 0,0);
 	colNumber = addIntParameter("Col number", "", 0,0);
+	customText = addStringParameter("Custom Text", "Write your own text on your button", "");
 
 	targetType = addEnumParameter("Target type", "");
 	targetType->addOption("Cuelist", "cuelist");
@@ -256,6 +257,9 @@ void VirtualButton::released() {
 }
 
 String VirtualButton::getBtnText() {
+	if (customText->stringValue() != "") {
+		return customText->stringValue();
+	}
 	String text = "";
 	String targType = targetType->getValue();
 	String action = "";
