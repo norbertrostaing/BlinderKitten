@@ -81,6 +81,7 @@ Effect::~Effect()
 		sfc->effectOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
+	EffectGridView::getInstance()->updateCells();
 }
 
 void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {

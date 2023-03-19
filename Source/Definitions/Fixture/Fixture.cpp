@@ -20,6 +20,7 @@
 #include "../ChannelFamily/ChannelFamily.h"
 #include "FixtureMultiEditor.h"
 #include "UI/GridView/FixtureGridView.h"
+#include "BKEngine.h"
 
 
 Fixture::Fixture(var params) :
@@ -70,6 +71,10 @@ Fixture::~Fixture()
 			delete it.getValue();
 		}
 	}
+	if (!BKEngine::mainEngine->isClearing) {
+		FixtureGridView::getInstance()->updateCells();
+	}
+	
 }
 
 

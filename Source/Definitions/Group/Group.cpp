@@ -41,6 +41,7 @@ Group::Group(var params) :
 Group::~Group()
 {
 	Brain::getInstance()->unregisterGroup(this);
+	GroupGridView::getInstance()->updateCells();
 }
 
 void Group::updateName() {

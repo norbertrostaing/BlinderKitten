@@ -209,6 +209,7 @@ Cuelist::~Cuelist()
 		sfc->cuelistOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
+	CuelistGridView::getInstance()->updateCells();
 
 }
 

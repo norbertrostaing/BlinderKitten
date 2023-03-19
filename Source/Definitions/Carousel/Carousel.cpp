@@ -83,7 +83,7 @@ Carousel::~Carousel()
 		sfc->carouselOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
-
+	CarouselGridView::getInstance()->updateCells();
 }
 
 void Carousel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {

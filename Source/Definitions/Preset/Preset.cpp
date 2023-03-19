@@ -88,6 +88,7 @@ Preset::~Preset()
 		}
 		it.getValue()->~HashMap();
 	}
+	PresetGridView::getInstance()->updateCells();
 }
 
 void Preset::onContainerParameterChangedInternal(Parameter* p) {
