@@ -224,10 +224,10 @@ void Assistant::patchFixtures()
 
     LOG("Patching your fixtures, please wait");
     Brain::getInstance()->usingCollections.enter();
-    const MessageManagerLock mmLock;
     int currentAdress = firstAddress;
 
     for (int i = 0; i < amount; i++) {
+        const MessageManagerLock mmLock;
         Fixture* f = FixtureManager::getInstance()->addItem();
         f-> id->setValue(firstId+i);
         if (amount > 1) {
@@ -263,7 +263,6 @@ void Assistant::patchFixtures()
 
 void Assistant::createPalette()
 {
-    const MessageManagerLock mmLock;
     int groupId = paletteGroupId->getValue();
     int presetFrom = paletteFirstPresetId->getValue();
     int presetTo = paletteLastPresetId->getValue();
@@ -298,6 +297,7 @@ void Assistant::createPalette()
     cl->deselectThis();
     // supprimer premier cue
     for (int i = presetFrom; i != presetTo + delta; i += delta) {
+        const MessageManagerLock mmLock;
         Preset* p = Brain::getInstance()->getPresetById(i);
         if (p != nullptr) {
             String name = p->userName->getValue().toString();
@@ -313,7 +313,7 @@ void Assistant::createPalette()
                 c->commands.items[0]->timing.presetId->setValue(timePreset);
             }
             LOG("Cue " + name + " Created");
-            wait(100);
+            //wait(10);
         }
     }
 
