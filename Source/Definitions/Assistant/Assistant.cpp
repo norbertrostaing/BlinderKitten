@@ -17,6 +17,7 @@
 #include "Definitions/Cue/Cue.h"
 #include "Definitions/Preset/Preset.h"
 #include "Definitions/Preset/PresetManager.h"
+#include "Definitions/TimingPreset/TimingPresetManager.h"
 #include "Definitions/TimingPreset/TimingPreset.h"
 #include "Definitions/Command/CommandValueManager.h"
 #include "Definitions/Command/CommandValue.h"
@@ -314,6 +315,14 @@ void Assistant::createPalette()
             }
             LOG("Cue " + name + " Created");
             //wait(10);
+        }
+    }
+
+    if (timePreset > 0) {
+        TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timePreset);
+        if (tp == nullptr) {
+            tp = TimingPresetManager::getInstance()->addItem();
+            tp->id->setValue(timePreset);
         }
     }
 
