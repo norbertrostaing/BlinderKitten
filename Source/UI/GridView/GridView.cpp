@@ -134,6 +134,7 @@ void GridView::scrollBarMoved(ScrollBar* scrollBarThatHasMoved, double newRangeS
 void GridView::buttonClicked(juce::Button* button) {
     int id = gridButtons.indexOf((TextButton*)button);
     cellClicked(id+1);
+    UserInputManager::getInstance()->resetFocus();
 }
 
 void GridView::cellClicked(int id) {

@@ -147,6 +147,7 @@ void VirtualButtonGrid::buttonClicked(juce::Button* button) {
     else {
         buttonPressedUp((TextButton*)button);
     }
+    UserInputManager::getInstance()->resetFocus();
 }
 
 void VirtualButtonGrid::buttonStateChanged(juce::Button* button) {

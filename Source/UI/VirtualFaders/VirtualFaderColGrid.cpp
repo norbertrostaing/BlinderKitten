@@ -316,6 +316,7 @@ void VirtualFaderColGrid::buttonClicked(juce::Button* button) {
     else {
         buttonPressedUp((TextButton*)button);
     }
+    UserInputManager::getInstance()->resetFocus();
 }
 
 void VirtualFaderColGrid::buttonStateChanged(juce::Button* button) {
