@@ -126,9 +126,9 @@ void FixtureGridView::buttonClicked(juce::Button* button) {
     for (auto it = hashMapButtons.begin(); it != hashMapButtons.end(); it.next()) {
         if (it.getValue() == button) {
             cellClicked(it.getKey());
+            cs.exit();
             return;
         }
     }
     cs.exit();
-
 }
