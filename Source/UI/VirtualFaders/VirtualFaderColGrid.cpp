@@ -241,13 +241,13 @@ void VirtualFaderColGrid::fillCells() {
     }
     for (int i = 0; i < aboveButtons.size(); i++) {
         for (int j = 0; j < aboveButtons[i]->size(); j++) {
-            aboveButtons[i]->getRawDataPointer()[j]->setColour(TextButton::buttonColourId, Colour(63, 63, 63));
+            aboveButtons[i]->getRawDataPointer()[j]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
             aboveButtons[i]->getRawDataPointer()[j]->setButtonText("");
         }
     }
     for (int i = 0; i < belowButtons.size(); i++) {
         for (int j = 0; j < belowButtons[i]->size(); j++) {
-            belowButtons[i]->getRawDataPointer()[j]->setColour(TextButton::buttonColourId, Colour(63, 63, 63));
+            belowButtons[i]->getRawDataPointer()[j]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
             belowButtons[i]->getRawDataPointer()[j]->setButtonText("");
         }
     }
@@ -278,7 +278,7 @@ void VirtualFaderColGrid::fillCells() {
                     String text = vb->getBtnText(targType);
                     if (text != "") {
                         aboveButtons[c]->getRawDataPointer()[n]->setButtonText(text);
-                        aboveButtons[c]->getRawDataPointer()[n]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
+                        aboveButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
                     }
                 }
                 String text = vf->fader.getBtnText(targType);
@@ -294,7 +294,7 @@ void VirtualFaderColGrid::fillCells() {
                     String btnText = vb->getBtnText(targType);
                     if (btnText != "") {
                         belowButtons[c]->getRawDataPointer()[n]->setButtonText(btnText);
-                        belowButtons[c]->getRawDataPointer()[n]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
+                        belowButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
                     }
                 }
                 //faderLabels[c]->setText(btnText, juce::dontSendNotification);

@@ -117,7 +117,7 @@ void VirtualButtonGrid::fillCells() {
     buttonToVirtualButton.clear();
     pageDisplayBtn.setButtonText("Page "+String(page));
     for (int i = 0; i < gridButtons.size(); i++) {
-        gridButtons[i]->setColour(TextButton::buttonColourId, Colour(63,63,63));
+        gridButtons[i]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
         gridButtons[i]->setButtonText("");
     }
     for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
@@ -128,7 +128,7 @@ void VirtualButtonGrid::fillCells() {
             String btnText = vb->getBtnText();
             if (r != 0 && c != 0 && r <= rows && c <= cols) {
                 int index = ((r-1)*cols)+(c-1);
-                gridButtons[index]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
+                gridButtons[index]->removeColour(TextButton::buttonColourId);
                 gridButtons[index]->setButtonText(btnText);
                 buttonToVirtualButton.set(gridButtons[index], vb);
             }
