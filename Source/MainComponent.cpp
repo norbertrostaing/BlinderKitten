@@ -185,4 +185,7 @@ void MainContentComponent::init()
 
     OrganicMainContentComponent::init();
 
+    //getLookAndFeel().setColour(juce::TextButton::textColourOffId, Colour(127,127,127));
+    getLookAndFeel().setColour(juce::TextButton::buttonColourId, Colour(64,64,64));
+
 }

@@ -42,12 +42,17 @@ void CuelistGridView::updateCells() {
     for (int i = 0; i < numberOfCells; i++) {
         Cuelist* g = Brain::getInstance()->getCuelistById(i+1);
         if (g != nullptr) {
-            gridButtons[i]->setColour(TextButton::buttonColourId, Colour(127, 127, 127));
-            gridButtons[i]->setButtonText(String(i + 1) + "\n"+g->userName->getValue().toString());
+            gridButtons[i]->removeColour(TextButton::buttonColourId);
+            gridButtons[i]->removeColour(TextButton::textColourOnId);
+            gridButtons[i]->removeColour(TextButton::textColourOffId);
+
+            gridButtons[i]->setButtonText(String(i + 1) + "\n" + g->userName->getValue().toString());
         }
         else {
             gridButtons[i]->setButtonText(String(i + 1));
-            gridButtons[i]->setColour(TextButton::buttonColourId, Colour(63, 63, 63));
+            gridButtons[i]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
+            gridButtons[i]->setColour(TextButton::textColourOnId, Colour(96, 96, 96));
+            gridButtons[i]->setColour(TextButton::textColourOffId, Colour(96, 96, 96));
 
         }
     }
