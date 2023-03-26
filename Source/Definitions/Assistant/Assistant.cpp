@@ -329,6 +329,8 @@ void Assistant::createPalette()
         if (p != nullptr) {
             String name = p->userName->getValue().toString();
             Cue* c = cl->cues.addItem();
+            c->editorIsCollapsed = true;
+
             c->setNiceName(name);
             c->id->setValue(i);
             c->commands.items[0]->selection.items[0]->targetType->setValueWithKey("Group");
@@ -351,7 +353,7 @@ void Assistant::createPalette()
             tp->id->setValue(timePreset);
         }
     }
-
+    
     cl->selectThis();
     LOG("Palette created :)");
 
