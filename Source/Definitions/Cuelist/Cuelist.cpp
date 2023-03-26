@@ -40,6 +40,10 @@ Cuelist::Cuelist(var params) :
 	itemDataType = "Cuelist";
 	canBeDisabled = false;
 
+	conductorInfos.editorIsCollapsed = true;
+	chaserOptions.editorIsCollapsed = true;
+	offFadeCurve.editorIsCollapsed = true;
+
 	id = addIntParameter("ID", "Id of this Cuelist", params.getProperty("ID", 1), 1);
 	userName = addStringParameter("Name", "Name of this cuelist", "New cuelist");
 	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
