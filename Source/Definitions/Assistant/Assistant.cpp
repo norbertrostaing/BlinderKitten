@@ -223,6 +223,32 @@ void Assistant::patchFixtures()
     if (fixtureType == nullptr) {LOGERROR("You must provide me a valid fixture type"); return;}
     if (name == "") { name = fixtureType->niceName; }
 
+    Array<int> usedIds;
+    for (int i = 0; i < amount; i++) {
+        Fixture* test = Brain::getInstance()->getFixtureById(firstId + i);
+        if (test != nullptr) {
+            usedIds.add(firstId + i);
+        }
+    }
+
+    if (usedIds.size() > 0) {
+        String msg = "";
+        for (int i = 0; i < usedIds.size() - 1; i++) {
+            msg+= String(usedIds[i])+", ";
+        }
+        msg += String(usedIds[usedIds.size()-1]);
+        if (usedIds.size() == 1) {
+            msg = "there is already a fixture with ID "+msg;
+        }
+        else {
+            msg = "The following IDs are already taken : " + msg;
+        }
+
+        LOGERROR(msg);
+        return;
+    }
+
+
     LOG("Patching your fixtures, please wait");
     Brain::getInstance()->usingCollections.enter();
     int currentAdress = firstAddress;
