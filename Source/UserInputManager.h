@@ -62,4 +62,5 @@ public:
     double lastCuelistLoadWindowTS = 0;
 
     void testPreset(Preset* p);
+    void resetFocus();
 };

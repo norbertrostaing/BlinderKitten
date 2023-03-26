@@ -32,6 +32,7 @@
 #include "UI/VirtualFaders/VirtualFaderColManager.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
+#include "UI/InputPanel.h";
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -674,4 +675,10 @@ void UserInputManager::testPreset(Preset* p)
 	processInput(String(fixtMax));
 	processInput("Preset");
 	processInput(p->id->getValue());
+}
+
+void UserInputManager::resetFocus()
+{
+	// Component::unfocusAllComponents();
+	InputPanel::getInstance()->setFocusContainer(true);
 }

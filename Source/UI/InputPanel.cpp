@@ -78,6 +78,7 @@ InputPanel::~InputPanel()
 }
 
 void InputPanel::buttonClicked(juce::Button* button) {
+    UserInputManager::getInstance()->resetFocus();
     ModifierKeys k = ModifierKeys::getCurrentModifiersRealtime();
     if (button == &btnAssistant){
         Assistant::getInstance()->selectThis();
