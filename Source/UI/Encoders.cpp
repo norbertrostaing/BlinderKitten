@@ -65,7 +65,7 @@ Encoders::Encoders():
 
     addAndMakeVisible(&commandUpBtn);
     commandUpBtn.addListener(this);
-    commandUpBtn.setButtonText("Com -");
+    commandUpBtn.setButtonText("Com +");
     commandUpBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&commandDownBtn);
