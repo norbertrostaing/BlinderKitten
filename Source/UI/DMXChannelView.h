@@ -65,6 +65,7 @@ public:
     OwnedArray<DMXChannelItem> channelItems;
     Array<DMXChannelItem*> selectedItems;
     int lastClickedId = 0;
+    int keyboardStartSelection = 0;
 
     DMXInterface* currentInterface;
 

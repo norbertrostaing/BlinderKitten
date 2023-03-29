@@ -210,16 +210,22 @@ bool DMXChannelView::keyPressed(const KeyPress& key, Component* originatingCompo
 		clearSelection();
 		lastClickedId = lastClickedId - 1;
 		lastClickedId = jlimit(-1,511,lastClickedId);
+		if (!key.getModifiers().isShiftDown()) {
+			keyboardStartSelection = lastClickedId;
+		}
 		if (lastClickedId > -1) {
-			rangeOn(lastClickedId, lastClickedId);
+			rangeOn(keyboardStartSelection, lastClickedId);
 		}
 	}
 	if (key.getKeyCode() == KeyPress::rightKey) {
 		clearSelection();
 		lastClickedId = lastClickedId + 1;
 		lastClickedId = jlimit(-1, 511, lastClickedId);
+		if (!key.getModifiers().isShiftDown()) {
+			keyboardStartSelection = lastClickedId;
+		}
 		if (lastClickedId > -1) {
-			rangeOn(lastClickedId, lastClickedId);
+			rangeOn(keyboardStartSelection, lastClickedId);
 		}
 	}
 	return false;
@@ -286,6 +292,11 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 
 	}
 	channelView->lastClickedId = channelView->channelItems.indexOf(this);
+
+
+	if (!e.mods.isShiftDown()) {
+		channelView->keyboardStartSelection = channelView->channelItems.indexOf(this);
+	}
 	//valueAtMouseDown = value;
 	if (e.mods.isLeftButtonDown() && !e.mods.isAltDown())
 	{
