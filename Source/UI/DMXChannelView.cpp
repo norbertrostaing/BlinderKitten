@@ -27,7 +27,7 @@ DMXChannelView::DMXChannelView() :
 
 	addAndMakeVisible(viewport);
 	viewport.setViewedComponent(&channelContainer);
-
+	addKeyListener(this);
 	InterfaceManager::getInstance()->addAsyncManagerListener(this);
 }
 
@@ -72,7 +72,7 @@ void DMXChannelView::resized()
 		lowerY = ir.getBottom();
 	}
 
-	channelContainer.setBounds(Rectangle<int>(0, 0, r.getWidth() - 6, lowerY));
+	channelContainer.setBounds(Rectangle<int>(0, 0, r.getWidth() - 10, lowerY));
 	viewport.setBounds(r);
 }
 
@@ -202,6 +202,27 @@ void DMXChannelView::comboBoxChanged(ComboBox* comboBoxThatHasChanged)
 float DMXChannelView::getFlashValue()
 {
 	return currentInterface != nullptr ? currentInterface->channelTestingFlashValue->floatValue() : 1;
+}
+
+bool DMXChannelView::keyPressed(const KeyPress& key, Component* originatingComponent)
+{
+	if (key.getKeyCode() == KeyPress::leftKey) {
+		clearSelection();
+		lastClickedId = lastClickedId - 1;
+		lastClickedId = jlimit(-1,511,lastClickedId);
+		if (lastClickedId > -1) {
+			rangeOn(lastClickedId, lastClickedId);
+		}
+	}
+	if (key.getKeyCode() == KeyPress::rightKey) {
+		clearSelection();
+		lastClickedId = lastClickedId + 1;
+		lastClickedId = jlimit(-1, 511, lastClickedId);
+		if (lastClickedId > -1) {
+			rangeOn(lastClickedId, lastClickedId);
+		}
+	}
+	return false;
 }
 
 void DMXChannelView::inspectableDestroyed(Inspectable* i)
@@ -361,3 +382,4 @@ void DMXChannelItem::paint(Graphics& g)
 	g.setFont(jlimit<float>(12, 20, getHeight() - 30));
 	g.drawText(String(channel), getLocalBounds().toFloat(), Justification::centred, false);
 }
+
