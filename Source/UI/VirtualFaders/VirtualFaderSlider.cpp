@@ -63,11 +63,16 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 
 	updateDisplay();
 	updateName();
+	VirtualFaderColManager::getInstance()->reconstructLibraries();
+	VirtualFaderColGrid::getInstance()->fillCells();
+
 }
 
 VirtualFaderSlider::~VirtualFaderSlider()
 {
 	VirtualFaderColGrid::getInstance()->sliderToVFS.removeValue(this);
+	VirtualFaderColManager::getInstance()->reconstructLibraries();
+	VirtualFaderColGrid::getInstance()->fillCells();
 
 }
 
@@ -78,6 +83,7 @@ void VirtualFaderSlider::onContainerParameterChangedInternal(Parameter* c) {
 	if (c == targetType || c == cuelistAction || c == carouselAction || c == effectAction) {
 		updateDisplay();
 	}
+	VirtualFaderColManager::getInstance()->reconstructLibraries();
 	VirtualFaderColGrid::getInstance()->fillCells();
 }
 

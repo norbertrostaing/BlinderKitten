@@ -78,11 +78,12 @@ VirtualButton::VirtualButton(var params) :
 	// userName = addStringParameter("Name", "Name of this VirtualButton","New VirtualButton");
 	updateDisplay();
 	updateName();
-
+	VirtualButtonManager::getInstance()->reconstructLibrary();
 }
 
 VirtualButton::~VirtualButton()
 {
+	VirtualButtonManager::getInstance()->reconstructLibrary();
 }
 
 void VirtualButton::updateName() {

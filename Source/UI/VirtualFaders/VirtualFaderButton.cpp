@@ -78,11 +78,15 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	// id = addIntParameter("ID", "ID of this VirtualFaderButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualFaderButton","New VirtualFaderButton");
 	updateDisplay();
+	VirtualFaderColManager::getInstance()->reconstructLibraries();
+	VirtualFaderColGrid::getInstance()->fillCells();
 }
 
 VirtualFaderButton::~VirtualFaderButton()
 {
 	VirtualFaderColGrid::getInstance()->buttonToVFB.removeValue(this);
+	VirtualFaderColManager::getInstance()->reconstructLibraries();
+	VirtualFaderColGrid::getInstance()->fillCells();
 }
 
 void VirtualFaderButton::updateName() {
@@ -92,6 +96,7 @@ void VirtualFaderButton::onContainerParameterChangedInternal(Parameter* c) {
 	if (c == targetType || c == cuelistAction) {
 		updateDisplay();
 	}
+	VirtualFaderColManager::getInstance()->reconstructLibraries();
 	VirtualFaderColGrid::getInstance()->fillCells();
 }
 
