@@ -91,7 +91,6 @@ void EncodersMult::targetChanged()
 
 void EncodersMult::reconstructSubComponents()
 {
-    //test.setText("", juce::dontSendNotification);
     clear();
     if (targetCommandManager != nullptr) {
         for (int i = 0; i < targetCommandManager->items.size(); i++) {

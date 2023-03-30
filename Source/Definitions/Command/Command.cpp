@@ -501,8 +501,8 @@ StringArray Command::getCommandSelectionAsTexts() {
 	userCanPressSelectionType = true;
 	for (int i = 0; i < selection.items.size(); i++) {
 		CommandSelection* s = selection.items[i];
-		if (s->plusOrMinus->getValue() == "-" || words.size() > 0) {
-			words.add(s->plusOrMinus->getValueData());
+		if (s->plusOrMinus->getValueKey() == "-" || words.size() > 0) {
+			words.add(s->plusOrMinus->getValueKey());
 		}
 		if (s->targetType->getValueData() == "group") {
 			words.add("grp");
