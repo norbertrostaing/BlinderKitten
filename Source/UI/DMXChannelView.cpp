@@ -27,7 +27,7 @@ DMXChannelView::DMXChannelView() :
 
 	addAndMakeVisible(viewport);
 	viewport.setViewedComponent(&channelContainer);
-
+	addKeyListener(this);
 	InterfaceManager::getInstance()->addAsyncManagerListener(this);
 }
 
@@ -72,7 +72,7 @@ void DMXChannelView::resized()
 		lowerY = ir.getBottom();
 	}
 
-	channelContainer.setBounds(Rectangle<int>(0, 0, r.getWidth() - 6, lowerY));
+	channelContainer.setBounds(Rectangle<int>(0, 0, r.getWidth() - 10, lowerY));
 	viewport.setBounds(r);
 }
 
@@ -204,6 +204,33 @@ float DMXChannelView::getFlashValue()
 	return currentInterface != nullptr ? currentInterface->channelTestingFlashValue->floatValue() : 1;
 }
 
+bool DMXChannelView::keyPressed(const KeyPress& key, Component* originatingComponent)
+{
+	if (key.getKeyCode() == KeyPress::leftKey) {
+		clearSelection();
+		lastClickedId = lastClickedId - 1;
+		lastClickedId = jlimit(-1,511,lastClickedId);
+		if (!key.getModifiers().isShiftDown()) {
+			keyboardStartSelection = lastClickedId;
+		}
+		if (lastClickedId > -1) {
+			rangeOn(keyboardStartSelection, lastClickedId);
+		}
+	}
+	if (key.getKeyCode() == KeyPress::rightKey) {
+		clearSelection();
+		lastClickedId = lastClickedId + 1;
+		lastClickedId = jlimit(-1, 511, lastClickedId);
+		if (!key.getModifiers().isShiftDown()) {
+			keyboardStartSelection = lastClickedId;
+		}
+		if (lastClickedId > -1) {
+			rangeOn(keyboardStartSelection, lastClickedId);
+		}
+	}
+	return false;
+}
+
 void DMXChannelView::inspectableDestroyed(Inspectable* i)
 {
 	if (i == currentInterface) setCurrentInterface(nullptr);
@@ -265,6 +292,11 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 
 	}
 	channelView->lastClickedId = channelView->channelItems.indexOf(this);
+
+
+	if (!e.mods.isShiftDown()) {
+		channelView->keyboardStartSelection = channelView->channelItems.indexOf(this);
+	}
 	//valueAtMouseDown = value;
 	if (e.mods.isLeftButtonDown() && !e.mods.isAltDown())
 	{
@@ -361,3 +393,4 @@ void DMXChannelItem::paint(Graphics& g)
 	g.setFont(jlimit<float>(12, 20, getHeight() - 30));
 	g.drawText(String(channel), getLocalBounds().toFloat(), Justification::centred, false);
 }
+

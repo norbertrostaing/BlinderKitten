@@ -16,8 +16,7 @@ class DMXInterface;
 class DMXChannelView;
 
 class DMXChannelItem :
-    public Component
-{
+    public Component{
 public:
     DMXChannelItem(int channel, DMXChannelView * v);
     ~DMXChannelItem();
@@ -40,13 +39,15 @@ public:
     void updateDMXValue(float val);
 
     void paint(Graphics& g) override;
+    bool keyPressed(const KeyPress& key, Component* originatingComponent);
 };
 
 class DMXChannelView :
     public ShapeShifterContentComponent,
     public InterfaceManager::AsyncListener,
     public ComboBox::Listener,
-    public Inspectable::InspectableListener
+    public Inspectable::InspectableListener,
+    public KeyListener
 {
 public:
     juce_DeclareSingleton(DMXChannelView, true);
@@ -64,6 +65,7 @@ public:
     OwnedArray<DMXChannelItem> channelItems;
     Array<DMXChannelItem*> selectedItems;
     int lastClickedId = 0;
+    int keyboardStartSelection = 0;
 
     DMXInterface* currentInterface;
 
@@ -85,6 +87,7 @@ public:
     virtual void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override;
 
     float getFlashValue();
+    bool keyPressed(const KeyPress& key, Component* originatingComponent);
 
     void inspectableDestroyed(Inspectable* i) override;
 

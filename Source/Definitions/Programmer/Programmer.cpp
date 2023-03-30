@@ -424,6 +424,13 @@ void Programmer::processUserInput(String s) {
 				LOGERROR("Invalid command");
 			}
 		}
+		else if (s == "clear") {
+			cliActionType->setValueWithData(""); 
+			cliParamAType->setValueWithData(""); 
+			cliParamBType->setValueWithData(""); 
+			cliParamAId->setValue(UserInputManager::backspaceOnInt(cliParamAId->getValue())); 
+			cliParamBId->setValue(UserInputManager::backspaceOnInt(cliParamBId->getValue())); 
+		}
 		else if (s == "backspace") {
 			if (cliLastTarget == "actionType") { cliActionType->setValueWithData(""); }
 			else if (cliLastTarget == "paramAType") { cliParamAType->setValueWithData(""); }
