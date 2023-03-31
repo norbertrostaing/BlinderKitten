@@ -10,6 +10,7 @@
 
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/DMXChannelView.h"
+#include "Fixture/FixturePatch.h"
 
 DMXInterface::DMXInterface() :
 	Interface(getTypeString())
@@ -37,6 +38,10 @@ DMXInterface::DMXInterface() :
 
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 	addChildControllableContainer(&mappingManager);
+
+	for (int i = 0; i <= 512; i++) {
+		channelToFixturePatch.add(nullptr);
+	}
 
 }
 

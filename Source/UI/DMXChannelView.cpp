@@ -110,8 +110,8 @@ void DMXChannelView::setCurrentInterface(DMXInterface* i)
 		resized();
 	}
 	else {
-		for (int i = 0; i < 512; i++) {
-			channelItems[i]->value = 0;
+		for (int n = 0; n < 512; n++) {
+			channelItems[n]->value = 0;
 		}
 		repaint();
 	}
@@ -376,7 +376,14 @@ void DMXChannelItem::paint(Graphics& g)
 	Rectangle<int> r = getLocalBounds().reduced(2);
 
 	Colour c = BG_COLOR.darker();
-	if (isMouseOver()) c = c.brighter(.2f);
+	//c = Colour(32,64,32);
+	if (channelView->currentInterface != nullptr) {
+		if (channelView->currentInterface->channelToFixturePatch[channel] != nullptr) {
+			c = BG_COLOR.brighter(0.2f);
+		}
+	}
+
+	if (isMouseOver()) c = c.brighter(.4f);
 	g.setColour(c);
 	g.fillRoundedRectangle(r.toFloat(), 4);
 

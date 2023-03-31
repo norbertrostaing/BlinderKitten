@@ -15,6 +15,8 @@
 #include "UI/DMXChannelView.h"
 #include "DMXMappingManager.h"
 
+class FixturePatch;
+
 class DMXInterface :
     public Interface,
     public DMXDevice::DMXDeviceListener
@@ -35,6 +37,7 @@ public:
     DMXChannelView* tester = nullptr;
 
     DMXMappingManager mappingManager;
+    Array<FixturePatch* > channelToFixturePatch;
 
     void clearItem() override;
 
