@@ -14,6 +14,7 @@
 #include "VirtualFaderColManager.h"
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
+#include "BKEngine.h"
 
 VirtualFaderSlider::VirtualFaderSlider(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderSlider")),
@@ -71,8 +72,10 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 VirtualFaderSlider::~VirtualFaderSlider()
 {
 	VirtualFaderColGrid::getInstance()->sliderToVFS.removeValue(this);
-	VirtualFaderColManager::getInstance()->reconstructLibraries();
-	VirtualFaderColGrid::getInstance()->fillCells();
+	if (!BKEngine::mainEngine->isClearing) {
+		VirtualFaderColManager::getInstance()->reconstructLibraries();
+		VirtualFaderColGrid::getInstance()->fillCells();
+	}
 
 }
 

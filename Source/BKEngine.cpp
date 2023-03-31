@@ -94,6 +94,7 @@ BKEngine::BKEngine() :
 	OSCRemoteControl::getInstance()->addRemoteControlListener(UserInputManager::getInstance());
 	//init here
 	Engine::mainEngine = this;
+	BKEngine::mainEngine = this;
 
 	GlobalSettings::getInstance()->altScaleFactor->setDefaultValue(0.002);
 
@@ -581,6 +582,13 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	autoFillColorPickerValues();
 	Encoders::getInstance()->updateChannels();
 	EncodersMult::getInstance()->targetChanged();
+
+	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
+		Fixture* f = FixtureManager::getInstance()->items[i];
+		for (int p = 0; p < f->patchs.items.size(); p++) {
+			f->patchs.items[p]->tryToEnablePatch();
+		}
+	}
 
 }
 

@@ -13,6 +13,7 @@
 #include "VirtualFaderColManager.h"
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
+#include "BKEngine.h"
 
 VirtualFaderButton::VirtualFaderButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderButton")),
@@ -85,8 +86,10 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 VirtualFaderButton::~VirtualFaderButton()
 {
 	VirtualFaderColGrid::getInstance()->buttonToVFB.removeValue(this);
-	VirtualFaderColManager::getInstance()->reconstructLibraries();
-	VirtualFaderColGrid::getInstance()->fillCells();
+	if (!BKEngine::mainEngine->isClearing) {
+		VirtualFaderColManager::getInstance()->reconstructLibraries();
+		VirtualFaderColGrid::getInstance()->fillCells();
+	}
 }
 
 void VirtualFaderButton::updateName() {
