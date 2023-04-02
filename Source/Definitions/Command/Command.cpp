@@ -197,7 +197,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				}
 
 				for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
-					SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(it.getKey());
+					SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.contains(it.getKey()) ? SubFixtures[indexFixt]->channelsMap.getReference(it.getKey()) : nullptr;
 
 					float valueFrom = it.getValue();
 					float valueTo = valueFrom;
@@ -691,14 +691,17 @@ void Command::explodeSelection()
 		}
 		for (int idCh = 0; idCh < ChannelFamilyManager::getInstance()->orderedElements.size(); idCh++) {
 			ChannelType* chanType = ChannelFamilyManager::getInstance()->orderedElements[idCh];
-			SubFixtureChannel* chan = sf->channelsMap.getReference(chanType);
-			if (chan != nullptr && computedValues.contains(chan)) {
-				CommandValue* cv = newCommand->values.addItem();
-				cv->channelType->setValueFromTarget(chan->channelType);
-				ChannelValue* chanVal = computedValues.getReference(chan);
-				if (chanVal != nullptr) {
-					cv->valueFrom->setValue(chanVal->endValue);
+			if (sf->channelsMap.contains(chanType)) {
+				SubFixtureChannel* chan = sf->channelsMap.getReference(chanType);
+				if (chan != nullptr && computedValues.contains(chan)) {
+					CommandValue* cv = newCommand->values.addItem();
+					cv->channelType->setValueFromTarget(chan->channelType);
+					ChannelValue* chanVal = computedValues.getReference(chan);
+					if (chanVal != nullptr) {
+						cv->valueFrom->setValue(chanVal->endValue);
+					}
 				}
+
 			}
 		}
 	}

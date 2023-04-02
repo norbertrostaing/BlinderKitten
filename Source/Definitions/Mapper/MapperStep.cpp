@@ -117,7 +117,7 @@ void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 			}
 
 			for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
-				SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.getReference(it.getKey());
+				SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.contains(it.getKey()) ? SubFixtures[indexFixt]->channelsMap.getReference(it.getKey()) : nullptr;
 
 				float valueFrom = it.getValue();
 				float valueTo = valueFrom;

@@ -172,7 +172,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		MapperRow * r = activeRows->getReference(rId);
 		
 		ChannelType* chanType = dynamic_cast<ChannelType*>(r->followedChannel->targetContainer.get());
-		if (chanType != nullptr) {
+		if (chanType != nullptr && fc->parentSubFixture->channelsMap.contains(chanType)) {
 			SubFixtureChannel* followedChan = fc->parentSubFixture->channelsMap.getReference(chanType);
 			if (followedChan != nullptr) {
 				double offset = followedChan->value;

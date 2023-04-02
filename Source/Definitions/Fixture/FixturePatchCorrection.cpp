@@ -56,7 +56,9 @@ void FixturePatchCorrection::onContainerParameterChangedInternal(Parameter* p) {
 	Fixture* f = dynamic_cast<Fixture*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
 	SubFixture* sf = f->subFixtures.getReference(subFixtureId->getValue());
 	if (sf == nullptr) { return; }
-	SubFixtureChannel* chan = sf->channelsMap.getReference(dynamic_cast<ChannelType*>(channelType->targetContainer.get()));
+	ChannelType* ct = dynamic_cast<ChannelType*>(channelType->targetContainer.get());
+	if (!sf->channelsMap.contains(ct)) {return; }
+	SubFixtureChannel* chan = sf->channelsMap.getReference(ct);
 	if (chan == nullptr) { return; }
 	Brain::getInstance()->pleaseUpdate(chan);
 }

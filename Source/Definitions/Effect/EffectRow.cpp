@@ -112,9 +112,8 @@ void EffectRow::computeData() {
                 Array<SubFixtureChannel*> chans;
                 for (int fIndex = 0; fIndex < selection.computedSelectedSubFixtures.size(); fIndex++) {
                     SubFixture* f = selection.computedSelectedSubFixtures[fIndex];
-                    SubFixtureChannel* c = f->channelsMap.getReference(chanType);
-                    if (c != nullptr) {
-                        chans.add(c);
+                    if (f->channelsMap.contains(chanType)) {
+                        chans.add(f->channelsMap.getReference(chanType));
                     }
                 }
             
