@@ -30,13 +30,13 @@ public:
     int registeredId = 0;
     StringParameter* userName;
     void onContainerParameterChangedInternal(Parameter* p);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void updateName();
     TargetParameter* devTypeParam;
 
     HashMap<int, SubFixture*> subFixtures;
     BaseManager<FixturePatch> patchs;
     String getTypeString() const override { return objectType; }
-    Array<SubFixtureChannel*> channels;
 
     void applyPatchs();
     void checkChildrenSubFixtures();

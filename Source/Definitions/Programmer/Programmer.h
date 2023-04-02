@@ -41,6 +41,8 @@ public:
     Trigger* recBtn;
     Trigger* clearAllBtn;
 
+    BoolParameter* highlightCurrentCommand;
+
     HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
     HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
 

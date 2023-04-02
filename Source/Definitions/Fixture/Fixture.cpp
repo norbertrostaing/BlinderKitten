@@ -166,6 +166,7 @@ void Fixture::checkChildrenSubFixtures() {
 				SubFixtureChannel* chan = new SubFixtureChannel();
 				subFixt->channelsMap.set(param, chan);
 				chan->defaultValue = c->defaultValue->getValue();
+				chan->highlightValue = c->highlightValue->getValue();
 				chan->isHTP = param->priority->getValue() == "HTP";
 				chan->channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
 				chan->parentParamDefinition = param;
@@ -213,6 +214,7 @@ void Fixture::checkChildrenSubFixtures() {
 				SubFixtureChannel* chan = new SubFixtureChannel();
 				subFixt->channelsMap.set(param, chan);
 				chan->defaultValue = c->defaultValue->getValue();
+				chan->highlightValue = c->highlightValue->getValue();
 				chan->isHTP = param->priority->getValue() == "HTP";
 				chan->resolution = c->resolution->getValue();
 				chan->channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());

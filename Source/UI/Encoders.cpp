@@ -33,6 +33,11 @@ Encoders::Encoders():
 {
     addAndMakeVisible(&commandLine);
 
+    addAndMakeVisible(&HLBtn);
+    HLBtn.addListener(this);
+    HLBtn.setButtonText("HL");
+    HLBtn.setWantsKeyboardFocus(false);
+
     addAndMakeVisible(&btnMode);
     btnMode.addListener(this);
     btnMode.setButtonText("Val");
@@ -65,13 +70,18 @@ Encoders::Encoders():
 
     addAndMakeVisible(&commandUpBtn);
     commandUpBtn.addListener(this);
-    commandUpBtn.setButtonText("Com +");
+    commandUpBtn.setButtonText("Com -");
     commandUpBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&commandDownBtn);
     commandDownBtn.addListener(this);
-    commandDownBtn.setButtonText("Com -");
+    commandDownBtn.setButtonText("Com +");
     commandDownBtn.setWantsKeyboardFocus(false);
+
+    addAndMakeVisible(&explodeCommandBtn);
+    explodeCommandBtn.addListener(this);
+    explodeCommandBtn.setButtonText("<>");
+    explodeCommandBtn.setWantsKeyboardFocus(false);
 
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
@@ -125,18 +135,21 @@ void Encoders::resized()
     //int y = 0;
     int btnWidth = 40;
     int btnValueWidth = 40;
+
+    int margin = 5;
    
     commandLine.setBounds(0,40,windowW, 20);
 
-    btnMode.setBounds(windowW - (1 * btnValueWidth), 0, btnValueWidth, 20);
-    encoderRangeBtn.setBounds(windowW - (2 * btnValueWidth), 0, btnValueWidth, 20);
-    bigMoveRightBtn.setBounds(windowW - (2 * btnValueWidth) - (1 * btnWidth), 0, btnWidth, 20);
-    littleMoveRightBtn.setBounds(windowW - (2 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
-    littleMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
-    bigMoveLeftBtn.setBounds(windowW - (2 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
-    commandDownBtn.setBounds(windowW - (2 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
-    commandUpBtn.setBounds(windowW - (2 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
-
+    btnMode.setBounds(windowW - (0 * margin) - (1 * btnValueWidth), 0, btnValueWidth, 20);
+    encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnValueWidth), 0, btnValueWidth, 20);
+    HLBtn.setBounds(windowW - (0 * margin) - (3 * btnValueWidth), 0, btnValueWidth, 20);
+    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (1 * btnWidth), 0, btnWidth, 20);
+    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
+    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
+    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
+    commandDownBtn.setBounds(windowW - (2 * margin) - (3 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
+    commandUpBtn.setBounds(windowW - (2 * margin) - (3 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
+    explodeCommandBtn.setBounds(windowW - (3 * margin) - (3 * btnValueWidth) - (7 * btnWidth), 0, btnWidth, 20);
 
     if (filterBtns.size() > 0) {
         float w = getWidth() / filterBtns.size();
@@ -205,7 +218,21 @@ void Encoders::buttonClicked(Button* b) {
         }
         updateChannels();
     }
-    else 
+    else if (b == &explodeCommandBtn) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
+            UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+        }
+        updateChannels();
+    }
+    else if (b == &HLBtn) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            bool hl = !UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->getValue();
+            UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->setValue(hl);
+        }
+        updateChannels();
+    }
+    else
     {
         // filters
         int i = filterBtns.indexOf(dynamic_cast<TextButton*>(b));

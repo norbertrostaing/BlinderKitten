@@ -31,6 +31,7 @@ public:
     String objectType = "SubFixtureChannel";
     String resolution;
     float defaultValue = 0;
+    float highlightValue = 0;
     float value = 0;
     float postCuelistValue = 0;
     bool isHTP = false;

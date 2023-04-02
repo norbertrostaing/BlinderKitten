@@ -26,6 +26,7 @@ class FixtureTypeVirtualChannel:
     // StringParameter* idGroupName;
     IntParameter* subFixtureId;
     FloatParameter* defaultValue;
+    FloatParameter* highlightValue;
     BoolParameter* killedBySWOP;
     EnumParameter* fadeOrSnap;
     void onContainerParameterChangedInternal(Parameter* p);

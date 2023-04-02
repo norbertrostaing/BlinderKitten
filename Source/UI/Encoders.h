@@ -45,14 +45,16 @@ public:
     OwnedArray<Slider> encoders;
     OwnedArray<Label> labels;
     Label commandLine;
-    TextButton btnMode;
 
     OwnedArray<TextButton> filterBtns;
     Array<ChannelFamily*> availableFilters;
     Array<ChannelFamily*> selectedFilters;
     Array<ChannelType*> channels;
 
+    TextButton HLBtn;
+    TextButton btnMode;
     TextButton encoderRangeBtn;
+
     TextButton littleMoveLeftBtn;
     TextButton littleMoveRightBtn;
     TextButton bigMoveLeftBtn;
@@ -60,6 +62,7 @@ public:
 
     TextButton commandUpBtn;
     TextButton commandDownBtn;
+    TextButton explodeCommandBtn;
 
     int nEncoders = 10;
     int encodersOffset = 0;

@@ -40,6 +40,8 @@ Programmer::Programmer(var params) :
 	canBeDisabled = false;
 	itemDataType = "Programmer";
 
+	cliContainer.editorIsCollapsed = true;
+
 	id = addIntParameter("ID", "Id of this Programmer", 1, 1);
 	userName = addStringParameter("Name", "Name of this programmer", "New programmer");
 	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
@@ -56,6 +58,8 @@ Programmer::Programmer(var params) :
 	releaseBtn = addTrigger("Release", "release this programmer");
 	recBtn = addTrigger("Record", "Record the content of this programmer in something");
 	clearAllBtn = addTrigger("Clear All", "Clear and reset this programmer");
+
+	highlightCurrentCommand = addBoolParameter("Highlight", "Highlite the current command", false);
 
 	cliActionType = cliContainer.addEnumParameter("Action type", "What kind of action do you wanna do ?");
 	cliActionType->addOption("None", "");
@@ -156,6 +160,10 @@ void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 			release();
 		}
 	}
+	if (p == highlightCurrentCommand) {
+		go();
+	}
+
 }
 
 void Programmer::computeValues() {
@@ -175,6 +183,23 @@ void Programmer::computeValues() {
 			}
 		}
 		cs[i]->isComputing.exit();
+	}
+
+	if (highlightCurrentCommand->boolValue() && currentUserCommand != nullptr) {
+		Array<SubFixture*> subFixtures = currentUserCommand->selection.computedSelectedSubFixtures;
+		for (int i = 0; i < subFixtures.size(); i++) {
+			for (auto it = subFixtures[i]->channelsMap.begin(); it != subFixtures[i]->channelsMap.end(); it.next()) {
+				SubFixtureChannel* sfc = it.getValue();
+				if (sfc != nullptr && sfc->highlightValue > 0) {
+					ChannelValue* cv = computedValues.getReference(sfc);
+					if (cv == nullptr) {
+						cv = new ChannelValue();
+						computedValues.set(sfc, cv);
+					}
+					cv->endValue = sfc->highlightValue;
+				}
+			}
+		}
 	}
 	computing.exit();
 }
@@ -374,6 +399,9 @@ void Programmer::selectNextCommand()
 			index = 0;
 		}
 		currentUserCommand = commands.items[index];
+		if (highlightCurrentCommand->boolValue()) {
+			go();
+		}
 	}
 }
 
@@ -389,6 +417,9 @@ void Programmer::selectPrevCommand()
 			index = 0;
 		}
 		currentUserCommand = commands.items[index];
+		if (highlightCurrentCommand->boolValue()) {
+			go();
+		}
 	}
 }
 
