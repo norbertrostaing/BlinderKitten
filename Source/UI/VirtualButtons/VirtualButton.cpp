@@ -13,6 +13,7 @@
 #include "VirtualButtonManager.h"
 #include "VirtualButtonGrid.h"
 #include "../../Brain.h"
+#include "BKEngine.h"
 
 VirtualButton::VirtualButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualButton")),
@@ -83,7 +84,10 @@ VirtualButton::VirtualButton(var params) :
 
 VirtualButton::~VirtualButton()
 {
-	VirtualButtonManager::getInstance()->reconstructLibrary();
+	if (!BKEngine::mainEngine->isClearing) {
+		VirtualButtonManager::getInstance()->reconstructLibrary();
+		VirtualButtonGrid::getInstance()->fillCells();
+	}
 }
 
 void VirtualButton::updateName() {
