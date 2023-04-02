@@ -84,6 +84,7 @@ void FixturePatch::disableCurrentPatch()
 		for (int i = 0; i < currentAdresses.size(); i++) {
 			if (inter->channelToFixturePatch[currentAdresses[i]] == this) {
 				inter->channelToFixturePatch.set(currentAdresses[i], nullptr);
+				inter->sendDMXValue(currentAdresses[i], 0);
 			}
 			else {
 				//LOG("meh");

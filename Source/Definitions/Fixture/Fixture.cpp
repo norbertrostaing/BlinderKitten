@@ -105,6 +105,18 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
+void Fixture::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	if (cc == &patchs) {
+		for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+			SubFixture* sf = it.getValue();
+			for (auto it2 = sf->channelsMap.begin(); it2 != sf->channelsMap.end(); it2.next()) {
+				Brain::getInstance()->pleaseUpdate(it2.getValue());
+			}
+		}
+	}
+}
+
 void Fixture::applyPatchs() {
 	if (devTypeParam == nullptr) { return; }
 
