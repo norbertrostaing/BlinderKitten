@@ -32,6 +32,9 @@ public:
     void closeWindow();
     bool windowOpened = false;
 
+    Viewport viewport;
+    Component btnContainer;
+
     OwnedArray<TextButton> buttons;
     Array<float> cueIds;
     Cuelist* currentTarget = nullptr;

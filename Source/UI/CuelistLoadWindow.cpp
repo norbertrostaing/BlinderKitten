@@ -21,6 +21,11 @@ juce_ImplementSingleton(CuelistLoadWindow);
 CuelistLoadWindow::CuelistLoadWindow()
 {
     setSize(810, 610);
+    addAndMakeVisible(viewport);
+    viewport.setViewedComponent(&btnContainer);
+    viewport.setBounds(0, 0, 810, 610);
+    btnContainer.setSize(800, 200);
+
 }
 
 CuelistLoadWindow::~CuelistLoadWindow()
@@ -53,6 +58,8 @@ void CuelistLoadWindow::resized()
         b->addListener(this);
         prevId = id;
     }
+    btnContainer.setSize(800, (y+1)*h);
+
 }
 
 void CuelistLoadWindow::fillButtons(Cuelist* c) {
@@ -63,7 +70,7 @@ void CuelistLoadWindow::fillButtons(Cuelist* c) {
     for (int i = 0; i < c->cues.items.size(); i++) {
         TextButton *temp = new TextButton();
         temp->setButtonText(c->cues.items[i]->niceName);
-        addAndMakeVisible(temp);
+        btnContainer.addAndMakeVisible(temp);
         buttons.add(temp);
         cueIds.add(c->cues.items[i]->id->floatValue());
     }
