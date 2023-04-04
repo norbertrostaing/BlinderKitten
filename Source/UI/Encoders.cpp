@@ -289,6 +289,11 @@ void Encoders::updateFilters() {
 
 void Encoders::updateFilterBtns()
 {
+    float scale = 1;
+    if (engine != nullptr && engine->encodersScale != nullptr) {
+        scale = engine->encodersScale->getValue();
+    }
+
     for (int i = 0; i < filterBtns.size(); i++) {
         removeChildComponent(filterBtns[i]);
     }
@@ -297,6 +302,7 @@ void Encoders::updateFilterBtns()
         float w = getWidth()/availableFilters.size();
         for (int i = 0; i < availableFilters.size(); i++) {
             TextButton* t = filterBtns.add(std::make_unique<TextButton>());
+            t->setTransform(AffineTransform::scale(scale));
             t->setButtonText(availableFilters[i]->niceName);
             t->setBounds(i * w, 20, w, 20);
             t->addListener(this);
