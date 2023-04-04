@@ -165,6 +165,10 @@ void Assistant::run()
         pleaseCreateMidiMappings = false;
         createMidiMappings();
     }
+    if (pleaseImportAscii) {
+        pleaseImportAscii= false;
+        importAscii();
+    }
 }
 
 void Assistant::triggerTriggered(Trigger* t) {
@@ -191,7 +195,8 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
         updateDisplay();
     }
     else if (c == importAsciiBtn) {
-        importAscii();
+        pleaseImportAscii = true;
+        startThread();
     }
     else if (c == exportAsciiBtn) {
         exportAscii();
@@ -495,9 +500,10 @@ void Assistant::createMidiMappings()
 
 void Assistant::importAscii()
 {
-    const MessageManagerLock mmLock;
     FileChooser fc("Import an ASCII file", File::getCurrentWorkingDirectory(), "*.asc");
     if (!fc.browseForFileToOpen()) return;
+
+
     File f = fc.getResult();
     String content = f.loadFileAsString();
 
@@ -507,10 +513,12 @@ void Assistant::importAscii()
     String currentSecondary = "";
 
     int mainCuelistId = asciiCuelistId->getValue();
+    LOG("importing your ascii... please wait :)");
 
     Array<DMXInterface*> universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
     Cuelist* cuelist = nullptr;
     if (asciiCues) {
+        const MessageManagerLock mmlock;
         cuelist = Brain::getInstance()->getCuelistById(mainCuelistId);
         if (cuelist == nullptr) {
             cuelist = CuelistManager::getInstance()->addItem();
@@ -526,9 +534,12 @@ void Assistant::importAscii()
     Cue* currentSubCue = nullptr;
 
     FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
-
+    int totLines = lines.size();
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
+        LOG((i+1)<<"/"<<totLines<<" : "<<line);
+        //wait(10);
+        const MessageManagerLock mmlock;
         String originalLine = line;
         line = line.replaceCharacters(" ,/;<=>@", "        ").trim();
         while (line.indexOf("  ") != -1) {
