@@ -97,6 +97,9 @@ Assistant::Assistant() :
     asciiCues = asciiCC.addBoolParameter("Cues", "Do you want to import or export cues ?", true);
     asciiSubs = asciiCC.addBoolParameter("Subs", "Do you want to import or export subs ?", true);
     asciiRespectCueNumbers = asciiCC.addBoolParameter("Respect cue number", "If checked, the cues will be ordered by cue ID, if not, they will be ordered by step number", true);
+    asciiChannelFixtureType = asciiCC.addTargetParameter("Channel Fixture type", "Fixture used for ascii import/export", FixtureTypeManager::getInstance());
+    asciiChannelFixtureType->targetType = TargetParameter::CONTAINER;
+    asciiChannelFixtureType->maxDefaultSearchLevel = 0;
     asciiDimmerChannel = asciiCC.addTargetParameter("Intensity Channel", "Channel used as intensity for ascii import/export", ChannelFamilyManager::getInstance());
     asciiDimmerChannel->targetType = TargetParameter::CONTAINER;
     asciiDimmerChannel->maxDefaultSearchLevel = 2;
@@ -522,6 +525,7 @@ void Assistant::importAscii()
     Cuelist* currentSub = nullptr;
     Cue* currentSubCue = nullptr;
 
+    FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
 
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
@@ -581,6 +585,9 @@ void Assistant::importAscii()
                         Fixture* fixt = Brain::getInstance()->getFixtureById(channel);
                         if (fixt == nullptr) {
                             fixt = FixtureManager::getInstance()->addItem();
+                            if (ft != nullptr) {
+                                fixt->devTypeParam->setValueFromTarget(ft);
+                            }
                             fixt->id->setValue(channel);
                         }
 

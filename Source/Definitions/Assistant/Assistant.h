@@ -62,6 +62,7 @@ public:
 	BoolParameter* asciiSubs;
 	BoolParameter* asciiRespectCueNumbers;
 	IntParameter* asciiCuelistId;
+	TargetParameter* asciiChannelFixtureType;
 	TargetParameter* asciiDimmerChannel;
 	Trigger* importAsciiBtn;
 	Trigger* exportAsciiBtn;
