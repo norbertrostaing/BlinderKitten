@@ -538,7 +538,7 @@ void Assistant::importAscii()
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
         LOG((i+1)<<"/"<<totLines<<" : "<<line);
-        //wait(10);
+        wait(50);
         const MessageManagerLock mmlock;
         String originalLine = line;
         line = line.replaceCharacters(" ,/;<=>@", "        ").trim();
