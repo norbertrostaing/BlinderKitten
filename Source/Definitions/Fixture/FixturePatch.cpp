@@ -39,6 +39,13 @@ FixturePatch::FixturePatch(var params) :
 	corrections.selectItemWhenCreated = false;
 	addChildControllableContainer(&corrections);
 
+	Array<DMXInterface*> interfaces = InterfaceManager::getInstance()->getInterfacesOfType<DMXInterface>();
+	if (interfaces.size() == 1) {
+		targetInterface->setValueFromTarget(interfaces[0]);
+	}
+
+
+
 	/*curve->editorIsCollapsed = true;
 	curve->setNiceName("Response curve");
 	curve->allowKeysOutside = false;

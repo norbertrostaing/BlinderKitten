@@ -45,6 +45,18 @@ public:
 		);
 	}
 
+	template <class T>
+	static Array<T*> getInterfacesOfType()
+	{
+		Array<T*> ret;
+		for (auto& m : InterfaceManager::getInstance()->items)
+		{
+			T* mt = dynamic_cast<T*>(m);
+			if (mt == nullptr) continue;
+			ret.add(mt);
+		}
+		return ret;
 
+	}
 
 };
