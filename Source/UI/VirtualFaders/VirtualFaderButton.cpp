@@ -43,6 +43,8 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("Go", "go");
 	cuelistAction->addOption("Go back", "goback");
+	cuelistAction->addOption("Go instant", "goinstant");
+	cuelistAction->addOption("Go back instant", "gobackinstant");
 	cuelistAction->addOption("Off", "off");
 	cuelistAction->addOption("Toggle", "toggle");
 	cuelistAction->addOption("Flash", "flash");
@@ -151,6 +153,8 @@ void VirtualFaderButton::pressed() {
 			String action = cuelistAction->getValue();
 			if (action == "go") { targ->userGo(); }
 			if (action == "goback") { targ->goBack(); }
+			if (action == "goinstant") { targ->userGo(0,0); }
+			if (action == "gobackinstant") { targ->goBack(0,0); }
 			if (action == "off") { targ->off(); }
 			if (action == "toggle") { targ->toggle(); }
 			if (action == "flash") { targ->flash(true, false, false); }

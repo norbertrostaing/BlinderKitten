@@ -132,11 +132,17 @@ public:
 
     String getTypeString() const override { return objectType; }
 
-    void userGo(Cue* c);
     void userGo();
-    void go(Cue* c);
+    void userGo(Cue* c);
+    void userGo(float forcedDelay, float forcedFade);
+    void userGo(Cue* c, float forcedDelay, float forcedFade);
+
     void go();
+    void go(Cue* c);
+    void go(float forcedDelay, float forcedFade);
+    void go(Cue* c, float forcedDelay, float forcedFade);
     void goBack();
+    void goBack(float forcedDelay, float forcedFade);
     void goRandom();
     void flash(bool on, bool timing, bool swop = false);
     bool userPressedGo = false;

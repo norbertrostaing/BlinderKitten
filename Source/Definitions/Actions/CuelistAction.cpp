@@ -62,6 +62,18 @@ void CuelistAction::setValueInternal(var value, String origin) {
         }
         break;
 
+    case CL_GOINSTANT:
+        if (val > 0 && (float)previousValue == 0) {
+            target->go(0,0);
+        }
+        break;
+
+    case CL_GOBACKINSTANT:
+        if (val > 0 && (float)previousValue == 0) {
+            target->goBack(0,0);
+        }
+        break;
+
     case CL_GORANDOM:
         if (val > 0 && (float)previousValue == 0) {
             target->go();

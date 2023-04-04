@@ -126,13 +126,13 @@ Cuelist::Cuelist(var params) :
 
 	goBtn = addTrigger("GO", "Trigger next cue");
 	goBackBtn = addTrigger("GO back", "Trigger previous cue");
-	goRandomBtn = addTrigger("GO random", "Trigger a random cue");
+	// goRandomBtn = addTrigger("GO random", "Trigger a random cue");
 	offBtn = addTrigger("OFF", "Off this cuelist");
 	killBtn = addTrigger("KILL", "Kill this cuelist and leave no clues");
 	toggleBtn = addTrigger("Toggle", "Turns on and off the cuelist");
 	loadBtn = addTrigger("Load", "Choose next cue");
 	loadAndGoBtn = addTrigger("Load and go", "Choose a cue");
-	loadRandomBtn = addTrigger("Load Random", "Load a random cue");
+	// loadRandomBtn = addTrigger("Load Random", "Load a random cue");
 	// flashOnBtn = addTrigger("Flash ON", "release flash");
 	// flashOffBtn = addTrigger("flash Off", "press flash");
 	// swopOnBtn = addTrigger("Swop ON", "press swop");
@@ -227,6 +227,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		//return;
 	}
 	if (p == HTPLevel) {
+		LOG("coucou");
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
 		if (!Brain::getInstance()->loadingIsRunning) {
 			if (autoStart->getValue() && cueA == nullptr && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
@@ -348,25 +349,76 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 }
 
 
-void Cuelist::userGo(Cue* c)
-{
-	userPressedGo = true;
-	if (isChaser->boolValue() && cueA != nullptr) {
-		cueA->TSAutoFollowEnd = 0;
-	}
-	go(c);
-}
-
 void Cuelist::userGo()
 {
 	userPressedGo = true;
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
-	go();
+	go(-1, -1);
 }
 
-void Cuelist::go(Cue* c) {
+void Cuelist::userGo(Cue* c)
+{
+	userPressedGo = true;
+	if (isChaser->boolValue() && cueA != nullptr) {
+		cueA->TSAutoFollowEnd = 0;
+	}
+	go(c, -1, -1);
+}
+
+void Cuelist::userGo(float delay, float fade)
+{
+	userPressedGo = true;
+	if (isChaser->boolValue() && cueA != nullptr) {
+		cueA->TSAutoFollowEnd = 0;
+	}
+	go(delay, fade);
+}
+
+
+void Cuelist::userGo(Cue* c, float delay, float fade)
+{
+	userPressedGo = true;
+	if (isChaser->boolValue() && cueA != nullptr) {
+		cueA->TSAutoFollowEnd = 0;
+	}
+	go(c, delay, fade);
+}
+
+
+void Cuelist::go()
+{
+	go(-1, -1);
+}
+
+void Cuelist::go(Cue* c)
+{
+	go(c, -1, -1);
+}
+
+void Cuelist::go(float forcedDelay, float forcedFade) {
+	cueB = dynamic_cast<Cue*>(nextCue->targetContainer.get());
+	float nextId = nextCueId->getValue();
+	if (nextId > 0) {
+		for (int i = 0; i < cues.items.size() && cueB == nullptr; i++) {
+			if ((float)cues.items[i]->id->getValue() >= nextId) {
+				cueB = cues.items[i];
+			}
+		}
+	}
+	if (cueB == nullptr) {
+		if (isChaser->getValue()) {
+			cueB = getNextChaserCue();
+		}
+		else {
+			autoLoadCueB();
+		}
+	}
+	go(cueB, forcedDelay, forcedFade);
+}
+
+void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();;
 	isComputing.enter();
@@ -443,9 +495,11 @@ void Cuelist::go(Cue* c) {
 				else {
 					temp->startValue = -1;
 				}
+				float delay = forcedDelay != -1 ? forcedDelay : temp->delay;
+				float fade = forcedFade != -1 ? forcedFade : temp->fade;
 				temp->TSInit = now;
-				temp->TSStart = now + (temp->delay);
-				temp->TSEnd = temp->TSStart + (temp->fade);
+				temp->TSStart = now + (delay);
+				temp->TSEnd = temp->TSStart + (fade);
 				temp->isEnded = false;
 				newActiveValues.set(it.getKey(), temp);
 				it.getKey()->cuelistOnTopOfStack(this);
@@ -487,8 +541,10 @@ void Cuelist::go(Cue* c) {
 			}
 			else {
 				temp->TSInit = now;
-				temp->TSStart = now + (temp->delay);
-				temp->TSEnd = temp->TSStart + (temp->fade);
+				float delay = forcedDelay != -1 ? forcedDelay : temp->delay;
+				float fade = forcedFade != -1 ? forcedFade : temp->fade;
+				temp->TSStart = now + (delay);
+				temp->TSEnd = temp->TSStart + (fade);
 			}
 			temp->isEnded = false;
 			newActiveValues.set(it.getKey(), temp);
@@ -505,7 +561,7 @@ void Cuelist::go(Cue* c) {
 				ChannelValue* temp = it.getValue();
 				if (temp != nullptr && temp -> endValue != -1) {
 					float fadeTime = 0;
-					float delay = 0;
+					float delayTime = 0;
 					if (isChaser->getValue()) {
 						fadeTime = chaserFadeOutDuration;
 						temp->fadeCurve = &chaserFadeOutCurve;
@@ -517,17 +573,19 @@ void Cuelist::go(Cue* c) {
 					else {
 						if (it.getKey()->isHTP) {
 							fadeTime = (float)c->htpOutFade->getValue() * 1000;
-							delay = (float)c->htpOutDelay->getValue() * 1000;
+							delayTime = (float)c->htpOutDelay->getValue() * 1000;
 						}
 						else {
 							fadeTime = (float)c->ltpFade->getValue() * 1000;
-							delay = (float)c->ltpDelay->getValue() * 1000;
+							delayTime = (float)c->ltpDelay->getValue() * 1000;
 						}
 					}
 
+					float delay = forcedDelay != -1 ? forcedDelay : delayTime;
+					float fade = forcedFade != -1 ? forcedFade : fadeTime;
 					temp->TSInit = now;
 					temp->TSStart = now + delay;
-					temp->TSEnd = now + fadeTime + delay;
+					temp->TSEnd = now + fade + delay;
 					temp->endValue = -1;
 					temp->startValue = temp->value;
 					temp->isEnded = false;
@@ -554,36 +612,19 @@ void Cuelist::go(Cue* c) {
 	return ;
 }
 
-void Cuelist::go() {
-	cueB = dynamic_cast<Cue*>(nextCue->targetContainer.get());
-	float nextId = nextCueId->getValue();
-	if (nextId > 0) {
-		for (int i = 0; i < cues.items.size() && cueB == nullptr; i++) {
-			if ((float)cues.items[i]->id->getValue() >= nextId) {
-				cueB = cues.items[i];
-			}
-		}
-	}
-	if (cueB == nullptr) {
-		if (isChaser->getValue()) {
-			cueB = getNextChaserCue();
-		}
-		else {
-			autoLoadCueB();
-		}
-	}
-	go(cueB);
+void Cuelist::goBack() {
+	goBack(-1,-1);
 }
 
-
-void Cuelist::goBack() {
+void Cuelist::goBack(float forcedDelay, float forcedFade)
+{
 	if (cueA == nullptr) {
 		return;
 	}
 	Array<Cue*> currentCues = cues.getItemsWithType<Cue>();
-	for (int i = 0; i < currentCues.size()-1; i++) {
+	for (int i = 0; i < currentCues.size() - 1; i++) {
 		if (currentCues[i + 1] == cueA) {
-			userGo(currentCues[i]);
+			userGo(currentCues[i], forcedDelay, forcedFade);
 			return;
 		}
 	}
