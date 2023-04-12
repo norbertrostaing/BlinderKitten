@@ -9,7 +9,7 @@
 			<array>
 				<dict>
 					<key>APPLICATION_ID</key>
-					<string>norbertrostaing.Chataigne</string>
+					<string>norbertrostaing.BlinderKitten</string>
 					<key>STATE</key>
 					<true/>
 				</dict>
@@ -43,7 +43,7 @@
 									<key>CHILDREN</key>
 									<array/>
 									<key>GID</key>
-									<integer>0</integer>
+									<integer>80</integer>
 									<key>PATH</key>
 									<string>../Release/BlinderKitten.app</string>
 									<key>PATH_TYPE</key>
