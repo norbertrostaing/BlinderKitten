@@ -762,6 +762,8 @@
         <CONFIGURATION isDebug="1" name="Debug"/>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release"
                        macOSDeploymentTarget="10.10" osxCompatibility="10.10 SDK" targetName="BlinderKitten"/>
+        <CONFIGURATION isDebug="0" name="ReleaseSilicon" targetName="BlinderKitten"
+                       libraryPath="../../External/servus/lib/silicon/release" optimisation="3"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
