@@ -886,6 +886,13 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	else {
 		outIsOff= true;
 	}
+
+	float totTime = (cv->delay + cv->fade);
+	cv->currentPosition = 0;
+	if (totTime > 0) {
+		cv->currentPosition = (now - cv->TSInit) / (totTime);
+	}
+
 	if (flashValues) {
 		localValue = valueTo;
 	}
@@ -902,13 +909,6 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		}
 	}
 	else {
-		float totTime = (cv->delay + cv->fade);
-		if (totTime > 0) {
-			cv->currentPosition = (now - cv->TSInit) / (totTime);
-		}
-		else {
-			cv->currentPosition = 1;
-		}
 		float fade = double(now - cv->TSStart) / double(cv -> TSEnd - cv->TSStart);
 		fade = cv->fadeCurve->getValueAtPosition(fade);
 		localValue = jmap(fade, valueFrom, valueTo);
