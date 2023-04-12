@@ -45,7 +45,7 @@
 									<key>GID</key>
 									<integer>0</integer>
 									<key>PATH</key>
-									<string>../Builds/MacOSX_CI/build/Release/BlinderKitten.app</string>
+									<string>../Release/BlinderKitten.app</string>
 									<key>PATH_TYPE</key>
 									<integer>1</integer>
 									<key>PERMISSIONS</key>
