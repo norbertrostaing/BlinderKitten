@@ -44,6 +44,20 @@ SubFixtureChannel::~SubFixtureChannel()
 	Brain::getInstance()->swoppableChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->subFixtureChannelPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->subFixtureChannelPoolUpdating.removeAllInstancesOf(this);
+	// supprimer ici toutes les references dans les activesValues des cuelists et programmers
+	for (auto it = Brain::getInstance()->cuelists.begin(); it != Brain::getInstance()->cuelists.end(); it.next()) {
+		Cuelist* c = it.getValue();
+		if (c->activeValues.contains(this)) {
+			c->activeValues.remove(this);
+		}
+	}
+	for (auto it = Brain::getInstance()->programmers.begin(); it != Brain::getInstance()->programmers.end(); it.next()) {
+		Programmer* c = it.getValue();
+		if (c->activeValues.contains(this)) {
+			c->activeValues.remove(this);
+		}
+	}
+
 	Brain::getInstance()->usingCollections.exit();
 
 	cs.exit();

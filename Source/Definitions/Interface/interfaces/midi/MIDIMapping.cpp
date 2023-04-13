@@ -46,7 +46,7 @@ MIDIMapping::~MIDIMapping()
 {
 }
 
-void MIDIMapping::handleNote(int channel, int pitch, int velocity, String origin)
+void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -58,12 +58,13 @@ void MIDIMapping::handleNote(int channel, int pitch, int velocity, String origin
     if (!enabled->boolValue()) return;
 
     if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return;
+    if (channel->intValue() != rcvChannel) return;
     if (pitchOrNumber->intValue() != pitch) return;
     float relVal = jmap<float>(jlimit<float>(0, 127, velocity), 0, 127, 0, 1);
     handleValue(relVal, origin);
 }
 
-void MIDIMapping::handleCC(int channel, int number, int value, String origin)
+void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -74,12 +75,13 @@ void MIDIMapping::handleCC(int channel, int number, int value, String origin)
 
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return;
+    if (channel->intValue() != rcvChannel) return;
     if (pitchOrNumber->intValue() != number) return;
     float relVal = jmap<float>(jlimit<float>(0, 127, value), 0, 127, 0, 1);
     handleValue(relVal, origin);
 }
 
-void MIDIMapping::handlePitchWheel(int channel, int value, String origin)
+void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -89,6 +91,7 @@ void MIDIMapping::handlePitchWheel(int channel, int value, String origin)
 
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL) return;
+    if (channel->intValue() != rcvChannel) return;
     float relVal = jmap<float>(jlimit<float>(0, 16383, value), 0, 16383, 0, 1);
     handleValue(relVal, origin);
 }

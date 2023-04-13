@@ -227,7 +227,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		//return;
 	}
 	if (p == HTPLevel) {
-		LOG("coucou");
+		// LOG("coucou");
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
 		if (!Brain::getInstance()->loadingIsRunning) {
 			if (autoStart->getValue() && cueA == nullptr && (float)HTPLevel->getValue() != 0 && lastHTPLevel == 0) {
