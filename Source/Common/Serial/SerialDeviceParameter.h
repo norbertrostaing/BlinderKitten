@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    SerialDeviceParameter.h
-    Created: 15 Mar 2017 10:14:56am
-    Author:  Ben-Portable
+	SerialDeviceParameter.h
+	Created: 15 Mar 2017 10:14:56am
+	Author:  Ben-Portable
 
   ==============================================================================
 */
@@ -15,23 +15,25 @@ class SerialDeviceParameter :
 	public SerialManager::SerialManagerListener
 {
 public:
-	SerialDeviceParameter(const String &name, const String &description, bool enabled);
+	SerialDeviceParameter(const String& name, const String& description, bool enabled);
 	~SerialDeviceParameter();
 
-	SerialDevice * currentDevice;
-	SerialDevice * getDevice();
+	SerialDevice* currentDevice;
+	SerialDevice* getDevice();
 
+	String ghostData;
 	int openBaudRate;
-	int vidFilter;
-	int pidFilter;
+	Array<int> vidFilters;
+	Array<int> pidFilters;
 
-	void setValueInternal(var &value) override;
+	void setValueInternal(var& value) override;
 
+	void setVIDPIDFilters(Array<int> vidFilters, Array<int> pidFilters);
 	void updatePortList();
 
 	// Inherited via SerialManagerListener
-	virtual void portAdded(SerialDeviceInfo * info) override;
-	virtual void portRemoved(SerialDeviceInfo * info) override;
+	virtual void portAdded(SerialDeviceInfo* info) override;
+	virtual void portRemoved(SerialDeviceInfo* info) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SerialDeviceParameter)
 };
