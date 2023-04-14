@@ -69,6 +69,10 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 
 VirtualFaderCol::~VirtualFaderCol()
 {
+	if (!Engine::mainEngine->isClearing) {
+		VirtualFaderColManager::getInstance()->reconstructLibraries();
+		VirtualFaderColGrid::getInstance()->fillCells();
+	}
 }
 
 void VirtualFaderCol::updateName() {
