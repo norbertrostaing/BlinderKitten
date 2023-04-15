@@ -1,0 +1,4184 @@
+{
+  "interfaces": [
+    {
+      "niceName": "Akai APC40 mk1",
+      "containers": {
+        "mappings": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Fader Move",
+                      "type": "Fader Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Fader 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Activ col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": true,
+                  "controlAddress": "/enabled"
+                },
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Solo col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Record col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Above Button Press",
+                      "type": "Above Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 82,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 1 col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 9,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 83,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 2 col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 9,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 84,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 3 col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 9,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 85,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 4 col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 9,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 86,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 5 col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 9,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/channel"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 87,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "button row 6 col 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/row"
+                        },
+                        {
+                          "value": 9,
+                          "hexMode": false,
+                          "controlAddress": "/col"
+                        }
+                      ],
+                      "niceName": "Virtual Button Press",
+                      "type": "Virtual Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 49,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 50,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 51,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 52,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 54,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 55,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary up 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 16,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 17,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 19,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 21,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 22,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 23,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary down 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 47,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "rotary faders",
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "MIDI"
+    }
+  ],
+  "channelFamilies": null,
+  "fixtureType": null,
+  "fixture": null,
+  "group": null,
+  "preset": null,
+  "command": null,
+  "cuelist": null,
+  "programmer": null,
+  "curvePreset": null,
+  "timingPreset": null,
+  "carousel": null,
+  "mapper": null,
+  "multiplicators": null,
+  "effect": null,
+  "virtualButton": null,
+  "virtualFaderCol": null
+}

@@ -17,12 +17,12 @@
     {
       "parameters": [
         {
-          "value": 1,
+          "value": 2,
           "hexMode": false,
           "controlAddress": "/id"
         },
         {
-          "value": "thriller",
+          "value": "sin dimmer",
           "controlAddress": "/name"
         },
         {
@@ -30,19 +30,15 @@
           "controlAddress": "/isON"
         },
         {
-          "value": true,
-          "controlAddress": "/autoStart_Stop"
-        },
-        {
           "value": 0.0,
           "controlAddress": "/size"
         },
         {
-          "value": 600.0,
+          "value": 30.0,
           "controlAddress": "/speed"
         }
       ],
-      "niceName": "1 - thriller",
+      "niceName": "2 - sin dimmer",
       "containers": {
         "speedMultiplicators": {
           "viewOffset": [
@@ -66,8 +62,8 @@
                 "curve": {
                   "parameters": [
                     {
-                      "value": "Drawed",
-                      "controlAddress": "/curveType"
+                      "value": 0.5,
+                      "controlAddress": "/curveOrigin"
                     }
                   ],
                   "containers": {

@@ -10,11 +10,6 @@
     {
       "parameters": [
         {
-          "value": 1,
-          "hexMode": false,
-          "controlAddress": "/id"
-        },
-        {
           "value": "random flash",
           "controlAddress": "/name"
         },
@@ -23,8 +18,8 @@
           "controlAddress": "/tracking"
         },
         {
-          "value": 1.0,
-          "controlAddress": "/htpLevel"
+          "value": "",
+          "controlAddress": "/nextCue"
         },
         {
           "value": 0.7999999523162842,
@@ -35,8 +30,10 @@
       "editorIsCollapsed": true,
       "containers": {
         "conductorInfos": {
+          "editorIsCollapsed": true
         },
         "chaserOptions": {
+          "editorIsCollapsed": true,
           "containers": {
             "inCurve": {
               "parameters": [
@@ -171,6 +168,18 @@
                 0
               ],
               "viewZoom": 1.0
+            },
+            "regenerateChaser": {
+              "editorIsCollapsed": true,
+              "containers": {
+                "commandValue": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              }
             }
           }
         },
@@ -196,6 +205,7 @@
               "enabled": true
             }
           ],
+          "editorIsCollapsed": true,
           "containers": {
             "key": {
               "parameters": [
@@ -291,12 +301,15 @@
                   "controlAddress": "/autoFollow"
                 },
                 {
-                  "value": 0.05000000074505806,
-                  "controlAddress": "/autoFollowTiming"
+                  "value": 0.05,
+                  "controlAddress": "/autoFollowDelay"
                 }
               ],
               "niceName": "Cue",
               "containers": {
+                "actions": {
+                  "editorIsCollapsed": true
+                },
                 "timing": {
                   "editorIsCollapsed": true
                 },

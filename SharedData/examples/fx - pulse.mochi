@@ -17,12 +17,12 @@
     {
       "parameters": [
         {
-          "value": 1,
+          "value": 3,
           "hexMode": false,
           "controlAddress": "/id"
         },
         {
-          "value": "sin dimmer",
+          "value": "Pulse",
           "controlAddress": "/name"
         },
         {
@@ -30,19 +30,20 @@
           "controlAddress": "/isON"
         },
         {
-          "value": true,
-          "controlAddress": "/autoStart_Stop"
-        },
-        {
           "value": 0.0,
           "controlAddress": "/size"
         },
         {
-          "value": 30.0,
+          "value": 18.30658149719238,
           "controlAddress": "/speed"
+        },
+        {
+          "value": 4,
+          "hexMode": false,
+          "controlAddress": "/beatByCycles"
         }
       ],
-      "niceName": "1 - sin dimmer",
+      "niceName": "3 - Pulse",
       "containers": {
         "speedMultiplicators": {
           "viewOffset": [
@@ -64,12 +65,6 @@
               "niceName": "EffectRow",
               "containers": {
                 "curve": {
-                  "parameters": [
-                    {
-                      "value": "Drawed",
-                      "controlAddress": "/curveType"
-                    }
-                  ],
                   "containers": {
                     "curve": {
                       "parameters": [
@@ -97,26 +92,17 @@
                         "key": {
                           "parameters": [
                             {
-                              "value": 0.5,
+                              "value": 1.0,
                               "controlAddress": "/value"
                             },
                             {
-                              "value": "Sine",
+                              "value": "Linear",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key",
                           "containers": {
                             "easing": {
-                              "parameters": [
-                                {
-                                  "value": [
-                                    1.003062844276428,
-                                    0.4750000238418579
-                                  ],
-                                  "controlAddress": "/frequencyAmplitude"
-                                }
-                              ]
                             }
                           },
                           "type": "Key"
@@ -124,30 +110,17 @@
                         "key1": {
                           "parameters": [
                             {
-                              "value": 1.0,
+                              "value": 0.5108413100242615,
                               "controlAddress": "/position"
                             },
                             {
-                              "value": 0.5,
-                              "controlAddress": "/value"
-                            },
-                            {
-                              "value": "Sine",
+                              "value": "Bezier",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key 1",
                           "containers": {
                             "easing": {
-                              "parameters": [
-                                {
-                                  "value": [
-                                    1.0,
-                                    0.25
-                                  ],
-                                  "controlAddress": "/frequencyAmplitude"
-                                }
-                              ]
                             }
                           },
                           "type": "Key"
@@ -157,26 +130,17 @@
                         {
                           "parameters": [
                             {
-                              "value": 0.5,
+                              "value": 1.0,
                               "controlAddress": "/value"
                             },
                             {
-                              "value": "Sine",
+                              "value": "Linear",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key",
                           "containers": {
                             "easing": {
-                              "parameters": [
-                                {
-                                  "value": [
-                                    1.003062844276428,
-                                    0.4750000238418579
-                                  ],
-                                  "controlAddress": "/frequencyAmplitude"
-                                }
-                              ]
                             }
                           },
                           "type": "Key"
@@ -184,30 +148,17 @@
                         {
                           "parameters": [
                             {
-                              "value": 1.0,
+                              "value": 0.5108413100242615,
                               "controlAddress": "/position"
                             },
                             {
-                              "value": 0.5,
-                              "controlAddress": "/value"
-                            },
-                            {
-                              "value": "Sine",
+                              "value": "Bezier",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key 1",
                           "containers": {
                             "easing": {
-                              "parameters": [
-                                {
-                                  "value": [
-                                    1.0,
-                                    0.25
-                                  ],
-                                  "controlAddress": "/frequencyAmplitude"
-                                }
-                              ]
                             }
                           },
                           "type": "Key"
@@ -239,7 +190,7 @@
                           "controlAddress": "/filter"
                         },
                         {
-                          "value": 1,
+                          "value": 2,
                           "hexMode": false,
                           "controlAddress": "/seed"
                         }

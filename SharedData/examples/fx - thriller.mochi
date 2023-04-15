@@ -22,7 +22,7 @@
           "controlAddress": "/id"
         },
         {
-          "value": "paparazzi",
+          "value": "thriller",
           "controlAddress": "/name"
         },
         {
@@ -30,19 +30,15 @@
           "controlAddress": "/isON"
         },
         {
-          "value": true,
-          "controlAddress": "/autoStart_Stop"
-        },
-        {
           "value": 0.0,
           "controlAddress": "/size"
         },
         {
-          "value": 186.1999969482422,
+          "value": 600.0,
           "controlAddress": "/speed"
         }
       ],
-      "niceName": "1 - paparazzi",
+      "niceName": "1 - thriller",
       "containers": {
         "speedMultiplicators": {
           "viewOffset": [
@@ -64,6 +60,12 @@
               "niceName": "EffectRow",
               "containers": {
                 "curve": {
+                  "parameters": [
+                    {
+                      "value": 0.5,
+                      "controlAddress": "/curveOrigin"
+                    }
+                  ],
                   "containers": {
                     "curve": {
                       "parameters": [
@@ -91,79 +93,24 @@
                         "key": {
                           "parameters": [
                             {
-                              "value": 0.0,
-                              "controlAddress": "/position"
-                            },
-                            {
-                              "value": 1.0,
+                              "value": 0.5,
                               "controlAddress": "/value"
                             },
                             {
-                              "value": "Linear",
+                              "value": "Sine",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key",
                           "containers": {
                             "easing": {
-                            }
-                          },
-                          "type": "Key"
-                        },
-                        "key6": {
-                          "parameters": [
-                            {
-                              "value": 0.1225114911794662,
-                              "controlAddress": "/position"
-                            },
-                            {
-                              "value": 1.0,
-                              "controlAddress": "/value"
-                            },
-                            {
-                              "value": "Linear",
-                              "controlAddress": "/easingType"
-                            }
-                          ],
-                          "niceName": "Key 6",
-                          "containers": {
-                            "easing": {
-                            }
-                          },
-                          "type": "Key"
-                        },
-                        "key7": {
-                          "parameters": [
-                            {
-                              "value": 0.1393568068742752,
-                              "controlAddress": "/position"
-                            },
-                            {
-                              "value": 0.0,
-                              "controlAddress": "/value"
-                            },
-                            {
-                              "value": "Bezier",
-                              "controlAddress": "/easingType"
-                            }
-                          ],
-                          "niceName": "Key 7",
-                          "containers": {
-                            "easing": {
                               "parameters": [
                                 {
                                   "value": [
-                                    0.2770290970802307,
-                                    0.0
+                                    1.003062844276428,
+                                    0.4750000238418579
                                   ],
-                                  "controlAddress": "/anchor1"
-                                },
-                                {
-                                  "value": [
-                                    -0.2770290970802307,
-                                    0.0
-                                  ],
-                                  "controlAddress": "/anchor2"
+                                  "controlAddress": "/frequencyAmplitude"
                                 }
                               ]
                             }
@@ -177,17 +124,26 @@
                               "controlAddress": "/position"
                             },
                             {
-                              "value": 0.0,
+                              "value": 0.5,
                               "controlAddress": "/value"
                             },
                             {
-                              "value": "Bezier",
+                              "value": "Sine",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key 1",
                           "containers": {
                             "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    1.0,
+                                    0.25
+                                  ],
+                                  "controlAddress": "/frequencyAmplitude"
+                                }
+                              ]
                             }
                           },
                           "type": "Key"
@@ -197,79 +153,24 @@
                         {
                           "parameters": [
                             {
-                              "value": 0.0,
-                              "controlAddress": "/position"
-                            },
-                            {
-                              "value": 1.0,
+                              "value": 0.5,
                               "controlAddress": "/value"
                             },
                             {
-                              "value": "Linear",
+                              "value": "Sine",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key",
                           "containers": {
                             "easing": {
-                            }
-                          },
-                          "type": "Key"
-                        },
-                        {
-                          "parameters": [
-                            {
-                              "value": 0.1225114911794662,
-                              "controlAddress": "/position"
-                            },
-                            {
-                              "value": 1.0,
-                              "controlAddress": "/value"
-                            },
-                            {
-                              "value": "Linear",
-                              "controlAddress": "/easingType"
-                            }
-                          ],
-                          "niceName": "Key 6",
-                          "containers": {
-                            "easing": {
-                            }
-                          },
-                          "type": "Key"
-                        },
-                        {
-                          "parameters": [
-                            {
-                              "value": 0.1393568068742752,
-                              "controlAddress": "/position"
-                            },
-                            {
-                              "value": 0.0,
-                              "controlAddress": "/value"
-                            },
-                            {
-                              "value": "Bezier",
-                              "controlAddress": "/easingType"
-                            }
-                          ],
-                          "niceName": "Key 7",
-                          "containers": {
-                            "easing": {
                               "parameters": [
                                 {
                                   "value": [
-                                    0.2770290970802307,
-                                    0.0
+                                    1.003062844276428,
+                                    0.4750000238418579
                                   ],
-                                  "controlAddress": "/anchor1"
-                                },
-                                {
-                                  "value": [
-                                    -0.2770290970802307,
-                                    0.0
-                                  ],
-                                  "controlAddress": "/anchor2"
+                                  "controlAddress": "/frequencyAmplitude"
                                 }
                               ]
                             }
@@ -283,17 +184,26 @@
                               "controlAddress": "/position"
                             },
                             {
-                              "value": 0.0,
+                              "value": 0.5,
                               "controlAddress": "/value"
                             },
                             {
-                              "value": "Bezier",
+                              "value": "Sine",
                               "controlAddress": "/easingType"
                             }
                           ],
                           "niceName": "Key 1",
                           "containers": {
                             "easing": {
+                              "parameters": [
+                                {
+                                  "value": [
+                                    1.0,
+                                    0.25
+                                  ],
+                                  "controlAddress": "/frequencyAmplitude"
+                                }
+                              ]
                             }
                           },
                           "type": "Key"
@@ -325,7 +235,7 @@
                           "controlAddress": "/filter"
                         },
                         {
-                          "value": 3,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/seed"
                         }
