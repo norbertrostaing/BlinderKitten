@@ -22,7 +22,7 @@ VirtualButton::VirtualButton(var params) :
 	actionManager("Generic Actions")
 {
 	saveAndLoadRecursiveData = true;
-	nameCanBeChangedByUser = false;
+	nameCanBeChangedByUser = true;
 	canBeDisabled = false;
 
 	itemDataType = "VirtualButton";
@@ -93,6 +93,14 @@ VirtualButton::~VirtualButton()
 }
 
 void VirtualButton::updateName() {
+	if (niceName.startsWith("VirtualButton")) {
+		String n = "VirtualButton";
+		n += " p" + pageNumber->stringValue();
+		n += " c" + colNumber->stringValue();
+		n += " r" + rowNumber->stringValue();
+		n += " " + customText->stringValue();
+		setNiceName(n);
+	}
 }
 
 void VirtualButton::onContainerParameterChangedInternal(Parameter* c) {
@@ -101,6 +109,9 @@ void VirtualButton::onContainerParameterChangedInternal(Parameter* c) {
 	}
 	if (c == colNumber || c == pageNumber || c == rowNumber) {
 		VirtualButtonManager::getInstance()->reconstructLibrary();
+	}
+	if (c == colNumber || c == pageNumber || c == rowNumber || c == customText) {
+		updateName();
 	}
 	VirtualButtonGrid::getInstance()->fillCells();
 }

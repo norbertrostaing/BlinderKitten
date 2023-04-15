@@ -36,7 +36,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 	belowButtons("Below Buttons")
 {
 	saveAndLoadRecursiveData = true;
-	nameCanBeChangedByUser = false;
+	nameCanBeChangedByUser = true;
 	canBeDisabled = false;
 
 	itemDataType = "VirtualFaderCol";
@@ -76,6 +76,12 @@ VirtualFaderCol::~VirtualFaderCol()
 }
 
 void VirtualFaderCol::updateName() {
+	if (niceName.startsWith("VirtualFaderCol")) {
+		String n = "VirtualFaderCol";
+		n += " p" + pageNumber->stringValue();
+		n += " c" + colNumber->stringValue();
+		setNiceName(n);
+	}
 }
 
 void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
@@ -84,6 +90,7 @@ void VirtualFaderCol::onContainerParameterChangedInternal(Parameter* c) {
 	}
 	if (c == colNumber || c == pageNumber) {
 		VirtualFaderColManager::getInstance()->reconstructLibraries();
+		updateName();
 	}
 	VirtualFaderColGrid::getInstance()->fillCells();
 }
