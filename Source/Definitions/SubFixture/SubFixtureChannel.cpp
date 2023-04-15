@@ -60,7 +60,7 @@ SubFixtureChannel::~SubFixtureChannel()
 		if (c->activeValues.contains(this)) {
 			c->activeValues.remove(this);
 		}
-		c->computing.enter();
+		c->computing.exit();
 	}
 
 	cs.exit();
