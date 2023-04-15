@@ -69,7 +69,9 @@ void ArtnetSocket::selectSocketPort()
 
 void ArtnetSocket::sendArtPoll(String ip)
 {
+	isSending.enter();
 	socket->write(ip, 6454, artPollPacket, 18);
+	isSending.exit();
 }
 
 
@@ -176,7 +178,9 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 	artnetPacket[16] = 2;
 	artnetPacket[17] = 0;
 
+	ArtnetSocket::getInstance()->isSending.enter();
 	ArtnetSocket::getInstance()->socket->write(remoteHost->stringValue(), 6454, artnetPacket, 530);
+	ArtnetSocket::getInstance()->isSending.exit();
 }
 
 void DMXArtNetDevice::sendArtPoll()

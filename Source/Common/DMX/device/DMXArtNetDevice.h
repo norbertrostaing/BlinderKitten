@@ -34,6 +34,7 @@ class ArtnetSocket :
 	uint8 sequenceNumber;
 	void selectSocketPort();
 	void sendArtPoll(String ip);
+	CriticalSection isSending;
 
 };
 
