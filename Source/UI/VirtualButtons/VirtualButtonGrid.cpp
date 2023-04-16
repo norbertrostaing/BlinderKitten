@@ -122,15 +122,17 @@ void VirtualButtonGrid::fillCells() {
     }
     for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
         VirtualButton* vb = VirtualButtonManager::getInstance()->items[i];
-        if ((int)vb->pageNumber->getValue() == page) {
+        if ((int)vb->pageNumber->getValue() == page || (int)vb->pageNumber->getValue() == 0) {
             int r = vb->rowNumber->getValue();
             int c = vb->colNumber->getValue();
             String btnText = vb->getBtnText();
             if (r != 0 && c != 0 && r <= rows && c <= cols) {
                 int index = ((r-1)*cols)+(c-1);
-                gridButtons[index]->removeColour(TextButton::buttonColourId);
-                gridButtons[index]->setButtonText(btnText);
-                buttonToVirtualButton.set(gridButtons[index], vb);
+                if (! buttonToVirtualButton.contains(gridButtons[index])) {
+                    gridButtons[index]->removeColour(TextButton::buttonColourId);
+                    gridButtons[index]->setButtonText(btnText);
+                    buttonToVirtualButton.set(gridButtons[index], vb);
+                }
             }
         }
     }

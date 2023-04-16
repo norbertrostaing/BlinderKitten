@@ -254,7 +254,7 @@ void VirtualFaderColGrid::fillCells() {
 
     for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
         VirtualFaderCol* vf = VirtualFaderColManager::getInstance()->items[i];
-        if ((int)vf->pageNumber->getValue() == page) {
+        if (vf->pageNumber->intValue() == page || vf->pageNumber->intValue() == 0) {
             int c = vf->colNumber->getValue();
             columnToVFC.set(c, vf);
             c = c - 1;
@@ -263,38 +263,46 @@ void VirtualFaderColGrid::fillCells() {
             if (c>=0 && c < cols) {
                 columnLabels[c]->setText(targName, juce::dontSendNotification);
                 for (int n = 0; n < vf->rotaries.items.size() && n < nRotaries; n++) {
-                    VirtualFaderSlider* vs = vf->rotaries.items[n];
-                    sliderToVFS.set(rotaries[c]->getRawDataPointer()[n], vs);
-                    String text = vs->getBtnText(targType);
-                    if (text != "") {
-                        rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);
-                        rotaries[c]->getRawDataPointer()[n]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+                    if (!sliderToVFS.contains(rotaries[c]->getRawDataPointer()[n])) {
+                        VirtualFaderSlider* vs = vf->rotaries.items[n];
+                        sliderToVFS.set(rotaries[c]->getRawDataPointer()[n], vs);
+                        String text = vs->getBtnText(targType);
+                        if (text != "") {
+                            rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);
+                            rotaries[c]->getRawDataPointer()[n]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
 
+                        }
                     }
                 }
                 for (int n = 0; n < vf->aboveButtons.items.size() && n < nAbove; n++) {
-                    VirtualFaderButton* vb = vf->aboveButtons.items[n];
-                    buttonToVFB.set(aboveButtons[c]->getRawDataPointer()[n], vb);
-                    String text = vb->getBtnText(targType);
-                    if (text != "") {
-                        aboveButtons[c]->getRawDataPointer()[n]->setButtonText(text);
-                        aboveButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
+                    if (!buttonToVFB.contains(aboveButtons[c]->getRawDataPointer()[n])) {
+                        VirtualFaderButton* vb = vf->aboveButtons.items[n];
+                        buttonToVFB.set(aboveButtons[c]->getRawDataPointer()[n], vb);
+                        String text = vb->getBtnText(targType);
+                        if (text != "") {
+                            aboveButtons[c]->getRawDataPointer()[n]->setButtonText(text);
+                            aboveButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
+                        }
                     }
                 }
-                String text = vf->fader.getBtnText(targType);
-                sliderToVFS.set(faders[c], &vf->fader);
-                if (text != "") {
-                    faderLabels[c]->setText(text, juce::dontSendNotification);
-                    faders[c]->setColour(Slider::trackColourId, Colour(127, 127, 127));
+                if (!sliderToVFS.contains(faders[c])) {
+                    sliderToVFS.set(faders[c], &vf->fader);
+                    String text = vf->fader.getBtnText(targType);
+                    if (text != "") {
+                        faderLabels[c]->setText(text, juce::dontSendNotification);
+                        faders[c]->setColour(Slider::trackColourId, Colour(127, 127, 127));
+                    }
                 }
 
                 for (int n = 0; n < vf->belowButtons.items.size() && n < nBelow; n++) {
-                    VirtualFaderButton* vb = vf->belowButtons.items[n];
-                    buttonToVFB.set(belowButtons[c]->getRawDataPointer()[n], vb);
-                    String btnText = vb->getBtnText(targType);
-                    if (btnText != "") {
-                        belowButtons[c]->getRawDataPointer()[n]->setButtonText(btnText);
-                        belowButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
+                    if (!buttonToVFB.contains(belowButtons[c]->getRawDataPointer()[n])) {
+                        VirtualFaderButton* vb = vf->belowButtons.items[n];
+                        buttonToVFB.set(belowButtons[c]->getRawDataPointer()[n], vb);
+                        String btnText = vb->getBtnText(targType);
+                        if (btnText != "") {
+                            belowButtons[c]->getRawDataPointer()[n]->setButtonText(btnText);
+                            belowButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
+                        }
                     }
                 }
                 //faderLabels[c]->setText(btnText, juce::dontSendNotification);

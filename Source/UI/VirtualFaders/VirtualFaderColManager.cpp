@@ -46,6 +46,8 @@ void VirtualFaderColManager::onContainerParameterChanged(Parameter* p)
 void VirtualFaderColManager::reconstructLibraries()
 {
     usingLibraries.enter();
+    buttonLibrary.clear();
+    sliderLibrary.clear();
     for (int i = 0; i < items.size(); i++) {
         VirtualFaderCol* vfc = items[i];
         String page = vfc->pageNumber->stringValue();
@@ -78,9 +80,12 @@ void VirtualFaderColManager::setAboveButtonValue(int page, int col, int row, flo
 {
     VirtualFaderButton* vb = nullptr;
     String address = "above/" + String(page) + "/" + String(col) + "/" + String(row);
+    String addressGen = "above/0/" + String(col) + "/" + String(row);
     usingLibraries.enter();
-    if (buttonLibrary.contains(address)) {
-        vb = buttonLibrary.getReference(address);
+    for (auto it = buttonLibrary.begin(); it != buttonLibrary.end() && vb == nullptr; it.next()) {
+        if (it.getKey() == address || it.getKey() == addressGen) {
+            vb = it.getValue();
+        }
     }
     usingLibraries.exit();
     if (vb != nullptr) {
@@ -97,9 +102,12 @@ void VirtualFaderColManager::setBelowButtonValue(int page, int col, int row, flo
 {
     VirtualFaderButton* vb = nullptr;
     String address = "below/" + String(page) + "/" + String(col) + "/" + String(row);
+    String addressGen = "below/0/" + String(col) + "/" + String(row);
     usingLibraries.enter();
-    if (buttonLibrary.contains(address)) {
-        vb = buttonLibrary.getReference(address);
+    for (auto it = buttonLibrary.begin(); it != buttonLibrary.end() && vb == nullptr; it.next()) {
+        if (it.getKey() == address || it.getKey() == addressGen) {
+            vb = it.getValue();
+        }
     }
     usingLibraries.exit();
     if (vb != nullptr) {
@@ -116,9 +124,12 @@ void VirtualFaderColManager::setRotaryValue(int page, int col, int row, float va
 {
     VirtualFaderSlider* vs = nullptr;
     String address = "rotary/" + String(page) + "/" + String(col) + "/" + String(row);
+    String addressGen = "rotary/0/" + String(col) + "/" + String(row);
     usingLibraries.enter();
-    if (sliderLibrary.contains(address)) {
-        vs = sliderLibrary.getReference(address);
+    for (auto it = sliderLibrary.begin(); it != sliderLibrary.end() && vs == nullptr; it.next()) {
+        if (it.getKey() == address || it.getKey() == addressGen) {
+            vs = it.getValue();
+        }
     }
     usingLibraries.exit();
     if (vs != nullptr) {
@@ -130,9 +141,12 @@ void VirtualFaderColManager::setFaderValue(int page, int col, float value, Strin
 {
     VirtualFaderSlider* vs = nullptr;
     String address = "fader/" + String(page) + "/" + String(col);
+    String addressGen = "fader/0/" + String(col);
     usingLibraries.enter();
-    if (sliderLibrary.contains(address)) {
-        vs = sliderLibrary.getReference(address);
+    for (auto it = sliderLibrary.begin(); it != sliderLibrary.end() && vs == nullptr; it.next()) {
+        if (it.getKey() == address || it.getKey() == addressGen) {
+            vs = it.getValue();
+        }
     }
     usingLibraries.exit();
     if (vs != nullptr) {

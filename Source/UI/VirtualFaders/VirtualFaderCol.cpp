@@ -41,7 +41,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 
 	itemDataType = "VirtualFaderCol";
 
-	pageNumber = addIntParameter("Page number", "", 0,0);
+	pageNumber = addIntParameter("Page number", "0 means on all pages", 0,0);
 	colNumber = addIntParameter("Col number", "", 1,1);
 
 	targetType = addEnumParameter("Target type", "");

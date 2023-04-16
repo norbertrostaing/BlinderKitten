@@ -27,7 +27,7 @@ VirtualButton::VirtualButton(var params) :
 
 	itemDataType = "VirtualButton";
 
-	pageNumber = addIntParameter("Page number", "", 0,0);
+	pageNumber = addIntParameter("Page number", "0 means on all pages", 0,0);
 	rowNumber = addIntParameter("Row number", "", 0,0);
 	colNumber = addIntParameter("Col number", "", 0,0);
 	customText = addStringParameter("Custom Text", "Write your own text on your button", "");
