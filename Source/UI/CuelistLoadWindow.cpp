@@ -70,6 +70,10 @@ void CuelistLoadWindow::fillButtons(Cuelist* c) {
     for (int i = 0; i < c->cues.items.size(); i++) {
         TextButton *temp = new TextButton();
         temp->setButtonText(c->cues.items[i]->niceName);
+        if (c->cueA == c->cues.items[i]) {
+            temp->setColour(TextButton::buttonColourId, Colour(128, 128, 128));
+            temp->setColour(TextButton::textColourOffId, Colour(255,255,255));
+        }
         btnContainer.addAndMakeVisible(temp);
         buttons.add(temp);
         cueIds.add(c->cues.items[i]->id->floatValue());
