@@ -590,6 +590,13 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 		}
 	}
 
+	for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
+		VirtualButtonManager::getInstance()->items[i]->updateDisplay();
+	}
+	for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
+		VirtualFaderColManager::getInstance()->items[i]->updateDisplay();
+	}
+
 }
 
 void BKEngine::childStructureChanged(ControllableContainer* cc)

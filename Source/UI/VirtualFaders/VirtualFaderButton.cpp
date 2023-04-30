@@ -108,7 +108,7 @@ void VirtualFaderButton::onContainerParameterChangedInternal(Parameter* c) {
 void VirtualFaderButton::updateDisplay() {
 	String targType = targetType->getValue();
 	
-	targetId->hideInEditor = targType == "column" || targType == "disabled" || targType == "actions";
+	bool isColumn = targType == "column";
 
 	if (targType == "column" && parentContainer != nullptr) {
 		targType = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get())->targetType->getValue();
@@ -119,6 +119,7 @@ void VirtualFaderButton::updateDisplay() {
 	mapperAction->hideInEditor = targType != "mapper";
 
 	actionManager.hideInEditor = targType != "actions";
+	targetId->hideInEditor = isColumn || targType == "disabled" || targType == "actions";
 
 	bool isLoad = targType == "cuelist";
 	isLoad = isLoad && (cuelistAction->getValue() == "load" || cuelistAction->getValue() == "loadandgo");

@@ -92,8 +92,7 @@ void VirtualFaderSlider::onContainerParameterChangedInternal(Parameter* c) {
 
 void VirtualFaderSlider::updateDisplay() {
 	String targType = targetType->getValue();
-
-	targetId->hideInEditor = targType == "column" || targType == "disabled" || targType == "actions";
+	bool isColumn = targType == "column";
 
 	if (targType == "column" && parentContainer != nullptr && parentContainer -> parentContainer != nullptr) {
 		if (parentContainer->niceName == "Rotaries") {
@@ -110,7 +109,7 @@ void VirtualFaderSlider::updateDisplay() {
 	mapperAction->hideInEditor = targType != "mapper";
 
 	actionManager.hideInEditor = targType != "actions";
-	targetId->hideInEditor = targType == "actions";
+	targetId->hideInEditor = isColumn || targType == "disabled" || targType == "actions";
 
 	bool needSpeed = false;
 	needSpeed = needSpeed || (targType == "cuelist" && cuelistAction->getValue() == "speed");
