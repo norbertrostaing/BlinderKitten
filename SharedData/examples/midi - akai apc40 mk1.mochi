@@ -1,6 +1,19 @@
 {
   "interfaces": [
     {
+      "parameters": [
+        {
+          "value": false,
+          "controlAddress": "/logIncoming"
+        },
+        {
+          "value": [
+            "\\\\?\\usb#vid_09e8&pid_0073&mi_00#7&182ab30c&0&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global",
+            ""
+          ],
+          "controlAddress": "/device"
+        }
+      ],
       "niceName": "Akai APC40 mk1",
       "containers": {
         "mappings": {
@@ -18,7 +31,6 @@
                 }
               ],
               "niceName": "Fader 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -54,7 +66,6 @@
                 }
               ],
               "niceName": "Fader 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -97,7 +108,6 @@
                 }
               ],
               "niceName": "Fader 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -140,7 +150,6 @@
                 }
               ],
               "niceName": "Fader 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -183,7 +192,6 @@
                 }
               ],
               "niceName": "Fader 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -226,7 +234,6 @@
                 }
               ],
               "niceName": "Fader 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -269,7 +276,6 @@
                 }
               ],
               "niceName": "Fader 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -312,7 +318,6 @@
                 }
               ],
               "niceName": "Fader 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -350,7 +355,6 @@
                 }
               ],
               "niceName": "Fader 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "viewOffset": [
@@ -365,13 +369,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -392,13 +395,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -426,13 +428,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -460,13 +461,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -494,13 +494,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -528,13 +527,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -562,13 +560,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -596,13 +593,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Activ col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -630,13 +626,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -664,13 +659,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -703,13 +697,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -742,13 +735,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -781,13 +773,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -820,13 +811,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -859,13 +849,12 @@
             {
               "parameters": [
                 {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -898,17 +887,12 @@
             {
               "parameters": [
                 {
-                  "value": true,
-                  "controlAddress": "/enabled"
-                },
-                {
-                  "value": 48,
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "Solo col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -947,7 +931,6 @@
                 }
               ],
               "niceName": "Record col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -981,7 +964,6 @@
                 }
               ],
               "niceName": "Record col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1020,7 +1002,6 @@
                 }
               ],
               "niceName": "Record col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1059,7 +1040,6 @@
                 }
               ],
               "niceName": "Record col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1098,7 +1078,6 @@
                 }
               ],
               "niceName": "Record col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1137,7 +1116,6 @@
                 }
               ],
               "niceName": "Record col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1176,7 +1154,6 @@
                 }
               ],
               "niceName": "Record col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1215,7 +1192,6 @@
                 }
               ],
               "niceName": "Record col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1254,7 +1230,6 @@
                 }
               ],
               "niceName": "button row 1 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1286,7 +1261,6 @@
                 }
               ],
               "niceName": "button row 1 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1325,7 +1299,6 @@
                 }
               ],
               "niceName": "button row 1 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1364,7 +1337,6 @@
                 }
               ],
               "niceName": "button row 1 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1403,7 +1375,6 @@
                 }
               ],
               "niceName": "button row 1 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1442,7 +1413,6 @@
                 }
               ],
               "niceName": "button row 1 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1481,7 +1451,6 @@
                 }
               ],
               "niceName": "button row 1 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1520,7 +1489,6 @@
                 }
               ],
               "niceName": "button row 1 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1554,7 +1522,6 @@
                 }
               ],
               "niceName": "button row 1 col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1582,13 +1549,12 @@
             {
               "parameters": [
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1621,13 +1587,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1665,13 +1630,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1709,13 +1673,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1753,13 +1716,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1797,13 +1759,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1841,13 +1802,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1885,13 +1845,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 2 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1930,7 +1889,6 @@
                 }
               ],
               "niceName": "button row 2 col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1963,13 +1921,12 @@
             {
               "parameters": [
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2002,13 +1959,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2046,13 +2002,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2090,13 +2045,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2134,13 +2088,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2178,13 +2131,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2222,13 +2174,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2266,13 +2217,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 3 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2311,7 +2261,6 @@
                 }
               ],
               "niceName": "button row 3 col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2344,13 +2293,12 @@
             {
               "parameters": [
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2383,13 +2331,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2427,13 +2374,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2471,13 +2417,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2515,13 +2460,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2559,13 +2503,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2603,13 +2546,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2647,13 +2589,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 4 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2692,7 +2633,6 @@
                 }
               ],
               "niceName": "button row 4 col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2725,13 +2665,12 @@
             {
               "parameters": [
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2764,13 +2703,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2808,13 +2746,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2852,13 +2789,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2896,13 +2832,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2940,13 +2875,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2984,13 +2918,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3028,13 +2961,12 @@
                   "controlAddress": "/channel"
                 },
                 {
-                  "value": 53,
+                  "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
               "niceName": "button row 5 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3073,7 +3005,6 @@
                 }
               ],
               "niceName": "button row 5 col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3112,7 +3043,6 @@
                 }
               ],
               "niceName": "button row 6 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3151,7 +3081,6 @@
                 }
               ],
               "niceName": "button row 6 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3195,7 +3124,6 @@
                 }
               ],
               "niceName": "button row 6 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3239,7 +3167,6 @@
                 }
               ],
               "niceName": "button row 6 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3283,7 +3210,6 @@
                 }
               ],
               "niceName": "button row 6 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3327,7 +3253,6 @@
                 }
               ],
               "niceName": "button row 6 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3371,7 +3296,6 @@
                 }
               ],
               "niceName": "button row 6 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3415,7 +3339,6 @@
                 }
               ],
               "niceName": "button row 6 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3454,7 +3377,6 @@
                 }
               ],
               "niceName": "button row 6 col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3497,7 +3419,6 @@
                 }
               ],
               "niceName": "rotary up 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3528,7 +3449,6 @@
                 }
               ],
               "niceName": "rotary up 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3566,7 +3486,6 @@
                 }
               ],
               "niceName": "rotary up 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3604,7 +3523,6 @@
                 }
               ],
               "niceName": "rotary up 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3642,17 +3560,11 @@
                 }
               ],
               "niceName": "rotary up 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        },
                         {
                           "value": 2,
                           "hexMode": false,
@@ -3685,7 +3597,6 @@
                 }
               ],
               "niceName": "rotary up 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3728,7 +3639,6 @@
                 }
               ],
               "niceName": "rotary up 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3771,7 +3681,6 @@
                 }
               ],
               "niceName": "rotary up 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3814,7 +3723,6 @@
                 }
               ],
               "niceName": "rotary down 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3824,11 +3732,6 @@
                           "value": 5,
                           "hexMode": false,
                           "controlAddress": "/column"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/number"
                         }
                       ],
                       "niceName": "Encoder Move",
@@ -3857,7 +3760,6 @@
                 }
               ],
               "niceName": "rotary down 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3895,7 +3797,6 @@
                 }
               ],
               "niceName": "rotary down 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3933,7 +3834,6 @@
                 }
               ],
               "niceName": "rotary down 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3971,7 +3871,6 @@
                 }
               ],
               "niceName": "rotary down 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -4014,7 +3913,6 @@
                 }
               ],
               "niceName": "rotary down 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -4057,7 +3955,6 @@
                 }
               ],
               "niceName": "rotary down 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -4100,7 +3997,6 @@
                 }
               ],
               "niceName": "rotary down 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -4142,9 +4038,39 @@
                   "controlAddress": "/pitchOrNumber"
                 }
               ],
-              "niceName": "rotary faders",
+              "niceName": "rotary faders do not use now",
               "containers": {
                 "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 15,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                }
+              ],
+              "niceName": "Crossfade",
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "niceName": "Grand Master",
+                      "type": "Grand Master"
+                    }
+                  ],
                   "viewOffset": [
                     0,
                     0
