@@ -371,9 +371,13 @@ void DataTransferManager::execute() {
         }
     }
     else if (srcType == "mapper") {
+        Mapper* src = Brain::getInstance()->getMapperById(sId);
+        if (src == nullptr) {
+            LOGERROR("Mapper " + String(sId) + " doesn't exist !");
+            return;
+        }
         if (trgType == "mapper") {
             valid = true;
-            Mapper* src = Brain::getInstance()->getMapperById(sId);
             Mapper* trg = Brain::getInstance()->getMapperById(tId);
             if (trg == nullptr) {
                 trg = MapperManager::getInstance()->addItemFromData(src->getJSONData());
@@ -401,8 +405,12 @@ void DataTransferManager::execute() {
         }
     }
     else if (srcType == "preset") {
-    Preset* src = Brain::getInstance()->getPresetById(sId);
-    if (trgType == "preset") {
+        Preset* src = Brain::getInstance()->getPresetById(sId);
+        if (src == nullptr) {
+            LOGERROR("Preset " + String(sId) + " doesn't exist !");
+            return;
+        }
+        if (trgType == "preset") {
             valid = true;
             Preset* trg = Brain::getInstance()->getPresetById(tId);
             if (trg == nullptr) {
@@ -427,11 +435,15 @@ void DataTransferManager::execute() {
         }
     }
     else if (srcType == "group") {
+        Group* src = Brain::getInstance()->getGroupById(sId);
+        if (src == nullptr) {
+            LOGERROR("Group " + String(sId) + " doesn't exist !");
+            return;
+        }
         if (trgType == "group") {
             valid = true;
-            Group* src = Brain::getInstance()->getGroupById(sId);
             Group* trg = Brain::getInstance()->getGroupById(tId);
-            if (trg == nullptr) {
+            if (src != nullptr && trg == nullptr) {
                 trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
                 src->id->setValue(sId);
                 trg->id->setValue(tId);
