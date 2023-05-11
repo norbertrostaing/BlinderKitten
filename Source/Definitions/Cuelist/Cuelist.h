@@ -25,6 +25,8 @@ public:
     var objectData;
 
     CueManager cues;
+    bool isDeleting = false;
+
 
     IntParameter* id;
     IntParameter* layerId;
@@ -32,12 +34,6 @@ public:
     StringParameter* userName;
     void updateName();
     
-    ControllableContainer conductorInfos;
-    StringParameter* currentCueName;
-    StringParameter* currentCueText;
-    StringParameter* nextCueGo;
-    StringParameter* nextCueName;
-
     ControllableContainer chaserOptions;
     BoolParameter* isChaser;
     EnumParameter* chaserDirection;
@@ -122,6 +118,12 @@ public:
 
     Cue* cueA = nullptr;
     Cue* cueB = nullptr;
+
+    ControllableContainer conductorInfos;
+    StringParameter* currentCueName;
+    StringParameter* currentCueText;
+    StringParameter* nextCueGo;
+    StringParameter* nextCueName;
 
     float xFade = 0;
     double currentTimeElapsed = 0;

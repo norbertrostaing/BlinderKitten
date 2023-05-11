@@ -198,6 +198,7 @@ Cuelist::Cuelist(var params) :
 
 Cuelist::~Cuelist()
 {
+	isDeleting = true;
 	kill(true);
 	Brain::getInstance()->unregisterCuelist(this);
 	Brain::getInstance()->usingCollections.enter();
@@ -280,6 +281,9 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == userName || p == id) {
 		updateName();
 		CuelistGridView::getInstance()->updateCells();
+	}
+	if (p == nextCue || p == nextCueId) {
+		fillTexts();
 	}
 }
 
@@ -1077,6 +1081,7 @@ void Cuelist::loadRandom() {
 }
 
 void Cuelist::fillTexts() {
+	if (isDeleting) {return;}
 	if (cueA != nullptr) {
 		currentCueName->setValue(cueA->niceName);
 		currentCueText->setValue(cueA->cueText->getValue());
@@ -1085,7 +1090,18 @@ void Cuelist::fillTexts() {
 		currentCueName->setValue("");
 		currentCueText->setValue("");
 	}
-	Cue* n = getNextCue();
+	Cue* n = dynamic_cast<Cue*>(nextCue->targetContainer.get());
+	float nextId = nextCueId->getValue();
+	if (nextId > 0) {
+		for (int i = 0; i < cues.items.size() && cueB == nullptr; i++) {
+			if ((float)cues.items[i]->id->getValue() >= nextId) {
+				cueB = cues.items[i];
+			}
+		}
+	}
+	if (n == nullptr) {
+		n = getNextCue();
+	}
 	if (n) {
 		nextCueGo->setValue(n->goText->getValue());
 		nextCueName->setValue(n->niceName);
