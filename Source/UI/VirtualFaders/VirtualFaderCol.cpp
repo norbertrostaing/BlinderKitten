@@ -61,6 +61,7 @@ VirtualFaderCol::VirtualFaderCol(var params) :
 	addChildControllableContainer(&belowButtons);
 
 	fader.parentColumn = this;
+	fader.isFader = true;
 
 	updateDisplay();
 	updateName();

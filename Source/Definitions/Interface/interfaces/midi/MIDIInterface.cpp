@@ -18,6 +18,7 @@ MIDIInterface::MIDIInterface() :
     addParameter(deviceParam);
 
     addChildControllableContainer(&mappingManager);
+    addChildControllableContainer(&feedbackManager);
 }
 
 MIDIInterface::~MIDIInterface()
@@ -78,4 +79,12 @@ void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
     mappingManager.handlePitchWheel(channel, value, niceName);
+}
+
+void MIDIInterface::feedback(String address, double value)
+{
+    for (int i = 0; i < feedbackManager.items.size(); i++) {
+        MIDIFeedback* f = feedbackManager.items[i];
+        f->processFeedback(address, value);
+    }
 }

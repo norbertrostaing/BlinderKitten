@@ -24,6 +24,8 @@
 
 #include "interfaces/midi/MIDIMapping.cpp"
 #include "interfaces/midi/MIDIMappingManager.cpp"
+#include "interfaces/midi/MIDIFeedback.cpp"
+#include "interfaces/midi/MIDIFeedbackManager.cpp"
 #include "interfaces/midi/MIDIInterface.cpp"
 #include "interfaces/midi/ui/MIDIMappingEditor.cpp"
 

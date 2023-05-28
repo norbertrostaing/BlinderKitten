@@ -15,6 +15,7 @@
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
 #include "BKEngine.h"
+#include "UserInputManager.h"
 
 VirtualFaderSlider::VirtualFaderSlider(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderSlider")),
@@ -210,6 +211,25 @@ void VirtualFaderSlider::moved(float value, String origin) {
 	if (!isAllowedToMove(origin, value)) {
 		return;
 	}
+
+	String address = "";
+
+	int page = parentColumn->pageNumber->intValue();
+	address = "/page/" + String(page);
+
+	int col = parentColumn->colNumber->intValue();
+
+	if (isFader) {
+		address += "/vfader/" + String(page)+"/"+String(col);
+	}
+	else {
+		int id = parentColumn->rotaries.items.indexOf(this);
+		address += "/vrotary/" + String(page) + "/" + String(col) + "/" + String(id+1);
+	}
+
+	UserInputManager::getInstance()->feedback(address, value);
+
+
 	if (targType == "actions") {
 		actionManager.setValueAll(value, "VirtualFaders");
 		return;

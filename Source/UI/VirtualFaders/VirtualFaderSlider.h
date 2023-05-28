@@ -24,6 +24,8 @@ public:
     String objectType;
     var objectData;
 
+    bool isFader = false;
+
     EnumParameter * targetType;
     IntParameter * targetId;
     StringParameter* customText;

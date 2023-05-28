@@ -333,6 +333,12 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedback.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedbackManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIInterface.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3356,6 +3362,8 @@
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMapping.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\dmx\DMXMappingManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedback.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedbackManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIInterface.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIMapping.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIMappingManager.h"/>

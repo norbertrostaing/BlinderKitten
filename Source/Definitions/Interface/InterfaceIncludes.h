@@ -34,6 +34,8 @@
 
 #include "interfaces/midi/MIDIMapping.h"
 #include "interfaces/midi/MIDIMappingManager.h"
+#include "interfaces/midi/MIDIFeedback.h"
+#include "interfaces/midi/MIDIFeedbackManager.h"
 #include "interfaces/midi/ui/MIDIMappingEditor.h"
 #include "interfaces/midi/MIDIInterface.h"
 
