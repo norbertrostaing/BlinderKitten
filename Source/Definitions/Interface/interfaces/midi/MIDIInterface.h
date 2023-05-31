@@ -21,7 +21,9 @@ public:
     MIDIDeviceParameter* deviceParam;
 
     MIDIMappingManager mappingManager;
+    MIDIFeedbackManager feedbackManager;
     MIDIInputDevice* inputDevice;
+    MIDIOutputDevice* outputDevice;
 
     void updateDevices();
 
@@ -31,6 +33,8 @@ public:
     void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
     void controlChangeReceived(const int& channel, const int& number, const int& value) override;
     void pitchWheelReceived(const int& channel, const int& value) override;
+
+    void feedback(String address, double value);
 
     String getTypeString() const override { return "MIDI"; }
     static MIDIInterface* create(var params) { return new MIDIInterface(); };

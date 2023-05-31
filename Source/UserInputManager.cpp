@@ -682,3 +682,8 @@ void UserInputManager::resetFocus()
 	// Component::unfocusAllComponents();
 	InputPanel::getInstance()->setFocusContainer(true);
 }
+
+void UserInputManager::feedback(String address, double value)
+{
+	InterfaceManager::getInstance()->feedback(address, value);
+}

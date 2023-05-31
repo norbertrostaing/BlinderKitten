@@ -1336,6 +1336,12 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedback.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedbackManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIInterface.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi</Filter>
     </ClCompile>
@@ -4868,6 +4874,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\ui\MIDIMappingEditor.h">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedback.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIFeedbackManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIInterface.h">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\midi</Filter>

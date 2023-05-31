@@ -12,12 +12,14 @@
 
 MIDIInterface::MIDIInterface() :
     Interface(getTypeString()),
-    inputDevice(nullptr)
+    inputDevice(nullptr),
+    outputDevice(nullptr)
 {
     deviceParam = new MIDIDeviceParameter("Device");
     addParameter(deviceParam);
 
     addChildControllableContainer(&mappingManager);
+    addChildControllableContainer(&feedbackManager);
 }
 
 MIDIInterface::~MIDIInterface()
@@ -33,13 +35,24 @@ void MIDIInterface::updateDevices()
     if (deviceParam->inputDevice != inputDevice)
     {
         if (inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
-
         inputDevice = deviceParam->inputDevice;
 
         if (inputDevice != nullptr)
         {
             inputDevice->addMIDIInputListener(this);
             NLOG(niceName, "Now listening to MIDI Device : " << inputDevice->name);
+        }
+    }
+
+if (deviceParam->outputDevice != outputDevice)
+    {
+        if (outputDevice != nullptr) outputDevice->close();
+        outputDevice = deviceParam->outputDevice;
+
+        if (outputDevice != nullptr)
+        {
+            outputDevice->open();
+            NLOG(niceName, "Now writing to MIDI Device : " << outputDevice->name);
         }
     }
 }
@@ -78,4 +91,12 @@ void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
     mappingManager.handlePitchWheel(channel, value, niceName);
+}
+
+void MIDIInterface::feedback(String address, double value)
+{
+    for (int i = 0; i < feedbackManager.items.size(); i++) {
+        MIDIFeedback* f = feedbackManager.items[i];
+        f->processFeedback(address, value);
+    }
 }

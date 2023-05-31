@@ -24,6 +24,8 @@ public:
     String objectType;
     var objectData;
 
+    bool isFader = false;
+
     EnumParameter * targetType;
     IntParameter * targetId;
     StringParameter* customText;
@@ -41,6 +43,8 @@ public:
     float getTargetValue();
 
     void moved(float value, String origin);
+    void feedback(float value);
+
     void released();
     String getBtnText(String columnType);
 

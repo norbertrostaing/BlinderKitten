@@ -15,6 +15,7 @@
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
 #include "BKEngine.h"
+#include "UserInputManager.h"
 
 VirtualFaderSlider::VirtualFaderSlider(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderSlider")),
@@ -210,6 +211,9 @@ void VirtualFaderSlider::moved(float value, String origin) {
 	if (!isAllowedToMove(origin, value)) {
 		return;
 	}
+
+	feedback(value);
+
 	if (targType == "actions") {
 		actionManager.setValueAll(value, "VirtualFaders");
 		return;
@@ -291,6 +295,32 @@ void VirtualFaderSlider::moved(float value, String origin) {
 				}
 			}
 		}
+	}
+
+}
+
+void VirtualFaderSlider::feedback(float value)
+{
+	if (Brain::getInstance()->loadingIsRunning) {return; }
+	String address = "";
+	String address0 = "";
+
+	int page = parentColumn->pageNumber->intValue();
+	int col = parentColumn->colNumber->intValue();
+
+	if (isFader) {
+		address += "/vfader/" + String(page) + "/" + String(col);
+		address0 += "/vfader/0/" + String(col);
+	}
+	else {
+		int id = parentColumn->rotaries.items.indexOf(this);
+		address += "/vrotary/" + String(page) + "/" + String(col) + "/" + String(id + 1);
+		address0 += "/vrotary/0/" + String(col) + "/" + String(id + 1);
+	}
+
+	UserInputManager::getInstance()->feedback(address, value);
+	if (page == VirtualFaderColGrid::getInstance()->page) {
+		UserInputManager::getInstance()->feedback(address0, value);
 	}
 
 }

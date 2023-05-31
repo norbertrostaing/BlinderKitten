@@ -502,6 +502,13 @@
                 <FILE id="SoYNt1" name="MIDIMappingEditor.h" compile="0" resource="0"
                       file="Source/Definitions/Interface/interfaces/midi/ui/MIDIMappingEditor.h"/>
               </GROUP>
+              <FILE id="js1zfb" name="MIDIFeedback.cpp" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/midi/MIDIFeedback.cpp"/>
+              <FILE id="KPGdAc" name="MIDIFeedback.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/midi/MIDIFeedback.h"/>
+              <FILE id="TjktFT" name="MIDIFeedbackManager.cpp" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/midi/MIDIFeedbackManager.cpp"/>
+              <FILE id="ytwk7L" name="MIDIFeedbackManager.h" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/midi/MIDIFeedbackManager.h"/>
               <FILE id="I9FBEj" name="MIDIInterface.cpp" compile="0" resource="0"
                     file="Source/Definitions/Interface/interfaces/midi/MIDIInterface.cpp"/>
               <FILE id="e0b6gv" name="MIDIInterface.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/midi/MIDIInterface.h"/>
