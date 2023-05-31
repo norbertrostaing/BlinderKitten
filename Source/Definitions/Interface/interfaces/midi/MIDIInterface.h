@@ -23,6 +23,7 @@ public:
     MIDIMappingManager mappingManager;
     MIDIFeedbackManager feedbackManager;
     MIDIInputDevice* inputDevice;
+    MIDIOutputDevice* outputDevice;
 
     void updateDevices();
 

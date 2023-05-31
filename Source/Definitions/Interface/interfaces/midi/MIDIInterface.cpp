@@ -12,7 +12,8 @@
 
 MIDIInterface::MIDIInterface() :
     Interface(getTypeString()),
-    inputDevice(nullptr)
+    inputDevice(nullptr),
+    outputDevice(nullptr)
 {
     deviceParam = new MIDIDeviceParameter("Device");
     addParameter(deviceParam);
@@ -34,13 +35,24 @@ void MIDIInterface::updateDevices()
     if (deviceParam->inputDevice != inputDevice)
     {
         if (inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
-
         inputDevice = deviceParam->inputDevice;
 
         if (inputDevice != nullptr)
         {
             inputDevice->addMIDIInputListener(this);
             NLOG(niceName, "Now listening to MIDI Device : " << inputDevice->name);
+        }
+    }
+
+if (deviceParam->outputDevice != outputDevice)
+    {
+        if (outputDevice != nullptr) outputDevice->close();
+        outputDevice = deviceParam->outputDevice;
+
+        if (outputDevice != nullptr)
+        {
+            outputDevice->open();
+            NLOG(niceName, "Now writing to MIDI Device : " << outputDevice->name);
         }
     }
 }

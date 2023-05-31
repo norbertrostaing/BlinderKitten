@@ -43,6 +43,8 @@ public:
     float getTargetValue();
 
     void moved(float value, String origin);
+    void feedback(float value);
+
     void released();
     String getBtnText(String columnType);
 
