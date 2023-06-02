@@ -93,6 +93,9 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerEffect(this, id->getValue(), true);
 	}
+	if (p == isEffectOn) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+	}
 	if (p == userName || p == id) {
 		updateName();
 		EffectGridView::getInstance()->updateCells();

@@ -12,6 +12,7 @@
 #include "Brain.h"
 #include "Definitions/ChannelValue.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
 
 juce_ImplementSingleton(Brain);
 
@@ -204,7 +205,11 @@ void Brain::brainLoop() {
     if (virtualFadersNeedUpdate) {
         virtualFadersNeedUpdate = false;
         VirtualFaderColGrid::getInstance()->updateSlidersValues();
+    }
 
+    if (virtualButtonsNeedUpdate) {
+        virtualButtonsNeedUpdate = false;
+        VirtualButtonGrid::getInstance()->updateButtons();
     }
 
     //double delta = Time::getMillisecondCounterHiRes() - now;

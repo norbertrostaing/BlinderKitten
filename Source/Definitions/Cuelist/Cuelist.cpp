@@ -227,6 +227,9 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	if (Brain::getInstance()->loadingIsRunning) {
 		//return;
 	}
+	if (p == isCuelistOn || p == nextCue || p == nextCueId) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+	}
 	if (p == HTPLevel) {
 		// LOG("coucou");
 		Brain::getInstance()->virtualFadersNeedUpdate = true;

@@ -80,6 +80,9 @@ void Mapper::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerMapper(this, id->getValue(), true);
 	}
+	if (p == isMapperOn) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+	}
 	if (p == userName || p == id) {
 		updateName();
 		MapperGridView::getInstance()->updateCells();

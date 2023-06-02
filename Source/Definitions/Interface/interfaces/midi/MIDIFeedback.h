@@ -17,11 +17,12 @@ public:
     MIDIFeedback();
     ~MIDIFeedback();
 
-    enum FeedbackSource { VFADER, VROTARY};
+    enum FeedbackSource { VFADER, VROTARY, VBUTTON};
     EnumParameter* feedbackSource;
     IntParameter* sourceId;
     IntParameter* sourcePage;
     IntParameter* sourceCol;
+    IntParameter* sourceRow;
     IntParameter* sourceNumber;
 
     enum MidiType { NOTE, CONTROLCHANGE, PITCHWHEEL };
@@ -29,6 +30,12 @@ public:
     IntParameter* channel;
     IntParameter* pitchOrNumber;
     Point2DParameter* outputRange;
+
+    IntParameter* onValue;
+    IntParameter* offValue;
+    IntParameter* onLoadedValue;
+    IntParameter* offLoadedValue;
+    IntParameter* isGenericValue;
 
     Point2DParameter* inputRange;
 

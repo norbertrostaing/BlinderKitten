@@ -22,6 +22,9 @@ public:
     String objectType;
     var objectData;
 
+    enum ButtonStatus{BTN_UNASSIGNED, BTN_ON, BTN_OFF, BTN_ON_LOADED, BTN_OFF_LOADED, BTN_GENERIC};
+    ButtonStatus currentStatus;
+
     IntParameter * pageNumber;
     IntParameter * rowNumber;
     IntParameter * colNumber;
@@ -44,6 +47,8 @@ public:
     void pressed();
     void released();
     String getBtnText();
+    void updateStatus();
+    void feedback(ButtonStatus value);
 
     String getTypeString() const override { return objectType; }
 

@@ -14,6 +14,7 @@
 #include "VirtualButtonGrid.h"
 #include "../../Brain.h"
 #include "BKEngine.h"
+#include "UserInputManager.h"
 
 VirtualButton::VirtualButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualButton")),
@@ -319,4 +320,79 @@ String VirtualButton::getBtnText() {
 		text = action + "\n" + text;
 	}
 	return text;
+}
+
+void VirtualButton::updateStatus()
+{
+	ButtonStatus newStatus = BTN_UNASSIGNED;
+	String targType = targetType->getValue();
+	int targId = targetId->getValue();
+
+	if (targType == "actions") {
+		newStatus = BTN_GENERIC;
+	}
+	else if (targType == "cuelist") {
+		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+		if (targ != nullptr) {
+			bool loaded = false;
+			loaded = loaded || targ->nextCueId->intValue() > 0;
+			loaded = loaded || targ->nextCue->value != "";
+			if (targ->isCuelistOn->boolValue()) {
+				newStatus = loaded ? BTN_ON_LOADED : BTN_ON;
+			}
+			else {
+				newStatus = loaded ? BTN_OFF_LOADED : BTN_OFF;
+			}
+		}
+	}
+	else if (targType == "effect") {
+		Effect* targ = Brain::getInstance()->getEffectById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+	else if (targType == "carousel") {
+		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+	else if (targType == "mapper") {
+		Mapper* targ = Brain::getInstance()->getMapperById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+
+	if (currentStatus != newStatus) {
+		feedback(newStatus);
+	}
+
+	currentStatus = newStatus;
+
+}
+
+void VirtualButton::feedback(ButtonStatus value)
+{
+	if (isCurrentlyLoadingData) { return; }
+	String address = "";
+	String address0 = "";
+
+	int page = pageNumber->intValue();
+	int col = colNumber->intValue();
+	int row = rowNumber->intValue();
+
+	address += "/vbutton/" + String(page) + "/" + String(col) + "/" + String(row);
+	address0 += "/vbutton/0/" + String(col) + "/" + String(row);
+
+	double sentValue = 0; 
+	sentValue = value;
+
+
+	UserInputManager::getInstance()->feedback(address, sentValue);
+	if (page == VirtualButtonGrid::getInstance()->page) {
+		UserInputManager::getInstance()->feedback(address0, sentValue);
+	}
+
+
 }

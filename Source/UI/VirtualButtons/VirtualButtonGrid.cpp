@@ -117,7 +117,7 @@ void VirtualButtonGrid::fillCells() {
     buttonToVirtualButton.clear();
     pageDisplayBtn.setButtonText("Page "+String(page));
     for (int i = 0; i < gridButtons.size(); i++) {
-        gridButtons[i]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
+        //gridButtons[i]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
         gridButtons[i]->setButtonText("");
     }
     for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
@@ -129,13 +129,14 @@ void VirtualButtonGrid::fillCells() {
             if (r != 0 && c != 0 && r <= rows && c <= cols) {
                 int index = ((r-1)*cols)+(c-1);
                 if (! buttonToVirtualButton.contains(gridButtons[index])) {
-                    gridButtons[index]->removeColour(TextButton::buttonColourId);
+                    //gridButtons[index]->removeColour(TextButton::buttonColourId);
                     gridButtons[index]->setButtonText(btnText);
                     buttonToVirtualButton.set(gridButtons[index], vb);
                 }
             }
         }
     }
+    updateButtons();
 }
 
 void VirtualButtonGrid::buttonClicked(juce::Button* button) {
@@ -174,7 +175,7 @@ void VirtualButtonGrid::buttonPressedDown(TextButton* t) {
         }
     }
     else {
-        VirtualButton * vb = buttonToVirtualButton.getReference(t);
+        VirtualButton * vb = buttonToVirtualButton.contains(t) ? buttonToVirtualButton.getReference(t) : nullptr;
         if (vb != nullptr) {
             vb -> pressed();
         }
@@ -182,8 +183,8 @@ void VirtualButtonGrid::buttonPressedDown(TextButton* t) {
 }
 
 void VirtualButtonGrid::buttonPressedUp(TextButton* t) {
-   VirtualButton* vb = buttonToVirtualButton.getReference(t);
-   if (vb != nullptr) {
+    VirtualButton* vb = buttonToVirtualButton.contains(t) ? buttonToVirtualButton.getReference(t) : nullptr;
+    if (vb != nullptr) {
        vb->released();
    }
 }
@@ -192,7 +193,7 @@ void VirtualButtonGrid::editCell(int id) {
     id = id - 1;
     if (id >= 0 && id >= gridButtons.size()) {return; }
     TextButton* b = gridButtons[id];
-    VirtualButton* vb = buttonToVirtualButton.getReference(b);
+    VirtualButton* vb = buttonToVirtualButton.contains(b) ? buttonToVirtualButton.getReference(b) : nullptr;
     if (vb == nullptr) {
         vb = VirtualButtonManager::getInstance()->addItem();
         vb->pageNumber->setValue(page);
@@ -207,7 +208,7 @@ void VirtualButtonGrid::deleteCell(int id) {
     id = id-1;
     if (id >= 0 && id >= gridButtons.size()) { return; }
     TextButton* b = gridButtons[id];
-    VirtualButton* vb = buttonToVirtualButton.getReference(b);
+    VirtualButton* vb = buttonToVirtualButton.contains(b) ? buttonToVirtualButton.getReference(b) : nullptr;
     if (vb != nullptr) {
         VirtualButtonManager::getInstance()->removeItem(vb);
         fillCells();
@@ -220,7 +221,7 @@ void VirtualButtonGrid::moveCell(int idFrom, int idTo) {
     if (idFrom >= 0 && idFrom >= gridButtons.size()) { return; }
     if (idTo>= 0 && idTo >= gridButtons.size()) { return; }
     TextButton* b = gridButtons[idFrom];
-    VirtualButton* vb = buttonToVirtualButton.getReference(b);
+    VirtualButton* vb = buttonToVirtualButton.contains(b) ? buttonToVirtualButton.getReference(b) : nullptr;
     if (vb != nullptr) {
         vb->rowNumber->setValue(1+(idTo / cols));
         vb->colNumber->setValue(1+(idTo % cols));
@@ -234,7 +235,7 @@ void VirtualButtonGrid::copyCell(int idFrom, int idTo) {
     if (idFrom >= 0 && idFrom >= gridButtons.size()) { return; }
     if (idTo>= 0 && idTo >= gridButtons.size()) { return; }
     TextButton* b = gridButtons[idFrom];
-    VirtualButton* vb = buttonToVirtualButton.getReference(b);
+    VirtualButton* vb = buttonToVirtualButton.contains(b) ? buttonToVirtualButton.getReference(b) : nullptr;
     if (vb != nullptr) {
         VirtualButton* vbCopy = nullptr;
         vbCopy = VirtualButtonManager::getInstance()->addItemFromData(vb->getJSONData());
@@ -250,7 +251,7 @@ VirtualButton* VirtualButtonGrid::getVirtualButton(int id, bool create)
     id = id - 1;
     if (id >= 0 && id >= gridButtons.size()) { return nullptr; }
     TextButton* b = gridButtons[id];
-    VirtualButton* vb = buttonToVirtualButton.getReference(b);
+    VirtualButton* vb = buttonToVirtualButton.contains(b) ? buttonToVirtualButton.getReference(b) : nullptr;
     if (create) {
         vb = VirtualButtonManager::getInstance()->addItem();
         vb->pageNumber->setValue(page);
@@ -258,5 +259,40 @@ VirtualButton* VirtualButtonGrid::getVirtualButton(int id, bool create)
         vb->colNumber->setValue(1 + (id % cols));
     }
     return vb;
+}
+
+void VirtualButtonGrid::updateButtons()
+{
+    for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
+        VirtualButtonManager::getInstance()->items[i]->updateStatus();
+    }
+    for (int i = 0; i < gridButtons.size(); i++) {
+        if (buttonToVirtualButton.contains(gridButtons[i]) && buttonToVirtualButton.getReference(gridButtons[i]) != nullptr) {
+            VirtualButton* vb = buttonToVirtualButton.getReference(gridButtons[i]);
+            if (vb->currentStatus == VirtualButton::BTN_GENERIC) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 80));
+            }
+            else if (vb->currentStatus == VirtualButton::BTN_ON) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+            }
+            else if (vb->currentStatus == VirtualButton::BTN_OFF) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 64));
+            }
+            else if (vb->currentStatus == VirtualButton::BTN_ON_LOADED) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+            }
+            else if (vb->currentStatus == VirtualButton::BTN_OFF_LOADED) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+            }
+            else {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+            }
+        }
+        else {
+            gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+        }
+
+    }
+
 }
 

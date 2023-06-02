@@ -95,6 +95,9 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerCarousel(this, id->getValue(), true);
 	}
+	if (p == isCarouselOn) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+	}
 	if (p == userName || p == id) {
 		updateName();
 		CarouselGridView::getInstance()->updateCells();

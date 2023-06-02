@@ -71,6 +71,7 @@ public:
     bool loadingIsRunning = false;
 
     bool virtualFadersNeedUpdate = false;
+    bool virtualButtonsNeedUpdate = false;
 
     void run() override;
     void brainLoop();
