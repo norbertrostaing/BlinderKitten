@@ -94,7 +94,7 @@ void ConductorInfos::paint (juce::Graphics& g)
         float htpInDelay = round(nextCue->htpInDelay->floatValue() * 100) / 100.;
         float htpOutDelay = round(nextCue->htpOutDelay->floatValue() * 100) / 100.;
         float htpInFade = round(nextCue->htpInFade->floatValue() * 100) / 100.;
-        float htpOutFade = round(nextCue->htpOutDelay->floatValue() * 100) / 100.;
+        float htpOutFade = round(nextCue->htpOutFade->floatValue() * 100) / 100.;
     
         g.drawFittedText(String(htpInDelay), w - (3 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
         g.drawFittedText(String(htpOutDelay), w - (2 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
