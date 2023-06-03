@@ -364,9 +364,7 @@ void VirtualButton::updateStatus()
 		}
 	}
 
-	if (currentStatus != newStatus) {
-		feedback(newStatus);
-	}
+	feedback(newStatus);
 
 	currentStatus = newStatus;
 

@@ -98,6 +98,7 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
     int sendValue = 0;
 
     bool sameDevice = inter->niceName == origin;
+    sameDevice = sameDevice && origin != "";
 
     if (source == VFADER && !sameDevice) {
         localAddress = "/vfader/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue());
@@ -106,7 +107,7 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = round(jmap(value, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
-    else if (source && !sameDevice) {
+    else if (source == VROTARY && !sameDevice) {
         localAddress = "/vrotary/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
