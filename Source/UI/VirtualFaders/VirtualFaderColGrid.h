@@ -91,6 +91,8 @@ public:
 
     void goToPage(int n);
 
+    void resetFeedbacks();
+
 
 
 private:

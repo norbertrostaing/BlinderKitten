@@ -34,10 +34,10 @@ InterfaceManager::~InterfaceManager()
 {
 }
 
-void InterfaceManager::feedback(String address, double value)
+void InterfaceManager::feedback(String address, double value, String origin = "")
 {
     Array<MIDIInterface*> interfaces = getInterfacesOfType<MIDIInterface>();
     for (int i = 0; i < interfaces.size(); i++) {
-        interfaces[i]->feedback(address, value);
+        interfaces[i]->feedback(address, value, origin);
     }
 }

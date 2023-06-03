@@ -47,6 +47,6 @@ public:
     void updateDisplay();
     void onContainerParameterChangedInternal(Parameter*);
 
-    void processFeedback(String address, double value);
+    void processFeedback(String address, double value, String origin);
 
 };

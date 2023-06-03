@@ -88,22 +88,25 @@ void MIDIFeedback::onContainerParameterChangedInternal(Parameter* p)
     }
 }
 
-void MIDIFeedback::processFeedback(String address, double value)
+void MIDIFeedback::processFeedback(String address, double value, String origin)
 {
     String localAddress = "";
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
+    MIDIInterface* inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
 
     bool valid = false;
     int sendValue = 0;
 
-    if (source == VFADER) {
+    bool sameDevice = inter->niceName == origin;
+
+    if (source == VFADER && !sameDevice) {
         localAddress = "/vfader/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = round(jmap(value, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
-    else if (source == VROTARY) {
+    else if (source && !sameDevice) {
         localAddress = "/vrotary/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
@@ -127,9 +130,10 @@ void MIDIFeedback::processFeedback(String address, double value)
     }
 
     if (valid) {
-        MIDIInterface* inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
         auto dev = inter->deviceParam->outputDevice;
-
+        if (dev == nullptr) {
+            return;
+        }
         if (midiType->getValueDataAsEnum<MidiType>() == NOTE) {
             dev->sendNoteOn(channel->intValue(), pitchOrNumber->intValue(), round(sendValue));
         }

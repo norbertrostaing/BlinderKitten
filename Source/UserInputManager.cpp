@@ -683,7 +683,7 @@ void UserInputManager::resetFocus()
 	InputPanel::getInstance()->setFocusContainer(true);
 }
 
-void UserInputManager::feedback(String address, double value)
+void UserInputManager::feedback(String address, double value, String origin="")
 {
-	InterfaceManager::getInstance()->feedback(address, value);
+	InterfaceManager::getInstance()->feedback(address, value, origin);
 }

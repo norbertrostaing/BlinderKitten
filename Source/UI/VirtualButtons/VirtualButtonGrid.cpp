@@ -92,6 +92,7 @@ void VirtualButtonGrid::resized()
 
 void VirtualButtonGrid::goToPage(int n) {
     page = jmax(1,n);
+    resetFeedbacks();
     fillCells();
 }
 
@@ -142,9 +143,11 @@ void VirtualButtonGrid::fillCells() {
 void VirtualButtonGrid::buttonClicked(juce::Button* button) {
     if ((TextButton*)button == &pagePlusBtn) {
         page += 1;
+        resetFeedbacks();
         fillCells();
     } else if ((TextButton*)button == &pageMinusBtn) {
         page = jmax(1, page-1);
+        resetFeedbacks();
         fillCells();
     }
     else {
@@ -292,6 +295,23 @@ void VirtualButtonGrid::updateButtons()
             gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
         }
 
+    }
+
+}
+
+void VirtualButtonGrid::resetFeedbacks()
+{
+    for (int l = 0; l < rows; l++) 
+    {
+        for (int c = 0; c < cols; c++) 
+        {
+            String address0 = "/vbutton/0/" + String(c+1) + "/" + String(l+1);
+            UserInputManager::getInstance()->feedback(address0, 0, "");
+        }
+    }
+
+    for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
+        VirtualButtonManager::getInstance()->items[i]->updateStatus();
     }
 
 }

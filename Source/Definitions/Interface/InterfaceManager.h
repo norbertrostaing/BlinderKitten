@@ -59,5 +59,5 @@ public:
 
 	}
 
-	void feedback(String address, double value);
+	void feedback(String address, double value, String origin);
 };

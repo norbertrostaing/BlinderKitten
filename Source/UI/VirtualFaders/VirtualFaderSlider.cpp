@@ -212,7 +212,7 @@ void VirtualFaderSlider::moved(float value, String origin) {
 		return;
 	}
 
-	feedback(value);
+	feedback(value, origin);
 
 	if (targType == "actions") {
 		actionManager.setValueAll(value, "VirtualFaders");
@@ -299,7 +299,7 @@ void VirtualFaderSlider::moved(float value, String origin) {
 
 }
 
-void VirtualFaderSlider::feedback(float value)
+void VirtualFaderSlider::feedback(float value, String origin="")
 {
 	if (Brain::getInstance()->loadingIsRunning) {return; }
 	String address = "";
@@ -318,9 +318,9 @@ void VirtualFaderSlider::feedback(float value)
 		address0 += "/vrotary/0/" + String(col) + "/" + String(id + 1);
 	}
 
-	UserInputManager::getInstance()->feedback(address, value);
+	UserInputManager::getInstance()->feedback(address, value, origin);
 	if (page == VirtualFaderColGrid::getInstance()->page) {
-		UserInputManager::getInstance()->feedback(address0, value);
+		UserInputManager::getInstance()->feedback(address0, value, origin);
 	}
 
 }

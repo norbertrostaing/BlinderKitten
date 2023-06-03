@@ -117,7 +117,19 @@ void VirtualFaderColGrid::resized()
 
 void VirtualFaderColGrid::goToPage(int n) {
     page = jmax(1, n);
+    resetFeedbacks();
     fillCells();
+}
+
+void VirtualFaderColGrid::resetFeedbacks()
+{
+    for (int c = 0; c < cols; c++) {
+        String address0 = "/vfader/0/" + String(c);
+        UserInputManager::getInstance()->feedback(address0, 0, "");
+        for (int n = 0; n < nRotaries; n++) {
+            address0 = "/vrotary/0/" + String(c) + "/" + String(n + 1);
+        }
+    }
 }
 
 
@@ -316,9 +328,11 @@ void VirtualFaderColGrid::fillCells() {
 void VirtualFaderColGrid::buttonClicked(juce::Button* button) {
     if ((TextButton*)button == &pagePlusBtn) {
         page += 1;
+        resetFeedbacks();
         fillCells();
     } else if ((TextButton*)button == &pageMinusBtn) {
         page = jmax(1, page-1);
+        resetFeedbacks();
         fillCells();
     }
     else {
@@ -476,7 +490,7 @@ void VirtualFaderColGrid::updateSlidersValues()
         float v = 0;
         if (s != nullptr) {
             v = s->getTargetValue();
-            s->feedback(v);
+            s->feedback(v, "");
         }
         faders[i]->setValue(v, juce::dontSendNotification);
 
@@ -485,7 +499,7 @@ void VirtualFaderColGrid::updateSlidersValues()
             v = 0;
             if (s != nullptr) {
                 v = s->getTargetValue();
-                s->feedback(v);
+                s->feedback(v, "");
             }
             rotaries[i]->getRawDataPointer()[r]->setValue(v, juce::dontSendNotification);
 
