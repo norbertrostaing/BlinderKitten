@@ -92,6 +92,7 @@ public:
     void goToPage(int n);
 
     void resetFeedbacks();
+    void updateButtons();
 
 
 

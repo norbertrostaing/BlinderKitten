@@ -10,6 +10,7 @@
 
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/VirtualButtons/VirtualButton.h"
+#include "UI/VirtualFaders/VirtualFaderButton.h"
 
 MIDIFeedback::MIDIFeedback() :
     BaseItem("MIDI Feedback"),
@@ -18,7 +19,12 @@ MIDIFeedback::MIDIFeedback() :
 {
 
     feedbackSource = addEnumParameter("Source type", "Source data for this feedback");
-    feedbackSource->addOption("Virtual Fader", VFADER)->addOption("Virtual rotary", VROTARY)->addOption("Virtual button", VBUTTON);
+    feedbackSource->addOption("Virtual fader", VFADER)
+                    ->addOption("Virtual rotary", VROTARY)
+                    ->addOption("Virtual fader above button", VABOVEBUTTON)
+                    ->addOption("Virtual fader below button", VBELOWBUTTON)
+                    ->addOption("Virtual button", VBUTTON)
+                    ;
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
     sourcePage = addIntParameter("Source Page", "Source page, 0 means current page", 0);
@@ -124,6 +130,30 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualButton::BTN_ON_LOADED ? onLoadedValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_OFF_LOADED ? offLoadedValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
+        }
+    }
+    else if (source == VABOVEBUTTON) {
+        localAddress = "/vabovebutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
+        if (address == localAddress) {
+            valid = true;
+            sendValue = 0;
+            sendValue = value == VirtualFaderButton::BTN_ON ? onValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_OFF ? offValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_ON_LOADED ? onLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_OFF_LOADED ? offLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
+        }
+    }
+    else if (source == VBELOWBUTTON) {
+        localAddress = "/vbelowbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
+        if (address == localAddress) {
+            valid = true;
+            sendValue = 0;
+            sendValue = value == VirtualFaderButton::BTN_ON ? onValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_OFF ? offValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_ON_LOADED ? onLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_OFF_LOADED ? offLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
         }
     }
     else {

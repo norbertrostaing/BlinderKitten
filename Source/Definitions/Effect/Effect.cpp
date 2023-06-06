@@ -95,6 +95,7 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == isEffectOn) {
 		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+		Brain::getInstance()->virtualFaderButtonsNeedUpdate = true;
 	}
 	if (p == userName || p == id) {
 		updateName();

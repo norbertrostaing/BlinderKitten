@@ -14,6 +14,7 @@
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
 #include "BKEngine.h"
+#include "UserInputManager.h"
 
 VirtualFaderButton::VirtualFaderButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderButton")),
@@ -361,3 +362,87 @@ bool VirtualFaderButton::checkParentColumn()
 	return parentColumn != nullptr;
 }
 
+
+void VirtualFaderButton::updateStatus(bool forceRefresh)
+{
+	ButtonStatus newStatus = BTN_UNASSIGNED;
+	String targType = targetType->getValue();
+	int targId = targetId->getValue();
+
+	if (targType == "actions") {
+		newStatus = BTN_GENERIC;
+	}
+	else if (targType == "cuelist") {
+		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
+		if (targ != nullptr) {
+			bool loaded = false;
+			loaded = loaded || targ->nextCueId->intValue() > 0;
+			loaded = loaded || targ->nextCue->value != "";
+			if (targ->isCuelistOn->boolValue()) {
+				newStatus = loaded ? BTN_ON_LOADED : BTN_ON;
+			}
+			else {
+				newStatus = loaded ? BTN_OFF_LOADED : BTN_OFF;
+			}
+		}
+	}
+	else if (targType == "effect") {
+		Effect* targ = Brain::getInstance()->getEffectById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+	else if (targType == "carousel") {
+		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+	else if (targType == "mapper") {
+		Mapper* targ = Brain::getInstance()->getMapperById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+
+	if (currentStatus != newStatus || forceRefresh) {
+		feedback(newStatus);
+	}
+
+	currentStatus = newStatus;
+
+}
+
+void VirtualFaderButton::feedback(ButtonStatus value)
+{
+	if (isCurrentlyLoadingData) { return; }
+	if (!checkParentColumn()) { return; }
+
+	String address = "";
+	String address0 = "";
+
+
+	int page = parentColumn->pageNumber->intValue();
+	int col = parentColumn->colNumber->intValue();
+	bool isAbove = false;
+	int index = parentColumn->aboveButtons.items.indexOf(this);
+	if (index == -1) {
+		isAbove = false;
+		index = parentColumn->belowButtons.items.indexOf(this);
+	}
+
+	String aboveOrBelow = isAbove ? "vabovebutton" : "vbelowbutton";
+
+	address += "/"+aboveOrBelow+"/" + String(page) + "/" + String(col) + "/" + String(index+1);
+	address0 += "/"+aboveOrBelow+"/0/" + String(col) + "/" + String(index+1);
+
+	double sentValue = 0;
+	sentValue = value;
+
+	UserInputManager::getInstance()->feedback(address, sentValue, "");
+	if (page == VirtualFaderColGrid::getInstance()->page) {
+		UserInputManager::getInstance()->feedback(address0, sentValue, "");
+	}
+
+
+}

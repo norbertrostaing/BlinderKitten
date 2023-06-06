@@ -207,6 +207,11 @@ void Brain::brainLoop() {
         VirtualFaderColGrid::getInstance()->updateSlidersValues();
     }
 
+    if (virtualFaderButtonsNeedUpdate) {
+        virtualFaderButtonsNeedUpdate = false;
+        VirtualFaderColGrid::getInstance()->updateButtons();
+    }
+
     if (virtualButtonsNeedUpdate) {
         virtualButtonsNeedUpdate = false;
         VirtualButtonGrid::getInstance()->updateButtons();

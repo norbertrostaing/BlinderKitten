@@ -124,10 +124,91 @@ void VirtualFaderColGrid::goToPage(int n) {
 void VirtualFaderColGrid::resetFeedbacks()
 {
     for (int c = 0; c < cols; c++) {
-        String address0 = "/vfader/0/" + String(c);
+        String address0 = "/vfader/0/" + String(c+1);
         UserInputManager::getInstance()->feedback(address0, 0, "");
         for (int n = 0; n < nRotaries; n++) {
-            address0 = "/vrotary/0/" + String(c) + "/" + String(n + 1);
+            address0 = "/vrotary/0/" + String(c+1) + "/" + String(n + 1);
+            UserInputManager::getInstance()->feedback(address0, 0, "");
+        }
+        for (int n = 0; n < nAbove; n++) {
+            address0 = "/vabovebutton/0/" + String(c + 1) + "/" + String(n + 1);
+            UserInputManager::getInstance()->feedback(address0, 0, "");
+        }
+        for (int n = 0; n < nBelow; n++) {
+            address0 = "/vbelowbutton/0/" + String(c + 1) + "/" + String(n + 1);
+            UserInputManager::getInstance()->feedback(address0, 0, "");
+        }
+    }
+}
+
+void VirtualFaderColGrid::updateButtons()
+{
+    {
+        for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
+            for (int a = 0; a < VirtualFaderColManager::getInstance()->items[i]->aboveButtons.items.size(); a++) {
+                VirtualFaderColManager::getInstance()->items[i]->aboveButtons.items[a]->updateStatus();
+            }
+            for (int b = 0; b < VirtualFaderColManager::getInstance()->items[i]->belowButtons.items.size(); b++) {
+                VirtualFaderColManager::getInstance()->items[i]->belowButtons.items[b]->updateStatus();
+            }
+        }
+        for (int c = 0; c < aboveButtons.size(); c++) {
+            for (int a = 0; a < aboveButtons[c]->size(); a++) {
+                auto btn = aboveButtons[c]->getRawDataPointer()[a];
+                if (buttonToVFB.contains(btn) && buttonToVFB.getReference(btn) != nullptr) {
+                    VirtualFaderButton* vb = buttonToVFB.getReference(btn);
+                    if (vb->currentStatus == VirtualFaderButton::BTN_GENERIC) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 80));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_ON) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_OFF) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 64));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_ON_LOADED) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_OFF_LOADED) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+                    }
+                    else {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+                    }
+                }
+                else {
+                    btn->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+                }
+            }
+        }
+        for (int c = 0; c < belowButtons.size(); c++) {
+            for (int a = 0; a < belowButtons[c]->size(); a++) {
+                auto btn = belowButtons[c]->getRawDataPointer()[a];
+                if (buttonToVFB.contains(btn) && buttonToVFB.getReference(btn) != nullptr) {
+                    VirtualFaderButton* vb = buttonToVFB.getReference(btn);
+                    if (vb->currentStatus == VirtualFaderButton::BTN_GENERIC) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 80));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_ON) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_OFF) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 64));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_ON_LOADED) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_OFF_LOADED) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+                    }
+                    else {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+                    }
+                }
+                else {
+                    btn->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+                }
+            }
         }
     }
 }
@@ -323,6 +404,7 @@ void VirtualFaderColGrid::fillCells() {
     }
     resized();
     updateSlidersValues();
+    updateButtons();
 }
 
 void VirtualFaderColGrid::buttonClicked(juce::Button* button) {

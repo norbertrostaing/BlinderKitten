@@ -24,6 +24,9 @@ public:
     String objectType;
     var objectData;
 
+    enum ButtonStatus { BTN_UNASSIGNED, BTN_ON, BTN_OFF, BTN_ON_LOADED, BTN_OFF_LOADED, BTN_GENERIC };
+    ButtonStatus currentStatus;
+
     EnumParameter * targetType;
     IntParameter * targetId;
     StringParameter* customText;
@@ -46,6 +49,9 @@ public:
     String getBtnText(String columnType);
 
     bool checkParentColumn();
+
+    void feedback(ButtonStatus value);
+    void updateStatus(bool forceRefresh = false);
 
     String getTypeString() const override { return objectType; };
     static VirtualFaderButton* create(var params) { return new VirtualFaderButton(params); }

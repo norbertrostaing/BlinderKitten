@@ -82,6 +82,7 @@ void Mapper::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == isMapperOn) {
 		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+		Brain::getInstance()->virtualFaderButtonsNeedUpdate = true;
 	}
 	if (p == userName || p == id) {
 		updateName();

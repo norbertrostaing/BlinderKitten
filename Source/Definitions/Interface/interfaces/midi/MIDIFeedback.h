@@ -17,7 +17,7 @@ public:
     MIDIFeedback();
     ~MIDIFeedback();
 
-    enum FeedbackSource { VFADER, VROTARY, VBUTTON};
+    enum FeedbackSource { VFADER, VROTARY, VABOVEBUTTON, VBELOWBUTTON, VBUTTON};
     EnumParameter* feedbackSource;
     IntParameter* sourceId;
     IntParameter* sourcePage;

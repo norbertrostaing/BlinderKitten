@@ -97,6 +97,7 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == isCarouselOn) {
 		Brain::getInstance()->virtualButtonsNeedUpdate = true;
+		Brain::getInstance()->virtualFaderButtonsNeedUpdate = true;
 	}
 	if (p == userName || p == id) {
 		updateName();

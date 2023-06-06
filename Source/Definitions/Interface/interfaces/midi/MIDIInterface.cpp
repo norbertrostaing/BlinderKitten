@@ -44,10 +44,14 @@ void MIDIInterface::updateDevices()
         }
     }
 
-if (deviceParam->outputDevice != outputDevice)
-    {
-        if (outputDevice != nullptr) outputDevice->close();
-        outputDevice = deviceParam->outputDevice;
+    if (deviceParam->outputDevice != outputDevice) {
+        MIDIOutputDevice* newOutput = deviceParam->outputDevice;
+        if (outputDevice != nullptr)
+        {
+            outputDevice->close();
+        }
+
+        outputDevice = newOutput;
 
         if (outputDevice != nullptr)
         {
