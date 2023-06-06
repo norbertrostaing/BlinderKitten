@@ -40,6 +40,7 @@ public:
     Point2DParameter* inputRange;
 
     BoolParameter* learnMode;
+    int lastSentValue = -1;
 
     bool isValid;
     bool wasInRange;

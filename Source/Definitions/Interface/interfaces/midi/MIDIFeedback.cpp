@@ -130,11 +130,12 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
 
     }
 
-    if (valid) {
+    if (valid && sendValue != lastSentValue) {
         auto dev = inter->deviceParam->outputDevice;
         if (dev == nullptr) {
             return;
         }
+        lastSentValue = sendValue;
         if (midiType->getValueDataAsEnum<MidiType>() == NOTE) {
             dev->sendNoteOn(channel->intValue(), pitchOrNumber->intValue(), round(sendValue));
         }

@@ -311,7 +311,7 @@ void VirtualButtonGrid::resetFeedbacks()
     }
 
     for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
-        VirtualButtonManager::getInstance()->items[i]->updateStatus();
+        VirtualButtonManager::getInstance()->items[i]->updateStatus(true);
     }
 
 }

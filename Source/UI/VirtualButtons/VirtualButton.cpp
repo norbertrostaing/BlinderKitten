@@ -322,7 +322,7 @@ String VirtualButton::getBtnText() {
 	return text;
 }
 
-void VirtualButton::updateStatus()
+void VirtualButton::updateStatus(bool forceRefresh)
 {
 	ButtonStatus newStatus = BTN_UNASSIGNED;
 	String targType = targetType->getValue();
@@ -364,7 +364,9 @@ void VirtualButton::updateStatus()
 		}
 	}
 
-	feedback(newStatus);
+	if (currentStatus != newStatus || forceRefresh) {
+		feedback(newStatus);
+	}
 
 	currentStatus = newStatus;
 

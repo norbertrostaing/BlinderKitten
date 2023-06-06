@@ -47,7 +47,7 @@ public:
     void pressed();
     void released();
     String getBtnText();
-    void updateStatus();
+    void updateStatus(bool forceRefresh = false);
     void feedback(ButtonStatus value);
 
     String getTypeString() const override { return objectType; }

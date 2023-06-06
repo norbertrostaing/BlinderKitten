@@ -25,7 +25,7 @@ MIDIInterface::MIDIInterface() :
 MIDIInterface::~MIDIInterface()
 {
     if (inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
-
+    if (outputDevice != nullptr) outputDevice->close();
 }
 
 void MIDIInterface::updateDevices()
