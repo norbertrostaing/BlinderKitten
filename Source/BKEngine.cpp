@@ -100,7 +100,7 @@ BKEngine::BKEngine() :
 
 	GlobalSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
-	GlobalSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
+	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 
 	virtualButtonGridCols = virtualParamsContainer.addIntParameter("Button cols", "Number of cols in playback button grid", 5, 1);
@@ -108,7 +108,7 @@ BKEngine::BKEngine() :
 	virtualButtonGridRows = virtualParamsContainer.addIntParameter("Button rows", "Number of rows in playback button grid", 5, 1);
 	virtualButtonGridRows->addParameterListener(this);
 
-	virtualFaderCols = virtualParamsContainer.addIntParameter("Fader cols", "Number of cols in playback button grid", 5, 1);
+	virtualFaderCols = virtualParamsContainer.addIntParameter("Fader cols", "Number of cols in playback button grid", 8, 1);
 	virtualFaderCols->addParameterListener(this);
 	virtualFaderRotary = virtualParamsContainer.addIntParameter("Rotary number", "Number of rotary in each fader column", 1, 0);
 	virtualFaderRotary->addParameterListener(this);
