@@ -45,6 +45,9 @@ public:
     void buttonClicked(Button*);
     bool triggerGo = false;
 
+    int posX = 0;
+    int posY = 0;
+
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuelistLoadWindow)
 };

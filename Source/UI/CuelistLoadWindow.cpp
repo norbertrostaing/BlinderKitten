@@ -91,6 +91,9 @@ void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
         setSize(810, 610);
         resized();
         DialogWindow::showDialog("Load next cue for " + c->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
+        if (posX != 0 && posY != 0) {
+            findParentComponentOfClass<DialogWindow>()->setBounds(posX, posY, 810, 610);
+        }
     }
 }
 
@@ -104,6 +107,9 @@ void CuelistLoadWindow::buttonClicked(Button* b)
             currentTarget->userGo();
         }
     }
+    auto test = findParentComponentOfClass<DialogWindow>()->getBounds();
+    posX = test.getX();
+    posY = test.getY();
     closeWindow();
 }
 
