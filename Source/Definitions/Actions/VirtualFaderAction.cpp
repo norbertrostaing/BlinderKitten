@@ -43,7 +43,7 @@ void VirtualFaderAction::triggerInternal()
     //if (target == nullptr) return;
 }
 
-void VirtualFaderAction::setValueInternal(var value, String origin)
+void VirtualFaderAction::setValueInternal(var value, String origin, bool isRelative)
 {
     float val = value;
     int number = 0;
@@ -81,7 +81,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
 
     switch (actionType) {
     case VF_ROTARY:
-        VirtualFaderColManager::getInstance()->setRotaryValue(page, col, number, val, origin);
+        VirtualFaderColManager::getInstance()->setRotaryValue(page, col, number, val, origin, isRelative);
         break;
 
     case VF_ABOVEBUTTON:
@@ -89,7 +89,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin)
        break;
 
     case VF_FADER: {
-        VirtualFaderColManager::getInstance()->setFaderValue(page, col, val, origin);
+        VirtualFaderColManager::getInstance()->setFaderValue(page, col, val, origin, isRelative);
         break;
     }
     case VF_BELOWBUTTON:

@@ -55,7 +55,7 @@ void DMXMapping::handleValue(int value, String origin)
     //float minInput = jmin(inputRange->x, inputRange->y);
     //float maxInput = jmax(inputRange->x, inputRange->y);
     float relVal = jmap<float>(jlimit<float>(0, 255, value), 0, 255, 0, 1);
-    actionManager.setValueAll(relVal, origin);
+    actionManager.setValueAll(relVal, origin, false);
     return;
     /*
     if (m != CONTINUOUS)

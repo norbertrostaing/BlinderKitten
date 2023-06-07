@@ -26,7 +26,7 @@ public:
     FloatParameter* maxSpeed;
 
     void triggerInternal() override;
-    void setValueInternal(var value, String origin);
+    void setValueInternal(var value, String origin, bool isRelative);
 
     static CuelistAction* create(var params) { return new CuelistAction(params); }
 

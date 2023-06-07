@@ -66,7 +66,7 @@ void InputPanelAction::triggerInternal()
 {
 }
 
-void InputPanelAction::setValueInternal(var value, String origin) {
+void InputPanelAction::setValueInternal(var value, String origin, bool isRelative) {
     float val = value;
 
     switch (actionType)
@@ -80,7 +80,16 @@ void InputPanelAction::setValueInternal(var value, String origin) {
     case IP_GM:
         {
         const MessageManagerLock mmLock;
-        InputPanel::getInstance()->grandMaster.setValue(val);
+        if (isRelative) 
+            {
+            float v = InputPanel::getInstance()->grandMaster.getValue() + val;
+            v = jlimit<float>(0,1,v);
+            InputPanel::getInstance()->grandMaster.setValue(v);
+            }
+        else 
+            {
+            InputPanel::getInstance()->grandMaster.setValue(val);
+            }
         }
         break;
 

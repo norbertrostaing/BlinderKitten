@@ -34,10 +34,10 @@ void Action::setValue(var value)
     previousValue = value;
 }
 
-void Action::setValue(var value, String origin)
+void Action::setValue(var value, String origin, bool isRelative)
 {
     if (!enabled->boolValue()) return;
-    setValueInternal(value, origin);
+    setValueInternal(value, origin, isRelative);
     previousValue = value;
 }
 

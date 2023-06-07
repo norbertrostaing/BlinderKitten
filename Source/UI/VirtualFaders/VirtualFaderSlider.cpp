@@ -202,20 +202,20 @@ float VirtualFaderSlider::getTargetValue()
 
 }
 
-void VirtualFaderSlider::moved(float value, String origin) {
+void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 	checkParentColumn();
 	if (parentColumn == nullptr) { LOG("this is strange"); return; }
 	String colTargetType = parentColumn->targetType->getValue();
 	int colTargetId = parentColumn->targetId->intValue();
 	String targType = targetType->getValue();
-	if (!isAllowedToMove(origin, value)) {
+	if (!isAllowedToMove(origin, value) && !isRelative) {
 		return;
 	}
 
 	feedback(value, origin);
 
 	if (targType == "actions") {
-		actionManager.setValueAll(value, "VirtualFaders");
+		actionManager.setValueAll(value, "VirtualFaders", isRelative);
 		return;
 	}
 	int targId = targetId->getValue();
@@ -232,24 +232,22 @@ void VirtualFaderSlider::moved(float value, String origin) {
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") { 
-				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - value) < 0.05) {
-					targ->nextHTPLevelController = origin;
-					targ->HTPLevel->setValue(value);
-				}
+				targ->nextHTPLevelController = origin;
+				value = isRelative ? targ->HTPLevel->floatValue()+value : value;
+				targ->HTPLevel->setValue(value);
 			}
 			if (action == "flashlevel") { 
-				if (origin == "" || targ->currentFlashLevelController == origin || abs(targ->FlashLevel->floatValue() - value) < 0.05) {
-					targ->nextFlashLevelController = origin;
-					targ->FlashLevel->setValue(value);
-				}
+				targ->nextFlashLevelController = origin;
+				value = isRelative ? targ->FlashLevel->floatValue() + value : value;
+				targ->FlashLevel->setValue(value);
 			}
 			if (action == "ltplevel") { 
-				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - value) < 0.05) {
-					targ->nextLTPLevelController = origin;
-					targ->LTPLevel->setValue(value);
-				}
+				targ->nextLTPLevelController = origin;
+				value = isRelative ? targ->LTPLevel->floatValue() + value : value;
+				targ->LTPLevel->setValue(value);
 			}
 			if (action == "speed") {
+				value = isRelative ? (targ->chaserSpeed->floatValue()/ maxSpeed->floatValue())+value : value;
 				targ->chaserSpeed->setValue(value*maxSpeed->floatValue());
 			}
 		}
@@ -259,12 +257,12 @@ void VirtualFaderSlider::moved(float value, String origin) {
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
 			if (action == "size") { 
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - value) < 0.05) {
-					targ->nextSizeController = origin;
-					targ->sizeValue->setValue(value);
-				}
+				targ->nextSizeController = origin;
+				value = isRelative ? targ->sizeValue->floatValue() + value : value;
+				targ->sizeValue->setValue(value);
 			}
 			if (action == "speed") {
+				value = isRelative ? (targ->speed->floatValue() / maxSpeed->floatValue()) + value : value;
 				targ->speed->setValue(value * maxSpeed->floatValue());
 			}
 		}
@@ -274,12 +272,12 @@ void VirtualFaderSlider::moved(float value, String origin) {
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
 			if (action == "size") { 
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - value) < 0.05) {
-					targ->nextSizeController = origin;
-					targ->sizeValue->setValue(value);
-				}
+				targ->nextSizeController = origin;
+				value = isRelative ? targ->sizeValue->floatValue() + value : value;
+				targ->sizeValue->setValue(value);
 			}
 			if (action == "speed") {
+				value = isRelative ? (targ->speed->floatValue() / maxSpeed->floatValue()) + value : value;
 				targ->speed->setValue(value * maxSpeed->floatValue());
 			}
 		}
@@ -289,10 +287,9 @@ void VirtualFaderSlider::moved(float value, String origin) {
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
 			if (action == "size") { 
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - value) < 0.05) {
-					targ->nextSizeController = origin;
-					targ->sizeValue->setValue(value);
-				}
+				targ->nextSizeController = origin;
+				value = isRelative ? targ->sizeValue->floatValue() + value : value;
+				targ->sizeValue->setValue(value);
 			}
 		}
 	}

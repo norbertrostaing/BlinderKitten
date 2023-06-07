@@ -42,7 +42,7 @@ public:
     void updateDisplay();
     float getTargetValue();
 
-    void moved(float value, String origin);
+    void moved(float value, String origin, bool isRelative);
     void feedback(float value, String origin);
 
     void released();

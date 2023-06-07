@@ -38,7 +38,7 @@ void CuelistAction::triggerInternal()
     if (target == nullptr) return;
 }
 
-void CuelistAction::setValueInternal(var value, String origin) {
+void CuelistAction::setValueInternal(var value, String origin, bool isRelative) {
     if (actionType == CL_GOALLLOADED) {
         Brain::getInstance()->goAllLoadedCuelists();
         return;
@@ -123,21 +123,38 @@ void CuelistAction::setValueInternal(var value, String origin) {
         break;
 
     case CL_HTPLEVEL:
-        if (target->currentHTPLevelController == origin || abs(target->HTPLevel->floatValue() - val) < 0.05) {
+        if (isRelative) {
             target->nextHTPLevelController = origin;
-            target->HTPLevel->setValue(val);
+            target->HTPLevel->setValue(target->HTPLevel->floatValue() + val);
+        }
+        else {
+            if (target->currentHTPLevelController == origin || abs(target->HTPLevel->floatValue() - val) < 0.05) {
+                target->nextHTPLevelController = origin;
+                target->HTPLevel->setValue(val);
+            }
         }
         break;
 
     case CL_LTPLEVEL:
-        if (target->currentLTPLevelController == origin || abs(target->LTPLevel->floatValue() - val) < 0.05) {
+        if (isRelative) {
+            target->nextLTPLevelController = origin;
+            target->LTPLevel->setValue(target->LTPLevel->floatValue() + val);
+        }
+        else {
+            if (target->currentLTPLevelController == origin || abs(target->LTPLevel->floatValue() - val) < 0.05) {
             target->nextLTPLevelController = origin;
             target->LTPLevel->setValue(val);
+            }
         }
         break;
 
     case CL_CHASERSPEED:
-        target->chaserSpeed->setValue(val*maxSpeed->floatValue());
+        if (isRelative) {
+            target->chaserSpeed->setValue(target->chaserSpeed->floatValue() + (val * maxSpeed->floatValue()));
+        }
+        else {
+            target->chaserSpeed->setValue(val* maxSpeed->floatValue());
+        }
         break;
 
     case CL_FLASH:
@@ -159,9 +176,15 @@ void CuelistAction::setValueInternal(var value, String origin) {
         break;
 
     case CL_FLASHLEVEL:
-        if (target->currentFlashLevelController == origin || abs(target->FlashLevel->floatValue() - val) < 0.05) {
+        if (isRelative) {
             target->nextFlashLevelController = origin;
-            target->FlashLevel->setValue(val);
+            target->FlashLevel->setValue(target->FlashLevel->floatValue() + val);
+        }
+        else {
+            if (target->currentFlashLevelController == origin || abs(target->FlashLevel->floatValue() - val) < 0.05) {
+                target->nextFlashLevelController = origin;
+                target->FlashLevel->setValue(val);
+            }
         }
         break;
 

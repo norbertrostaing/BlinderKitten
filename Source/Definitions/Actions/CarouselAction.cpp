@@ -32,7 +32,7 @@ void CarouselAction::triggerInternal()
 {
 }
 
-void CarouselAction::setValueInternal(var value, String origin) {
+void CarouselAction::setValueInternal(var value, String origin, bool isRelative) {
     Carousel* target = Brain::getInstance()->getCarouselById(targetId->getValue());
     if (target == nullptr) return;
 
@@ -72,15 +72,26 @@ void CarouselAction::setValueInternal(var value, String origin) {
         break;
 
     case CAR_SIZE:
-        if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+        if (isRelative) {
             target->nextSizeController = origin;
-            target->sizeValue->setValue(val);
+            target->sizeValue->setValue(target->sizeValue->floatValue() + val);
+        }
+        else {
+            if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+                target->nextSizeController = origin;
+                target->sizeValue->setValue(val);
+            }
         }
         break;
 
     case CAR_SPEED:
         val *= (float)maxSpeed->getValue();
-        target->speed->setValue(val);
+        if (isRelative) {
+            target->speed->setValue(target->speed->floatValue()+ val);
+        }
+        else {
+            target->speed->setValue(val);
+        }
         break;
 
     case CAR_DOUBLESPEED:

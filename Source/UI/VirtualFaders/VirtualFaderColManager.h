@@ -32,8 +32,8 @@ public:
     // static int sort(VirtualFaderCol* A, VirtualFaderCol* B) {return (int)A->id->getValue() - (int)B->id->getValue();};
     void setAboveButtonValue(int page, int col, int row, float value, String origin);
     void setBelowButtonValue(int page, int col, int row, float value, String origin);
-    void setRotaryValue(int page, int col, int row, float value, String origin);
-    void setFaderValue(int page, int col, float value, String origin);
+    void setRotaryValue(int page, int col, int row, float value, String origin, bool isRelative);
+    void setFaderValue(int page, int col, float value, String origin, bool isRelative);
 
 
 };

@@ -24,9 +24,9 @@ public:
     virtual void triggerInternal() {}
 
     void setValue(var value);
-    void setValue(var value, String origin);
-    virtual void setValueInternal(var value) {setValueInternal(value, "unknown"); }
-    virtual void setValueInternal(var value, String origin) {}
+    void setValue(var value, String origin, bool isRelative);
+    virtual void setValueInternal(var value) {setValueInternal(value, "unknown", false); }
+    virtual void setValueInternal(var value, String origin, bool isRelative) {}
 
     String getTypeString() const override { return typeString; }
 };

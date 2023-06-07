@@ -424,7 +424,7 @@ void VirtualFaderButton::feedback(ButtonStatus value)
 
 	int page = parentColumn->pageNumber->intValue();
 	int col = parentColumn->colNumber->intValue();
-	bool isAbove = false;
+	bool isAbove = true;
 	int index = parentColumn->aboveButtons.items.indexOf(this);
 	if (index == -1) {
 		isAbove = false;

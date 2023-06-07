@@ -25,7 +25,7 @@ public:
     FloatParameter* maxSpeed;
 
     void triggerInternal() override;
-    void setValueInternal(var value, String origin);
+    void setValueInternal(var value, String origin, bool isRelative);
 
     static CarouselAction* create(var params) { return new CarouselAction(params); }
 

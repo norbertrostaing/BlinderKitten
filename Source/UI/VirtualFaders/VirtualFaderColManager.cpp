@@ -120,7 +120,7 @@ void VirtualFaderColManager::setBelowButtonValue(int page, int col, int row, flo
     }
 }
 
-void VirtualFaderColManager::setRotaryValue(int page, int col, int row, float value, String origin)
+void VirtualFaderColManager::setRotaryValue(int page, int col, int row, float value, String origin, bool isRelative)
 {
     VirtualFaderSlider* vs = nullptr;
     String address = "rotary/" + String(page) + "/" + String(col) + "/" + String(row);
@@ -133,11 +133,11 @@ void VirtualFaderColManager::setRotaryValue(int page, int col, int row, float va
     }
     usingLibraries.exit();
     if (vs != nullptr) {
-        vs->moved(value, origin);
+        vs->moved(value, origin, isRelative);
     }
 }
 
-void VirtualFaderColManager::setFaderValue(int page, int col, float value, String origin)
+void VirtualFaderColManager::setFaderValue(int page, int col, float value, String origin, bool isRelative)
 {
     VirtualFaderSlider* vs = nullptr;
     String address = "fader/" + String(page) + "/" + String(col);
@@ -150,7 +150,7 @@ void VirtualFaderColManager::setFaderValue(int page, int col, float value, Strin
     }
     usingLibraries.exit();
     if (vs != nullptr) {
-        vs->moved(value, origin);
+        vs->moved(value, origin, isRelative);
     }
 }
 

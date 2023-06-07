@@ -27,7 +27,7 @@ public:
     FloatParameter* atValue;
 
     void triggerInternal() override;
-    void setValueInternal(var value, String origin);
+    void setValueInternal(var value, String origin, bool isRelative);
 
     static MultiplicatorAction* create(var params) { return new MultiplicatorAction(params); }
 

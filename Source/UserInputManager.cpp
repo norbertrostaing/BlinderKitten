@@ -294,7 +294,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 			col = (int)((var)aList[3]);
 			row = (int)((var)aList[4]);
 		}
-		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "");
+		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "", false);
 	}
 
 	else if (firstWord == "virtfader" && aList.size() > 3) {
@@ -305,7 +305,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
 		}
-		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "");
+		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "", false);
 	}
 
 

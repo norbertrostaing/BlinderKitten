@@ -27,7 +27,7 @@ public:
     IntParameter* goToPageId;
 
     void triggerInternal() override;
-    void setValueInternal(var value, String origin);
+    void setValueInternal(var value, String origin, bool isRelative);
 
     static VirtualButtonAction* create(var params) { return new VirtualButtonAction(params); }
 

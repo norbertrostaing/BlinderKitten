@@ -29,7 +29,7 @@ void MapperAction::triggerInternal()
 {
 }
 
-void MapperAction::setValueInternal(var value, String origin) {
+void MapperAction::setValueInternal(var value, String origin, bool isRelative) {
     Mapper* target = Brain::getInstance()->getMapperById(targetId->getValue());
     if (target == nullptr) return;
 
@@ -61,9 +61,15 @@ void MapperAction::setValueInternal(var value, String origin) {
         break;
 
     case TRK_SIZE:
-        if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+        if (isRelative) {
             target->nextSizeController = origin;
-            target->sizeValue->setValue(val);
+            target->sizeValue->setValue(target->sizeValue->floatValue() + val);
+        }
+        else {
+            if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+                target->nextSizeController = origin;
+                target->sizeValue->setValue(val);
+            }
         }
         break;
 

@@ -72,17 +72,19 @@ void MIDIFeedback::updateDisplay() {
     sourcePage->hideInEditor = false;
     sourceCol->hideInEditor = false;
     sourceRow->hideInEditor = source != VBUTTON;
-    sourceNumber->hideInEditor = source != VROTARY;
+    sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON;
 
     MidiType type = midiType->getValueDataAsEnum<MidiType>();
     pitchOrNumber->hideInEditor = type == PITCHWHEEL;
 
-    outputRange -> hideInEditor = source == VBUTTON;
-    onValue -> hideInEditor = source != VBUTTON;
-    offValue -> hideInEditor = source != VBUTTON;
-    onLoadedValue -> hideInEditor = source != VBUTTON;
-    offLoadedValue -> hideInEditor = source != VBUTTON;
-    isGenericValue -> hideInEditor = source != VBUTTON;
+    bool isButton = source == VBUTTON || source == VABOVEBUTTON || source == VBELOWBUTTON;
+
+    outputRange -> hideInEditor = isButton;
+    onValue -> hideInEditor = !isButton;
+    offValue -> hideInEditor = !isButton;
+    onLoadedValue -> hideInEditor = !isButton;
+    offLoadedValue -> hideInEditor = !isButton;
+    isGenericValue -> hideInEditor = !isButton;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -133,7 +135,7 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
         }
     }
     else if (source == VABOVEBUTTON) {
-        localAddress = "/vabovebutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
+        localAddress = "/vabovebutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = 0;
@@ -145,7 +147,7 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
         }
     }
     else if (source == VBELOWBUTTON) {
-        localAddress = "/vbelowbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
+        localAddress = "/vbelowbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = 0;
