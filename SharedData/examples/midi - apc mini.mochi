@@ -3,14 +3,6 @@
     {
       "parameters": [
         {
-          "value": true,
-          "controlAddress": "/enabled"
-        },
-        {
-          "value": false,
-          "controlAddress": "/logIncoming"
-        },
-        {
           "value": [
             "",
             ""
@@ -21,6 +13,7 @@
       "niceName": "APC mini",
       "containers": {
         "mappings": {
+          "editorIsCollapsed": true,
           "items": [
             {
               "parameters": [
@@ -32,16 +25,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 1",
@@ -73,16 +73,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 2",
@@ -121,16 +128,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 3",
@@ -169,16 +183,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 4",
@@ -217,16 +238,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 5",
@@ -265,16 +293,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 6",
@@ -313,16 +348,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 7",
@@ -361,16 +403,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 1 col 8",
@@ -409,16 +458,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 1",
@@ -432,11 +488,6 @@
                           "value": 2,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -462,16 +513,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 2",
@@ -515,16 +573,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 3",
@@ -568,16 +633,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 4",
@@ -621,16 +693,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 5",
@@ -674,16 +753,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 6",
@@ -727,16 +813,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 7",
@@ -780,16 +873,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 2 col 8",
@@ -833,16 +933,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 1",
@@ -856,11 +963,6 @@
                           "value": 3,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -886,16 +988,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 2",
@@ -939,16 +1048,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 3",
@@ -992,16 +1108,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 4",
@@ -1045,16 +1168,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 5",
@@ -1098,16 +1228,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 6",
@@ -1151,16 +1288,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 7",
@@ -1204,16 +1348,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 3 col 8",
@@ -1257,16 +1408,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 1",
@@ -1280,11 +1438,6 @@
                           "value": 4,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -1310,16 +1463,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 2",
@@ -1363,16 +1523,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 3",
@@ -1416,16 +1583,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 4",
@@ -1469,16 +1643,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 5",
@@ -1522,16 +1703,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 6",
@@ -1575,16 +1763,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 7",
@@ -1628,16 +1823,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 4 col 8",
@@ -1681,16 +1883,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 1",
@@ -1704,11 +1913,6 @@
                           "value": 5,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -1734,16 +1938,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 2",
@@ -1787,16 +1998,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 3",
@@ -1840,20 +2058,26 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -1893,16 +2117,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 5",
@@ -1946,16 +2177,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 6",
@@ -1999,16 +2237,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 7",
@@ -2052,16 +2297,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 5 col 8",
@@ -2105,16 +2357,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 1",
@@ -2128,11 +2387,6 @@
                           "value": 6,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -2158,16 +2412,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 2",
@@ -2211,16 +2472,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 3",
@@ -2264,16 +2532,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 4",
@@ -2317,16 +2592,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 5",
@@ -2370,16 +2652,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 6",
@@ -2423,16 +2712,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 7",
@@ -2476,16 +2772,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 6 col 8",
@@ -2529,16 +2832,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 1",
@@ -2552,11 +2862,6 @@
                           "value": 7,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -2582,16 +2887,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 2",
@@ -2635,16 +2947,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 3",
@@ -2688,16 +3007,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 4",
@@ -2741,16 +3067,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 5",
@@ -2794,16 +3127,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 6",
@@ -2847,16 +3187,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 7",
@@ -2900,16 +3247,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 7 col 8",
@@ -2946,23 +3300,25 @@
             {
               "parameters": [
                 {
-                  "value": 0,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    127.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/inputRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    1.0
-                  ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 1",
@@ -2976,11 +3332,6 @@
                           "value": 8,
                           "hexMode": false,
                           "controlAddress": "/row"
-                        },
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/col"
                         }
                       ],
                       "niceName": "Virtual Button Press",
@@ -3006,16 +3357,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 2",
@@ -3059,16 +3417,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 3",
@@ -3112,16 +3477,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 4",
@@ -3165,16 +3537,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 5",
@@ -3218,16 +3597,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 6",
@@ -3271,16 +3657,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 7",
@@ -3324,16 +3717,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "bouton ligne 8 col 8",
@@ -3381,16 +3781,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 1",
@@ -3433,16 +3840,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 2",
@@ -3490,16 +3904,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 3",
@@ -3547,20 +3968,26 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -3604,16 +4031,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 5",
@@ -3661,16 +4095,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 6",
@@ -3718,16 +4159,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 7",
@@ -3775,16 +4223,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader 8",
@@ -3828,16 +4283,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 1",
@@ -3876,16 +4338,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 2",
@@ -3929,16 +4398,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 3",
@@ -3982,16 +4458,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 4",
@@ -4035,16 +4518,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 5",
@@ -4088,16 +4578,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 6",
@@ -4141,16 +4638,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 7",
@@ -4194,16 +4698,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton h 8",
@@ -4247,16 +4758,23 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    10.0
                   ],
-                  "controlAddress": "/inputRange"
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
                 },
                 {
                   "value": [
                     0.0,
-                    1.0
+                    0.1000000014901161
                   ],
-                  "controlAddress": "/outputRange"
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Shift",
@@ -4304,6 +4822,3643 @@
                   "viewZoom": 1.0
                 }
               },
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "feedbacks": {
+          "editorIsCollapsed": true,
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 56,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 57,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 58,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 59,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 60,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 61,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 62,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 63,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 1 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 48,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 49,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 50,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 51,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 52,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 54,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 55,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 2 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 40,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 41,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 42,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 43,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 44,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 45,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 46,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 47,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 3 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 33,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 34,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 35,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 36,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 37,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 38,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 39,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 4 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 24,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 25,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 26,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 27,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 28,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 29,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 30,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 31,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 5 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 16,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 17,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 19,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 21,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 22,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 23,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 6 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 9,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 10,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 11,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 12,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 13,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 14,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 15,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 7 col 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 5",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceRow"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/onLoadedValue"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/offLoadedValue"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/genericActionValue"
+                }
+              ],
+              "niceName": "Bouton ligne 8 col 8",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             }
           ],
