@@ -256,9 +256,11 @@ void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
 }
 
 void SubFixtureChannel::cuelistOutOfStack(Cuelist* c) {
+	cs.enter();
 	while (cuelistStack.indexOf(c) >= 0) {
 		cuelistStack.removeAllInstancesOf(c);
 	}
+	cs.exit();
 }
 
 void SubFixtureChannel::cuelistOnTopOfFlashStack(Cuelist* c) {
@@ -267,9 +269,11 @@ void SubFixtureChannel::cuelistOnTopOfFlashStack(Cuelist* c) {
 }
 
 void SubFixtureChannel::cuelistOutOfFlashStack(Cuelist* c) {
+	cs.enter();
 	while (cuelistFlashStack.indexOf(c) >= 0) {
 		cuelistFlashStack.removeAllInstancesOf(c);
 	}
+	cs.exit();
 }
 
 void SubFixtureChannel::programmerOnTopOfStack(Programmer* p) {
@@ -278,9 +282,11 @@ void SubFixtureChannel::programmerOnTopOfStack(Programmer* p) {
 }
 
 void SubFixtureChannel::programmerOutOfStack(Programmer* p) {
+	cs.enter();
 	while (programmerStack.indexOf(p) >= 0) {
 		programmerStack.removeAllInstancesOf(p);
 	}
+	cs.exit();
 }
 
 void SubFixtureChannel::effectOnTopOfStack(Effect* f) {
@@ -289,9 +295,11 @@ void SubFixtureChannel::effectOnTopOfStack(Effect* f) {
 }
 
 void SubFixtureChannel::effectOutOfStack(Effect* f) {
+	cs.enter();
 	while (effectStack.indexOf(f) >= 0) {
 		effectStack.removeAllInstancesOf(f);
 	}
+	cs.exit();
 }
 
 void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
@@ -300,9 +308,11 @@ void SubFixtureChannel::carouselOnTopOfStack(Carousel* f) {
 }
 
 void SubFixtureChannel::carouselOutOfStack(Carousel* f) {
+	cs.enter();
 	while (carouselStack.indexOf(f) >= 0) {
 		carouselStack.removeAllInstancesOf(f);
 	}
+	cs.exit();
 }
 
 void SubFixtureChannel::mapperOnTopOfStack(Mapper* f) {
@@ -311,8 +321,10 @@ void SubFixtureChannel::mapperOnTopOfStack(Mapper* f) {
 }
 
 void SubFixtureChannel::mapperOutOfStack(Mapper* f) {
+	cs.enter();
 	while (mapperStack.indexOf(f) >= 0) {
 		mapperStack.removeAllInstancesOf(f);
 	}
+	cs.exit();
 }
 
