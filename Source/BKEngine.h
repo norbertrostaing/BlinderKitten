@@ -65,6 +65,12 @@ public:
 	TargetParameter* CPMagentaChannel;
 	TargetParameter* CPYellowChannel;
 
+	ControllableContainer loadWindowContainer;
+	IntParameter* loadWindowWidth;
+	IntParameter* loadWindowHeight;
+	IntParameter* loadWindowButtonPerLine;
+	IntParameter* loadWindowButtonHeight;
+
 
 	void createNewGraphInternal() override;
 

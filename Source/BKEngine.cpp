@@ -84,7 +84,8 @@ BKEngine::BKEngine() :
 	conductorInfosContainer("Conductor infos Settings"),
 	colorPickerContainer("Color Picker Settings"),
 	virtualParamsContainer("Virtual Playbacks Settings"),
-	uiParamsContainer("UI Settings")
+	uiParamsContainer("UI Settings"),
+	loadWindowContainer("Cuelist load window")
 	//defaultBehaviors("Test"),
 	//ossiaFixture(nullptr)
 {
@@ -102,6 +103,7 @@ BKEngine::BKEngine() :
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
+	ProjectSettings::getInstance()->addChildControllableContainer(&loadWindowContainer);
 
 	virtualButtonGridCols = virtualParamsContainer.addIntParameter("Button cols", "Number of cols in playback button grid", 5, 1);
 	virtualButtonGridCols->addParameterListener(this);
@@ -164,6 +166,12 @@ BKEngine::BKEngine() :
 	CPYellowChannel = colorPickerContainer.addTargetParameter("Yellow channel", "", ChannelFamilyManager::getInstance());
 	CPYellowChannel->targetType = TargetParameter::CONTAINER;
 	CPYellowChannel->maxDefaultSearchLevel = 2;
+
+
+	loadWindowWidth = loadWindowContainer.addIntParameter("Window Width", "", 810,100);
+	loadWindowHeight = loadWindowContainer.addIntParameter("Windows Height", "", 610,100);
+	loadWindowButtonPerLine = loadWindowContainer.addIntParameter("Buttons per line", "", 5,1);
+	loadWindowButtonHeight = loadWindowContainer.addIntParameter("Button height", "", 40,30);
 
 	mainBrain = Brain::getInstance();
 	addChildControllableContainer(InterfaceManager::getInstance());

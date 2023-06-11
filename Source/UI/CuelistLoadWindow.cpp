@@ -13,6 +13,7 @@
 
 #include "Definitions//Cuelist/Cuelist.h"
 #include "UserInputManager.h"
+#include "BKEngine.h"
 
 juce_ImplementSingleton(CuelistLoadWindow);
 
@@ -20,11 +21,6 @@ juce_ImplementSingleton(CuelistLoadWindow);
 //==============================================================================
 CuelistLoadWindow::CuelistLoadWindow()
 {
-    setSize(810, 610);
-    addAndMakeVisible(viewport);
-    viewport.setViewedComponent(&btnContainer);
-    viewport.setBounds(0, 0, 810, 610);
-    btnContainer.setSize(800, 200);
 
 }
 
@@ -38,10 +34,14 @@ void CuelistLoadWindow::paint (juce::Graphics& g)
 
 void CuelistLoadWindow::resized()
 {
+
+    BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+    int nButtons = e->loadWindowButtonPerLine->intValue();
+    int h = e->loadWindowButtonHeight->intValue();
+
     int x = 10;
     int y = -1; 
-    int w = getWidth()/5;
-    int h = 40;
+    int w = getWidth()/nButtons;
 
     if (cueIds.size() == 0) {return;}
 
@@ -49,7 +49,7 @@ void CuelistLoadWindow::resized()
     for (int i = 0; i < buttons.size(); i++) {
         float id = cueIds[i];
         x++;
-        if (x >= 5 || prevId + 1 < id) {
+        if (x >= nButtons || prevId + 1 < id) {
             y++;
             x = 0;
         }
@@ -58,7 +58,7 @@ void CuelistLoadWindow::resized()
         b->addListener(this);
         prevId = id;
     }
-    btnContainer.setSize(800, (y+1)*h);
+    btnContainer.setSize(getWidth()-10, (y + 1) * h);
 
 }
 
@@ -86,13 +86,24 @@ void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
     if (UserInputManager::getInstance()->lastCuelistLoadWindowTS + 500 < now) {
         UserInputManager::getInstance()->lastCuelistLoadWindowTS = now;
         triggerGo = triggerGoWhenSelected;
+
+        BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+        int w = e->loadWindowWidth->intValue();
+        int h = e->loadWindowHeight->intValue();
+
+        setSize(w, h);
+        addAndMakeVisible(viewport);
+        viewport.setViewedComponent(&btnContainer);
+        viewport.setBounds(0, 0, w, h);
+        btnContainer.setSize(w-10, 200);
+
         closeWindow();
         fillButtons(c);
-        setSize(810, 610);
+        setSize(w, h);
         resized();
         DialogWindow::showDialog("Load next cue for " + c->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
         if (posX != 0 && posY != 0) {
-            findParentComponentOfClass<DialogWindow>()->setBounds(posX, posY, 810, 610);
+            findParentComponentOfClass<DialogWindow>()->setBounds(posX, posY, w, h);
         }
     }
 }
