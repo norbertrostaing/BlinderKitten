@@ -33,6 +33,7 @@
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 #include "UI/InputPanel.h";
+#include "Definitions/Assistant/Assistant.h"
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -47,6 +48,10 @@ UserInputManager::~UserInputManager() {
 void UserInputManager::processInput(String s) {
 	if (EncodersMult::getInstance()->targetCommandManager == nullptr) {
 		EncodersMult::getInstance()->targetChanged();
+	}
+
+	if (s.toLowerCase() == "assistant") {
+		Assistant::getInstance()->selectThis();
 	}
 
 	getProgrammer(true)->processUserInput(s);
