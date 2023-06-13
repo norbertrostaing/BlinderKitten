@@ -38,7 +38,7 @@ MIDIMapping::MIDIMapping() :
     upInputRange->setPoint(0, 10);
     downInputRange = addPoint2DParameter("Down range", "Values considered as down value for the encoder");
     downInputRange->setBounds(0, 0, 127, 127);
-    downInputRange->setPoint(65, 75);
+    downInputRange->setPoint(64, 75);
     encoderValueRange = addPoint2DParameter("Value range", "Delta value for the target element");
     encoderValueRange->setBounds(0, 0, 1, 1);
     encoderValueRange->setPoint(0, 0.1);
