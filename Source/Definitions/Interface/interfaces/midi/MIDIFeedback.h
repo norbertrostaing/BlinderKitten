@@ -36,6 +36,8 @@ public:
     IntParameter* onLoadedValue;
     IntParameter* offLoadedValue;
     IntParameter* isGenericValue;
+    IntParameter* currentCueValue;
+    IntParameter* loadedCueValue;
 
     Point2DParameter* inputRange;
 

@@ -172,6 +172,12 @@ void VirtualFaderColGrid::updateButtons()
                     else if (vb->currentStatus == VirtualFaderButton::BTN_OFF_LOADED) {
                         btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
                     }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_CURRENTCUE) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 120, 64));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_LOADEDCUE) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 120));
+                    }
                     else {
                         btn->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
                     }
@@ -200,6 +206,12 @@ void VirtualFaderColGrid::updateButtons()
                     }
                     else if (vb->currentStatus == VirtualFaderButton::BTN_OFF_LOADED) {
                         btn->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_CURRENTCUE) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 120, 64));
+                    }
+                    else if (vb->currentStatus == VirtualFaderButton::BTN_LOADEDCUE) {
+                        btn->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 120));
                     }
                     else {
                         btn->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));

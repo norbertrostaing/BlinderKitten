@@ -287,6 +287,12 @@ void VirtualButtonGrid::updateButtons()
             else if (vb->currentStatus == VirtualButton::BTN_OFF_LOADED) {
                 gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 80));
             }
+            else if (vb->currentStatus == VirtualButton::BTN_CURRENTCUE) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 120, 64));
+            }
+            else if (vb->currentStatus == VirtualButton::BTN_LOADEDCUE) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 120));
+            }
             else {
                 gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
             }

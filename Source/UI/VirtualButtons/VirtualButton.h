@@ -22,7 +22,7 @@ public:
     String objectType;
     var objectData;
 
-    enum ButtonStatus{BTN_UNASSIGNED, BTN_ON, BTN_OFF, BTN_ON_LOADED, BTN_OFF_LOADED, BTN_GENERIC};
+    enum ButtonStatus{BTN_UNASSIGNED, BTN_ON, BTN_OFF, BTN_ON_LOADED, BTN_OFF_LOADED, BTN_GENERIC, BTN_CURRENTCUE, BTN_LOADEDCUE};
     ButtonStatus currentStatus;
 
     IntParameter * pageNumber;

@@ -48,6 +48,8 @@ MIDIFeedback::MIDIFeedback() :
     offValue = addIntParameter("Off Value", "Value to send when the target is off", 0);
     onLoadedValue = addIntParameter("On Loaded Value", "Value to send when the cuelist is on and has a loaded cue", 0);
     offLoadedValue = addIntParameter("Off Loaded Value", "Value to send when the cuelist is off and has a loaded cue", 0);
+    currentCueValue = addIntParameter("Current Cue Value", "Value to send when the current cue of the cuelist is the one selected in the button", 0);
+    loadedCueValue = addIntParameter("Loaded Cue Value", "Value to send when the loaded cue of the cuelist is the one selected in the button", 0);
     isGenericValue = addIntParameter("Generic Action Value", "Value to send when the target is on", 0);
 
     saveAndLoadRecursiveData = true;
@@ -83,7 +85,9 @@ void MIDIFeedback::updateDisplay() {
     onValue -> hideInEditor = !isButton;
     offValue -> hideInEditor = !isButton;
     onLoadedValue -> hideInEditor = !isButton;
-    offLoadedValue -> hideInEditor = !isButton;
+    offLoadedValue->hideInEditor = !isButton;
+    currentCueValue->hideInEditor = !isButton;
+    loadedCueValue->hideInEditor = !isButton;
     isGenericValue -> hideInEditor = !isButton;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
@@ -131,6 +135,8 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualButton::BTN_OFF ? offValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_ON_LOADED ? onLoadedValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_OFF_LOADED ? offLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
+            sendValue = value == VirtualButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
         }
     }
@@ -143,6 +149,8 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualFaderButton::BTN_OFF ? offValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_ON_LOADED ? onLoadedValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_OFF_LOADED ? offLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
         }
     }
@@ -155,6 +163,8 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualFaderButton::BTN_OFF ? offValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_ON_LOADED ? onLoadedValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_OFF_LOADED ? offLoadedValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
+            sendValue = value == VirtualFaderButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
         }
     }

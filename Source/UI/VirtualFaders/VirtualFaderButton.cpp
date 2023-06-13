@@ -375,13 +375,40 @@ void VirtualFaderButton::updateStatus(bool forceRefresh)
 	else if (targType == "cuelist") {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
+			bool isLoad = targType == "cuelist";
+			isLoad = isLoad && (cuelistAction->getValue() == "load" || cuelistAction->getValue() == "loadandgo");
+			float loadedCue = -2;
+
 			bool loaded = false;
-			loaded = loaded || targ->nextCueId->intValue() > 0;
-			loaded = loaded || targ->nextCue->value != "";
-			if (targ->isCuelistOn->boolValue()) {
-				newStatus = loaded ? BTN_ON_LOADED : BTN_ON;
+			if (targ->nextCueId->floatValue() > 0) {
+				loaded = true;
+				loadedCue = targ->nextCueId->floatValue();
 			}
-			else {
+			else if (targ->nextCue->value != "") {
+				Cue* nc = dynamic_cast<Cue*>(targ->nextCue->targetContainer.get());
+				if (nc != nullptr) {
+					loaded = true;
+					loadedCue = nc->id->floatValue();
+				}
+			}
+
+			if (isLoad && loaded && loadedCue == cueId->floatValue())
+			{
+				newStatus = BTN_LOADEDCUE;
+			}
+			else if (targ->isCuelistOn->boolValue())
+			{
+				if (isLoad && targ->cueA != nullptr && targ->cueA->id->floatValue() == cueId->floatValue())
+				{
+					newStatus = BTN_CURRENTCUE;
+				}
+				else
+				{
+					newStatus = loaded ? BTN_ON_LOADED : BTN_ON;
+				}
+			}
+			else
+			{
 				newStatus = loaded ? BTN_OFF_LOADED : BTN_OFF;
 			}
 		}
