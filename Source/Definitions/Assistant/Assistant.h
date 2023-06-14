@@ -39,6 +39,8 @@ public:
 	IntParameter* paletteFirstPresetId;
 	IntParameter* paletteLastPresetId;
 	IntParameter* paletteTimingPresetId;
+	IntParameter* paletteCuelistId;
+	StringParameter* paletteName;
 	Trigger* paletteBtn;
 
 	ControllableContainer masterMakerCC;

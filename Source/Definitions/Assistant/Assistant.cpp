@@ -63,6 +63,8 @@ Assistant::Assistant() :
 	paletteFirstPresetId = paletteMakerCC.addIntParameter("First Preset ID", "", 1,0);
 	paletteLastPresetId = paletteMakerCC.addIntParameter("Last Preset ID", "", 0,0);
 	paletteTimingPresetId = paletteMakerCC.addIntParameter("Timing Preset ID", "0 means none", 0,0);
+    paletteCuelistId = paletteMakerCC.addIntParameter("Palette ID", "Id for your palette, if already taken, search for a number above. Leave at 0 for auto number.", 0,0);
+    paletteName = paletteMakerCC.addStringParameter("Palette Name", "Name your palette here, leave empty to have an auto name", "");
     paletteBtn = paletteMakerCC.addTrigger("Create Palette", "create a new cuelist with selected group and presets");
     addChildControllableContainer(&paletteMakerCC);
 
@@ -327,6 +329,17 @@ void Assistant::createPalette()
         cuelistName = "Palette " + g->userName->getValue().toString();
     }
     Cuelist* cl = CuelistManager::getInstance()->addItem();
+    int askedId = paletteCuelistId->intValue();
+    if (askedId > cl->id->intValue()) {
+        while (Brain::getInstance()->getCuelistById(askedId) != nullptr) {
+            askedId++;
+        }
+        cl->id->setValue(askedId);
+    }
+
+    if (paletteName->stringValue() != "") {
+        cuelistName = paletteName->stringValue();
+    }
     cl->userName->setValue(cuelistName);
     cl->cues.clear();
     cl->deselectThis();
