@@ -49,5 +49,5 @@ public:
 
     void updateDisplay();
 
-    InspectableEditor* getEditorInternal(bool isRoot);
+    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables);
 };
