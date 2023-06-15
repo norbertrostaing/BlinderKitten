@@ -3,20 +3,17 @@
     {
       "parameters": [
         {
-          "value": false,
-          "controlAddress": "/logIncoming"
-        },
-        {
           "value": [
-            "\\\\?\\usb#vid_0763&pid_1002#6&13c452c7&0&1#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\midisport2x2inb",
-            "\\\\?\\usb#vid_0763&pid_1002#6&13c452c7&0&1#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\midisport2x2outb"
+            "\\\\?\\usb#vid_194f&pid_0204&mi_00#7&35e436a&0&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global-2",
+            "\\\\?\\usb#vid_194f&pid_0204&mi_00#7&35e436a&0&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global-2"
           ],
           "controlAddress": "/device"
         }
       ],
-      "niceName": "BCF2000 - 9 to 16 - Mackie control mode",
+      "niceName": "BCF2000 - 9 to 16 - Mackie control",
       "containers": {
         "mappings": {
+          "editorIsCollapsed": true,
           "items": [
             {
               "parameters": [
@@ -47,6 +44,7 @@
                 }
               ],
               "niceName": "Fader 1",
+              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -110,6 +108,7 @@
                 }
               ],
               "niceName": "Fader 2",
+              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2676,6 +2675,11 @@
             {
               "parameters": [
                 {
+                  "value": 9,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
                   "value": "Pitch wheel",
                   "controlAddress": "/midiType"
                 },
@@ -2694,7 +2698,7 @@
             {
               "parameters": [
                 {
-                  "value": 2,
+                  "value": 10,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2727,7 +2731,7 @@
             {
               "parameters": [
                 {
-                  "value": 3,
+                  "value": 11,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2760,7 +2764,7 @@
             {
               "parameters": [
                 {
-                  "value": 4,
+                  "value": 12,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2793,7 +2797,7 @@
             {
               "parameters": [
                 {
-                  "value": 5,
+                  "value": 13,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2826,7 +2830,7 @@
             {
               "parameters": [
                 {
-                  "value": 6,
+                  "value": 14,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2859,7 +2863,7 @@
             {
               "parameters": [
                 {
-                  "value": 7,
+                  "value": 15,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2892,7 +2896,7 @@
             {
               "parameters": [
                 {
-                  "value": 8,
+                  "value": 16,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2929,6 +2933,11 @@
                   "controlAddress": "/sourceType"
                 },
                 {
+                  "value": 9,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
                   "value": "Control Change",
                   "controlAddress": "/midiType"
                 },
@@ -2956,7 +2965,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 2,
+                  "value": 10,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -2988,7 +2997,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 3,
+                  "value": 11,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3020,7 +3029,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 4,
+                  "value": 12,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3052,7 +3061,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 5,
+                  "value": 13,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3084,7 +3093,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 6,
+                  "value": 14,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3116,7 +3125,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 7,
+                  "value": 15,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3148,7 +3157,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 8,
+                  "value": 16,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3178,6 +3187,11 @@
                 {
                   "value": "Virtual fader above button",
                   "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 9,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
                 },
                 {
                   "value": 2,
@@ -3228,7 +3242,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 2,
+                  "value": 10,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3281,7 +3295,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 3,
+                  "value": 11,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3334,7 +3348,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 4,
+                  "value": 12,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3387,7 +3401,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 5,
+                  "value": 13,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3440,7 +3454,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 6,
+                  "value": 14,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3493,7 +3507,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 7,
+                  "value": 15,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3546,7 +3560,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 8,
+                  "value": 16,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3599,6 +3613,11 @@
                   "controlAddress": "/sourceType"
                 },
                 {
+                  "value": 9,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
                   "value": 3,
                   "hexMode": false,
                   "controlAddress": "/sourceNumber"
@@ -3637,6 +3656,7 @@
                 }
               ],
               "niceName": "Btn down 1",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3646,7 +3666,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 2,
+                  "value": 10,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3689,6 +3709,7 @@
                 }
               ],
               "niceName": "Btn down 2",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3698,7 +3719,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 3,
+                  "value": 11,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3741,6 +3762,7 @@
                 }
               ],
               "niceName": "Btn down 3",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3750,7 +3772,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 4,
+                  "value": 12,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3793,6 +3815,7 @@
                 }
               ],
               "niceName": "Btn down 4",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3802,7 +3825,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 5,
+                  "value": 13,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3845,6 +3868,7 @@
                 }
               ],
               "niceName": "Btn down 5",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3854,7 +3878,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 6,
+                  "value": 14,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3897,6 +3921,7 @@
                 }
               ],
               "niceName": "Btn down 6",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3906,7 +3931,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 7,
+                  "value": 15,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -3949,6 +3974,7 @@
                 }
               ],
               "niceName": "Btn down 7",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
@@ -3958,7 +3984,7 @@
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 8,
+                  "value": 16,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
@@ -4001,6 +4027,7 @@
                 }
               ],
               "niceName": "Btn down 8",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             }
           ],

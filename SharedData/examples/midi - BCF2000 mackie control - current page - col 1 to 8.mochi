@@ -4,21 +4,17 @@
       "parameters": [
         {
           "value": true,
-          "controlAddress": "/enabled"
-        },
-        {
-          "value": true,
           "controlAddress": "/logIncoming"
         },
         {
           "value": [
-            "\\\\?\\usb#vid_0763&pid_1002#6&5280d8e&0&2#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\midisport2x2inb",
-            "\\\\?\\usb#vid_0763&pid_1002#6&5280d8e&0&2#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\midisport2x2outb"
+            "",
+            ""
           ],
           "controlAddress": "/device"
         }
       ],
-      "niceName": "BCF2000 - Mackie control mode",
+      "niceName": "BCF2000 - 1 to 8 - Mackie control",
       "containers": {
         "mappings": {
           "items": [
@@ -3616,11 +3612,6 @@
                 {
                   "value": "Virtual fader above button",
                   "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
                 },
                 {
                   "value": 3,

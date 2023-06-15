@@ -4,13 +4,13 @@
       "parameters": [
         {
           "value": [
-            "\\\\?\\usb#vid_09e8&pid_0028&mi_00#7&17b6db37&1&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global",
-            "\\\\?\\usb#vid_09e8&pid_0028&mi_00#7&17b6db37&1&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global"
+            "",
+            ""
           ],
           "controlAddress": "/device"
         }
       ],
-      "niceName": "APC mini",
+      "niceName": "akai apc40 mk1",
       "containers": {
         "mappings": {
           "editorIsCollapsed": true,
