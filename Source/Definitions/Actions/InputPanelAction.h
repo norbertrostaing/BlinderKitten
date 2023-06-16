@@ -19,10 +19,11 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED };
+    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_ENCODERVALUE };
     ActionType actionType;
     EnumParameter* targetButton;
     IntParameter* randomSeed;
+    IntParameter* targetEncoder;
 
 
     void triggerInternal() override;

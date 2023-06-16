@@ -151,12 +151,12 @@ void MIDIMapping::processValue(float value, String origin) {
         }
         if (value >= upY && value <= upX) {
             isRelative = true;
-            value = jmap<float>(value, upY, upX, encoderValueRange->x, encoderValueRange->y);
+            value = jmap<float>(value, upY, upX, encoderValueRange->y, encoderValueRange->x);
             handleValue(value, origin, true);
         }
         if (value >= downY && value <= downX) {
             isRelative = true;
-            value = -jmap<float>(value, downY, downX, encoderValueRange->x, encoderValueRange->y);
+            value = -jmap<float>(value, downY, downX, encoderValueRange->y, encoderValueRange->x);
             handleValue(value, origin, true);
         }
     }
