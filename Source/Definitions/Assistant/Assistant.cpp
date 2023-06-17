@@ -38,6 +38,7 @@ Assistant::Assistant() :
     patcherCC("Patch Helper"),
     paletteMakerCC("Palette maker"),
     masterMakerCC("Masters maker"),
+    fixtureSwapperCC("Fixture Type Swapper"),
     midiMapperCC("Midi mappings"),
     asciiCC("ASCII import / export"),
     controlsCC("Generic controls"),
@@ -73,6 +74,16 @@ Assistant::Assistant() :
     masterMakerCC.addChildControllableContainer(&masterValue);
     masterBtn = masterMakerCC.addTrigger("Create Masters", "create a master cuelist for each group with these values");
     addChildControllableContainer(&masterMakerCC);
+
+    swapperOld = fixtureSwapperCC.addTargetParameter("Replace fixtures", "", FixtureTypeManager::getInstance());
+    swapperOld->targetType = TargetParameter::CONTAINER;
+    swapperOld->maxDefaultSearchLevel = 0;
+    swapperNew = fixtureSwapperCC.addTargetParameter("With this", "", FixtureTypeManager::getInstance());
+    swapperNew->targetType = TargetParameter::CONTAINER;
+    swapperNew->maxDefaultSearchLevel = 0;
+    swapperBtn = fixtureSwapperCC.addTrigger("Change fixtures", "Replace all fixtures of first type with the second one");
+    addChildControllableContainer(&fixtureSwapperCC);
+
 
     /*
     midiMapperTargetInterface = midiMapperCC.addTargetParameter("Midi interface", "Midi interface to connect your new mapping, let empty to create a new one", InterfaceManager::getInstance());
@@ -163,6 +174,10 @@ void Assistant::run()
         pleaseCreateMasters = false;
         createMasters();
     }
+    if (pleaseSwapFixtures) {
+        pleaseSwapFixtures = false;
+        swapFixtures();
+    }
     if (pleaseCreateMidiMappings) {
         pleaseCreateMidiMappings = false;
         createMidiMappings();
@@ -187,6 +202,10 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
     }
     else if ((Trigger*)c == masterBtn) {
         pleaseCreateMasters = true;
+        startThread();
+    }
+    else if ((Trigger*)c == swapperBtn) {
+        pleaseSwapFixtures = true;
         startThread();
     }
     else if ((Trigger*)c == midiMapperBtn) {
@@ -509,6 +528,28 @@ void Assistant::createMidiMappings()
 
     }
     targetInterface->selectThis();
+}
+
+void Assistant::swapFixtures()
+{
+    LOG("Swapping fixture types");
+    String oldVal = swapperOld->stringValue();
+    FixtureType* newVal = dynamic_cast<FixtureType*>(swapperNew->targetContainer.get());
+    if (newVal != nullptr) {
+        int count = 0;
+        for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
+            Fixture* f = FixtureManager::getInstance()->items[i];
+            if (f->devTypeParam->stringValue() == oldVal) {
+                f->devTypeParam->setValueFromTarget(newVal);
+                count++;
+            }
+        }
+        LOG(String(count)+" fixtures changed.");
+    }
+    else {
+        LOGWARNING("You must specify a new fixture type");
+    }
+
 }
 
 void Assistant::importAscii()

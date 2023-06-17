@@ -49,6 +49,11 @@ public:
 	CommandValueManager masterValue;
 	Trigger* masterBtn;
 
+	ControllableContainer fixtureSwapperCC;
+	TargetParameter* swapperOld;
+	TargetParameter* swapperNew;
+	Trigger* swapperBtn;
+
 	ControllableContainer midiMapperCC;
 	TargetParameter* midiMapperTargetInterface;
 	EnumParameter* midiMapperTargetType = nullptr;
@@ -80,6 +85,7 @@ public:
 	bool pleasePatchFixtures = false;
 	bool pleaseCreatePalette = false;
 	bool pleaseCreateMasters = false;
+	bool pleaseSwapFixtures = false;
 	bool pleaseCreateMidiMappings = false;
 	bool pleaseImportAscii = false;
 
@@ -92,6 +98,7 @@ public:
 	void createPalette();
 	void createMasters();
 	void createMidiMappings();
+	void swapFixtures();
 
 	void importAscii();
 	void exportAscii();
