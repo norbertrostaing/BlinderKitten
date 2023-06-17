@@ -24,7 +24,8 @@ MIDIFeedback::MIDIFeedback() :
                     ->addOption("Virtual fader above button", VABOVEBUTTON)
                     ->addOption("Virtual fader below button", VBELOWBUTTON)
                     ->addOption("Virtual button", VBUTTON)
-                    ;
+                    ->addOption("Encoder", ENCODER)
+        ;
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
     sourcePage = addIntParameter("Source Page", "Source page, 0 means current page", 0);
@@ -71,10 +72,10 @@ void MIDIFeedback::updateDisplay() {
     
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
     sourceId->hideInEditor = true ;
-    sourcePage->hideInEditor = false;
-    sourceCol->hideInEditor = false;
+    sourcePage->hideInEditor = source == ENCODER;
+    sourceCol->hideInEditor = source == ENCODER;
     sourceRow->hideInEditor = source != VBUTTON;
-    sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON;
+    sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON && source != ENCODER;
 
     MidiType type = midiType->getValueDataAsEnum<MidiType>();
     pitchOrNumber->hideInEditor = type == PITCHWHEEL;
@@ -166,6 +167,13 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualFaderButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
+        }
+    }
+    else if (source == ENCODER && !sameDevice) {
+        localAddress = "/encoder/" + String(sourceNumber->intValue());
+        if (address == localAddress) {
+            valid = true;
+            sendValue = round(jmap(value, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
     else {

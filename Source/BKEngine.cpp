@@ -782,7 +782,6 @@ void BKEngine::importGDTF(File f)
 				ft -> setNiceName(fixtureName+" - "+modeName);
 				
 				Array<tempChannel> tempChannels;
-				int maxChannel = 0;
 				auto modeRelations = modeNode->getChildByName("Relations");
 				Array<String> getMasterDimmer;
 				HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;

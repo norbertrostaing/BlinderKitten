@@ -346,10 +346,14 @@ void Encoders::updateEncoders() {
             if (currentCommand != nullptr) {
                 float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
                 if (v >= 0) {
+                    UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), v, "");
                     encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                     if (encoderRange == 1) { v *= 100; }
                     else if (encoderRange == 2) { v *= 255; }
                     encoders[i]->setValue(v, juce::dontSendNotification);
+                }
+                else {
+                    UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), 0, "");
                 }
             }
         }
@@ -358,6 +362,7 @@ void Encoders::updateEncoders() {
             encoders[i]->setEnabled(false);
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
             encoders[i]->setValue(0, juce::dontSendNotification);
+            UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), 0, "");
         }
         //labels[i]->repaint();
     }

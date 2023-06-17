@@ -419,6 +419,7 @@ void UserInputManager::commandValueChanged(Command* c) {
 void UserInputManager::encoderValueChanged(int index, float newValue) {
 	const MessageManagerLock mmLock;
 	if (Encoders::getInstance()->channels.size() <= index) { return; }
+	UserInputManager::getInstance()->feedback("/encoder/" + String(index + 1), newValue, "");
 	int mode = Encoders::getInstance()->mode;
 	
 	targetCommand = getProgrammer(true)->currentUserCommand;
