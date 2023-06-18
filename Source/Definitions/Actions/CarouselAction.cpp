@@ -108,3 +108,42 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
 
     }
 }
+
+var CarouselAction::getValue()
+{
+    float val = var();
+
+    Carousel* target = Brain::getInstance()->getCarouselById(targetId->getValue());
+    if (target == nullptr) return val;
+
+    switch (actionType)
+    {
+    case CAR_START:
+        break;
+
+    case CAR_STOP:
+        break;
+
+    case CAR_TOGGLE:
+        break;
+
+    case CAR_TAPTEMPO:
+        break;
+
+    case CAR_SIZE:
+        val = target->sizeValue->floatValue();
+        break;
+
+    case CAR_SPEED:
+        val = target->speed->floatValue() / maxSpeed->floatValue();
+        break;
+
+    case CAR_DOUBLESPEED:
+        break;
+
+    case CAR_HALFSPEED:
+        break;
+
+    }
+    return val;
+}

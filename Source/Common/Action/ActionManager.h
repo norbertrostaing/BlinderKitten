@@ -29,4 +29,6 @@ public:
     void triggerAll();
     void setValueAll(var value);
     void setValueAll(var value, String origin, bool isRelative);
+    var getValue();
+
 };

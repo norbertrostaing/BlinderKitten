@@ -127,3 +127,36 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
     }
 
 }
+
+var InputPanelAction::getValue()
+{
+    var val = var();
+
+    switch (actionType)
+    {
+    case IP_PRESS:
+        break;
+
+    case IP_GM:
+        val = InputPanel::getInstance()->grandMaster.getValue();
+        break;
+
+    case IP_OFFCL:
+        break;
+
+    case IP_KILLCL:
+        break;
+
+    case IP_STOPFX:
+        break;
+
+    case IP_STOPCAR:
+        break;
+
+    case IP_RANDOMSEED:
+        break;
+
+    }
+
+    return val;
+}

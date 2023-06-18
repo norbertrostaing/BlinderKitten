@@ -27,6 +27,7 @@ public:
     void setValue(var value, String origin, bool isRelative);
     virtual void setValueInternal(var value) {setValueInternal(value, "unknown", false); }
     virtual void setValueInternal(var value, String origin, bool isRelative) {}
+    virtual var getValue() {return var(); };
 
     String getTypeString() const override { return typeString; }
 };

@@ -98,98 +98,67 @@ void VirtualFaderAction::setValueInternal(var value, String origin, bool isRelat
     }
 
 
-    /*
-    page = -1;
-    if (page == 0 || page == VirtualFaderColGrid::getInstance()->page) {
-        page = VirtualFaderColGrid::getInstance()->page;
-        const MessageManagerLock mmLock;
-        if (actionType == VF_FADER) {
-            if (col <= VirtualFaderColGrid::getInstance()->cols) {
-                VirtualFaderSlider* vfs = VirtualFaderColGrid::getInstance()->sliderToVFS.getReference(VirtualFaderColGrid::getInstance()->faders[col - 1]);
-                if (vfs == nullptr || vfs->isAllowedToMove(origin, value)) {
-                    if (VirtualFaderColGrid::getInstance()->faders[col - 1]->getValue() != val) {
-                        VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val, juce::dontSendNotification);
-                    }
-                }
-            }
-            return;
-        }
-        else if (actionType == VF_ROTARY) {
-            if (col <= VirtualFaderColGrid::getInstance()->cols) {
-                if (number < VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->size()) {
-                    if (VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->getRawDataPointer()[number]->getValue() != val) {
-                        VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col - 1]->getRawDataPointer()[number]->setValue(val);
-                    }
-                }
-            }
-            return;
-        }
+
+    
+}
+
+var VirtualFaderAction::getValue()
+{
+    var val = var();
+
+    int number = 0;
+    if (actionType == VF_PAGEUP) {
+        return val;
+    }
+    else if (actionType == VF_PAGEDOWN) {
+        return val;
+    }
+    else if (actionType == VF_GOTOPAGE) {
+        return val;
     }
 
-    page = 1;
-    */
-    //LOG("looking for page " + String(page) + ", col" + String(col) + ", number " + String(number) + "");
+    if (actionType != VF_FADER) {
+        number = elementNumber->getValue();
+    }
+    int col = colNumber->getValue();
+    int page = pageNumber->getValue();
 
+    if (page == 0) {
+        page = VirtualFaderColGrid::getInstance()->page;
+    }
 
-    /*
-    for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
-        VirtualFaderCol* vfc = VirtualFaderColManager::getInstance()->items[i];
+    bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
 
-        if ((int)vfc->pageNumber->getValue() == page && (int)vfc->colNumber->getValue() == col) {
-            switch (actionType) {
-            case VF_ENCODER:
-                if (vfc->rotaries.items.size() > number) {
-                    VirtualFaderSlider* vb = vfc->rotaries.items[number];
-                    if (vb->isAllowedToMove(origin, value)) {
-                        vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue(), origin);
-                        if (currentPage && VirtualFaderColGrid::getInstance()->rotaries.size() > col && VirtualFaderColGrid::getInstance()->rotaries[col-1]->size() > number) {
-                            VirtualFaderColGrid::getInstance()->rotaries[col - 1]->getRawDataPointer()[number]->setValue(val, juce::dontSendNotification);
-                        }
-                    }
+    switch (actionType) {
+    case VF_ROTARY:
+        if (col < VirtualFaderColGrid::getInstance()->rotaries.size()) {
+            if (number < VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col]->size()) {
+                Slider* s = VirtualFaderColGrid::getInstance()->rotaries.getRawDataPointer()[col]->getRawDataPointer()[number];
+                if (VirtualFaderColGrid::getInstance()->sliderToVFS.contains(s)) {
+                    VirtualFaderSlider* vfs = VirtualFaderColGrid::getInstance()->sliderToVFS.getReference(s);
+                    val = vfs->getTargetValue();
                 }
-
-                break;
-
-            case VF_ABOVEBUTTON:
-                if (vfc->aboveButtons.items.size() > number) {
-                    VirtualFaderButton* vb = vfc->aboveButtons.items[number];
-                    if (val > 0) {
-                        vb->pressed();
-                    }
-                    else {
-                        vb->released();
-                    }
-
-                }
-
-                break;
-
-            case VF_FADER: {
-                VirtualFaderSlider* vb = &vfc->fader;
-                if (vb->isAllowedToMove(origin, value)) {
-                    vb->moved(value, vfc->targetType->getValue(), vfc->targetId->getValue(), origin);
-                    if (currentPage && VirtualFaderColGrid::getInstance()->faders.size()>col) {
-                        VirtualFaderColGrid::getInstance()->faders[col - 1]->setValue(val, juce::dontSendNotification);
-                    }
-                }
-                break;
-            }
-            case VF_BELOWBUTTON:
-                if (vfc->belowButtons.items.size() > number) {
-                    VirtualFaderButton* vb = vfc->belowButtons.items[number];
-                    if (val > 0) {
-                        vb->pressed();
-                    }
-                    else {
-                        vb->released();
-                    }
-
-                }
-
-                break;
             }
         }
-        */
-    
-    
+        break;
+
+    case VF_ABOVEBUTTON:
+        break;
+
+    case VF_FADER: {
+        if (col < VirtualFaderColGrid::getInstance()->faders.size()) {
+            Slider* s = VirtualFaderColGrid::getInstance()->faders.getRawDataPointer()[col];
+            if (VirtualFaderColGrid::getInstance()->sliderToVFS.contains(s)) {
+                VirtualFaderSlider* vfs = VirtualFaderColGrid::getInstance()->sliderToVFS.getReference(s);
+                val = vfs->getTargetValue();
+            }
+        }
+        break;
+    }
+    case VF_BELOWBUTTON:
+        break;
+    }
+
+
+    return val;
 }

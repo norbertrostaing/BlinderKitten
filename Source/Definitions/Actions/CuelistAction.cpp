@@ -199,3 +199,68 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
 
 
 }
+
+var CuelistAction::getValue()
+{
+    float val = var();
+
+    Cuelist* target = Brain::getInstance()->getCuelistById(cuelistId->getValue());
+    if (target == nullptr) return val;
+
+    switch (actionType)
+    {
+    case CL_GO:
+        break;
+
+    case CL_GOBACK:
+        break;
+
+    case CL_GOINSTANT:
+        break;
+
+    case CL_GOBACKINSTANT:
+        break;
+
+    case CL_GORANDOM:
+        break;
+
+    case CL_OFF:
+        break;
+
+    case CL_TOGGLE:
+        break;
+
+    case CL_LOAD:
+        break;
+
+    case CL_LOADANDGO:
+        break;
+
+    case CL_HTPLEVEL:
+        val = target->HTPLevel->floatValue();
+        break;
+
+    case CL_LTPLEVEL:
+        val = target->LTPLevel->floatValue();
+        break;
+
+    case CL_CHASERSPEED:
+        val = target->chaserSpeed->floatValue() / maxSpeed->floatValue();
+        break;
+
+    case CL_FLASH:
+        break;
+
+    case CL_SWOP:
+        break;
+
+    case CL_FLASHLEVEL:
+        target->FlashLevel->floatValue();
+        break;
+
+    case CL_CHASERTAPTEMPO:
+        break;
+    }
+
+    return val;
+}

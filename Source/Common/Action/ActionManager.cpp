@@ -22,6 +22,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/EncoderAction.h"
 #include "Definitions/Actions/MultiplicatorAction.h"
 #include "Definitions/Actions/TapTempoMultiple.h"
+#include "ActionManager.h"
 
 ActionFactory::ActionFactory()
 {
@@ -139,4 +140,13 @@ void ActionManager::setValueAll(var value)
 void ActionManager::setValueAll(var value, String origin, bool isRelative)
 {
     for (auto& i : items) i->setValue(value, origin, isRelative);
+}
+
+var ActionManager::getValue()
+{
+    if (items.size() > 0) {
+        return items[0]->getValue();
+    }
+
+    return var();
 }

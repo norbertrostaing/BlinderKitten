@@ -136,6 +136,10 @@ float VirtualFaderSlider::getTargetValue()
 		targId = colTargetId;
 	}
 
+	if (targType == "actions") {
+		return actionManager.getValue();
+	}
+
 	if (targId == 0) { return 0; }
 
 	if (targType == "cuelist") {
@@ -299,6 +303,7 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 void VirtualFaderSlider::feedback(float value, String origin="")
 {
 	if (Brain::getInstance()->loadingIsRunning) {return; }
+	if (!checkParentColumn()) {return;}
 	String address = "";
 	String address0 = "";
 

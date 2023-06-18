@@ -75,3 +75,30 @@ void MapperAction::setValueInternal(var value, String origin, bool isRelative) {
 
     }
 }
+
+var MapperAction::getValue()
+{
+    var val = var();
+
+    Mapper* target = Brain::getInstance()->getMapperById(targetId->getValue());
+    if (target == nullptr) return val;
+
+    switch (actionType)
+    {
+    case TRK_START:
+        break;
+
+    case TRK_STOP:
+        break;
+
+    case TRK_TOGGLE:
+        break;
+
+    case TRK_SIZE:
+        val = target->sizeValue->floatValue();
+        break;
+
+    }
+
+    return val;
+}

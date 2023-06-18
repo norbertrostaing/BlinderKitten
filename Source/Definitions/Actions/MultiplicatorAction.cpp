@@ -59,3 +59,22 @@ void MultiplicatorAction::setValueInternal(var value, String origin, bool isRela
         break;
     }
 }
+
+var MultiplicatorAction::getValue()
+{
+    var val = var();
+
+    Multiplicator* target = dynamic_cast<Multiplicator*>(targetMult->targetContainer.get());
+    if (target == nullptr) return val;
+
+    switch (actionType)
+    {
+    case MULT_SETAT:
+        break;
+
+    case MULT_SET:
+        val = jmap(target->multValue->floatValue(), fromValue->floatValue(), toValue->floatValue());
+        break;
+    }
+    return val;
+}

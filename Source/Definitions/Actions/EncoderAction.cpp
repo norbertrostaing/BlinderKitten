@@ -93,3 +93,33 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
     }
 
 }
+
+var EncoderAction::getValue()
+{
+    var val = var();
+
+    switch (actionType)
+    {
+    case ENC_VALUE:
+        int index;
+        index = targetEncoder->intValue() - 1;
+        if (index >= 0 && index < Encoders::getInstance()->encoders.size()) {
+            val = Encoders::getInstance()->encoders[index]->getValue();
+        }
+        break;
+
+    case ENC_SELECT:
+        break;
+
+    case ENC_NEXTCOMMAND:
+        break;
+
+    case ENC_PREVCOMMAND:
+        break;
+
+    case ENC_TOGGLEFILTER:
+        break;
+    }
+
+    return val;
+}

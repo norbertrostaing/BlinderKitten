@@ -66,28 +66,11 @@ void VirtualButtonAction::setValueInternal(var value, String origin, bool isRela
         else {
             VirtualButtonManager::getInstance()->setButtonValue(page, col, row, 0, origin);
         }
-
-        /*
-        for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
-            VirtualButton* target = VirtualButtonManager::getInstance()->items[i];
-            if ((int)target->pageNumber->getValue() == page && (int)target->rowNumber->getValue() == row && (int)target->colNumber->getValue() == col) {
-                switch (actionType) {
-                case VB_PRESS:
-                    if (val >0) {
-                        target->pressed();
-                    } else {
-                        target->released();
-                    }
-                    break;
-
-                //case CL_FLASHLEVEL:
-                //    target->setFlashLevel(val);
-                //    break;
-                //}
-                }
-            }
-        }
-        */
     }
 
+}
+
+var VirtualButtonAction::getValue()
+{
+    return var();
 }

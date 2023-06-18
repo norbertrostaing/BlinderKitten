@@ -61,3 +61,8 @@ void TapTempoMultiple::setValueInternal(var value, String origin, bool isRelativ
     }
 
 }
+
+var TapTempoMultiple::getValue()
+{
+    return var();
+}

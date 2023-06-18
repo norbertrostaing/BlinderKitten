@@ -105,3 +105,43 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
         break;
     }
 }
+
+var EffectAction::getValue()
+{
+    var val = var();
+
+    Effect* target = Brain::getInstance()->getEffectById(targetId->getValue());
+    if (target == nullptr) return val;
+
+    switch (actionType)
+    {
+    case FX_START:
+        break;
+
+    case FX_STOP:
+        break;
+
+    case FX_TOGGLE:
+        break;
+
+    case FX_TAPTEMPO:
+        break;
+
+    case FX_SIZE:
+        val = target->sizeValue->floatValue();
+        break;
+
+    case FX_SPEED:
+        val = target->speed->floatValue() / maxSpeed->floatValue();
+        break;
+
+    case FX_DOUBLESPEED:
+        break;
+
+    case FX_HALFSPEED:
+        break;
+    }
+
+
+    return val;
+}

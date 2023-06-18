@@ -29,6 +29,8 @@ public:
     void triggerInternal() override;
     void setValueInternal(var value, String origin, bool isRelative);
 
+    var getValue();
+
     static VirtualButtonAction* create(var params) { return new VirtualButtonAction(params); }
 
 };

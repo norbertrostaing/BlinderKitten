@@ -32,7 +32,7 @@
 #include "UI/VirtualFaders/VirtualFaderColManager.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
-#include "UI/InputPanel.h";
+#include "UI/InputPanel.h"
 #include "Definitions/Assistant/Assistant.h"
 
 juce_ImplementSingleton(UserInputManager);
@@ -428,6 +428,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
 			changeChannelValue(c, newValue);
+			Brain::getInstance()->virtualFadersNeedUpdate = true;
 		}
 	}
 	else {
