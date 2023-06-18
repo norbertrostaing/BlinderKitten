@@ -179,6 +179,8 @@ void Encoders::sliderValueChanged(Slider* slider)
     UserInputManager::getInstance()->encoderValueChanged(index, v);
 }
 
+
+
 void Encoders::buttonClicked(Button* b) {
     if (b == &encoderRangeBtn) {
         encoderRange = (encoderRange + 1) % 3;
@@ -190,21 +192,17 @@ void Encoders::buttonClicked(Button* b) {
     }
     else if (b == &bigMoveLeftBtn) {
         int bigOffset = engine->encoderBigNumber->getValue();
-        encodersOffset = jmax(0, encodersOffset - bigOffset);
-        updateEncoders();
+        offsetEncoders(-bigOffset);
     }
     else if (b == &bigMoveRightBtn) {
         int bigOffset = engine->encoderBigNumber->getValue();
-        encodersOffset = jmax(0, encodersOffset + bigOffset);
-        updateEncoders();
+        offsetEncoders(bigOffset);
     }
     else if (b == &littleMoveLeftBtn) {
-        encodersOffset = jmax(0, encodersOffset - 1);
-        updateEncoders();
+        offsetEncoders(-1);
     }
     else if (b == &littleMoveRightBtn) {
-        encodersOffset = jmax(0, encodersOffset + 1);
-        updateEncoders();
+        offsetEncoders(1);
     }
     else if (b == &commandDownBtn) {
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
@@ -456,4 +454,10 @@ void Encoders::mouseDoubleClick(const MouseEvent& e)
     updateEncoders();
     updateEncodersValues();
 
+}
+
+void Encoders::offsetEncoders(int n)
+{
+    encodersOffset = jmax(0, encodersOffset + n);
+    updateEncoders();
 }

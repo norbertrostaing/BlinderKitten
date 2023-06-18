@@ -263,6 +263,9 @@
           <FILE id="lsqSTo" name="EffectAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/EffectAction.cpp"/>
           <FILE id="AD3mke" name="EffectAction.h" compile="0" resource="0" file="Source/Definitions/Actions/EffectAction.h"/>
+          <FILE id="PuQr9b" name="EncoderAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/EncoderAction.cpp"/>
+          <FILE id="uYbcjo" name="EncoderAction.h" compile="0" resource="0" file="Source/Definitions/Actions/EncoderAction.h"/>
           <FILE id="WW4Xf4" name="InputPanelAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/InputPanelAction.cpp"/>
           <FILE id="vw8Ohs" name="InputPanelAction.h" compile="0" resource="0"

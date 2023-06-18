@@ -118,6 +118,7 @@
 		A64289305FD3653B87788360 /* ProgrammerManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = C0BBF6CF569A1508021F7D76; };
 		A73288A201F7FA8C713C9EF7 /* FixtureTypeChannel.cpp */ = {isa = PBXBuildFile; fileRef = 6402E85404CFF6EE269DB736; };
 		A73F2517D1F2C52FAAEDCBA5 /* FixtureTypeManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = AED5F19D85468BD94B808BB9; };
+		A7D30DB9CC789056A9C08985 /* EncoderAction.cpp */ = {isa = PBXBuildFile; fileRef = AA8C4B889DBD77DB9502ED43; };
 		AAAC64738E1432C42B8A7866 /* EncodersMult.cpp */ = {isa = PBXBuildFile; fileRef = E1109E4FDA6AEEBB3A86F01B; };
 		AC3A2538752AEED8F22BDCE4 /* FixturePatch.cpp */ = {isa = PBXBuildFile; fileRef = BB88E9227FD8BEE252B334F6; };
 		B243DB325F8E427E2A319A3D /* VirtualFaderColGrid.cpp */ = {isa = PBXBuildFile; fileRef = DB9A0F86E957473ED860E49B; };
@@ -294,6 +295,7 @@
 		4B74D5B746567488A8E58CB2 /* App */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlinderKitten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA1C6C62A961474826D94C2 /* DMXSerialDevice.h */ /* DMXSerialDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXSerialDevice.h; path = ../../Source/Common/DMX/device/DMXSerialDevice.h; sourceTree = SOURCE_ROOT; };
 		4CF698B7D53CB4227CF11F69 /* EffectGridView.h */ /* EffectGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EffectGridView.h; path = ../../Source/UI/GridView/EffectGridView.h; sourceTree = SOURCE_ROOT; };
+		4D46CE2C8AA20FB2A39A4D33 /* EncoderAction.h */ /* EncoderAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EncoderAction.h; path = ../../Source/Definitions/Actions/EncoderAction.h; sourceTree = SOURCE_ROOT; };
 		4EEF195FE87227D24525C463 /* CuelistManager.cpp */ /* CuelistManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CuelistManager.cpp; path = ../../Source/Definitions/Cuelist/CuelistManager.cpp; sourceTree = SOURCE_ROOT; };
 		4F25DC1CD243392275846853 /* Carousel.h */ /* Carousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Carousel.h; path = ../../Source/Definitions/Carousel/Carousel.h; sourceTree = SOURCE_ROOT; };
 		4F35F6ACB2250B49F619B60B /* EffectRow.h */ /* EffectRow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EffectRow.h; path = ../../Source/Definitions/Effect/EffectRow.h; sourceTree = SOURCE_ROOT; };
@@ -432,6 +434,7 @@
 		A857033014E001D803DAA7F2 /* UserInputManager.cpp */ /* UserInputManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserInputManager.cpp; path = ../../Source/UserInputManager.cpp; sourceTree = SOURCE_ROOT; };
 		A87EA1A69B977CF0F0DB441E /* VirtualFaderSlider.cpp */ /* VirtualFaderSlider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderSlider.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderSlider.cpp; sourceTree = SOURCE_ROOT; };
 		A93E5EC3380046B22ACD1F49 /* MapperManager.cpp */ /* MapperManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperManager.cpp; path = ../../Source/Definitions/Mapper/MapperManager.cpp; sourceTree = SOURCE_ROOT; };
+		AA8C4B889DBD77DB9502ED43 /* EncoderAction.cpp */ /* EncoderAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncoderAction.cpp; path = ../../Source/Definitions/Actions/EncoderAction.cpp; sourceTree = SOURCE_ROOT; };
 		AB0E3C665CF58829CA8EF074 /* PresetGridView.h */ /* PresetGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PresetGridView.h; path = ../../Source/UI/GridView/PresetGridView.h; sourceTree = SOURCE_ROOT; };
 		AB2695A71107F545DD994372 /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		AB78CEA2CDD8FAE4D5B23952 /* EncodersMultUI.h */ /* EncodersMultUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EncodersMultUI.h; path = ../../Source/UI/EncodersMult/EncodersMultUI.h; sourceTree = SOURCE_ROOT; };
@@ -769,6 +772,8 @@
 				74BE1046DD4EBC61E123D598,
 				ED6A0B82F8048D94BFA8D889,
 				87FC62863200C6732D9EABF1,
+				AA8C4B889DBD77DB9502ED43,
+				4D46CE2C8AA20FB2A39A4D33,
 				197ECD317D224A16CC530D7B,
 				5172B471EF9D3519A0FA1C21,
 				476097FAB285D9C99B750F5F,
@@ -1619,6 +1624,7 @@
 				8725D8372928BA384741E378,
 				15E54D59735BC9FE85CDA52E,
 				B6C79BB55EF2B92D7C8184E6,
+				A7D30DB9CC789056A9C08985,
 				943FBE29F3337859CB9F764C,
 				172939FB619E288DEABA5AFA,
 				D2670406E7A2779AADAE9E39,

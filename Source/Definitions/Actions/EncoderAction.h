@@ -12,23 +12,23 @@
 #include "JuceHeader.h"
 #include"../../Common/Action/Action.h"
 
-class InputPanelAction :
+class EncoderAction :
     public Action
 {
 public:
-    InputPanelAction(var params);
-    ~InputPanelAction();
+    EncoderAction(var params);
+    ~EncoderAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED};
+    enum ActionType { ENC_VALUE, ENC_SELECT, ENC_NEXTCOMMAND, ENC_PREVCOMMAND, ENC_TOGGLEFILTER };
     ActionType actionType;
-    EnumParameter* targetButton;
-    IntParameter* randomSeed;
     IntParameter* targetEncoder;
+    IntParameter* selectionDelta;
+    IntParameter* filterNumber;
 
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, bool isRelative);
 
-    static InputPanelAction* create(var params) { return new InputPanelAction(params); }
+    static EncoderAction* create(var params) { return new EncoderAction(params); }
 
 };

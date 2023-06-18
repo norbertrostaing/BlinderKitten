@@ -19,6 +19,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/VirtualButtonAction.h"
 #include "Definitions/Actions/VirtualFaderAction.h"
 #include "Definitions/Actions/InputPanelAction.h"
+#include "Definitions/Actions/EncoderAction.h"
 #include "Definitions/Actions/MultiplicatorAction.h"
 #include "Definitions/Actions/TapTempoMultiple.h"
 
@@ -87,7 +88,6 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Page Down", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PAGEDOWN));
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Go To Page", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_GOTOPAGE));
 
-
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Encoder Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ROTARY));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Above Button Press", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_ABOVEBUTTON));
     defs.add(Factory<Action>::Definition::createDef("VirtualFader", "Fader Move", &VirtualFaderAction::create)->addParam("actionType", VirtualFaderAction::VF_FADER));
@@ -103,7 +103,12 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Stop All Effects", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_STOPFX));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Stop All Carousels", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_STOPCAR));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Reset random Seed", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_RANDOMSEED));
-    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Encoder Value", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_ENCODERVALUE));
+
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_VALUE));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Select", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_SELECT));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder select next command", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_NEXTCOMMAND));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder select previous command", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_PREVCOMMAND));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder toggle filter", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TOGGLEFILTER));
 
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));

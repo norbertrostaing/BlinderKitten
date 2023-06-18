@@ -83,6 +83,8 @@ public:
     void updateCommandLine();
     void mouseDoubleClick(const MouseEvent &e);
 
+    void offsetEncoders(int n);
+
     int encoderRange = 0;
 
 private:

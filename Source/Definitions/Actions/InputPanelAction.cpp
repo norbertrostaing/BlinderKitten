@@ -57,10 +57,6 @@ InputPanelAction::InputPanelAction(var params) :
         randomSeed = addIntParameter("Random Seed", "Initialise all random events with this value",0,0);
     }
 
-    if (actionType == IP_ENCODERVALUE) {
-        targetEncoder = addIntParameter("Encoder", "Wich encoder do you want to modify ?", 1, 1, 10);
-    }
-
 }
 
 InputPanelAction::~InputPanelAction()
@@ -128,18 +124,6 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
         }
         break;
 
-    case IP_ENCODERVALUE:
-        int index = targetEncoder->intValue() - 1;
-        if (index >= 0 && index < Encoders::getInstance()->encoders.size()) {
-            if (isRelative) {
-                float baseValue = Encoders::getInstance()->encoders[index]->getValue();
-                UserInputManager::getInstance()->encoderValueChanged(index, baseValue+(float)value);
-            }
-            else {
-                UserInputManager::getInstance()->encoderValueChanged(index, value);
-            }
-        }
-        break;
     }
 
 }
