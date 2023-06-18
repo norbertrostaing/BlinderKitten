@@ -54,6 +54,7 @@ Assistant::Assistant() :
     patcherFirstId = patcherCC.addIntParameter("First ID", "", 1, 1);
     patcherInterface = patcherCC.addTargetParameter("Interface", "", InterfaceManager::getInstance());
     patcherInterface->targetType = TargetParameter::CONTAINER;
+    patcherInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
     patcherInterface->maxDefaultSearchLevel = 0;
     patcherFirstAddress = patcherCC.addIntParameter("Start Address", "",1);
     patcherAddressInterval = patcherCC.addIntParameter("Address Interval", "",1);

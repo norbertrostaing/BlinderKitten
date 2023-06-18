@@ -31,6 +31,7 @@ FixtureMultiEditor::FixtureMultiEditor() :
 
     targetInterface = repatcher.addTargetParameter("Interface", "output interface", InterfaceManager::getInstance());
     targetInterface->targetType = TargetParameter::CONTAINER;
+    targetInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
     targetInterface->maxDefaultSearchLevel = 0;
     firstAddress = repatcher.addIntParameter("Address", "First address ", 1, 1, 512);
     adressesInterval = repatcher.addIntParameter("Interval", "Fixtures will be patched every X", 1, 1, 512);
