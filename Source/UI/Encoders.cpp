@@ -82,14 +82,24 @@ Encoders::Encoders():
     explodeCommandBtn.addListener(this);
     explodeCommandBtn.setButtonText("<>");
     explodeCommandBtn.setWantsKeyboardFocus(false);
+    initEncoders();
+}
 
+Encoders::~Encoders()
+{
+}
+
+void Encoders::initEncoders()
+{
+    nEncoders = dynamic_cast<BKEngine*>(Engine::mainEngine)->encodersNumber->intValue();
+    encoders.clear();
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
         addAndMakeVisible(s);
         s->setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
-        s->setRange(0,1);
-        s->setValue(0,juce::dontSendNotification);
-        s->setColour(Slider::rotarySliderFillColourId, Colour(63,63,63));
+        s->setRange(0, 1);
+        s->setValue(0, juce::dontSendNotification);
+        s->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
         s->setNumDecimalPlacesToDisplay(5);
         s->addListener(this);
         s->setWantsKeyboardFocus(false);
@@ -103,11 +113,8 @@ Encoders::Encoders():
         labels.add(l);
         l->setWantsKeyboardFocus(false);
     }
-
-}
-
-Encoders::~Encoders()
-{
+    resized();
+    updateEncoders();
 }
 
 void Encoders::paint (juce::Graphics& g)
@@ -161,7 +168,7 @@ void Encoders::resized()
 
     float w = 57;
     float h = 57;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < nEncoders; i++) {
         encoders[i]->setBounds(i*w, 80, w, h);
         encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
         labels[i]->setBounds(i*w, 60, w, 20);

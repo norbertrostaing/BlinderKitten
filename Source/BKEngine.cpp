@@ -122,6 +122,8 @@ BKEngine::BKEngine() :
 	virtualFaderBelow = virtualParamsContainer.addIntParameter("Below button numbers", "Number of buttons below the fader in each fader column", 1, 0);
 	virtualFaderBelow->addParameterListener(this);
 
+	encodersNumber = uiParamsContainer.addIntParameter("Encoders number", "How many encoders do you want ?", 10, 1);
+	encodersNumber->addParameterListener(this);
 	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
 	panelScale->addParameterListener(this);
 	encodersScale = uiParamsContainer.addFloatParameter("Encoders scale", "scale the encoders view", 1, 0.1, 3);
@@ -1068,7 +1070,10 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	}
 	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor) {
 		ConductorInfos::getInstance()->repaint();
+	} else if (p == encodersNumber) {
+		Encoders::getInstance()->initEncoders();
 	}
+
 }
 
 void BKEngine::autoFillColorPickerValues()

@@ -34,6 +34,7 @@ public:
 	Brain* mainBrain;
 
 	ControllableContainer uiParamsContainer;
+	IntParameter* encodersNumber;
 	IntParameter* gridCols;
 	FloatParameter* gridScale;
 	FloatParameter* panelScale;
