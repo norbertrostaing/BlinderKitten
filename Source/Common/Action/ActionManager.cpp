@@ -22,6 +22,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/EncoderAction.h"
 #include "Definitions/Actions/MultiplicatorAction.h"
 #include "Definitions/Actions/TapTempoMultiple.h"
+#include "Definitions/Actions/GenericAction.h"
 #include "ActionManager.h"
 
 ActionFactory::ActionFactory()
@@ -40,9 +41,6 @@ ActionFactory::ActionFactory()
     //defs.add(Factory<Action>::Definition::createDef("Object", "Enable Object", &ObjectAction::create)->addParam("actionType", ObjectAction::ENABLE_OBJECT));
     //defs.add(Factory<Action>::Definition::createDef("Object", "Disable Object", &ObjectAction::create)->addParam("actionType", ObjectAction::DISABLE_OBJECT));
     //defs.add(Factory<Action>::Definition::createDef("Object", "Set Component Parameter", &ObjectAction::create)->addParam("actionType", ObjectAction::SET_COMPONENT_PARAMETER_VALUE));
-
-    // defs.add(Factory<Action>::Definition::createDef("Generic", "Set Parameter Value", &GenericAction::create)->addParam("actionType", GenericAction::SET_VALUE));
-    // defs.add(Factory<Action>::Definition::createDef("Generic", "Trigger a control", &GenericAction::create)->addParam("actionType", GenericAction::TRIGGER));
 
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go All Loaded", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOALLLOADED));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO));
@@ -116,6 +114,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Carousel", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CAR));
+
+    defs.add(Factory<Action>::Definition::createDef("Generic", "Set Parameter Value", &GenericAction::create)->addParam("actionType", GenericAction::SET_VALUE));
+    defs.add(Factory<Action>::Definition::createDef("Generic", "Trigger a control", &GenericAction::create)->addParam("actionType", GenericAction::TRIGGER));
+
 
 }
 

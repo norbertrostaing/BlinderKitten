@@ -1156,6 +1156,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\EncoderAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\GenericAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\InputPanelAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
@@ -4696,6 +4699,9 @@
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\EncoderAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\GenericAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\InputPanelAction.h">

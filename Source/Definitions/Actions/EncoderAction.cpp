@@ -97,7 +97,6 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
 
     case ENC_TOGGLEFILTERFAMILY:
         if (val > 0) {
-            int i;
             ChannelFamily* cf = dynamic_cast<ChannelFamily*>(filterFamily->targetContainer.get());
             if (cf != nullptr) {
                 for (int i = 0; i < Encoders::getInstance()->filterBtns.size(); i++) {

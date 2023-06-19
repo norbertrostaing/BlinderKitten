@@ -104,6 +104,7 @@
 		95CC2B9FB1CA57C47ADE5FC8 /* OpenGL.framework */ = {isa = PBXBuildFile; fileRef = FC1C1685A486AC1E9558F20A; };
 		9667441AA63D56CAE0EF42C5 /* include_juce_audio_basics.mm */ = {isa = PBXBuildFile; fileRef = E2C6478802669AB0941D034C; };
 		96724F38E7C7EC7F13022E92 /* CoreAudio.framework */ = {isa = PBXBuildFile; fileRef = 8A141B50127977490A31BCE4; };
+		96EA0B585B87450607000A5B /* GenericAction.cpp */ = {isa = PBXBuildFile; fileRef = 5AF3417585B43D5E257C071D; };
 		98F72D6EEE8B980D2A0673A7 /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = C367855733BE23EFCB64EA4E; };
 		9C42B22911AC5C05ECA6688B /* include_juce_audio_utils.mm */ = {isa = PBXBuildFile; fileRef = 5E3B41B9847D191E3782492F; };
 		9D4582C47CE587B7C8035F62 /* MultiplicatorLinkManager.cpp */ = {isa = PBXBuildFile; fileRef = 6BE43C4DFB6DE7B838E57558; };
@@ -319,6 +320,7 @@
 		5941FA6A90768BF9A5502B6B /* CommandSelectionManager.cpp */ /* CommandSelectionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandSelectionManager.cpp; path = ../../Source/Definitions/Command/CommandSelectionManager.cpp; sourceTree = SOURCE_ROOT; };
 		5AAD17CFD29D80557F9F840E /* Programmer.h */ /* Programmer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Programmer.h; path = ../../Source/Definitions/Programmer/Programmer.h; sourceTree = SOURCE_ROOT; };
 		5ABAC0BB0FF1C7D8D4D668A6 /* MapperAction.h */ /* MapperAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapperAction.h; path = ../../Source/Definitions/Actions/MapperAction.h; sourceTree = SOURCE_ROOT; };
+		5AF3417585B43D5E257C071D /* GenericAction.cpp */ /* GenericAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericAction.cpp; path = ../../Source/Definitions/Actions/GenericAction.cpp; sourceTree = SOURCE_ROOT; };
 		5B57028B2036D809ABB1C6B9 /* FixtureTypeManager.cpp */ /* FixtureTypeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeManager.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeManager.cpp; sourceTree = SOURCE_ROOT; };
 		5BB7A439CBCC024688691A60 /* CarouselGridView.h */ /* CarouselGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CarouselGridView.h; path = ../../Source/UI/GridView/CarouselGridView.h; sourceTree = SOURCE_ROOT; };
 		5E3B41B9847D191E3782492F /* include_juce_audio_utils.mm */ /* include_juce_audio_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_utils.mm; sourceTree = SOURCE_ROOT; };
@@ -444,6 +446,7 @@
 		ACF41B21590E56F7D8292C0E /* Interface.cpp */ /* Interface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Interface.cpp; path = ../../Source/Definitions/Interface/Interface.cpp; sourceTree = SOURCE_ROOT; };
 		AD561ABAED2745E121CE95A7 /* Fixture.cpp */ /* Fixture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Fixture.cpp; path = ../../Source/Definitions/Fixture/Fixture.cpp; sourceTree = SOURCE_ROOT; };
 		AD861E96EB2578CD4E903BF6 /* FixtureMultiEditor.h */ /* FixtureMultiEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureMultiEditor.h; path = ../../Source/Definitions/Fixture/FixtureMultiEditor.h; sourceTree = SOURCE_ROOT; };
+		ADB3F0D5C6D1C22D19EDA773 /* GenericAction.h */ /* GenericAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenericAction.h; path = ../../Source/Definitions/Actions/GenericAction.h; sourceTree = SOURCE_ROOT; };
 		AED5F19D85468BD94B808BB9 /* FixtureTypeManagerUI.cpp */ /* FixtureTypeManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeManagerUI.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		AF0ACD9868DA66DDB69479BF /* SerialInterface.cpp */ /* SerialInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialInterface.cpp; path = ../../Source/Definitions/Interface/interfaces/serial/SerialInterface.cpp; sourceTree = SOURCE_ROOT; };
 		B0B243B44EA568048CA8BE61 /* MTCReceiver.h */ /* MTCReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MTCReceiver.h; path = ../../Source/Common/MIDI/MTCReceiver.h; sourceTree = SOURCE_ROOT; };
@@ -774,6 +777,8 @@
 				87FC62863200C6732D9EABF1,
 				AA8C4B889DBD77DB9502ED43,
 				4D46CE2C8AA20FB2A39A4D33,
+				5AF3417585B43D5E257C071D,
+				ADB3F0D5C6D1C22D19EDA773,
 				197ECD317D224A16CC530D7B,
 				5172B471EF9D3519A0FA1C21,
 				476097FAB285D9C99B750F5F,
@@ -1625,6 +1630,7 @@
 				15E54D59735BC9FE85CDA52E,
 				B6C79BB55EF2B92D7C8184E6,
 				A7D30DB9CC789056A9C08985,
+				96EA0B585B87450607000A5B,
 				943FBE29F3337859CB9F764C,
 				172939FB619E288DEABA5AFA,
 				D2670406E7A2779AADAE9E39,

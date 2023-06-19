@@ -262,6 +262,7 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\CuelistAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\EffectAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\EncoderAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\GenericAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\InputPanelAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp"/>
@@ -3304,6 +3305,7 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\CuelistAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\EffectAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\EncoderAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\GenericAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\InputPanelAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h"/>

@@ -76,7 +76,7 @@ void VirtualFaderAction::setValueInternal(var value, String origin, bool isRelat
         page = VirtualFaderColGrid::getInstance()->page;
     }
 
-    bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
+    //bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
 
 
     switch (actionType) {
@@ -127,7 +127,7 @@ var VirtualFaderAction::getValue()
         page = VirtualFaderColGrid::getInstance()->page;
     }
 
-    bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
+    // bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
 
     switch (actionType) {
     case VF_ROTARY:

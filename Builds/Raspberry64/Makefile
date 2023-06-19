@@ -111,6 +111,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CuelistAction_667db027.o \
   $(JUCE_OBJDIR)/EffectAction_c4a53ef1.o \
   $(JUCE_OBJDIR)/EncoderAction_90a75232.o \
+  $(JUCE_OBJDIR)/GenericAction_be28692d.o \
   $(JUCE_OBJDIR)/InputPanelAction_a2d41bfa.o \
   $(JUCE_OBJDIR)/MapperAction_7d027a1.o \
   $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o \
@@ -428,6 +429,11 @@ $(JUCE_OBJDIR)/EffectAction_c4a53ef1.o: ../../Source/Definitions/Actions/EffectA
 $(JUCE_OBJDIR)/EncoderAction_90a75232.o: ../../Source/Definitions/Actions/EncoderAction.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling EncoderAction.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/GenericAction_be28692d.o: ../../Source/Definitions/Actions/GenericAction.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GenericAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/InputPanelAction_a2d41bfa.o: ../../Source/Definitions/Actions/InputPanelAction.cpp
