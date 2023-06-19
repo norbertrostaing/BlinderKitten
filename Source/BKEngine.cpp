@@ -935,15 +935,26 @@ void BKEngine::importMVR(File f)
 									int id = 0;
 									String spec = "";
 									String mode = "";
-									if (child->getChildByName("UnitNumber") != nullptr) { id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue(); }
-									else { valid = false; }
 									if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
 									else { valid = false; }
 									if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
 									else { valid = false; }
 									String name = child->getStringAttribute("name");
 
+									id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
+									if (id == 0) {
+										id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
+									}
+
 									if (valid) {
+
+										if (id == 0) {
+											id = 1000;
+											while (fixturesMap.contains(id)) {
+												id++;
+											}
+										}
+
 										String ftName = spec+" - "+mode;
 										FixtureType* ft = nullptr;
 										if (!fixtureTypesMap.contains(ftName)) {
