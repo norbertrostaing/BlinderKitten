@@ -385,6 +385,7 @@ void Programmer::clearCurrent() {
 	Brain::getInstance()->pleaseUpdate(this);
 	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
 	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
 }
 
 void Programmer::selectNextCommand()
