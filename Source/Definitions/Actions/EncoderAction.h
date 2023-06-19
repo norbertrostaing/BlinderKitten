@@ -19,7 +19,7 @@ public:
     EncoderAction(var params);
     ~EncoderAction();
 
-    enum ActionType { ENC_VALUE, ENC_SELECT, ENC_NEXTCOMMAND, ENC_PREVCOMMAND, ENC_TOGGLEFILTERNUM, ENC_TOGGLEFILTERFAMILY  };
+    enum ActionType { ENC_VALUE, ENC_SELECT, ENC_NEXTCOMMAND, ENC_PREVCOMMAND, ENC_TOGGLEFILTERNUM, ENC_TOGGLEFILTERFAMILY, ENC_CLEARFILTERS  };
     ActionType actionType;
     IntParameter* targetEncoder;
     IntParameter* selectionDelta;

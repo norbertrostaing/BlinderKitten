@@ -107,7 +107,12 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
                 }
             }
         }
-    break;
+        break;
+
+    case ENC_CLEARFILTERS:
+        Encoders::getInstance()->selectedFilters.clear();
+        Encoders::getInstance()->updateFilterBtns();
+        break;
 
 
     }
