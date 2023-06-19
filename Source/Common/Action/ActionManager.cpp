@@ -109,7 +109,8 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Select", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_SELECT));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder select next command", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_NEXTCOMMAND));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder select previous command", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_PREVCOMMAND));
-    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder toggle filter", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TOGGLEFILTER));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder toggle filter nth", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TOGGLEFILTERNUM));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder toggle filter family", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TOGGLEFILTERFAMILY));
 
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));

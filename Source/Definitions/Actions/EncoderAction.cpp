@@ -14,6 +14,7 @@
 #include "UserInputManager.h"
 #include "UI/InputPanel.h"
 #include "UI/Encoders.h"
+#include "ChannelFamily/ChannelFamilyManager.h"
 
 EncoderAction::EncoderAction(var params) :
     Action(params)
@@ -21,13 +22,18 @@ EncoderAction::EncoderAction(var params) :
     actionType = (ActionType)(int)params.getProperty("actionType", ENC_VALUE);
 
     if (actionType == ENC_VALUE) {
-        targetEncoder = addIntParameter("Encoder", "Wich encoder do you want to modify ?", 1, 1, 10);
+        targetEncoder = addIntParameter("Encoder", "Wich encoder do you want to modify ?", 1, 1);
     }
     else if(actionType == ENC_SELECT) {
         selectionDelta = addIntParameter("Selection delta", "If positive, it will select nth next encoder, if negative, nth previous encoder", 1);
     }
-    else if(actionType == ENC_TOGGLEFILTER) {
+    else if (actionType == ENC_TOGGLEFILTERNUM) {
         filterNumber = addIntParameter("Filter", "Wich filter do you want to toggle ?", 1, 1);
+    }
+    else if (actionType == ENC_TOGGLEFILTERFAMILY) {
+        filterFamily = addTargetParameter("Family", "Wich filter do you want to toggle ?", ChannelFamilyManager::getInstance());
+        filterFamily->targetType = TargetParameter::CONTAINER;
+        filterFamily->maxDefaultSearchLevel = 0;
     }
 }
 
@@ -78,7 +84,7 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
         }
         break;
 
-    case ENC_TOGGLEFILTER:
+    case ENC_TOGGLEFILTERNUM:
         if (val > 0) {
             int i;
             i = filterNumber->intValue() - 1;
@@ -87,6 +93,20 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
             }
         }
         
+    break;
+
+    case ENC_TOGGLEFILTERFAMILY:
+        if (val > 0) {
+            int i;
+            ChannelFamily* cf = dynamic_cast<ChannelFamily*>(filterFamily->targetContainer.get());
+            if (cf != nullptr) {
+                for (int i = 0; i < Encoders::getInstance()->filterBtns.size(); i++) {
+                    if (Encoders::getInstance()->filterBtns[i]->getButtonText() == cf->niceName) {
+                        Encoders::getInstance()->filterBtns[i]->triggerClick();
+                    }
+                }
+            }
+        }
     break;
 
 
@@ -117,7 +137,7 @@ var EncoderAction::getValue()
     case ENC_PREVCOMMAND:
         break;
 
-    case ENC_TOGGLEFILTER:
+    case ENC_TOGGLEFILTERNUM:
         break;
     }
 

@@ -19,11 +19,12 @@ public:
     EncoderAction(var params);
     ~EncoderAction();
 
-    enum ActionType { ENC_VALUE, ENC_SELECT, ENC_NEXTCOMMAND, ENC_PREVCOMMAND, ENC_TOGGLEFILTER };
+    enum ActionType { ENC_VALUE, ENC_SELECT, ENC_NEXTCOMMAND, ENC_PREVCOMMAND, ENC_TOGGLEFILTERNUM, ENC_TOGGLEFILTERFAMILY  };
     ActionType actionType;
     IntParameter* targetEncoder;
     IntParameter* selectionDelta;
     IntParameter* filterNumber;
+    TargetParameter* filterFamily;
 
 
     void triggerInternal() override;
