@@ -93,6 +93,7 @@ void Encoders::initEncoders()
 {
     nEncoders = dynamic_cast<BKEngine*>(Engine::mainEngine)->encodersNumber->intValue();
     encoders.clear();
+    labels.clear();
     for (int i = 0; i < nEncoders; i++) {
         Slider* s = new Slider();
         addAndMakeVisible(s);
