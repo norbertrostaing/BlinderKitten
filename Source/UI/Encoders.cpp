@@ -413,6 +413,7 @@ void Encoders::updateChannels()
     updateFilterBtns();
     updateEncoders();
     updateCommandLine();
+    Brain::getInstance()->virtualFadersNeedUpdate = true;
 }
 
 void Encoders::updateEncodersValues() {
