@@ -45,13 +45,21 @@ MIDIFeedback::MIDIFeedback() :
     //inputRange->setBounds(0, 0, 127, 127);
     //inputRange->setPoint(0, 127);
     
-    onValue = addIntParameter("On Value", "Value to send when the target is on", 0);
-    offValue = addIntParameter("Off Value", "Value to send when the target is off", 0);
-    onLoadedValue = addIntParameter("On Loaded Value", "Value to send when the cuelist is on and has a loaded cue", 0);
-    offLoadedValue = addIntParameter("Off Loaded Value", "Value to send when the cuelist is off and has a loaded cue", 0);
-    currentCueValue = addIntParameter("Current Cue Value", "Value to send when the current cue of the cuelist is the one selected in the button", 0);
-    loadedCueValue = addIntParameter("Loaded Cue Value", "Value to send when the loaded cue of the cuelist is the one selected in the button", 0);
-    isGenericValue = addIntParameter("Generic Action Value", "Value to send when the target is on", 0);
+    differentChannels = addBoolParameter("Different Channels", "use different channels for each value", false);
+    onChannel = addIntParameter("On Channel", "Channel to send when the target is on", 1,1,16);
+    onValue = addIntParameter("On Value", "Value to send when the target is on", 0,0,127);
+    offChannel = addIntParameter("Off Channel", "Channel to send when the target is off", 1,1,16);
+    offValue  = addIntParameter("Off Value", "Value to send when the target is off", 0,0,127);
+    onLoadedChannel = addIntParameter("On Loaded Channel", "Channel to send when the cuelist is on and has a loaded cue", 1,1,16);
+    onLoadedValue  = addIntParameter("On Loaded Value", "Value to send when the cuelist is on and has a loaded cue", 0,0,127);
+    offLoadedChannel = addIntParameter("Off Loaded Channel", "Channel to send when the cuelist is off and has a loaded cue", 1,1,16);
+    offLoadedValue  = addIntParameter("Off Loaded Value", "Value to send when the cuelist is off and has a loaded cue", 0,0,127);
+    currentCueChannel = addIntParameter("Current Cue Channel", "Channel to send when the current cue of the cuelist is the one selected in the button", 1,1,16);
+    currentCueValue  = addIntParameter("Current Cue Value", "Value to send when the current cue of the cuelist is the one selected in the button", 0,0,127);
+    loadedCueChannel = addIntParameter("Loaded Cue Channel", "Channel to send when the loaded cue of the cuelist is the one selected in the button", 1,1,16);
+    loadedCueValue  = addIntParameter("Loaded Cue Value", "Value to send when the loaded cue of the cuelist is the one selected in the button", 0,0,127);
+    isGenericChannel = addIntParameter("Generic Action Channel", "Channel to send when the target is on", 1,1,16);
+    isGenericValue  = addIntParameter("Generic Action Value", "Value to send when the target is on", 0,0,127);
 
     saveAndLoadRecursiveData = true;
 
@@ -81,6 +89,7 @@ void MIDIFeedback::updateDisplay() {
     pitchOrNumber->hideInEditor = type == PITCHWHEEL;
 
     bool isButton = source == VBUTTON || source == VABOVEBUTTON || source == VBELOWBUTTON;
+    bool isComplex = isButton && differentChannels->boolValue();
 
     outputRange -> hideInEditor = isButton;
     onValue -> hideInEditor = !isButton;
@@ -91,12 +100,20 @@ void MIDIFeedback::updateDisplay() {
     loadedCueValue->hideInEditor = !isButton;
     isGenericValue -> hideInEditor = !isButton;
 
+    onChannel->hideInEditor = !isComplex;
+    offChannel->hideInEditor = !isComplex;
+    onLoadedChannel->hideInEditor = !isComplex;
+    offLoadedChannel->hideInEditor = !isComplex;
+    currentCueChannel->hideInEditor = !isComplex;
+    loadedCueChannel->hideInEditor = !isComplex;
+    isGenericChannel->hideInEditor = !isComplex;
+
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void MIDIFeedback::onContainerParameterChangedInternal(Parameter* p)
 {
-    if (p == feedbackSource || p == midiType) {
+    if (p == feedbackSource || p == midiType || p == differentChannels) {
         updateDisplay();
     }
 }
@@ -109,6 +126,7 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
 
     bool valid = false;
     int sendValue = 0;
+    int sendChannel = channel->intValue();
 
     bool sameDevice = inter->niceName == origin;
     sameDevice = sameDevice && origin != "";
@@ -139,6 +157,15 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
+            if (differentChannels->boolValue()) {
+                sendChannel = value == VirtualButton::BTN_ON ? onChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_OFF ? offChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_ON_LOADED ? onLoadedChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_OFF_LOADED ? offLoadedChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_CURRENTCUE ? currentCueChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_LOADEDCUE ? loadedCueChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_GENERIC ? isGenericChannel->intValue() : sendChannel;
+            }
         }
     }
     else if (source == VABOVEBUTTON) {
@@ -153,6 +180,15 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualFaderButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
+            if (differentChannels->boolValue()) {
+                sendChannel = value == VirtualButton::BTN_ON ? onChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_OFF ? offChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_ON_LOADED ? onLoadedChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_OFF_LOADED ? offLoadedChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_CURRENTCUE ? currentCueChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_LOADEDCUE ? loadedCueChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_GENERIC ? isGenericChannel->intValue() : sendChannel;
+            }
         }
     }
     else if (source == VBELOWBUTTON) {
@@ -167,6 +203,15 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
             sendValue = value == VirtualFaderButton::BTN_CURRENTCUE ? currentCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_LOADEDCUE ? loadedCueValue->intValue() : sendValue;
             sendValue = value == VirtualFaderButton::BTN_GENERIC ? isGenericValue->intValue() : sendValue;
+            if (differentChannels->boolValue()) {
+                sendChannel = value == VirtualButton::BTN_ON ? onChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_OFF ? offChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_ON_LOADED ? onLoadedChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_OFF_LOADED ? offLoadedChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_CURRENTCUE ? currentCueChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_LOADEDCUE ? loadedCueChannel->intValue() : sendChannel;
+                sendChannel = value == VirtualButton::BTN_GENERIC ? isGenericChannel->intValue() : sendChannel;
+            }
         }
     }
     else if (source == ENCODER && !sameDevice) {
@@ -187,13 +232,13 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
         }
         lastSentValue = sendValue;
         if (midiType->getValueDataAsEnum<MidiType>() == NOTE) {
-            dev->sendNoteOn(channel->intValue(), pitchOrNumber->intValue(), round(sendValue));
+            dev->sendNoteOn(sendChannel, pitchOrNumber->intValue(), round(sendValue));
         }
         if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE) {
-            dev->sendControlChange(channel->intValue(), pitchOrNumber->intValue(), round(sendValue));
+            dev->sendControlChange(sendChannel, pitchOrNumber->intValue(), round(sendValue));
         }
         if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL) {
-            dev->sendPitchWheel(channel->intValue(), round(sendValue));
+            dev->sendPitchWheel(sendChannel, round(sendValue));
         }
     }
 

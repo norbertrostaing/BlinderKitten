@@ -31,6 +31,7 @@ public:
     IntParameter* pitchOrNumber;
     Point2DParameter* outputRange;
 
+    BoolParameter* differentChannels;
     IntParameter* onValue;
     IntParameter* offValue;
     IntParameter* onLoadedValue;
@@ -38,6 +39,14 @@ public:
     IntParameter* isGenericValue;
     IntParameter* currentCueValue;
     IntParameter* loadedCueValue;
+    IntParameter* onChannel;
+    IntParameter* offChannel;
+    IntParameter* onLoadedChannel;
+    IntParameter* offLoadedChannel;
+    IntParameter* isGenericChannel;
+    IntParameter* currentCueChannel;
+    IntParameter* loadedCueChannel;
+
 
     Point2DParameter* inputRange;
 
