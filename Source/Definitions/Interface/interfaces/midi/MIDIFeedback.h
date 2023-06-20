@@ -52,6 +52,7 @@ public:
 
     BoolParameter* learnMode;
     int lastSentValue = -1;
+    int lastSentChannel = -1;
 
     bool isValid;
     bool wasInRange;
