@@ -36,7 +36,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_OUTDIR := build
 
   ifeq ($(TARGET_ARCH),)
-    TARGET_ARCH := 
+    TARGET_ARCH := -m64
   endif
 
   JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_MODAL_LOOPS_PERMITTED=1" "-D_ITERATOR_DEBUG_LEVEL=1" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1b25" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../Source/Definitions -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/libusb/include/libusb-1.0 $(CPPFLAGS)
@@ -45,7 +45,7 @@ ifeq ($(CONFIG),Debug)
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell $(PKG_CONFIG) --libs alsa freetype2 libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lGL -lServus -lcurl -lusb-1.0 -lhidapi-hidraw $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L/usr/lib/x86_64-linux-gnu/ $(shell $(PKG_CONFIG) --libs alsa freetype2 libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lGL -lServus -lcurl -lusb-1.0 -lhidapi-hidraw $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
 endif
