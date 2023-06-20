@@ -775,7 +775,7 @@
         <CONFIGURATION isDebug="1" name="Debug"/>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release"
                        macOSDeploymentTarget="10.10" osxCompatibility="10.10 SDK" targetName="BlinderKitten"
-                       binaryPath="Release"/>
+                       binaryPath="Release" defines="JUCE_DISABLE_ASSERTIONS=1"/>
         <CONFIGURATION isDebug="0" name="ReleaseSilicon" targetName="BlinderKitten"
                        libraryPath="../../External/servus/lib/silicon/release" optimisation="3"
                        binaryPath="Release"/>
@@ -806,7 +806,7 @@
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;"
                        linuxArchitecture="-m64"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="BlinderKitten" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;"
-                       linuxArchitecture="-m64"/>
+                       linuxArchitecture="-m64" defines="JUCE_DISABLE_ASSERTIONS=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
@@ -886,7 +886,8 @@
             smallIcon="qTJiMk" bigIcon="qTJiMk">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/hidapi/lib/win/x64&#10;"/>
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/hidapi/lib/win/x64&#10;"
+                       defines="JUCE_DISABLE_ASSERTIONS=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
