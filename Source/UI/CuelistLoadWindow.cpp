@@ -125,6 +125,9 @@ void CuelistLoadWindow::buttonClicked(Button* b)
 }
 
 void CuelistLoadWindow::closeWindow() {
-    findParentComponentOfClass<DialogWindow>()->unfocusAllComponents();
-    findParentComponentOfClass<DialogWindow>()->exitModalState(0);
+    DialogWindow* dw = findParentComponentOfClass<DialogWindow>();
+    if (dw != nullptr) {
+        dw->unfocusAllComponents();
+        dw->exitModalState(0);
+    }
 }
