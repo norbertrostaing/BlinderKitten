@@ -778,29 +778,32 @@ void Assistant::importAscii()
                     }
                 }
             }
-            else if (currentPrimary == "GROUP" && asciiGroups->getValue() || asciiGroupValuesAsPreset->getValue()) {
+            else if (currentPrimary == "GROUP" && (asciiGroups->getValue() || asciiGroupValuesAsPreset->getValue())) {
                 if (currentSecondary == "GROUP") {
                     if (words.size() == 1) {
                         LOGERROR("invalid file, GROUP word must have an id in parameter");
                     }
                     int groupId = words[1].getIntValue();
                     if (asciiGroups->getValue()) {
-                        currentGroup = Brain::getInstance()->getGroupById(groupId);
-                        if (currentGroup == nullptr) {
-                            currentGroup = GroupManager::getInstance()->addItem();
-                            currentGroup->id->setValue(groupId);
+                        if (asciiGroupValuesAsPreset->getValue()) {
+                            currentPreset = Brain::getInstance()->getPresetById(groupId);
+                            if (currentPreset == nullptr) {
+                                currentPreset = PresetManager::getInstance()->addItem();
+                                currentPreset->id->setValue(groupId);
+                            }
+                            currentPreset->userName->setValue("ASCII Group " + words[1]);
+                            currentPreset->subFixtureValues.clear();
                         }
-                        currentGroup->userName->setValue("ASCII Group " + words[1]);
-                        currentGroup->selection.clear();
-                    }
-                    if (asciiGroupValuesAsPreset->getValue()) {
-                        currentPreset = Brain::getInstance()->getPresetById(groupId);
-                        if (currentPreset == nullptr) {
-                            currentPreset = PresetManager::getInstance()->addItem();
-                            currentPreset->id->setValue(groupId);
+                        else {
+                            currentGroup = Brain::getInstance()->getGroupById(groupId);
+                            if (currentGroup == nullptr) {
+                                currentGroup = GroupManager::getInstance()->addItem();
+                                currentGroup->id->setValue(groupId);
+                            }
+                            currentGroup->userName->setValue("ASCII Group " + words[1]);
+                            currentGroup->selection.clear();
+
                         }
-                        currentPreset->userName->setValue("ASCII Group " + words[1]);
-                        currentPreset->subFixtureValues.clear();
                     }
 
                 }
