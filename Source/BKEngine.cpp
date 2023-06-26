@@ -106,6 +106,9 @@ BKEngine::BKEngine() :
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&loadWindowContainer);
 
+	faderSelectionMode = virtualParamsContainer.addEnumParameter("Faders selection mode", "Single copies elements on only one leement, column assign target to all elements in selected column");
+	faderSelectionMode->addOption("Single", "single")->addOption("Column", "column");
+
 	virtualButtonGridCols = virtualParamsContainer.addIntParameter("Button cols", "Number of cols in playback button grid", 5, 1);
 	virtualButtonGridCols->addParameterListener(this);
 	virtualButtonGridRows = virtualParamsContainer.addIntParameter("Button rows", "Number of rows in playback button grid", 5, 1);

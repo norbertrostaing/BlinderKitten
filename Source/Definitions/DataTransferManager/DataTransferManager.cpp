@@ -69,7 +69,8 @@ DataTransferManager::DataTransferManager() :
     sourceType->addOption("Mapper", "mapper");
     sourceType->addOption("Programmer", "programmer");
     sourceType->addOption("Virtual Button", "virtualbutton");
-    sourceType->addOption("Virtual Fader", "virtualfadercol");
+    sourceType->addOption("Virtual Fader Column", "virtualfadercol");
+    sourceType->addOption("Virtual Fader Element", "virtualfaderelement");
     sourceId = addIntParameter("Source Id", "ID of the source", 0, 0);
     targetType = addEnumParameter("Target Type", "Type of the data target");
     targetType->addOption("Group", "group");
@@ -81,7 +82,8 @@ DataTransferManager::DataTransferManager() :
     targetType->addOption("Mapper", "mapper");
     targetType->addOption("Programmer", "programmer");
     targetType->addOption("Virtual Button", "virtualbutton");
-    targetType->addOption("Virtual Fader", "virtualfadercol");
+    targetType->addOption("Virtual Fader Column", "virtualfadercol");
+    targetType->addOption("Virtual Fader Element", "virtualfaderelement");
 
     targetUserId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
@@ -137,6 +139,7 @@ void DataTransferManager::execute() {
     bool valid = false;
     int sId = sourceId->getValue();
     int tId = targetUserId->getValue();
+
     if (srcType == "programmer") {
         Programmer* source = Brain::getInstance()->getProgrammerById(sourceId->getValue());
         ScopedLock lock(source->computing);
@@ -298,6 +301,24 @@ void DataTransferManager::execute() {
             trg->targetType->setValueWithData("cuelist");
             trg->selectThis();
         }
+        else if (trgType == "virtualfaderelement") {
+            valid = true;
+            VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("cuelist");
+                trg->parentColumn->selectThis();
+            }
+            else {
+                VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                if (trgf != nullptr) {
+                    trgf->targetId->setValue(sId);
+                    trgf->targetType->setValueWithData("cuelist");
+                    trgf->parentColumn->selectThis();
+                }
+            }
+            
+        }
     }
     else if (srcType == "effect") {
         Effect* src = Brain::getInstance()->getEffectById(sId);
@@ -334,6 +355,24 @@ void DataTransferManager::execute() {
                 trg->selectThis();
             }
         }
+        else if (trgType == "virtualfaderelement") {
+            valid = true;
+            VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("effect");
+                trg->parentColumn->selectThis();
+            }
+            else {
+                VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                if (trgf != nullptr) {
+                    trgf->targetId->setValue(sId);
+                    trgf->targetType->setValueWithData("effect");
+                    trgf->parentColumn->selectThis();
+                }
+            }
+
+        }
     }
     else if (srcType == "carousel") {
         Carousel* src = Brain::getInstance()->getCarouselById(sId);
@@ -369,6 +408,24 @@ void DataTransferManager::execute() {
                 trg->selectThis();
             }
         }
+        else if (trgType == "virtualfaderelement") {
+            valid = true;
+            VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("carousel");
+                trg->parentColumn->selectThis();
+            }
+            else {
+                VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                if (trgf != nullptr) {
+                    trgf->targetId->setValue(sId);
+                    trgf->targetType->setValueWithData("carousel");
+                    trgf->parentColumn->selectThis();
+                }
+            }
+
+        }
     }
     else if (srcType == "mapper") {
         Mapper* src = Brain::getInstance()->getMapperById(sId);
@@ -402,6 +459,24 @@ void DataTransferManager::execute() {
                 trg->targetType->setValueWithData("mapper");
                 trg->selectThis();
             }
+        }
+        else if (trgType == "virtualfaderelement") {
+            valid = true;
+            VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+            if (trg != nullptr) {
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("mapper");
+                trg->parentColumn->selectThis();
+            }
+            else {
+                VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                if (trgf != nullptr) {
+                    trgf->targetId->setValue(sId);
+                    trgf->targetType->setValueWithData("mapper");
+                    trgf->parentColumn->selectThis();
+                }
+            }
+
         }
     }
     else if (srcType == "preset") {
@@ -458,11 +533,46 @@ void DataTransferManager::execute() {
             valid = true;
             VirtualButtonGrid::getInstance()->copyCell(sId, tId);
         }
+        else if (trgType == "virtualfaderelement") {
+            valid = true;
+            VirtualButton* vb = VirtualButtonGrid::getInstance()->getVirtualButton(sId, false);
+            if (vb != nullptr) {
+                var data = vb->getJSONData();
+                
+                VirtualFaderButton* vfbTo = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+                VirtualFaderSlider* vfsTo = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                if (vfbTo != nullptr) { vfbTo->loadJSONData(data); vfbTo->targetType->setValueWithData(vb->targetType->getValueData()); }
+                if (vfsTo != nullptr) { vfsTo->loadJSONData(data); vfsTo->targetType->setValueWithData(vb->targetType->getValueData()); }
+            }
+
+
+
+        }
     }
     else if (srcType == "virtualfadercol") {
         if (trgType == "virtualfadercol") {
             valid = true;
-            VirtualFaderColGrid::getInstance()->copyCell(sId, tId);
+            VirtualFaderColGrid::getInstance()->copyCol(sId, tId);
+        }
+    }
+    else if (srcType == "virtualfaderelement") {
+        if (trgType == "virtualfaderelement") {
+            valid = true;
+            VirtualFaderColGrid::getInstance()->copyElmt(sId, tId);
+        }
+        else if (trgType == "virtualbutton") {
+            valid = true;
+            VirtualFaderButton* vfbFrom = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(sId, false);
+            VirtualFaderSlider* vfsFrom = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(sId, false);
+
+            if (vfbFrom != nullptr || vfsFrom != nullptr) {
+                var data = vfbFrom != nullptr ? vfbFrom->getJSONData() : vfsFrom->getJSONData();
+                LOG(data.toString());
+                VirtualButton* vb = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+                if (vb != nullptr) {
+                    vb -> loadJSONData(data);
+                }
+            }
         }
     }
 
@@ -531,7 +641,11 @@ void DataTransferManager::editObject(String type, int id) {
         Brain::getInstance()->showWindow("Inspector");
     }
     else if (type == "virtualfadercol") {
-        VirtualFaderColGrid::getInstance()->editCell(id);
+        VirtualFaderColGrid::getInstance()->editCol(id);
+        Brain::getInstance()->showWindow("Inspector");
+    }
+    else if (type == "virtualfaderelement") {
+        VirtualFaderColGrid::getInstance()->editElmt(id); //
         Brain::getInstance()->showWindow("Inspector");
     }
 }
@@ -569,52 +683,55 @@ void DataTransferManager::deleteObject(String type, int id) {
         VirtualButtonGrid::getInstance()->deleteCell(id);
     }
     else if (type == "virtualfadercol") {
-        VirtualFaderColGrid::getInstance()->deleteCell(id);
+        VirtualFaderColGrid::getInstance()->deleteCol(id);
+    }
+    else if (type == "virtualfaderelement") {
+        VirtualFaderColGrid::getInstance()->deleteElmt(id);
     }
 }
 
-void DataTransferManager::moveObject(String type, int id, int idTo) {
-    if (type == "fixture") {
+void DataTransferManager::moveObject(String type, int id, String typeTo, int idTo) {
+    if (type == "fixture" && typeTo == "fixture") {
         Fixture* source = Brain::getInstance()->getFixtureById(id);
         Fixture* target = Brain::getInstance()->getFixtureById(idTo);
-        if (source == nullptr) {return;}
+        if (source == nullptr) { return; }
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "group") {
+    else if (type == "group" && typeTo == "group") {
         Group* source = Brain::getInstance()->getGroupById(id);
         Group* target = Brain::getInstance()->getGroupById(idTo);
-        if (source == nullptr) {return;}
+        if (source == nullptr) { return; }
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "preset") {
+    else if (type == "preset" && typeTo == "preset") {
         Preset* source = Brain::getInstance()->getPresetById(id);
         Preset* target = Brain::getInstance()->getPresetById(idTo);
-        if (source == nullptr) {return;}
+        if (source == nullptr) { return; }
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "cuelist") {
+    else if (type == "cuelist" && typeTo == "cuelist") {
         Cuelist* source = Brain::getInstance()->getCuelistById(id);
         Cuelist* target = Brain::getInstance()->getCuelistById(idTo);
-        if (source == nullptr) {return;}
+        if (source == nullptr) { return; }
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "effect") {
+    else if (type == "effect" && typeTo == "effect") {
         Effect* source = Brain::getInstance()->getEffectById(id);
         Effect* target = Brain::getInstance()->getEffectById(idTo);
-        if (source == nullptr) {return;}
+        if (source == nullptr) { return; }
         if (target != nullptr) { target->id->setValue(99999999); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "carousel") {
+    else if (type == "carousel" && typeTo == "carousel") {
         Carousel* source = Brain::getInstance()->getCarouselById(id);
         Carousel* target = Brain::getInstance()->getCarouselById(idTo);
         if (source == nullptr) { return; }
@@ -622,7 +739,7 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "mapper") {
+    else if (type == "mapper" && typeTo == "mapper") {
         Mapper* source = Brain::getInstance()->getMapperById(id);
         Mapper* target = Brain::getInstance()->getMapperById(idTo);
         if (source == nullptr) { return; }
@@ -630,10 +747,49 @@ void DataTransferManager::moveObject(String type, int id, int idTo) {
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
-    else if (type == "virtualbutton") {
+    else if (type == "virtualbutton" && typeTo == "virtualbutton") {
         VirtualButtonGrid::getInstance()->moveCell(id, idTo);
     }
-    else if (type == "virtualfadercol") {
-        VirtualFaderColGrid::getInstance()->moveCell(id, idTo);
+    else if (type == "virtualfadercol" && typeTo == "virtualfadercol") {
+        VirtualFaderColGrid::getInstance()->moveCol(id, idTo);
+    }
+    else if (type == "virtualfaderelement" && typeTo == "virtualfaderelement") {
+        VirtualFaderColGrid::getInstance()->moveElmt(id, idTo);
+    }
+    else if (type == "virtualfaderelement" && typeTo == "virtualbutton") {
+        VirtualFaderButton* vfbFrom = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(id, false);
+        VirtualFaderSlider* vfsFrom = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(id, false);
+
+        if (vfbFrom != nullptr || vfsFrom != nullptr) {
+            var data = vfbFrom != nullptr ? vfbFrom->getJSONData() : vfsFrom->getJSONData();
+            LOG(data.toString());
+            VirtualButton* vb = VirtualButtonGrid::getInstance()->getVirtualButton(idTo, true);
+            if (vb != nullptr) {
+                vb->loadJSONData(data);
+                VirtualFaderColGrid::getInstance()->deleteElmt(id);
+            }
+        }
+    }
+    else if (type == "virtualbutton" && typeTo == "virtualfaderelement") {
+        VirtualButton* vb = VirtualButtonGrid::getInstance()->getVirtualButton(id, false);
+        if (vb != nullptr) {
+            var data = vb->getJSONData();
+
+            VirtualFaderButton* vfbTo = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(idTo, true);
+            VirtualFaderSlider* vfsTo = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(idTo, true);
+            if (vfbTo != nullptr) { 
+                vfbTo->loadJSONData(data); 
+                vfbTo->targetType->setValueWithData(vb->targetType->getValueData());                 
+                VirtualButtonGrid::getInstance()->deleteCell(id); 
+            }
+            if (vfsTo != nullptr) { 
+                vfsTo->loadJSONData(data); 
+                vfsTo->targetType->setValueWithData(vb->targetType->getValueData()); 
+                VirtualButtonGrid::getInstance()->deleteCell(id);
+            }
+        }
+    }
+    else {
+        LOGERROR("copy not allowed");
     }
 }

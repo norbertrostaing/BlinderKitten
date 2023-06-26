@@ -74,19 +74,37 @@ public:
     HashMap<Slider*, int> sliderColumnIndex;
     HashMap<int, VirtualFaderCol*> columnToVFC;
 
+    HashMap<TextButton*, int> buttonToIndex;
+    HashMap<int, TextButton*> indexToButton;
+
+    HashMap<Slider*, int> sliderToIndex;
+    HashMap<int, Slider*> indexToSlider;
+
+    HashMap<TextButton*, bool> buttonIsAbove;
+
     void buttonClicked(juce::Button* button) override;
     void buttonStateChanged(juce::Button* button) override;
     void sliderValueChanged(Slider* slider) override;
+    void mouseDown(const MouseEvent& m);
 
     void buttonPressedDown(juce::TextButton* button);
     void buttonPressedUp(juce::TextButton* button);
 
-    void editCell(int id);
-    void deleteCell(int id);
-    void moveCell(int idFrom, int idTo);
-    void copyCell(int idFrom, int idTo);
+    void sliderClicked(Slider* s);
+
+    void editCol(int id);
+    void deleteCol(int id);
+    void moveCol(int idFrom, int idTo);
+    void copyCol(int idFrom, int idTo);
+
+    void editElmt(int id);
+    void deleteElmt(int id);
+    void moveElmt(int idFrom, int idTo);
+    void copyElmt(int idFrom, int idTo);
 
     VirtualFaderCol* getVirtualFaderCol(int index, bool create = false);
+    VirtualFaderButton* getVirtualFaderButton(int index, bool create = false);
+    VirtualFaderSlider* getVirtualFaderSlider(int index, bool create = false);
     void updateSlidersValues();
 
     void goToPage(int n);

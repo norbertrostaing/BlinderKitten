@@ -42,6 +42,7 @@ public:
 	IntParameter* encoderBigNumber;
 
 	ControllableContainer virtualParamsContainer;
+	EnumParameter* faderSelectionMode;
 	IntParameter* virtualButtonGridCols;
 	IntParameter* virtualButtonGridRows;
 

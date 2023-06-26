@@ -80,7 +80,8 @@ Programmer::Programmer(var params) :
 	cliParamAType->addOption("Carousel", "carousel");
 	cliParamAType->addOption("Mapper", "mapper");
 	cliParamAType->addOption("Virtual button", "virtualbutton");
-	cliParamAType->addOption("Virtual fader", "virtualfadercol");
+	cliParamAType->addOption("Virtual fader column", "virtualfadercol");
+	cliParamAType->addOption("Virtual fader element", "virtualfaderelement");
 	cliParamAId = cliContainer.addIntParameter("Param A ID", "ID of first param", 0, 0);
 
 	cliParamBType = cliContainer.addEnumParameter("Param B type", "second object type");
@@ -92,7 +93,8 @@ Programmer::Programmer(var params) :
 	cliParamBType->addOption("Carousel", "carousel");
 	cliParamBType->addOption("Mapper", "mapper");
 	cliParamBType->addOption("Virtual button", "virtualbutton");
-	cliParamBType->addOption("Virtual fader", "virtualfadercol");
+	cliParamBType->addOption("Virtual fader column", "virtualfadercol");
+	cliParamBType->addOption("Virtual fader element", "virtualfaderelement");
 	cliParamBId = cliContainer.addIntParameter("Param B ID", "second object id for copy, move", 0, 0);
 
 	cliGo = cliContainer.addTrigger("GO", "Execute this command");
@@ -440,7 +442,7 @@ void Programmer::processUserInput(String s) {
 				LOGERROR("not allowed");
 			}
 		}
-		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel" || s == "mapper" || s == "virtualbutton" || s == "virtualfadercol") {
+		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel" || s == "mapper" || s == "virtualbutton" || s == "virtualfadercol" || s == "virtualfaderelement") {
 			if (userCanPressTargetType) {
 				dynamic_cast<EnumParameter*>(currentUserTargetType)->setValueWithData(s);
 			}
@@ -639,7 +641,7 @@ void Programmer::runCliCommand() {
 
 	}
 	else if (action == "move") {
-		DataTransferManager::getInstance()->moveObject(targetType, targetId, (int)cliParamBId->getValue());
+		DataTransferManager::getInstance()->moveObject(targetType, targetId, cliParamBType->getValue(), (int)cliParamBId->getValue());
 	}
 	else if (action == "edit") {
 		DataTransferManager::getInstance()->editObject(targetType, targetId);
