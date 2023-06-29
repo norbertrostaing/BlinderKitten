@@ -422,7 +422,7 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		}
 
 		if (text != "") {
-			text = action + "\n" + text;
+			//text = action + "\n" + text;
 		}
 		return text;
 	}

@@ -348,7 +348,7 @@ String VirtualFaderButton::getBtnText(String columnType) {
 		}
 
 		if (text != "") {
-			text = action + "\n" + text;
+			//text = action + "\n" + text;
 		}
 		return text;
 	}

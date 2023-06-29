@@ -317,7 +317,7 @@ String VirtualButton::getBtnText() {
 	}
 	
 	if (text != "") {
-		text = action + "\n" + text;
+		// text = action + "\n" + text;
 	}
 	return text;
 }
