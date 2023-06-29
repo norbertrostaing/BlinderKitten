@@ -711,7 +711,7 @@ VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool c
     VirtualFaderButton* vfb = nullptr;
     if (buttonToVFB.contains(clicked) && buttonToVFB.getReference(clicked) != nullptr) {
         return buttonToVFB.getReference(clicked);
-    } else {
+    } else if (create) {
         int col = buttonColumnIndex.getReference(clicked);
         VirtualFaderCol* vfc = getVirtualFaderCol(col, true);
         int maxBtn = nRotaries + nAbove + nBelow +1;
@@ -748,7 +748,7 @@ VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool c
     VirtualFaderSlider* vfs = nullptr;
     if (sliderToVFS.contains(clicked) && sliderToVFS.getReference(clicked) != nullptr) {
         return sliderToVFS.getReference(clicked);
-    } else {
+    } else if (create) {
         int col = sliderColumnIndex.getReference(clicked);
         VirtualFaderCol* vfc = getVirtualFaderCol(col, true);
         int maxBtn = nRotaries + nAbove + nBelow + 1;

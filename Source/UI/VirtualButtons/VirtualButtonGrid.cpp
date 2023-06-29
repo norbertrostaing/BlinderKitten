@@ -252,14 +252,15 @@ void VirtualButtonGrid::copyCell(int idFrom, int idTo) {
 VirtualButton* VirtualButtonGrid::getVirtualButton(int id, bool create)
 {
     id = id - 1;
-    if (id >= 0 && id >= gridButtons.size()) { return nullptr; }
+    if (id < 0 && id >= gridButtons.size()) { return nullptr; }
     TextButton* b = gridButtons[id];
     VirtualButton* vb = buttonToVirtualButton.contains(b) ? buttonToVirtualButton.getReference(b) : nullptr;
-    if (create) {
+    if (create && vb == nullptr) {
         vb = VirtualButtonManager::getInstance()->addItem();
         vb->pageNumber->setValue(page);
         vb->rowNumber->setValue(1 + (id / cols));
         vb->colNumber->setValue(1 + (id % cols));
+        buttonToVirtualButton.set(b, vb);
     }
     return vb;
 }

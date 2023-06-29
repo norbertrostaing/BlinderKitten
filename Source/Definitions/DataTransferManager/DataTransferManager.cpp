@@ -273,6 +273,7 @@ void DataTransferManager::execute() {
                 valid = true;
             }
             else if (trg->targetType->stringValue() == "cuelist") {
+                LOG(trg->targetId->intValue());
                 targetCuelist = Brain::getInstance()->getCuelistById(trg->targetId->intValue());
                 valid = true;
             }
