@@ -52,6 +52,7 @@ public:
     Array<ChannelType*> channels;
 
     TextButton HLBtn;
+    TextButton blindBtn;
     TextButton btnMode;
     TextButton encoderRangeBtn;
 
@@ -78,6 +79,8 @@ public:
     void updateEncoders();
     void updateChannels();
     void updateModeButton();
+    void updateHLButton();
+    void updateBlindButton();
     void updateRangeButton();
     void updateEncodersValues();
     void updateCommandLine();

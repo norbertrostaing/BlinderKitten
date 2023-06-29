@@ -26,6 +26,7 @@ il faudrait que le formulaire soit pré rempli genre
 #include "../ChannelValue.h"
 #include "../DataTransferManager/DataTransferManager.h"
 #include "ProgrammerManager.h"
+#include "UI/Encoders.h"
 
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
@@ -161,9 +162,11 @@ void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 		if (editionMode->getValue() == "blind") {
 			release();
 		}
+		Encoders::getInstance()->updateBlindButton();
 	}
 	if (p == highlightCurrentCommand) {
 		go();
+		Encoders::getInstance()->updateHLButton();
 	}
 
 }

@@ -38,6 +38,11 @@ Encoders::Encoders():
     HLBtn.setButtonText("HL");
     HLBtn.setWantsKeyboardFocus(false);
 
+    addAndMakeVisible(&blindBtn);
+    blindBtn.addListener(this);
+    blindBtn.setButtonText("Blind");
+    blindBtn.setWantsKeyboardFocus(false);
+
     addAndMakeVisible(&btnMode);
     btnMode.addListener(this);
     btnMode.setButtonText("Val");
@@ -151,13 +156,14 @@ void Encoders::resized()
     btnMode.setBounds(windowW - (0 * margin) - (1 * btnValueWidth), 0, btnValueWidth, 20);
     encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnValueWidth), 0, btnValueWidth, 20);
     HLBtn.setBounds(windowW - (0 * margin) - (3 * btnValueWidth), 0, btnValueWidth, 20);
-    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (1 * btnWidth), 0, btnWidth, 20);
-    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
-    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
-    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (3 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
-    commandDownBtn.setBounds(windowW - (2 * margin) - (3 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
-    commandUpBtn.setBounds(windowW - (2 * margin) - (3 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
-    explodeCommandBtn.setBounds(windowW - (3 * margin) - (3 * btnValueWidth) - (7 * btnWidth), 0, btnWidth, 20);
+    blindBtn.setBounds(windowW - (0 * margin) - (4 * btnValueWidth), 0, btnValueWidth, 20);
+    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (1 * btnWidth), 0, btnWidth, 20);
+    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
+    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
+    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
+    commandDownBtn.setBounds(windowW - (2 * margin) - (4 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
+    commandUpBtn.setBounds(windowW - (2 * margin) - (4 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
+    explodeCommandBtn.setBounds(windowW - (3 * margin) - (4 * btnValueWidth) - (7 * btnWidth), 0, btnWidth, 20);
 
     if (filterBtns.size() > 0) {
         float w = getWidth() / filterBtns.size();
@@ -238,6 +244,14 @@ void Encoders::buttonClicked(Button* b) {
         }
         updateChannels();
     }
+    else if (b == &blindBtn) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            String val = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
+            val = val == "blind" ? "notTimed" : "blind";
+            UserInputManager::getInstance()->currentProgrammer->editionMode->setValueWithData(val);
+        }
+        updateChannels();
+    }
     else
     {
         // filters
@@ -266,6 +280,33 @@ void Encoders::updateModeButton() {
         btnMode.setButtonText("Time");
     }
     updateEncoders();
+}
+
+void Encoders::updateHLButton()
+{
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+        bool hl = UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->getValue();
+        if (hl) {
+            HLBtn.setColour(TextButton::buttonColourId, Colour(127,0,0));
+        }
+        else {
+            HLBtn.removeColour(TextButton::buttonColourId);
+        }
+    }
+
+}
+
+void Encoders::updateBlindButton()
+{
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+        String mode = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
+        if (mode == "blind") {
+            blindBtn.setColour(TextButton::buttonColourId, Colour(127, 0, 0));
+        }
+        else {
+            blindBtn.removeColour(TextButton::buttonColourId);
+        }
+    }
 }
 
 void Encoders::updateRangeButton() {
@@ -413,6 +454,7 @@ void Encoders::updateChannels()
     updateFilterBtns();
     updateEncoders();
     updateCommandLine();
+    updateHLButton();
     Brain::getInstance()->virtualFadersNeedUpdate = true;
 }
 
