@@ -266,10 +266,73 @@ void DataTransferManager::execute() {
             }
             target->selectThis();
         }
+        else if (trgType == "virtualbutton") {
+            Cuelist* targetCuelist = nullptr;
+            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+            if (trg->targetType->stringValue() == "disabled") {
+                valid = true;
+            }
+            else if (trg->targetType->stringValue() == "cuelist") {
+                targetCuelist = Brain::getInstance()->getCuelistById(trg->targetId->intValue());
+                valid = true;
+            }
+            if (valid) {
+                if (targetCuelist == nullptr) {
+                    targetCuelist = CuelistManager::getInstance()->addItem();
+                    targetCuelist->cues.clear();
+                    trg->targetType->setValueWithData("cuelist");
+                    int id = targetCuelist->id->intValue();
+                    trg->targetId->setValue(targetCuelist->id->intValue());
+                }
+                targetType->setValueWithData("cuelist");
+                targetUserId->setValue(targetCuelist->id->intValue());
+                execute();
+            }
+        }
+        else if (trgType == "virtualfaderelement") {
+            Cuelist* targetCuelist = nullptr;
+            VirtualFaderButton* trgButton = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+            VirtualFaderSlider* trgSlider = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
 
+            String targType = trgButton != nullptr ? trgButton->targetType->stringValue() : trgSlider->targetType->stringValue();
+            int targId = trgButton != nullptr ? trgButton->targetId->intValue() : trgSlider->targetId->intValue();
+            if (targType == "column") {
+                if (trgButton != nullptr && trgButton->checkParentColumn()) {
+                    targType = trgButton->parentColumn->targetType->stringValue();
+                    targId = trgButton->parentColumn->targetId->intValue();
+                }
+                if (trgSlider != nullptr && trgSlider->checkParentColumn()) {
+                    targType = trgSlider->parentColumn->targetType->stringValue();
+                    targId = trgSlider->parentColumn->targetId->intValue();
+                }
+            }
+            if (targType == "disabled") {
+                valid = true;
+            }
+            else if (targType == "cuelist") {
+                targetCuelist = Brain::getInstance()->getCuelistById(targId);
+                valid = true;
+            }
+            if (valid) {
+                if (targetCuelist == nullptr) {
+                    targetCuelist = CuelistManager::getInstance()->addItem();
+                    targetCuelist->cues.clear();
+                    int id = targetCuelist->id->intValue();
+                    if (trgButton != nullptr) {
+                        trgButton->targetType->setValueWithData("cuelist");
+                        trgButton->targetId->setValue(targetCuelist->id->intValue());
+                    }
+                    if (trgSlider != nullptr) {
+                        trgSlider->targetType->setValueWithData("cuelist");
+                        trgSlider->targetId->setValue(targetCuelist->id->intValue());
+                    }
+                }
+                targetType->setValueWithData("cuelist");
+                targetUserId->setValue(targetCuelist->id->intValue());
+                execute();
+            }
+        }
     }
-
-
     else if (srcType == "cuelist") {
         Cuelist* src = Brain::getInstance()->getCuelistById(sId);
         if (src == nullptr) {

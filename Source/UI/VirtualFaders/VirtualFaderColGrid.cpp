@@ -678,22 +678,27 @@ VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
 {
     if (id < 1 || id > cols) { return nullptr; }
     VirtualFaderCol* vf = columnToVFC.getReference(id);
+    String mode = "disabled";
+    BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+    if (e->faderSelectionMode->getValueData() == "column") {
+        mode = "column";
+    }
     if (create) {
         vf = VirtualFaderColManager::getInstance()->addItem();
         vf->pageNumber->setValue(page);
         vf->colNumber->setValue(id);
-        vf->fader.targetType->setValueWithData("column");
+        vf->fader.targetType->setValueWithData(mode);
         for (int i = 0; i < nRotaries; i++) {
             VirtualFaderSlider* temp = vf->rotaries.addItem();
-            temp->targetType->setValueWithData("column");
+            temp->targetType->setValueWithData(mode);
         }
         for (int i = 0; i < nAbove; i++) {
             VirtualFaderButton* temp = vf->aboveButtons.addItem();
-            temp->targetType->setValueWithData("column");
+            temp->targetType->setValueWithData(mode);
         }
         for (int i = 0; i < nBelow; i++) {
             VirtualFaderButton* temp = vf->belowButtons.addItem();
-            temp->targetType->setValueWithData("column");
+            temp->targetType->setValueWithData(mode);
         }
     }
     return vf;
