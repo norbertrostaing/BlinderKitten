@@ -888,7 +888,8 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 			valueTo *= faderLevel;
 		}
 		else {
-			valueTo *= (double)LTPLevel->getValue();
+			valueTo = jmap(LTPLevel->floatValue(), currentVal, valueTo);
+			// valueTo *= (double)LTPLevel->getValue();
 		}
 	}
 	else {
