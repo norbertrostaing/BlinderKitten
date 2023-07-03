@@ -464,6 +464,7 @@ void Encoders::updateEncodersValues() {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
     }
+    Array<int> filledEncoders;
     if (currentCommand != nullptr) {
         for (int i = 0; i < currentCommand->values.items.size(); i++) {
             CommandValue* cv = currentCommand->values.items[i];
@@ -478,12 +479,41 @@ void Encoders::updateEncodersValues() {
                             else if (encoderRange == 2) { v *= 255; }
                             encoders[ci]->setValue(v, juce::dontSendNotification);
                             encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                            filledEncoders.add(ci);
                         }
                     }
                 }
             }
         }
+
+        
+        for (int ci = 0; ci < nEncoders; ci++) {
+
+            if (!filledEncoders.contains(ci)) {
+
+                int channelId = ci + encodersOffset;
+                double value = 0;
+                int n = 0;
+                for (int iFixt = 0; iFixt < currentCommand->selection.computedSelectedSubFixtures.size(); iFixt++) {
+                    SubFixture* sf = currentCommand->selection.computedSelectedSubFixtures[iFixt];
+                    if (sf->channelsMap.contains(channels[channelId])) {
+                        SubFixtureChannel* sfc = sf->channelsMap.getReference(channels[channelId]);
+                        n++;
+                        value += sfc->postCuelistValue;
+                    }
+                }
+
+
+                if (encoderRange == 1) { value *= 100; }
+                else if (encoderRange == 2) { value *= 255; }
+                encoders[ci]->setValue(value, juce::dontSendNotification);
+                //encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+            }
+        }
+
     }
+
+
 
 }
 
