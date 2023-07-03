@@ -73,6 +73,7 @@ public:
     bool virtualFadersNeedUpdate = false;
     bool virtualFaderButtonsNeedUpdate = false;
     bool virtualButtonsNeedUpdate = false;
+    bool encoderValuesNeedRefresh = false;
 
     void run() override;
     void brainLoop();

@@ -503,10 +503,12 @@ void Encoders::updateEncodersValues() {
                     }
                 }
 
-
-                if (encoderRange == 1) { value *= 100; }
-                else if (encoderRange == 2) { value *= 255; }
-                encoders[ci]->setValue(value, juce::dontSendNotification);
+                if (n > 0) {
+                    value = value / (float)n;
+                    if (encoderRange == 1) { value *= 100; }
+                    else if (encoderRange == 2) { value *= 255; }
+                    encoders[ci]->setValue(value, juce::dontSendNotification);
+                }
                 //encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
             }
         }

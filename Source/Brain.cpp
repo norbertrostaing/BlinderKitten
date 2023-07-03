@@ -13,6 +13,8 @@
 #include "Definitions/ChannelValue.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
+#include "UI/Encoders.h"
+#include "UserInputManager.h"
 
 juce_ImplementSingleton(Brain);
 
@@ -174,6 +176,9 @@ void Brain::brainLoop() {
     }
     programmerPoolUpdating.clear();
 
+    Command* currentCommand = nullptr;
+    Array<SubFixture* > encodersSF;
+
     {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
@@ -185,6 +190,12 @@ void Brain::brainLoop() {
     for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) {
         if (subFixtureChannelPoolUpdating[i] != nullptr && !subFixtureChannelPoolUpdating[i]->isDeleted) {
             subFixtureChannelPoolUpdating[i]->updateVal(now);
+
+            if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand!= nullptr) {
+                if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(subFixtureChannelPoolUpdating[i]->parentSubFixture)) {
+                    encoderValuesNeedRefresh = true;
+                }
+            }
         }
     }
     subFixtureChannelPoolUpdating.clear();
@@ -215,6 +226,11 @@ void Brain::brainLoop() {
     if (virtualButtonsNeedUpdate) {
         virtualButtonsNeedUpdate = false;
         VirtualButtonGrid::getInstance()->updateButtons();
+    }
+
+    if (encoderValuesNeedRefresh) {
+        encoderValuesNeedRefresh = false;
+        Encoders::getInstance()->updateEncodersValues();
     }
 
     //double delta = Time::getMillisecondCounterHiRes() - now;
