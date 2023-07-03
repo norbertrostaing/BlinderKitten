@@ -40,6 +40,7 @@ Carousel::Carousel(var params) :
 	isCarouselOn = addBoolParameter("is ON", "Enable or disable this Carousel",false);
 	isCarouselOn->isControllableFeedbackOnly;
 	isCarouselOn->setEnabled(false);
+	isCarouselOn->isSavable = false;
 	isOn = false;
 
 	startBtn = addTrigger("Start", "Start this Carousel");
@@ -47,6 +48,7 @@ Carousel::Carousel(var params) :
 
 	currentPosition = addFloatParameter("Current Position", "Actual position of the Carousel",0,0,1);
 	currentPosition->isControllableFeedbackOnly = true;
+	currentPosition->isSavable = false;
 
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Carousel when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Carousel", 1, 0, 1);

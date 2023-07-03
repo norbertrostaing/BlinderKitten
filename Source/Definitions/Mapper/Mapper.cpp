@@ -37,6 +37,7 @@ Mapper::Mapper(var params) :
 	isMapperOn = addBoolParameter("is ON", "Enable or disable this Mapper",false);
 	isMapperOn->isControllableFeedbackOnly;
 	isMapperOn->setEnabled(false);
+	isMapperOn->isSavable = false;
 	isOn = false;
 
 	startBtn = addTrigger("Start", "Start this Mapper");

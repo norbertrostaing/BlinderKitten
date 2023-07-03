@@ -39,6 +39,7 @@ Effect::Effect(var params) :
 	isEffectOn = addBoolParameter("is ON", "Enable or disable this effect",false);
 	isEffectOn->isControllableFeedbackOnly;
 	isEffectOn->setEnabled(false);
+	isEffectOn->isSavable = false;
 	isOn = false;
 
 	startBtn = addTrigger("Start", "Start this effect");
@@ -46,6 +47,7 @@ Effect::Effect(var params) :
 
 	currentPosition = addFloatParameter("Current Position", "Actual position of the effect",0,0,1);
 	currentPosition->isControllableFeedbackOnly = true;
+	currentPosition->isSavable = false;
 
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Effect", 1, 0, 1);

@@ -50,10 +50,14 @@ Cuelist::Cuelist(var params) :
 	updateName();
 
 	currentCueName = conductorInfos.addStringParameter("Current cue", "Current Cue name", "", false);
+	currentCueName->isSavable = false;
 	currentCueText = conductorInfos.addStringParameter("Current cue text", "What's happening during this cue ?", "", false);
 	currentCueText->multiline = true;
+	currentCueText->isSavable = false;
 	nextCueGo = conductorInfos.addStringParameter("Next go", "action needed to go to next cue", "", false);
+	nextCueGo->isSavable = false;
 	nextCueName = conductorInfos.addStringParameter("Next Cue", "Next cue name", "", false);
+	nextCueName->isSavable = false;
 	addChildControllableContainer(&conductorInfos);
 
 	isChaser = chaserOptions.addBoolParameter("Is Chaser", "Turn this cuelist in a wonderful chaser", false);
@@ -149,10 +153,12 @@ Cuelist::Cuelist(var params) :
 	LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
 
 	isCuelistOn = addBoolParameter("is On", "Is this cuelist on ?", false);
+	isCuelistOn->isSavable = false;
 	isCuelistOn->isControllableFeedbackOnly = true;
 
 	currentFade = addFloatParameter("Current Xfade", "Current position of the running cue", 0, 0, 1);
 	currentFade->isControllableFeedbackOnly = true;
+	currentFade->isSavable = false;
 
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
