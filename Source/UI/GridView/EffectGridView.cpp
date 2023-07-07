@@ -57,3 +57,19 @@ void EffectGridView::updateCells() {
         }
     }
 }
+
+void EffectGridView::updateButtons()
+{
+    for (int i = 0; i < numberOfCells; i++) {
+        Effect* c = Brain::getInstance()->getEffectById(i + 1);
+        if (c != nullptr) {
+            if (c->isEffectOn->boolValue()) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+            }
+            else {
+                gridButtons[i]->removeColour(TextButton::buttonColourId);
+            }
+        }
+    }
+
+}

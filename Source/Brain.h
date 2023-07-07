@@ -74,6 +74,9 @@ public:
     bool virtualFaderButtonsNeedUpdate = false;
     bool virtualButtonsNeedUpdate = false;
     bool encoderValuesNeedRefresh = false;
+    bool cuelistGridNeedRefresh = false;
+    bool carouselGridNeedRefresh = false;
+    bool effectGridNeedRefresh = false;
 
     void run() override;
     void brainLoop();

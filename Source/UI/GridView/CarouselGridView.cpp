@@ -59,3 +59,18 @@ void CarouselGridView::updateCells() {
         }
     }
 }
+
+void CarouselGridView::updateButtons()
+{
+    for (int i = 0; i < numberOfCells; i++) {
+        Carousel* c = Brain::getInstance()->getCarouselById(i + 1);
+        if (c != nullptr) {
+            if (c->isCarouselOn->boolValue()) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+            }
+            else {
+                gridButtons[i]->removeColour(TextButton::buttonColourId);
+            }
+        }
+    }
+}

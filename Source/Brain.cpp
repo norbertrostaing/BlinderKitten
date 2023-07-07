@@ -15,6 +15,9 @@
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/Encoders.h"
 #include "UserInputManager.h"
+#include "UI/GridView/CuelistGridView.h"
+#include "UI/GridView/EffectGridView.h"
+#include "UI/GridView/CarouselGridView.h"
 
 juce_ImplementSingleton(Brain);
 
@@ -231,6 +234,21 @@ void Brain::brainLoop() {
     if (encoderValuesNeedRefresh) {
         encoderValuesNeedRefresh = false;
         Encoders::getInstance()->updateEncodersValues();
+    }
+
+    if (cuelistGridNeedRefresh) {
+        cuelistGridNeedRefresh = false;
+        CuelistGridView::getInstance()->updateButtons();
+    }
+
+    if (carouselGridNeedRefresh) {
+        carouselGridNeedRefresh = false;
+        CarouselGridView::getInstance()->updateButtons();
+    }
+
+    if (effectGridNeedRefresh) {
+        effectGridNeedRefresh = false;
+        EffectGridView::getInstance()->updateButtons();
     }
 
     //double delta = Time::getMillisecondCounterHiRes() - now;

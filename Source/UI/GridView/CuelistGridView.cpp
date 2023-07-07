@@ -57,3 +57,19 @@ void CuelistGridView::updateCells() {
         }
     }
 }
+
+void CuelistGridView::updateButtons()
+{
+    for (int i = 0; i < numberOfCells; i++) {
+        Cuelist* c = Brain::getInstance()->getCuelistById(i+1);
+        if (c != nullptr) {
+            if (c->isCuelistOn->boolValue()) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+            }
+            else {
+                gridButtons[i]->removeColour(TextButton::buttonColourId);
+            }
+        }
+    }
+
+}
