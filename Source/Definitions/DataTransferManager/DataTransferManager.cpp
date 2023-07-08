@@ -631,7 +631,6 @@ void DataTransferManager::execute() {
 
             if (vfbFrom != nullptr || vfsFrom != nullptr) {
                 var data = vfbFrom != nullptr ? vfbFrom->getJSONData() : vfsFrom->getJSONData();
-                LOG(data.toString());
                 VirtualButton* vb = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
                 if (vb != nullptr) {
                     vb -> loadJSONData(data);

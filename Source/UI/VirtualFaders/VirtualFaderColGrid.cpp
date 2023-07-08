@@ -243,6 +243,8 @@ void VirtualFaderColGrid::initCells() {
     sliderColumnIndex.clear();
     buttonToIndex.clear();
     indexToButton.clear();
+    sliderToIndex.clear();
+    indexToSlider.clear();
     buttonIsAbove.clear();
     int currentIndex = 0;
 
@@ -706,6 +708,7 @@ VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
 
 VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool create)
 {
+    if (!indexToButton.contains(index)) {return nullptr; }
     TextButton* clicked = indexToButton.getReference(index);
     if (clicked == nullptr) {return nullptr; }
     VirtualFaderButton* vfb = nullptr;
@@ -743,6 +746,7 @@ VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool c
 
 VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool create)
 {
+    if (!indexToSlider.contains(index)) { return nullptr; }
     Slider* clicked = indexToSlider.getReference(index);
     if (clicked == nullptr) { return nullptr; }
     VirtualFaderSlider* vfs = nullptr;
