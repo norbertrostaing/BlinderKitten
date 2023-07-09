@@ -267,6 +267,8 @@ VirtualButton* VirtualButtonGrid::getVirtualButton(int id, bool create)
 
 void VirtualButtonGrid::updateButtons()
 {
+    const MessageManagerLock mmLock;
+
     for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
         VirtualButtonManager::getInstance()->items[i]->updateStatus();
     }

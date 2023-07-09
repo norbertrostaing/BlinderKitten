@@ -459,6 +459,7 @@ void Encoders::updateChannels()
 }
 
 void Encoders::updateEncodersValues() {
+    const MessageManagerLock mmLock;
     Command* currentCommand = nullptr;
     Array<ChannelType* >chans;
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {

@@ -60,6 +60,7 @@ void CuelistGridView::updateCells() {
 
 void CuelistGridView::updateButtons()
 {
+    const MessageManagerLock mmLock;
     for (int i = 0; i < numberOfCells; i++) {
         Cuelist* c = Brain::getInstance()->getCuelistById(i+1);
         if (c != nullptr) {

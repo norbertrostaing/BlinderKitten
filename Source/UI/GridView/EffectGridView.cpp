@@ -60,6 +60,7 @@ void EffectGridView::updateCells() {
 
 void EffectGridView::updateButtons()
 {
+    const MessageManagerLock mmLock;
     for (int i = 0; i < numberOfCells; i++) {
         Effect* c = Brain::getInstance()->getEffectById(i + 1);
         if (c != nullptr) {

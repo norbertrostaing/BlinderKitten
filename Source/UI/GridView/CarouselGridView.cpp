@@ -62,6 +62,7 @@ void CarouselGridView::updateCells() {
 
 void CarouselGridView::updateButtons()
 {
+    const MessageManagerLock mmLock;
     for (int i = 0; i < numberOfCells; i++) {
         Carousel* c = Brain::getInstance()->getCarouselById(i + 1);
         if (c != nullptr) {

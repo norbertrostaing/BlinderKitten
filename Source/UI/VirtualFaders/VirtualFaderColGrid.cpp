@@ -143,6 +143,7 @@ void VirtualFaderColGrid::resetFeedbacks()
 
 void VirtualFaderColGrid::updateButtons()
 {
+    const MessageManagerLock mmLock;
     {
         for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
             for (int a = 0; a < VirtualFaderColManager::getInstance()->items[i]->aboveButtons.items.size(); a++) {
