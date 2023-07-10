@@ -495,6 +495,7 @@ void Encoders::updateEncodersValues() {
                 int channelId = ci + encodersOffset;
                 double value = 0;
                 int n = 0;
+                currentCommand->isComputing.enter();
                 for (int iFixt = 0; iFixt < currentCommand->selection.computedSelectedSubFixtures.size(); iFixt++) {
                     SubFixture* sf = currentCommand->selection.computedSelectedSubFixtures[iFixt];
                     if (sf->channelsMap.contains(channels[channelId])) {
@@ -503,6 +504,7 @@ void Encoders::updateEncodersValues() {
                         value += sfc->postCuelistValue;
                     }
                 }
+                currentCommand->isComputing.exit();
 
                 if (n > 0) {
                     value = value / (float)n;
