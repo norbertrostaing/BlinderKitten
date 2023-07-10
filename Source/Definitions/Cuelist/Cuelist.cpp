@@ -346,7 +346,7 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 		chaserStepDuration = 60000.0/(double)chaserSpeed->getValue();
 		chaserFadeInDuration = chaserStepDuration * (double)chaserInFade->getValue();
 		chaserFadeOutDuration = chaserStepDuration * (double)chaserOutFade->getValue();;
-
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
 	}
 	else if (c == chaserInFade) {
 		chaserFadeInDuration = chaserStepDuration * (double)chaserInFade->getValue();
@@ -360,7 +360,7 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	else if (c == chaserGenButton) {
 		autoCreateChaser();
 	}
-	
+
 }
 
 
