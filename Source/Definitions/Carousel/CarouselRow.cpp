@@ -45,9 +45,9 @@ CarouselRow::CarouselRow(var params) :
 
     updateDisplay();
     if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
-        Carousel* parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
-        if (parentCarousel->isOn) {
-            parentCarousel->pleaseComputeIfRunning();
+        ownerCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
+        if (ownerCarousel->isOn) {
+            ownerCarousel->pleaseComputeIfRunning();
         }
     }
 
@@ -55,20 +55,22 @@ CarouselRow::CarouselRow(var params) :
 
 CarouselRow::~CarouselRow()
 {
-    if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
-        Carousel* parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
-        parentCarousel->isComputing.enter();
-        for (auto it = parentCarousel->chanToCarouselRow.begin(); it != parentCarousel->chanToCarouselRow.end(); it.next()) {
+    if (ownerCarousel != nullptr) {
+        ownerCarousel->isComputing.enter();
+        for (auto it = ownerCarousel->chanToCarouselRow.begin(); it != ownerCarousel->chanToCarouselRow.end(); it.next()) {
             it.getValue()->removeAllInstancesOf(this);
         }
-        if (parentCarousel->isOn) {
-            parentCarousel->pleaseComputeIfRunning();
+        if (ownerCarousel->isOn) {
+            ownerCarousel->pleaseComputeIfRunning();
         }
-        parentCarousel->isComputing.exit();
+        ownerCarousel->isComputing.exit();
     }
 };
 
 void CarouselRow::computeData() {
+    if (ownerCarousel == nullptr && parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
+        ownerCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
+    }
     isComputing.enter();
     computedPositions.clear();
     subFixtureChannelOffsets.clear();

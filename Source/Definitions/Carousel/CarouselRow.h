@@ -45,6 +45,8 @@ class CarouselRow:
     HashMap<SubFixture*, double> computedPositions;
     HashMap<SubFixtureChannel*,double> subFixtureChannelOffsets;
 
+    Carousel* ownerCarousel = nullptr;
+
     void computeData();
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*);

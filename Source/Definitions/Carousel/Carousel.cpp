@@ -75,6 +75,8 @@ Carousel::Carousel(var params) :
 
 Carousel::~Carousel()
 {
+	stop();
+	rows.clear();
 	Brain::getInstance()->unregisterCarousel(this);
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->carouselPoolWaiting.removeAllInstancesOf(this);
