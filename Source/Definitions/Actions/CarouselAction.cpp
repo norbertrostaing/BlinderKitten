@@ -22,6 +22,16 @@ CarouselAction::CarouselAction(var params) :
     if (actionType == CAR_SPEED) {
         maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
     }
+
+    if (actionType == CAR_BBW) {
+        buddyBlockOrWing = addEnumParameter("Parameter", "Wich parameter do you want to change");
+        buddyBlockOrWing->addOption("Buddy", "Buddy")->addOption("Block", "Block")->addOption("Wing", "Wing");
+        setOrAdd = addEnumParameter("Action", "Do you want to set or add a value ?");
+        setOrAdd->addOption("Set", "Set")->addOption("Add", "Add");
+        carRow = addIntParameter("Row", "the number of the row you want to change, 0 means all of them", 0, 0);
+        amount = addIntParameter("Amount", "Your value to set or to add", 1);
+    }
+
 }
 
 CarouselAction::~CarouselAction()
@@ -104,6 +114,36 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
         if (val > 0 && (float)previousValue == 0) {
             target->speed->setValue((double)target->speed->getValue() / 2);
         }
+        break;
+
+    case CAR_BBW:
+        if (val > 0 && (float)previousValue == 0) {
+            bool add = setOrAdd->stringValue() == "Add";
+            String type = buddyBlockOrWing->stringValue();
+            int rowId = carRow->intValue();
+            int offset = amount->intValue();
+            //target->isComputing.enter();
+            for (int iRow = 0; iRow < target->rows.items.size(); iRow++) {
+                if (rowId == 0 || iRow + 1 == rowId) {
+                    CarouselRow* row = target->rows.items[iRow];
+                    IntParameter* p = nullptr;
+                    if (type == "Buddy") { p = row->buddying; }
+                    if (type == "Block") { p = row->blocks; }
+                    if (type == "Wing") { p = row->wings; }
+                    if (p != nullptr) {
+                        const MessageManagerLock mmlock;
+                        if (add) {
+                            p->setValue(p->intValue() + offset);
+                        }
+                        else {
+                            p->setValue(offset);
+                        }
+                    }
+                }
+            }
+            //target->isComputing.exit();
+        }
+
         break;
 
     }
