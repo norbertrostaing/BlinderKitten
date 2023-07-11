@@ -188,14 +188,18 @@ void Carousel::pleaseComputeIfRunning() {
 }
 
 void Carousel::computeData() {
-	isComputing.enter();
-	if (computing) {return;}
+	if (computing) { 
+		return; 
+	}
 	computed = true;
 	computing = true;
+	isComputing.enter();
 	chanToCarouselRow.clear();
 	for (int i = 0; i < rows.items.size(); i++) {
 		rows.items[i]->computeData();
 	}
+	computing = false;
+	isComputing.exit();
 	if (isOn) {
 		for (auto it = chanToCarouselRow.begin(); it != chanToCarouselRow.end(); it.next()) {
 			if (it.getKey() != nullptr) {
@@ -205,8 +209,6 @@ void Carousel::computeData() {
 		}
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	computing = false;
-	isComputing.exit();
 }
 
 float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
