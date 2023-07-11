@@ -24,6 +24,27 @@
                   "value": 16,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 1",
@@ -34,7 +55,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         }
@@ -62,6 +83,27 @@
                   "value": 20,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 2",
@@ -72,7 +114,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -105,6 +147,27 @@
                   "value": 24,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 3",
@@ -115,7 +178,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -148,6 +211,27 @@
                   "value": 28,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 4",
@@ -158,7 +242,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -191,6 +275,27 @@
                   "value": 46,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 5",
@@ -201,7 +306,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -234,6 +339,27 @@
                   "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 6",
@@ -244,7 +370,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -277,6 +403,27 @@
                   "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 7",
@@ -287,7 +434,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -320,6 +467,27 @@
                   "value": 58,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 1 col 8",
@@ -330,7 +498,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -363,6 +531,27 @@
                   "value": 17,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 1",
@@ -373,7 +562,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -406,6 +595,27 @@
                   "value": 21,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 2",
@@ -416,7 +626,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -454,6 +664,27 @@
                   "value": 25,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 3",
@@ -464,7 +695,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -502,6 +733,27 @@
                   "value": 29,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 4",
@@ -512,7 +764,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -550,6 +802,27 @@
                   "value": 47,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 5",
@@ -560,7 +833,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -598,6 +871,27 @@
                   "value": 51,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 6",
@@ -608,7 +902,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -646,6 +940,27 @@
                   "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 7",
@@ -656,7 +971,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -694,6 +1009,27 @@
                   "value": 59,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 2 col 8",
@@ -704,7 +1040,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -752,6 +1088,27 @@
                   "value": 18,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 1",
@@ -762,7 +1119,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -795,6 +1152,27 @@
                   "value": 22,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 2",
@@ -805,7 +1183,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -843,6 +1221,27 @@
                   "value": 26,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 3",
@@ -853,7 +1252,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -891,6 +1290,27 @@
                   "value": 30,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 4",
@@ -901,7 +1321,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -939,6 +1359,27 @@
                   "value": 48,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 5",
@@ -949,7 +1390,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -987,6 +1428,27 @@
                   "value": 52,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 6",
@@ -997,7 +1459,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1035,6 +1497,27 @@
                   "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 7",
@@ -1045,7 +1528,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1083,6 +1566,27 @@
                   "value": 60,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Rota ligne 3 col 8",
@@ -1093,7 +1597,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1127,6 +1631,27 @@
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 1",
@@ -1137,7 +1662,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         }
@@ -1161,6 +1686,27 @@
                   "value": 4,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 2",
@@ -1171,7 +1717,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1200,6 +1746,27 @@
                   "value": 7,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 3",
@@ -1210,7 +1777,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1239,6 +1806,27 @@
                   "value": 10,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 4",
@@ -1249,7 +1837,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1278,6 +1866,27 @@
                   "value": 13,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 5",
@@ -1288,7 +1897,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1317,6 +1926,27 @@
                   "value": 16,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 6",
@@ -1327,7 +1957,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1356,6 +1986,27 @@
                   "value": 19,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 7",
@@ -1366,7 +2017,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1395,6 +2046,27 @@
                   "value": 22,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 1 col 8",
@@ -1405,7 +2077,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1434,6 +2106,27 @@
                   "value": 3,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 1",
@@ -1444,7 +2137,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1473,6 +2166,27 @@
                   "value": 6,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 2",
@@ -1483,7 +2197,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1517,6 +2231,27 @@
                   "value": 9,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 3",
@@ -1527,7 +2262,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1561,6 +2296,27 @@
                   "value": 12,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 4",
@@ -1571,7 +2327,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1605,6 +2361,27 @@
                   "value": 15,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 5",
@@ -1615,7 +2392,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1649,6 +2426,27 @@
                   "value": 18,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 6",
@@ -1659,7 +2457,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1693,6 +2491,27 @@
                   "value": 21,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 7",
@@ -1703,7 +2522,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1737,6 +2556,27 @@
                   "value": 24,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bouton ligne 2 col 8",
@@ -1747,7 +2587,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1785,6 +2625,27 @@
                   "value": 19,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 1",
@@ -1795,7 +2656,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         }
@@ -1823,6 +2684,27 @@
                   "value": 23,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 2",
@@ -1833,7 +2715,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1866,6 +2748,27 @@
                   "value": 27,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 3",
@@ -1876,7 +2779,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1909,6 +2812,27 @@
                   "value": 31,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 4",
@@ -1919,7 +2843,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1952,6 +2876,27 @@
                   "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 5",
@@ -1962,7 +2907,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1995,6 +2940,27 @@
                   "value": 53,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 6",
@@ -2005,7 +2971,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2038,6 +3004,27 @@
                   "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 7",
@@ -2048,7 +3035,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2081,6 +3068,27 @@
                   "value": 61,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 8",
@@ -2091,7 +3099,7 @@
                     {
                       "parameters": [
                         {
-                          "value": 2,
+                          "value": 1,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2124,6 +3132,27 @@
                   "value": 62,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Fader col 9",
@@ -2151,6 +3180,27 @@
                   "value": 25,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bank L",
@@ -2185,6 +3235,27 @@
                   "value": 26,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Bank R",
@@ -2219,9 +3290,31 @@
                   "value": 27,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
                 }
               ],
               "niceName": "Solo",
+              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2268,6 +3361,13 @@
               "type": "BaseItem"
             }
           ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        },
+        "feedbacks": {
           "viewOffset": [
             0,
             0
