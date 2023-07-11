@@ -65,6 +65,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Double Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_DOUBLESPEED));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Half Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_HALFSPEED));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Buddy Block Wing", &EffectAction::create)->addParam("actionType", EffectAction::FX_BBW));
 
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));

@@ -22,6 +22,16 @@ EffectAction::EffectAction(var params) :
     if (actionType == FX_SPEED) {
         maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
     }
+
+    if (actionType == FX_BBW) {
+        buddyBlockOrWing = addEnumParameter("Parameter", "Wich parameter do you want to change");
+        buddyBlockOrWing->addOption("Buddy", "Buddy") ->addOption("Block", "Block") ->addOption("Wing", "Wing");
+        setOrAdd = addEnumParameter("Action", "Do you want to set or add a value ?");
+        setOrAdd->addOption("Set", "Set")->addOption("Add", "Add");
+        fxRow = addIntParameter("Row", "the number of the row you want to change, 0 means all of them", 0, 0);
+        fxParam = addIntParameter("Param", "the number of the parameter you want to change, 0 means all of them", 0, 0);
+        amount = addIntParameter("Amount", "Your value to set or to add",1);
+    }
 }
 
 EffectAction::~EffectAction()
@@ -102,6 +112,41 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
         if (val > 0 && (float)previousValue == 0) {
             target->speed->setValue((double)target->speed->getValue()/2);
         }
+        break;
+
+    case FX_BBW:
+        if (val > 0 && (float)previousValue == 0) {
+            bool add = setOrAdd->stringValue() == "Add";
+            String type = buddyBlockOrWing->stringValue();
+            int rowId = fxRow->intValue();
+            int paramId = fxParam->intValue();
+            int offset = amount->intValue();
+            //target->isComputing.enter();
+            for (int iRow = 0; iRow < target->values.items.size(); iRow++) {
+                if (rowId == 0 || iRow + 1 == rowId) {
+                    EffectRow* row = target->values.items[iRow];
+                    for (int iParam = 0; iParam < row->paramContainer.items.size(); iParam++) {
+                        if (paramId == 0 || iParam + 1 == paramId) {
+                            IntParameter* p = nullptr;
+                            if (type == "Buddy") { p = row->paramContainer.items[iParam]->buddying; }
+                            if (type == "Block") { p = row->paramContainer.items[iParam]->blocks; }
+                            if (type == "Wing") { p = row->paramContainer.items[iParam]->wings; }
+                            if (p != nullptr) {
+                                const MessageManagerLock mmlock;
+                                if (add) {
+                                    p->setValue(p->intValue()+offset);
+                                }
+                                else {
+                                    p->setValue(offset);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //target->isComputing.exit();
+        }
+
         break;
     }
 }
