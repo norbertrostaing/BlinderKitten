@@ -40,6 +40,8 @@ class CommandSelection:
     IntParameter* randomSeed;
     IntParameter* randomNumber;
     IntParameter* randomBuddy;
+    IntParameter* randomBlock;
+    IntParameter* randomWing;
 
     Array<SubFixture*> lastRandom;
 

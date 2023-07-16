@@ -137,21 +137,6 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					float patternIndex = 0;
 
 					patternIndex = jmap(i,0,tempSelection.size(), 0, patternLength);
-					/*
-					if (i > tempSelectionSize / 2) {
-						patternIndex = (i + 1) * patternLength / float(tempSelectionSize);
-					}
-					else {
-						patternIndex = i * patternLength / float(tempSelectionSize);
-					}
-					patternIndex = floor(patternIndex);
-					if (sym && i >= tempSelectionSize / 2) {
-						patternIndex = tempSelectionSize - 1 - i;
-						patternIndex = patternIndex * patternLength / tempSelectionSize;
-					}
-
-					patternIndex = jmin(int(patternIndex), patternLength - 1);
-					*/
 					char c = pattern[patternIndex];
 					if (c == '1') {
 						filteredSelection.add(tempSelection[i]);
@@ -182,6 +167,87 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 			else if (selections[selId]->filter->getValue() == "random") {
 				Array<SubFixture*> filteredSelection;
+				HashMap<int, Array<SubFixture*>*> indexToSubFixtures;
+				HashMap<SubFixture*, int>subfixtureToIndex;
+
+				int nBuddy = selections[selId]->randomBuddy->getValue();
+				int nBlocks = selections[selId]->randomBlock->getValue();
+				int nWings = selections[selId]->randomWing->getValue();
+				int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
+				int maxIndex = 0;
+				Array<int> indexes;
+
+                int realTot = ceil(tempSelection.size()/(float)nBuddy);
+                float wingSize = realTot / (float)nWings;
+                realTot = ceil(realTot / (float)nWings);
+                int roundedWingSize = round(wingSize);
+                int flooredWingSize = floor(wingSize);
+
+                for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
+                    int realIndex = chanIndex/nBuddy;
+
+                    int nWing = realIndex/wingSize;
+                    if (nWing % 2 == 1) {
+                        realIndex = realIndex % roundedWingSize;
+                        realIndex = wingSize - 1 - realIndex;
+                    }
+                    realIndex = realIndex*nBlocks;
+                    realIndex = realIndex % roundedWingSize;
+					maxIndex = jmax(maxIndex, realIndex);
+					indexes.addIfNotAlreadyThere(realIndex);
+					if (!indexToSubFixtures.contains(realIndex)) {
+						indexToSubFixtures.set(realIndex, new Array<SubFixture*>());
+					}
+					indexToSubFixtures.getReference(realIndex)->add(tempSelection[chanIndex]);
+					subfixtureToIndex.set(tempSelection[chanIndex], realIndex);
+				}
+
+				Random r;
+				if (selections[selId]->randomSeed->intValue() == 0) {
+					r.setSeed(rand());
+					if (tempSelection.size() - selections[selId]->lastRandom.size() > to) {
+						for (int i = 0; i < selections[selId]->lastRandom.size(); i++) {
+							tempSelection.removeAllInstancesOf(selections[selId]->lastRandom[i]);
+						}
+					}
+				}
+				else {
+					r.setSeed((int)selections[selId]->randomSeed->getValue());
+				}
+
+				if (indexes.size() > to * 2 && selections[selId]->randomSeed->intValue() == 0) {
+					for (int i = 0; i < selections[selId]->lastRandom.size(); i++) {
+						if (subfixtureToIndex.contains(selections[selId]->lastRandom[i])) {
+							indexes.removeAllInstancesOf(subfixtureToIndex.getReference(selections[selId]->lastRandom[i]));
+						}
+					}
+				}
+
+				for (int i = 0; i < to && indexes.size()>0; i++) {
+					int randI = r.nextInt(indexes.size());
+					randI = r.nextInt(indexes.size());
+					int index = indexes[randI];
+					if (indexToSubFixtures.contains(index)) {
+						auto a = indexToSubFixtures.getReference(index);
+						for (int i = 0; i < a->size(); i++) {
+							filteredSelection.add(a->getRawDataPointer()[i]);
+						}
+						indexToSubFixtures.remove(index);
+						indexes.remove(index);
+					}
+				}
+
+				for (auto it = indexToSubFixtures.begin(); it != indexToSubFixtures.end(); it.next()) {
+					it.getValue()->~Array();
+				}
+
+				tempSelection = filteredSelection;
+				selections[selId]->lastRandom.clear();
+				selections[selId]->lastRandom.addArray(filteredSelection);
+			}
+
+			else if (selections[selId]->filter->getValue() == "random") {
+				Array<SubFixture*> filteredSelection;
 				int nBuddy = selections[selId]->randomBuddy->getValue();
 				int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
 
@@ -197,8 +263,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				else {
 					r.setSeed((int)selections[selId]->randomSeed->getValue());
 				}
-				for (int i = 0; i< to; i++) {
-					int maxIndex = floor(tempSelection.size()/(float)nBuddy);
+
+				for (int i = 0; i < to; i++) {
+					int maxIndex = floor(tempSelection.size() / (float)nBuddy);
 					int randIndex = r.nextInt(maxIndex);
 					randIndex = r.nextInt(maxIndex);
 					randIndex *= nBuddy;
