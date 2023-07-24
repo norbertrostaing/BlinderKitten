@@ -80,12 +80,11 @@ void CuelistLoadWindow::fillButtons(Cuelist* c) {
     }
 }
 
-void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
-{   
+void CuelistLoadWindow::showWindow()
+{
     double now = Time::getMillisecondCounterHiRes();
-    if (UserInputManager::getInstance()->lastCuelistLoadWindowTS + 500 < now) {
+    if (UserInputManager::getInstance()->lastCuelistLoadWindowTS + 500 < now && currentCuelist != nullptr) {
         UserInputManager::getInstance()->lastCuelistLoadWindowTS = now;
-        triggerGo = triggerGoWhenSelected;
 
         BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
         int w = e->loadWindowWidth->intValue();
@@ -98,14 +97,22 @@ void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
         btnContainer.setSize(w-10, 200);
 
         closeWindow();
-        fillButtons(c);
+        fillButtons(currentCuelist);
         setSize(w, h);
         resized();
-        DialogWindow::showDialog("Load next cue for " + c->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
+        DialogWindow::showDialog("Load next cue for " + currentCuelist->userName->getValue().toString(), this, &ShapeShifterManager::getInstance()->mainContainer, Colours::black, true);
         if (posX != 0 && posY != 0) {
             findParentComponentOfClass<DialogWindow>()->setBounds(posX, posY, w, h);
         }
     }
+}
+
+
+void CuelistLoadWindow::loadCuelist(Cuelist* c, bool triggerGoWhenSelected)
+{   
+    triggerGo = triggerGoWhenSelected;
+    currentCuelist = c;
+    MessageManager::callAsync([this](){showWindow();});
 }
 
 void CuelistLoadWindow::buttonClicked(Button* b)
