@@ -28,7 +28,7 @@ public:
 
 class GridView  : 
     public juce::Component,
-    public BaseItem,
+    //public BaseItem,
     public ScrollBar::Listener, 
     public Button::Listener
 {

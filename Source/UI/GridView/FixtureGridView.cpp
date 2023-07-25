@@ -37,10 +37,12 @@ FixtureGridView::FixtureGridView()
 
 FixtureGridView::~FixtureGridView()
 {
+    //hashMapButtons.~HashMap();
 }
 
 void FixtureGridView::initArrays() {
     cs.enter();
+    gridButtons.clear();
     hashMapButtons.clear();
     cs.exit();
 
@@ -50,9 +52,7 @@ void FixtureGridView::initArrays() {
 void FixtureGridView::updateCells() {
     cs.enter();
     validCells.clear();
-    for (auto it = hashMapButtons.begin(); it != hashMapButtons.end(); it.next()) {
-        it.getValue()->~TextButton();
-    }
+    gridButtons.clear();
     hashMapButtons.clear();
     fixtIdMax = 0;
     for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
@@ -62,6 +62,8 @@ void FixtureGridView::updateCells() {
         fixtIdMax = jmax(id, fixtIdMax);
 
         TextButton* b = new TextButton();
+        gridButtons.add(b);
+
         hashMapButtons.set(id, b);
         b->addListener(this);
         b->setButtonText(String(id)+" "+f->userName->stringValue());

@@ -34,6 +34,7 @@ public:
     void updateName();
     TargetParameter* devTypeParam;
 
+    OwnedArray<SubFixture> subFixturesContainer;
     HashMap<int, SubFixture*> subFixtures;
     BaseManager<FixturePatch> patchs;
     String getTypeString() const override { return objectType; }
@@ -48,4 +49,5 @@ public:
 
     void selectThis(bool addToSelection=false, bool notify = true);
     void autoName();
+
 };

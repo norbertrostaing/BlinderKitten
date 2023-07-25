@@ -180,6 +180,7 @@ BKEngine::BKEngine() :
 	loadWindowButtonHeight = loadWindowContainer.addIntParameter("Button height", "", 40,30);
 
 	mainBrain = Brain::getInstance();
+
 	addChildControllableContainer(InterfaceManager::getInstance());
 	addChildControllableContainer(ChannelFamilyManager::getInstance());
 	addChildControllableContainer(FixtureTypeManager::getInstance());
@@ -291,6 +292,9 @@ BKEngine::~BKEngine()
 	TimingPresetManager::deleteInstance();
 	CurvePresetManager::deleteInstance();
 
+	ConductorInfos::deleteInstance();
+	BKColorPicker::deleteInstance();
+
 	InterfaceManager::deleteInstance();
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
@@ -305,11 +309,13 @@ BKEngine::~BKEngine()
 	CuelistGridView::deleteInstance();
 	EffectGridView::deleteInstance();
 	CarouselGridView::deleteInstance();
+	MapperGridView::deleteInstance();
 
 	CommandLine::deleteInstance();
 	Encoders::deleteInstance();
 	InputPanel::deleteInstance();
 
+	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();
 }
 

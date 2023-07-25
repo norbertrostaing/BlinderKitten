@@ -24,14 +24,8 @@ SubFixture::SubFixture() :
 
 SubFixture::~SubFixture()
 {
-	
-	for (auto it = channelsMap.begin(); it != channelsMap.end(); it.next()) {
-		if (it.getValue() != nullptr) {
-			//it.getValue()->~SubFixtureChannel();
-			delete it.getValue();
-		}
-	}
 	channelsMap.clear();
+	channelsContainer.clear();
 }
 
 

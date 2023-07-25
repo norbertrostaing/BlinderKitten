@@ -65,12 +65,7 @@ void Fixture::afterLoadJSONDataInternal() {
 Fixture::~Fixture()
 {
 	Brain::getInstance()->unregisterFixture(this);
-	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
-		if (it.getValue()!= nullptr) {
-			//it.getValue()->~SubFixture();
-			delete it.getValue();
-		}
-	}
+	subFixturesContainer.clear();
 	if (!BKEngine::mainEngine->isClearing) {
 		FixtureGridView::getInstance()->updateCells();
 	}
@@ -129,9 +124,7 @@ void Fixture::checkChildrenSubFixtures() {
 
 	const MessageManagerLock mmLock;
 
-	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
-		delete it.getValue();
-	}
+	subFixturesContainer.clear();
 	subFixtures.clear();
 
 	FixtureType* t = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
@@ -151,6 +144,7 @@ void Fixture::checkChildrenSubFixtures() {
 		SubFixture* subFixt = subFixtures.getReference(subId);
 		if (subFixt == nullptr) {
 			subFixt = new SubFixture();
+			subFixturesContainer.add(subFixt);
 			subFixtures.set(subId, subFixt);
 			subFixt->subId = subId;
 		}
@@ -166,6 +160,7 @@ void Fixture::checkChildrenSubFixtures() {
 					LOGERROR("You have multiple channels with the same type in the same subfixture !");
 				}
 				SubFixtureChannel* chan = new SubFixtureChannel();
+				subFixt->channelsContainer.add(chan);
 				subFixt->channelsMap.set(param, chan);
 				chan->defaultValue = c->defaultValue->getValue();
 				chan->highlightValue = c->highlightValue->getValue();
@@ -196,9 +191,10 @@ void Fixture::checkChildrenSubFixtures() {
 	for (int i = 0; i < t->chansManager.items.size(); i++) {
 		FixtureTypeChannel* c = t->chansManager.items[i];
 		int subId = c->subFixtureId->getValue();
-		SubFixture* subFixt = subFixtures.getReference(subId);
+		SubFixture* subFixt = subFixtures.contains(subId) ? subFixtures.getReference(subId) : nullptr;
 		if (subFixt == nullptr) {
 			subFixt = new SubFixture();
+			subFixturesContainer.add(subFixt);
 			subFixtures.set(subId, subFixt);
 			subFixt->subId = subId;
 		}
@@ -214,6 +210,7 @@ void Fixture::checkChildrenSubFixtures() {
 					LOGERROR("You have multiple channels with the same type in the same subfixture !");
 				}
 				SubFixtureChannel* chan = new SubFixtureChannel();
+				subFixt->channelsContainer.add(chan);
 				subFixt->channelsMap.set(param, chan);
 				chan->defaultValue = c->defaultValue->getValue();
 				chan->highlightValue = c->highlightValue->getValue();

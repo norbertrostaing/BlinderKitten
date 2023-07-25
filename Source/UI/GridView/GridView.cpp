@@ -27,7 +27,7 @@ GridViewUI::~GridViewUI()
 juce_ImplementSingleton(GridView);
 
 GridView::GridView():
-    BaseItem("GridView"),
+    Component(),
     scroll(true),
     ScrollBar::Listener()
 {
@@ -47,6 +47,7 @@ GridView::~GridView()
 }
 
 void GridView::initArrays() {
+    gridButtons.clear();
     for (int i = 0; i < numberOfCells; i++) {
         TextButton* b = new TextButton();
         gridButtons.add(b);

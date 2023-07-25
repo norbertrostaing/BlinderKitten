@@ -55,7 +55,7 @@ void BlinderKittenApplication::shutdown()
 	}
 	*/
 	OrganicApplication::shutdown();
-	// AppUpdater::deleteInstance();
+	AppUpdater::deleteInstance();
 }
 
 void BlinderKittenApplication::handleCrashed()

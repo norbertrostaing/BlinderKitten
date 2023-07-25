@@ -20,6 +20,7 @@ public:
 
     Fixture* parentFixture;
     int subId;
+    OwnedArray<SubFixtureChannel> channelsContainer;
     HashMap<ChannelType*, SubFixtureChannel*> channelsMap;
 
 };
