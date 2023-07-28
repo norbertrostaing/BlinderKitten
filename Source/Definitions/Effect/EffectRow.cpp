@@ -147,6 +147,9 @@ void EffectRow::computeData() {
                     double offset = realIndex / (double)realTot;
                     offset *= (double)p->elementsSpread->getValue();
                     offset += (double)p->elementsStart->getValue();
+                    if (p->wingsInvertSelections->boolValue()) {
+                        offset = 1 - offset;
+                    }
                     p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
                     p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
                     p->subFixtureChannelAreCentered.set(chans[chanIndex], isCentered);

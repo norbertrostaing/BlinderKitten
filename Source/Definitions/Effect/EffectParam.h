@@ -30,7 +30,8 @@ class EffectParam:
     IntParameter* buddying;
     IntParameter* blocks;
     IntParameter* wings;
-    BoolParameter* wingsInvert;
+    BoolParameter* wingsInvertSelections;
+    BoolParameter* wingsInvertValues;
     BoolParameter* wingsSoloCenterDisable;
 
     EnumParameter* effectMode;

@@ -265,7 +265,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			}
 			value = c->getValueAtPosition(offset);
 			value -= (float)row->curveOrigin->getValue();
-			if (p->wingsInvert->getValue() && p->subFixtureChannelAreWinged.getReference(fc)) {
+			if (p->wingsInvertValues->getValue() && p->subFixtureChannelAreWinged.getReference(fc)) {
 				value = -value;
 			}
 			if (p->wingsSoloCenterDisable->getValue() && p->subFixtureChannelAreCentered.getReference(fc)) {
