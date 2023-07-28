@@ -139,7 +139,10 @@ public:
     static float symPosition(int index, int nElements);
 
     OwnedArray<RunningTask> runningTasks;
-    void startTask(Task* t, double startTime);
+    int currentTaskId = 0;
+    int newTaskId();
+    void startTask(Task* t, double startTime, int cuelistId);
+    void stopTasks(int cuelistId, int taskId);
 
     bool pleaseClearProgrammer = false;
 

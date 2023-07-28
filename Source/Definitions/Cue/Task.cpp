@@ -42,6 +42,7 @@ Task::Task(var params) :
 	cuelistAction->addOption("HTP Level", "htplevel");
 	cuelistAction->addOption("Flash Level", "flashlevel");
 	cuelistAction->addOption("LTP Level", "ltplevel");
+	cuelistAction->addOption("Cancel tasks", "canceltasks");
 
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
@@ -89,7 +90,6 @@ void Task::updateDisplay() {
 	String targType = targetType->getValue();
 
 	targetIdTo->hideInEditor = !targetThru->getValue();
-
 
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
@@ -176,7 +176,7 @@ void Task::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 }
 
 
-void Task::triggerGivenTask(String targetType, int targetId, String action, double value)
+void Task::triggerGivenTask(String targetType, int targetId, String action, double value, int id)
 {
 	if (targetType == "cuelist") {
 		Cuelist* target = Brain::getInstance()->getCuelistById(targetId);
@@ -198,6 +198,9 @@ void Task::triggerGivenTask(String targetType, int targetId, String action, doub
 			}
 			else if (action == "flashlevel") {
 				target->setFlashLevel(value);
+			}
+			else if (action == "canceltasks") {
+				Brain::getInstance()->stopTasks(targetId, id);
 			}
 		}
 	}

@@ -205,10 +205,10 @@ void Brain::brainLoop() {
     usingCollections.exit();
 
     {
+        ScopedLock lock(usingCollections);
         for (int i = 0; i < runningTasks.size(); i++) {
             runningTasks[i]->update(now);
         }
-        ScopedLock lock(usingCollections);
         for (int i = runningTasks.size() - 1; i >= 0; i--) {
             if (runningTasks[i]->isEnded) {
                 runningTasks.remove(i);
@@ -718,7 +718,13 @@ float Brain::symPosition(int index, int nElements) {
     return position;
 }
 
-void Brain::startTask(Task* t, double startTime)
+int Brain::newTaskId()
+{
+    currentTaskId++;
+    return currentTaskId;
+}
+
+void Brain::startTask(Task* t, double startTime, int cuelistId)
 {
     ScopedLock lock(usingCollections);
 
@@ -804,6 +810,8 @@ void Brain::startTask(Task* t, double startTime)
 
         if (valid) {
             RunningTask* rt = runningTasks.add(new RunningTask());
+            rt->id = newTaskId();
+            rt->cuelistId = cuelistId;
             rt->actionType = actionType;
             rt->targetType = targetType;
             rt->targetId = targetId;
@@ -822,6 +830,17 @@ void Brain::startTask(Task* t, double startTime)
         }
     }
 
+}
+
+void Brain::stopTasks(int cuelistId, int taskId)
+{
+    usingCollections.enter();
+    for (int i = runningTasks.size()-1; i >= 0; i--) {
+        if (runningTasks[i]->cuelistId == cuelistId && (taskId == -1 || taskId > runningTasks[i]->id)) {
+            runningTasks.remove(i);
+        }
+    }
+    usingCollections.exit();
 }
 
 SubFixture* Brain::getSubFixtureById(int id) {

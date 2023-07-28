@@ -22,6 +22,8 @@ public:
     String objectType;
     var objectData;
 
+    IntParameter* originId;
+
     EnumParameter* targetType;
     IntParameter* targetId;
     BoolParameter* targetThru;
@@ -44,6 +46,6 @@ public:
     String getTypeString() const override { return objectType; }
     static Task* create(var params) { return new Task(params); }
 
-    static void triggerGivenTask(String targetType, int targetId, String action, double targetValue);
+    static void triggerGivenTask(String targetType, int targetId, String action, double targetValue, int id);
 };
 

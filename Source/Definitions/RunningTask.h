@@ -16,6 +16,8 @@ public:
     RunningTask();
     ~RunningTask();
 
+    int id = 0;
+
     float value=-0;
     float delay=0;
     float fade=0;
@@ -33,6 +35,8 @@ public:
     String targetType = "";
     int targetId = 0;
     String actionType = "";
+
+    int cuelistId;
 
     void update(double now);
     void trigger(double value = 1);

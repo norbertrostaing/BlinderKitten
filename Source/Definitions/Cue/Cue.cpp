@@ -183,9 +183,10 @@ void Cue::go() {
 		TSAutoFollowEnd = now + (delay*1000);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
+	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	for (int i = 0; i < tasks.items.size(); i++) {
 		if (tasks.items[i]->enabled->boolValue()) {
-			Brain::getInstance()->startTask(tasks.items[i], now);
+			Brain::getInstance()->startTask(tasks.items[i], now, parentCuelist->id->intValue());
 		}
 	}
 }
