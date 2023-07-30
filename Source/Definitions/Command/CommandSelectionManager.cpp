@@ -167,7 +167,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 			else if (selections[selId]->filter->getValue() == "random") {
 				Array<SubFixture*> filteredSelection;
-				HashMap<int, Array<SubFixture*>*> indexToSubFixtures;
+				HashMap<int, std::shared_ptr<Array<SubFixture*>>> indexToSubFixtures;
 				HashMap<SubFixture*, int>subfixtureToIndex;
 
 				int nBuddy = selections[selId]->randomBuddy->getValue();
@@ -181,7 +181,6 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
                 float wingSize = realTot / (float)nWings;
                 realTot = ceil(realTot / (float)nWings);
                 int roundedWingSize = round(wingSize);
-                int flooredWingSize = floor(wingSize);
 
                 for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
                     int realIndex = chanIndex/nBuddy;
@@ -196,7 +195,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					maxIndex = jmax(maxIndex, realIndex);
 					indexes.addIfNotAlreadyThere(realIndex);
 					if (!indexToSubFixtures.contains(realIndex)) {
-						indexToSubFixtures.set(realIndex, new Array<SubFixture*>());
+						indexToSubFixtures.set(realIndex, std::make_shared<Array<SubFixture*>>());
 					}
 					indexToSubFixtures.getReference(realIndex)->add(tempSelection[chanIndex]);
 					subfixtureToIndex.set(tempSelection[chanIndex], realIndex);
@@ -229,16 +228,12 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					int index = indexes[randI];
 					if (indexToSubFixtures.contains(index)) {
 						auto a = indexToSubFixtures.getReference(index);
-						for (int i = 0; i < a->size(); i++) {
-							filteredSelection.add(a->getRawDataPointer()[i]);
+						for (int i2 = 0; i2 < a->size(); i2++) {
+							filteredSelection.add(a->getRawDataPointer()[i2]);
 						}
 						indexToSubFixtures.remove(index);
 						indexes.remove(index);
 					}
-				}
-
-				for (auto it = indexToSubFixtures.begin(); it != indexToSubFixtures.end(); it.next()) {
-					it.getValue()->~Array();
 				}
 
 				tempSelection = filteredSelection;

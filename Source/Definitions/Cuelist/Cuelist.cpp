@@ -1238,7 +1238,7 @@ void Cuelist::autoCreateChaser()
 	}
 	g->selection.computeSelection();
 	Array<SubFixture*> subfixtures = g->selection.computedSelectedSubFixtures;
-	Array<Array<SubFixture*>*> blocks;
+	Array<std::shared_ptr<Array<SubFixture*>>> blocks;
 	int nsubFixtures = subfixtures.size();
 
 	if (nsubFixtures == 0) {
@@ -1251,7 +1251,7 @@ void Cuelist::autoCreateChaser()
 		int wingId = i*nWings/nsubFixtures;
 		int blockId = i*(nWings*nBlocks) / nsubFixtures;
 
-		while (blocks.size() - 1 < blockId) { blocks.add(new Array<SubFixture*>()); }
+		while (blocks.size() - 1 < blockId) { blocks.add(std::make_shared<Array<SubFixture*>>()); }
 		if (wingId % 2 == 1) {
 			blocks[blockId]->insert(0, subfixtures[i]);
 		}
@@ -1298,7 +1298,7 @@ void Cuelist::autoCreateChaser()
 			}
 		}
 	}
-
+	blocks.clear();
 }
 
 void Cuelist::tapTempo() {
