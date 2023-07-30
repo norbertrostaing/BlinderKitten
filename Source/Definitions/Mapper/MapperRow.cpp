@@ -108,7 +108,7 @@ void MapperRow::computeData() {
         for (int ci = 0; ci < targetChannels.size(); ci++) {
             SubFixtureChannel* chan = targetChannels[ci];
             if (!currentStep->computedValues.contains(chan)) {
-                ChannelValue* newVal = new ChannelValue();
+                std::shared_ptr<ChannelValue> newVal = std::make_shared<ChannelValue>();
                 newVal->endValue = -1;
                 currentStep->computedValues.set(chan, newVal);
             }
@@ -120,7 +120,7 @@ void MapperRow::computeData() {
         MapperStep* previousStep = paramContainer.items[i - 1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();
-            ChannelValue* cValue = it.getValue();
+            std::shared_ptr<ChannelValue> cValue = it.getValue();
             currentStep->computedValues.getReference(chan)->startValue = cValue->endValue;
         }
     }

@@ -192,7 +192,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 				if (toApply == nullptr) {
 					return currentVal;
 				}
-				ChannelValue* cVal = toApply->computedValues.getReference(fc);
+				std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
 				if (cVal != nullptr) {
 					float fadeValue = 1;
 

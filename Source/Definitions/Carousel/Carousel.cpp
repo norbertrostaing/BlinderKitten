@@ -218,7 +218,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	isComputing.enter();
 	float calcValue = currentVal;
-	Array<CarouselRow*>* activeRows = chanToCarouselRow.getReference(fc);
+	std::shared_ptr<Array<CarouselRow*>> activeRows = chanToCarouselRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
 		CarouselRow * r = activeRows->getReference(rId);
 		double offset = totalElapsed;
@@ -242,7 +242,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 //			LOG(offset);
 			return currentVal;
 		}
-		ChannelValue* cVal = toApply->computedValues.getReference(fc); 
+		std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
 		if (cVal != nullptr) {
 			float fadeValue = 1;
 			

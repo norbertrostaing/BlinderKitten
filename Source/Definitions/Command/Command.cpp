@@ -143,8 +143,6 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 		fadeRepartCurve = &timing.curveFadeRepart;
 		delayRepartCurve = &timing.curveDelayRepart;
 	}
-
-
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
 		if (cv->enabled->boolValue()) {
@@ -165,24 +163,24 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
 			for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
 			
-				HashMap<ChannelType*, float>* valuesFrom = new HashMap<ChannelType*, float>();;
-				HashMap<ChannelType*, float>* valuesTo = new HashMap<ChannelType*, float>();;
+				std::shared_ptr<HashMap<ChannelType*, float>> valuesFrom = std::make_shared <HashMap<ChannelType*, float>>();
+				std::shared_ptr <HashMap<ChannelType*, float>> valuesTo = std::make_shared <HashMap<ChannelType*, float>>();
 				String test = cv->presetOrValue->getValue();
 				if (cv->presetOrValue->getValue() == "preset") {
 
-					HashMap<ChannelType*, float>* tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
-					HashMap<ChannelType*, float>* tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+					std::shared_ptr < HashMap<ChannelType*, float>> tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+					std::shared_ptr < HashMap<ChannelType*, float>> tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
 					if (tempValuesFrom != nullptr) {
 						for (auto it = tempValuesFrom->begin(); it != tempValuesFrom->end(); it.next()) {
 							valuesFrom->set(it.getKey(), it.getValue());
 						}
-						tempValuesFrom->~HashMap();
+						//tempValuesFrom->~HashMap();
 					}
 					if (tempValuesTo != nullptr) {
 						for (auto it = tempValuesTo->begin(); it != tempValuesTo->end(); it.next()) {
 							valuesTo->set(it.getKey(), it.getValue());
 						}
-						tempValuesTo->~HashMap();
+						//tempValuesTo->~HashMap();
 					}
 				
 				}
@@ -207,9 +205,9 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 
 					if (fchan != nullptr) {
 						if (!computedValues.contains(fchan)) {
-							computedValues.set(fchan, new ChannelValue());
+							computedValues.set(fchan, std::make_shared<ChannelValue>());
 						}
-						ChannelValue* finalValue = computedValues.getReference(fchan);
+						std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);
 						float val = valueFrom;
 						if (cv->thru->getValue() && SubFixtures.size() > 1) {
 							float position = float(indexFixt) / float(SubFixtures.size() - 1);
@@ -224,7 +222,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 								delay = (float)callingCue->ltpDelay->getValue()*1000.;
 							}
 							else {
-								ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
 								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
 									delay = (float)callingCue->htpInDelay->getValue() * 1000.;
 								}
@@ -251,7 +249,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 								fade = (float)callingCue->ltpFade->getValue() * 1000.;
 							}
 							else {
-								ChannelValue* currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
 								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
 									fade = (float)callingCue->htpInFade->getValue() * 1000.;
 								}
@@ -275,10 +273,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				}
 
 				if (valuesFrom != nullptr) {
-					delete valuesFrom;
+					//delete valuesFrom;
 				}
 				if (valuesTo != nullptr) {
-					delete valuesTo;
+					//delete valuesTo;
 				}
 			}
 		}
@@ -696,7 +694,7 @@ void Command::explodeSelection()
 				if (chan != nullptr && computedValues.contains(chan)) {
 					CommandValue* cv = newCommand->values.addItem();
 					cv->channelType->setValueFromTarget(chan->channelType);
-					ChannelValue* chanVal = computedValues.getReference(chan);
+					std::shared_ptr<ChannelValue> chanVal = computedValues.getReference(chan);
 					if (chanVal != nullptr) {
 						cv->valueFrom->setValue(chanVal->endValue);
 					}

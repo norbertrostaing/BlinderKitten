@@ -154,7 +154,7 @@ void EffectRow::computeData() {
                     p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
                     p->subFixtureChannelAreCentered.set(chans[chanIndex], isCentered);
                     if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
-                        parentEffect->chanToFxParam.set(chans[chanIndex], new Array<EffectParam*>());
+                        parentEffect->chanToFxParam.set(chans[chanIndex], std::make_shared<Array<EffectParam*>>());
                     }
                     parentEffect->chanToFxParam.getReference(chans[chanIndex])->add(p);
                 }

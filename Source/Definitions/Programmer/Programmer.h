@@ -43,8 +43,8 @@ public:
 
     BoolParameter* highlightCurrentCommand;
 
-    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
-    HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> activeValues;
 
     ControllableContainer cliContainer;
     EnumParameter* cliActionType;

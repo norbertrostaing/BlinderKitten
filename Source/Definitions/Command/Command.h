@@ -41,7 +41,7 @@ public:
     BaseManager<CommandValue> values;
     CommandTiming timing;
 
-    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
     CriticalSection isComputing;
     bool toDelete = false;
 

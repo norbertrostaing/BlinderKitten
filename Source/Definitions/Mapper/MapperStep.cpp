@@ -89,24 +89,24 @@ void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 		ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
 		for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
 
-			HashMap<ChannelType*, float>* valuesFrom = new HashMap<ChannelType*, float>();;
-			HashMap<ChannelType*, float>* valuesTo = new HashMap<ChannelType*, float>();;
+			std::shared_ptr < HashMap<ChannelType*, float>> valuesFrom = std::make_shared<HashMap<ChannelType*, float>>();
+			std::shared_ptr < HashMap<ChannelType*, float>> valuesTo = std::make_shared<HashMap<ChannelType*, float>>();
 			String test = cv->presetOrValue->getValue();
 			if (cv->presetOrValue->getValue() == "preset") {
 
-				HashMap<ChannelType*, float>* tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
-				HashMap<ChannelType*, float>* tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+				std::shared_ptr < HashMap<ChannelType*, float>> tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
+				std::shared_ptr < HashMap<ChannelType*, float>> tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
 				if (tempValuesFrom != nullptr) {
 					for (auto it = tempValuesFrom->begin(); it != tempValuesFrom->end(); it.next()) {
 						valuesFrom->set(it.getKey(), it.getValue());
 					}
-					delete tempValuesFrom;
+					//delete tempValuesFrom;
 				}
 				if (tempValuesTo != nullptr) {
 					for (auto it = tempValuesTo->begin(); it != tempValuesTo->end(); it.next()) {
 						valuesTo->set(it.getKey(), it.getValue());
 					}
-					delete tempValuesTo;
+					//delete tempValuesTo;
 				}
 
 			}
@@ -127,9 +127,9 @@ void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 
 				if (fchan != nullptr) {
 					if (!computedValues.contains(fchan)) {
-						computedValues.set(fchan, new ChannelValue());
+						computedValues.set(fchan, std::make_shared<ChannelValue>());
 					}
-					ChannelValue* finalValue = computedValues.getReference(fchan);
+					std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);
 					float val = valueFrom;
 					if (cv->thru->getValue() && SubFixtures.size() > 1) {
 						float position = float(indexFixt) / float(SubFixtures.size() - 1);
@@ -141,10 +141,10 @@ void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 			}
 
 			if (valuesFrom != nullptr) {
-				delete valuesFrom;
+				//delete valuesFrom;
 			}
 			if (valuesTo != nullptr) {
-				delete valuesTo;
+				//delete valuesTo;
 			}
 		}
 	}

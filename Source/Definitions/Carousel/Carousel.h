@@ -53,7 +53,7 @@ public:
     double TSLastUpdate;
     double totalElapsed;
 
-    HashMap<SubFixtureChannel*, Array<CarouselRow*>*> chanToCarouselRow;
+    HashMap<SubFixtureChannel*, std::shared_ptr<Array<CarouselRow*>>> chanToCarouselRow;
     CriticalSection isComputing;
 
     double lastTapTempo;

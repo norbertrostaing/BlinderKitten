@@ -46,7 +46,7 @@ public:
     Trigger* createBeforeBtn;
     bool isComputing = false;
 
-    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
     CriticalSection csComputing;
 
     void triggerTriggered(Trigger* t) override;

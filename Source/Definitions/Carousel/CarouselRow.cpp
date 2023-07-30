@@ -106,7 +106,7 @@ void CarouselRow::computeData() {
 
         for (auto it = step->computedValues.begin(); it != paramContainer.items[i]->computedValues.end(); it.next()) {
             if (!parentCarousel->chanToCarouselRow.contains(it.getKey())) {
-                parentCarousel->chanToCarouselRow.set(it.getKey(), new Array<CarouselRow*>());
+                parentCarousel->chanToCarouselRow.set(it.getKey(), std::make_shared<Array<CarouselRow*>>());
             }
             parentCarousel->chanToCarouselRow.getReference(it.getKey())->addIfNotAlreadyThere(this);
         }
@@ -137,7 +137,7 @@ void CarouselRow::computeData() {
         for (int ci = 0; ci < targetChannels.size(); ci++) {
             SubFixtureChannel* chan = targetChannels[ci];
             if (!currentStep->computedValues.contains(chan)) {
-                ChannelValue* newVal = new ChannelValue();
+                std::shared_ptr<ChannelValue> newVal = std::make_shared<ChannelValue>();
                 newVal->endValue = -1;
                 currentStep->computedValues.set(chan, newVal);
             }
@@ -149,7 +149,7 @@ void CarouselRow::computeData() {
         CarouselStep* previousStep = paramContainer.items[i - 1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();
-            ChannelValue* cValue = it.getValue();
+            std::shared_ptr<ChannelValue> cValue = it.getValue();
             if (!subFixtureChannelOffsets.contains(chan)) {
                 int chanIndex = selection.computedSelectedSubFixtures.indexOf(chan->parentSubFixture);
                 int realIndex = chanIndex / nBuddying;

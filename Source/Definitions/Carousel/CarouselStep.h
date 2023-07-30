@@ -35,7 +35,7 @@ class CarouselStep:
     CommandValueManager values;
 
     void computeValues(Array<SubFixture*> SubFixtures);
-    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
     CriticalSection isComputing;
 
     void onContainerParameterChangedInternal(Parameter*);

@@ -105,8 +105,8 @@ public:
 
     Automation offFadeCurve;
     FloatParameter* offFade;
-    HashMap<SubFixtureChannel*, ChannelValue*> activeValues;
-    HashMap<SubFixtureChannel*, ChannelValue*> flashingValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> activeValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> flashingValues;
     CriticalSection isComputing;
 
     TargetParameter* currentCue;

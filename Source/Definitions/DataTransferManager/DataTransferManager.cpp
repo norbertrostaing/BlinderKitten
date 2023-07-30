@@ -190,7 +190,7 @@ void DataTransferManager::execute() {
             for (auto it = source->computedValues.begin(); it != source->computedValues.end(); it.next()) {
                 // HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
                 SubFixtureChannel* chan = it.getKey();
-                ChannelValue* cValue = it.getValue();
+                std::shared_ptr<ChannelValue> cValue = it.getValue();
                 ChannelFamily* chanType = dynamic_cast<ChannelFamily*>(chan->channelType->parentContainer->parentContainer.get());
 
                 if (cValue->endValue != -1 && (filter == nullptr || filter == chanType)) {

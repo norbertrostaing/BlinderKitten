@@ -494,7 +494,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 
-	HashMap<SubFixtureChannel*, ChannelValue*> newActiveValues;
+	HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> newActiveValues;
 
 	if (needRebuildTracking) {
 		for (int i = 0; i <= nextIndex-1; i++) {
@@ -502,7 +502,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			tempCue->computeValues();
 			tempCue->csComputing.enter();
 			for (auto it = tempCue->computedValues.begin(); it != tempCue->computedValues.end(); it.next()) {
-				ChannelValue* temp = it.getValue();
+				std::shared_ptr<ChannelValue> temp = it.getValue();
 				if (newActiveValues.contains(it.getKey())) {
 					//ChannelValue* current = newActiveValues.getReference(it.getKey());
 					temp->startValue = it.getKey()->postCuelistValue;
@@ -529,9 +529,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		c->computeValues();
 		c->csComputing.enter();
 		for (auto it = c->computedValues.begin(); it != c->computedValues.end(); it.next()) {
-			ChannelValue* temp = it.getValue();
+			std::shared_ptr<ChannelValue> temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
-				ChannelValue * current = activeValues.getReference(it.getKey());
+				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
 				if (it.getKey()->isHTP) {
 					if (current != nullptr) {
 						double fader = HTPLevel->getValue();
@@ -573,7 +573,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	if (trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue()) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			if (!newActiveValues.contains(it.getKey())) {
-				ChannelValue* temp = it.getValue();
+				std::shared_ptr<ChannelValue> temp = it.getValue();
 				if (temp != nullptr && temp -> endValue != -1) {
 					float fadeTime = 0;
 					float delayTime = 0;
@@ -787,7 +787,7 @@ void Cuelist::update() {
 	float isOverWritten = true;
 	bool isEnded = true;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		ChannelValue* cv = it.getValue();
+		std::shared_ptr<ChannelValue> cv = it.getValue();
 		if (cv != nullptr) {
 			tempPosition = jmin(tempPosition, cv->currentPosition);
 			isUseFul = isUseFul || cv->endValue != -1 || !cv->isEnded;
@@ -812,7 +812,7 @@ void Cuelist::update() {
 	if (wannaOffFlash) {
 		bool canStopFlash = true;
 		for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
-			ChannelValue* cv = it.getValue();
+			std::shared_ptr<ChannelValue> cv = it.getValue();
 			canStopFlash = canStopFlash && cv->isEnded;
 		}
 
@@ -863,7 +863,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	bool keepUpdate = false;
 
 	float localValue = 0;
-	ChannelValue* cv;
+	std::shared_ptr<ChannelValue> cv;
 	float faderLevel = 0;
 	cv = activeValues.getReference(fc);
 	if (!activeValues.contains(fc)) {return currentVal;}

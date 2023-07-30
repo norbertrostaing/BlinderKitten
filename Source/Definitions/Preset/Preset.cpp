@@ -197,8 +197,8 @@ void Preset::computeValues() {
 
 }
 
-HashMap<ChannelType*, float>* Preset::getSubFixtureValues(SubFixture* f) {
-	HashMap<ChannelType*, float>* values = new HashMap<ChannelType*, float>();
+	std::shared_ptr < HashMap<ChannelType*, float>> Preset::getSubFixtureValues(SubFixture* f) {
+	std::shared_ptr < HashMap<ChannelType*, float>> values = std::make_shared<HashMap<ChannelType*, float>>();
 	for (auto it = computedUniversalValues.begin(); it != computedUniversalValues.end(); it.next()) {
 		values->set(it.getKey(), it.getValue());
 	}

@@ -35,7 +35,7 @@ class MapperStep:
     CommandValueManager values;
 
     void computeValues(Array<SubFixture*> SubFixtures);
-    HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
+    HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

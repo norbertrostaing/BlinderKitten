@@ -42,7 +42,7 @@ public:
     HashMap<FixtureType*, HashMap<String, HashMap<ChannelType*, float>*>*> computedSubFixtureTypeValues;
     HashMap<ChannelType*, float> computedUniversalValues;
 
-    HashMap<ChannelType*, float>* getSubFixtureValues(SubFixture* f);
+    std::shared_ptr <HashMap<ChannelType*, float>> getSubFixtureValues(SubFixture* f);
 
     Trigger* loadToProgrammerBtn;
     void triggerTriggered(Trigger* t) override;

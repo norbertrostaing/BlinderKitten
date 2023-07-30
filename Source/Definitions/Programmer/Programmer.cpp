@@ -196,9 +196,9 @@ void Programmer::computeValues() {
 			for (auto it = subFixtures[i]->channelsMap.begin(); it != subFixtures[i]->channelsMap.end(); it.next()) {
 				SubFixtureChannel* sfc = it.getValue();
 				if (sfc != nullptr && sfc->highlightValue > 0) {
-					ChannelValue* cv = computedValues.getReference(sfc);
+					std::shared_ptr<ChannelValue> cv = computedValues.getReference(sfc);
 					if (cv == nullptr) {
-						cv = new ChannelValue();
+						cv = std::make_shared<ChannelValue>();
 						computedValues.set(sfc, cv);
 					}
 					cv->endValue = sfc->highlightValue;
@@ -235,7 +235,7 @@ void Programmer::render(double now) {
 	String mode = editionMode->getValue();
 	if (mode != "blind") {
 		for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
-			ChannelValue* temp = it.getValue();
+			std::shared_ptr<ChannelValue> temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				temp->startValue = it.getKey()->value;
 			}
@@ -267,7 +267,7 @@ void Programmer::release(double now) {
 		now = Brain::getInstance()->now;
 	}
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		ChannelValue* temp = it.getValue();
+		std::shared_ptr<ChannelValue> temp = it.getValue();
 		float fadeTime = releaseTime->getValue();
 
 		temp->TSInit = now;
@@ -292,7 +292,7 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 
 	float localValue = 0;
 	if (!activeValues.contains(fc)) { return currentVal; }
-	ChannelValue* cv = activeValues.getReference(fc);
+	std::shared_ptr<ChannelValue> cv = activeValues.getReference(fc);
 
 	float valueFrom = currentVal;
 	float valueTo = currentVal;

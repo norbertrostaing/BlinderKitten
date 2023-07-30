@@ -54,7 +54,7 @@ public:
     double TSLastUpdate;
     double totalElapsed;
 
-    HashMap<SubFixtureChannel*, Array<EffectParam*>*> chanToFxParam;
+    HashMap<SubFixtureChannel*, std::shared_ptr<Array<EffectParam*>>> chanToFxParam;
     CriticalSection isComputing;
 
     double lastTapTempo;

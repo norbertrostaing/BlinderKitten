@@ -207,7 +207,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 	if (!chanToFxParam.contains(fc)) {return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	isComputing.enter();
-	Array<EffectParam*>* params = chanToFxParam.getReference(fc);
+	std::shared_ptr<Array<EffectParam*>> params = chanToFxParam.getReference(fc);
 	for (int i = 0; i < params->size(); i++) {
 		EffectParam* p = params->getReference(i);
 		EffectRow* row = dynamic_cast<EffectRow*>(p->parentContainer->parentContainer.get());
