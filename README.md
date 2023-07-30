@@ -5,8 +5,6 @@
 BlinderKitten is a lighting software built on top of [JUCE framework](https://juce.com/) and the wonderful [OrganicUI](https://github.com/benkuper/juce_organicui/) by [Benjamin Kuperberg](http://benjamin.kuperberg.fr/) (thanks Ben !)
 By the way, you should probably check [Chataigne](https://benjamin.kuperberg.fr/chataigne/en), a wonderful software if you don't know it !
 
-BlinkderKitten is actually not a production software but just a personnal learning project. The current developement is dependant of my learning process :)
-
 Please check the [online documentation](https://norbertrostaing.gitbook.io/blinderkitten/).
 
 You can also join the [discord server](https://discord.gg/4RKYHQDn) to ask questions and report bugs.
