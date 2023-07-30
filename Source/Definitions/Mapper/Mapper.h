@@ -47,7 +47,7 @@ public:
     float lastSize = 0;
     BaseManager<MapperRow> rows;
 
-    HashMap<SubFixtureChannel*, Array<MapperRow*>*> chanToMapperRow;
+    HashMap<SubFixtureChannel*, std::shared_ptr<Array<MapperRow*>>> chanToMapperRow;
 
     String getTypeString() const override { return objectType; }
 

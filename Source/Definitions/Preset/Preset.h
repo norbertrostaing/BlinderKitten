@@ -37,9 +37,9 @@ public:
     Trigger* testMeButton;
     Trigger* reOrderButton;
 
-    HashMap<SubFixture*, HashMap<ChannelType*, float>*> computedSubFixtureValues;
-    HashMap<FixtureType*, HashMap<ChannelType*, float>*> computedFixtureTypeValues;
-    HashMap<FixtureType*, HashMap<String, HashMap<ChannelType*, float>*>*> computedSubFixtureTypeValues;
+    HashMap<SubFixture*, std::shared_ptr <HashMap<ChannelType*, float>>> computedSubFixtureValues;
+    HashMap<FixtureType*, std::shared_ptr <HashMap<ChannelType*, float>>> computedFixtureTypeValues;
+    HashMap<FixtureType*, std::shared_ptr <HashMap<String, std::shared_ptr <HashMap<ChannelType*, float>>>>> computedSubFixtureTypeValues;
     HashMap<ChannelType*, float> computedUniversalValues;
 
     std::shared_ptr <HashMap<ChannelType*, float>> getSubFixtureValues(SubFixture* f);

@@ -82,7 +82,7 @@ void MapperRow::computeData() {
 
             for (auto it = step->computedValues.begin(); it != paramContainer.items[i]->computedValues.end(); it.next()) {
                 if (!parentMapper->chanToMapperRow.contains(it.getKey())) {
-                    parentMapper->chanToMapperRow.set(it.getKey(), new Array<MapperRow*>());
+                    parentMapper->chanToMapperRow.set(it.getKey(), std::make_shared<Array<MapperRow*>>());
                 }
                 parentMapper->chanToMapperRow.getReference(it.getKey())->addIfNotAlreadyThere(this);
             }

@@ -172,7 +172,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 	if (computing) { return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	float calcValue = currentVal;
-	Array<MapperRow*>* activeRows = chanToMapperRow.getReference(fc);
+	std::shared_ptr<Array<MapperRow*>> activeRows = chanToMapperRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
 		MapperRow * r = activeRows->getReference(rId);
 		

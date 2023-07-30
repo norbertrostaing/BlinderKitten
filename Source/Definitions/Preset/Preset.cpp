@@ -77,16 +77,16 @@ Preset::~Preset()
 {
 	Brain::getInstance()->unregisterPreset(this);
 	for (auto it = computedSubFixtureValues.begin(); it != computedSubFixtureValues.end(); it.next()) {
-		it.getValue()->~HashMap();
+		//it.getValue()->~HashMap();
 	}
 	for (auto it = computedFixtureTypeValues.begin(); it != computedFixtureTypeValues.end(); it.next()) {
-		it.getValue()->~HashMap();
+		//it.getValue()->~HashMap();
 	}
 	for (auto it = computedSubFixtureTypeValues.begin(); it != computedSubFixtureTypeValues.end(); it.next()) {
 		for (auto it2 = it.getValue()->begin(); it2 != it.getValue()->end(); it2.next()) {
-			it2.getValue()->~HashMap();
+			//it2.getValue()->~HashMap();
 		}
-		it.getValue()->~HashMap();
+		//it.getValue()->~HashMap();
 	}
 	PresetGridView::getInstance()->updateCells();
 }
@@ -164,18 +164,18 @@ void Preset::computeValues() {
 			float value = values[valIndex] -> paramValue -> getValue();
 			if (param != nullptr) {
 				if (pType >= 1 && subFixt != nullptr) {
-					HashMap<ChannelType*, float>* content = computedSubFixtureValues.getReference(subFixt);
+					std::shared_ptr<HashMap<ChannelType*, float>> content = computedSubFixtureValues.getReference(subFixt);
 					if (content == nullptr) {
-						content = new HashMap<ChannelType*, float>();
+						content = std::make_shared<HashMap<ChannelType*, float>>();
 						computedSubFixtureValues.set(subFixt, content);
 					}
 					content -> set(param, value); 
 				}
 				// Fixture mode
 				if (pType >= 3 && type != nullptr) {
-					HashMap<ChannelType*, float>* content = computedFixtureTypeValues.getReference(type);
+					std::shared_ptr<HashMap<ChannelType*, float>> content = computedFixtureTypeValues.getReference(type);
 					if (content == nullptr) {
-						content = new HashMap<ChannelType*, float>();
+						content = std::make_shared<HashMap<ChannelType*, float>>();
 						computedFixtureTypeValues.set(type, content);
 					}
 					content->set(param, value);
@@ -205,14 +205,14 @@ void Preset::computeValues() {
 
 	FixtureType* dt = dynamic_cast<FixtureType*>(f->parentFixture->devTypeParam->targetContainer.get());
 	if (computedFixtureTypeValues.contains(dt)) {
-		HashMap<ChannelType*, float>* fixtureTypeValues = computedFixtureTypeValues.getReference(dt);
+		std::shared_ptr<HashMap<ChannelType*, float>> fixtureTypeValues = computedFixtureTypeValues.getReference(dt);
 		for (auto it = fixtureTypeValues->begin(); it != fixtureTypeValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}
 	}
 
 	if (computedSubFixtureValues.contains(f)) {
-		HashMap<ChannelType*, float>* currentSubFixtureValues = computedSubFixtureValues.getReference(f);
+		std::shared_ptr<HashMap<ChannelType*, float>> currentSubFixtureValues = computedSubFixtureValues.getReference(f);
 		for (auto it = currentSubFixtureValues->begin(); it != currentSubFixtureValues->end(); it.next()) {
 			values->set(it.getKey(), it.getValue());
 		}
