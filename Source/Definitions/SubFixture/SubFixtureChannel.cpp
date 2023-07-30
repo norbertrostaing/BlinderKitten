@@ -115,13 +115,14 @@ void SubFixtureChannel::writeValue(float v) {
 					if (address > 0) {
 						address += (deltaAdress);
 						if (chanRes == "8bits") {
-							int val = floor(256.0 * value);
-							val = val > 255 ? 255 : val;
+							int val = value >= 1 ? 255 : round(255 * value);
+							//val = val > 255 ? 255 : val;
 							out->sendDMXValue(address, val);
 						}
 						else if (chanRes == "16bits") {
-							int val = floor(65535.0 * value);
-							val = value > 65535 ? 65535 : val;
+							int val = value >= 1 ? 65535 : round(65535.0 * value);
+							//int val = floor(65535.0 * value);
+							//val = value > 65535 ? 65535 : val;
 							int valueA = val / 256;
 							int valueB = val % 256;
 							out->sendDMXValue(address, valueA);
