@@ -156,6 +156,7 @@ void EncodersMultCmd::buttonClicked(Button* b)
     else if (b == &deleteBtn) 
     {
         if (targetCommand != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->checkCurrentUserCommand();
             if (targetCommand == UserInputManager::getInstance()->targetCommand) {
                 if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand == targetCommand) {
                     UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
