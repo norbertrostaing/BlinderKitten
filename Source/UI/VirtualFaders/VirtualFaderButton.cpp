@@ -356,7 +356,7 @@ String VirtualFaderButton::getBtnText(String columnType) {
 
 bool VirtualFaderButton::checkParentColumn()
 {
-	if (parentColumn == nullptr) {
+	if (parentColumn == nullptr && parentContainer != nullptr) {
 		parentColumn = dynamic_cast<VirtualFaderCol*>(parentContainer->parentContainer.get());
 	}
 	return parentColumn != nullptr;
