@@ -77,6 +77,7 @@
 
 #include "UserInputManager.h"
 #include "UI/DMXChannelView.h"
+#include "Assistant/Assistant.h"
 
 ControllableContainer* getAppSettings();
 
@@ -314,6 +315,7 @@ BKEngine::~BKEngine()
 	CommandLine::deleteInstance();
 	Encoders::deleteInstance();
 	InputPanel::deleteInstance();
+	Assistant::deleteInstance();
 
 	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();
