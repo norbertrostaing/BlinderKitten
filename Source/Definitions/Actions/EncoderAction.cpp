@@ -129,6 +129,9 @@ var EncoderAction::getValue()
         index = targetEncoder->intValue() - 1;
         if (index >= 0 && index < Encoders::getInstance()->encoders.size()) {
             val = Encoders::getInstance()->encoders[index]->getValue();
+            int range = Encoders::getInstance()->encoderRange;
+            if (range == 1) { val = (float)val / 100.; }
+            if (range == 2) { val = (float)val / 255.; }
         }
         break;
 
