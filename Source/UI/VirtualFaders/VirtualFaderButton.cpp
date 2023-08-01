@@ -369,6 +369,12 @@ void VirtualFaderButton::updateStatus(bool forceRefresh)
 	String targType = targetType->getValue();
 	int targId = targetId->getValue();
 
+	if (targType == "column") {
+		if (!checkParentColumn()) {return;}
+		targType = parentColumn->targetType->stringValue();
+		targId = parentColumn->targetId->getValue();
+	}
+
 	if (targType == "actions") {
 		newStatus = BTN_GENERIC;
 	}
