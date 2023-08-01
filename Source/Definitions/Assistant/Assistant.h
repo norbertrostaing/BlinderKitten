@@ -32,6 +32,7 @@ public:
 	TargetParameter* patcherInterface;
 	IntParameter* patcherFirstAddress;
 	IntParameter* patcherAddressInterval;
+	BoolParameter* patcherMakeGroup;
 	Trigger* patcherBtn;
 
 	ControllableContainer paletteMakerCC;

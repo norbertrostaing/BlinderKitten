@@ -52,6 +52,7 @@ Assistant::Assistant() :
     patcherAmount = patcherCC.addIntParameter("Amount", "",1,1);
     patcherName = patcherCC.addStringParameter("Fixture name", "", "");
     patcherFirstId = patcherCC.addIntParameter("First ID", "", 1, 1);
+    patcherMakeGroup = patcherCC.addBoolParameter("Create Group", "Create a group with added fixtures", true);
     patcherInterface = patcherCC.addTargetParameter("Interface", "", InterfaceManager::getInstance());
     patcherInterface->targetType = TargetParameter::CONTAINER;
     patcherInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
@@ -308,12 +309,14 @@ void Assistant::patchFixtures()
         }
     }
 
-    if (amount > 1) {
+    if (amount > 0 && patcherMakeGroup->boolValue()) {
         Group* g = GroupManager::getInstance()->addItem();
         g->userName->setValue(name);
         g->selection.items[0]->valueFrom->setValue(firstId);
-        g->selection.items[0]->thru->setValue(true);
-        g->selection.items[0]->valueTo->setValue(firstId+amount-1);
+        if (amount > 1) {
+            g->selection.items[0]->thru->setValue(true);
+            g->selection.items[0]->valueTo->setValue(firstId + amount - 1);
+        }
     }
     Brain::getInstance()->usingCollections.exit();
 }
