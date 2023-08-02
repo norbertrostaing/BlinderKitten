@@ -100,13 +100,13 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 					for (auto it = tempValuesFrom->begin(); it != tempValuesFrom->end(); it.next()) {
 						valuesFrom->set(it.getKey(), it.getValue());
 					}
-					tempValuesFrom->~HashMap();
+					//tempValuesFrom->~HashMap();
 				}
 				if (tempValuesTo != nullptr) {
 					for (auto it = tempValuesTo->begin(); it != tempValuesTo->end(); it.next()) {
 						valuesTo->set(it.getKey(), it.getValue());
 					}
-					tempValuesTo->~HashMap();
+					//tempValuesTo->~HashMap();
 				}
 
 			}
