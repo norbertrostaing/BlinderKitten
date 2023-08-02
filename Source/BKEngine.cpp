@@ -923,75 +923,77 @@ void BKEngine::importMVR(File f)
 	
 	HashMap<String, FixtureType*> fixtureTypesMap;
 	HashMap<int, Fixture*> fixturesMap;
-	HashMap<int, Array<int>* > fixtureAddressesMap;
+	HashMap<int, std::shared_ptr<Array<int>> > fixtureAddressesMap;
 
 	int maxAddress = 0;
 
 	for (int indexScene = 0; indexScene < nLayers; indexScene++) {
 		auto sceneNode = rootElmt->getChildElement(indexScene);
 		if (sceneNode->getTagName().toLowerCase() == "scene") {
-			auto layersNode = sceneNode->getChildElement(0);
-			if (layersNode->getTagName().toLowerCase() == "layers") {
-				for (int indexLayer = 0; indexLayer < layersNode->getNumChildElements(); indexLayer++) {
-					auto layerNode = layersNode->getChildElement(indexLayer);
-					if (layerNode->getTagName().toLowerCase() == "layer") {
-						auto childListNode = layerNode->getChildElement(0);
-						if (childListNode != nullptr && childListNode->getTagName().toLowerCase() == "childlist") {
-							int nChildren = childListNode->getNumChildElements();
-							for (int indexChild = 0; indexChild < nChildren; indexChild++) {
-								auto child = childListNode->getChildElement(indexChild);
-								String childType = child->getTagName().toLowerCase();
-								if (childType == "fixture") {
-									bool valid = true;
-									int id = 0;
-									String spec = "";
-									String mode = "";
-									if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
-									else { valid = false; }
-									if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
-									else { valid = false; }
-									String name = child->getStringAttribute("name");
+			for (int indexScene = 0; indexScene < sceneNode->getNumChildElements(); indexScene++) {
+				auto layersNode = sceneNode->getChildElement(indexScene);
+				if (layersNode->getTagName().toLowerCase() == "layers") {
+					for (int indexLayer = 0; indexLayer < layersNode->getNumChildElements(); indexLayer++) {
+						auto layerNode = layersNode->getChildElement(indexLayer);
+						if (layerNode->getTagName().toLowerCase() == "layer") {
+							auto childListNode = layerNode->getChildElement(0);
+							if (childListNode != nullptr && childListNode->getTagName().toLowerCase() == "childlist") {
+								int nChildren = childListNode->getNumChildElements();
+								for (int indexChild = 0; indexChild < nChildren; indexChild++) {
+									auto child = childListNode->getChildElement(indexChild);
+									String childType = child->getTagName().toLowerCase();
+									if (childType == "fixture") {
+										bool valid = true;
+										int id = 0;
+										String spec = "";
+										String mode = "";
+										if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
+										else { valid = false; }
+										if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
+										else { valid = false; }
+										String name = child->getStringAttribute("name");
 
-									id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
-									if (id == 0) {
-										id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
-									}
-
-									if (valid) {
-
+										id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
 										if (id == 0) {
-											id = 1000;
-											while (fixturesMap.contains(id)) {
-												id++;
+											id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
+										}
+
+										if (valid) {
+
+											if (id == 0) {
+												id = 1000;
+												while (fixturesMap.contains(id)) {
+													id++;
+												}
 											}
-										}
 
-										String ftName = spec+" - "+mode;
-										FixtureType* ft = nullptr;
-										if (!fixtureTypesMap.contains(ftName)) {
-											ft = FixtureTypeManager::getInstance()->addItem();
-											ft->setNiceName(ftName);
-											fixtureTypesMap.set(ftName, ft);
-										}
-										ft = fixtureTypesMap.getReference(ftName);
+											String ftName = spec + " - " + mode;
+											FixtureType* ft = nullptr;
+											if (!fixtureTypesMap.contains(ftName)) {
+												ft = FixtureTypeManager::getInstance()->addItem();
+												ft->setNiceName(ftName);
+												fixtureTypesMap.set(ftName, ft);
+											}
+											ft = fixtureTypesMap.getReference(ftName);
 
-										if (!fixturesMap.contains(id)) {
-											Fixture* fixt = FixtureManager::getInstance()->addItem();
-											fixturesMap.set(id, fixt);
-											fixtureAddressesMap.set(id, new Array<int>());
-											fixt->id->setValue(id);
-											fixt->userName->setValue(name);
-											fixt->devTypeParam->setValueFromTarget(ft);
-										}
-										
-										if (child->getChildByName("Addresses") != nullptr) {
-											auto addressesNode = child->getChildByName("Addresses");
-											Array<int>* fixtAddresses = fixtureAddressesMap.getReference(id);
-											for (int indexAddress = 0; indexAddress < addressesNode->getNumChildElements(); indexAddress++) {
-												auto tag = addressesNode->getChildElement(indexAddress);
-												int address = tag->getAllSubText().trim().getIntValue();
-												maxAddress = jmax(address, maxAddress);
-												fixtAddresses->addIfNotAlreadyThere(address);
+											if (!fixturesMap.contains(id)) {
+												Fixture* fixt = FixtureManager::getInstance()->addItem();
+												fixturesMap.set(id, fixt);
+												fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
+												fixt->id->setValue(id);
+												fixt->userName->setValue(name);
+												fixt->devTypeParam->setValueFromTarget(ft);
+											}
+
+											if (child->getChildByName("Addresses") != nullptr) {
+												auto addressesNode = child->getChildByName("Addresses");
+												std::shared_ptr<Array<int>> fixtAddresses = fixtureAddressesMap.getReference(id);
+												for (int indexAddress = 0; indexAddress < addressesNode->getNumChildElements(); indexAddress++) {
+													auto tag = addressesNode->getChildElement(indexAddress);
+													int address = tag->getAllSubText().trim().getIntValue();
+													maxAddress = jmax(address, maxAddress);
+													fixtAddresses->addIfNotAlreadyThere(address);
+												}
 											}
 										}
 									}
@@ -999,7 +1001,8 @@ void BKEngine::importMVR(File f)
 							}
 						}
 					}
-				}
+
+			}
 			}
 		}
 	}
@@ -1019,7 +1022,7 @@ void BKEngine::importMVR(File f)
 		int id = it.getKey();
 		Fixture* fixt = it.getValue();
 		
-		Array<int>* addresses = fixtureAddressesMap.getReference(id);
+		std::shared_ptr<Array<int>> addresses = fixtureAddressesMap.getReference(id);
 		for (int i = 0; i < addresses->size(); i++) {
 			int globalAddress = addresses->getReference(i) - 1;
 			int dmxAddress = globalAddress%512;
