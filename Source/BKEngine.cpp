@@ -909,7 +909,7 @@ void BKEngine::getBreakOffset(XmlElement* tag, String geometryName, Array<geomet
 
 void BKEngine::importMVR(File f)
 {
-	ZipFile* archive = new ZipFile(f);
+	std::shared_ptr<ZipFile> archive = std::make_shared<ZipFile>(f);
 	int descIndex = archive->getIndexOfFileName("GeneralSceneDescription.xml");
 	if (descIndex == -1) {
 		LOGERROR("the file " + f.getFileName() + " is not a valid MVVR File (no GeneralSceneDescription.xml in the archive)");
@@ -930,8 +930,8 @@ void BKEngine::importMVR(File f)
 	for (int indexScene = 0; indexScene < nLayers; indexScene++) {
 		auto sceneNode = rootElmt->getChildElement(indexScene);
 		if (sceneNode->getTagName().toLowerCase() == "scene") {
-			for (int indexScene = 0; indexScene < sceneNode->getNumChildElements(); indexScene++) {
-				auto layersNode = sceneNode->getChildElement(indexScene);
+			for (int indexScene2 = 0; indexScene2 < sceneNode->getNumChildElements(); indexScene2++) {
+				auto layersNode = sceneNode->getChildElement(indexScene2);
 				if (layersNode->getTagName().toLowerCase() == "layers") {
 					for (int indexLayer = 0; indexLayer < layersNode->getNumChildElements(); indexLayer++) {
 						auto layerNode = layersNode->getChildElement(indexLayer);
@@ -1002,11 +1002,10 @@ void BKEngine::importMVR(File f)
 						}
 					}
 
-			}
+				}
 			}
 		}
 	}
-	
 	Array<DMXInterface*> universes;
 	int currentUniverse = 1;
 
