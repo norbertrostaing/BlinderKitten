@@ -11,6 +11,7 @@
 #pragma once
 
 #define DMX_OPCODE 0x5000
+#define OPPOLL 0x2000
 #define POLLRESPONSE_OPCODE 0x2100
 #define PROTOCOL_VERSION 14
 #define NUM_CHANNELS 512
@@ -27,6 +28,7 @@ class ArtnetSocket :
 
 	uint8 artnetPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
 	uint8 artPollPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x20,  0, PROTOCOL_VERSION };
+	uint8 artPollReplyPacket[287]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x21 };
 	uint8 receiveBuffer[MAX_PACKET_LENGTH];
 
 	void run() override;
@@ -34,6 +36,7 @@ class ArtnetSocket :
 	uint8 sequenceNumber;
 	void selectSocketPort();
 	void sendArtPoll(String ip);
+	void sendArtPollReply(String ip);
 	CriticalSection isSending;
 
 };

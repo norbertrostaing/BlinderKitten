@@ -74,6 +74,60 @@ void ArtnetSocket::sendArtPoll(String ip)
 	isSending.exit();
 }
 
+void ArtnetSocket::sendArtPollReply(String ip)
+{
+	artPollReplyPacket[14] = 0X36; //port low
+	artPollReplyPacket[15] = 0X19; // port high
+	artPollReplyPacket[16] = 0; // version H
+	artPollReplyPacket[17] = 1; // version L
+	artPollReplyPacket[18] = 0; // netSwitch
+	artPollReplyPacket[19] = 0; // subSwitch
+	artPollReplyPacket[20] = 0x12; // OEM Hi
+	artPollReplyPacket[21] = 0x12; // OEM
+	artPollReplyPacket[22] = 0; // ubea
+	artPollReplyPacket[23] = 0b11010000; // status 1
+	artPollReplyPacket[24] = 0; // EstaMan lo
+	artPollReplyPacket[25] = 0; // EstaMan HI
+	artPollReplyPacket[26] = 0; // shortname (18)
+	String shortname = "Blinderkitten";
+	for (int i = 0; i < shortname.length(); i++) {
+		artPollReplyPacket[26 + i] = shortname[i];
+	}
+	String longname = "Blinderkitten";
+	for (int i = 0; i < longname.length(); i++) {
+		artPollReplyPacket[44 + i] = longname[i];
+	}
+	String status = "Everything is purrfect";
+	for (int i = 0; i < status.length(); i++) {
+		artPollReplyPacket[108 + i] = status[i];
+	}
+	artPollReplyPacket[172] = 0; // NumPortsHi
+	artPollReplyPacket[173] = 0; // NumPortsLow
+	artPollReplyPacket[174] = 0; // PortTypes1
+	artPollReplyPacket[174] = 0; // PortTypes2
+	artPollReplyPacket[174] = 0; // PortTypes3
+	artPollReplyPacket[174] = 0; // PortTypes4
+
+	StringArray receiveAdress = StringArray::fromTokens(ip, ".", "");
+
+	auto ips = IPAddress::getAllAddresses(false);
+	for (int i = 0; i < ips.size(); i++) {
+		String ip2 = ips[i].toString();
+		StringArray sendAddress = StringArray::fromTokens(ip2, ".", "");
+		if (sendAddress[0] == receiveAdress[0]) {
+			artPollReplyPacket[10] = ips[i].address[0];
+			artPollReplyPacket[11] = ips[i].address[1];
+			artPollReplyPacket[12] = ips[i].address[2];
+			artPollReplyPacket[13] = ips[i].address[3];
+			DatagramSocket tempSender = new DatagramSocket(true);
+			tempSender.bindToPort(0, ip2);
+			tempSender.write("255.255.255.255", 6454, artPollReplyPacket, 287);
+		}
+	}
+
+
+}
+
 
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true)
@@ -209,7 +263,9 @@ void ArtnetSocket::run()
 			sleep(10); //100fps
 		}
 		else {
-			int bytesRead = socket->read(receiveBuffer, MAX_PACKET_LENGTH, false);
+			String rAddress = "";
+			int rPort;
+			int bytesRead = socket->read(receiveBuffer, MAX_PACKET_LENGTH, false, rAddress, rPort);
 			if (bytesRead > 0)
 			{
 				for (uint8 i = 0; i < 8; ++i)
@@ -243,8 +299,10 @@ void ArtnetSocket::run()
 						}
 					}
 				}
-				else if (opcode == 0x2000)
+				else if (opcode == OPPOLL)
 				{
+					//DBG("Received ArtPoll");
+					sendArtPollReply(rAddress);
 				}
 				else if (opcode == POLLRESPONSE_OPCODE)
 				{
