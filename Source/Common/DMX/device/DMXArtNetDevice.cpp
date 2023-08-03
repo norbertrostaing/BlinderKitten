@@ -18,7 +18,7 @@ ArtnetSocket::ArtnetSocket() :
 {
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
-	socket.reset(new DatagramSocket());
+	socket = std::make_unique <DatagramSocket>(true);
 	socket->bindToPort(0);
 	startThread();
 }
@@ -51,7 +51,7 @@ void ArtnetSocket::selectSocketPort()
 
 	if (socket != nullptr) socket->shutdown();
 
-	socket.reset(new DatagramSocket());
+	socket.reset(new DatagramSocket(true));
 
 	if (forceBind) {
 		if (socket->bindToPort(6454)) {
