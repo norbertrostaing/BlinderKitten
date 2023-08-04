@@ -37,6 +37,7 @@ public:
     bool isHTP = false;
     bool swopKillable = false;
     bool snapOnly = false;
+    bool invertOutput = false;
     bool reactToGrandMaster = false;
 
     ChannelFamily* parentParamType = nullptr;

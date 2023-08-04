@@ -83,6 +83,10 @@ void SubFixtureChannel::writeValue(float v) {
 		v *= virtualMaster->value;
 	}
 
+	if (invertOutput) {
+		v = 1-v;
+	}
+
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();

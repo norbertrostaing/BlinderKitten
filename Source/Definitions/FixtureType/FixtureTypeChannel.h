@@ -28,6 +28,7 @@ class FixtureTypeChannel:
     FloatParameter* defaultValue;
     FloatParameter* highlightValue;
     BoolParameter* killedBySWOP;
+    BoolParameter* invertOutput;
     EnumParameter* resolution;
     EnumParameter* fadeOrSnap;
     IntParameter* dmxDelta;

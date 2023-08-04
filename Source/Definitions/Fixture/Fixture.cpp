@@ -223,6 +223,7 @@ void Fixture::checkChildrenSubFixtures() {
 				chan->parentFixture = this;
 				chan->parentSubFixture = subFixt;
 				chan->subFixtureId = subId;
+				chan->invertOutput = c->invertOutput->boolValue();
 
 				if (param->reactGM->getValue()) {
 					chan->reactToGrandMaster = true;
