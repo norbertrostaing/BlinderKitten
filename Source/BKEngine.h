@@ -97,7 +97,7 @@ public:
 	void importMVR(File f);
 	void exportSelection();
 
-	void getBreakOffset(XmlElement* tag, String geometryName, Array<geometryBreaks>* subs);
+	void getBreakOffset(XmlElement* tag, String geometryName, int dmxBreak, Array<geometryBreaks>* subs);
 
 	void parameterValueChanged(Parameter* p);
 

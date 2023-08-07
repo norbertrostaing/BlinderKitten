@@ -703,7 +703,7 @@ void BKEngine::importMochi(var data)
 
 void BKEngine::importGDTF(File f)
 {
-	ZipFile* archive = new ZipFile(f);
+	std::shared_ptr<ZipFile> archive = std::make_shared<ZipFile>(f);
 	int descIndex = archive->getIndexOfFileName("description.xml");
 	if (descIndex == -1) {
 		LOGERROR("the file "+f.getFileName()+" is not a valid GDTF File (no description.xml in the archive)");
@@ -711,12 +711,11 @@ void BKEngine::importGDTF(File f)
 	}
 
 	importGDTFContent(archive->createStreamForEntry(descIndex), "");
-
 }
 
 FixtureType* BKEngine::importGDTF(InputStream* stream, String modeName)
 {
-	ZipFile* archive = new ZipFile(stream, false);
+	std::shared_ptr<ZipFile> archive = std::make_shared<ZipFile>(stream, false);
 	int descIndex = archive->getIndexOfFileName("description.xml");
 	if (descIndex == -1) {
 		LOGERROR("the file is not a valid GDTF File (no description.xml in the archive)");
@@ -834,6 +833,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 						String attribute = logicalChannelNode->getStringAttribute("Attribute");
 						String geometry = dmxChannelNode->getStringAttribute("Geometry");
 						String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
+						int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
 						int dmxAdress = 0;
 						int resolution = 0;
 						if (DMXOffset == "") {
@@ -849,7 +849,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 						}
 						Array<geometryBreaks> breaks;
 
-						getBreakOffset(modeGeometry, geometry, &breaks);
+						getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
 						if (dmxAdress > 0) {
 							if (breaks.size() > 0) {
 								for (int i = 0; i < breaks.size(); i++) {
@@ -871,17 +871,20 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 								tc.attribute = attribute;
 								tc.resolution = resolution;
 								tc.initialFunction = initialFunction;
+								if (subFixtureNames.indexOf(geometry) == -1) { subFixtureNames.add(geometry); }
+								tc.subFixtId = subFixtureNames.indexOf(geometry) + 1;
 								int index = dmxAdress - 1;
 								while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
 								tempChannels.set(index, tc);
 							}
 						}
 					}
+					
 					// got all channels
 					for (int i = 0; i < tempChannels.size(); i++) {
 						if (tempChannels[i].attribute != "") {
-							FixtureTypeChannel* ftc = ft->chansManager.addItem();
 							String attrName = tempChannels[i].attribute;
+							FixtureTypeChannel* ftc = ft->chansManager.addItem();
 							if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
 
 							ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
@@ -891,7 +894,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 								ftc->resolution->setValue("16bits");
 							}
 							if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
-								if (subIdToVirtDimmer.getReference(tempChannels[i].subFixtId) == nullptr) {
+								if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
 									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem();
 									subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
 									virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
@@ -911,20 +914,19 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 	return ret;
 }
 
-void BKEngine::getBreakOffset(XmlElement* tag, String geometryName, Array<geometryBreaks>* breaks)
+void BKEngine::getBreakOffset(XmlElement* tag, String geometryName, int dmxBreak, Array<geometryBreaks>* breaks)
 {
-	if (tag->getTagName() == "Geometry") {
+	if (tag->getTagName() == "Geometry") { 
 		for (int i = 0; i < tag->getNumChildElements(); i++) {
-			getBreakOffset(tag->getChildElement(i), geometryName, breaks);
+			getBreakOffset(tag->getChildElement(i), geometryName, dmxBreak, breaks);
 		}
 	}
 	else if (tag->getTagName() == "GeometryReference" && tag->getStringAttribute("Geometry") == geometryName) {
 		for (int i = 0; i < tag->getNumChildElements(); i++) {
 			auto br = tag->getChildElement(i);
-			if (br->getTagName() == "Break") {
+			if (br->getTagName() == "Break" && dmxBreak == br->getStringAttribute("DMXBreak").getIntValue()) {
 				geometryBreaks temp;
 				temp.name = tag->getStringAttribute("Name");
-				temp.breakNum = br->getStringAttribute("DMXBreak").getIntValue();
 				temp.offset = br->getStringAttribute("DMXOffset").getIntValue();
 				breaks->add(temp);
 			}
