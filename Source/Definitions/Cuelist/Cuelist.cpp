@@ -646,11 +646,16 @@ void Cuelist::goBack(float forcedDelay, float forcedFade)
 }
 
 void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
-	if (!isComputing.tryEnter()) {return;}
+	if (!isComputing.tryEnter()) {return; }
 	if (setOn) {
 		isFlashing = true;
 		if (cueA == nullptr) {
-			go();
+			if (withTiming) {
+				go();
+			}
+			else {
+				go(0,0);
+			}
 		}
 		if (swop) {
 			isSwopping = true;
@@ -678,7 +683,12 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 			cueA->csComputing.exit();
 		}
 		if (!userPressedGo) {
-			kill();
+			if (withTiming) {
+				off();
+			}
+			else {
+				kill();
+			}
 		}
 	}
 	isComputing.exit();
@@ -1024,6 +1034,12 @@ void Cuelist::kill(bool forceRefreshChannels) {
 			Brain::getInstance()->pleaseUpdate(chan);
 		}
 	}
+	isComputing.enter();
+	if (cueA != nullptr) {
+		cueA->computedValues.clear();
+	}
+	activeValues.clear();
+	isComputing.exit();
 	cueA = nullptr;
 	cueB = nullptr;
 	userPressedGo = false;

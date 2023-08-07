@@ -49,9 +49,11 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	cuelistAction->addOption("Off", "off");
 	cuelistAction->addOption("Toggle", "toggle");
 	cuelistAction->addOption("Flash", "flash");
+	cuelistAction->addOption("Swop", "swop");
+	cuelistAction->addOption("Timed flash", "flashtimed");
+	cuelistAction->addOption("Timed swop", "swoptimed");
 	cuelistAction->addOption("Load", "load");
 	cuelistAction->addOption("Load and Go", "loadandgo");
-	cuelistAction->addOption("Swop", "swop");
 	cuelistAction->addOption("Go random", "gorandom");
 
 	cueId = addFloatParameter("Cue ID", "Insert here the id of the cue you want to load, -1 will prompt the cue choose window", -1, -1);
@@ -160,6 +162,7 @@ void VirtualFaderButton::pressed() {
 			if (action == "off") { targ->off(); }
 			if (action == "toggle") { targ->toggle(); }
 			if (action == "flash") { targ->flash(true, false, false); }
+			if (action == "flashtimed") { targ->flash(true, true, false); }
 			if (action == "load") {
 				float targetCue = cueId->floatValue();
 				if (targetCue == -1) {
@@ -180,6 +183,7 @@ void VirtualFaderButton::pressed() {
 				}
 			}
 			if (action == "swop") { targ->flash(true, false, true); }
+			if (action == "swoptimed") { targ->flash(true, true, true); }
 			if (action == "gorandom") { targ->goRandom(); }
 		}
 	}
@@ -264,6 +268,8 @@ void VirtualFaderButton::released() {
 			String action = cuelistAction->getValue();
 			if (action == "flash") { targ->flash(false, false, false); }
 			if (action == "swop") { targ->flash(false, false, true); }
+			if (action == "flashtimed") { targ->flash(false, true, false); }
+			if (action == "swoptimed") { targ->flash(false, true, true); }
 		}
 	}
 	else if (targType == "effect") {

@@ -175,6 +175,24 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         }
         break;
 
+    case CL_FLASHTIMED:
+        if (val > 0 && (float)previousValue == 0) {
+            target->flash(true, true);
+        }
+        else {
+            target->flash(false, true);
+        }
+        break;
+
+    case CL_SWOPTIMED:
+        if (val > 0 && (float)previousValue == 0) {
+            target->flash(true, true, true);
+        }
+        else {
+            target->flash(false, true);
+        }
+        break;
+
     case CL_FLASHLEVEL:
         if (isRelative) {
             target->nextFlashLevelController = origin;

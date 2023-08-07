@@ -48,6 +48,8 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go random", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GORANDOM));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Timed Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASHTIMED));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Timed Swop", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOPTIMED));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFF));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Toggle", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Load", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LOAD));
