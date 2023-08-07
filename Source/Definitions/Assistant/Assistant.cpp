@@ -68,6 +68,7 @@ Assistant::Assistant() :
 	paletteTimingPresetId = paletteMakerCC.addIntParameter("Timing Preset ID", "0 means none", 0,0);
     paletteCuelistId = paletteMakerCC.addIntParameter("Palette ID", "Id for your palette, if already taken, search for a number above. Leave at 0 for auto number.", 0,0);
     paletteName = paletteMakerCC.addStringParameter("Palette Name", "Name your palette here, leave empty to have an auto name", "");
+    paletteKeepEmpty = paletteMakerCC.addBoolParameter("Keep unused presets", "If checked, all presets will have a cue, even if the preset has no target in the group", false);
     paletteBtn = paletteMakerCC.addTrigger("Create Palette", "create a new cuelist with selected group and presets");
     addChildControllableContainer(&paletteMakerCC);
 
@@ -385,7 +386,19 @@ void Assistant::createPalette()
                 c->commands.items[0]->timing.presetOrValue->setValueWithKey("Preset");
                 c->commands.items[0]->timing.presetId->setValue(timePreset);
             }
-            LOG("Cue " + name + " Created");
+
+            bool log = true;
+            if (!paletteKeepEmpty->boolValue()) {
+                c->computeValues();
+                if (c->computedValues.size() == 0) {
+                    log = false;
+                    cl->cues.removeItem(c);
+                }
+            }
+            if (log) {
+                LOG("Cue " + name + " Created");
+            }
+
             //wait(10);
         }
     }

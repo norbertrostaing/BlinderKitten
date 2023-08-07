@@ -42,6 +42,7 @@ public:
 	IntParameter* paletteTimingPresetId;
 	IntParameter* paletteCuelistId;
 	StringParameter* paletteName;
+	BoolParameter* paletteKeepEmpty;
 	Trigger* paletteBtn;
 
 	ControllableContainer masterMakerCC;
