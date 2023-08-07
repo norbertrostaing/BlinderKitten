@@ -207,7 +207,7 @@ void Fixture::checkChildrenSubFixtures() {
 			ChannelType* param = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
 			if (param != nullptr) {
 				if (subFixt->channelsMap.contains(param)) {
-					LOGERROR("You have multiple channels with the same type in the same subfixture !");
+					LOGERROR("You have multiple channels with the same type in the same subfixture ! ("+String(subId)+" - "+param->niceName+" )");
 				}
 				SubFixtureChannel* chan = new SubFixtureChannel();
 				subFixt->channelsContainer.add(chan);

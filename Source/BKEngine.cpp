@@ -710,22 +710,42 @@ void BKEngine::importGDTF(File f)
 		return;
 	}
 
-	HashMap<String, String> changedNames;
-	changedNames.set( "Dimmer", "Intensity");
-	changedNames.set( "ColorAdd_R", "Red");
-	changedNames.set( "ColorAdd_G", "Green");
-	changedNames.set( "ColorAdd_B", "Blue");
-	changedNames.set( "ColorAdd_W", "White");
-	changedNames.set( "ColorAdd_A", "Amber");
-	changedNames.set( "ColorSub_C", "Cyan");
-	changedNames.set( "ColorSub_M", "Magenta");
-	changedNames.set( "ColorSub_Y", "Yellow");
+	importGDTFContent(archive->createStreamForEntry(descIndex), "");
 
-	XmlDocument descriptionXml = archive->createStreamForEntry(descIndex)->readString();
+}
+
+FixtureType* BKEngine::importGDTF(InputStream* stream, String modeName)
+{
+	ZipFile* archive = new ZipFile(stream, false);
+	int descIndex = archive->getIndexOfFileName("description.xml");
+	if (descIndex == -1) {
+		LOGERROR("the file is not a valid GDTF File (no description.xml in the archive)");
+		return nullptr;
+	}
+
+	return importGDTFContent(archive->createStreamForEntry(descIndex), modeName);
+}
+
+FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeName)
+{
+	HashMap<String, String> changedNames;
+	changedNames.set("Dimmer", "Intensity");
+	changedNames.set("ColorAdd_R", "Red");
+	changedNames.set("ColorAdd_G", "Green");
+	changedNames.set("ColorAdd_B", "Blue");
+	changedNames.set("ColorAdd_W", "White");
+	changedNames.set("ColorAdd_A", "Amber");
+	changedNames.set("ColorSub_C", "Cyan");
+	changedNames.set("ColorSub_M", "Magenta");
+	changedNames.set("ColorSub_Y", "Yellow");
+
+	XmlDocument descriptionXml = stream->readString();
 	auto rootElmt = descriptionXml.getDocumentElement();
 	int nChildren = rootElmt->getNumChildElements();
 	HashMap<int, int> breakOffsets;
 	HashMap<String, ChannelType*> nameToChannelType;
+
+	FixtureType* ret = nullptr;
 
 	for (int iFam = 0; iFam < ChannelFamilyManager::getInstance()->items.size(); iFam++) {
 		for (int iChan = 0; iChan < ChannelFamilyManager::getInstance()->items[iFam]->definitions.items.size(); iChan++) {
@@ -737,18 +757,18 @@ void BKEngine::importGDTF(File f)
 	for (int indexChild = 0; indexChild < nChildren; indexChild++) {
 		auto fixtureTypeNode = rootElmt->getChildElement(indexChild);
 		if (fixtureTypeNode->getTagName().toLowerCase() == "fixturetype") {
-			String fixtureName = "imported ";
+			String fixtureName = "";
 			String manufacturer = "";
 			fixtureName += fixtureTypeNode->getStringAttribute("Name");
 			manufacturer += fixtureTypeNode->getStringAttribute("Manufacturer");
 
 			XmlElement* attributesNode = fixtureTypeNode->getChildByName("AttributeDefinitions");
-			if (attributesNode == nullptr) {LOGERROR("import not finished, the fixture has no attributes tag"); }
+			if (attributesNode == nullptr) { LOGERROR("import not finished, the fixture has no attributes tag"); }
 			auto attributes = attributesNode->getChildByName("Attributes");
 			for (int i = 0; i < attributes->getNumChildElements(); i++) {
 				auto attr = attributes->getChildElement(i);
 				String attrName = attr->getStringAttribute("Name");
-				if (changedNames.contains(attrName)) {attrName = changedNames.getReference(attrName); }
+				if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
 				String attrFamilyName = StringArray::fromTokens(attr->getStringAttribute("Feature"), ".", "")[0];
 
 				if (!nameToChannelType.contains(attrName)) {
@@ -791,91 +811,95 @@ void BKEngine::importGDTF(File f)
 			for (int iMode = 0; iMode < dmxModesNode->getNumChildElements(); iMode++) {
 				auto modeNode = dmxModesNode->getChildElement(iMode);
 				String modeName = modeNode->getStringAttribute("Name");
-				FixtureType* ft = FixtureTypeManager::getInstance()->addItem();
-				ft -> setNiceName(fixtureName+" - "+modeName);
-				
-				Array<tempChannel> tempChannels;
-				auto modeRelations = modeNode->getChildByName("Relations");
-				Array<String> getMasterDimmer;
-				HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
-				for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
-					getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
-				}
-				auto modeChannels = modeNode->getChildByName("DMXChannels");
-				XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
-				Array<String> subFixtureNames;
-				for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
-					auto dmxChannelNode = modeChannels->getChildElement(iChan);
-					auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
-					String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
-					String attribute = logicalChannelNode->getStringAttribute("Attribute");
-					String geometry = dmxChannelNode->getStringAttribute("Geometry");
-					String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
-					int dmxAdress = 0;
-					int resolution = 0;
-					if (DMXOffset == "") {
-						// virtual
+				if (importModeName == "" || importModeName == modeName) {
+
+					FixtureType* ft = FixtureTypeManager::getInstance()->addItem();
+					ret = ft;
+					ft->setNiceName(fixtureName + " - " + modeName);
+
+					Array<tempChannel> tempChannels;
+					auto modeRelations = modeNode->getChildByName("Relations");
+					Array<String> getMasterDimmer;
+					HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
+					for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
+						getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
 					}
-					else if (DMXOffset.indexOf(",") != -1) {
-						dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
-						resolution = 2;
-					}
-					else {
-						dmxAdress = DMXOffset.getIntValue();
-						resolution = 1;
-					}
-					Array<geometryBreaks> breaks;
-					
-					getBreakOffset(modeGeometry, geometry, &breaks);
-					if (dmxAdress > 0) {
-						if (breaks.size() > 0) {
-							for (int i = 0; i < breaks.size(); i++) {
-								subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
+					auto modeChannels = modeNode->getChildByName("DMXChannels");
+					XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
+					Array<String> subFixtureNames;
+					for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
+						auto dmxChannelNode = modeChannels->getChildElement(iChan);
+						auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
+						String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
+						String attribute = logicalChannelNode->getStringAttribute("Attribute");
+						String geometry = dmxChannelNode->getStringAttribute("Geometry");
+						String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
+						int dmxAdress = 0;
+						int resolution = 0;
+						if (DMXOffset == "") {
+							// virtual
+						}
+						else if (DMXOffset.indexOf(",") != -1) {
+							dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
+							resolution = 2;
+						}
+						else {
+							dmxAdress = DMXOffset.getIntValue();
+							resolution = 1;
+						}
+						Array<geometryBreaks> breaks;
+
+						getBreakOffset(modeGeometry, geometry, &breaks);
+						if (dmxAdress > 0) {
+							if (breaks.size() > 0) {
+								for (int i = 0; i < breaks.size(); i++) {
+									subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
+									tempChannel tc;
+									tc.attribute = attribute;
+									tc.resolution = resolution;
+									tc.subFixtId = subFixtureNames.indexOf(breaks[i].name) + 1;
+									tc.initialFunction = initialFunction;
+									int index = dmxAdress;
+									index += breaks[i].offset;
+									index -= 2;
+									while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+									tempChannels.set(index, tc);
+								}
+							}
+							else {
 								tempChannel tc;
 								tc.attribute = attribute;
 								tc.resolution = resolution;
-								tc.subFixtId = subFixtureNames.indexOf(breaks[i].name)+1;
 								tc.initialFunction = initialFunction;
-								int index = dmxAdress;
-								index += breaks[i].offset;
-								index -= 2;
+								int index = dmxAdress - 1;
 								while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
 								tempChannels.set(index, tc);
 							}
 						}
-						else {
-							tempChannel tc;
-							tc.attribute = attribute;
-							tc.resolution = resolution;
-							tc.initialFunction = initialFunction;
-							int index = dmxAdress-1;
-							while(tempChannels.size() < index) {tempChannels.add(tempChannel()); }
-							tempChannels.set(index, tc);
-						}
 					}
-				}
-				// got all channels
-				for (int i = 0; i < tempChannels.size(); i++) {
-					if (tempChannels[i].attribute != "") {
-						FixtureTypeChannel* ftc = ft->chansManager.addItem();
-						String attrName = tempChannels[i].attribute;
-						if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
+					// got all channels
+					for (int i = 0; i < tempChannels.size(); i++) {
+						if (tempChannels[i].attribute != "") {
+							FixtureTypeChannel* ftc = ft->chansManager.addItem();
+							String attrName = tempChannels[i].attribute;
+							if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
 
-						ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
-						ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
-						if (tempChannels[i].resolution == 2) 
-						{
-							ftc->resolution->setValue("16bits");
-						}
-						if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
-							if (subIdToVirtDimmer.getReference(tempChannels[i].subFixtId) == nullptr) {
-								FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem();
-								subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
-								virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Dimmer"));
-								virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
-								virtDim-> setNiceName("Dimmer "+String(tempChannels[i].subFixtId));
+							ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
+							ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+							if (tempChannels[i].resolution == 2)
+							{
+								ftc->resolution->setValue("16bits");
 							}
-							ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
+							if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
+								if (subIdToVirtDimmer.getReference(tempChannels[i].subFixtId) == nullptr) {
+									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem();
+									subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
+									virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
+									virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
+									virtDim->setNiceName("Dimmer " + String(tempChannels[i].subFixtId));
+								}
+								ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
+							}
 						}
 					}
 				}
@@ -884,6 +908,7 @@ void BKEngine::importGDTF(File f)
 		}
 	}
 	LOG("Import done !");
+	return ret;
 }
 
 void BKEngine::getBreakOffset(XmlElement* tag, String geometryName, Array<geometryBreaks>* breaks)
@@ -936,63 +961,72 @@ void BKEngine::importMVR(File f)
 					for (int indexLayer = 0; indexLayer < layersNode->getNumChildElements(); indexLayer++) {
 						auto layerNode = layersNode->getChildElement(indexLayer);
 						if (layerNode->getTagName().toLowerCase() == "layer") {
-							auto childListNode = layerNode->getChildElement(0);
-							if (childListNode != nullptr && childListNode->getTagName().toLowerCase() == "childlist") {
-								int nChildren = childListNode->getNumChildElements();
-								for (int indexChild = 0; indexChild < nChildren; indexChild++) {
-									auto child = childListNode->getChildElement(indexChild);
-									String childType = child->getTagName().toLowerCase();
-									if (childType == "fixture") {
-										bool valid = true;
-										int id = 0;
-										String spec = "";
-										String mode = "";
-										if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
-										else { valid = false; }
-										if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
-										else { valid = false; }
-										String name = child->getStringAttribute("name");
+							for (int indexLayer2 = 0; indexLayer2 < layerNode->getNumChildElements(); indexLayer2++) {
+								auto childListNode = layerNode->getChildElement(indexLayer2);
+								if (childListNode != nullptr && childListNode->getTagName().toLowerCase() == "childlist") {
+									int nChildren = childListNode->getNumChildElements();
+									for (int indexChild = 0; indexChild < nChildren; indexChild++) {
+										auto child = childListNode->getChildElement(indexChild);
+										String childType = child->getTagName().toLowerCase();
+										if (childType == "fixture") {
+											bool valid = true;
+											int id = 0;
+											String spec = "";
+											String mode = "";
+											if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
+											else { valid = false; }
+											if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
+											else { valid = false; }
+											String name = child->getStringAttribute("name");
 
-										id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
-										if (id == 0) {
-											id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
-										}
-
-										if (valid) {
-
+											id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
 											if (id == 0) {
-												id = 1000;
-												while (fixturesMap.contains(id)) {
-													id++;
+												id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
+											}
+
+											if (valid) {
+
+												if (id == 0) {
+													id = 1000;
+													while (fixturesMap.contains(id)) {
+														id++;
+													}
 												}
-											}
 
-											String ftName = spec + " - " + mode;
-											FixtureType* ft = nullptr;
-											if (!fixtureTypesMap.contains(ftName)) {
-												ft = FixtureTypeManager::getInstance()->addItem();
-												ft->setNiceName(ftName);
-												fixtureTypesMap.set(ftName, ft);
-											}
-											ft = fixtureTypesMap.getReference(ftName);
+												String ftName = spec + " - " + mode;
+												FixtureType* ft = nullptr;
+												if (!fixtureTypesMap.contains(ftName)) {
+													int gdtfIndex = archive->getIndexOfFileName(spec);
+													if (gdtfIndex != -1) {
+														ft = importGDTF(archive->createStreamForEntry(gdtfIndex), mode);
 
-											if (!fixturesMap.contains(id)) {
-												Fixture* fixt = FixtureManager::getInstance()->addItem();
-												fixturesMap.set(id, fixt);
-												fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
-												fixt->id->setValue(id);
-												fixt->userName->setValue(name);
-												fixt->devTypeParam->setValueFromTarget(ft);
-											}
+													}
+													if (ft == nullptr) {
+														ft = FixtureTypeManager::getInstance()->addItem();
+														ft->setNiceName(ftName);
+													}
+													fixtureTypesMap.set(ftName, ft);
+												}
+												ft = fixtureTypesMap.getReference(ftName);
 
-											if (child->getChildByName("Addresses") != nullptr) {
-												auto addressesNode = child->getChildByName("Addresses");
-												std::shared_ptr<Array<int>> fixtAddresses = fixtureAddressesMap.getReference(id);
-												for (int indexAddress = 0; indexAddress < addressesNode->getNumChildElements(); indexAddress++) {
-													auto tag = addressesNode->getChildElement(indexAddress);
-													int address = tag->getAllSubText().trim().getIntValue();
-													maxAddress = jmax(address, maxAddress);
-													fixtAddresses->addIfNotAlreadyThere(address);
+												if (!fixturesMap.contains(id)) {
+													Fixture* fixt = FixtureManager::getInstance()->addItem();
+													fixturesMap.set(id, fixt);
+													fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
+													fixt->id->setValue(id);
+													fixt->userName->setValue(name);
+													fixt->devTypeParam->setValueFromTarget(ft);
+												}
+
+												if (child->getChildByName("Addresses") != nullptr) {
+													auto addressesNode = child->getChildByName("Addresses");
+													std::shared_ptr<Array<int>> fixtAddresses = fixtureAddressesMap.getReference(id);
+													for (int indexAddress = 0; indexAddress < addressesNode->getNumChildElements(); indexAddress++) {
+														auto tag = addressesNode->getChildElement(indexAddress);
+														int address = tag->getAllSubText().trim().getIntValue();
+														maxAddress = jmax(address, maxAddress);
+														fixtAddresses->addIfNotAlreadyThere(address);
+													}
 												}
 											}
 										}

@@ -92,6 +92,8 @@ public:
 	void importMochi(File f);
 	void importMochi(var data);
 	void importGDTF(File f);
+	FixtureType* importGDTF(InputStream* stream, String modeName);
+	FixtureType* importGDTFContent(InputStream* stream, String modeName);
 	void importMVR(File f);
 	void exportSelection();
 
