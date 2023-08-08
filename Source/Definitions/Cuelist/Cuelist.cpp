@@ -1005,6 +1005,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	else if (cv -> TSStart > now) {
 		localValue = valueFrom; 
 		keepUpdate = true;
+		Brain::getInstance()->pleaseUpdate(this);
 	}
 	else if (cv -> TSEnd <= now) {
 		localValue = valueTo;
