@@ -605,6 +605,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	Encoders::getInstance()->updateChannels();
 	EncodersMult::getInstance()->targetChanged();
 
+	ConductorInfos::getInstance()->linkFadeSlider();
+
 	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
 		Fixture* f = FixtureManager::getInstance()->items[i];
 		for (int p = 0; p < f->patchs.items.size(); p++) {
@@ -1129,6 +1131,9 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 		VirtualFaderColGrid::getInstance()->initCells();
 	}
 	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor) {
+		if (p == conductorCuelistId) {
+			ConductorInfos::getInstance()->linkFadeSlider();
+		}
 		ConductorInfos::getInstance()->repaint();
 	} else if (p == encodersNumber) {
 		Encoders::getInstance()->initEncoders();

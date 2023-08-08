@@ -42,7 +42,7 @@ void ConductorInfos::paint (juce::Graphics& g)
     float titleSize = engine->conductorTitleSize->getValue();
 
     float w = getLocalBounds().getWidth();
-    float h = getLocalBounds().getHeight();
+    float h = getLocalBounds().getHeight() - 20;
 
     float currentCueHeight = titleSize +10;
     float nextCueHeight = textSize +10;
@@ -106,7 +106,6 @@ void ConductorInfos::paint (juce::Graphics& g)
     }
 
 
-
 }
 
 void ConductorInfos::resized()
@@ -123,4 +122,35 @@ void ConductorInfos::resized()
     else {
         targetId.setBounds(0, 0, h, h);
     }
+
+    if (currentFade != nullptr) {
+        currentFade->setBounds(0,h-20,w,20);
+    }
+}
+
+void ConductorInfos::linkFadeSlider()
+{
+    if (currentFade != nullptr) {
+        removeChildComponent(currentFade);
+    }
+
+    currentFade = nullptr;
+
+    int targetCueId = engine->conductorCuelistId->getValue();
+    Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+    if (target == nullptr) {
+        return;
+    }
+
+    currentFade = target->currentFade->createSlider();
+    currentFade->showLabel = false;
+    currentFade->showValue = false;
+    currentFade->customFGColor = Colour(96, 96, 96);
+    currentFade->customBGColor = Colour(32, 32, 32);
+    currentFade->useCustomFGColor = true;
+    currentFade->useCustomBGColor = true;
+
+
+    addAndMakeVisible(currentFade);
+    repaint();
 }
