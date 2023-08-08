@@ -18,6 +18,7 @@
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
+#include "UI/ConductorInfos.h"
 
 juce_ImplementSingleton(Brain);
 
@@ -389,9 +390,17 @@ void Brain::unregisterPreset(Preset* p) {
 }
 
 void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
+    int conductorId = dynamic_cast<BKEngine*>(Engine::mainEngine)->conductorCuelistId->intValue();
+    bool relinkConductor = false;
+
     int askedId = id;
     //LOG("register Cuelist");
     if (cuelists.getReference(id) == p) { return; }
+
+    if (cuelists.contains(conductorId) && cuelists.getReference(conductorId) == p) {
+        relinkConductor = true;
+    }
+
     if (cuelists.containsValue(p)) {
         cuelists.removeValue(p);
     }
@@ -415,6 +424,14 @@ void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
     p->id->setValue(id);
     p->registeredId = id;
     if (id != askedId) {
+    }
+
+    if (id == dynamic_cast<BKEngine*>(Engine::mainEngine)->conductorCuelistId->intValue()) {
+        ConductorInfos::getInstance()->linkFadeSlider();
+    }
+
+    if (conductorId == id || relinkConductor) {
+        ConductorInfos::getInstance()->linkFadeSlider();
     }
 }
 

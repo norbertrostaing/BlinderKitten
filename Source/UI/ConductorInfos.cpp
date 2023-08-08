@@ -22,6 +22,10 @@ ConductorInfos::ConductorInfos()
 
 ConductorInfos::~ConductorInfos()
 {
+    if (currentFade != nullptr) {
+        removeChildComponent(currentFade);
+        delete currentFade;
+    }
 }
 
 void ConductorInfos::paint (juce::Graphics& g)
@@ -132,8 +136,8 @@ void ConductorInfos::linkFadeSlider()
 {
     if (currentFade != nullptr) {
         removeChildComponent(currentFade);
+        delete currentFade;
     }
-
     currentFade = nullptr;
 
     int targetCueId = engine->conductorCuelistId->getValue();
@@ -150,7 +154,6 @@ void ConductorInfos::linkFadeSlider()
     currentFade->useCustomFGColor = true;
     currentFade->useCustomBGColor = true;
 
-
     addAndMakeVisible(currentFade);
-    repaint();
+    resized();
 }
