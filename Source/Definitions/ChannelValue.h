@@ -33,4 +33,6 @@ public:
     bool isEnded = false;
     bool isOverWritten = false;
     float currentPosition = 0;
+
+    bool isTransitionOut = false;
 };

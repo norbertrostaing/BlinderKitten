@@ -265,8 +265,17 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 							position = fadeRepartCurve->getValueAtPosition(position);
 							fade = jmap(position, fadeFrom, fadeTo);
 						}
+
 						finalValue->fade = fade;
 						finalValue->fadeCurve = &timing.curveFade;
+						if (fchan->isHTP) {
+							if (callingCuelist != nullptr && callingCue != nullptr) {
+								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								if (currentCuelistVal != nullptr && currentCuelistVal->endValue > finalValue->endValue) {
+									finalValue->isTransitionOut = true;
+								}
+							}
+						}
 						double tempTiming = (delay + fade);
 						maxTiming = std::max(maxTiming, tempTiming);
 					}

@@ -26,7 +26,7 @@ public:
 
     CueManager cues;
     bool isDeleting = false;
-
+    bool transitionRunning = false;
 
     IntParameter* id;
     IntParameter* layerId;
@@ -83,12 +83,20 @@ public:
     float lastHTPLevel = -1;
     float lastLTPLevel = -1;
     FloatParameter* FlashLevel;
+
     String currentHTPLevelController = "";
     String currentLTPLevelController = "";
     String currentFlashLevelController = "";
+    String currentCrossFadeController = "";
+    String currentUpFadeController = "";
+    String currentDownFadeController = "";
+
     String nextHTPLevelController = "";
     String nextLTPLevelController = "";
     String nextFlashLevelController = "";
+    String nextCrossFadeController = "";
+    String nextUpFadeController = "";
+    String nextDownFadeController = "";
 
     bool pleaseUpdateHTPs = false;
     bool pleaseUpdateLTPs = false;
@@ -113,6 +121,13 @@ public:
     TargetParameter* nextCue;
 
     FloatParameter* currentFade;
+    FloatParameter* upFadeController;
+    FloatParameter* downFadeController;
+    FloatParameter* crossFadeController;
+    bool upFadeCanMove = true;
+    bool downFadeCanMove = true;
+    bool crossFadeCanMove = true;
+
 
     Trigger* renumberCuesBtn;
 
@@ -173,6 +188,7 @@ public:
 
     void updateHTPs();
     void updateLTPs();
+    void updateAllChannels();
 
     void renumberCues();
 
@@ -180,6 +196,11 @@ public:
     void setLTPLevel(float level);
     void setFlashLevel(float level);
     void setChaserSpeed(float level);
+
+    bool stopTransition = false;
+    double currentManualInTransition = 0;
+    double currentManualOutTransition = 0;
+    void manualTransition(float ratioIn, float ratioOut);
 
     void showLoad();
     void showLoadAndGo();

@@ -19,7 +19,13 @@ public:
     CuelistAction(var params = var());
     ~CuelistAction();
 
-    enum ActionType { CL_GO, CL_GOBACK, CL_GOINSTANT, CL_GOBACKINSTANT, CL_OFF, CL_HTPLEVEL, CL_LTPLEVEL, CL_FLASH, CL_FLASHTIMED, CL_SWOP, CL_SWOPTIMED, CL_LOAD, CL_LOADANDGO, CL_FLASHLEVEL, CL_GORANDOM, CL_TOGGLE, CL_GOALLLOADED, CL_CHASERSPEED, CL_CHASERTAPTEMPO};
+    enum ActionType {   CL_GO, CL_GOBACK, CL_GOINSTANT, CL_GOBACKINSTANT, CL_OFF, 
+                        CL_HTPLEVEL, CL_LTPLEVEL, CL_FLASHLEVEL, 
+                        CL_FLASH, CL_FLASHTIMED, CL_SWOP, CL_SWOPTIMED, 
+                        CL_LOAD, CL_LOADANDGO, CL_GORANDOM, CL_TOGGLE, CL_GOALLLOADED, 
+                        CL_CHASERSPEED, CL_CHASERTAPTEMPO, 
+                        CL_CROSSFADE, CL_UPFADE, CL_DOWNFADE
+    };
     ActionType actionType;
     IntParameter* cuelistId;
     FloatParameter* cueId;

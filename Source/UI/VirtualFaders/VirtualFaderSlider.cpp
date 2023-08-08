@@ -47,6 +47,9 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	cuelistAction->addOption("Flash Level", "flashlevel");
 	cuelistAction->addOption("LTP Level", "ltplevel");
 	cuelistAction->addOption("Chaser Speed", "speed");
+	cuelistAction->addOption("Cross fade", "crossfade");
+	cuelistAction->addOption("Up fade", "upfade");
+	cuelistAction->addOption("Down fade", "downfade");
 
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Size", "size");
@@ -161,6 +164,9 @@ float VirtualFaderSlider::getTargetValue()
 					return 0;
 				}
 			}
+			if (action == "crossfade") { return targ->crossFadeController->getValue(); }
+			if (action == "upfade") { return targ->upFadeController->getValue(); }
+			if (action == "downfade") { return targ->downFadeController->getValue(); }
 		}
 	}
 	else if (targType == "effect") {
@@ -251,8 +257,20 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 				targ->LTPLevel->setValue(value);
 			}
 			if (action == "speed") {
-				value = isRelative ? (targ->chaserSpeed->floatValue()/ maxSpeed->floatValue())+value : value;
-				targ->chaserSpeed->setValue(value*maxSpeed->floatValue());
+				value = isRelative ? (targ->chaserSpeed->floatValue() / maxSpeed->floatValue()) + value : value;
+				targ->chaserSpeed->setValue(value * maxSpeed->floatValue());
+			}
+			if (action == "crossfade") {
+				value = isRelative ? targ->crossFadeController->floatValue() + value : value;
+				targ->crossFadeController->setValue(value);
+			}
+			if (action == "upfade") {
+				value = isRelative ? targ->upFadeController->floatValue() + value : value;
+				targ->upFadeController->setValue(value);
+			}
+			if (action == "downfade") {
+				value = isRelative ? targ->downFadeController->floatValue() + value : value;
+				targ->downFadeController->setValue(value);
 			}
 		}
 	}
@@ -476,6 +494,21 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 			}
 			if (action == "ltplevel") {
 				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "crossfade") {
+				if (origin == "" || targ->currentCrossFadeController == origin || abs(targ->crossFadeController->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "upfade") {
+				if (origin == "" || targ->currentUpFadeController == origin || abs(targ->upFadeController->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "downfade") {
+				if (origin == "" || targ->currentDownFadeController == origin || abs(targ->downFadeController->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}

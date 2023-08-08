@@ -212,6 +212,45 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         }
         break;
 
+    case CL_CROSSFADE:
+        if (isRelative) {
+            target->nextCrossFadeController = origin;
+            target->crossFadeController->setValue(target->crossFadeController->floatValue() + val);
+        }
+        else {
+            if (target->currentCrossFadeController == origin || abs(target->crossFadeController->floatValue() - val) < 0.05) {
+                target->nextCrossFadeController = origin;
+                target->crossFadeController->setValue(val);
+            }
+        }
+        break;
+
+    case CL_UPFADE:
+        if (isRelative) {
+            target->nextUpFadeController = origin;
+            target->upFadeController->setValue(target->upFadeController->floatValue() + val);
+        }
+        else {
+            if (target->currentUpFadeController == origin || abs(target->upFadeController->floatValue() - val) < 0.05) {
+                target->nextUpFadeController = origin;
+                target->upFadeController->setValue(val);
+            }
+        }
+        break;
+
+    case CL_DOWNFADE:
+        if (isRelative) {
+            target->nextDownFadeController = origin;
+            target->downFadeController->setValue(target->downFadeController->floatValue() + val);
+        }
+        else {
+            if (target->currentDownFadeController == origin || abs(target->downFadeController->floatValue() - val) < 0.05) {
+                target->nextCrossFadeController = origin;
+                target->downFadeController->setValue(val);
+            }
+        }
+        break;
+
 
     }
 

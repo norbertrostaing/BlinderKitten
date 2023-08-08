@@ -160,6 +160,16 @@ Cuelist::Cuelist(var params) :
 	currentFade->isControllableFeedbackOnly = true;
 	currentFade->isSavable = false;
 
+	upFadeController = addFloatParameter("up fade", "", 0, 0, 1);
+	upFadeController->isSavable = false;
+	upFadeController->hideInEditor = true;
+	downFadeController = addFloatParameter("down fade", "", 0, 0, 1);
+	downFadeController->isSavable = false;
+	downFadeController->hideInEditor = true;
+	crossFadeController = addFloatParameter("cross fade", "", 0, 0, 1);
+	crossFadeController->isSavable = false;
+	crossFadeController->hideInEditor = true;
+
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
 	// offFadeCurve = new Automation();
@@ -295,6 +305,49 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == nextCue || p == nextCueId) {
 		fillTexts();
+	}
+	if (p == upFadeController) {
+		currentUpFadeController = nextUpFadeController;
+		nextUpFadeController = "";
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+		if ((float)p->lastValue == 0 || upFadeCanMove) {
+			float in = upFadeController->floatValue();
+			float out = -1;
+
+			if (crossFadeCanMove) { in = jmax(in, crossFadeController->floatValue()); }
+
+			manualTransition(in, out);
+			upFadeCanMove = true;
+		}
+	}
+	if (p == downFadeController) {
+		currentDownFadeController = nextDownFadeController;
+		nextDownFadeController = "";
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+		if ((float)p->lastValue == 0 || downFadeCanMove) {
+			float in = -1;
+			float out = downFadeController->floatValue();
+
+			if (crossFadeCanMove) { out = jmax(out, crossFadeController->floatValue()); }
+
+			manualTransition(in, out);
+			downFadeCanMove = true;
+		}
+	}
+	if (p == crossFadeController) {
+		currentCrossFadeController = nextCrossFadeController;
+		nextCrossFadeController = "";
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+		if ((float)p->lastValue == 0 || crossFadeCanMove) {
+			float in = crossFadeController->floatValue();
+			float out = in;
+
+			if (upFadeCanMove) { in = jmax(in, upFadeController->floatValue()); }
+			if (downFadeCanMove) { out = jmax(out, downFadeController->floatValue()); }
+
+			manualTransition(in, out);
+			crossFadeCanMove = true;
+		}
 	}
 }
 
@@ -435,12 +488,22 @@ void Cuelist::go(float forcedDelay, float forcedFade) {
 
 void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	const MessageManagerLock mmLock;
-	double now = Time::getMillisecondCounterHiRes();;
+	double now = Time::getMillisecondCounterHiRes();
+	TSTransitionStart = now;
+	currentManualInTransition= 0;
+	currentManualOutTransition = 0;
+	stopTransition = false;
+	transitionRunning = true;
+	currentFade->setValue(0, false);
+	upFadeCanMove = false;
+	downFadeCanMove = false;
+	crossFadeCanMove = false;
+
 	isComputing.enter();
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	} 
-
+	
 
 	if ((float)chaserRunXTimes->getValue() > 0) {
 		if (cueA == nullptr && isChaser->getValue()) {
@@ -481,7 +544,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	}
 
 	cueA = c;
-	cueB = nullptr;
+	cueB = c;
 	nextCue->resetValue();
 	nextCueId->resetValue();
 	fillTexts();
@@ -515,6 +578,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				temp->TSInit = now;
 				temp->TSStart = now + (delay);
 				temp->TSEnd = temp->TSStart + (fade);
+				TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
 				temp->isEnded = false;
 				newActiveValues.set(it.getKey(), temp);
 				it.getKey()->cuelistOnTopOfStack(this);
@@ -562,6 +626,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				temp->TSEnd = temp->TSStart + (fade);
 			}
 			temp->isEnded = false;
+			TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
 			newActiveValues.set(it.getKey(), temp);
 			it.getKey()->cuelistOnTopOfStack(this);
 			Brain::getInstance()->pleaseUpdate(it.getKey());
@@ -575,6 +640,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			if (!newActiveValues.contains(it.getKey())) {
 				std::shared_ptr<ChannelValue> temp = it.getValue();
 				if (temp != nullptr && temp -> endValue != -1) {
+					temp->isTransitionOut = true;
 					float fadeTime = 0;
 					float delayTime = 0;
 					if (isChaser->getValue()) {
@@ -601,6 +667,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					temp->TSInit = now;
 					temp->TSStart = now + delay;
 					temp->TSEnd = now + fade + delay;
+					TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
 					temp->endValue = -1;
 					temp->startValue = temp->value;
 					temp->isEnded = false;
@@ -612,6 +679,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			}
 		}
 	}
+	
+	TSTransitionDuration = TSTransitionEnd - TSTransitionStart;
 	
 	for (auto it = newActiveValues.begin(); it != newActiveValues.end(); it.next()) {
 		activeValues.set(it.getKey(), it.getValue());
@@ -806,6 +875,7 @@ void Cuelist::update() {
 		}
 	}
 	currentFade->setValue(tempPosition);
+	transitionRunning = !isEnded;
 	if (tempPosition == 1 && cueA != nullptr) {
 		cueA->endTransition();
 	}
@@ -817,6 +887,11 @@ void Cuelist::update() {
 	} 
 	if (isEnded && wannaOff) {
 		kill(false);
+	}
+	if (isEnded) {
+		upFadeCanMove = false;
+		downFadeCanMove = false;
+		crossFadeCanMove = false;
 	}
 
 	if (wannaOffFlash) {
@@ -875,8 +950,13 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	float localValue = 0;
 	std::shared_ptr<ChannelValue> cv;
 	float faderLevel = 0;
-	cv = activeValues.getReference(fc);
 	if (!activeValues.contains(fc)) {return currentVal;}
+	cv = activeValues.getReference(fc);
+
+	if (stopTransition) {
+		double ratio = cv->isTransitionOut ? currentManualOutTransition : currentManualInTransition;
+		now = TSTransitionStart + (TSTransitionDuration * ratio);
+	}
 
 	faderLevel = (float)HTPLevel->getValue();
 
@@ -952,7 +1032,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		val = localValue;
 	}
 
-	if (keepUpdate) {
+	if (keepUpdate && !stopTransition) {
 		Brain::getInstance()->pleaseUpdate(fc);
 	}
 	return val;
@@ -1024,6 +1104,18 @@ void Cuelist::updateLTPs() {
 	}
 }
 
+void Cuelist::updateAllChannels()
+{
+	isComputing.enter();
+	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		SubFixtureChannel* chan = it.getKey();
+		if (chan != nullptr) {
+			Brain::getInstance()->pleaseUpdate(chan);
+		}
+	}
+	isComputing.exit();
+}
+
 
 void Cuelist::kill(bool forceRefreshChannels) {
 	wannaOff = true;
@@ -1061,6 +1153,22 @@ void Cuelist::setLTPLevel(float level) {
 
 void Cuelist::setChaserSpeed(float level) {
 	chaserSpeed->setValue(level);
+}
+
+void Cuelist::manualTransition(float ratioIn, float ratioOut)
+{
+	if (ratioIn == -1 && ratioOut == -1) {return;}
+	if (!transitionRunning) {
+		userGo();
+	}
+	stopTransition = true;
+	if (ratioIn != -1) { 
+		currentManualInTransition = ratioIn; 
+	}
+	if (ratioOut != -1) { 
+		currentManualOutTransition = ratioOut; 
+	}
+	updateAllChannels();
 }
 
 void Cuelist::showLoad()
