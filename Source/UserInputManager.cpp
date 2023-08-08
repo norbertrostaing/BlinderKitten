@@ -510,6 +510,23 @@ void UserInputManager::updateCommandLine() {
 	Encoders::getInstance()->updateCommandLine();
 }
 
+void UserInputManager::toggleHightlight()
+{
+	if (currentProgrammer != nullptr) {
+		bool hl = !currentProgrammer->highlightCurrentCommand->getValue();
+		currentProgrammer->highlightCurrentCommand->setValue(hl);
+	}
+}
+
+void UserInputManager::toggleBlind()
+{
+	if (currentProgrammer != nullptr) {
+		String val = currentProgrammer->editionMode->getValueData();
+		val = val == "blind" ? "notTimed" : "blind";
+		currentProgrammer->editionMode->setValueWithData(val);
+	}
+}
+
 String UserInputManager::toUserText(String s) {
 	if (s.containsOnly("1234567890.")) {return s;}
 	if (s == "group") { return "Group"; }

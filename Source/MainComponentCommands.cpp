@@ -53,6 +53,8 @@ namespace BlinderKittenCommandId
 	static const int keyMapper= 0x60308;
 	static const int keyAssistant = 0x60309;
 
+	static const int keyHighlight = 0x60320;
+	static const int keyBlind = 0x60321;
 
 	static const int key1 = 0x60401;
 	static const int key2 = 0x60402;
@@ -64,6 +66,9 @@ namespace BlinderKittenCommandId
 	static const int key8 = 0x60408;
 	static const int key9 = 0x60409;
 	static const int key0 = 0x60410;
+
+
+
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
@@ -241,6 +246,15 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		break;
 
 
+	case BlinderKittenCommandId::keyHighlight:
+		result.setInfo("Hightlight", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("h").getKeyCode(), ModifierKeys::noModifiers);
+		break;
+
+	case BlinderKittenCommandId::keyBlind:
+		result.setInfo("Blind", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("b").getKeyCode(), ModifierKeys::noModifiers);
+		break;
 
 
 
@@ -361,6 +375,9 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		BlinderKittenCommandId::keyEffect,
 		BlinderKittenCommandId::keyCarousel,
 		BlinderKittenCommandId::keyMapper,
+
+		BlinderKittenCommandId::keyHighlight,
+		BlinderKittenCommandId::keyBlind,
 
 		BlinderKittenCommandId::key1,
 		BlinderKittenCommandId::key2,
@@ -512,6 +529,9 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::keyEffect: {	UserInputManager::getInstance()->processInput("Effect"); }break;
 	case BlinderKittenCommandId::keyCarousel: {	UserInputManager::getInstance()->processInput("Carousel"); }break;
 	case BlinderKittenCommandId::keyMapper: {	UserInputManager::getInstance()->processInput("Mapper"); }break;
+
+	case BlinderKittenCommandId::keyHighlight: {UserInputManager::getInstance()->toggleHightlight(); }break;
+	case BlinderKittenCommandId::keyBlind: {	UserInputManager::getInstance()->toggleBlind(); }break;
 
 	case BlinderKittenCommandId::keyClear: {	UserInputManager::getInstance()->processInput("Clear"); }break;
 	case BlinderKittenCommandId::keyBackspace: {UserInputManager::getInstance()->processInput("Backspace"); }break;

@@ -238,18 +238,11 @@ void Encoders::buttonClicked(Button* b) {
         updateChannels();
     }
     else if (b == &HLBtn) {
-        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
-            bool hl = !UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->getValue();
-            UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->setValue(hl);
-        }
+        UserInputManager::getInstance()->toggleHightlight();
         updateChannels();
     }
     else if (b == &blindBtn) {
-        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
-            String val = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
-            val = val == "blind" ? "notTimed" : "blind";
-            UserInputManager::getInstance()->currentProgrammer->editionMode->setValueWithData(val);
-        }
+        UserInputManager::getInstance()->toggleBlind();
         updateChannels();
     }
     else

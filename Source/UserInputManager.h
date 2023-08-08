@@ -52,6 +52,9 @@ public:
     void redrawEncoders();
     void updateCommandLine();
 
+    void toggleHightlight();
+    void toggleBlind();
+
     String toUserText(String s);
     Programmer* getProgrammer(bool createIfNotThere);
 
