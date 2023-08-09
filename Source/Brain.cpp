@@ -97,6 +97,7 @@ void Brain::brainLoop() {
         return;
     }
 
+
     if (pleaseClearProgrammer) {
         pleaseClearProgrammer = false;
         if (Programmer* p = getProgrammerById(1)) {
@@ -219,37 +220,37 @@ void Brain::brainLoop() {
 
     if (virtualFadersNeedUpdate) {
         virtualFadersNeedUpdate = false;
-        VirtualFaderColGrid::getInstance()->updateSlidersValues();
+        MessageManager::callAsync([this]() {VirtualFaderColGrid::getInstance()->updateSlidersValues(); });
     }
 
     if (virtualFaderButtonsNeedUpdate) {
         virtualFaderButtonsNeedUpdate = false;
-        VirtualFaderColGrid::getInstance()->updateButtons();
+        MessageManager::callAsync([this]() {VirtualFaderColGrid::getInstance()->updateButtons(); });
     }
 
     if (virtualButtonsNeedUpdate) {
         virtualButtonsNeedUpdate = false;
-        VirtualButtonGrid::getInstance()->updateButtons();
+        MessageManager::callAsync([this]() {VirtualButtonGrid::getInstance()->updateButtons(); });
     }
 
     if (encoderValuesNeedRefresh) {
         encoderValuesNeedRefresh = false;
-        Encoders::getInstance()->updateEncodersValues();
+        MessageManager::callAsync([this]() {Encoders::getInstance()->updateEncodersValues(); });
     }
 
     if (cuelistGridNeedRefresh) {
         cuelistGridNeedRefresh = false;
-        CuelistGridView::getInstance()->updateButtons();
+        MessageManager::callAsync([this]() {CuelistGridView::getInstance()->updateButtons(); });
     }
 
     if (carouselGridNeedRefresh) {
         carouselGridNeedRefresh = false;
-        CarouselGridView::getInstance()->updateButtons();
+        MessageManager::callAsync([this]() {CarouselGridView::getInstance()->updateButtons(); });
     }
 
     if (effectGridNeedRefresh) {
         effectGridNeedRefresh = false;
-        EffectGridView::getInstance()->updateButtons();
+        MessageManager::callAsync([this]() {EffectGridView::getInstance()->updateButtons(); });
     }
 
     //double delta = Time::getMillisecondCounterHiRes() - now;
