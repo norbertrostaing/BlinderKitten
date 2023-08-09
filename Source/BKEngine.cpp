@@ -823,69 +823,73 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					ft->setNiceName(fixtureName + " - " + modeName);
 
 					Array<tempChannel> tempChannels;
-					auto modeRelations = modeNode->getChildByName("Relations");
 					Array<String> getMasterDimmer;
 					HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
-					for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
-						getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
+					auto modeRelations = modeNode->getChildByName("Relations");
+					if (modeRelations != nullptr) {
+						for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
+							getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
+						}
 					}
-					auto modeChannels = modeNode->getChildByName("DMXChannels");
 					XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
 					Array<String> subFixtureNames;
-					for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
-						auto dmxChannelNode = modeChannels->getChildElement(iChan);
-						auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
-						String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
-						String attribute = logicalChannelNode->getStringAttribute("Attribute");
-						String geometry = dmxChannelNode->getStringAttribute("Geometry");
-						String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
-						int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
-						int dmxAdress = 0;
-						int resolution = 0;
-						if (DMXOffset == "") {
-							// virtual
-						}
-						else if (DMXOffset.indexOf(",") != -1) {
-							dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
-							resolution = 2;
-						}
-						else {
-							dmxAdress = DMXOffset.getIntValue();
-							resolution = 1;
-						}
-						Array<geometryBreaks> breaks;
+					auto modeChannels = modeNode->getChildByName("DMXChannels");
+					if (modeChannels != nullptr) {
+						for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
+							auto dmxChannelNode = modeChannels->getChildElement(iChan);
+							auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
+							String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
+							String attribute = logicalChannelNode->getStringAttribute("Attribute");
+							String geometry = dmxChannelNode->getStringAttribute("Geometry");
+							String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
+							int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
+							int dmxAdress = 0;
+							int resolution = 0;
+							if (DMXOffset == "") {
+								// virtual
+							}
+							else if (DMXOffset.indexOf(",") != -1) {
+								dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
+								resolution = 2;
+							}
+							else {
+								dmxAdress = DMXOffset.getIntValue();
+								resolution = 1;
+							}
+							Array<geometryBreaks> breaks;
 
-						getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
-						if (dmxAdress > 0) {
-							if (breaks.size() > 0) {
-								for (int i = 0; i < breaks.size(); i++) {
-									subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
+							getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
+							if (dmxAdress > 0) {
+								if (breaks.size() > 0) {
+									for (int i = 0; i < breaks.size(); i++) {
+										subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
+										tempChannel tc;
+										tc.attribute = attribute;
+										tc.resolution = resolution;
+										tc.subFixtId = subFixtureNames.indexOf(breaks[i].name) + 1;
+										tc.initialFunction = initialFunction;
+										int index = dmxAdress;
+										index += breaks[i].offset;
+										index -= 2;
+										while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+										tempChannels.set(index, tc);
+									}
+								}
+								else {
 									tempChannel tc;
 									tc.attribute = attribute;
 									tc.resolution = resolution;
-									tc.subFixtId = subFixtureNames.indexOf(breaks[i].name) + 1;
 									tc.initialFunction = initialFunction;
-									int index = dmxAdress;
-									index += breaks[i].offset;
-									index -= 2;
+									if (subFixtureNames.indexOf(geometry) == -1) { subFixtureNames.add(geometry); }
+									tc.subFixtId = subFixtureNames.indexOf(geometry) + 1;
+									int index = dmxAdress - 1;
 									while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
 									tempChannels.set(index, tc);
 								}
 							}
-							else {
-								tempChannel tc;
-								tc.attribute = attribute;
-								tc.resolution = resolution;
-								tc.initialFunction = initialFunction;
-								if (subFixtureNames.indexOf(geometry) == -1) { subFixtureNames.add(geometry); }
-								tc.subFixtId = subFixtureNames.indexOf(geometry) + 1;
-								int index = dmxAdress - 1;
-								while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
-								tempChannels.set(index, tc);
-							}
 						}
 					}
-					
+
 					// got all channels
 					for (int i = 0; i < tempChannels.size(); i++) {
 						if (tempChannels[i].attribute != "") {
