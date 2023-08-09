@@ -545,9 +545,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	cueA = c;
 	cueB = c;
-	nextCue->resetValue();
-	nextCueId->resetValue();
-	fillTexts();
+
 	if (c != nullptr) {
 		isCuelistOn->setValue(true);
 		wannaOff = false;
@@ -693,6 +691,12 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	}
 	isComputing.exit();
+
+	const MessageManagerLock mmLock;
+	nextCue->resetValue();
+	nextCueId->resetValue();
+	fillTexts();
+
 	return ;
 }
 
