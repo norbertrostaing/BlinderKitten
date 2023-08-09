@@ -78,6 +78,7 @@
 #include "UserInputManager.h"
 #include "UI/DMXChannelView.h"
 #include "Assistant/Assistant.h"
+#include "UI/CuelistLoadWindow.h"
 
 ControllableContainer* getAppSettings();
 
@@ -316,6 +317,7 @@ BKEngine::~BKEngine()
 	Encoders::deleteInstance();
 	InputPanel::deleteInstance();
 	Assistant::deleteInstance();
+	CuelistLoadWindow::deleteInstance();
 
 	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();
@@ -712,7 +714,9 @@ void BKEngine::importGDTF(File f)
 		return;
 	}
 
-	importGDTFContent(archive->createStreamForEntry(descIndex), "");
+	InputStream* stream = archive->createStreamForEntry(descIndex);
+	importGDTFContent(stream, "");
+	stream->~InputStream();
 }
 
 FixtureType* BKEngine::importGDTF(InputStream* stream, String modeName)
@@ -1002,7 +1006,9 @@ void BKEngine::importMVR(File f)
 												if (!fixtureTypesMap.contains(ftName)) {
 													int gdtfIndex = archive->getIndexOfFileName(spec);
 													if (gdtfIndex != -1) {
-														ft = importGDTF(archive->createStreamForEntry(gdtfIndex), mode);
+														InputStream* s = archive->createStreamForEntry(gdtfIndex);
+														ft = importGDTF(s, mode);
+														s->~InputStream();
 
 													}
 													if (ft == nullptr) {
