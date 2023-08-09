@@ -487,7 +487,7 @@ void Cuelist::go(float forcedDelay, float forcedFade) {
 }
 
 void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
-	const MessageManagerLock mmLock;
+	//const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();
 	TSTransitionStart = now;
 	currentManualInTransition= 0;
