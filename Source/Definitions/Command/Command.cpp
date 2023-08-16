@@ -278,6 +278,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						}
 						double tempTiming = (delay + fade);
 						maxTiming = std::max(maxTiming, tempTiming);
+
+						finalValue->htpOverride = cv -> HTPOverride->boolValue();
 					}
 				}
 

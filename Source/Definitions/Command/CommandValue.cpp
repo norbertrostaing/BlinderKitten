@@ -36,6 +36,8 @@ CommandValue::CommandValue(var params) :
     presetIdTo = addIntParameter("ID To", "ID of the preset for the last element", 0, 0);
 
     symmetry = addBoolParameter("Symmetry", "Apply value with symmetry ?", false);
+
+    HTPOverride = addBoolParameter("HTP Override", "If checked, HTP channels will be computed as LTP.", false);
     updateDisplay();
 };
 

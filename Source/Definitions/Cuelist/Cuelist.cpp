@@ -594,7 +594,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			std::shared_ptr<ChannelValue> temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
-				if (it.getKey()->isHTP) {
+				if (it.getKey()->isHTP && !temp->htpOverride) {
 					if (current != nullptr) {
 						double fader = HTPLevel->getValue();
 						temp->startValue = current->endValue*fader;
@@ -956,6 +956,10 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	float faderLevel = 0;
 	if (!activeValues.contains(fc)) {return currentVal;}
 	cv = activeValues.getReference(fc);
+
+	if (cv->htpOverride) {
+		HTP = false;
+	}
 
 	if (stopTransition) {
 		double ratio = cv->isTransitionOut ? currentManualOutTransition : currentManualInTransition;

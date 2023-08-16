@@ -37,6 +37,8 @@ class CommandValue:
     FloatParameter* valueTo;
     BoolParameter* symmetry;
 
+    BoolParameter* HTPOverride;
+
     void updateDisplay();
 
     void afterLoadJSONDataInternal();

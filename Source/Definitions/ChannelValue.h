@@ -35,4 +35,5 @@ public:
     float currentPosition = 0;
 
     bool isTransitionOut = false;
+    bool htpOverride = false;
 };
