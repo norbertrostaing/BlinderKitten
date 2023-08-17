@@ -100,6 +100,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/DMXChannelView_4a36d235.o \
   $(JUCE_OBJDIR)/Encoders_6bf10993.o \
   $(JUCE_OBJDIR)/InputPanel_276fbbd6.o \
+  $(JUCE_OBJDIR)/LayoutViewer_b08c5698.o \
   $(JUCE_OBJDIR)/list_ports_linux_203b2613.o \
   $(JUCE_OBJDIR)/list_ports_osx_d93ade33.o \
   $(JUCE_OBJDIR)/list_ports_win_e6502c6b.o \
@@ -168,6 +169,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/GroupManager_c56377f6.o \
   $(JUCE_OBJDIR)/GroupManagerUI_3b65cc4a.o \
   $(JUCE_OBJDIR)/InterfaceIncludes_a0d5be60.o \
+  $(JUCE_OBJDIR)/BKPath_ef1d6e62.o \
+  $(JUCE_OBJDIR)/Layout_4da3e0c1.o \
+  $(JUCE_OBJDIR)/LayoutManager_d8bf6836.o \
+  $(JUCE_OBJDIR)/LayoutManagerUI_e786ac8a.o \
   $(JUCE_OBJDIR)/Mapper_c6bc78e1.o \
   $(JUCE_OBJDIR)/MapperManager_23716c16.o \
   $(JUCE_OBJDIR)/MapperManagerUI_4dc7386a.o \
@@ -374,6 +379,11 @@ $(JUCE_OBJDIR)/Encoders_6bf10993.o: ../../Source/UI/Encoders.cpp
 $(JUCE_OBJDIR)/InputPanel_276fbbd6.o: ../../Source/UI/InputPanel.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling InputPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LayoutViewer_b08c5698.o: ../../Source/UI/LayoutViewer.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LayoutViewer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/list_ports_linux_203b2613.o: ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc
@@ -714,6 +724,26 @@ $(JUCE_OBJDIR)/GroupManagerUI_3b65cc4a.o: ../../Source/Definitions/Group/GroupMa
 $(JUCE_OBJDIR)/InterfaceIncludes_a0d5be60.o: ../../Source/Definitions/Interface/InterfaceIncludes.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling InterfaceIncludes.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKPath_ef1d6e62.o: ../../Source/Definitions/Layout/BKPath/BKPath.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BKPath.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Layout_4da3e0c1.o: ../../Source/Definitions/Layout/Layout.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Layout.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LayoutManager_d8bf6836.o: ../../Source/Definitions/Layout/LayoutManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LayoutManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LayoutManagerUI_e786ac8a.o: ../../Source/Definitions/Layout/LayoutManagerUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LayoutManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Mapper_c6bc78e1.o: ../../Source/Definitions/Mapper/Mapper.cpp

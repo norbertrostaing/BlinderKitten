@@ -39,6 +39,7 @@
 #include "./Definitions/Carousel/CarouselManager.h"
 #include "./Definitions/Mapper/MapperManager.h"
 #include "./Definitions/Multiplicator/MultiplicatorManager.h"
+#include "./Definitions/Layout/LayoutManager.h"
 
 #include "./Definitions/DataTransferManager/DataTransferManager.h"
 #include "./Definitions/Fixture/FixtureMultiEditor.h"
@@ -57,6 +58,7 @@
 #include "UI/Encoders.h"
 #include "UI/EncodersMult/EncodersMult.h"
 #include "UI/InputPanel.h"
+#include "UI/LayoutViewer.h"
 
 #include "UI/GridView/FixtureGridView.h"
 #include "UI/GridView/GroupGridView.h"
@@ -198,6 +200,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(MapperManager::getInstance());
 	addChildControllableContainer(MultiplicatorManager::getInstance());
+	addChildControllableContainer(LayoutManager::getInstance());
 
 	addChildControllableContainer(VirtualButtonManager::getInstance());
 	addChildControllableContainer(VirtualFaderColManager::getInstance());
@@ -268,8 +271,6 @@ BKEngine::~BKEngine()
 
 	ArtnetSocket::getInstance()->stopThread(100);
 
-
-
 	DataTransferManager::deleteInstance();
 	FixtureMultiEditor::deleteInstance();
 
@@ -279,6 +280,7 @@ BKEngine::~BKEngine()
 	VirtualFaderColGrid::deleteInstance();
 
 	EncodersMult::deleteInstance();
+	LayoutManager::deleteInstance();
 	MultiplicatorManager::deleteInstance();
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
@@ -364,6 +366,7 @@ void BKEngine::clearInternal()
 	InterfaceManager::getInstance()->clear();
 	TimingPresetManager::getInstance()->clear();
 	CurvePresetManager::getInstance()->clear();
+	LayoutManager::getInstance()->clear();
 
 	VirtualButtonGrid::getInstance()->initCells();
 	VirtualFaderColGrid::getInstance()->initCells();
@@ -439,6 +442,9 @@ var BKEngine::getJSONData()
 	var vfData = VirtualFaderColManager::getInstance()->getJSONData();
 	if (!vfData.isVoid() && vfData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, vfData);
 
+	var layData = LayoutManager::getInstance()->getJSONData();
+	if (!layData.isVoid() && layData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, layData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -472,6 +478,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* carTask = loadingTask->addTask("Carousels");
 	ProgressTask* trackTask = loadingTask->addTask("Mappers");
 	ProgressTask* multTask = loadingTask->addTask("Multiplicators");
+	ProgressTask* layTask = loadingTask->addTask("Layouts");
 	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
 	ProgressTask* vfTask = loadingTask->addTask("Virtual faders");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
@@ -557,6 +564,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	MultiplicatorManager::getInstance()->loadJSONData(data.getProperty(MultiplicatorManager::getInstance()->shortName, var()));
 	multTask->setProgress(1);
 	multTask->end();
+
+	layTask->start();
+	LayoutManager::getInstance()->loadJSONData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
+	layTask->setProgress(1);
+	layTask->end();
 
 	vbTask->start();
 	VirtualButtonManager::getInstance()->loadJSONData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));

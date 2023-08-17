@@ -17,6 +17,7 @@
 #include "Definitions/Carousel/CarouselManagerUI.h"
 #include "Definitions/Mapper/MapperManagerUI.h"
 #include "Definitions/Multiplicator/MultiplicatorManagerUI.h"
+#include "Definitions/Layout/LayoutManagerUI.h"
 #include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI/EncodersMult/EncodersMultUI.h"
@@ -38,6 +39,7 @@
 #include "UI/ConductorInfos.h"
 #include "UI/BKColorPicker.h"
 #include "UI/DMXChannelView.h"
+#include "UI/LayoutViewer.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -120,6 +122,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Mappers", &MapperManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Multiplicators", &MultiplicatorManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Layouts", &LayoutManagerUI::create));
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders Overview", &EncodersMultUI::create));
@@ -140,6 +143,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Conductor Infos", &ConductorInfosUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Color Picker", &BKColorPickerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("DMX Tester", &DMXChannelView::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Layout Viewer", &LayoutViewer::create));
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Interfaces", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Channels config", "Lists");
@@ -155,6 +159,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Carousels", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Mappers", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Multiplicators", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Layouts", "Lists");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Encoders", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Encoders Overview", "Panels");
@@ -173,6 +178,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Conductor Infos", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Color Picker", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("DMX Tester", "Panels");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Layout Viewer", "Panels");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Outliner", "");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Dashboard", "");
