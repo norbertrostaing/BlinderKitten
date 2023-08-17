@@ -38,6 +38,7 @@ class BKPath:
     EnumParameter* gridOrientation;
     BoolParameter* gridZigZag;
     BoolParameter* gridInverseRows;
+    Array<std::shared_ptr<Point<float>>> gridPath;
 
     BoolParameter* spreadSubFixtures;
     CommandSelectionManager selection;

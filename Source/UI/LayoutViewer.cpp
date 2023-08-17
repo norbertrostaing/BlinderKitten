@@ -100,6 +100,7 @@ void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)
 void LayoutViewer::paint(Graphics& g)
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
+	g.fillAll(Colour(0, 0, 0));
 
 	// ajouter liste déroulante pour choisir le layout
 	if (selectedLayout == nullptr) {
@@ -146,7 +147,6 @@ void LayoutViewer::paint(Graphics& g)
 	}
 
 	//g.setColour(Colour(64,64,64));
-	g.fillAll(Colour(0, 0, 0));
 	//g.fillRect(originX, originY, width, height);
 	g.reduceClipRegion(originX, originY, width, height);
 	g.setOrigin(originX, originY);
@@ -175,7 +175,57 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X-halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+			if (!p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+		}
+		if (type == BKPath::PATH_GRID) {
+			if (true) {
+				LOG(p->gridPath.size());
+				for (int i = 0; i < p->gridPath.size() - 1; i++) {
+					float fromX = jmap(p->gridPath[i]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float fromY = jmap(p->gridPath[i]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float toX = jmap(p->gridPath[i + 1]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float toY = jmap(p->gridPath[i + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.setColour(juce::Colours::orange);
+					Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
+					g.drawLine(line, 0.5f);
+				}
+			}
+
+
+			if (p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				float lastX = 0; 
+				float lastY = 0;
+				bool tracePath = false;
+				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+
+					tracePath = true;
+					lastX = X;
+					lastY = Y;
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+			if (!p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
 				}
 				p->isComputing.exit();
 			}

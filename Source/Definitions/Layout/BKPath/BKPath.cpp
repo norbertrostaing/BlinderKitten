@@ -25,8 +25,9 @@ BKPath::BKPath(var params) :
     lineEndPosition = addPoint2DParameter("End position", "");
 
     gridSize = addPoint2DParameter("Size", "Size of yout grid");
+    gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
     gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,0,360);
-    gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",1,1);
+    gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",2,2);
     gridOrientation = addEnumParameter("Orientation", "Grid orientation");
     gridOrientation->addOption("Left to right", GRID_LR)
         ->addOption("Right to left", GRID_RL)
@@ -84,7 +85,7 @@ void BKPath::computeData()
 
         for (int i = 0; i < subFixts.size(); i++) {
             Fixture* f = subFixts[i]->parentFixture;
-            std::shared_ptr<Vector3D<float>> vect = std::make_shared<Vector3D<float>>();
+            //std::shared_ptr<Vector3D<float>> vect = std::make_shared<Vector3D<float>>();
 
             float ratio = subFixts.size() > 1 ? (float)i / ((float)subFixts.size()-1) : 0.5;
             if (!spreadSubFixtures->boolValue()) {
@@ -97,7 +98,7 @@ void BKPath::computeData()
             temp.y += origin.y;
             subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
 
-            LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(temp.x)+"  y:" + String(temp.y));
+            // LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(temp.x)+"  y:" + String(temp.y));
 
             if (!fixtToPos.contains(f)) {
                 fixtToPos.set(f, std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
@@ -106,6 +107,89 @@ void BKPath::computeData()
 
     }
     else if (type == BKPath::PATH_GRID) {
+        Vector3D<float> currentPos(0, 0, 0);
+        Vector3D<float> deltaCol(0,0,0);
+        Vector3D<float> deltaRow(0, 0, 0);
+        Vector3D<float> deltaOrigin(0, 0, 0);
+        Vector3D<float> lineOrigin(0, 0, 0);
+
+        int nElements = spreadSubFixtures->boolValue() ? subFixts.size() : fixts.size();
+        int nPerRow = gridNumberOfElements->intValue();
+        int nRows = ceil(nElements/(float)nPerRow);
+
+        float gridWidth = gridSize->getValue()[0];
+        float gridHeight = gridSize->getValue()[1];
+
+        GridOrentation o = gridOrientation->getValueDataAsEnum<GridOrentation>();
+        if (o == GRID_LR) {
+            deltaCol.x = gridWidth / (float)(nPerRow - 1);
+            deltaRow.y = nRows > 1 ? gridHeight / (float)(nRows-1) : 0;
+        }
+        else if (o == GRID_RL) {
+            deltaCol.x = -gridWidth / (float)(nPerRow - 1);
+            deltaRow.y = nRows > 1 ? gridHeight / (float)(nRows-1) : 0;
+            deltaOrigin.x += gridWidth;
+        }
+        else if (o == GRID_TB) {
+            deltaRow.x = nRows > 1 ? gridWidth / (float)(nRows-1) : 0;
+            deltaCol.y = gridHeight / (float)(nPerRow - 1);
+        }
+        else if(o == GRID_BT) {
+            deltaRow.x = nRows > 1 ? gridWidth / (float)(nRows-1) : 0;
+            deltaCol.y = -gridHeight / (float)(nPerRow - 1);
+            deltaOrigin.y += gridHeight;
+        }
+
+        if (gridInverseRows->boolValue()) {
+            if (o == GRID_LR || o == GRID_RL) {
+                deltaOrigin.y += gridHeight;
+            }
+            else if (o == GRID_TB || o == GRID_BT) {
+                deltaOrigin.x += gridWidth;
+            }
+            deltaRow *= -1;
+        }
+
+
+        // apply rotations here
+        currentPos.x = origin.x + deltaOrigin.x;
+        currentPos.y = origin.y + deltaOrigin.y;
+        lineOrigin.x = currentPos.x;
+        lineOrigin.y = currentPos.y;
+
+        int currentCol = 0;
+        int currentRow = 0;
+
+        gridPath.clear();
+
+        if (spreadSubFixtures->boolValue()) {
+            for (int i = 0; i < subFixts.size(); i++) {
+                Fixture* f = subFixts[i]->parentFixture;
+                subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
+                //LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(currentPos.x)+"  y:" + String(currentPos.y));
+                gridPath.add(std::make_shared<Point<float>>(currentPos.x, currentPos.y));
+                if (!fixtToPos.contains(f)) {
+                    fixtToPos.set(f, std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
+                }
+                if (currentCol == nPerRow - 1) {
+                    currentCol = 0;
+                    currentRow += 1;
+                    if (!gridZigZag->boolValue()) {
+                        currentPos.x = lineOrigin.x;
+                        currentPos.y = lineOrigin.y;
+                    }
+                    else {
+                        deltaCol = -deltaCol;
+                    }
+                    currentPos += deltaRow;
+                    lineOrigin = currentPos;
+                }
+                else {
+                    currentCol += 1;
+                    currentPos += deltaCol;
+                }
+            }
+        }
 
     }
     isComputing.exit();
