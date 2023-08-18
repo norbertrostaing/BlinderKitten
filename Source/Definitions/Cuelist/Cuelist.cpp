@@ -32,7 +32,8 @@ Cuelist::Cuelist(var params) :
 	chaserGenContainer("Regenerate Chaser"),
 	offFadeCurve(),
 	chaseGenValue(),
-	cues()
+	cues(),
+	speedMult("Speed multiplicators")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -110,6 +111,7 @@ Cuelist::Cuelist(var params) :
 	chaserGenContainer.saveAndLoadRecursiveData = true;
 	chaseGenValue.saveAndLoadRecursiveData = true;
 
+
 	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
@@ -184,6 +186,8 @@ Cuelist::Cuelist(var params) :
 	offFadeCurve.selectItemWhenCreated = false;
 	offFadeCurve.editorCanBeCollapsed = true;
 	addChildControllableContainer(&offFadeCurve);
+
+	addChildControllableContainer(&speedMult);
 
 	//nextCueId = addFloatParameter("Next Cue", "Index of the next cue", - 1, -1);
 	cueA = nullptr; // static current cue
@@ -489,6 +493,19 @@ void Cuelist::go(float forcedDelay, float forcedFade) {
 void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	//const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();
+	if (TSLateCompensation > 0) {
+		bool compensate = false;
+		if (isChaser->boolValue()) {
+			compensate = chaserStepDuration > TSLateCompensation;
+		}
+		else {
+			compensate = true;
+		}
+		if (compensate) {
+			now -= TSLateCompensation;
+		}
+		TSLateCompensation = 0;
+	}
 	TSTransitionStart = now;
 	currentManualInTransition= 0;
 	currentManualOutTransition = 0;
@@ -498,6 +515,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	upFadeCanMove = false;
 	downFadeCanMove = false;
 	crossFadeCanMove = false;
+
+	float speedMultVal = speedMult.getValue();
+	if (speedMultVal < 0.00001) { speedMultVal = 0.00001; }
+	speedMultVal = 1/speedMultVal;
 
 	isComputing.enter();
 	if (cueA != nullptr) {
@@ -573,6 +594,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				}
 				float delay = forcedDelay != -1 ? forcedDelay : temp->delay;
 				float fade = forcedFade != -1 ? forcedFade : temp->fade;
+				delay *= speedMultVal;
+				fade *= speedMultVal;
 				temp->TSInit = now;
 				temp->TSStart = now + (delay);
 				temp->TSEnd = temp->TSStart + (fade);
@@ -613,13 +636,15 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			if (isChaser->getValue()) {
 				temp->TSInit = now;
 				temp->TSStart = now;
-				temp->TSEnd = temp->TSStart + chaserFadeInDuration;
+				temp->TSEnd = temp->TSStart + (chaserFadeInDuration * speedMultVal);
 				temp->fadeCurve = &chaserFadeInCurve;
 			}
 			else {
 				temp->TSInit = now;
 				float delay = forcedDelay != -1 ? forcedDelay : temp->delay;
 				float fade = forcedFade != -1 ? forcedFade : temp->fade;
+				delay *= speedMultVal;
+				fade *= speedMultVal;
 				temp->TSStart = now + (delay);
 				temp->TSEnd = temp->TSStart + (fade);
 			}
@@ -662,6 +687,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 					float delay = forcedDelay != -1 ? forcedDelay : delayTime;
 					float fade = forcedFade != -1 ? forcedFade : fadeTime;
+					delay *= speedMultVal;
+					fade *= speedMultVal;
 					temp->TSInit = now;
 					temp->TSStart = now + delay;
 					temp->TSEnd = now + fade + delay;
@@ -686,7 +713,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	if (isChaser->getValue() && c != nullptr) {
 		c->TSAutoFollowStart = now;
-		c->TSAutoFollowEnd = now + (chaserStepDuration);
+		c->TSAutoFollowEnd = now + (chaserStepDuration*speedMultVal);
 		Brain::getInstance()->pleaseUpdate(c);
 
 	}

@@ -46,6 +46,9 @@ public:
     FloatParameter* chaserStepPerTap;
     Trigger* chaserTapTempo;
 
+    MultiplicatorLinkManager speedMult;
+
+
     ControllableContainer chaserGenContainer;
     IntParameter* chaseGenGroup;
     CommandValueManager chaseGenValue;
@@ -146,6 +149,7 @@ public:
     double TSTransitionStart;
     double TSTransitionDuration;
     double TSTransitionEnd;
+    double TSLateCompensation = 0;
 
     String getTypeString() const override { return objectType; }
 
