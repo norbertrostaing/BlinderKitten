@@ -38,13 +38,17 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Pattern", "pattern");
     filter->addOption("Shuffle", "shuffle");
     filter->addOption("Pick Random", "random");
+    filter->addOption("Layout Direction", "layoutdir");
     pattern = addStringParameter("Pattern", "type 1 to select SubFixtures and 0 to skip them, for example, 100 will select every first SubFixture of three in pattern mode, and the first third of all SubFixtures in divide mode", "");
-    symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
     randomSeed = addIntParameter("Seed", "Seed used to generate random, if 0, selection will change each call, if not, the random selection will alway be the same", 0, 0);
     randomNumber = addIntParameter("Number of subfixtures", "Number of subfixtures to take randomly", 1, 1);
     randomBuddy = addIntParameter("Buddying", "They stay together", 1, 1);
     randomBlock = addIntParameter("Block", "Repetitions", 1, 1);
     randomWing = addIntParameter("Wings", "Symmetries", 1, 1);
+    layoutId = addIntParameter("Layout ID", "Id ot desired layout", 0, 0);
+    layoutDirection = addFloatParameter("Direction angle", "angle of selection direction", 0, -360, 360);
+    symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
+
     updateDisplay();
 };
 
@@ -59,6 +63,8 @@ void CommandSelection::updateDisplay()
     bool pat = filter->getValue() == "divide" || filter->getValue() == "pattern";
     bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
     bool randNum = filter->getValue() == "random";
+    bool layout = filter->getValue() == "layoutdir";
+    bool layoutDir = filter->getValue() == "layoutdir";
 
     randSeed = randSeed && mult;
     randNum = randNum && mult;
@@ -69,7 +75,7 @@ void CommandSelection::updateDisplay()
     valueTo -> hideInEditor = !th;
     filter -> hideInEditor = false;
     pattern -> hideInEditor = !(pat);
-    symmetry -> hideInEditor = !(pat);
+    symmetry -> hideInEditor = !(pat) && !layout;
 
     bool sub = subSel->getValue();
     bool subTh = subThru->getValue();
@@ -83,6 +89,9 @@ void CommandSelection::updateDisplay()
     randomBuddy->hideInEditor = !randNum;
     randomBlock->hideInEditor = !randNum;
     randomWing->hideInEditor = !randNum;
+
+    layoutId->hideInEditor = !layout;
+    layoutDirection->hideInEditor = !layoutDir;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

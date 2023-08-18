@@ -3,6 +3,7 @@
 #include "../../Brain.h"
 #include "../../UserInputManager.h"
 #include "Command.h"
+#include "Definitions/Layout/Layout.h"
 
 CommandSelectionManager::CommandSelectionManager() :
     BaseManager("Selections")
@@ -15,6 +16,7 @@ CommandSelectionManager::~CommandSelectionManager()
 {
 	computing.enter();
 	computedSelectedSubFixtures.clear();
+	subFixtureToPosition.clear();
 	computing.exit();
 }
 
@@ -25,7 +27,9 @@ void CommandSelectionManager::computeSelection() {
 
 void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	ScopedLock lock(computing);
+	LOG("compute");
 	computedSelectedSubFixtures.clear();
+	subFixtureToPosition.clear();
 	Brain* b = Brain::getInstance();
 	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();
 	for (int selId = 0; selId < selections.size(); selId++) {
@@ -73,6 +77,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 							g->selection.computeSelection(groupHistory);
 							g->selection.computing.enter();
 							tempSelection.addArray(g->selection.computedSelectedSubFixtures);
+							for (auto it = g->selection.subFixtureToPosition.begin(); it != g->selection.subFixtureToPosition.end(); it.next()) {
+								subFixtureToPosition.set(it.getKey(), it.getValue());
+							}
 							g->selection.computing.exit();
 						}
 					}
@@ -241,41 +248,21 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				selections[selId]->lastRandom.addArray(filteredSelection);
 			}
 
-			else if (selections[selId]->filter->getValue() == "random") {
-				Array<SubFixture*> filteredSelection;
-				int nBuddy = selections[selId]->randomBuddy->getValue();
-				int to = jmin(tempSelection.size(), (int)selections[selId]->randomNumber->getValue());
-
-				Random r;
-				if ((int)selections[selId]->randomSeed->getValue() == 0) {
-					r.setSeed(rand());
-					if (tempSelection.size() - selections[selId]->lastRandom.size() > to) {
-						for (int i = 0; i < selections[selId]->lastRandom.size(); i++) {
-							tempSelection.removeAllInstancesOf(selections[selId]->lastRandom[i]);
+			else if (selections[selId]->filter->getValue() == "layoutdir") {
+				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
+				if (l != nullptr) {
+					auto sfToPos = l->getSubfixturesRatioFromDirection(selections[selId]->layoutDirection->floatValue());
+					for (int i = 0; i < tempSelection.size(); i++) {
+						if (sfToPos->contains(tempSelection[i])) {
+							float v = sfToPos->getReference(tempSelection[i]);
+							if (sym) {
+								v = 2*v;
+								v = v>1 ? 2-v : v;
+							}
+							subFixtureToPosition.set(tempSelection[i], v);
 						}
 					}
 				}
-				else {
-					r.setSeed((int)selections[selId]->randomSeed->getValue());
-				}
-
-				for (int i = 0; i < to; i++) {
-					int maxIndex = floor(tempSelection.size() / (float)nBuddy);
-					int randIndex = r.nextInt(maxIndex);
-					randIndex = r.nextInt(maxIndex);
-					randIndex *= nBuddy;
-					for (int n = 0; n < nBuddy; n++) {
-						if (randIndex < tempSelection.size()) {
-							filteredSelection.add(tempSelection[randIndex]);
-							tempSelection.remove(randIndex);
-
-						}
-					}
-				}
-
-				tempSelection = filteredSelection;
-				selections[selId]->lastRandom.clear();
-				selections[selId]->lastRandom.addArray(filteredSelection);
 			}
 
 			if (selections[selId]->plusOrMinus->getValue() == "add") {
@@ -287,6 +274,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			else {}
 		}
 	}
+	int n = subFixtureToPosition.size();
+	auto t = this;
+	LOG("coucou");
 }
 
 Array<ChannelType *> CommandSelectionManager::getControllableChannelsTypes() {

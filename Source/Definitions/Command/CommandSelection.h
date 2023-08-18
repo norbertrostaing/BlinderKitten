@@ -43,6 +43,9 @@ class CommandSelection:
     IntParameter* randomBlock;
     IntParameter* randomWing;
 
+    IntParameter* layoutId;
+    FloatParameter* layoutDirection;
+
     Array<SubFixture*> lastRandom;
 
     void updateDisplay();

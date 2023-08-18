@@ -22,7 +22,7 @@ class BKPath:
     String objectType;
     var objectData;
 
-    enum PathType { PATH_POINT, PATH_LINE, PATH_GRID };
+    enum PathType { PATH_POINT, PATH_LINE, PATH_GRID, PATH_CIRCLE };
     enum GridOrentation { 
         GRID_LR, GRID_RL, GRID_TB, GRID_BT
     };
@@ -40,6 +40,10 @@ class BKPath:
     BoolParameter* gridInverseRows;
     Array<std::shared_ptr<Point<float>>> gridPath;
 
+    FloatParameter* circleRadius;
+    FloatParameter* circleFrom;
+    FloatParameter* circleTo;
+
     BoolParameter* spreadSubFixtures;
     CommandSelectionManager selection;
 
@@ -48,8 +52,10 @@ class BKPath:
     HashMap<SubFixture*, std::shared_ptr<Vector3D<float>>> subFixtToPos;
     void computeData();
 
-
+    
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
+
+    static void rotateVect(Vector3D<float>* vect, float angleInDegrees);
 
 };

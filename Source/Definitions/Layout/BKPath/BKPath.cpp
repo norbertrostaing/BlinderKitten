@@ -19,14 +19,14 @@ BKPath::BKPath(var params) :
 {
     saveAndLoadRecursiveData = true;
     pathType = addEnumParameter("Type", "Type of path");
-    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Grid", PATH_GRID);
+    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE);
     position = addPoint2DParameter("Position", "Position in pexiels in your layout");
 
     lineEndPosition = addPoint2DParameter("End position", "");
 
     gridSize = addPoint2DParameter("Size", "Size of yout grid");
     gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
-    gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,0,360);
+    gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,-360,360);
     gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",2,2);
     gridOrientation = addEnumParameter("Orientation", "Grid orientation");
     gridOrientation->addOption("Left to right", GRID_LR)
@@ -36,6 +36,10 @@ BKPath::BKPath(var params) :
         ;
     gridZigZag = addBoolParameter("Zig zag", "", false);
     gridInverseRows = addBoolParameter("Reverse lines", "", false);
+
+    circleRadius = addFloatParameter("Radius", "Radius of the circle", 0, 0);
+    circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
+    circleTo = addFloatParameter("To angle", "Angle of the last element", 0, -360, 360);
 
     addChildControllableContainer(&selection);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
@@ -57,8 +61,12 @@ void BKPath::computeData()
     selection.computeSelection();
     for (int isf = 0; isf < selection.computedSelectedSubFixtures.size(); isf++) {
         SubFixture* sf = selection.computedSelectedSubFixtures[isf];
-        subFixts.addIfNotAlreadyThere(sf);
-        fixts.addIfNotAlreadyThere(sf->parentFixture);
+        if (sf != nullptr) {
+            subFixts.addIfNotAlreadyThere(sf);
+            if (sf->parentFixture != nullptr) {
+                fixts.addIfNotAlreadyThere(sf->parentFixture);
+            }
+        }
     }
 
     Vector3D<float> origin;
@@ -150,6 +158,9 @@ void BKPath::computeData()
             deltaRow *= -1;
         }
 
+        rotateVect(&deltaOrigin, gridAngle->floatValue());
+        rotateVect(&deltaRow, gridAngle->floatValue());
+        rotateVect(&deltaCol, gridAngle->floatValue());
 
         // apply rotations here
         currentPos.x = origin.x + deltaOrigin.x;
@@ -162,32 +173,68 @@ void BKPath::computeData()
 
         gridPath.clear();
 
-        if (spreadSubFixtures->boolValue()) {
-            for (int i = 0; i < subFixts.size(); i++) {
+        for (int i = 0; i < nElements; i++) {
+            if (spreadSubFixtures->boolValue()) {
                 Fixture* f = subFixts[i]->parentFixture;
                 subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
-                //LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(currentPos.x)+"  y:" + String(currentPos.y));
-                gridPath.add(std::make_shared<Point<float>>(currentPos.x, currentPos.y));
-                if (!fixtToPos.contains(f)) {
-                    fixtToPos.set(f, std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
-                }
-                if (currentCol == nPerRow - 1) {
-                    currentCol = 0;
-                    currentRow += 1;
-                    if (!gridZigZag->boolValue()) {
-                        currentPos.x = lineOrigin.x;
-                        currentPos.y = lineOrigin.y;
-                    }
-                    else {
-                        deltaCol = -deltaCol;
-                    }
-                    currentPos += deltaRow;
-                    lineOrigin = currentPos;
+            }
+            else {
+                Fixture* f = fixts[i];
+                fixtToPos.set(f, std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
+            }
+            //LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(currentPos.x)+"  y:" + String(currentPos.y));
+            gridPath.add(std::make_shared<Point<float>>(currentPos.x, currentPos.y));
+            if (currentCol == nPerRow - 1) {
+                currentCol = 0;
+                currentRow += 1;
+                if (!gridZigZag->boolValue()) {
+                    currentPos.x = lineOrigin.x;
+                    currentPos.y = lineOrigin.y;
                 }
                 else {
-                    currentCol += 1;
-                    currentPos += deltaCol;
+                    deltaCol = -deltaCol;
                 }
+                currentPos += deltaRow;
+                lineOrigin = currentPos;
+            }
+            else {
+                currentCol += 1;
+                currentPos += deltaCol;
+            }
+        }
+
+    }
+    else if (type == BKPath::PATH_CIRCLE)
+    {
+        Vector3D<float> offset(circleRadius->floatValue(), 0, 0);
+        Vector3D<float> temp(0, 0, 0);
+        float angleTo = circleTo->floatValue();
+        float angleFrom = circleFrom->floatValue();
+
+        int nElements = spreadSubFixtures->boolValue() ? subFixts.size() : fixts.size();
+
+        float deltaAngle = angleTo - angleFrom;
+        if (nElements > 1) {
+            if (abs(deltaAngle) >= 360) {
+                deltaAngle = 360;
+                deltaAngle /= (float)(nElements);
+            }
+            else {
+                deltaAngle /= (float)(nElements - 1);
+            }
+        }
+
+        for (int i = 0; i < nElements; i++) {
+            temp = offset;
+            rotateVect(&temp, angleFrom + (i*deltaAngle));
+            temp += origin;
+            if (spreadSubFixtures->boolValue()) {
+                Fixture* f = subFixts[i]->parentFixture;
+                subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
+            }
+            else {
+                Fixture* f = fixts[i];
+                fixtToPos.set(f, std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
             }
         }
 
@@ -204,12 +251,27 @@ void BKPath::onContainerParameterChangedInternal(Parameter* c) {
 void BKPath::updateDisplay() {
 
     lineEndPosition -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_LINE;
+
     gridSize -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
     gridAngle -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
     gridNumberOfElements -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
     gridOrientation -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
     gridZigZag -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
-    gridInverseRows -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
+    gridInverseRows->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
+    
+    circleRadius->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
+    circleFrom->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
+    circleTo->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
+void BKPath::rotateVect(Vector3D<float>* vect, float angleInDegrees)
+{
+    float angle = -angleInDegrees / 360.0;
+    angle = angle * 2 * MathConstants<float>::pi;
+    float x1 = vect->x;
+    float y1 = vect->y;
+    vect->x = (cos(angle) * x1) - (sin(angle) * y1);
+    vect->y = (sin(angle) * x1) + (cos(angle) * y1);
 }

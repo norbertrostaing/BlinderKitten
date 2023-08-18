@@ -93,9 +93,36 @@ void Layout::computeData()
 	for (int iPath = 0; iPath < paths.items.size(); iPath++) {
 		BKPath* p = paths.items[iPath];
 		p->computeData();
+		for (auto it = p->subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
+			subFixtToPos.set(it.getKey(), it.getValue());
+		}
 	}
 
 	isComputing.exit();
+}
+
+std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromDirection(float angle)
+{
+	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();
+	Vector3D<float> xAxis(1,0,0);
+	BKPath::rotateVect(&xAxis, angle);
+
+	float minDot = (float)INT32_MAX;
+	float maxDot = -(float)INT32_MAX;
+	computeData();
+	isComputing.enter();
+	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
+		Vector3D<float> sfAxis(it.getValue()->x, it.getValue()->y, 0);
+		float dot = xAxis*sfAxis;
+		minDot = jmin(minDot, dot);
+		maxDot = jmax(maxDot, dot);
+		ret->set(it.getKey(), dot);
+	}
+	isComputing.exit();
+	for (auto it = ret->begin(); it != ret->end(); it.next()) {
+		ret->set(it.getKey(), jmap(it.getValue(), minDot, maxDot, (float)0, (float)1));
+	}
+	return ret;
 }
 
 

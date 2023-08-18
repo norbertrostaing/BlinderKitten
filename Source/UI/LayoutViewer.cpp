@@ -128,6 +128,7 @@ void LayoutViewer::paint(Graphics& g)
 	float originY = 0;
 	float width = 0;
 	float height = 0;
+	float uiScale = 1;
 
 	if (layoutRatio > windowRatio) {
 		// crop top and bottom;
@@ -145,6 +146,8 @@ void LayoutViewer::paint(Graphics& g)
 		originX = getWidth()-width;
 		originX /= 2;
 	}
+
+	uiScale = width/layoutWidth;
 
 	//g.setColour(Colour(64,64,64));
 	//g.fillRect(originX, originY, width, height);
@@ -191,12 +194,11 @@ void LayoutViewer::paint(Graphics& g)
 		}
 		if (type == BKPath::PATH_GRID) {
 			if (true) {
-				LOG(p->gridPath.size());
-				for (int i = 0; i < p->gridPath.size() - 1; i++) {
-					float fromX = jmap(p->gridPath[i]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float fromY = jmap(p->gridPath[i]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					float toX = jmap(p->gridPath[i + 1]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float toY = jmap(p->gridPath[i + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+				for (int iGrid = 0; iGrid < p->gridPath.size() - 1; iGrid++) {
+					float fromX = jmap(p->gridPath[iGrid]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float fromY = jmap(p->gridPath[iGrid]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float toX = jmap(p->gridPath[iGrid + 1]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
 					g.setColour(juce::Colours::orange);
 					Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 					g.drawLine(line, 0.5f);
@@ -206,16 +208,43 @@ void LayoutViewer::paint(Graphics& g)
 
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				float lastX = 0; 
-				float lastY = 0;
-				bool tracePath = false;
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+			if (!p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+		}
+		if (type == BKPath::PATH_CIRCLE) {
+			if (true) {
+				float from = -(p->circleFrom->floatValue() / 360. ) * 2 * MathConstants<float>::pi;
+				float to = -(p->circleTo->floatValue() / 360. ) * 2 * MathConstants<float>::pi;
+				from += MathConstants<float>::pi / 2;
+				to += MathConstants<float>::pi / 2;
+				float X = jmap(p->position->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+				float Y = jmap(p->position->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+				float W = p->circleRadius->floatValue() * uiScale;
+				Path path;
+				path.addArc(X-(W), Y-(W), W*2, W*2, from, to, true);
+				g.strokePath(path, PathStrokeType(0.5));
+			}
 
-					tracePath = true;
-					lastX = X;
-					lastY = Y;
+
+			if (p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
 					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
 				}
 				p->isComputing.exit();
