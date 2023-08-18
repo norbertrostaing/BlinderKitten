@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\Source\UI\DMXChannelView.cpp"/>
     <ClCompile Include="..\..\Source\UI\Encoders.cpp"/>
     <ClCompile Include="..\..\Source\UI\InputPanel.cpp"/>
+    <ClCompile Include="..\..\Source\UI\LayoutViewer.cpp"/>
     <ClCompile Include="..\..\Source\Common\Action\Action.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -373,6 +374,10 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\InterfaceManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Layout\BKPath\BKPath.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Layout\Layout.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Layout\LayoutManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Layout\LayoutManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\Mapper.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperManagerUI.cpp"/>
@@ -3272,6 +3277,7 @@
     <ClInclude Include="..\..\Source\UI\DMXChannelView.h"/>
     <ClInclude Include="..\..\Source\UI\Encoders.h"/>
     <ClInclude Include="..\..\Source\UI\InputPanel.h"/>
+    <ClInclude Include="..\..\Source\UI\LayoutViewer.h"/>
     <ClInclude Include="..\..\Source\Common\Action\Action.h"/>
     <ClInclude Include="..\..\Source\Common\Action\ActionManager.h"/>
     <ClInclude Include="..\..\Source\Common\CommonClasses\ComponentType.h"/>
@@ -3378,6 +3384,10 @@
     <ClInclude Include="..\..\Source\Definitions\Interface\Interface.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\InterfaceIncludes.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\InterfaceManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Layout\BKPath\BKPath.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Layout\Layout.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Layout\LayoutManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Layout\LayoutManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\Mapper.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperManagerUI.h"/>

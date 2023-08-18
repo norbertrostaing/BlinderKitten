@@ -957,7 +957,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	if (!activeValues.contains(fc)) {return currentVal;}
 	cv = activeValues.getReference(fc);
 
-	if (cv->htpOverride) {
+	if (cv != nullptr && cv->htpOverride) {
 		HTP = false;
 	}
 

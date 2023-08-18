@@ -38,6 +38,9 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Pattern", "pattern");
     filter->addOption("Shuffle", "shuffle");
     filter->addOption("Pick Random", "random");
+    filter->addOption("Layout Direction", "layoutdir");
+    filter->addOption("Layout Circle", "layoutcircle");
+    filter->addOption("Layout Droplet wave", "layoutpoint");
     pattern = addStringParameter("Pattern", "type 1 to select SubFixtures and 0 to skip them, for example, 100 will select every first SubFixture of three in pattern mode, and the first third of all SubFixtures in divide mode", "");
     symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
     randomSeed = addIntParameter("Seed", "Seed used to generate random, if 0, selection will change each call, if not, the random selection will alway be the same", 0, 0);
@@ -45,6 +48,14 @@ CommandSelection::CommandSelection(var params) :
     randomBuddy = addIntParameter("Buddying", "They stay together", 1, 1);
     randomBlock = addIntParameter("Block", "Repetitions", 1, 1);
     randomWing = addIntParameter("Wings", "Symmetries", 1, 1);
+    layoutId = addIntParameter("Layout ID", "Id ot desired layout", 0, 0);
+    layoutDirection = addFloatParameter("Direction angle", "angle of selection direction", 0, -360, 360);
+
+    layoutCircleOrigin = addPoint2DParameter("Circle Origin", "");
+    layoutCircleStartAngle = addFloatParameter("Start angle", "",0,-360,360);
+    layoutCircleCompleteRevolution = addBoolParameter("Complete revolution", "", false);
+    layoutCircleClockWise = addBoolParameter("Clockwise", "", false);
+
     updateDisplay();
 };
 
@@ -59,6 +70,10 @@ void CommandSelection::updateDisplay()
     bool pat = filter->getValue() == "divide" || filter->getValue() == "pattern";
     bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
     bool randNum = filter->getValue() == "random";
+    bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" ;
+    bool layoutDir = filter->getValue() == "layoutdir";
+    bool layoutCir = filter->getValue() == "layoutcircle";
+    bool layoutPnt = filter->getValue() == "layoutpoint";
 
     randSeed = randSeed && mult;
     randNum = randNum && mult;
@@ -83,6 +98,14 @@ void CommandSelection::updateDisplay()
     randomBuddy->hideInEditor = !randNum;
     randomBlock->hideInEditor = !randNum;
     randomWing->hideInEditor = !randNum;
+
+    layoutId->hideInEditor = !layout;
+    layoutDirection->hideInEditor = !layoutDir;
+
+    layoutCircleOrigin->hideInEditor = !layoutCir && !layoutPnt;
+    layoutCircleStartAngle->hideInEditor = !layoutCir;
+    layoutCircleCompleteRevolution->hideInEditor = !layoutCir;
+
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

@@ -25,7 +25,7 @@
 #include "Definitions/Mapper/Mapper.h"
 #include "Definitions/RunningTask.h"
 #include "Definitions/Cue/Task.h"
-
+#include "Definitions/Layout/Layout.h"
 class Brain :
     public Thread
 {
@@ -47,6 +47,7 @@ public:
     HashMap<int, Effect*>effects;
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
+    HashMap<int, Layout*>layouts;
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
@@ -105,6 +106,8 @@ public:
     void unregisterCarousel(Carousel* p);
     void registerMapper(Mapper* p, int id, bool swap = false);
     void unregisterMapper(Mapper* p);
+    void registerLayout(Layout* p, int id, bool swap = false);
+    void unregisterLayout(Layout* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(SubFixtureChannel* f);
@@ -131,6 +134,7 @@ public:
     Effect* getEffectById(int id);
     Carousel* getCarouselById(int id);
     Mapper* getMapperById(int id);
+    Layout* getLayoutById(int id);
 
     void swoppedCuelist(Cuelist* c);
     void unswoppedCuelist(Cuelist* c);

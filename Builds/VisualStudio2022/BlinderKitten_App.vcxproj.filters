@@ -146,6 +146,12 @@
     <Filter Include="BlinderKitten\Source\Definitions\Interface">
       <UniqueIdentifier>{281C7544-23DA-FB8B-F3F9-99CA3013E707}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Layout\BKPath">
+      <UniqueIdentifier>{27FB12D5-A6AC-EF2C-1824-D47A9989C3E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Layout">
+      <UniqueIdentifier>{BC895C69-B654-8853-0DC2-D93A7DDD5B4A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Mapper">
       <UniqueIdentifier>{33C5E391-B443-ADC2-92AC-8BACD2D18526}</UniqueIdentifier>
     </Filter>
@@ -1054,6 +1060,9 @@
     <ClCompile Include="..\..\Source\UI\InputPanel.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\UI\LayoutViewer.cpp">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Action\Action.cpp">
       <Filter>BlinderKitten\Source\Common\Action</Filter>
     </ClCompile>
@@ -1383,6 +1392,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\InterfaceManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Layout\BKPath\BKPath.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Layout\BKPath</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Layout\Layout.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Layout\LayoutManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Layout\LayoutManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Layout</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Mapper\Mapper.cpp">
       <Filter>BlinderKitten\Source\Definitions\Mapper</Filter>
@@ -4611,6 +4632,9 @@
     <ClInclude Include="..\..\Source\UI\InputPanel.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\UI\LayoutViewer.h">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Action\Action.h">
       <Filter>BlinderKitten\Source\Common\Action</Filter>
     </ClInclude>
@@ -4928,6 +4952,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\InterfaceManager.h">
       <Filter>BlinderKitten\Source\Definitions\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Layout\BKPath\BKPath.h">
+      <Filter>BlinderKitten\Source\Definitions\Layout\BKPath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Layout\Layout.h">
+      <Filter>BlinderKitten\Source\Definitions\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Layout\LayoutManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Layout\LayoutManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\Layout</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Mapper\Mapper.h">
       <Filter>BlinderKitten\Source\Definitions\Mapper</Filter>

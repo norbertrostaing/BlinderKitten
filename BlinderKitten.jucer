@@ -129,6 +129,9 @@
         <FILE id="yt8yKK" name="Encoders.h" compile="0" resource="0" file="Source/UI/Encoders.h"/>
         <FILE id="R1P4dS" name="InputPanel.cpp" compile="1" resource="0" file="Source/UI/InputPanel.cpp"/>
         <FILE id="NMQyY5" name="InputPanel.h" compile="0" resource="0" file="Source/UI/InputPanel.h"/>
+        <FILE id="U9IfWo" name="LayoutViewer.cpp" compile="1" resource="0"
+              file="Source/UI/LayoutViewer.cpp"/>
+        <FILE id="j7853L" name="LayoutViewer.h" compile="0" resource="0" file="Source/UI/LayoutViewer.h"/>
       </GROUP>
       <GROUP id="{45FB759F-EFE9-4473-37EC-722C12285C7E}" name="Common">
         <GROUP id="{FFFFEE64-A9BA-CAEB-F127-B70753B6745E}" name="Action">
@@ -565,6 +568,21 @@
                 file="Source/Definitions/Interface/InterfaceManager.cpp"/>
           <FILE id="tiMbY8" name="InterfaceManager.h" compile="0" resource="0"
                 file="Source/Definitions/Interface/InterfaceManager.h"/>
+        </GROUP>
+        <GROUP id="{ADFF91CA-B821-276B-A5AE-385C710F0AB1}" name="Layout">
+          <GROUP id="{24C2F859-4392-B642-DFD5-36D7E0CF099B}" name="BKPath">
+            <FILE id="L4J9Jx" name="BKPath.cpp" compile="1" resource="0" file="Source/Definitions/Layout/BKPath/BKPath.cpp"/>
+            <FILE id="gFsfZJ" name="BKPath.h" compile="0" resource="0" file="Source/Definitions/Layout/BKPath/BKPath.h"/>
+          </GROUP>
+          <FILE id="YaC6Rx" name="Layout.cpp" compile="1" resource="0" file="Source/Definitions/Layout/Layout.cpp"/>
+          <FILE id="BDu0m9" name="Layout.h" compile="0" resource="0" file="Source/Definitions/Layout/Layout.h"/>
+          <FILE id="XZwfr6" name="LayoutManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Layout/LayoutManager.cpp"/>
+          <FILE id="aDNGu6" name="LayoutManager.h" compile="0" resource="0" file="Source/Definitions/Layout/LayoutManager.h"/>
+          <FILE id="j3yn97" name="LayoutManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Layout/LayoutManagerUI.cpp"/>
+          <FILE id="TwbJoR" name="LayoutManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Layout/LayoutManagerUI.h"/>
         </GROUP>
         <GROUP id="{6FE974D1-50A6-DCC6-1CDA-3B78BFE1813D}" name="Mapper">
           <FILE id="DofpmX" name="Mapper.cpp" compile="1" resource="0" file="Source/Definitions/Mapper/Mapper.cpp"/>

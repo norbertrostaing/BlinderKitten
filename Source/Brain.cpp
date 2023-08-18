@@ -658,6 +658,42 @@ void Brain::unregisterMapper(Mapper* c) {
     }
 }
 
+void Brain::registerLayout(Layout* p, int id, bool swap) {
+    int askedId = id;
+    if (layouts.getReference(id) == p) { return; }
+    if (layouts.containsValue(p)) {
+        layouts.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (layouts.contains(id) && layouts.getReference(id) != nullptr) {
+            Layout* presentItem = layouts.getReference(id);
+            unregisterLayout(p);
+            registerLayout(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (layouts.contains(id) && layouts.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    layouts.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterLayout(Layout* c) {
+    if (layouts.containsValue(c)) {
+        layouts.removeValue(c);
+    }
+}
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
     ScopedLock lock(usingCollections);
@@ -954,6 +990,15 @@ Carousel* Brain::getCarouselById(int id) {
 Mapper* Brain::getMapperById(int id) {
     if (mappers.contains(id)) {
         return mappers.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+Layout* Brain::getLayoutById(int id) {
+    if (layouts.contains(id)) {
+        return layouts.getReference(id);
     }
     else {
         return nullptr;

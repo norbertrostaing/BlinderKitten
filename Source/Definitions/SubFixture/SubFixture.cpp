@@ -11,6 +11,7 @@
 #include "JuceHeader.h"
 #include "SubFixture.h"
 #include "../../Brain.h"
+#include "Fixture/Fixture.h"
 
 SubFixture::SubFixture() :
 	channelsMap()
@@ -28,4 +29,7 @@ SubFixture::~SubFixture()
 	channelsContainer.clear();
 }
 
-
+int SubFixture::MyHashGenerator::generateHash(SubFixture* key, int upperLimit) const
+{
+	return ((key->parentFixture->id->intValue() * 512) + key->subId) % upperLimit;
+}
