@@ -49,7 +49,7 @@ class CommandSelection:
     Point2DParameter* layoutCircleOrigin;
     FloatParameter* layoutCircleStartAngle;
     BoolParameter* layoutCircleCompleteRevolution;
-    BoolParameter* layoutCircleClockWise;
+    BoolParameter* layoutCircleCCW;
 
 
     Array<SubFixture*> lastRandom;

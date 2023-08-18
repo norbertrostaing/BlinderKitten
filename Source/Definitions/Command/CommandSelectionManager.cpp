@@ -263,7 +263,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
 				if (l != nullptr) {
 					Vector3D<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1],0);
-					auto sfToPos = l->getSubfixturesRatioFromOriginAndAngle(&origin, selections[selId]->layoutCircleStartAngle->floatValue(), !selections[selId]->layoutCircleCompleteRevolution->boolValue(), selections[selId]->layoutCircleClockWise->boolValue());
+					auto sfToPos = l->getSubfixturesRatioFromOriginAndAngle(&origin, selections[selId]->layoutCircleStartAngle->floatValue(), !selections[selId]->layoutCircleCompleteRevolution->boolValue(), selections[selId]->layoutCircleCCW->boolValue());
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
 							float v = sfToPos->getReference(tempSelection[i]);

@@ -54,7 +54,7 @@ CommandSelection::CommandSelection(var params) :
     layoutCircleOrigin = addPoint2DParameter("Circle Origin", "");
     layoutCircleStartAngle = addFloatParameter("Start angle", "",0,-360,360);
     layoutCircleCompleteRevolution = addBoolParameter("Complete revolution", "", false);
-    layoutCircleClockWise = addBoolParameter("Clockwise", "", false);
+    layoutCircleCCW = addBoolParameter("Counter Clockwise", "", false);
 
     updateDisplay();
 };
@@ -80,7 +80,6 @@ void CommandSelection::updateDisplay()
     
     bool isFixture = targetType->getValue() == "fixture";
 
-
     valueTo -> hideInEditor = !th;
     filter -> hideInEditor = false;
     pattern -> hideInEditor = !(pat);
@@ -105,7 +104,7 @@ void CommandSelection::updateDisplay()
     layoutCircleOrigin->hideInEditor = !layoutCir && !layoutPnt;
     layoutCircleStartAngle->hideInEditor = !layoutCir;
     layoutCircleCompleteRevolution->hideInEditor = !layoutCir;
-
+    layoutCircleCCW->hideInEditor = !layoutCir;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
