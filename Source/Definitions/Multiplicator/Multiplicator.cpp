@@ -10,6 +10,7 @@
 
 #include "JuceHeader.h"
 #include "Multiplicator.h"
+#include "Brain.h"
 
 Multiplicator::Multiplicator(var params) :
 	BaseItem(params.getProperty("name", "Multiplicator")),
@@ -36,10 +37,10 @@ Multiplicator::~Multiplicator()
 void Multiplicator::onContainerParameterChangedInternal(Parameter* p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
-	//if (p == targetInterface)
-	//{
-	//	rebuildInterfaceParams();
-	//}
+	if (p == multValue)
+	{
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+	}
 	
 }
 

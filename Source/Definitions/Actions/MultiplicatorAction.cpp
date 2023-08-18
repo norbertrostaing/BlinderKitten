@@ -73,7 +73,7 @@ var MultiplicatorAction::getValue()
         break;
 
     case MULT_SET:
-        val = jmap(target->multValue->floatValue(), fromValue->floatValue(), toValue->floatValue());
+        val = jmap(target->multValue->floatValue(), fromValue->floatValue(), toValue->floatValue(),0.0f,1.0f);
         break;
     }
     return val;
