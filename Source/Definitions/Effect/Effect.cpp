@@ -52,6 +52,7 @@ Effect::Effect(var params) :
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Effect", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this effect in cycles/minutes", 5, 0);
+	noLoop = addBoolParameter("No loop", "Play this effect only once", false);
 
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "");
@@ -205,9 +206,9 @@ void Effect::computeData() {
 }
 
 float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
-	if (!chanToFxParam.contains(fc)) {return currentVal; }
-	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	isComputing.enter();
+	if (!chanToFxParam.contains(fc)) { isComputing.exit(); return currentVal; }
+	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	std::shared_ptr<Array<EffectParam*>> params = chanToFxParam.getReference(fc);
 	for (int i = 0; i < params->size(); i++) {
 		EffectParam* p = params->getReference(i);
@@ -215,8 +216,10 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 
 		double offset = totalElapsed*(double)row->speed->getValue();
 		double deltaOffset = p->subFixtureChannelOffsets.getReference(fc);
-		while (offset < 0) {
-			offset += 1;
+		if (!noLoop->boolValue() || row->direction->getValueData() == "bounce") {
+			while (offset < 0) {
+				offset += 1;
+			}
 		}
 		if (row->direction->getValueData() == "bounce") {
 			offset = fmodf(offset, 2);
@@ -225,17 +228,19 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			}
 		}
 		else if (row->direction->getValueData() == "backward") {
-			offset = fmodf(offset, 1);
+			if (!noLoop->boolValue()) {
+				offset = fmodf(offset, 1);
+			}
 			offset = 1 - offset;
 		}
-		else {
+		offset += deltaOffset;
+		if (!noLoop->boolValue()) {
+			while (offset < 0) {
+				offset += 1;
+			}
 			offset = fmodf(offset, 1);
 		}
-		offset += p->subFixtureChannelOffsets.getReference(fc);
-		while (offset < 0) {
-			offset += 1;
-		}
-		offset = fmodf(offset, 1);
+		//
 
 		float value = 0;
 		String mode = row->curvePresetOrValue->getValue().toString();

@@ -45,6 +45,7 @@ public:
     BoolParameter* autoStartAndStop;
     FloatParameter* speed;
     FloatParameter* sizeValue;
+    BoolParameter* noLoop;
     String currentSizeController = "";
     String nextSizeController = "";
     float lastSize = 0;
