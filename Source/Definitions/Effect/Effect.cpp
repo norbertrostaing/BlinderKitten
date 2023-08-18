@@ -150,6 +150,7 @@ void Effect::stop() {
 	isEffectOn->setValue(false);
 	for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
 		it.getKey()->effectOutOfStack(this);
+		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
 }
 
