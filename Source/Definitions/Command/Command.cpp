@@ -165,11 +165,12 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 
 				float normalizedPosition = indexFixt / (float)(SubFixtures.size()-1);
 				bool useNormalized = false;
-				LOG(selection.subFixtureToPosition.size());
 				if (selection.subFixtureToPosition.contains(SubFixtures[indexFixt])) {
 					useNormalized = true;
 					normalizedPosition = selection.subFixtureToPosition.getReference(SubFixtures[indexFixt]);
 				}
+				float normalizedPositionSym = normalizedPosition * 2;
+				normalizedPositionSym = normalizedPositionSym > 1 ? 2 - normalizedPositionSym : normalizedPositionSym;
 
 				std::shared_ptr<HashMap<ChannelType*, float>> valuesFrom = std::make_shared <HashMap<ChannelType*, float>>();
 				std::shared_ptr <HashMap<ChannelType*, float>> valuesTo = std::make_shared <HashMap<ChannelType*, float>>();
@@ -219,7 +220,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						float val = valueFrom;
 						if (cv->thru->getValue() && SubFixtures.size() > 1) {
 							float position = normalizedPosition;
-							if (symValues) { position = useNormalized ? normalizedPosition : Brain::symPosition(indexFixt, SubFixtures.size()); }
+							if (symValues) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, SubFixtures.size()); }
 							val = jmap(position, val, valueTo);
 						}
 						finalValue->endValue = val;
@@ -241,7 +242,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						}
 						else if (delayThru && SubFixtures.size() > 1) {
 							float position = normalizedPosition;
-							if (delaySym) { position = useNormalized ? normalizedPosition : Brain::symPosition(indexFixt, SubFixtures.size()); }
+							if (delaySym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, SubFixtures.size()); }
 							position = timing.curveDelayRepart.getValueAtPosition(position);
 							position = delayRepartCurve->getValueAtPosition(position);
 							delay = jmap(position, delayFrom, delayTo);
@@ -268,7 +269,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						}
 						else if (fadeThru && SubFixtures.size() > 1) {
 							float position = normalizedPosition;
-							if (fadeSym) { position = useNormalized ? normalizedPosition : Brain::symPosition(indexFixt, SubFixtures.size()); }
+							if (fadeSym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, SubFixtures.size()); }
 							position = timing.curveFadeRepart.getValueAtPosition(position);
 							position = fadeRepartCurve->getValueAtPosition(position);
 							fade = jmap(position, fadeFrom, fadeTo);

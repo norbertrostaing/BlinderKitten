@@ -163,6 +163,20 @@ void CarouselRow::computeData() {
                 realIndex = realIndex % roundedWingSize;
 
                 double offset = realIndex / (double)realTot;
+
+                if (selection.subFixtureToPosition.contains(chan->parentSubFixture)) {
+                    offset = selection.subFixtureToPosition.getReference(chan->parentSubFixture);
+                    if (offset == 1) { offset = 0.999999999; }
+                    offset *= nBlocks;
+                    offset = fmod(offset, 1.0f);
+                    offset *= nWings;
+                    nWing = floor(offset);
+                    offset = fmod(offset, 1.0f);
+                    if (nWing % 2 == 1) {
+                        offset = 1 - offset;
+                    }
+                }
+
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
                 // LOG(offset);

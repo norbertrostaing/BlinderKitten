@@ -45,6 +45,12 @@ class CommandSelection:
 
     IntParameter* layoutId;
     FloatParameter* layoutDirection;
+    
+    Point2DParameter* layoutCircleOrigin;
+    FloatParameter* layoutCircleStartAngle;
+    BoolParameter* layoutCircleCompleteRevolution;
+    BoolParameter* layoutCircleClockWise;
+
 
     Array<SubFixture*> lastRandom;
 

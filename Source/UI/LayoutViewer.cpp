@@ -152,10 +152,11 @@ void LayoutViewer::paint(Graphics& g)
 	//g.setColour(Colour(64,64,64));
 	//g.fillRect(originX, originY, width, height);
 	g.reduceClipRegion(originX, originY, width, height);
-	g.setOrigin(originX, originY);
+	g.setOrigin(originX, originY+height);
+	g.addTransform(AffineTransform::verticalFlip(1));
 	g.fillAll(Colour(32, 32, 32));
 
-	float fixtWidth = 10;
+	float fixtWidth = 5;
 	float halfFixtWidth = fixtWidth/2;
 
 	for (int i = 0; i < selectedLayout->paths.items.size(); i++) {
@@ -168,11 +169,12 @@ void LayoutViewer::paint(Graphics& g)
 				float toX = jmap((float)p->lineEndPosition->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 				float toY = jmap((float)p->lineEndPosition->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
 
-				g.setColour(juce::Colours::orange);
+				g.setColour(juce::Colours::lightgrey);
 				Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
-				g.drawLine(line, 2.0f);
+				g.drawLine(line, 0.5f);
 
 			}
+			g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
@@ -194,16 +196,17 @@ void LayoutViewer::paint(Graphics& g)
 		}
 		if (type == BKPath::PATH_GRID) {
 			if (true) {
+				g.setColour(juce::Colours::lightgrey);
 				for (int iGrid = 0; iGrid < p->gridPath.size() - 1; iGrid++) {
 					float fromX = jmap(p->gridPath[iGrid]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float fromY = jmap(p->gridPath[iGrid]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
 					float toX = jmap(p->gridPath[iGrid + 1]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.setColour(juce::Colours::orange);
 					Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 					g.drawLine(line, 0.5f);
 				}
 			}
+			g.setColour(juce::Colours::orange);
 
 
 			if (p->spreadSubFixtures->boolValue()) {

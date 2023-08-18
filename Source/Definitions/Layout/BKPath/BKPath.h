@@ -57,5 +57,5 @@ class BKPath:
     void updateDisplay();
 
     static void rotateVect(Vector3D<float>* vect, float angleInDegrees);
-
+    static float getVectAngle(Vector3D<float>* vect);
 };

@@ -18,6 +18,11 @@ public:
     SubFixture();
     virtual ~SubFixture();
 
+    struct MyHashGenerator:juce::DefaultHashFunctions
+    {
+        int generateHash(SubFixture* key, int upperLimit) const;
+    };
+
     Fixture* parentFixture;
     int subId;
     OwnedArray<SubFixtureChannel> channelsContainer;

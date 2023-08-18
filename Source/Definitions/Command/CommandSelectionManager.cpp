@@ -27,7 +27,6 @@ void CommandSelectionManager::computeSelection() {
 
 void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	ScopedLock lock(computing);
-	LOG("compute");
 	computedSelectedSubFixtures.clear();
 	subFixtureToPosition.clear();
 	Brain* b = Brain::getInstance();
@@ -255,10 +254,32 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
 							float v = sfToPos->getReference(tempSelection[i]);
-							if (sym) {
-								v = 2*v;
-								v = v>1 ? 2-v : v;
-							}
+							subFixtureToPosition.set(tempSelection[i], v);
+						}
+					}
+				}
+			}
+			else if (selections[selId]->filter->getValue() == "layoutcircle") {
+				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
+				if (l != nullptr) {
+					Vector3D<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1],0);
+					auto sfToPos = l->getSubfixturesRatioFromOriginAndAngle(&origin, selections[selId]->layoutCircleStartAngle->floatValue(), !selections[selId]->layoutCircleCompleteRevolution->boolValue(), selections[selId]->layoutCircleClockWise->boolValue());
+					for (int i = 0; i < tempSelection.size(); i++) {
+						if (sfToPos->contains(tempSelection[i])) {
+							float v = sfToPos->getReference(tempSelection[i]);
+							subFixtureToPosition.set(tempSelection[i], v);
+						}
+					}
+				}
+			}
+			else if (selections[selId]->filter->getValue() == "layoutpoint") {
+				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
+				if (l != nullptr) {
+					Vector3D<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1], 0);
+					auto sfToPos = l->getSubfixturesRatioFromOrigin(&origin);
+					for (int i = 0; i < tempSelection.size(); i++) {
+						if (sfToPos->contains(tempSelection[i])) {
+							float v = sfToPos->getReference(tempSelection[i]);
 							subFixtureToPosition.set(tempSelection[i], v);
 						}
 					}
@@ -274,9 +295,9 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			else {}
 		}
 	}
-	int n = subFixtureToPosition.size();
-	auto t = this;
-	LOG("coucou");
+	//int n = subFixtureToPosition.size();
+	//auto t = this;
+	//LOG("coucou");
 }
 
 Array<ChannelType *> CommandSelectionManager::getControllableChannelsTypes() {

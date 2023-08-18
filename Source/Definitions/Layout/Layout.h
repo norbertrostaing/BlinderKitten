@@ -48,6 +48,8 @@ public:
     void computeData();
 
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromDirection(float angle);
+    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOriginAndAngle(Vector3D<float>* vect, float angle, bool normalize, bool clockwise);
+    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOrigin(Vector3D<float>* vect);
 
     String getTypeString() const override { return objectType; }
     static Layout* create(var params) { return new Layout(params); }

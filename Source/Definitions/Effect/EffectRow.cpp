@@ -145,6 +145,24 @@ void EffectRow::computeData() {
                     realIndex = realIndex % roundedWingSize;
 
                     double offset = realIndex / (double)realTot;
+
+                    if (selection.subFixtureToPosition.contains(chans[chanIndex]->parentSubFixture)) {
+                        isWinged = false;
+                        isCentered = false;
+                        offset = selection.subFixtureToPosition.getReference(chans[chanIndex]->parentSubFixture);
+                        if (offset == 1) {offset = 0.999999999;}
+                        offset *= nBlocks;
+                        offset = fmod(offset,1.0f);
+                        offset *= nWings;
+                        nWing = floor(offset);
+                        offset = fmod(offset, 1.0f);
+                        if (nWing % 2 == 1) {
+                            isWinged = true;
+                            offset = 1-offset;
+                        }
+                    }
+
+
                     offset *= (double)p->elementsSpread->getValue();
                     offset += (double)p->elementsStart->getValue();
                     if (p->wingsInvertSelections->boolValue()) {

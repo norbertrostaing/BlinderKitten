@@ -15,7 +15,8 @@
 BKPath::BKPath(var params) :
     BaseItem(params.getProperty("name", "Path")),
     objectType(params.getProperty("type", "BKPath").toString()),
-    objectData(params)
+    objectData(params),
+    subFixtToPos(4096, SubFixture::MyHashGenerator())
 {
     saveAndLoadRecursiveData = true;
     pathType = addEnumParameter("Type", "Type of path");
@@ -90,7 +91,7 @@ void BKPath::computeData()
         delta.x = float(lineEndPosition->getValue()[0]) - float(position->getValue()[0]);
         delta.y = float(lineEndPosition->getValue()[1]) - float(position->getValue()[1]);
         delta.z = 0;
-
+        int test = subFixts.size();
         for (int i = 0; i < subFixts.size(); i++) {
             Fixture* f = subFixts[i]->parentFixture;
             //std::shared_ptr<Vector3D<float>> vect = std::make_shared<Vector3D<float>>();
@@ -128,6 +129,9 @@ void BKPath::computeData()
         float gridWidth = gridSize->getValue()[0];
         float gridHeight = gridSize->getValue()[1];
 
+        deltaOrigin.x -= gridWidth / 2;
+        deltaOrigin.y += gridHeight / 2;
+
         GridOrentation o = gridOrientation->getValueDataAsEnum<GridOrentation>();
         if (o == GRID_LR) {
             deltaCol.x = gridWidth / (float)(nPerRow - 1);
@@ -148,6 +152,7 @@ void BKPath::computeData()
             deltaOrigin.y += gridHeight;
         }
 
+        deltaRow *= -1;
         if (gridInverseRows->boolValue()) {
             if (o == GRID_LR || o == GRID_RL) {
                 deltaOrigin.y += gridHeight;
@@ -170,7 +175,7 @@ void BKPath::computeData()
 
         int currentCol = 0;
         int currentRow = 0;
-
+        String test = niceName;
         gridPath.clear();
 
         for (int i = 0; i < nElements; i++) {
@@ -274,4 +279,14 @@ void BKPath::rotateVect(Vector3D<float>* vect, float angleInDegrees)
     float y1 = vect->y;
     vect->x = (cos(angle) * x1) - (sin(angle) * y1);
     vect->y = (sin(angle) * x1) + (cos(angle) * y1);
+}
+
+float BKPath::getVectAngle(Vector3D<float>* vect)
+{
+    Vector3D<float> temp = vect->normalised();
+    float angle = acosf(temp.x);
+    if (vect->y > 0) {
+        angle = -angle;
+    }
+    return angle;
 }
