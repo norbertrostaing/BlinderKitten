@@ -39,6 +39,7 @@ class BKPath:
     BoolParameter* gridZigZag;
     BoolParameter* gridInverseRows;
     Array<std::shared_ptr<Point<float>>> gridPath;
+    Point<float> gridTL, gridTR, gridBL, gridBR;
 
     FloatParameter* circleRadius;
     FloatParameter* circleFrom;
@@ -52,7 +53,6 @@ class BKPath:
     HashMap<SubFixture*, std::shared_ptr<Point<float>>> subFixtToPos;
     void computeData();
 
-    
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
 

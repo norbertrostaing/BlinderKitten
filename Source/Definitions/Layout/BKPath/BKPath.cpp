@@ -19,16 +19,21 @@ BKPath::BKPath(var params) :
     subFixtToPos(4096, SubFixture::MyHashGenerator())
 {
     saveAndLoadRecursiveData = true;
+    var d; d.append(0); d.append(0);
     pathType = addEnumParameter("Type", "Type of path");
     pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE);
     position = addPoint2DParameter("Position", "Position in pexiels in your layout");
 
+    d[0] = 5;    d[1] = 0;
     lineEndPosition = addPoint2DParameter("End position", "");
+    lineEndPosition->setDefaultValue(d);
 
+    d[0] = 4;    d[1] = 4;
     gridSize = addPoint2DParameter("Size", "Size of yout grid");
+    gridSize->setDefaultValue(d);
     gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
     gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,-360,360);
-    gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",2,2);
+    gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",8,2);
     gridOrientation = addEnumParameter("Orientation", "Grid orientation");
     gridOrientation->addOption("Left to right", GRID_LR)
         ->addOption("Right to left", GRID_RL)
@@ -38,9 +43,9 @@ BKPath::BKPath(var params) :
     gridZigZag = addBoolParameter("Zig zag", "", false);
     gridInverseRows = addBoolParameter("Reverse lines", "", false);
 
-    circleRadius = addFloatParameter("Radius", "Radius of the circle", 0, 0);
+    circleRadius = addFloatParameter("Radius", "Radius of the circle", 2, 0);
     circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
-    circleTo = addFloatParameter("To angle", "Angle of the last element", 0, -360, 360);
+    circleTo = addFloatParameter("To angle", "Angle of the last element", 360, -360, 360);
 
     addChildControllableContainer(&selection);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
@@ -161,9 +166,23 @@ void BKPath::computeData()
             deltaRow *= -1;
         }
 
+
         rotateVect(&deltaOrigin, gridAngle->floatValue());
         rotateVect(&deltaRow, gridAngle->floatValue());
         rotateVect(&deltaCol, gridAngle->floatValue());
+
+        gridTL.setXY(-gridWidth / 2, gridHeight / 2);
+        gridTR.setXY(gridWidth / 2, gridHeight / 2);
+        gridBL.setXY(-gridWidth / 2, -gridHeight / 2);
+        gridBR.setXY(gridWidth / 2, -gridHeight / 2);
+        rotateVect(&gridTL, gridAngle->floatValue());
+        rotateVect(&gridTR, gridAngle->floatValue());
+        rotateVect(&gridBL, gridAngle->floatValue());
+        rotateVect(&gridBR, gridAngle->floatValue());
+        gridTL += origin;
+        gridTR += origin;
+        gridBL += origin;
+        gridBR += origin;
 
         // apply rotations here
         currentPos.x = origin.x + deltaOrigin.x;
