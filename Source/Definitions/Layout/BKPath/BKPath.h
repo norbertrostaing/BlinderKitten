@@ -48,14 +48,14 @@ class BKPath:
     CommandSelectionManager selection;
 
     CriticalSection isComputing;
-    HashMap<Fixture*, std::shared_ptr<Vector3D<float>>> fixtToPos;
-    HashMap<SubFixture*, std::shared_ptr<Vector3D<float>>> subFixtToPos;
+    HashMap<Fixture*, std::shared_ptr<Point<float>>> fixtToPos;
+    HashMap<SubFixture*, std::shared_ptr<Point<float>>> subFixtToPos;
     void computeData();
 
     
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
 
-    static void rotateVect(Vector3D<float>* vect, float angleInDegrees);
-    static float getVectAngle(Vector3D<float>* vect);
+    static void rotateVect(Point<float>* vect, float angleInDegrees);
+    static float getVectAngle(Point<float>* vect);
 };

@@ -110,7 +110,7 @@ void Layout::computeData()
 std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromDirection(float angle)
 {
 	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();
-	Vector3D<float> xAxis(1,0,0);
+	Point<float> xAxis(1,0);
 	BKPath::rotateVect(&xAxis, angle);
 
 	float minDot = (float)INT32_MAX;
@@ -118,8 +118,8 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromDire
 	computeData();
 	isComputing.enter();
 	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
-		Vector3D<float> sfAxis(it.getValue()->x, it.getValue()->y, 0);
-		float dot = xAxis*sfAxis;
+		Point<float> sfAxis(it.getValue()->x, it.getValue()->y);
+		float dot = xAxis.getDotProduct(sfAxis);
 		minDot = jmin(minDot, dot);
 		maxDot = jmax(maxDot, dot);
 		ret->set(it.getKey(), dot);
@@ -131,20 +131,20 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromDire
 	return ret;
 }
 
-std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOriginAndAngle(Vector3D<float>* vect, float angle, bool normalize, bool clockwise)
+std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOriginAndAngle(Point<float>* vect, float angle, bool normalize, bool clockwise)
 {
 	float twoPi = 2 * MathConstants<float>::pi;
 	float fourPi = 4 * MathConstants<float>::pi;
 	angle = (angle / 360.0)*twoPi;
 	angle = fmod(angle + fourPi, twoPi);
 	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();
-	Vector3D<float> origin(vect->x, vect->y, 0);
+	Point<float> origin(vect->x, vect->y);
 	computeData();
 	isComputing.enter();
 	float minRatio = 1;
 	float maxRatio = 0;
 	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
-		Vector3D<float> sfAxis(it.getValue()->x, it.getValue()->y, 0);
+		Point<float> sfAxis(it.getValue()->x, it.getValue()->y);
 		sfAxis -= origin;
 		float sfAngle = BKPath::getVectAngle(&sfAxis); // angle between -PI and PI
 		sfAngle -= angle;
@@ -171,16 +171,16 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOrig
 	return ret;
 }
 
-std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOrigin(Vector3D<float>* vect)
+std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOrigin(Point<float>* vect)
 {
 	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();
-	Vector3D<float> origin(vect->x, vect->y, 0);
+	Point<float> origin(vect->x, vect->y);
 	computeData();
 	isComputing.enter();
 	float minDist = UINT16_MAX;
 	float maxDist = 0;
 	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
-		Vector3D<float> sfAxis(it.getValue()->x, it.getValue()->y, 0);
+		Point<float> sfAxis(it.getValue()->x, it.getValue()->y);
 
 		float deltaX = sfAxis.x - vect->x;
 		float deltaY = sfAxis.y - vect->y;

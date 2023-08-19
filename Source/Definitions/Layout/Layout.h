@@ -27,8 +27,8 @@ public:
     String objectType;
     var objectData;
 
-    HashMap<Fixture*, std::shared_ptr<Vector3D<float>>> fixtToPos;
-    HashMap<SubFixture*, std::shared_ptr<Vector3D<float>>> subFixtToPos;
+    HashMap<Fixture*, std::shared_ptr<Point<float>>> fixtToPos;
+    HashMap<SubFixture*, std::shared_ptr<Point<float>>> subFixtToPos;
     CriticalSection isComputing;
 
     IntParameter* id;
@@ -48,8 +48,8 @@ public:
     void computeData();
 
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromDirection(float angle);
-    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOriginAndAngle(Vector3D<float>* vect, float angle, bool normalize, bool clockwise);
-    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOrigin(Vector3D<float>* vect);
+    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOriginAndAngle(Point<float>* vect, float angle, bool normalize, bool clockwise);
+    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOrigin(Point<float>* vect);
 
     String getTypeString() const override { return objectType; }
     static Layout* create(var params) { return new Layout(params); }

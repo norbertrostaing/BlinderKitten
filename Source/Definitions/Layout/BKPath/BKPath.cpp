@@ -70,57 +70,55 @@ void BKPath::computeData()
         }
     }
 
-    Vector3D<float> origin;
+    Point<float> origin;
     origin.x = float(position->getValue()[0]);
     origin.y = float(position->getValue()[1]);
-    origin.z = 0;
 
     PathType type = pathType->getValueDataAsEnum<PathType>();
     if (type == PATH_POINT) {
         for (int i = 0; i < subFixts.size(); i++) {
-            subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(position->getValue()[0], position->getValue()[1],0));
+            subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(position->getValue()[0], position->getValue()[1]));
         }
         for (int i = 0; i < fixts.size(); i++) {
-            fixtToPos.set(fixts[i], std::make_shared<Vector3D<float>>(position->getValue()[0], position->getValue()[1],0));
+            fixtToPos.set(fixts[i], std::make_shared<Point<float>>(position->getValue()[0], position->getValue()[1]));
         }
     }
     else if (type == BKPath::PATH_LINE) {
-        Vector3D<float> temp;
-        Vector3D<float> delta;
+        Point<float> temp;
+        Point<float> delta;
 
         delta.x = float(lineEndPosition->getValue()[0]) - float(position->getValue()[0]);
         delta.y = float(lineEndPosition->getValue()[1]) - float(position->getValue()[1]);
-        delta.z = 0;
         int test = subFixts.size();
         for (int i = 0; i < subFixts.size(); i++) {
             Fixture* f = subFixts[i]->parentFixture;
-            //std::shared_ptr<Vector3D<float>> vect = std::make_shared<Vector3D<float>>();
+            //std::shared_ptr<Point<float>> vect = std::make_shared<Point<float>>();
 
             float ratio = subFixts.size() > 1 ? (float)i / ((float)subFixts.size()-1) : 0.5;
             if (!spreadSubFixtures->boolValue()) {
                 ratio = fixts.size() > 1 ? (float)fixts.indexOf(f) / ((float)fixts.size() - 1) : 0.5;
             }
-            temp.x = 0; temp.y = 0; temp.z = 0;
+            temp.x = 0; temp.y = 0;
             temp += delta;
             temp *= ratio;
             temp.x += origin.x;
             temp.y += origin.y;
-            subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
+            subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(temp.x, temp.y));
 
             // LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(temp.x)+"  y:" + String(temp.y));
 
             if (!fixtToPos.contains(f)) {
-                fixtToPos.set(f, std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
+                fixtToPos.set(f, std::make_shared<Point<float>>(temp.x, temp.y));
             }
         }
 
     }
     else if (type == BKPath::PATH_GRID) {
-        Vector3D<float> currentPos(0, 0, 0);
-        Vector3D<float> deltaCol(0,0,0);
-        Vector3D<float> deltaRow(0, 0, 0);
-        Vector3D<float> deltaOrigin(0, 0, 0);
-        Vector3D<float> lineOrigin(0, 0, 0);
+        Point<float> currentPos(0, 0);
+        Point<float> deltaCol(0, 0);
+        Point<float> deltaRow(0, 0);
+        Point<float> deltaOrigin(0, 0);
+        Point<float> lineOrigin(0, 0);
 
         int nElements = spreadSubFixtures->boolValue() ? subFixts.size() : fixts.size();
         int nPerRow = gridNumberOfElements->intValue();
@@ -181,11 +179,11 @@ void BKPath::computeData()
         for (int i = 0; i < nElements; i++) {
             if (spreadSubFixtures->boolValue()) {
                 Fixture* f = subFixts[i]->parentFixture;
-                subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
+                subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(currentPos.x, currentPos.y));
             }
             else {
                 Fixture* f = fixts[i];
-                fixtToPos.set(f, std::make_shared<Vector3D<float>>(currentPos.x, currentPos.y, 0));
+                fixtToPos.set(f, std::make_shared<Point<float>>(currentPos.x, currentPos.y));
             }
             //LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(currentPos.x)+"  y:" + String(currentPos.y));
             gridPath.add(std::make_shared<Point<float>>(currentPos.x, currentPos.y));
@@ -211,8 +209,8 @@ void BKPath::computeData()
     }
     else if (type == BKPath::PATH_CIRCLE)
     {
-        Vector3D<float> offset(circleRadius->floatValue(), 0, 0);
-        Vector3D<float> temp(0, 0, 0);
+        Point<float> offset(circleRadius->floatValue(), 0);
+        Point<float> temp(0, 0);
         float angleTo = circleTo->floatValue();
         float angleFrom = circleFrom->floatValue();
 
@@ -235,11 +233,11 @@ void BKPath::computeData()
             temp += origin;
             if (spreadSubFixtures->boolValue()) {
                 Fixture* f = subFixts[i]->parentFixture;
-                subFixtToPos.set(subFixts[i], std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
+                subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(temp.x, temp.y));
             }
             else {
                 Fixture* f = fixts[i];
-                fixtToPos.set(f, std::make_shared<Vector3D<float>>(temp.x, temp.y, 0));
+                fixtToPos.set(f, std::make_shared<Point<float>>(temp.x, temp.y));
             }
         }
 
@@ -271,7 +269,7 @@ void BKPath::updateDisplay() {
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
-void BKPath::rotateVect(Vector3D<float>* vect, float angleInDegrees)
+void BKPath::rotateVect(Point<float>* vect, float angleInDegrees)
 {
     float angle = -angleInDegrees / 360.0;
     angle = angle * 2 * MathConstants<float>::pi;
@@ -281,9 +279,10 @@ void BKPath::rotateVect(Vector3D<float>* vect, float angleInDegrees)
     vect->y = (sin(angle) * x1) + (cos(angle) * y1);
 }
 
-float BKPath::getVectAngle(Vector3D<float>* vect)
+float BKPath::getVectAngle(Point<float>* vect)
 {
-    Vector3D<float> temp = vect->normalised();
+    Point<float> temp(vect->x, vect->y);
+    temp /= temp.getDistanceFromOrigin();
     float angle = acosf(temp.x);
     if (vect->y > 0) {
         angle = -angle;

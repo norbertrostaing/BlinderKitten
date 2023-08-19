@@ -24,6 +24,10 @@ public:
     ~LayoutViewer();
 
     ComboBox layoutsList;
+    Image clicZones;
+    enum clicAction {CLIC_DRAG, CLIC_ORIGIN, CLIC_END, CLIC_TL, CLIC_TR, CLIC_BL, CLIC_BR};
+
+    HashMap<int, BKPath*> colourToTarget;
 
     //void setCurrentLayout(Layout* l);
     void rebuildLayoutsList();

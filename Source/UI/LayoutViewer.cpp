@@ -100,7 +100,10 @@ void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)
 void LayoutViewer::paint(Graphics& g)
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
+
+	Graphics clicg(clicZones);
 	g.fillAll(Colour(0, 0, 0));
+	clicg.fillAll(Colour(0));
 
 	// ajouter liste déroulante pour choisir le layout
 	if (selectedLayout == nullptr) {

@@ -262,7 +262,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			else if (selections[selId]->filter->getValue() == "layoutcircle") {
 				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
 				if (l != nullptr) {
-					Vector3D<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1],0);
+					Point<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1]);
 					auto sfToPos = l->getSubfixturesRatioFromOriginAndAngle(&origin, selections[selId]->layoutCircleStartAngle->floatValue(), !selections[selId]->layoutCircleCompleteRevolution->boolValue(), selections[selId]->layoutCircleCCW->boolValue());
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
@@ -275,7 +275,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			else if (selections[selId]->filter->getValue() == "layoutpoint") {
 				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
 				if (l != nullptr) {
-					Vector3D<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1], 0);
+					Point<float> origin((float)selections[selId]->layoutCircleOrigin->getValue()[0], (float)selections[selId]->layoutCircleOrigin->getValue()[1]);
 					auto sfToPos = l->getSubfixturesRatioFromOrigin(&origin);
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
