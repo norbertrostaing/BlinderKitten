@@ -58,4 +58,8 @@ class BKPath:
 
     static void rotateVect(Point<float>* vect, float angleInDegrees);
     static float getVectAngle(Point<float>* vect);
+
+    String getTypeString() const override { return objectType; }
+    static BKPath* create(var params) { return new BKPath(params); }
+
 };

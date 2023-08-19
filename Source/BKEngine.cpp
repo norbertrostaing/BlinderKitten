@@ -976,6 +976,10 @@ void BKEngine::importMVR(File f)
 
 	int maxAddress = 0;
 
+	Layout* frontLayout = nullptr;
+	Layout* topLayout = nullptr;
+	Layout* sideLayout = nullptr;
+
 	for (int indexScene = 0; indexScene < nLayers; indexScene++) {
 		auto sceneNode = rootElmt->getChildElement(indexScene);
 		if (sceneNode->getTagName().toLowerCase() == "scene") {
@@ -1035,8 +1039,9 @@ void BKEngine::importMVR(File f)
 												}
 												ft = fixtureTypesMap.getReference(ftName);
 
+												Fixture* fixt;
 												if (!fixturesMap.contains(id)) {
-													Fixture* fixt = FixtureManager::getInstance()->addItem();
+													fixt = FixtureManager::getInstance()->addItem();
 													fixturesMap.set(id, fixt);
 													fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
 													fixt->id->setValue(id);
@@ -1052,6 +1057,37 @@ void BKEngine::importMVR(File f)
 														int address = tag->getAllSubText().trim().getIntValue();
 														maxAddress = jmax(address, maxAddress);
 														fixtAddresses->addIfNotAlreadyThere(address);
+													}
+												}
+
+												if (child->getChildByName("Matrix") != nullptr) {
+													auto matrixNode = child->getChildByName("Matrix");
+													String matrixValue = matrixNode->getAllSubText();
+													matrixValue = matrixValue.replace("}{", ",");
+													matrixValue = matrixValue.replace("}", "");
+													matrixValue = matrixValue.replace("{", "");
+													auto matVals = StringArray::fromTokens(matrixValue, ",", "");
+
+													if (matVals.size() == 12 && fixt != nullptr) {
+														if (frontLayout == nullptr) {
+															frontLayout = LayoutManager::getInstance()->addItem();
+															frontLayout->userName->setValue("MVR Front layout");
+														}
+														if (topLayout == nullptr) {
+															topLayout = LayoutManager::getInstance()->addItem();
+															topLayout->userName->setValue("MVR Top layout");
+														}
+														if (sideLayout == nullptr) {
+															sideLayout = LayoutManager::getInstance()->addItem();
+															sideLayout->userName->setValue("MVR Side layout");
+														}
+														float x = matVals[9].getFloatValue()/1000;
+														float y = matVals[10].getFloatValue()/1000;
+														float z = matVals[11].getFloatValue()/1000;
+
+														frontLayout->createPathForFixture(fixt, x, z);
+														topLayout->createPathForFixture(fixt, x, y);
+														sideLayout->createPathForFixture(fixt, y, z);
 													}
 												}
 											}
@@ -1092,6 +1128,10 @@ void BKEngine::importMVR(File f)
 			p->address->setValue(dmxAddress+1);
 		}
 	}
+
+	if (frontLayout != nullptr) { frontLayout->fitToContent(); }
+	if (topLayout != nullptr) { topLayout->fitToContent(); }
+	if (sideLayout != nullptr) { sideLayout->fitToContent(); }
 
 	LOG("Import done !");
 }

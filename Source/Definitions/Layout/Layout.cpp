@@ -107,6 +107,40 @@ void Layout::computeData()
 	isComputing.exit();
 }
 
+void Layout::fitToContent()
+{
+	float minX = INT16_MAX;
+	float maxX = -INT16_MAX;
+	float minY = INT16_MAX;
+	float maxY = -INT16_MAX;
+	for (int i = 0; i < paths.items.size(); i++) {
+		BKPath* p = paths.items[i];
+		minX = jmin((float)p->position->getValue()[0], minX);
+		minY = jmin((float)p->position->getValue()[1], minY);
+		maxX = jmax((float)p->position->getValue()[0], maxX);
+		maxY = jmax((float)p->position->getValue()[1], maxY);
+	}
+	var x = var();
+	x.append(minX - 1);
+	x.append(maxX + 1);
+	dimensionsX->setValue(x);
+	var y = var();
+	y.append(minY - 1);
+	y.append(maxY + 1);
+	dimensionsY->setValue(y);
+}
+
+void Layout::createPathForFixture(Fixture* f, float x, float y)
+{
+	BKPath* p = paths.addItem();
+	CommandSelection* s = p->selection.addItem();
+	s->valueFrom->setValue(f->id->getValue());
+	var pos = var();
+	pos.append(x);
+	pos.append(y);
+	p->position->setValue(pos);
+}
+
 std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromDirection(float angle)
 {
 	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();

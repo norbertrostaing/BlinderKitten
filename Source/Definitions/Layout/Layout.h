@@ -46,6 +46,9 @@ public:
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
     void computeData();
+    void fitToContent();
+
+    void createPathForFixture(Fixture* f, float x, float y);
 
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromDirection(float angle);
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOriginAndAngle(Point<float>* vect, float angle, bool normalize, bool clockwise);

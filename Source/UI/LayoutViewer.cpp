@@ -102,6 +102,9 @@ void LayoutViewer::selectLayout(int id)
 		selectedLayout->addChangeListener(this);
 		selectedLayout->computeData();
 	}
+	else {
+		selectedLayout = nullptr;
+	}
 	repaint();
 }
 
@@ -296,7 +299,7 @@ void LayoutViewer::paint(Graphics& g)
 
 	Rectangle<float> layoutZone;
 	float layoutRatio = abs(layoutWidth / layoutHeight);
-	float windowRatio = (float)getWidth() / (float)getHeight();
+	float windowRatio = (float)getWidth() / ((float)getHeight()-20);
 	float originX = 0;
 	float originY = 0;
 	float width = 0;
@@ -313,8 +316,8 @@ void LayoutViewer::paint(Graphics& g)
 	}
 	else {
 		// crop left and right
-		originY = 0;
-		height = getHeight();
+		originY = 20;
+		height = getHeight()-20;
 		width = height * layoutRatio;
 		originX = getWidth()-width;
 		originX /= 2;
@@ -350,6 +353,21 @@ void LayoutViewer::paint(Graphics& g)
 	for (int i = 0; i < selectedLayout->paths.items.size(); i++) {
 		BKPath* p = selectedLayout->paths.items[i];
 		BKPath::PathType type = p->pathType->getValueDataAsEnum<BKPath::PathType>(); //::PATH_LINE) 
+		if (type == BKPath::PATH_POINT) {
+			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+
+			clicg.setColour(getClickColour(p, CLIC_DRAG));
+			clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
+			g.setColour(juce::Colours::orange);
+			g.drawRect(fromX - halfFixtWidth, fromY - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+
+			if (p == hoveredPath) {
+				g.setColour(Colour((uint8)255, (uint8)255, (uint8)255));
+				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
+			}
+
+		}
 		if (type == BKPath::PATH_LINE) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
