@@ -133,6 +133,7 @@ void Layout::fitToContent()
 void Layout::createPathForFixture(Fixture* f, float x, float y)
 {
 	BKPath* p = paths.addItem();
+	p->setNiceName("Fixture "+f->id->stringValue());
 	CommandSelection* s = p->selection.addItem();
 	s->valueFrom->setValue(f->id->getValue());
 	var pos = var();
