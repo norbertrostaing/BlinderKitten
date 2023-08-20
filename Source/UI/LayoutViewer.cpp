@@ -165,7 +165,15 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 		float layoutY = jmap(float(e.getDistanceFromDragStartY() + e.getMouseDownY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
 
 		BKPath::PathType type = currentMousePath->pathType->getValueDataAsEnum<BKPath::PathType>();
-		if (type == BKPath::PATH_LINE) {
+		if (type == BKPath::PATH_POINT) {
+			if (currentMouseAction == CLIC_DRAG) {
+				var v;
+				v.append(layoutX + deltaMouseX);
+				v.append(layoutY + deltaMouseY);
+				currentMousePath->position->setValue(v);
+			}
+		}
+		else if (type == BKPath::PATH_LINE) {
 			if (currentMouseAction == CLIC_DRAG) {
 				float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
 				float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
@@ -191,7 +199,7 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 				v.append(layoutY);
 				currentMousePath->lineEndPosition->setValue(v);
 			}
-			
+
 		}
 		else if(type == BKPath::PATH_GRID) {
 			if (currentMouseAction == CLIC_DRAG) {
@@ -226,6 +234,14 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 				mouse -= origin;
 				float angle = BKPath::getVectAngle(&mouse);
 				currentMousePath->gridAngle->setValue(radiansToDegrees(angle));
+			}
+		}
+		if (type == BKPath::PATH_CIRCLE) {
+			if (currentMouseAction == CLIC_DRAG) {
+				var v;
+				v.append(layoutX + deltaMouseX);
+				v.append(layoutY + deltaMouseY);
+				currentMousePath->position->setValue(v);
 			}
 		}
 
@@ -353,6 +369,9 @@ void LayoutViewer::paint(Graphics& g)
 	for (int i = 0; i < selectedLayout->paths.items.size(); i++) {
 		BKPath* p = selectedLayout->paths.items[i];
 		BKPath::PathType type = p->pathType->getValueDataAsEnum<BKPath::PathType>(); //::PATH_LINE) 
+		Colour hoverColour((uint8)255, (uint8)255, (uint8)255, (uint8)63);
+		Colour handleColour((uint8)255, (uint8)255, (uint8)255);
+
 		if (type == BKPath::PATH_POINT) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
@@ -363,7 +382,7 @@ void LayoutViewer::paint(Graphics& g)
 			g.drawRect(fromX - halfFixtWidth, fromY - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
 
 			if (p == hoveredPath) {
-				g.setColour(Colour((uint8)255, (uint8)255, (uint8)255));
+				g.setColour(handleColour);
 				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
 			}
 
@@ -407,9 +426,9 @@ void LayoutViewer::paint(Graphics& g)
 			}
 
 			if (p == hoveredPath) {
-				g.setColour(Colour((uint8)255, (uint8)255, (uint8)255, (uint8)63));
+				g.setColour(hoverColour);
 				g.drawLine(line, halfHandleWidth);
-				g.setColour(juce::Colours::white);
+				g.setColour(handleColour);
 				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
 			}
@@ -478,9 +497,9 @@ void LayoutViewer::paint(Graphics& g)
 			clicg.fillEllipse(rotate.x - halfHandleWidth, rotate.y - halfHandleWidth, handleWidth, handleWidth);
 
 			if (p == hoveredPath) {
-				g.setColour(Colour((uint8)255, (uint8)255, (uint8)255, (uint8)63));
+				g.setColour(hoverColour);
 				g.fillPath(path);
-				g.setColour(juce::Colours::white);
+				g.setColour(handleColour);
 				g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(bl.x - halfHandleWidth, bl.y - halfHandleWidth, handleWidth, handleWidth);
@@ -490,18 +509,24 @@ void LayoutViewer::paint(Graphics& g)
 
 		}
 		if (type == BKPath::PATH_CIRCLE) {
+			float from = -(p->circleFrom->floatValue() / 360.) * 2 * MathConstants<float>::pi;
+			float to = -(p->circleTo->floatValue() / 360.) * 2 * MathConstants<float>::pi;
+			from += MathConstants<float>::pi / 2;
+			to += MathConstants<float>::pi / 2;
+			float X = jmap(p->position->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+			float Y = jmap(p->position->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float W = p->circleRadius->floatValue() * uiScale;
+			Path path;
+			path.addArc(X - (W), Y - (W), W * 2, W * 2, from, to, true);
 			if (true) {
-				float from = -(p->circleFrom->floatValue() / 360. ) * 2 * MathConstants<float>::pi;
-				float to = -(p->circleTo->floatValue() / 360. ) * 2 * MathConstants<float>::pi;
-				from += MathConstants<float>::pi / 2;
-				to += MathConstants<float>::pi / 2;
-				float X = jmap(p->position->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-				float Y = jmap(p->position->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-				float W = p->circleRadius->floatValue() * uiScale;
-				Path path;
-				path.addArc(X-(W), Y-(W), W*2, W*2, from, to, true);
 				g.setColour(juce::Colours::lightgrey);
 				g.strokePath(path, PathStrokeType(0.5));
+			}
+			clicg.setColour(getClickColour(p, CLIC_DRAG));
+			clicg.strokePath(path, PathStrokeType(handleWidth));
+			if (p == hoveredPath) {
+				g.setColour(hoverColour);
+				g.strokePath(path, PathStrokeType(handleWidth));
 			}
 
 
