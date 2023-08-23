@@ -603,7 +603,6 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				temp->isEnded = false;
 				newActiveValues.set(it.getKey(), temp);
 				it.getKey()->cuelistOnTopOfStack(this);
-				Brain::getInstance()->pleaseUpdate(it.getKey());
 			}
 			tempCue->csComputing.exit();
 			tempCue->go();
@@ -652,7 +651,6 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
 			newActiveValues.set(it.getKey(), temp);
 			it.getKey()->cuelistOnTopOfStack(this);
-			Brain::getInstance()->pleaseUpdate(it.getKey());
 		}
 		c->csComputing.exit();
 		c->go();
@@ -698,7 +696,6 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					temp->isEnded = false;
 
 					newActiveValues.set(it.getKey(), temp);
-					Brain::getInstance()->pleaseUpdate(it.getKey());
 				}
 
 			}
@@ -709,6 +706,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	
 	for (auto it = newActiveValues.begin(); it != newActiveValues.end(); it.next()) {
 		activeValues.set(it.getKey(), it.getValue());
+		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
 
 	if (isChaser->getValue() && c != nullptr) {
