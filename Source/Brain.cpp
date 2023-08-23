@@ -207,10 +207,10 @@ void Brain::brainLoop() {
     usingCollections.exit();
 
     {
-        ScopedLock lock(usingCollections);
         for (int i = 0; i < runningTasks.size(); i++) {
             runningTasks[i]->update(now);
         }
+        ScopedLock lock(usingTasksCollection);
         for (int i = runningTasks.size() - 1; i >= 0; i--) {
             if (runningTasks[i]->isEnded) {
                 runningTasks.remove(i);
@@ -780,7 +780,7 @@ int Brain::newTaskId()
 
 void Brain::startTask(Task* t, double startTime, int cuelistId)
 {
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingTasksCollection);
 
     String actionType = "";
     String targetType = t->targetType->getValue();
@@ -888,13 +888,13 @@ void Brain::startTask(Task* t, double startTime, int cuelistId)
 
 void Brain::stopTasks(int cuelistId, int taskId)
 {
-    usingCollections.enter();
+    usingTasksCollection.enter();
     for (int i = runningTasks.size()-1; i >= 0; i--) {
         if (runningTasks[i]->cuelistId == cuelistId && (taskId == -1 || taskId > runningTasks[i]->id)) {
             runningTasks.remove(i);
         }
     }
-    usingCollections.exit();
+    usingTasksCollection.exit();
 }
 
 SubFixture* Brain::getSubFixtureById(int id) {

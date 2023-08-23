@@ -84,6 +84,7 @@ public:
     bool skipLoop = false;
 
     CriticalSection usingCollections;
+    CriticalSection usingTasksCollection;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);
     void registerFixture(Fixture* f, int id, bool swap = false);

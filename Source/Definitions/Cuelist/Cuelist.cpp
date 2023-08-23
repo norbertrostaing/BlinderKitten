@@ -983,6 +983,9 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	float faderLevel = 0;
 	if (!activeValues.contains(fc)) {return currentVal;}
 	cv = activeValues.getReference(fc);
+	if (cv == nullptr) {
+		return currentVal;
+	}
 
 	if (cv != nullptr && cv->htpOverride) {
 		HTP = false;
@@ -999,11 +1002,6 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		faderLevel = jmax(faderLevel,(float)FlashLevel->getValue());
 	}
 	else {
-	}
-
-	if (cv == nullptr) {
-		LOG("c'est chelou");
-		return currentVal; 
 	}
 
 	float valueFrom = currentVal;
