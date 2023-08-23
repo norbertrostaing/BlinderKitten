@@ -21,12 +21,15 @@ BKPath::BKPath(var params) :
     saveAndLoadRecursiveData = true;
     var d; d.append(0); d.append(0);
     pathType = addEnumParameter("Type", "Type of path");
-    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE);
-    position = addPoint2DParameter("Position", "Position in pexiels in your layout");
+    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Rod", PATH_ROD)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE);
+    position = addPoint2DParameter("Position", "Position in your layout");
 
     d[0] = 5;    d[1] = 0;
     lineEndPosition = addPoint2DParameter("End position", "");
     lineEndPosition->setDefaultValue(d);
+
+    rodSize = addFloatParameter("Rod size", "", 1,0);
+    rodAngle = addFloatParameter("Angle", "Angle of your rod", 0, -360, 360);
 
     d[0] = 4;    d[1] = 4;
     gridSize = addPoint2DParameter("Size", "Size of yout grid");
@@ -99,7 +102,7 @@ void BKPath::computeData()
             Fixture* f = subFixts[i]->parentFixture;
             //std::shared_ptr<Point<float>> vect = std::make_shared<Point<float>>();
 
-            float ratio = subFixts.size() > 1 ? (float)i / ((float)subFixts.size()-1) : 0.5;
+            float ratio = subFixts.size() > 1 ? (float)i / ((float)subFixts.size() - 1) : 0.5;
             if (!spreadSubFixtures->boolValue()) {
                 ratio = fixts.size() > 1 ? (float)fixts.indexOf(f) / ((float)fixts.size() - 1) : 0.5;
             }
@@ -108,6 +111,47 @@ void BKPath::computeData()
             temp *= ratio;
             temp.x += origin.x;
             temp.y += origin.y;
+            subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(temp.x, temp.y));
+
+            // LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(temp.x)+"  y:" + String(temp.y));
+
+            if (!fixtToPos.contains(f)) {
+                fixtToPos.set(f, std::make_shared<Point<float>>(temp.x, temp.y));
+            }
+        }
+
+    }
+    else if (type == BKPath::PATH_ROD) {
+        Point<float> start;
+        Point<float> end;
+        Point<float> delta;
+        Point<float> temp;
+
+        Point<float> halfRod(rodSize->floatValue()/2, 0);
+        rotateVect(&halfRod, rodAngle->floatValue());
+        end = halfRod + origin;
+        rotateVect(&halfRod, 180.0);
+        start = halfRod+origin;
+
+        gridTL = start;
+        gridTR = end;
+
+        delta = end-start;
+
+        int test = subFixts.size();
+        for (int i = 0; i < subFixts.size(); i++) {
+            Fixture* f = subFixts[i]->parentFixture;
+            //std::shared_ptr<Point<float>> vect = std::make_shared<Point<float>>();
+
+            float ratio = subFixts.size() > 1 ? (float)i / ((float)subFixts.size() - 1) : 0.5;
+            if (!spreadSubFixtures->boolValue()) {
+                ratio = fixts.size() > 1 ? (float)fixts.indexOf(f) / ((float)fixts.size() - 1) : 0.5;
+            }
+            temp.x = 0; temp.y = 0;
+            temp += delta;
+            temp *= ratio;
+            temp.x += start.x;
+            temp.y += start.y;
             subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(temp.x, temp.y));
 
             // LOG(f->id->stringValue()+" "+String(subFixts[i]->subId)+" - x:"+String(temp.x)+"  y:" + String(temp.y));
@@ -272,7 +316,10 @@ void BKPath::onContainerParameterChangedInternal(Parameter* c) {
 
 void BKPath::updateDisplay() {
 
-    lineEndPosition -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_LINE;
+    lineEndPosition->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_LINE;
+
+    rodSize->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_ROD;
+    rodAngle->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_ROD;
 
     gridSize -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
     gridAngle -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;

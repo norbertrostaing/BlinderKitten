@@ -201,6 +201,27 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 			}
 
 		}
+		else if (type == BKPath::PATH_ROD) {
+			if (currentMouseAction == CLIC_DRAG) {
+				float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
+				float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
+
+				var v;
+				v.append(layoutX + deltaMouseX);
+				v.append(layoutY + deltaMouseY);
+				currentMousePath->position->setValue(v);
+
+			}
+			else if (currentMouseAction == CLIC_END) {
+				Point<float> delta(layoutX, layoutY);
+				delta.x -= (float)currentMousePath->position->getValue()[0];
+				delta.y -= (float)currentMousePath->position->getValue()[1];
+
+				currentMousePath->rodSize->setValue( delta.getDistanceFromOrigin());
+				currentMousePath->rodAngle->setValue(radiansToDegrees( BKPath::getVectAngle(&delta)));
+			}
+
+		}
 		else if(type == BKPath::PATH_GRID) {
 			if (currentMouseAction == CLIC_DRAG) {
 				var v;
@@ -431,6 +452,51 @@ void LayoutViewer::paint(Graphics& g)
 				g.setColour(handleColour);
 				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
+			}
+
+		}
+		if (type == BKPath::PATH_ROD) {
+			Point tl(jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
+			Point tr(jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
+			Line<float> line(tl, tr);
+
+			if (true) { // wanna draw lines ?
+				g.setColour(juce::Colours::lightgrey);
+				g.drawLine(line, 0.5f);
+			}
+
+			clicg.setColour(getClickColour(p, CLIC_DRAG));
+			clicg.drawLine(line, handleWidth);
+			clicg.setColour(getClickColour(p, CLIC_ORIGIN));
+			clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+			clicg.setColour(getClickColour(p, CLIC_END));
+			clicg.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
+			g.setColour(juce::Colours::orange);
+			if (p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+			if (!p->spreadSubFixtures->boolValue()) {
+				p->isComputing.enter();
+				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
+					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				}
+				p->isComputing.exit();
+			}
+
+			if (p == hoveredPath) {
+				g.setColour(hoverColour);
+				g.drawLine(line, halfHandleWidth);
+				g.setColour(handleColour);
+				g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+				g.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
 			}
 
 		}
