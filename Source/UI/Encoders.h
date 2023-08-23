@@ -74,7 +74,6 @@ public:
     void resized() override;
     void sliderValueChanged(Slider* slider) override;
     void buttonClicked (Button*);
-    void updateFilters();
     void updateFilterBtns();
     void updateEncoders();
     void updateChannels();

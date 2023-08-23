@@ -50,7 +50,7 @@ class CommandSelection:
     FloatParameter* layoutCircleStartAngle;
     BoolParameter* layoutCircleCompleteRevolution;
     BoolParameter* layoutCircleCCW;
-
+    BoolParameter* layoutUseOnlySelection;
 
     Array<SubFixture*> lastRandom;
 

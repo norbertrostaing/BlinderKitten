@@ -79,6 +79,7 @@ public:
 
     void selectNextCommand();
     void selectPrevCommand();
+    void selectCommand(Command* c);
 
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
 

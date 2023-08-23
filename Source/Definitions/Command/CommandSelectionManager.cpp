@@ -251,9 +251,24 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
 				if (l != nullptr) {
 					auto sfToPos = l->getSubfixturesRatioFromDirection(selections[selId]->layoutDirection->floatValue());
+					float min = 0;
+					float max = 1;
+					bool reNormalize = selections[selId]->layoutUseOnlySelection->boolValue();
+					if (reNormalize) {
+						min = 1; max = 0;
+						for (int i = 0; i < tempSelection.size(); i++) {
+							if (sfToPos->contains(tempSelection[i])) {
+								min = jmin(min, sfToPos->getReference(tempSelection[i]));
+								max = jmax(max, sfToPos->getReference(tempSelection[i]));
+							}
+						}
+					}
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
 							float v = sfToPos->getReference(tempSelection[i]);
+							if (reNormalize) {
+								v = jmap(v, min, max, 0.f, 1.f);
+							}
 							subFixtureToPosition.set(tempSelection[i], v);
 						}
 					}

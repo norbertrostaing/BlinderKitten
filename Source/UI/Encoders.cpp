@@ -323,10 +323,6 @@ void Encoders::updateRangeButton() {
     updateEncoders();
 }
 
-void Encoders::updateFilters() {
-    // add buttons to filter types of channels by family
-}
-
 void Encoders::updateFilterBtns()
 {
     float scale = 1;
@@ -407,6 +403,8 @@ void Encoders::updateEncoders() {
         //labels[i]->repaint();
     }
     //repaint();
+    updateEncodersValues();
+
 
 }
 

@@ -50,6 +50,7 @@ CommandSelection::CommandSelection(var params) :
     randomWing = addIntParameter("Wings", "Symmetries", 1, 1);
     layoutId = addIntParameter("Layout ID", "Id ot desired layout", 0, 0);
     layoutDirection = addFloatParameter("Direction angle", "angle of selection direction", 0, -360, 360);
+    layoutUseOnlySelection = addBoolParameter("Use selected only", "If checked, the min and max indexes will be contrained on selection and not on all elements of the layout", true);
 
     layoutCircleOrigin = addPoint2DParameter("Circle Origin", "");
     layoutCircleStartAngle = addFloatParameter("Start angle", "",0,-360,360);
@@ -105,6 +106,8 @@ void CommandSelection::updateDisplay()
     layoutCircleStartAngle->hideInEditor = !layoutCir;
     layoutCircleCompleteRevolution->hideInEditor = !layoutCir;
     layoutCircleCCW->hideInEditor = !layoutCir;
+
+    layoutUseOnlySelection->hideInEditor = !layout;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

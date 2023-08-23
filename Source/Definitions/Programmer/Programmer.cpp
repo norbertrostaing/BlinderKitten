@@ -429,6 +429,19 @@ void Programmer::selectPrevCommand()
 	}
 }
 
+void Programmer::selectCommand(Command* c)
+{
+	checkCurrentUserCommand();
+	if (commands.items.size() > 1) {
+		if (commands.items.indexOf(c) >= 0) {
+			currentUserCommand = c;
+			if (highlightCurrentCommand->boolValue()) {
+				go();
+			}
+		}
+	}
+}
+
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
 	const MessageManagerLock mmLock;
