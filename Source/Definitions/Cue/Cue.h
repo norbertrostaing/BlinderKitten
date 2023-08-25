@@ -34,6 +34,7 @@ public:
     FloatParameter* autoFollowTiming;
     FloatParameter* autoFollowCountDown;
     BoolParameter* canBeRandomlyCalled;
+    BoolParameter* loadWindowBreakLine;
     double TSAutoFollowStart;
     double TSAutoFollowEnd;
 

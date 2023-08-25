@@ -43,6 +43,7 @@ Cue::Cue(var params) :
 	autoFollowCountDown->isControllableFeedbackOnly = true;
 
 	canBeRandomlyCalled = addBoolParameter("Random callable", "Can this cue be called by the randomGo of its cuelist ?", true);
+	loadWindowBreakLine = addBoolParameter("New line load window", "If checked, this element will force a new line in the cuelist window", false);
 	goBtn = actionsContainer.addTrigger("GO", "trigger this cue");
 	loadBtn = actionsContainer.addTrigger("Load", "load the content of this cue in programmer");
 	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");

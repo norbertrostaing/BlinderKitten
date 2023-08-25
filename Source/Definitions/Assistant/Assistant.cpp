@@ -368,6 +368,7 @@ void Assistant::createPalette()
     cl->cues.clear();
     cl->deselectThis();
     // supprimer premier cue
+    bool nextIsNewLine = false;
     for (int i = presetFrom; i != presetTo + delta; i += delta) {
         const MessageManagerLock mmLock;
         Preset* p = Brain::getInstance()->getPresetById(i);
@@ -377,6 +378,8 @@ void Assistant::createPalette()
             c->editorIsCollapsed = true;
 
             c->setNiceName(name);
+            c->loadWindowBreakLine->setValue(nextIsNewLine);
+            nextIsNewLine = false;
             c->id->setValue(i);
             c->commands.items[0]->selection.items[0]->targetType->setValueWithKey("Group");
             c->commands.items[0]->selection.items[0]->valueFrom->setValue(groupId);
@@ -400,6 +403,9 @@ void Assistant::createPalette()
             }
 
             //wait(10);
+        }
+        else {
+            nextIsNewLine = true;
         }
     }
 

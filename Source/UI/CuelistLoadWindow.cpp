@@ -47,9 +47,15 @@ void CuelistLoadWindow::resized()
 
     float prevId = cueIds[0];
     for (int i = 0; i < buttons.size(); i++) {
+        bool newLine = false;
+        if (currentTarget != nullptr && currentTarget->cues.items.size() > i) {
+            Cue* c = currentTarget->cues.items[i];
+            newLine = c->loadWindowBreakLine->boolValue();
+        }
+
         float id = cueIds[i];
         x++;
-        if (x >= nButtons || prevId + 1 < id) {
+        if (x >= nButtons || newLine) {
             y++;
             x = 0;
         }
