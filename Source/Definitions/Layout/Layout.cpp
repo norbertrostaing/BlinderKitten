@@ -219,7 +219,7 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOrig
 
 		float deltaX = sfAxis.x - vect->x;
 		float deltaY = sfAxis.y - vect->y;
-		float dist = sqrtf((deltaX*deltaX)+(deltaY*deltaY));
+		float dist = sqrtf((deltaX * deltaX) + (deltaY * deltaY));
 		minDist = jmin(minDist, dist);
 		maxDist = jmax(maxDist, dist);
 		ret->set(it.getKey(), dist);
@@ -228,6 +228,47 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromOrig
 
 	for (auto it = ret->begin(); it != ret->end(); it.next()) {
 		ret->set(it.getKey(), jmap(it.getValue(), minDist, maxDist, (float)0, (float)1));
+	}
+
+	return ret;
+}
+
+
+std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioPerlin(float scale, int seed)
+{
+	using namespace siv;
+	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();
+	computeData();
+	PerlinNoise p = PerlinNoise();
+	if (seed == 0) {
+		seed = juce::Random::getSystemRandom().nextInt() + 1;
+	}
+	p.reseed(seed);
+	float minVal = UINT16_MAX;
+	float maxVal = 0;
+
+	float w = (float)dimensionsX->getValue()[1] - (float)dimensionsX->getValue()[0];
+	float h = (float)dimensionsY->getValue()[1] - (float)dimensionsY->getValue()[0];
+
+	isComputing.enter();
+	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
+		Point<float> sfAxis(it.getValue()->x, it.getValue()->y);
+		sfAxis *= scale;
+		float x = jmap(sfAxis.x, (float)dimensionsX->getValue()[0], (float)dimensionsX->getValue()[1], 0.f, 1.f);
+		float y = jmap(sfAxis.y, (float)dimensionsY->getValue()[0], (float)dimensionsY->getValue()[1], 0.f, 1.f);
+		float v = p.octaveNoise0_1(x, y, 0, 8);
+		minVal = jmin(minVal, v);
+		maxVal = jmax(maxVal, v);
+
+		ret->set(it.getKey(), v);
+	}
+	isComputing.exit();
+
+	if (minVal == maxVal) {
+		maxVal += 1;
+	}
+	for (auto it = ret->begin(); it != ret->end(); it.next()) {
+		ret->set(it.getKey(), jmap(it.getValue(), minVal, maxVal, (float)0, (float)1));
 	}
 
 	return ret;

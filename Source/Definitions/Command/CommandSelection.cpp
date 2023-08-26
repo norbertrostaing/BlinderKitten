@@ -41,6 +41,7 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Layout Direction", "layoutdir");
     filter->addOption("Layout Circle", "layoutcircle");
     filter->addOption("Layout Droplet wave", "layoutpoint");
+    filter->addOption("Layout Perlin", "layoutperlin");
     pattern = addStringParameter("Pattern", "type 1 to select SubFixtures and 0 to skip them, for example, 100 will select every first SubFixture of three in pattern mode, and the first third of all SubFixtures in divide mode", "");
     symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
     randomSeed = addIntParameter("Seed", "Seed used to generate random, if 0, selection will change each call, if not, the random selection will alway be the same", 0, 0);
@@ -56,6 +57,8 @@ CommandSelection::CommandSelection(var params) :
     layoutCircleStartAngle = addFloatParameter("Start angle", "",0,-360,360);
     layoutCircleCompleteRevolution = addBoolParameter("Complete revolution", "", false);
     layoutCircleCCW = addBoolParameter("Counter Clockwise", "", false);
+    layoutPerlinSeed = addIntParameter("Perlin Seed", "If 0, a new seed will be generated each time", 0, 0);
+    layoutPerlinScale = addFloatParameter("Perlin scale", "", 1, 0);
 
     updateDisplay();
 };
@@ -71,10 +74,11 @@ void CommandSelection::updateDisplay()
     bool pat = filter->getValue() == "divide" || filter->getValue() == "pattern";
     bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
     bool randNum = filter->getValue() == "random";
-    bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" ;
+    bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" || filter->getValue() == "layoutperlin";
     bool layoutDir = filter->getValue() == "layoutdir";
     bool layoutCir = filter->getValue() == "layoutcircle";
     bool layoutPnt = filter->getValue() == "layoutpoint";
+    bool layoutPerl = filter->getValue() == "layoutperlin";
 
     randSeed = randSeed && mult;
     randNum = randNum && mult;
@@ -106,8 +110,10 @@ void CommandSelection::updateDisplay()
     layoutCircleStartAngle->hideInEditor = !layoutCir;
     layoutCircleCompleteRevolution->hideInEditor = !layoutCir;
     layoutCircleCCW->hideInEditor = !layoutCir;
+    layoutPerlinScale->hideInEditor = !layoutPerl;
+    layoutPerlinSeed->hideInEditor = !layoutPerl;
 
-    layoutUseOnlySelection->hideInEditor = !layout;
+    layoutUseOnlySelection->hideInEditor = !layout || layoutPerl;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

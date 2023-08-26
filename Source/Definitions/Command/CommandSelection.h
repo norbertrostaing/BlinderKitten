@@ -51,6 +51,8 @@ class CommandSelection:
     BoolParameter* layoutCircleCompleteRevolution;
     BoolParameter* layoutCircleCCW;
     BoolParameter* layoutUseOnlySelection;
+    IntParameter* layoutPerlinSeed;
+    FloatParameter* layoutPerlinScale;
 
     Array<SubFixture*> lastRandom;
 

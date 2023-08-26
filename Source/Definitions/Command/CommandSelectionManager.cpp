@@ -300,6 +300,18 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					}
 				}
 			}
+			else if (selections[selId]->filter->getValue() == "layoutperlin") {
+				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
+				if (l != nullptr) {
+					auto sfToPos = l->getSubfixturesRatioPerlin(selections[selId]->layoutPerlinScale->floatValue(), selections[selId]->layoutPerlinSeed->floatValue());
+					for (int i = 0; i < tempSelection.size(); i++) {
+						if (sfToPos->contains(tempSelection[i])) {
+							float v = sfToPos->getReference(tempSelection[i]);
+							subFixtureToPosition.set(tempSelection[i], v);
+						}
+					}
+				}
+			}
 
 			if (selections[selId]->plusOrMinus->getValue() == "add") {
 				computedSelectedSubFixtures.addArray(tempSelection);
