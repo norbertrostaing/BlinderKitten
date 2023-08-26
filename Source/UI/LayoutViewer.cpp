@@ -238,8 +238,8 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 				Point<float> yAxis(0, 1);
 				BKPath::rotateVect(&xAxis, currentMousePath->gridAngle->floatValue());
 				BKPath::rotateVect(&yAxis, currentMousePath->gridAngle->floatValue());
-				float width = diag.getDotProduct(xAxis);
-				float height = diag.getDotProduct(yAxis);
+				float width = abs(diag.getDotProduct(xAxis));
+				float height = abs(diag.getDotProduct(yAxis));
 
 				var v;
 				v.append(width);
