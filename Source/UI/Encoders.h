@@ -44,6 +44,8 @@ public:
 
     OwnedArray<Slider> encoders;
     OwnedArray<Label> labels;
+
+    HashMap<ChannelType*, String> lastOrigin;
     Label commandLine;
 
     OwnedArray<TextButton> filterBtns;

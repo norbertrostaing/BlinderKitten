@@ -56,10 +56,10 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
         if (index >= 0 && index < Encoders::getInstance()->encoders.size()) {
             if (isRelative) {
                 float baseValue = Encoders::getInstance()->encoders[index]->getValue();
-                UserInputManager::getInstance()->encoderValueChanged(index, baseValue+(float)value);
+                UserInputManager::getInstance()->encoderValueChanged(index, baseValue+(float)value, origin);
             }
             else {
-                UserInputManager::getInstance()->encoderValueChanged(index, value);
+                UserInputManager::getInstance()->encoderValueChanged(index, value, origin);
             }
         }
         break;

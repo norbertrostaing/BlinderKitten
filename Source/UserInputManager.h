@@ -39,7 +39,7 @@ public:
 	void processInput(String s);
     void processMessage(const OSCMessage& m) override;
 
-    void encoderValueChanged(int index, float absVal);
+    void encoderValueChanged(int index, float absVal, String origin);
     void changeChannelValue(ChannelType* chan, float absVal);
     HashMap<int, ChannelType*> encoderChannels;
 

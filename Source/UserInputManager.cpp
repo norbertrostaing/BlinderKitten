@@ -416,10 +416,9 @@ void UserInputManager::commandValueChanged(Command* c) {
 	}
 }
 
-void UserInputManager::encoderValueChanged(int index, float newValue) {
+void UserInputManager::encoderValueChanged(int index, float newValue, String origin) {
 	const MessageManagerLock mmLock;
 	if (Encoders::getInstance()->channels.size() <= index) { return; }
-	UserInputManager::getInstance()->feedback("/encoder/" + String(index + 1), newValue, "");
 	int mode = Encoders::getInstance()->mode;
 	
 	targetCommand = getProgrammer(true)->currentUserCommand;
@@ -427,8 +426,17 @@ void UserInputManager::encoderValueChanged(int index, float newValue) {
 	if (mode < 2) { // bug ici ?
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
-			changeChannelValue(c, newValue);
-			Brain::getInstance()->virtualFadersNeedUpdate = true;
+			String oldOrigin = "";
+			float value = Encoders::getInstance()->encoders[index]->getValue();
+			if (Encoders::getInstance()->lastOrigin.contains(c)) {
+				oldOrigin = Encoders::getInstance()->lastOrigin.getReference(c);
+			}
+			if (origin == "" || origin == oldOrigin || abs(value - newValue) <= 0.009) {
+				Encoders::getInstance()->lastOrigin.set(c, origin);
+				UserInputManager::getInstance()->feedback("/encoder/" + String(index + 1), newValue, "");
+				changeChannelValue(c, newValue);
+				Brain::getInstance()->virtualFadersNeedUpdate = true;
+			}
 		}
 	}
 	else {

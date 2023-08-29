@@ -190,7 +190,7 @@ void Encoders::sliderValueChanged(Slider* slider)
     if (encoderRange == 1) { v /= 100.; }
     else if (encoderRange == 2) { v /= 255.; }
 
-    UserInputManager::getInstance()->encoderValueChanged(index, v);
+    UserInputManager::getInstance()->encoderValueChanged(index, v, "");
 }
 
 
@@ -526,7 +526,7 @@ void Encoders::mouseDoubleClick(const MouseEvent& e)
     Slider* s = dynamic_cast<Slider* >(e.eventComponent);
 
     int index = encoders.indexOf(s) + encodersOffset;
-    UserInputManager::getInstance()->encoderValueChanged(index, -2);
+    UserInputManager::getInstance()->encoderValueChanged(index, -2, "");
     updateChannels();
     updateEncoders();
     updateEncodersValues();
