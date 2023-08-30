@@ -81,6 +81,7 @@ void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
     {
         midiType->setValueWithData(NOTE);
         pitchOrNumber->setValue(pitch);
+        channel->setValue(rcvChannel);
         learnMode->setValue(false);
     }
 
@@ -99,6 +100,7 @@ void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
     if (learnMode->boolValue())
     {
         midiType->setValueWithData(CONTROLCHANGE);
+        channel->setValue(rcvChannel);
         pitchOrNumber->setValue(number);
         learnMode->setValue(false);
     }
@@ -116,6 +118,7 @@ void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
     if (learnMode->boolValue())
     {
         midiType->setValueWithData(PITCHWHEEL);
+        channel->setValue(rcvChannel);
         learnMode->setValue(false);
     }
 
