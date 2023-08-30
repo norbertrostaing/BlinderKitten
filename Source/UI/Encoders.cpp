@@ -364,6 +364,8 @@ void Encoders::updateEncoders() {
     encodersOffset = jmin(encodersOffset, channels.size()-nEncoders);
     encodersOffset = jmax(encodersOffset, 0);
 
+    lastOrigin.clear();
+
     for (int i = 0; i < nEncoders; i++) {
         int channelId = i+encodersOffset;
         if (mode == 2) {
