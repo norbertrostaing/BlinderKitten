@@ -1,5 +1,7 @@
 #include "VirtualButton.h"
 #include "VirtualButtonManager.h"
+#include "VirtualButtonGrid.h"
+#include "Brain.h"
 
 /*
   ==============================================================================
@@ -51,6 +53,9 @@ void VirtualButtonManager::reconstructLibrary()
         library.set(address, items[i]);
     }
     usingLibrary.exit();
+    if (!Brain::getInstance()->loadingIsRunning) {
+        VirtualButtonGrid::getInstance()->resetFeedbacks();
+    }
 }
 
 void VirtualButtonManager::setButtonValue(int page, int col, int row, float value, String origin)

@@ -608,10 +608,13 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 	VirtualFaderColGrid::getInstance()->page = 1;
 	VirtualFaderColGrid::getInstance()->initCells();
+
 	Brain::getInstance()->clearUpdates();
 	Brain::getInstance()->loadingIsRunning = false;
 	Brain::getInstance()->startThread();
 
+	VirtualButtonGrid::getInstance()->resetFeedbacks();
+	VirtualFaderColGrid::getInstance()->resetFeedbacks();
 	Brain::getInstance()->updateAllChannels();
 	//EncodersMult::getInstance()->updateChannels();
 
