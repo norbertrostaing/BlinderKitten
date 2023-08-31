@@ -99,8 +99,9 @@ void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
 
 void MIDIInterface::feedback(String address, double value, String origin = "")
 {
+    bool logOutput = logOutgoingData->boolValue();
     for (int i = 0; i < feedbackManager.items.size(); i++) {
         MIDIFeedback* f = feedbackManager.items[i];
-        f->processFeedback(address, value, origin);
+        f->processFeedback(address, value, origin, logOutput);
     }
 }

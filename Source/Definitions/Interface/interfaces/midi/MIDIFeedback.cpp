@@ -118,7 +118,7 @@ void MIDIFeedback::onContainerParameterChangedInternal(Parameter* p)
     }
 }
 
-void MIDIFeedback::processFeedback(String address, double value, String origin)
+void MIDIFeedback::processFeedback(String address, double value, String origin, bool logOutput)
 {
     String localAddress = "";
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
@@ -233,12 +233,15 @@ void MIDIFeedback::processFeedback(String address, double value, String origin)
         lastSentValue = sendValue;
         lastSentChannel = sendChannel;
         if (midiType->getValueDataAsEnum<MidiType>() == NOTE) {
+            if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(pitchOrNumber->intValue()) + ", vel " + String(round(sendValue))); }
             dev->sendNoteOn(sendChannel, pitchOrNumber->intValue(), round(sendValue));
         }
         if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE) {
+            if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(pitchOrNumber->intValue()) + ", val " + String(round(sendValue))); }
             dev->sendControlChange(sendChannel, pitchOrNumber->intValue(), round(sendValue));
         }
         if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL) {
+            if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(round(sendValue))); }
             dev->sendPitchWheel(sendChannel, round(sendValue));
         }
     }

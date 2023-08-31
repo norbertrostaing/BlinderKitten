@@ -60,6 +60,6 @@ public:
     void updateDisplay();
     void onContainerParameterChangedInternal(Parameter*);
 
-    void processFeedback(String address, double value, String origin);
+    void processFeedback(String address, double value, String origin, bool logOutput);
 
 };
