@@ -40,6 +40,8 @@
 #include "./Definitions/Mapper/MapperManager.h"
 #include "./Definitions/Multiplicator/MultiplicatorManager.h"
 #include "./Definitions/Layout/LayoutManager.h"
+#include "./Definitions/Media/MediaManager.h"
+#include "./Definitions/Stamp/StampManager.h"
 
 #include "./Definitions/DataTransferManager/DataTransferManager.h"
 #include "./Definitions/Fixture/FixtureMultiEditor.h"
@@ -177,7 +179,6 @@ BKEngine::BKEngine() :
 	CPYellowChannel->targetType = TargetParameter::CONTAINER;
 	CPYellowChannel->maxDefaultSearchLevel = 2;
 
-
 	loadWindowWidth = loadWindowContainer.addIntParameter("Window Width", "", 810,100);
 	loadWindowHeight = loadWindowContainer.addIntParameter("Windows Height", "", 610,100);
 	loadWindowButtonPerLine = loadWindowContainer.addIntParameter("Buttons per line", "", 5,1);
@@ -201,6 +202,8 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(MapperManager::getInstance());
 	addChildControllableContainer(MultiplicatorManager::getInstance());
 	addChildControllableContainer(LayoutManager::getInstance());
+	addChildControllableContainer(MediaManager::getInstance());
+	addChildControllableContainer(StampManager::getInstance());
 
 	addChildControllableContainer(VirtualButtonManager::getInstance());
 	addChildControllableContainer(VirtualFaderColManager::getInstance());
@@ -280,6 +283,9 @@ BKEngine::~BKEngine()
 	VirtualFaderColGrid::deleteInstance();
 
 	EncodersMult::deleteInstance();
+
+	StampManager::deleteInstance();
+	MediaManager::deleteInstance();
 	LayoutManager::deleteInstance();
 	MultiplicatorManager::deleteInstance();
 	EffectManager::deleteInstance();
@@ -367,6 +373,8 @@ void BKEngine::clearInternal()
 	TimingPresetManager::getInstance()->clear();
 	CurvePresetManager::getInstance()->clear();
 	LayoutManager::getInstance()->clear();
+	MediaManager::getInstance()->clear();
+	StampManager::getInstance()->clear();
 
 	VirtualButtonGrid::getInstance()->initCells();
 	VirtualFaderColGrid::getInstance()->initCells();
@@ -445,6 +453,12 @@ var BKEngine::getJSONData()
 	var layData = LayoutManager::getInstance()->getJSONData();
 	if (!layData.isVoid() && layData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, layData);
 
+	var medData = MediaManager::getInstance()->getJSONData();
+	if (!medData.isVoid() && medData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(MediaManager::getInstance()->shortName, medData);
+
+	var stampData = StampManager::getInstance()->getJSONData();
+	if (!stampData.isVoid() && stampData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StampManager::getInstance()->shortName, stampData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -479,6 +493,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* trackTask = loadingTask->addTask("Mappers");
 	ProgressTask* multTask = loadingTask->addTask("Multiplicators");
 	ProgressTask* layTask = loadingTask->addTask("Layouts");
+	ProgressTask* medTask = loadingTask->addTask("Media");
+	ProgressTask* stampTask = loadingTask->addTask("Stamp");
 	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
 	ProgressTask* vfTask = loadingTask->addTask("Virtual faders");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
@@ -569,6 +585,16 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	LayoutManager::getInstance()->loadJSONData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
 	layTask->setProgress(1);
 	layTask->end();
+
+	medTask->start();
+	MediaManager::getInstance()->loadJSONData(data.getProperty(MediaManager::getInstance()->shortName, var()));
+	medTask->setProgress(1);
+	medTask->end();
+
+	stampTask->start();
+	StampManager::getInstance()->loadJSONData(data.getProperty(StampManager::getInstance()->shortName, var()));
+	stampTask->setProgress(1);
+	stampTask->end();
 
 	vbTask->start();
 	VirtualButtonManager::getInstance()->loadJSONData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
@@ -704,6 +730,9 @@ void BKEngine::importMochi(var data)
 	TimingPresetManager::getInstance()->addItemsFromData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
 	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
 	MapperManager::getInstance()->addItemsFromData(data.getProperty(MapperManager::getInstance()->shortName, var()));
+	LayoutManager::getInstance()->addItemsFromData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
+	MediaManager::getInstance()->addItemsFromData(data.getProperty(MediaManager::getInstance()->shortName, var()));
+	StampManager::getInstance()->addItemsFromData(data.getProperty(StampManager::getInstance()->shortName, var()));
 	MultiplicatorManager::getInstance()->addItemsFromData(data.getProperty(MultiplicatorManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));

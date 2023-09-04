@@ -383,6 +383,10 @@
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperRow.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperStep.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\Media.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\MediaManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\MediaManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Multiplicator\Multiplicator.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Multiplicator\MultiplicatorLink.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Multiplicator\MultiplicatorLinkManager.cpp"/>
@@ -396,6 +400,9 @@
     <ClCompile Include="..\..\Source\Definitions\Programmer\Programmer.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Programmer\ProgrammerManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\Stamp.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPreset.cpp"/>
@@ -3393,6 +3400,10 @@
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperRow.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperStep.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\Media.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\MediaManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\MediaManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Multiplicator\Multiplicator.h"/>
     <ClInclude Include="..\..\Source\Definitions\Multiplicator\MultiplicatorLink.h"/>
     <ClInclude Include="..\..\Source\Definitions\Multiplicator\MultiplicatorLinkManager.h"/>
@@ -3406,6 +3417,9 @@
     <ClInclude Include="..\..\Source\Definitions\Programmer\Programmer.h"/>
     <ClInclude Include="..\..\Source\Definitions\Programmer\ProgrammerManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\Stamp.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPreset.h"/>

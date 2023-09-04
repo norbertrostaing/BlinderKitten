@@ -155,6 +155,15 @@
     <Filter Include="BlinderKitten\Source\Definitions\Mapper">
       <UniqueIdentifier>{33C5E391-B443-ADC2-92AC-8BACD2D18526}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media\medias\SolidColor">
+      <UniqueIdentifier>{53F9EE02-ADFF-9524-CA41-F31EDCB97AB8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media\medias">
+      <UniqueIdentifier>{289C2085-2F22-712C-8F78-EF6C20AEE6F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media">
+      <UniqueIdentifier>{B9DAD81F-5BF6-02DC-ACBD-3443B2652570}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Multiplicator">
       <UniqueIdentifier>{7B04FAE4-975B-764C-6E21-185560367B66}</UniqueIdentifier>
     </Filter>
@@ -163,6 +172,9 @@
     </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Programmer">
       <UniqueIdentifier>{166D0C99-5B9A-E645-30E2-3B61A6497BAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Stamp">
+      <UniqueIdentifier>{E1FD3B70-8001-4F10-81EA-FC4E5DB398FB}</UniqueIdentifier>
     </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\SubFixture">
       <UniqueIdentifier>{31ABCE2F-E396-1009-4A33-7C970B554790}</UniqueIdentifier>
@@ -1420,6 +1432,18 @@
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperStep.cpp">
       <Filter>BlinderKitten\Source\Definitions\Mapper</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\SolidColor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\Media.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\MediaManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\MediaManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Multiplicator\Multiplicator.cpp">
       <Filter>BlinderKitten\Source\Definitions\Multiplicator</Filter>
     </ClCompile>
@@ -1458,6 +1482,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.cpp">
       <Filter>BlinderKitten\Source\Definitions\Programmer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\Stamp.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
@@ -4980,6 +5013,18 @@
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperStep.h">
       <Filter>BlinderKitten\Source\Definitions\Mapper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.h">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\SolidColor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\Media.h">
+      <Filter>BlinderKitten\Source\Definitions\Media</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\MediaManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Media</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\MediaManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\Media</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Multiplicator\Multiplicator.h">
       <Filter>BlinderKitten\Source\Definitions\Multiplicator</Filter>
     </ClInclude>
@@ -5018,6 +5063,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.h">
       <Filter>BlinderKitten\Source\Definitions\Programmer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\Stamp.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>

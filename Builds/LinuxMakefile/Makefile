@@ -178,6 +178,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MapperManagerUI_4dc7386a.o \
   $(JUCE_OBJDIR)/MapperRow_abd771c3.o \
   $(JUCE_OBJDIR)/MapperStep_2449a7cd.o \
+  $(JUCE_OBJDIR)/SolidColor_6cdae5d2.o \
+  $(JUCE_OBJDIR)/Media_628d070b.o \
+  $(JUCE_OBJDIR)/MediaManager_8f767aac.o \
+  $(JUCE_OBJDIR)/MediaManagerUI_ccc2f980.o \
   $(JUCE_OBJDIR)/Multiplicator_13f1ecd.o \
   $(JUCE_OBJDIR)/MultiplicatorLink_61f7d9e7.o \
   $(JUCE_OBJDIR)/MultiplicatorLinkManager_411df850.o \
@@ -191,6 +195,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Programmer_37f4f5c1.o \
   $(JUCE_OBJDIR)/ProgrammerManager_59fcb336.o \
   $(JUCE_OBJDIR)/ProgrammerManagerUI_e9d378a.o \
+  $(JUCE_OBJDIR)/Stamp_bf149c89.o \
+  $(JUCE_OBJDIR)/StampManager_8d015b6e.o \
+  $(JUCE_OBJDIR)/StampManagerUI_9318b1c2.o \
   $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o \
   $(JUCE_OBJDIR)/SubFixtureChannel_8716636c.o \
   $(JUCE_OBJDIR)/TimingPreset_47a547e1.o \
@@ -771,6 +778,26 @@ $(JUCE_OBJDIR)/MapperStep_2449a7cd.o: ../../Source/Definitions/Mapper/MapperStep
 	@echo "Compiling MapperStep.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/SolidColor_6cdae5d2.o: ../../Source/Definitions/Media/medias/SolidColor/SolidColor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SolidColor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Media_628d070b.o: ../../Source/Definitions/Media/Media.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Media.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MediaManager_8f767aac.o: ../../Source/Definitions/Media/MediaManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MediaManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MediaManagerUI_ccc2f980.o: ../../Source/Definitions/Media/MediaManagerUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling MediaManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/Multiplicator_13f1ecd.o: ../../Source/Definitions/Multiplicator/Multiplicator.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling Multiplicator.cpp"
@@ -834,6 +861,21 @@ $(JUCE_OBJDIR)/ProgrammerManager_59fcb336.o: ../../Source/Definitions/Programmer
 $(JUCE_OBJDIR)/ProgrammerManagerUI_e9d378a.o: ../../Source/Definitions/Programmer/ProgrammerManagerUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ProgrammerManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Stamp_bf149c89.o: ../../Source/Definitions/Stamp/Stamp.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Stamp.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StampManager_8d015b6e.o: ../../Source/Definitions/Stamp/StampManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StampManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StampManagerUI_9318b1c2.o: ../../Source/Definitions/Stamp/StampManagerUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling StampManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o: ../../Source/Definitions/SubFixture/SubFixture.cpp

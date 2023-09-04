@@ -63,6 +63,8 @@ void Brain::clear()
     carouselPoolWaiting.clear();
     mapperPoolUpdating.clear();
     mapperPoolWaiting.clear();
+    stampPoolUpdating.clear();
+    stampPoolWaiting.clear();
     swoppableChannels.clear();
 }
 
@@ -83,6 +85,8 @@ void Brain::clearUpdates()
     carouselPoolWaiting.clear();
     mapperPoolUpdating.clear();
     mapperPoolWaiting.clear();
+    stampPoolUpdating.clear();
+    stampPoolWaiting.clear();
 }
 
 void Brain::run() {
@@ -694,6 +698,78 @@ void Brain::unregisterLayout(Layout* c) {
     }
 }
 
+void Brain::registerMedia(Media* p, int id, bool swap) {
+    int askedId = id;
+    if (medias.getReference(id) == p) { return; }
+    if (medias.containsValue(p)) {
+        medias.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (medias.contains(id) && medias.getReference(id) != nullptr) {
+            Media* presentItem = medias.getReference(id);
+            unregisterMedia(p);
+            registerMedia(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (medias.contains(id) && medias.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    medias.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterMedia(Media* c) {
+    if (medias.containsValue(c)) {
+        medias.removeValue(c);
+    }
+}
+
+void Brain::registerStamp(Stamp* p, int id, bool swap) {
+    int askedId = id;
+    if (stamps.getReference(id) == p) { return; }
+    if (stamps.containsValue(p)) {
+        stamps.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (stamps.contains(id) && stamps.getReference(id) != nullptr) {
+            Stamp* presentItem = stamps.getReference(id);
+            unregisterStamp(p);
+            registerStamp(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (stamps.contains(id) && stamps.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    stamps.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterStamp(Stamp* c) {
+    if (stamps.containsValue(c)) {
+        stamps.removeValue(c);
+    }
+}
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
     ScopedLock lock(usingCollections);
@@ -748,6 +824,14 @@ void Brain::pleaseUpdate(Mapper* f) {
     ScopedLock lock(usingCollections);
     if (!mapperPoolWaiting.contains(f)) {
         mapperPoolWaiting.add(f);
+    }
+}
+
+void Brain::pleaseUpdate(Stamp* f) {
+    if (f == nullptr || f->objectType != "Stamp") { return; }
+    ScopedLock lock(usingCollections);
+    if (!stampPoolWaiting.contains(f)) {
+        stampPoolWaiting.add(f);
     }
 }
 

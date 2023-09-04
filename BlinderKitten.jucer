@@ -599,6 +599,23 @@
           <FILE id="tNtpI4" name="MapperStep.cpp" compile="1" resource="0" file="Source/Definitions/Mapper/MapperStep.cpp"/>
           <FILE id="BxRgPo" name="MapperStep.h" compile="0" resource="0" file="Source/Definitions/Mapper/MapperStep.h"/>
         </GROUP>
+        <GROUP id="{D8EFFF1F-7C52-6CD4-62A8-4562321B6DE4}" name="Media">
+          <GROUP id="{9B1DECC4-A26A-267C-D684-DE83DC76DA66}" name="medias">
+            <GROUP id="{182EDCCA-C574-FFD3-5386-7085948ACFE1}" name="SolidColor">
+              <FILE id="WU5pEI" name="SolidColor.cpp" compile="1" resource="0" file="Source/Definitions/Media/medias/SolidColor/SolidColor.cpp"/>
+              <FILE id="ai9dyB" name="SolidColor.h" compile="0" resource="0" file="Source/Definitions/Media/medias/SolidColor/SolidColor.h"/>
+            </GROUP>
+          </GROUP>
+          <FILE id="TOcEYi" name="Media.cpp" compile="1" resource="0" file="Source/Definitions/Media/Media.cpp"/>
+          <FILE id="jGhmIn" name="Media.h" compile="0" resource="0" file="Source/Definitions/Media/Media.h"/>
+          <FILE id="XJ3SC6" name="MediaManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Media/MediaManager.cpp"/>
+          <FILE id="sppYlX" name="MediaManager.h" compile="0" resource="0" file="Source/Definitions/Media/MediaManager.h"/>
+          <FILE id="woIz5F" name="MediaManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Media/MediaManagerUI.cpp"/>
+          <FILE id="uMCfUM" name="MediaManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Media/MediaManagerUI.h"/>
+        </GROUP>
         <GROUP id="{7A9EF611-C0FA-5D83-AF5B-C65FCAC46BB4}" name="Multiplicator">
           <FILE id="UvVObP" name="Multiplicator.cpp" compile="1" resource="0"
                 file="Source/Definitions/Multiplicator/Multiplicator.cpp"/>
@@ -648,6 +665,17 @@
                 file="Source/Definitions/Programmer/ProgrammerManagerUI.cpp"/>
           <FILE id="cVpv9b" name="ProgrammerManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Programmer/ProgrammerManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{D99EBB04-0342-CC9A-A12B-80EBBF192045}" name="Stamp">
+          <FILE id="vbFRkZ" name="Stamp.cpp" compile="1" resource="0" file="Source/Definitions/Stamp/Stamp.cpp"/>
+          <FILE id="IihlPI" name="Stamp.h" compile="0" resource="0" file="Source/Definitions/Stamp/Stamp.h"/>
+          <FILE id="lq38gr" name="StampManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Stamp/StampManager.cpp"/>
+          <FILE id="uYa44x" name="StampManager.h" compile="0" resource="0" file="Source/Definitions/Stamp/StampManager.h"/>
+          <FILE id="L3lpkH" name="StampManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Stamp/StampManagerUI.cpp"/>
+          <FILE id="wXqurp" name="StampManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Stamp/StampManagerUI.h"/>
         </GROUP>
         <GROUP id="{7FB4DF5D-8DCA-AC2D-DD2C-F67ECA24743D}" name="SubFixture">
           <FILE id="jbO0qH" name="SubFixture.cpp" compile="1" resource="0" file="Source/Definitions/SubFixture/SubFixture.cpp"/>

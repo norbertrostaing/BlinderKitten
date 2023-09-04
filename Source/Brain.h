@@ -26,6 +26,11 @@
 #include "Definitions/RunningTask.h"
 #include "Definitions/Cue/Task.h"
 #include "Definitions/Layout/Layout.h"
+#include "Definitions/Media/Media.h"
+#include "Definitions/Stamp/Stamp.h"
+
+
+
 class Brain :
     public Thread
 {
@@ -48,6 +53,8 @@ public:
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
     HashMap<int, Layout*>layouts;
+    HashMap<int, Media*>medias;
+    HashMap<int, Stamp*>stamps;
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
@@ -63,6 +70,8 @@ public:
     Array<Carousel*> carouselPoolWaiting;
     Array<Mapper*> mapperPoolUpdating;
     Array<Mapper*> mapperPoolWaiting;
+    Array<Stamp*> stampPoolUpdating;
+    Array<Stamp*> stampPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
     Array<SubFixtureChannel*> grandMasterChannels;
@@ -109,6 +118,10 @@ public:
     void unregisterMapper(Mapper* p);
     void registerLayout(Layout* p, int id, bool swap = false);
     void unregisterLayout(Layout* p);
+    void registerMedia(Media* p, int id, bool swap = false);
+    void unregisterMedia(Media* p);
+    void registerStamp(Stamp* p, int id, bool swap = false);
+    void unregisterStamp(Stamp* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(SubFixtureChannel* f);
@@ -117,6 +130,7 @@ public:
     void pleaseUpdate(Effect* f);
     void pleaseUpdate(Carousel* c);
     void pleaseUpdate(Mapper* c);
+    void pleaseUpdate(Stamp* s);
 
     void updateAllChannels();
 
@@ -136,6 +150,8 @@ public:
     Carousel* getCarouselById(int id);
     Mapper* getMapperById(int id);
     Layout* getLayoutById(int id);
+    Media* getMediaById(int id);
+    Stamp* getStampById(int id);
 
     void swoppedCuelist(Cuelist* c);
     void unswoppedCuelist(Cuelist* c);
