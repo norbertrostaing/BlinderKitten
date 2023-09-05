@@ -385,6 +385,9 @@
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperRow.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperStep.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\BKImage\BKIMage.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\BKNDI\BKNDI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\BKVideo\BKVideo.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Media\Media.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Media\MediaManager.cpp"/>
@@ -3402,6 +3405,9 @@
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperRow.h"/>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperStep.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKImage\BKIMage.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKNDI\BKNDI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\BKVideo.h"/>
     <ClInclude Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.h"/>
     <ClInclude Include="..\..\Source\Definitions\Media\Media.h"/>
     <ClInclude Include="..\..\Source\Definitions\Media\MediaManager.h"/>

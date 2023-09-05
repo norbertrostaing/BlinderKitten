@@ -178,6 +178,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MapperManagerUI_4dc7386a.o \
   $(JUCE_OBJDIR)/MapperRow_abd771c3.o \
   $(JUCE_OBJDIR)/MapperStep_2449a7cd.o \
+  $(JUCE_OBJDIR)/BKIMage_c4f01718.o \
+  $(JUCE_OBJDIR)/BKNDI_e6b80068.o \
+  $(JUCE_OBJDIR)/BKVideo_722e4938.o \
   $(JUCE_OBJDIR)/SolidColor_6cdae5d2.o \
   $(JUCE_OBJDIR)/Media_628d070b.o \
   $(JUCE_OBJDIR)/MediaManager_8f767aac.o \
@@ -776,6 +779,21 @@ $(JUCE_OBJDIR)/MapperRow_abd771c3.o: ../../Source/Definitions/Mapper/MapperRow.c
 $(JUCE_OBJDIR)/MapperStep_2449a7cd.o: ../../Source/Definitions/Mapper/MapperStep.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MapperStep.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKIMage_c4f01718.o: ../../Source/Definitions/Media/medias/BKImage/BKIMage.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BKIMage.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKNDI_e6b80068.o: ../../Source/Definitions/Media/medias/BKNDI/BKNDI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BKNDI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKVideo_722e4938.o: ../../Source/Definitions/Media/medias/BKVideo/BKVideo.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BKVideo.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SolidColor_6cdae5d2.o: ../../Source/Definitions/Media/medias/SolidColor/SolidColor.cpp

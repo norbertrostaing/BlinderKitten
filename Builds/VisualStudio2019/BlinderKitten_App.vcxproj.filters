@@ -155,6 +155,15 @@
     <Filter Include="BlinderKitten\Source\Definitions\Mapper">
       <UniqueIdentifier>{33C5E391-B443-ADC2-92AC-8BACD2D18526}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media\medias\BKImage">
+      <UniqueIdentifier>{7BB63FAF-0629-5C63-4868-670FA1B66D55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media\medias\BKNDI">
+      <UniqueIdentifier>{C9D87556-8754-D091-E7C1-048C251D2D0D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media\medias\BKVideo">
+      <UniqueIdentifier>{2FD866AE-1306-D408-13E9-A5352E2C151F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Media\medias\SolidColor">
       <UniqueIdentifier>{53F9EE02-ADFF-9524-CA41-F31EDCB97AB8}</UniqueIdentifier>
     </Filter>
@@ -1431,6 +1440,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Mapper\MapperStep.cpp">
       <Filter>BlinderKitten\Source\Definitions\Mapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\BKImage\BKIMage.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKImage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\BKNDI\BKNDI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKNDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Media\medias\BKVideo\BKVideo.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.cpp">
       <Filter>BlinderKitten\Source\Definitions\Media\medias\SolidColor</Filter>
@@ -5012,6 +5030,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Mapper\MapperStep.h">
       <Filter>BlinderKitten\Source\Definitions\Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKImage\BKIMage.h">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKImage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKNDI\BKNDI.h">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKNDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\BKVideo.h">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Media\medias\SolidColor\SolidColor.h">
       <Filter>BlinderKitten\Source\Definitions\Media\medias\SolidColor</Filter>

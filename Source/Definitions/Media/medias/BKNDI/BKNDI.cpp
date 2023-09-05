@@ -1,37 +1,36 @@
 /*
   ==============================================================================
 
-	SolidColor.cpp
+	BKNDI.cpp
 	Created: 26 Sep 2020 1:51:42pm
 	Author:  bkupe
 
   ==============================================================================
 */
 
-#include "SolidColor.h"
+#include "BKNDI.h"
 
-SolidColor::SolidColor(var params) :
+BKNDI::BKNDI(var params) :
 	Media(params)
 {
 	color = addColorParameter("Color", "", Colour(255,0,0));
 }
 
-SolidColor::~SolidColor()
+BKNDI::~BKNDI()
 {
 }
 
-void SolidColor::clearItem()
+void BKNDI::clearItem()
 {
 	BaseItem::clearItem();
 }
 
-Colour SolidColor::getColourAtCoord(Point<float>* point)
+Colour BKNDI::getColourAtCoord(Point<float>* point)
 {
 	return color->getColor();
 }
 
-void SolidColor::onContainerParameterChanged(Parameter* p)
+void BKNDI::onContainerParameterChanged(Parameter* p)
 {
-	Media::onContainerParameterChanged(p);
 }
 

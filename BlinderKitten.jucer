@@ -601,6 +601,18 @@
         </GROUP>
         <GROUP id="{D8EFFF1F-7C52-6CD4-62A8-4562321B6DE4}" name="Media">
           <GROUP id="{9B1DECC4-A26A-267C-D684-DE83DC76DA66}" name="medias">
+            <GROUP id="{4FC6FDDD-C5C8-E3AC-3B9F-D7889E223B60}" name="BKImage">
+              <FILE id="j6fpKp" name="BKIMage.cpp" compile="1" resource="0" file="Source/Definitions/Media/medias/BKImage/BKIMage.cpp"/>
+              <FILE id="FdeTdR" name="BKIMage.h" compile="0" resource="0" file="Source/Definitions/Media/medias/BKImage/BKIMage.h"/>
+            </GROUP>
+            <GROUP id="{8B27C559-F20A-4D66-30CE-2CBA69C248B7}" name="BKNDI">
+              <FILE id="HCQHAO" name="BKNDI.cpp" compile="1" resource="0" file="Source/Definitions/Media/medias/BKNDI/BKNDI.cpp"/>
+              <FILE id="aQqKpd" name="BKNDI.h" compile="0" resource="0" file="Source/Definitions/Media/medias/BKNDI/BKNDI.h"/>
+            </GROUP>
+            <GROUP id="{A5370BFB-2CB4-5AF2-0DC0-7EA436D5E926}" name="BKVideo">
+              <FILE id="xpZuKz" name="BKVideo.cpp" compile="1" resource="0" file="Source/Definitions/Media/medias/BKVideo/BKVideo.cpp"/>
+              <FILE id="SOScKb" name="BKVideo.h" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/BKVideo.h"/>
+            </GROUP>
             <GROUP id="{182EDCCA-C574-FFD3-5386-7085948ACFE1}" name="SolidColor">
               <FILE id="WU5pEI" name="SolidColor.cpp" compile="1" resource="0" file="Source/Definitions/Media/medias/SolidColor/SolidColor.cpp"/>
               <FILE id="ai9dyB" name="SolidColor.h" compile="0" resource="0" file="Source/Definitions/Media/medias/SolidColor/SolidColor.h"/>

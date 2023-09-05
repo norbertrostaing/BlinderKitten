@@ -18,7 +18,8 @@
 Stamp::Stamp(var params) :
 	BaseItem(params.getProperty("name", "Stamp")),
 	objectType(params.getProperty("type", "Stamp").toString()),
-	objectData(params)
+	objectData(params),
+	stampValues("Values")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -30,11 +31,28 @@ Stamp::Stamp(var params) :
 	userName = addStringParameter("Name", "Name of this Stamp","New Stamp");
 	updateName();
 
-	addChildControllableContainer(&selection);
+	layoutId = addIntParameter("Layout", "Id of desired layout", 0);
+	groupId = addIntParameter("Group", "Id of desired group", 0);
+	position = addPoint2DParameter("Position", "Layout position, center of image, layout units");
+	size = addPoint2DParameter("Size", "Size of the stamp (with layout units)");
+	angle = addFloatParameter("Angle", "Angle of the stamp", 0, -360, 360);
+
+	addChildControllableContainer(&stampValues);
+	redFull.setNiceName("Red channel at full");
+	stampValues.addChildControllableContainer(&redFull);
+	redZero.setNiceName("Red channel at zero");
+	stampValues.addChildControllableContainer(&redZero);
+	greenFull.setNiceName("Green channel at full");
+	stampValues.addChildControllableContainer(&greenFull);
+	greenZero.setNiceName("Green channel at zero");
+	stampValues.addChildControllableContainer(&greenZero);
+	blueFull.setNiceName("Blue channel at full");
+	stampValues.addChildControllableContainer(&blueFull);
+	blueZero.setNiceName("Blue channel at zero");
+	stampValues.addChildControllableContainer(&blueZero);
+	//addChildControllableContainer(&selection);
 	Brain::getInstance()->registerStamp(this, id->getValue());
-	if (params.isVoid()) {
-		selection.addItem();
-	}
+
 }
 
 Stamp::~Stamp()

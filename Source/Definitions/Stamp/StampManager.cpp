@@ -34,7 +34,7 @@ StampManager::~StampManager()
 
 void StampManager::addItemInternal(Stamp* o, var data)
 {
-    reorderItems();
+    //reorderItems();
 }
 
 void StampManager::removeItemInternal(Stamp* o)

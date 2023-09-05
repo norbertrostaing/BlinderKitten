@@ -15,12 +15,18 @@
 LayoutViewer::LayoutViewer() :
 	ShapeShifterContentComponent("Layout Viewer")
 {
-	layoutsList.setTextWhenNoChoicesAvailable("No Layout created");
-	layoutsList.setTextWhenNothingSelected("Select a Layout");
+	layoutsList.setTextWhenNoChoicesAvailable("No layout created");
+	layoutsList.setTextWhenNothingSelected("Select a layout");
 	layoutsList.addListener(this);
 	addAndMakeVisible(&layoutsList);
+	stampsList.setTextWhenNoChoicesAvailable("No stamp created");
+	stampsList.setTextWhenNothingSelected("Select a stamp");
+	stampsList.addListener(this);
+	addAndMakeVisible(&stampsList);
 
 	rebuildLayoutsList();
+	rebuildStampsList();
+	StampManager::getInstance()->addAsyncManagerListener(this);
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
 
 }
@@ -30,7 +36,11 @@ LayoutViewer::~LayoutViewer()
 	if (selectedLayout != nullptr) {
 		selectedLayout->removeChangeListener(this);
 	}
+	if (selectedStamp != nullptr) {
+		selectedStamp->removeChangeListener(this);
+	}
 	if (LayoutManager::getInstanceWithoutCreating()) LayoutManager::getInstance()->removeAsyncManagerListener(this);
+	if (StampManager::getInstanceWithoutCreating()) StampManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 
@@ -63,6 +73,35 @@ void LayoutViewer::newMessage(const LayoutManager::ManagerEvent& e)
 	}
 }
 
+void LayoutViewer::rebuildStampsList()
+{
+	int idToSelect = 0;
+
+	stampsList.clear(dontSendNotification);
+	stampsList.addItem("No stamp selected", -1);
+	for (auto& l : StampManager::getInstance()->items)
+	{
+		if (l != nullptr) {
+			int id = l->id->intValue();
+			if (l == selectedStamp) idToSelect = id;
+			stampsList.addItem(l->niceName, id);
+		}
+	}
+
+	stampsList.setSelectedId(idToSelect, dontSendNotification);
+}
+
+void LayoutViewer::newMessage(const StampManager::ManagerEvent& e)
+{
+	if (e.type == StampManager::ManagerEvent::ITEM_ADDED || e.type == StampManager::ManagerEvent::ITEM_REMOVED || e.type == StampManager::ManagerEvent::ITEMS_REORDERED)
+	{
+		if (e.type == StampManager::ManagerEvent::ITEM_REMOVED && e.getItem() == selectedStamp) {
+			selectedStamp = nullptr;
+		}
+		rebuildStampsList();
+	}
+}
+
 Colour LayoutViewer::getClickColour(BKPath* path, ClicAction action)
 {
 	currentClicColour+= 5;
@@ -87,8 +126,14 @@ void LayoutViewer::resetClickColour()
 
 void LayoutViewer::comboBoxChanged(ComboBox* comboBoxThatHasChanged)
 {
-	int id = comboBoxThatHasChanged->getSelectedId();
-	selectLayout(id);
+	if (comboBoxThatHasChanged == &layoutsList) {
+		int id = comboBoxThatHasChanged->getSelectedId();
+		selectLayout(id);
+	}
+	else if (comboBoxThatHasChanged == &stampsList) {
+		int id = comboBoxThatHasChanged->getSelectedId();
+		selectStamp(id);
+	}
 }
 
 void LayoutViewer::selectLayout(int id)
@@ -108,12 +153,30 @@ void LayoutViewer::selectLayout(int id)
 	repaint();
 }
 
+void LayoutViewer::selectStamp(int id)
+{
+	if (selectedStamp != nullptr) {
+		selectedStamp->removeChangeListener(this);
+	}
+	Stamp* l = Brain::getInstance()->getStampById(id);
+	if (l != nullptr) {
+		selectedStamp = l;
+		selectedStamp->addChangeListener(this);
+		//selectedStamp->computeData();
+	}
+	else {
+		selectedStamp = nullptr;
+	}
+	repaint();
+}
+
 void LayoutViewer::resized()
 {
 	Rectangle<int> r = getLocalBounds();
 	Rectangle<int> hr = r.removeFromTop(20);
 
 	layoutsList.setBounds(hr.removeFromLeft(150).reduced(2));
+	stampsList.setBounds(154,2,146,16);
 }
 
 

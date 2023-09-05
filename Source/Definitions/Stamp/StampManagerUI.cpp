@@ -17,7 +17,7 @@ StampManagerUI::StampManagerUI(const String & contentName) :
 	BaseManagerShapeShifterUI(contentName, StampManager::getInstance())
 {
 	addItemText = "Add new Stamp";
-	noItemText = "Stamps are re-usable selections of SubFixtures.";
+	noItemText = "Stamps";
 	// setShowAddButton(false);
 	// setShowSearchBar(false);
 	addExistingItems();

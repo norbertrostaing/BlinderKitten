@@ -1089,6 +1089,24 @@ Layout* Brain::getLayoutById(int id) {
     }
 }
 
+Media* Brain::getMediaById(int id) {
+    if (medias.contains(id)) {
+        return medias.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+Stamp* Brain::getStampById(int id) {
+    if (stamps.contains(id)) {
+        return stamps.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
 
 void Brain::swoppedCuelist(Cuelist* c) {
     usingCollections.enter();

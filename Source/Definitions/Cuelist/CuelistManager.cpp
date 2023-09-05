@@ -17,8 +17,6 @@ int compare(Cuelist* A, Cuelist* B) {
     return (int)A->id->getValue() - (int)B->id->getValue();
 }
 
-
-
 CuelistManager::CuelistManager() :
     BaseManager("Cuelist")
     {

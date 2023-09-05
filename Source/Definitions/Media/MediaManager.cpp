@@ -2,6 +2,9 @@
 #include "MediaManager.h"
 
 #include "Media/medias/SolidColor/SolidColor.h"
+#include "Media/medias/BKImage/BKImage.h"
+#include "Media/medias/BKVideo/BKVideo.h"
+#include "Media/medias/BKNDI/BKNDI.h"
 
 /*
   ==============================================================================
@@ -25,9 +28,9 @@ MediaManager::MediaManager() :
     managerFactory = &factory;
 
     factory.defs.add(Factory<Media>::Definition::createDef("", "SolidColor", &SolidColor::create));
-    factory.defs.add(Factory<Media>::Definition::createDef("", "Image", &SolidColor::create));
-    factory.defs.add(Factory<Media>::Definition::createDef("", "VideoFile", &SolidColor::create));
-    factory.defs.add(Factory<Media>::Definition::createDef("", "NDI", &SolidColor::create));
+    factory.defs.add(Factory<Media>::Definition::createDef("", "Image", &BKImage::create));
+    factory.defs.add(Factory<Media>::Definition::createDef("", "VideoFile", &BKVideo::create));
+    factory.defs.add(Factory<Media>::Definition::createDef("", "NDI", &BKNDI::create));
 
     itemDataType = "Media";
     selectItemWhenCreated = true;

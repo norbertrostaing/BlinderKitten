@@ -11,11 +11,13 @@
 #pragma once
 #include "JuceHeader.h"
 #include "Definitions/Layout/LayoutManager.h"
+#include "Definitions/Stamp/StampManager.h"
 
 class LayoutViewer :
     public ShapeShifterContentComponent,
     public ComboBox::Listener,
     public LayoutManager::AsyncListener,
+    public StampManager::AsyncListener,
     public ChangeListener
 
 {
@@ -24,6 +26,7 @@ public:
     ~LayoutViewer();
 
     ComboBox layoutsList;
+    ComboBox stampsList;
     Image clicZones;
     enum ClicAction {CLIC_NOACTION, CLIC_DRAG, CLIC_ORIGIN, CLIC_END, CLIC_TL, CLIC_TR, CLIC_BL, CLIC_BR, CLIC_ROTATE};
 
@@ -43,13 +46,18 @@ public:
     void rebuildLayoutsList();
     void newMessage(const LayoutManager::ManagerEvent& e) override;
 
+    void rebuildStampsList();
+    void newMessage(const StampManager::ManagerEvent& e) override;
+
     Colour getClickColour(BKPath* path, ClicAction action);
     void resetClickColour();
 
     virtual void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override;
     Layout* selectedLayout = nullptr;
+    Stamp* selectedStamp = nullptr;
 
     void selectLayout(int id);
+    void selectStamp(int id); 
 
     void resized() override;
     //void mouseEnter(const MouseEvent& e) override;
