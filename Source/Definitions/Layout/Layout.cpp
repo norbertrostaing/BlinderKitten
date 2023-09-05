@@ -75,6 +75,9 @@ void Layout::onContainerParameterChangedInternal(Parameter* p)
 	if (p == userName || p == id) {
 		updateName();
 	}
+	if (p == id) {
+		Brain::getInstance()->registerLayout(this, id->getValue(), true);
+	}
 	sendChangeMessage();
 	
 }

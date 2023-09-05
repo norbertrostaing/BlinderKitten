@@ -47,11 +47,6 @@ public:
 
     void onContainerParameterChanged(Parameter* p) override;
 
-    void importData(var data = var());
-
-    Array<BKPath*> orderedElements;
-    void updateOrderedElements();
-
     // var getSceneData();
     // void updateSceneData(var& sceneData);
     // void lerpFromSceneData(var startData, var endData, float weight);
