@@ -27,7 +27,11 @@ void SolidColor::clearItem()
 
 Colour SolidColor::getColourAtCoord(Point<float>* point)
 {
-	return color->getColor();
+	if (abs(point->x) <= 1 && abs(point->y) <= 1) {
+		return color->getColor();
+	}
+	return Colour(0,0,0);
+
 }
 
 void SolidColor::onContainerParameterChanged(Parameter* p)

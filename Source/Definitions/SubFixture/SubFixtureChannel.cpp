@@ -157,6 +157,9 @@ void SubFixtureChannel::updateVal(double now) {
 	for (int i = 0; i < mapperStack.size(); i++) {
 		layers.addIfNotAlreadyThere(mapperStack.getReference(i)->layerId->getValue());
 	}
+	for (int i = 0; i < stampStack.size(); i++) {
+		layers.addIfNotAlreadyThere(stampStack.getReference(i)->layerId->getValue());
+	}
 	for (int i = 0; i < carouselStack.size(); i++) {
 		layers.addIfNotAlreadyThere(carouselStack.getReference(i)->layerId->getValue());
 	}
@@ -203,6 +206,12 @@ void SubFixtureChannel::updateVal(double now) {
 			for (int i = 0; i < programmerStack.size(); i++) {
 				if ((int)programmerStack.getReference(i)->layerId->getValue() == currentLayer) {
 					newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
+			}
+
+			for (int i = 0; i < stampStack.size(); i++) {
+				if ((int)stampStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = stampStack.getReference(i)->applyToChannel(this, newValue, now);
 				}
 			}
 
@@ -329,6 +338,19 @@ void SubFixtureChannel::mapperOutOfStack(Mapper* f) {
 	cs.enter();
 	while (mapperStack.indexOf(f) >= 0) {
 		mapperStack.removeAllInstancesOf(f);
+	}
+	cs.exit();
+}
+
+void SubFixtureChannel::stampOnTopOfStack(Stamp* f) {
+	stampOutOfStack(f);
+	stampStack.add(f);
+}
+
+void SubFixtureChannel::stampOutOfStack(Stamp* f) {
+	cs.enter();
+	while (stampStack.indexOf(f) >= 0) {
+		stampStack.removeAllInstancesOf(f);
 	}
 	cs.exit();
 }

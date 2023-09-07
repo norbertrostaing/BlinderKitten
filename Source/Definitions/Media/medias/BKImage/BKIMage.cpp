@@ -30,8 +30,8 @@ Colour BKImage::getColourAtCoord(Point<float>* point)
 	int w = imageContent.getWidth();
 	int h = imageContent.getHeight();
 	if (w > 0 && h > 0) {
-		int x = point->x * w;
-		int y = point->y * h;
+		int x = jmap(point->x, -1.0f, 1.0f, 0.0f, 1.0f) * w;
+		int y = jmap(point->y, -1.0f, 1.0f, 0.0f, 1.0f) * h;
 		return imageContent.getPixelAt(x, y);
 	}
 	else {

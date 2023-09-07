@@ -20,6 +20,7 @@ class SubFixture;
 class Effect;
 class Carousel;
 class Mapper;
+class Stamp;
 
 class SubFixtureChannel{
 public:
@@ -59,6 +60,7 @@ public:
     Array<Carousel*> carouselStack;
     Array<Mapper*> mapperStack;
     Array<Cuelist*> cuelistFlashStack;
+    Array<Stamp*> stampStack;
 
     void updateVal(double now);
 
@@ -74,5 +76,7 @@ public:
     void carouselOutOfStack(Carousel* f);
     void mapperOnTopOfStack(Mapper* f);
     void mapperOutOfStack(Mapper* f);
+    void stampOnTopOfStack(Stamp* s);
+    void stampOutOfStack(Stamp* s);
 
 };
