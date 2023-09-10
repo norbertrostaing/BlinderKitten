@@ -1,0 +1,11 @@
+prefix=/home/jenkins/workspace/vlc-release/windows/vlc-release-win32-x64/win64/_win32
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: LibVLC control API
+Description: VLC media player external control library
+Version: 3.0.16
+Cflags: -I${includedir}
+Libs: -L${libdir} -lvlc
+Libs.private: -lvlccore 

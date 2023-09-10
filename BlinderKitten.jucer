@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="e7FbaJ" name="BlinderKitten" projectType="guiapp" useAppConfig="1"
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="1" jucerFormatVersion="1"
-              compilerFlagSchemes="NewScheme" headerPath="../../Source&#10;../../Source/Definitions&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/libusb/include/libusb-1.0"
+              compilerFlagSchemes="NewScheme" headerPath="../../Source&#10;../../Source/Definitions&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/vlc/include"
               defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;&#10;_ITERATOR_DEBUG_LEVEL=1"
               version="1.0.1b36" companyName="Norbert Rostaing" companyCopyright="Norbert Rostaing"
               companyWebsite="http://blinderkitten.lighting" companyEmail="blinderkitten@gmail.com"
@@ -610,6 +610,29 @@
               <FILE id="aQqKpd" name="BKNDI.h" compile="0" resource="0" file="Source/Definitions/Media/medias/BKNDI/BKNDI.h"/>
             </GROUP>
             <GROUP id="{A5370BFB-2CB4-5AF2-0DC0-7EA436D5E926}" name="BKVideo">
+              <GROUP id="{E0F02432-CDD2-1779-9ED0-D47FD9F5096F}" name="vlcpp">
+                <FILE id="d2mT1m" name="common.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/common.hpp"/>
+                <FILE id="xs6wJq" name="Dialog.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/Dialog.hpp"/>
+                <FILE id="KzPM5U" name="Equalizer.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/Equalizer.hpp"/>
+                <FILE id="a1F8bX" name="EventManager.hpp" compile="0" resource="0"
+                      file="Source/Definitions/Media/medias/BKVideo/vlcpp/EventManager.hpp"/>
+                <FILE id="gR3zbo" name="Instance.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/Instance.hpp"/>
+                <FILE id="SxXyvw" name="Internal.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/Internal.hpp"/>
+                <FILE id="XLssat" name="Media.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/Media.hpp"/>
+                <FILE id="sHw3q4" name="MediaDiscoverer.hpp" compile="0" resource="0"
+                      file="Source/Definitions/Media/medias/BKVideo/vlcpp/MediaDiscoverer.hpp"/>
+                <FILE id="ymPunI" name="MediaLibrary.hpp" compile="0" resource="0"
+                      file="Source/Definitions/Media/medias/BKVideo/vlcpp/MediaLibrary.hpp"/>
+                <FILE id="yXKISW" name="MediaList.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/MediaList.hpp"/>
+                <FILE id="KSeVhX" name="MediaListPlayer.hpp" compile="0" resource="0"
+                      file="Source/Definitions/Media/medias/BKVideo/vlcpp/MediaListPlayer.hpp"/>
+                <FILE id="VX0lv1" name="MediaPlayer.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/MediaPlayer.hpp"/>
+                <FILE id="EGMkdz" name="Picture.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/Picture.hpp"/>
+                <FILE id="og3jdI" name="RendererDiscoverer.hpp" compile="0" resource="0"
+                      file="Source/Definitions/Media/medias/BKVideo/vlcpp/RendererDiscoverer.hpp"/>
+                <FILE id="vPU9Bs" name="structures.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/structures.hpp"/>
+                <FILE id="im3P3V" name="vlc.hpp" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/vlcpp/vlc.hpp"/>
+              </GROUP>
               <FILE id="xpZuKz" name="BKVideo.cpp" compile="1" resource="0" file="Source/Definitions/Media/medias/BKVideo/BKVideo.cpp"/>
               <FILE id="SOScKb" name="BKVideo.h" compile="0" resource="0" file="Source/Definitions/Media/medias/BKVideo/BKVideo.h"/>
             </GROUP>
@@ -768,10 +791,10 @@
       </MODULEPATHS>
     </VS2019>
     <VS2022 targetFolder="Builds/VisualStudio2022" smallIcon="qTJiMk" bigIcon="qTJiMk"
-            externalLibraries="Setupapi.lib&#10;Servus.lib&#10;dnssd.lib">
+            externalLibraries="Setupapi.lib&#10;Servus.lib&#10;dnssd.lib&#10;libvlc.lib&#10;libvlccore.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       binaryPath="Binaries/Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib"
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/vlc/include&#10;../../External/vlc/include/vlc/plugins"
+                       binaryPath="Binaries/Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/vlc/lib"
                        defines="JUCE_DISABLE_ASSERTIONS=1"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
                        binaryPath="Binaries/" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"

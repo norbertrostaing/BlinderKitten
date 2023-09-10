@@ -161,6 +161,9 @@
     <Filter Include="BlinderKitten\Source\Definitions\Media\medias\BKNDI">
       <UniqueIdentifier>{C9D87556-8754-D091-E7C1-048C251D2D0D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp">
+      <UniqueIdentifier>{E46C23EA-D9CE-8A13-924D-A4EB18E2D5E7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Media\medias\BKVideo">
       <UniqueIdentifier>{2FD866AE-1306-D408-13E9-A5352E2C151F}</UniqueIdentifier>
     </Filter>
@@ -5036,6 +5039,54 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Media\medias\BKNDI\BKNDI.h">
       <Filter>BlinderKitten\Source\Definitions\Media\medias\BKNDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\common.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\Dialog.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\Equalizer.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\EventManager.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\Instance.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\Internal.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\Media.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\MediaDiscoverer.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\MediaLibrary.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\MediaList.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\MediaListPlayer.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\MediaPlayer.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\Picture.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\RendererDiscoverer.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\structures.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\vlcpp\vlc.hpp">
+      <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo\vlcpp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Media\medias\BKVideo\BKVideo.h">
       <Filter>BlinderKitten\Source\Definitions\Media\medias\BKVideo</Filter>
