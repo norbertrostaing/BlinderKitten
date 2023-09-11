@@ -16,15 +16,26 @@ BKVideo::BKVideo(var params) :
     Thread("BKVideoFileMedia")
 {
 	filePath = addFileParameter("File path", "File path", "");
+
+    startBtn = addTrigger("start", "");
+    stopBtn = addTrigger("stop", "");
+    restartBtn = addTrigger("restart", "");
+    pauseBtn = addTrigger("pause", "");
+
+    mediaVolume = addFloatParameter("Volume", "Media volume", 1, 0, 1);
+
     const char* argv[1] = { "-vvv" };
     VLCInstance = libvlc_new(1, argv);
 }
 
 BKVideo::~BKVideo()
 {
-    if (VLCMediaPlayer != nullptr) {
-        libvlc_media_player_release(VLCMediaPlayer);
-    }
+    stop();
+    if (VLCMediaPlayer != nullptr) { libvlc_media_player_release(VLCMediaPlayer); }
+    if (VLCMediaListPlayer != nullptr) {  libvlc_media_list_player_release(VLCMediaListPlayer); }
+    if (VLCMediaList != nullptr) {  libvlc_media_list_release(VLCMediaList); }
+    if (VLCMedia != nullptr) {  libvlc_media_release(VLCMedia); }
+
     libvlc_release(VLCInstance);
 }
 
@@ -35,79 +46,95 @@ void BKVideo::clearItem()
 
 Colour BKVideo::getColourAtCoord(Point<float>* point)
 {
+    useImageData.enter();
     int w = imageWidth;
     int h = imageHeight;
-    if (w > 0 && h > 0 && abs(point->x) <= 1 && abs(point->y) <= 1) {
+    if (vlcDataIsValid && w > 0 && h > 0 && abs(point->x) <= 1 && abs(point->y) <= 1) {
         int x = jmap(point->x, -1.0f, 1.0f, 0.0f, 1.0f) * w;
         int y = jmap(point->y, -1.0f, 1.0f, 0.0f, 1.0f) * h;
         int index = x + (imageWidth*y);
 
         uint32_t pixel = vlcData[index];
         //auto pixel = packed[x];
-        uint8_t red = pixel;
-        uint8_t green = pixel << 8;
-        uint8_t blue = pixel << 16;
-        uint8_t alpha = pixel << 24;
+        uint8_t blue = pixel;
+        uint8_t green = pixel >> 8;
+        uint8_t red = pixel >> 16;
+        uint8_t alpha = pixel >> 24;
 
+        useImageData.exit();
         return Colour(red, green, blue);
         
         //return Colour(*vlcData[index], *vlcData[index+1], *vlcData[index+2]);
         return Colour(0, 0, 0);
     }
     else {
+        useImageData.exit();
         return Colour(0, 0, 0);
     }
 }
 
 void BKVideo::onContainerParameterChanged(Parameter* p)
 {
+    // LIBVLC_API int libvlc_audio_set_volume( libvlc_media_player_t *p_mi, int i_volume );
 
     if (p == filePath) {
         String f = filePath->getFile().getFullPathName();
+        stop();
+        VLCMediaList = libvlc_media_list_new(VLCInstance);
         VLCMedia = libvlc_media_new_path(VLCInstance, f.toRawUTF8());
-        //VLCMedia = libvlc_media_new_location(VLCInstance, f.toRawUTF8());
-        VLCMediaPlayer = libvlc_media_player_new_from_media(VLCMedia);
-    
-        // libvlc_video_set_callbacks(); ---- https://cpp.hotexamples.com/fr/examples/-/-/libvlc_video_set_format_callbacks/cpp-libvlc_video_set_format_callbacks-function-examples.html
-        //libvlc_video_lock_cb;
-        //libvlc_video_cleanup_cb;
+        libvlc_media_list_add_media(VLCMediaList, VLCMedia);
 
+        VLCMediaPlayer = libvlc_media_player_new(VLCInstance); //libvlc_media_player_new_from_media(VLCMedia);
         libvlc_video_set_format_callbacks(VLCMediaPlayer, setup_video, cleanup_video);
         libvlc_video_set_callbacks(VLCMediaPlayer, lock, unlock, display, this);
-        //libvlc_video_set_callbacks(VLCMediaPlayer, lock, unlock, display, this);
+
+        VLCMediaListPlayer = libvlc_media_list_player_new(VLCInstance);
+
+        libvlc_media_list_player_set_media_list(VLCMediaListPlayer, VLCMediaList);
+        libvlc_media_list_player_set_media_player(VLCMediaListPlayer, VLCMediaPlayer);
+        libvlc_media_list_player_set_playback_mode(VLCMediaListPlayer, libvlc_playback_mode_loop);
+
+        //libvlc_media_player_play(VLCMediaPlayer);
+
         libvlc_media_release(VLCMedia);
         play();
     }
+    else if (p == mediaVolume) {
+        int v = mediaVolume->floatValue()*100;
+        libvlc_audio_set_volume(VLCMediaPlayer, v);
+    }
 
-#if 0
-    /* This is a non working code that show how to hooks into a window,
-     * if we have a window around */
-    libvlc_media_player_set_xwindow(mp, xid);
-    /* or on windows */
-    libvlc_media_player_set_hwnd(mp, hwnd);
-    /* or on mac os */
-    libvlc_media_player_set_nsobject(mp, view);
-#endif
+}
 
-    /* play the media_player */
-
-    //sleep(10); /* Let it play a bit */
-
-    /* Stop playing */
+void BKVideo::triggerTriggered(Trigger* t)
+{
+    if (t == startBtn) {
+        play();
+    }
+    else if (t == stopBtn) {
+        stop();
+    }
+    else if (t == restartBtn) {
+        stop();
+        play();
+    }
+    else if (t == pauseBtn) {
+        libvlc_media_list_player_pause(VLCMediaListPlayer);
+    }
 
 }
 
 void BKVideo::play()
 {
     if (VLCMediaPlayer != nullptr) {
-        libvlc_media_player_play(VLCMediaPlayer);
+        libvlc_media_list_player_play(VLCMediaListPlayer);
     }
 }
 
 void BKVideo::stop()
 {
     if (VLCMediaPlayer != nullptr) {
-        libvlc_media_player_stop(VLCMediaPlayer);
+        libvlc_media_list_player_stop(VLCMediaListPlayer);
     }
 }
 
@@ -147,12 +174,15 @@ unsigned BKVideo::setup_video(char* chroma, unsigned* width, unsigned* height, u
     imagePitches = *pitches;
     imageLines = *lines;
 
+    useImageData.enter();
     vlcData = (uint32_t*)malloc(imageWidth * imageHeight * sizeof(uint32_t));
+    vlcDataIsValid = true;
 
     // setup vlc
     memcpy(chroma, "RV32", 4);
     (*pitches) = imageWidth * 4;
     (*lines) = imageHeight;
+    useImageData.exit();
 
     //LOG(String(imageLines) + " " + String(imagePitches));
     return 1;
@@ -160,6 +190,7 @@ unsigned BKVideo::setup_video(char* chroma, unsigned* width, unsigned* height, u
 
 void BKVideo::cleanup_video()
 {
+    vlcDataIsValid = false;
     free(vlcData);
     //LOG("cleanup_video");
 
