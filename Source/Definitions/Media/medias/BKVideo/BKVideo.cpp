@@ -35,7 +35,28 @@ void BKVideo::clearItem()
 
 Colour BKVideo::getColourAtCoord(Point<float>* point)
 {
-	return Colour(0,0,0);
+    int w = imageWidth;
+    int h = imageHeight;
+    if (w > 0 && h > 0 && abs(point->x) <= 1 && abs(point->y) <= 1) {
+        int x = jmap(point->x, -1.0f, 1.0f, 0.0f, 1.0f) * w;
+        int y = jmap(point->y, -1.0f, 1.0f, 0.0f, 1.0f) * h;
+        int index = x + (imageWidth*y);
+
+        uint32_t pixel = vlcData[index];
+        //auto pixel = packed[x];
+        uint8_t red = pixel;
+        uint8_t green = pixel << 8;
+        uint8_t blue = pixel << 16;
+        uint8_t alpha = pixel << 24;
+
+        return Colour(red, green, blue);
+        
+        //return Colour(*vlcData[index], *vlcData[index+1], *vlcData[index+2]);
+        return Colour(0, 0, 0);
+    }
+    else {
+        return Colour(0, 0, 0);
+    }
 }
 
 void BKVideo::onContainerParameterChanged(Parameter* p)
@@ -49,10 +70,10 @@ void BKVideo::onContainerParameterChanged(Parameter* p)
     
         // libvlc_video_set_callbacks(); ---- https://cpp.hotexamples.com/fr/examples/-/-/libvlc_video_set_format_callbacks/cpp-libvlc_video_set_format_callbacks-function-examples.html
         //libvlc_video_lock_cb;
-        libvlc_video_cleanup_cb;
+        //libvlc_video_cleanup_cb;
 
-        libvlc_video_set_callbacks(VLCMediaPlayer, NULL, unlock, display, this);
-        libvlc_video_set_format_callbacks(VLCMediaPlayer, setupVideo, cleanVideo);
+        libvlc_video_set_format_callbacks(VLCMediaPlayer, setup_video, cleanup_video);
+        libvlc_video_set_callbacks(VLCMediaPlayer, lock, unlock, display, this);
         //libvlc_video_set_callbacks(VLCMediaPlayer, lock, unlock, display, this);
         libvlc_media_release(VLCMedia);
         play();
@@ -98,49 +119,50 @@ void BKVideo::threadLoop()
 {
 }
 
-
-
-void* BKVideo::lock(void* opaque, void** planes)
+void* BKVideo::lock(void** pixels)
 {
-    //LOG("oui");
-    /*VideoSource* _this = static_cast<VideoSource*>(data);
-
-    *pixelData = _this->pixelData;
-
-    EnterCriticalSection(&_this->textureLock);
-    */
-    return 0;
+    useImageData.enter();
+    pixels[0] = vlcData;
+    //vlcData = pixels;
+    return vlcData;
 }
 
-void BKVideo::unlock(void* data, void* id, void* const* pixelData)
+void BKVideo::unlock(void* oldBuffer, void* const* pixels)
 {
-    LOG("oui");
-    /*
-    VideoSource* _this = static_cast<VideoSource*>(data);
-
-    if (_this->isInScene) {
-        _this->GetTexture()->SetImage(*pixelData, GS_IMAGEFORMAT_BGRA, _this->GetTexture()->Width() * 4);
-    }
-
-    LeaveCriticalSection(&_this->textureLock);
-
-    assert(id == NULL); // picture identifier, not needed here 
-    */
+    useImageData.exit();
 }
 
-void BKVideo::display(void* opaque, void* picture)
+void BKVideo::display(void* nextBuffer)
 {
-    LOG("oui");
+    //LOG("display");
+    //LOG(String(imageLines)+" "+String(imagePitches));
+    //vlcData = nextBuffer;
 }
 
-unsigned BKVideo::setupVideo(void** opaque, char* chroma, unsigned* width, unsigned* height, unsigned* pitches, unsigned* lines)
+unsigned BKVideo::setup_video(char* chroma, unsigned* width, unsigned* height, unsigned* pitches, unsigned* lines)
 {
-    LOG("ok");
+    //LOG("Hello ");
+    imageWidth = *width;
+    imageHeight = *height;
+    imagePitches = *pitches;
+    imageLines = *lines;
+
+    vlcData = (uint32_t*)malloc(imageWidth * imageHeight * sizeof(uint32_t));
+
+    // setup vlc
+    memcpy(chroma, "RV32", 4);
+    (*pitches) = imageWidth * 4;
+    (*lines) = imageHeight;
+
+    //LOG(String(imageLines) + " " + String(imagePitches));
     return 1;
 }
 
-void BKVideo::cleanVideo(void* opaque)
+void BKVideo::cleanup_video()
 {
-    LOG("meh");
+    free(vlcData);
+    //LOG("cleanup_video");
+
 }
+
 

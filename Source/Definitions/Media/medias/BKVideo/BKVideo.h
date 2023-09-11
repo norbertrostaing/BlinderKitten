@@ -35,9 +35,16 @@ public:
     String getTypeString() const override { return "VideoFile"; }
     static BKVideo* create(var params) { return new BKVideo(); }
 
-    libvlc_instance_t* VLCInstance;
-    libvlc_media_player_t* VLCMediaPlayer;
-    libvlc_media_t* VLCMedia;
+    libvlc_instance_t* VLCInstance = nullptr;
+    libvlc_media_player_t* VLCMediaPlayer = nullptr;
+    libvlc_media_t* VLCMedia = nullptr;
+
+    int imageWidth = 0;
+    int imageHeight = 0;
+    int imagePitches = 0;
+    int imageLines = 0;
+    uint32_t* vlcData;
+    CriticalSection useImageData;
 
     void play(); 
     void stop();
@@ -45,12 +52,24 @@ public:
     void run() override;
     void threadLoop();
 
-    static void* lock(void* opaque, void** planes);
-    static void unlock(void* data, void* id, void* const* pixelData);
-    static void display(void* data, void* id);
+    void* lock(void** pixels);
+    static void* lock(void* self, void** pixels) {  return static_cast<BKVideo*>(self)->lock(pixels);   };
 
-    static unsigned setupVideo(void** opaque, char* chroma, unsigned* width, unsigned* height, unsigned* pitches, unsigned* lines);
-    static void cleanVideo(void* opaque);
+    void unlock(void* oldBuffer, void* const* pixels);
+    static void unlock(void* self, void* oldBuffer, void* const* pixels) { static_cast<BKVideo*>(self)->unlock(oldBuffer, pixels); };
+
+    void display(void* nextBuffer);
+    static void display(void* self, void* nextBuffer) { static_cast<BKVideo*>(self)->display(nextBuffer); };
+
+    unsigned setup_video(char* chroma, unsigned* width, unsigned* height, unsigned* pitches, unsigned* lines);
+    static unsigned setup_video(void** self, char* chroma, unsigned* width, unsigned* height, unsigned* pitches, unsigned* lines) {
+        return static_cast<BKVideo*>(*self)->setup_video(chroma, width, height, pitches, lines);
+    }
+
+    void cleanup_video();
+    static void cleanup_video(void* self) {
+        static_cast<BKVideo*>(self)->cleanup_video();
+    }
 
     //virtual MediaUI* createUI() {return new BKVideo(); };
 };
