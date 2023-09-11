@@ -35,6 +35,7 @@ public:
     Trigger* restartBtn;
     Trigger* pauseBtn;
     FloatParameter* mediaVolume;
+    FloatParameter* seek;
 
     void clearItem() override;
     Colour getColourAtCoord(Point<float>* point) override;
@@ -83,5 +84,10 @@ public:
         static_cast<BKVideo*>(self)->cleanup_video();
     }
 
+    bool vlcSeekedLast = false;
+    void vlcSeek();
+    static void vlcSeek(const struct libvlc_event_t* p_event, void* p_data) {
+        static_cast<BKVideo*>(p_data)->vlcSeek();
+    }
     //virtual MediaUI* createUI() {return new BKVideo(); };
 };

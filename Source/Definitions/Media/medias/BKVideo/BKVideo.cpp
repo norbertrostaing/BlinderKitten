@@ -23,6 +23,8 @@ BKVideo::BKVideo(var params) :
     pauseBtn = addTrigger("pause", "");
 
     mediaVolume = addFloatParameter("Volume", "Media volume", 1, 0, 1);
+    seek = addFloatParameter("Seek", "Manual seek", 1, 0, 1);
+    seek->isSavable = false;
 
     const char* argv[1] = { "-vvv" };
     VLCInstance = libvlc_new(1, argv);
@@ -31,7 +33,10 @@ BKVideo::BKVideo(var params) :
 BKVideo::~BKVideo()
 {
     stop();
-    if (VLCMediaPlayer != nullptr) { libvlc_media_player_release(VLCMediaPlayer); }
+    if (VLCMediaPlayer != nullptr) { 
+        libvlc_media_player_release(VLCMediaPlayer); 
+        libvlc_event_attach(libvlc_media_player_event_manager(VLCMediaPlayer), libvlc_MediaPlayerPositionChanged, vlcSeek, this);
+        }
     if (VLCMediaListPlayer != nullptr) {  libvlc_media_list_player_release(VLCMediaListPlayer); }
     if (VLCMediaList != nullptr) {  libvlc_media_list_release(VLCMediaList); }
     if (VLCMedia != nullptr) {  libvlc_media_release(VLCMedia); }
@@ -46,23 +51,46 @@ void BKVideo::clearItem()
 
 Colour BKVideo::getColourAtCoord(Point<float>* point)
 {
+    int delta = 0;
     useImageData.enter();
     int w = imageWidth;
     int h = imageHeight;
+
+    int r = 0;
+    int g = 0;
+    int b = 0;
+    int number = 0;
+
     if (vlcDataIsValid && w > 0 && h > 0 && abs(point->x) <= 1 && abs(point->y) <= 1) {
         int x = jmap(point->x, -1.0f, 1.0f, 0.0f, 1.0f) * w;
         int y = jmap(point->y, -1.0f, 1.0f, 0.0f, 1.0f) * h;
-        int index = x + (imageWidth*y);
 
-        uint32_t pixel = vlcData[index];
-        //auto pixel = packed[x];
-        uint8_t blue = pixel;
-        uint8_t green = pixel >> 8;
-        uint8_t red = pixel >> 16;
-        uint8_t alpha = pixel >> 24;
+        for (int dx = -delta; dx <= delta; dx++) {
+            for (int dy = -delta; dy <= delta; dy++) {
+                int localX = x + dx;
+                int localY = y + dy;
+                if (localX >= 0 && localX < w && localY >= 0 && localY < h) {
+                    int index = localX + (imageWidth * localY);
 
+                    uint32_t pixel = vlcData[index];
+                    //auto pixel = packed[x];
+                    uint8_t blue = pixel;
+                    uint8_t green = pixel >> 8;
+                    uint8_t red = pixel >> 16;
+                    uint8_t alpha = pixel >> 24;
+
+                    r += red;
+                    g += green;
+                    b += blue;
+                    number++;
+                }
+            }
+        }
         useImageData.exit();
-        return Colour(red, green, blue);
+        r /= number;
+        g /= number;
+        b /= number;
+        return Colour(r, g, b);
         
         //return Colour(*vlcData[index], *vlcData[index+1], *vlcData[index+2]);
         return Colour(0, 0, 0);
@@ -94,6 +122,7 @@ void BKVideo::onContainerParameterChanged(Parameter* p)
         libvlc_media_list_player_set_media_player(VLCMediaListPlayer, VLCMediaPlayer);
         libvlc_media_list_player_set_playback_mode(VLCMediaListPlayer, libvlc_playback_mode_loop);
 
+        libvlc_event_attach(libvlc_media_player_event_manager(VLCMediaPlayer), libvlc_MediaPlayerPositionChanged, vlcSeek, this);
         //libvlc_media_player_play(VLCMediaPlayer);
 
         libvlc_media_release(VLCMedia);
@@ -103,7 +132,12 @@ void BKVideo::onContainerParameterChanged(Parameter* p)
         int v = mediaVolume->floatValue()*100;
         libvlc_audio_set_volume(VLCMediaPlayer, v);
     }
-
+    else if (p == seek) {
+        if (!vlcSeekedLast) {
+            libvlc_media_player_set_position(VLCMediaPlayer, seek->floatValue());
+        }
+        vlcSeekedLast = false;
+    }
 }
 
 void BKVideo::triggerTriggered(Trigger* t)
@@ -194,6 +228,13 @@ void BKVideo::cleanup_video()
     free(vlcData);
     //LOG("cleanup_video");
 
+}
+
+void BKVideo::vlcSeek()
+{
+    float pos = libvlc_media_player_get_position(VLCMediaPlayer);
+    vlcSeekedLast = true;
+    seek->setValue(pos);
 }
 
 
