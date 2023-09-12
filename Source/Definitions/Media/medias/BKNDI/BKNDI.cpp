@@ -25,7 +25,7 @@ void BKNDI::clearItem()
 	BaseItem::clearItem();
 }
 
-Colour BKNDI::getColourAtCoord(Point<float>* point)
+Colour BKNDI::getColourAtCoord(Point<float>* point, int pixelsAround)
 {
 	return color->getColor();
 }

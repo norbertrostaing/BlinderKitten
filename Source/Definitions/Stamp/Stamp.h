@@ -52,6 +52,7 @@ public:
     Point2DParameter* redRange;
     Point2DParameter* greenRange;
     Point2DParameter* blueRange;
+    IntParameter* pixelsAround;
 
     Command tempCommand;
     ControllableContainer stampValues;

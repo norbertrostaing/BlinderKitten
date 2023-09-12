@@ -29,6 +29,7 @@ class Media :
 public:
     Media(var params = var());
     virtual ~Media();
+    CriticalSection useImageData;
 
     String objectType;
     var objectData;
@@ -36,10 +37,12 @@ public:
     IntParameter* id;
     int registeredId = 0;
     StringParameter* userName;
+    Image image;
+    bool continuousRepaint = false;
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
 
-    virtual Colour getColourAtCoord(Point<float>* point){return Colour(0,0,0);};
+    virtual Colour getColourAtCoord(Point<float>* point, int pixelsAround){return Colour(0,0,0);};
 
     String getTypeString() const override { return objectType; }
 

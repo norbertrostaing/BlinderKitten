@@ -18,7 +18,8 @@ class LayoutViewer :
     public ComboBox::Listener,
     public LayoutManager::AsyncListener,
     public StampManager::AsyncListener,
-    public ChangeListener
+    public ChangeListener,
+    public Timer
 
 {
 public:
@@ -71,6 +72,8 @@ public:
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
     void paint(Graphics& g) override;
+
+    void timerCallback() override { repaint(); }
     
     float topLeftX = 0;
     float topLeftY = 0;

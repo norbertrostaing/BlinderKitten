@@ -28,7 +28,7 @@ LayoutViewer::LayoutViewer() :
 	rebuildStampsList();
 	StampManager::getInstance()->addAsyncManagerListener(this);
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
-
+	startTimerHz(30);
 }
 
 LayoutViewer::~LayoutViewer()
@@ -386,6 +386,7 @@ void LayoutViewer::paint(Graphics& g)
 		return;
 	}
 
+
 	var dimensionX = selectedLayout->dimensionsX->getValue();
 	var dimensionY = selectedLayout->dimensionsY->getValue();
 	if (dimensionX[1] < dimensionX[0]) { var temp = dimensionX[0]; dimensionX[0] = dimensionX[1]; dimensionX[1] = temp; }
@@ -433,8 +434,36 @@ void LayoutViewer::paint(Graphics& g)
 	//g.fillRect(originX, originY, width, height);
 	g.reduceClipRegion(originX, originY, width, height);
 	g.setOrigin(originX, originY+height);
+
 	g.addTransform(AffineTransform::verticalFlip(1));
 	g.fillAll(Colour(32, 32, 32));
+
+
+	if (selectedStamp != nullptr) {
+		Media* m = Brain::getInstance()->getMediaById(selectedStamp->mediaId->intValue());
+		Rectangle<float> bounds = Rectangle<float>();
+		bounds.setX(Random().nextFloat() * 30);
+		bounds.setY(0);
+		bounds.setWidth(getWidth());
+		bounds.setHeight(getHeight());
+
+		m->useImageData.enter();
+		AffineTransform t;
+		float oX = jmap(0.f, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+		float oY = jmap(0.f, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+		t = t.scaled(1 / (float)m->image.getWidth(), 1 / (float)m->image.getHeight());
+		t = t.scaled((float)selectedStamp->dimensions->getValue()[0], (float)selectedStamp->dimensions->getValue()[1]);
+		t = t.translated(-(float)selectedStamp->dimensions->getValue()[0] / 2, -(float)selectedStamp->dimensions->getValue()[1] / 2);
+		t = t.rotated(degreesToRadians( selectedStamp->angle->floatValue()));
+		t = t.translated((float)selectedStamp->position->getValue()[0], -(float)selectedStamp->position->getValue()[1]);
+		t = t.scaled(1, -1);
+		t = t.scaled(uiScale);
+		t = t.translated(oX, oY);
+		
+		g.drawImageTransformed(m->image.createCopy(), t, false);
+		m->useImageData.exit();
+	}
+
 
 	clicg.reduceClipRegion(originX, originY, width, height);
 	clicg.setOrigin(originX, originY + height);

@@ -28,7 +28,8 @@ MediaUI::~MediaUI()
 Media::Media(var params) :
 	BaseItem(params.getProperty("name", "Media")),
 	objectType(params.getProperty("type", "Media").toString()),
-	objectData(params)
+	objectData(params),
+	image(Image::ARGB, 10,10, true)
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;

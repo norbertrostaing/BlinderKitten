@@ -25,7 +25,7 @@ public:
     ColorParameter* color;
 
     void clearItem() override;
-    Colour getColourAtCoord(Point<float>* point) override;
+    Colour getColourAtCoord(Point<float>* point, int pixelsAround) override;
     void onContainerParameterChanged(Parameter* p) override;
     
     String getTypeString() const override { return "SolidColor"; }

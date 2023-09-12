@@ -36,10 +36,9 @@ public:
     Trigger* pauseBtn;
     FloatParameter* mediaVolume;
     FloatParameter* seek;
-    IntParameter* pixelsAround;
 
     void clearItem() override;
-    Colour getColourAtCoord(Point<float>* point) override;
+    Colour getColourAtCoord(Point<float>* point, int pixelsAround) override;
     void onContainerParameterChanged(Parameter* p) override;
     void triggerTriggered(Trigger* t);
     
@@ -56,9 +55,10 @@ public:
     int imageHeight = 0;
     int imagePitches = 0;
     int imageLines = 0;
-    uint32_t* vlcData;
+    //uint32_t* vlcData;
+
+    std::shared_ptr<Image::BitmapData> vlcBitmapData = nullptr;
     bool vlcDataIsValid = false;
-    CriticalSection useImageData;
 
     void play(); 
     void stop();

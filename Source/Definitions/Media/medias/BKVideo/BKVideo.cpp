@@ -16,6 +16,7 @@ BKVideo::BKVideo(var params) :
     Thread("BKVideoFileMedia")
 {
 	filePath = addFileParameter("File path", "File path", "");
+    continuousRepaint = true;
 
     startBtn = addTrigger("start", "");
     stopBtn = addTrigger("stop", "");
@@ -25,7 +26,6 @@ BKVideo::BKVideo(var params) :
     mediaVolume = addFloatParameter("Volume", "Media volume", 1, 0, 1);
     seek = addFloatParameter("Seek", "Manual seek", 1, 0, 1);
     seek->isSavable = false;
-    pixelsAround = addIntParameter("Pixels around", "number of pixels to look around the targeted pixel. To have a medium value.",0,0);
 
     const char* argv[1] = { "-vvv" };
     VLCInstance = libvlc_new(1, argv);
@@ -49,48 +49,45 @@ void BKVideo::clearItem()
     BaseItem::clearItem();
 }
 
-Colour BKVideo::getColourAtCoord(Point<float>* point)
+Colour BKVideo::getColourAtCoord(Point<float>* point, int pixelsAround)
 {
-    int delta = pixelsAround->intValue();
     useImageData.enter();
     int w = imageWidth;
     int h = imageHeight;
 
-    int r = 0;
-    int g = 0;
-    int b = 0;
-    int number = 0;
 
     if (vlcDataIsValid && w > 0 && h > 0 && abs(point->x) <= 1 && abs(point->y) <= 1) {
         int x = jmap(point->x, -1.0f, 1.0f, 0.0f, 1.0f) * w;
         int y = jmap(point->y, -1.0f, 1.0f, 0.0f, 1.0f) * h;
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        int number = 0;
 
-        for (int dx = -delta; dx <= delta; dx++) {
-            for (int dy = -delta; dy <= delta; dy++) {
+        for (int dx = -pixelsAround; dx <= pixelsAround; dx++) {
+            for (int dy = -pixelsAround; dy <= pixelsAround; dy++) {
                 int localX = x + dx;
                 int localY = y + dy;
                 if (localX >= 0 && localX < w && localY >= 0 && localY < h) {
-                    int index = localX + (imageWidth * localY);
+                    Colour pixel = image.getPixelAt(localX, localY);
 
-                    uint32_t pixel = vlcData[index];
-                    //auto pixel = packed[x];
-                    uint8_t blue = pixel;
-                    uint8_t green = pixel >> 8;
-                    uint8_t red = pixel >> 16;
-                    uint8_t alpha = pixel >> 24;
-
-                    r += red;
-                    g += green;
-                    b += blue;
+                    r += pixel.getRed();
+                    g += pixel.getGreen();
+                    b += pixel.getBlue();
                     number++;
                 }
             }
         }
         useImageData.exit();
-        r /= number;
-        g /= number;
-        b /= number;
-        return Colour(r, g, b);
+        if (number > 0) {
+            r /= number;
+            g /= number;
+            b /= number;
+            return Colour(r, g, b);
+        } 
+        else {
+            return Colour(0, 0, 0);
+        }
 
         //return Colour(*vlcData[index], *vlcData[index+1], *vlcData[index+2]);
         //return Colour(0, 0, 0);
@@ -183,9 +180,9 @@ void BKVideo::threadLoop()
 void* BKVideo::lock(void** pixels)
 {
     useImageData.enter();
-    pixels[0] = vlcData;
-    //vlcData = pixels;
-    return vlcData;
+    //pixels[0] = vlcData;
+    pixels[0] = vlcBitmapData->getLinePointer(0);
+    return 0;
 }
 
 void BKVideo::unlock(void* oldBuffer, void* const* pixels)
@@ -209,10 +206,12 @@ unsigned BKVideo::setup_video(char* chroma, unsigned* width, unsigned* height, u
     imageLines = *lines;
 
     useImageData.enter();
-    vlcData = (uint32_t*)malloc(imageWidth * imageHeight * sizeof(uint32_t));
-    vlcDataIsValid = true;
+    //vlcData = (uint32_t*)malloc(imageWidth * imageHeight * sizeof(uint32_t));
 
-    // setup vlc
+    image = Image(Image::ARGB, imageWidth, imageHeight, true);
+    vlcBitmapData = std::make_shared<Image::BitmapData>(image, Image::BitmapData::writeOnly);
+
+    vlcDataIsValid = true;
     memcpy(chroma, "RV32", 4);
     (*pitches) = imageWidth * 4;
     (*lines) = imageHeight;
@@ -225,7 +224,7 @@ unsigned BKVideo::setup_video(char* chroma, unsigned* width, unsigned* height, u
 void BKVideo::cleanup_video()
 {
     vlcDataIsValid = false;
-    free(vlcData);
+    //free(vlcData);
     //LOG("cleanup_video");
 
 }

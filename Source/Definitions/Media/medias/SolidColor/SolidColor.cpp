@@ -25,7 +25,7 @@ void SolidColor::clearItem()
 	BaseItem::clearItem();
 }
 
-Colour SolidColor::getColourAtCoord(Point<float>* point)
+Colour SolidColor::getColourAtCoord(Point<float>* point, int pixelsAround)
 {
 	if (abs(point->x) <= 1 && abs(point->y) <= 1) {
 		return color->getColor();

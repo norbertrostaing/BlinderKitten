@@ -55,6 +55,7 @@ Stamp::Stamp(var params) :
 	redRange = addPoint2DParameter("Red range", "Input min and max");
 	greenRange = addPoint2DParameter("Green range", "Input min and max");
 	blueRange = addPoint2DParameter("Blue range", "Input min and max");
+	pixelsAround = addIntParameter("Pixels around", "number of pixels to look around the targeted pixel. To have a medium value.", 0, 0);
 
 	var v = var(); v.append(0); v.append(1);
 	var min = var(); min.append(0); min.append(0);
@@ -107,6 +108,7 @@ void Stamp::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerStamp(this, id->getValue(), true);
 	}
+	sendChangeMessage();
 }
 
 
@@ -245,7 +247,7 @@ float Stamp::applyToChannel(SubFixtureChannel* fc, float currentVal, double now)
 	finalPos.y /= stompHeight/2;
 	finalPos.y *= -1;
 
-	Colour color = media->getColourAtCoord(&finalPos);
+	Colour color = media->getColourAtCoord(&finalPos, pixelsAround->intValue());
 
 	float fromValue;
 	float toValue;
