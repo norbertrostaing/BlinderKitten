@@ -49,6 +49,10 @@ public:
     Point2DParameter* dimensions;
     FloatParameter* angle;
 
+    Point2DParameter* redRange;
+    Point2DParameter* greenRange;
+    Point2DParameter* blueRange;
+
     Command tempCommand;
     ControllableContainer stampValues;
     CommandValueManager redFull;

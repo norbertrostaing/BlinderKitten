@@ -36,6 +36,7 @@ public:
     Trigger* pauseBtn;
     FloatParameter* mediaVolume;
     FloatParameter* seek;
+    IntParameter* pixelsAround;
 
     void clearItem() override;
     Colour getColourAtCoord(Point<float>* point) override;

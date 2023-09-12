@@ -25,6 +25,7 @@ BKVideo::BKVideo(var params) :
     mediaVolume = addFloatParameter("Volume", "Media volume", 1, 0, 1);
     seek = addFloatParameter("Seek", "Manual seek", 1, 0, 1);
     seek->isSavable = false;
+    pixelsAround = addIntParameter("Pixels around", "number of pixels to look around the targeted pixel. To have a medium value.",0,0);
 
     const char* argv[1] = { "-vvv" };
     VLCInstance = libvlc_new(1, argv);
@@ -33,25 +34,24 @@ BKVideo::BKVideo(var params) :
 BKVideo::~BKVideo()
 {
     stop();
-    if (VLCMediaPlayer != nullptr) { 
-        libvlc_media_player_release(VLCMediaPlayer); 
-        libvlc_event_attach(libvlc_media_player_event_manager(VLCMediaPlayer), libvlc_MediaPlayerPositionChanged, vlcSeek, this);
-        }
-    if (VLCMediaListPlayer != nullptr) {  libvlc_media_list_player_release(VLCMediaListPlayer); }
-    if (VLCMediaList != nullptr) {  libvlc_media_list_release(VLCMediaList); }
-    if (VLCMedia != nullptr) {  libvlc_media_release(VLCMedia); }
-
-    libvlc_release(VLCInstance);
+    if (VLCMediaListPlayer != nullptr) { libvlc_media_list_player_release(VLCMediaListPlayer); VLCMediaListPlayer = nullptr;}
+    if (VLCMediaList != nullptr) { libvlc_media_list_release(VLCMediaList); VLCMediaList = nullptr; }
+    if (VLCMediaPlayer != nullptr) {
+        libvlc_event_detach(libvlc_media_player_event_manager(VLCMediaPlayer), libvlc_MediaPlayerPositionChanged, vlcSeek, this);
+        libvlc_media_player_release(VLCMediaPlayer); VLCMediaPlayer = nullptr;
+    }
+    if (VLCMedia != nullptr) {  libvlc_media_release(VLCMedia);VLCMedia = nullptr; }
+    libvlc_release(VLCInstance); VLCInstance = nullptr;
 }
 
 void BKVideo::clearItem()
 {
-	BaseItem::clearItem();
+    BaseItem::clearItem();
 }
 
 Colour BKVideo::getColourAtCoord(Point<float>* point)
 {
-    int delta = 0;
+    int delta = pixelsAround->intValue();
     useImageData.enter();
     int w = imageWidth;
     int h = imageHeight;
@@ -91,9 +91,9 @@ Colour BKVideo::getColourAtCoord(Point<float>* point)
         g /= number;
         b /= number;
         return Colour(r, g, b);
-        
+
         //return Colour(*vlcData[index], *vlcData[index+1], *vlcData[index+2]);
-        return Colour(0, 0, 0);
+        //return Colour(0, 0, 0);
     }
     else {
         useImageData.exit();
@@ -123,9 +123,9 @@ void BKVideo::onContainerParameterChanged(Parameter* p)
         libvlc_media_list_player_set_playback_mode(VLCMediaListPlayer, libvlc_playback_mode_loop);
 
         libvlc_event_attach(libvlc_media_player_event_manager(VLCMediaPlayer), libvlc_MediaPlayerPositionChanged, vlcSeek, this);
-        //libvlc_media_player_play(VLCMediaPlayer);
+        libvlc_media_player_play(VLCMediaPlayer);
 
-        libvlc_media_release(VLCMedia);
+        libvlc_media_release(VLCMedia); VLCMedia = nullptr;
         play();
     }
     else if (p == mediaVolume) {

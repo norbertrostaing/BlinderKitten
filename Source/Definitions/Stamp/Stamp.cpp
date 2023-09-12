@@ -52,8 +52,23 @@ Stamp::Stamp(var params) :
 	dimensions = addPoint2DParameter("Dimensions", "Size of the stamp (with layout units)");
 	angle = addFloatParameter("Angle", "Angle of the stamp", 0, -360, 360);
 
+	redRange = addPoint2DParameter("Red range", "Input min and max");
+	greenRange = addPoint2DParameter("Green range", "Input min and max");
+	blueRange = addPoint2DParameter("Blue range", "Input min and max");
+
+	var v = var(); v.append(0); v.append(1);
+	var min = var(); min.append(0); min.append(0);
+	var max = var(); max.append(1); max.append(1);
+	redRange->setDefaultValue(v);
+	greenRange->setDefaultValue(v);
+	blueRange->setDefaultValue(v);
+	redRange->setRange(min, max);
+	greenRange->setRange(min, max);
+	blueRange->setRange(min, max);
+
 	addChildControllableContainer(&stampValues);
 	stampValues.saveAndLoadRecursiveData = true;
+
 
 	redFull.setNiceName("Red channel at full");
 	stampValues.addChildControllableContainer(&redFull);
@@ -238,18 +253,26 @@ float Stamp::applyToChannel(SubFixtureChannel* fc, float currentVal, double now)
 
 	bool HTP = fc->isHTP;
 
+	float red = color.getFloatRed();
+	float green = color.getFloatGreen();
+	float blue = color.getFloatBlue();
+
+	red = jmap(red, (float)redRange->getValue()[0], (float)redRange->getValue()[1], 0.0f, 1.0f);
+	green = jmap(green, (float)greenRange->getValue()[0], (float)greenRange->getValue()[1], 0.0f, 1.0f);
+	blue = jmap(blue, (float)blueRange->getValue()[0], (float)blueRange->getValue()[1], 0.0f, 1.0f);
+
 	isComputing.enter();
 	fromValue = redZeroMap.contains(fc) ? redZeroMap.getReference(fc)->endValue : currentVal;
 	toValue = redFullMap.contains(fc) ? redFullMap.getReference(fc)->endValue : currentVal;
-	stompValue = jmax(stompValue, jmap(color.getFloatRed(), fromValue, toValue));
+	stompValue = jmax(stompValue, jmap(red, fromValue, toValue));
 
 	fromValue = greenZeroMap.contains(fc) ? greenZeroMap.getReference(fc)->endValue : currentVal;
 	toValue = greenFullMap.contains(fc) ? greenFullMap.getReference(fc)->endValue : currentVal;
-	stompValue = jmax(stompValue, jmap(color.getFloatGreen(), fromValue, toValue));
+	stompValue = jmax(stompValue, jmap(green, fromValue, toValue));
 
 	fromValue = blueZeroMap.contains(fc) ? blueZeroMap.getReference(fc)->endValue : currentVal;
 	toValue = blueFullMap.contains(fc) ? blueFullMap.getReference(fc)->endValue : currentVal;
-	stompValue = jmax(stompValue, jmap(color.getFloatBlue(), fromValue, toValue));
+	stompValue = jmax(stompValue, jmap(blue, fromValue, toValue));
 	isComputing.exit();
 
 	if (HTP) {
