@@ -28,6 +28,8 @@ BKVideo::BKVideo(var params) :
     seek->isSavable = false;
 
     speedRate = addFloatParameter("Speed rate", "Speed factor of video",1,0);
+    beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
+    tapTempoBtn = addTrigger("Tap tempo", "");
 
     const char* argv[1] = { "-vvv" };
     VLCInstance = libvlc_new(1, argv);
@@ -157,6 +159,9 @@ void BKVideo::triggerTriggered(Trigger* t)
     else if (t == pauseBtn) {
         libvlc_media_list_player_pause(VLCMediaListPlayer);
     }
+    else if (t == tapTempoBtn) {
+        tapTempo();
+    }
 
 }
 
@@ -241,4 +246,15 @@ void BKVideo::vlcSeek()
     seek->setValue(pos);
 }
 
-
+void BKVideo::tapTempo() {
+    double now = Time::getMillisecondCounterHiRes();
+    double delta = now - lastTapTempo;
+    lastTapTempo = now;
+    if (delta < 3000) {
+        delta = delta * (int)beatPerCycle->getValue();
+        float totalTime = libvlc_media_player_get_length(VLCMediaPlayer);
+        float rate = totalTime / delta;
+        speedRate->setValue(rate);
+        //speed->setValue(cpm);
+    }
+}

@@ -92,4 +92,11 @@ public:
         static_cast<BKVideo*>(p_data)->vlcSeek();
     }
     //virtual MediaUI* createUI() {return new BKVideo(); };
+
+    double lastTapTempo;
+    Trigger* tapTempoBtn;
+    IntParameter* beatPerCycle;
+    void tapTempo();
+
+
 };
