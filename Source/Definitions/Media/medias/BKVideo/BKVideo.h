@@ -35,6 +35,8 @@ public:
     Trigger* restartBtn;
     Trigger* pauseBtn;
     FloatParameter* mediaVolume;
+    String currentVolumeController = "";
+    String nextVolumeController = "";
     FloatParameter* speedRate;
     FloatParameter* seek;
 
@@ -63,6 +65,8 @@ public:
 
     void play(); 
     void stop();
+    void pause();
+    void restart();
 
     void run() override;
     void threadLoop();

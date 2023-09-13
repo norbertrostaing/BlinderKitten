@@ -266,7 +266,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\GenericAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\InputPanelAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\MediaAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\StampAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualFaderAction.cpp"/>
@@ -3324,7 +3326,9 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\GenericAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\InputPanelAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\MediaAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\StampAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualFaderAction.h"/>

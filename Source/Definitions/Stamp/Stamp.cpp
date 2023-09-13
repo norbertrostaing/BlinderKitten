@@ -108,6 +108,21 @@ void Stamp::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerStamp(this, id->getValue(), true);
 	}
+	if (p == sizeValue) {
+		if (autoStartAndStop->getValue()) {
+			if (isOn && (float)sizeValue->getValue() == 0) {
+				stop();
+			}
+			else if (!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
+				start();
+			}
+		}
+		lastSize = p->getValue();
+		currentSizeController = nextSizeController;
+		nextSizeController = "";
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+	}
+
 	sendChangeMessage();
 }
 

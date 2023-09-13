@@ -41,6 +41,9 @@ public:
 
     BoolParameter* autoStartAndStop;
     FloatParameter* sizeValue;
+    String currentSizeController = "";
+    String nextSizeController = "";
+    float lastSize = 0;
 
     IntParameter* groupId;
     IntParameter* layoutId;

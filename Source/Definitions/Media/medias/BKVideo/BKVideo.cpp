@@ -130,6 +130,8 @@ void BKVideo::onContainerParameterChanged(Parameter* p)
         play();
     }
     else if (p == mediaVolume) {
+        currentVolumeController = nextVolumeController;
+        nextVolumeController = "";
         int v = mediaVolume->floatValue() * 100;
         libvlc_audio_set_volume(VLCMediaPlayer, v);
     }
@@ -153,11 +155,10 @@ void BKVideo::triggerTriggered(Trigger* t)
         stop();
     }
     else if (t == restartBtn) {
-        stop();
-        play();
+        restart();
     }
     else if (t == pauseBtn) {
-        libvlc_media_list_player_pause(VLCMediaListPlayer);
+        pause();
     }
     else if (t == tapTempoBtn) {
         tapTempo();
@@ -177,6 +178,18 @@ void BKVideo::stop()
     if (VLCMediaPlayer != nullptr) {
         libvlc_media_list_player_stop(VLCMediaListPlayer);
     }
+}
+
+void BKVideo::pause()
+{
+    libvlc_media_list_player_pause(VLCMediaListPlayer);
+
+}
+
+void BKVideo::restart()
+{
+    stop();
+    play();
 }
 
 void BKVideo::run()

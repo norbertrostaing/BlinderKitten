@@ -16,6 +16,8 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/EffectAction.h"
 #include "Definitions/Actions/CarouselAction.h"
 #include "Definitions/Actions/MapperAction.h"
+#include "Definitions/Actions/MediaAction.h"
+#include "Definitions/Actions/StampAction.h"
 #include "Definitions/Actions/VirtualButtonAction.h"
 #include "Definitions/Actions/VirtualFaderAction.h"
 #include "Definitions/Actions/InputPanelAction.h"
@@ -86,8 +88,20 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Toggle", &MapperAction::create)->addParam("actionType", MapperAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Size", &MapperAction::create)->addParam("actionType", MapperAction::TRK_SIZE));
 
-    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
-    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Play", &MediaAction::create)->addParam("actionType", MediaAction::MED_START));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Restart", &MediaAction::create)->addParam("actionType", MediaAction::MED_RESTART));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Stop", &MediaAction::create)->addParam("actionType", MediaAction::MED_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Pause", &MediaAction::create)->addParam("actionType", MediaAction::MED_PAUSE));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Volume", &MediaAction::create)->addParam("actionType", MediaAction::MED_VOL));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Rate", &MediaAction::create)->addParam("actionType", MediaAction::MED_RATE));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Double Speed", &MediaAction::create)->addParam("actionType", MediaAction::MED_DOUBLESPEED));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Half Speed", &MediaAction::create)->addParam("actionType", MediaAction::MED_HALFSPEED));
+    defs.add(Factory<Action>::Definition::createDef("Media", "Media Tap Temp", &MediaAction::create)->addParam("actionType", MediaAction::MED_TAPTEMPO));
+
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Start", &StampAction::create)->addParam("actionType", StampAction::STMP_START));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Stop", &StampAction::create)->addParam("actionType", StampAction::STMP_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Toggle", &StampAction::create)->addParam("actionType", StampAction::STMP_TOGGLE));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Size", &StampAction::create)->addParam("actionType", StampAction::STMP_SIZE));
 
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Button Press", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PRESS));
     defs.add(Factory<Action>::Definition::createDef("VirtualButton", "Virtual Buttons Page Up", &VirtualButtonAction::create)->addParam("actionType", VirtualButtonAction::VB_PAGEUP));
@@ -121,6 +135,9 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Carousel", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CAR));
+
+    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
+    defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
 
     defs.add(Factory<Action>::Definition::createDef("Generic", "Set Parameter Value", &GenericAction::create)->addParam("actionType", GenericAction::SET_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Generic", "Trigger a control", &GenericAction::create)->addParam("actionType", GenericAction::TRIGGER));

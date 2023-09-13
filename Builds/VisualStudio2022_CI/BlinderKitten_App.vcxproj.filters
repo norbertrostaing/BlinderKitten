@@ -1198,7 +1198,13 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\MediaAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\StampAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp">
@@ -4788,7 +4794,13 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\MediaAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\StampAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h">

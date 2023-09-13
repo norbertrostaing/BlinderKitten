@@ -279,10 +279,14 @@
           <FILE id="V2ilC6" name="MapperAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/MapperAction.cpp"/>
           <FILE id="j4489w" name="MapperAction.h" compile="0" resource="0" file="Source/Definitions/Actions/MapperAction.h"/>
+          <FILE id="qi9QVD" name="MediaAction.cpp" compile="1" resource="0" file="Source/Definitions/Actions/MediaAction.cpp"/>
+          <FILE id="pallJS" name="MediaAction.h" compile="0" resource="0" file="Source/Definitions/Actions/MediaAction.h"/>
           <FILE id="cvjtKj" name="MultiplicatorAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/MultiplicatorAction.cpp"/>
           <FILE id="C5M6jw" name="MultiplicatorAction.h" compile="0" resource="0"
                 file="Source/Definitions/Actions/MultiplicatorAction.h"/>
+          <FILE id="Ovonjs" name="StampAction.cpp" compile="1" resource="0" file="Source/Definitions/Actions/StampAction.cpp"/>
+          <FILE id="XzTyHR" name="StampAction.h" compile="0" resource="0" file="Source/Definitions/Actions/StampAction.h"/>
           <FILE id="XXLjiy" name="TapTempoMultiple.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/TapTempoMultiple.cpp"/>
           <FILE id="VX4gZH" name="TapTempoMultiple.h" compile="0" resource="0"
