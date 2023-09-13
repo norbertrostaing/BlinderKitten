@@ -35,6 +35,7 @@ public:
     Trigger* restartBtn;
     Trigger* pauseBtn;
     FloatParameter* mediaVolume;
+    FloatParameter* speedRate;
     FloatParameter* seek;
 
     void clearItem() override;

@@ -27,6 +27,8 @@ BKVideo::BKVideo(var params) :
     seek = addFloatParameter("Seek", "Manual seek", 1, 0, 1);
     seek->isSavable = false;
 
+    speedRate = addFloatParameter("Speed rate", "Speed factor of video",1,0);
+
     const char* argv[1] = { "-vvv" };
     VLCInstance = libvlc_new(1, argv);
 }
@@ -126,8 +128,11 @@ void BKVideo::onContainerParameterChanged(Parameter* p)
         play();
     }
     else if (p == mediaVolume) {
-        int v = mediaVolume->floatValue()*100;
+        int v = mediaVolume->floatValue() * 100;
         libvlc_audio_set_volume(VLCMediaPlayer, v);
+    }
+    else if (p == speedRate) {
+        libvlc_media_player_set_rate(VLCMediaPlayer, speedRate->floatValue());
     }
     else if (p == seek) {
         if (!vlcSeekedLast) {
