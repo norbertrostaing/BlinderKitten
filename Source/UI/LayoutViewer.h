@@ -73,7 +73,7 @@ public:
 
     void paint(Graphics& g) override;
 
-    void timerCallback() override { repaint(); }
+    void timerCallback() override;
     
     float topLeftX = 0;
     float topLeftY = 0;

@@ -710,3 +710,13 @@ void LayoutViewer::paint(Graphics& g)
 	}
 }
 
+void LayoutViewer::timerCallback()
+{
+	if (selectedStamp != nullptr) {
+		Media* m = Brain::getInstance()->getMediaById(selectedStamp->mediaId->intValue());
+		if (m->continuousRepaint) {
+			repaint();
+		}
+}
+}
+
