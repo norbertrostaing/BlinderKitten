@@ -12,7 +12,7 @@ namespace BinaryData
     const int            colorpicker_pngSize = 129085;
 
     extern const char*   crash_png;
-    const int            crash_pngSize = 96417;
+    const int            crash_pngSize = 144198;
 
     extern const char*   default_blinderlayout;
     const int            default_blinderlayoutSize = 5978;
