@@ -10,6 +10,8 @@
 
 #include "DMXChannelView.h"
 #include "Definitions/Interface/interfaces/dmx/DMXInterface.h"
+#include "Definitions/Fixture/FixtureManager.h"
+#include "Definitions/FixtureType/FixtureTypeManager.h"
 
 DMXChannelView::DMXChannelView() :
 	ShapeShifterContentComponent("DMX Tester"),
@@ -266,63 +268,105 @@ void DMXChannelItem::mouseExit(const MouseEvent& e)
 
 void DMXChannelItem::mouseDown(const MouseEvent& e)
 {
-	if (e.mods.isShiftDown()) {
+	if (e.mods.isLeftButtonDown() && !e.mods.isAltDown())
+	{
+		if (e.mods.isShiftDown()) {
 		if (!channelView->selectedItems.contains(this)) {
 			channelView->rangeOn(channelView->lastClickedId, channelView->channelItems.indexOf(this));
 		}
 		else {
 			channelView->rangeOff(channelView->lastClickedId, channelView->channelItems.indexOf(this));
 		}
-	}
-	else if (channelView->selectedItems.contains(this)) {
-		updateDMXValue(0);
-		channelView->selectedItems.removeAllInstancesOf(this);
-		tmpFlash = false;
-	}
-	else if (e.mods.isCtrlDown()) {
-		updateDMXValue(channelView->getFlashValue());
-		channelView->selectedItems.add(this);
-		tmpFlash = true;
-	}
-	else {
-		channelView->clearSelection();
-		updateDMXValue(channelView->getFlashValue());
-		channelView->selectedItems.add(this);
-		tmpFlash = true;
+		}
+		else if (channelView->selectedItems.contains(this)) {
+			updateDMXValue(0);
+			channelView->selectedItems.removeAllInstancesOf(this);
+			tmpFlash = false;
+		}
+		else if (e.mods.isCtrlDown()) {
+			updateDMXValue(channelView->getFlashValue());
+			channelView->selectedItems.add(this);
+			tmpFlash = true;
+		}
+		else {
+			channelView->clearSelection();
+			updateDMXValue(channelView->getFlashValue());
+			channelView->selectedItems.add(this);
+			tmpFlash = true;
 
-	}
-	channelView->lastClickedId = channelView->channelItems.indexOf(this);
+		}
+		channelView->lastClickedId = channelView->channelItems.indexOf(this);
 
 
-	if (!e.mods.isShiftDown()) {
-		channelView->keyboardStartSelection = channelView->channelItems.indexOf(this);
-	}
-	//valueAtMouseDown = value;
-	if (e.mods.isLeftButtonDown() && !e.mods.isAltDown())
-	{
-		//updateDMXValue(channelView->getFlashValue());
+		if (!e.mods.isShiftDown()) {
+			channelView->keyboardStartSelection = channelView->channelItems.indexOf(this);
+		}
+		//valueAtMouseDown = value;
+			//updateDMXValue(channelView->getFlashValue());
 	}
 	else if (e.mods.isRightButtonDown())
 	{
-		PopupMenu p;
-		/*
-		p.addSubMenu("Create from this channel...", ObjectManager::getInstance()->factory.getMenu());
-		p.showMenuAsync(PopupMenu::Options(), [this](int result)
-			{
-				if (Object* o = ObjectManager::getInstance()->factory.createFromMenuResult(result))
-				{
-					o->targetInterface->setValueFromTarget(channelView->currentInterface);
-					if (o->interfaceParameters != nullptr)
-					{
-						if (IntParameter* ch = dynamic_cast<IntParameter*>(o->interfaceParameters->getParameterByName("startChannel")))
-						{
-							ch->setValue(channel);
-						}
-					}
-					ObjectManager::getInstance()->addItem(o);
-				}
+		DMXInterface* inter = channelView->currentInterface;
+
+		if (inter != nullptr) {
+			PopupMenu p;
+			PopupMenu fixtureTypesMenu;
+			PopupMenu addPatchMenu;
+			PopupMenu replacePatchMenu;
+			int address = channel;
+
+			for (int i = 0; i < FixtureTypeManager::getInstance()->items.size(); i++) {
+				FixtureType* ft = FixtureTypeManager::getInstance()->items[i];
+				fixtureTypesMenu.addItem(ft->niceName, [this, ft, inter, address]() {
+					Fixture* f = FixtureManager::getInstance()->addItem();
+					f->devTypeParam->setValueFromTarget(ft);
+					FixturePatch* p = f->patchs.addItem();
+					p->targetInterface->setValueFromTarget(inter);
+					p->address->setValue(address);
+				});
 			}
-		);*/
+
+			for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
+				Fixture* f = FixtureManager::getInstance()->items[i];
+				addPatchMenu.addItem(f->niceName, [this, f, inter, address]() {
+					FixturePatch* p = f->patchs.addItem();
+					p->targetInterface->setValueFromTarget(inter);
+					p->address->setValue(address);
+				});
+				replacePatchMenu.addItem(f->niceName, [this, f, inter, address]() {
+					f->patchs.clear();
+					FixturePatch* p = f->patchs.addItem();
+					p->targetInterface->setValueFromTarget(inter);
+					p->address->setValue(address);
+				});
+
+			}
+
+			// p.addSubMenu();
+			p.addSubMenu("Create fixture", fixtureTypesMenu);
+			p.addSubMenu("Add fixture patch", addPatchMenu);
+			p.addSubMenu("Replace fixture patch", replacePatchMenu);
+
+			p.showMenuAsync(PopupMenu::Options(), [this](int result)
+				{
+					/*if (Object* o = ObjectManager::getInstance()->factory.createFromMenuResult(result))
+					{
+						o->targetInterface->setValueFromTarget(channelView->currentInterface);
+						if (o->interfaceParameters != nullptr)
+						{
+							if (IntParameter* ch = dynamic_cast<IntParameter*>(o->interfaceParameters->getParameterByName("startChannel")))
+							{
+								ch->setValue(channel);
+							}
+						}
+						ObjectManager::getInstance()->addItem(o);
+					}
+				*/
+				}
+			);
+
+		}
+
 	}
 }
 
