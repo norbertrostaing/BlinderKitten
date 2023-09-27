@@ -202,7 +202,7 @@ void BKPath::computeData()
         deltaRow *= -1;
         if (gridInverseRows->boolValue()) {
             if (o == GRID_LR || o == GRID_RL) {
-                deltaOrigin.y += gridHeight;
+                deltaOrigin.y -= gridHeight;
             }
             else if (o == GRID_TB || o == GRID_BT) {
                 deltaOrigin.x += gridWidth;
