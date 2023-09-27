@@ -253,22 +253,40 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					auto sfToPos = l->getSubfixturesRatioFromDirection(selections[selId]->layoutDirection->floatValue());
 					float min = 0;
 					float max = 1;
-					bool reNormalize = selections[selId]->layoutUseOnlySelection->boolValue();
-					if (reNormalize) {
-						min = 1; max = 0;
-						for (int i = 0; i < tempSelection.size(); i++) {
-							if (sfToPos->contains(tempSelection[i])) {
-								min = jmin(min, sfToPos->getReference(tempSelection[i]));
-								max = jmax(max, sfToPos->getReference(tempSelection[i]));
-							}
+					min = 1; max = 0;
+					for (int i = 0; i < tempSelection.size(); i++) {
+						if (sfToPos->contains(tempSelection[i])) {
+							min = jmin(min, sfToPos->getReference(tempSelection[i]));
+							max = jmax(max, sfToPos->getReference(tempSelection[i]));
 						}
 					}
+					float maxGap = 0;
+					float currentOffset = 0;
+					float currentNextOffset = 1;
+					bool search = true;
+					while (search) {
+						for (int i = 0; i < tempSelection.size(); i++) {
+							if (sfToPos->contains(tempSelection[i])) {
+								float thisVal = sfToPos->getReference(tempSelection[i]);
+								if (thisVal > currentOffset && thisVal < currentNextOffset) {
+									currentNextOffset = thisVal;
+								}
+							}
+						}
+						maxGap = jmax(maxGap, currentNextOffset-currentOffset);
+						if (currentOffset == currentNextOffset) {
+							search = false;
+						}
+						else {
+							currentOffset = currentNextOffset;
+							currentNextOffset = max;
+						}
+					}
+					max += maxGap;
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
 							float v = sfToPos->getReference(tempSelection[i]);
-							if (reNormalize) {
-								v = jmap(v, min, max, 0.f, 1.f);
-							}
+							v = jmap(v, min, max, 0.f, 1.f);
 							subFixtureToPosition.set(tempSelection[i], v);
 						}
 					}

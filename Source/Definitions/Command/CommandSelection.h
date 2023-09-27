@@ -50,7 +50,6 @@ class CommandSelection:
     FloatParameter* layoutCircleStartAngle;
     BoolParameter* layoutCircleCompleteRevolution;
     BoolParameter* layoutCircleCCW;
-    BoolParameter* layoutUseOnlySelection;
     IntParameter* layoutPerlinSeed;
     FloatParameter* layoutPerlinScale;
 
