@@ -308,6 +308,29 @@ void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)
 	repaint();
 }
 
+void LayoutViewer::drawMidArrow(Graphics& g, Point<float>& from, Point<float>& to)
+{
+	Point<float> endArrow;
+	Line<float> line;
+	endArrow = ((to - from)/2.0f);
+	float arrSize = endArrow.getDistanceFromOrigin();
+	float ratio = (arrSize + 4) / arrSize;
+	endArrow *= ratio;
+	endArrow += from;
+	line.setStart(from);
+	line.setEnd(endArrow);
+	g.drawArrow(line, 0, 6, 8);
+}
+
+void LayoutViewer::drawMidArrow(Graphics& g, float fromX, float fromY, float toX, float toY)
+{
+	Point<float>from;
+	from.setXY(fromX, fromY);
+	Point<float>to;
+	to.setXY(toX, toY);
+	drawMidArrow(g, from, to);
+}
+
 void LayoutViewer::paint(Graphics& g)
 {
 	clicZones = Image(Image::ARGB, getWidth(), getHeight(), true);
@@ -510,6 +533,7 @@ void LayoutViewer::paint(Graphics& g)
 					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
 					Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 					g.drawLine(line, 0.5f);
+					drawMidArrow(g, fromX, fromY, toX, toY);
 				}
 			}
 
@@ -595,7 +619,7 @@ void LayoutViewer::paint(Graphics& g)
 				g.strokePath(path, PathStrokeType(handleWidth));
 			}
 
-
+			g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {

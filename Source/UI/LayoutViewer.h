@@ -62,6 +62,9 @@ public:
     //bool keyPressed(const KeyPress& key, Component* originatingComponent);
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
+    void drawMidArrow(Graphics& g, Point<float>& from, Point<float>& to);
+    void drawMidArrow(Graphics& g, float fromX, float fromY, float toX, float toY);
+
     void paint(Graphics& g) override;
     
     float topLeftX = 0;
