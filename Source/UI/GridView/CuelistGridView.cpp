@@ -56,6 +56,7 @@ void CuelistGridView::updateCells() {
 
         }
     }
+    updateButtons();
 }
 
 void CuelistGridView::updateButtons()

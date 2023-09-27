@@ -58,6 +58,7 @@ void CarouselGridView::updateCells() {
 
         }
     }
+    updateButtons();
 }
 
 void CarouselGridView::updateButtons()
