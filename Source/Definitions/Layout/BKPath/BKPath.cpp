@@ -191,23 +191,24 @@ void BKPath::computeData()
         }
         else if (o == GRID_TB) {
             deltaRow.x = nRows > 1 ? gridWidth / (float)(nRows-1) : 0;
-            deltaCol.y = gridHeight / (float)(nPerRow - 1);
+            deltaCol.y = -gridHeight / (float)(nPerRow - 1);
         }
         else if(o == GRID_BT) {
             deltaRow.x = nRows > 1 ? gridWidth / (float)(nRows-1) : 0;
-            deltaCol.y = -gridHeight / (float)(nPerRow - 1);
-            deltaOrigin.y += gridHeight;
+            deltaCol.y = gridHeight / (float)(nPerRow - 1);
+            deltaOrigin.y -= gridHeight;
         }
 
-        deltaRow *= -1;
+        deltaRow.y *= -1;
         if (gridInverseRows->boolValue()) {
             if (o == GRID_LR || o == GRID_RL) {
                 deltaOrigin.y -= gridHeight;
+                deltaRow.y *= -1;
             }
             else if (o == GRID_TB || o == GRID_BT) {
                 deltaOrigin.x += gridWidth;
+                deltaRow.x *= -1;
             }
-            deltaRow *= -1;
         }
 
 
