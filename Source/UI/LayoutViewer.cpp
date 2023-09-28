@@ -217,7 +217,7 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 				delta.x -= (float)currentMousePath->position->getValue()[0];
 				delta.y -= (float)currentMousePath->position->getValue()[1];
 
-				currentMousePath->rodSize->setValue( delta.getDistanceFromOrigin());
+				currentMousePath->rodSize->setValue( delta.getDistanceFromOrigin() *2);
 				currentMousePath->rodAngle->setValue(radiansToDegrees( BKPath::getVectAngle(&delta)));
 			}
 
