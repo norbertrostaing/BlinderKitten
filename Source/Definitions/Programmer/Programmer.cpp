@@ -455,7 +455,7 @@ void Programmer::processUserInput(String s) {
 				currentUserTargetId->setValue(val.getIntValue());
 			}
 			else {
-				LOGERROR("not allowed");
+				LOGERROR(s+ " not allowed");
 			}
 		}
 		else if (s == "fixture" || s == "group" || s == "preset" || s == "cuelist" || s == "effect" || s == "carousel" || s == "mapper" || s == "virtualbutton" || s == "virtualfadercol" || s == "virtualfaderelement") {
@@ -463,7 +463,7 @@ void Programmer::processUserInput(String s) {
 				dynamic_cast<EnumParameter*>(currentUserTargetType)->setValueWithData(s);
 			}
 			else {
-				LOGERROR("not allowed");
+				LOGERROR(s+ " not allowed");
 			}
 		}
 		else if (s == "enter") {
@@ -494,7 +494,7 @@ void Programmer::processUserInput(String s) {
 				else { cliActionType->setValueWithData("record"); }
 			}
 			else {
-				LOGERROR("not allowed");
+				LOGERROR(s+ " not allowed");
 			}
 		}
 		else if (s == "copy") {
@@ -503,7 +503,7 @@ void Programmer::processUserInput(String s) {
 				else { cliActionType->setValueWithData("copy"); }
 			}
 			else {
-				LOGERROR("not allowed");
+				LOGERROR(s+ " not allowed");
 			}
 		}
 		else if (s == "edit") {
@@ -511,7 +511,7 @@ void Programmer::processUserInput(String s) {
 				cliActionType->setValueWithData(s);
 			}
 			else {
-				LOGERROR("not allowed");
+				LOGERROR(s+ " not allowed");
 			}
 		}
 		else if (s == "delete") {
@@ -519,7 +519,7 @@ void Programmer::processUserInput(String s) {
 				cliActionType->setValueWithData(s);
 			}
 			else {
-				LOGERROR("not allowed");
+				LOGERROR(s+ " not allowed");
 			}
 		}
 
@@ -544,7 +544,7 @@ void Programmer::processUserInput(String s) {
 			currentUserCommand->userPress(s);
 		}
 		else {
-			LOGERROR("not allowed");
+			LOGERROR(s+ " not allowed");
 		}
 	}
 	else if (s == "group" || s == "fixture") {
@@ -559,8 +559,13 @@ void Programmer::processUserInput(String s) {
 			currentUserCommand = commands.addItem();
 			currentUserCommand->userPress(s);
 		}
+		else if (currentUserCommand->userCanPressPlusOrMinus) {
+			//currentUserCommand = commands.addItem();
+			currentUserCommand->userPress("+");
+			currentUserCommand->userPress(s);
+		}
 		else {
-			LOGERROR("not allowed");
+			LOGERROR(s+ " not allowed");
 		}
 	}
 	else if (s == "backspace") {
@@ -573,7 +578,7 @@ void Programmer::processUserInput(String s) {
 			currentUserCommand->userPress(s);
 		}
 		else {
-			LOGERROR("not allowed");
+			LOGERROR(s+ " not allowed");
 		}
 	}
 	else if (s == "thru") {
@@ -581,7 +586,7 @@ void Programmer::processUserInput(String s) {
 			currentUserCommand->userPress(s);
 		}
 		else {
-			LOGERROR("not allowed");
+			LOGERROR(s+ " not allowed");
 		}
 	}
 	else if (s == "preset") {
@@ -589,7 +594,7 @@ void Programmer::processUserInput(String s) {
 			currentUserCommand->userPress(s);
 		}
 		else {
-			LOGERROR("not allowed");
+			LOGERROR(s+ " not allowed");
 		}
 	}
 	else if (s.containsOnly("1234567890.")) {
@@ -600,7 +605,7 @@ void Programmer::processUserInput(String s) {
 			currentUserCommand->userPress(s);
 		}
 		else {
-			LOGERROR("not allowed");
+			LOGERROR(s+ " not allowed");
 		}
 	}
 	else {
