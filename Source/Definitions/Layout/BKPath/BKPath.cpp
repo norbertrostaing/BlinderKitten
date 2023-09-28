@@ -32,7 +32,7 @@ BKPath::BKPath(var params) :
     rodAngle = addFloatParameter("Angle", "Angle of your rod", 0, -360, 360);
 
     d[0] = 4;    d[1] = 4;
-    gridSize = addPoint2DParameter("Size", "Size of yout grid");
+    gridSize = addPoint2DParameter("Size", "Size of your grid");
     gridSize->setDefaultValue(d);
     gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
     gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,-360,360);
@@ -50,6 +50,9 @@ BKPath::BKPath(var params) :
     circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
     circleTo = addFloatParameter("To angle", "Angle of the last element", 360, -360, 360);
 
+    d[0] = 5;    d[1] = 5;
+    tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
+    tilesSize->setDefaultValue(d);
     addChildControllableContainer(&selection);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
 

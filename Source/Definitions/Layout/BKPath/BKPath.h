@@ -49,6 +49,7 @@ class BKPath:
     FloatParameter* circleTo;
 
     BoolParameter* spreadSubFixtures;
+    Point2DParameter* tilesSize;
     CommandSelectionManager selection;
 
     CriticalSection isComputing;

@@ -417,6 +417,9 @@ void LayoutViewer::paint(Graphics& g)
 		return;
 	}
 
+	float scaleTileX = selectedLayout->tilesScale->getValue()[0];
+	float scaleTileY = selectedLayout->tilesScale->getValue()[1];
+
 	var dimensionX = selectedLayout->dimensionsX->getValue();
 	var dimensionY = selectedLayout->dimensionsY->getValue();
 	if (dimensionX[1] < dimensionX[0]) { var temp = dimensionX[0]; dimensionX[0] = dimensionX[1]; dimensionX[1] = temp; }
@@ -471,9 +474,6 @@ void LayoutViewer::paint(Graphics& g)
 	clicg.setOrigin(originX, originY + height);
 	clicg.addTransform(AffineTransform::verticalFlip(1));
 
-	float fixtWidth = 5;
-	float halfFixtWidth = fixtWidth/2;
-
 	float handleWidth = 10;
 	float halfHandleWidth = handleWidth/2;
 
@@ -489,6 +489,15 @@ void LayoutViewer::paint(Graphics& g)
 		Colour hoverColour((uint8)255, (uint8)255, (uint8)255, (uint8)63);
 		Colour handleColour((uint8)255, (uint8)255, (uint8)255);
 
+		float tileWidth = p->tilesSize->getValue()[0];
+		float tileHeight = p->tilesSize->getValue()[1];
+
+		tileWidth *= scaleTileX;
+		tileHeight *= scaleTileY;
+		float halfTileWidth = tileWidth/2;
+		float halfTileHeight = tileHeight/2;
+
+
 		bool drawPaths = viewPaths.getToggleState();
 		bool edit = editMode.getToggleState();
 
@@ -502,10 +511,10 @@ void LayoutViewer::paint(Graphics& g)
 			}
 			else {
 				clicg.setColour(getClickColour(p, CLIC_SELECT));
-				clicg.fillRect(fromX - halfFixtWidth, fromY - halfFixtWidth, fixtWidth, fixtWidth);
+				clicg.fillRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight);
 			}
 			g.setColour(juce::Colours::orange);
-			g.drawRect(fromX - halfFixtWidth, fromY - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+			g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
 
 			if (p == hoveredPath) {
 				g.setColour(handleColour);
@@ -551,10 +560,10 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowX = X;
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
-						g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
-							clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 						}
 					}
 				}
@@ -576,10 +585,10 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowX = X;
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
-						g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
-							clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 						}
 					}
 				}
@@ -628,10 +637,10 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowX = X;
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
-						g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
-							clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 						}
 					}
 				}
@@ -653,10 +662,10 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowX = X;
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
-						g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
-							clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 						}
 					}
 				}
@@ -701,10 +710,10 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
-						clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
 				p->isComputing.exit();
@@ -714,10 +723,10 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
-						clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
 				p->isComputing.exit();
@@ -787,10 +796,10 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
-						clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
 				p->isComputing.exit();
@@ -800,10 +809,10 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					g.drawRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, (float)1);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
-						clicg.fillRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth);
+						clicg.fillRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight);
 					}
 				}
 				p->isComputing.exit();
