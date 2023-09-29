@@ -252,7 +252,7 @@ void Fixture::checkChildrenSubFixtures() {
 			}
 		}
 	}
-
+	updateSubFixtureNames();
 }
 
 void Fixture::updateName() {
@@ -260,7 +260,18 @@ void Fixture::updateName() {
 	if (parentContainer != nullptr) {
 		dynamic_cast<FixtureManager*>(parentContainer.get())->reorderItems();
 	}
+	updateSubFixtureNames();
 	setNiceName(String((int)id->getValue()) + " - " + n);
+}
+
+void Fixture::updateSubFixtureNames()
+{
+	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+		it.getValue()->displayName = id->stringValue();
+		if (subFixtures.size() > 1) {
+			it.getValue()->displayName += "." + String(it.getKey());
+		}
+	}
 }
 
 
