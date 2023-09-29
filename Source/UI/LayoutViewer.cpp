@@ -500,6 +500,12 @@ void LayoutViewer::paint(Graphics& g)
 
 		g.setFont(p->textSize->floatValue()*scaleText);
 
+		bool overrideColor = p->overrideColor->boolValue();
+		Colour overridenColor = juce::Colours::black;
+		if (p->overrideColor->boolValue()) {
+			overridenColor = p->pathColor->getColor();
+		}
+
 		bool drawPaths = viewPaths.getToggleState();
 		bool edit = editMode.getToggleState();
 
@@ -515,7 +521,12 @@ void LayoutViewer::paint(Graphics& g)
 				clicg.setColour(getClickColour(p, CLIC_SELECT));
 				clicg.fillRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight);
 			}
-			g.setColour(juce::Colours::orange);
+			Colour drawColor = juce::Colours::white;
+			if (overrideColor) {drawColor = overridenColor; }
+			else if (p->selection.computedSelectedSubFixtures.size() > 0) {
+				drawColor = p->selection.computedSelectedSubFixtures[0]->parentFixture->getLayoutColor();
+			}
+			g.setColour(drawColor);
 			g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
 			String name = "";
 			if (p->spreadSubFixtures->boolValue()) {
@@ -556,7 +567,6 @@ void LayoutViewer::paint(Graphics& g)
 				clicg.setColour(getClickColour(p, CLIC_END));
 				clicg.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
 			}
-			g.setColour(juce::Colours::orange);
 			float currentArrowX = -1;
 			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
@@ -573,7 +583,12 @@ void LayoutViewer::paint(Graphics& g)
 						}
 						currentArrowX = X;
 						currentArrowY = Y;
-						g.setColour(juce::Colours::orange);
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						String name = sf->displayName;
 						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -600,7 +615,12 @@ void LayoutViewer::paint(Graphics& g)
 						}
 						currentArrowX = X;
 						currentArrowY = Y;
-						g.setColour(juce::Colours::orange);
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						String name = sf->parentFixture->id->stringValue();
 						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -654,7 +674,12 @@ void LayoutViewer::paint(Graphics& g)
 						}
 						currentArrowX = X;
 						currentArrowY = Y;
-						g.setColour(juce::Colours::orange);
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						String name = sf->displayName;
 						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -681,7 +706,12 @@ void LayoutViewer::paint(Graphics& g)
 						}
 						currentArrowX = X;
 						currentArrowY = Y;
-						g.setColour(juce::Colours::orange);
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 						String name = sf->parentFixture->id->stringValue();
 						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -732,6 +762,12 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->parentFixture->getLayoutColor();
+					}
+					g.setColour(drawColor);
 					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 					String name = it.getKey()->displayName;
 					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -747,6 +783,12 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->getLayoutColor();
+					}
+					g.setColour(drawColor);
 					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 					String name = it.getKey()->id->stringValue();
 					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -822,6 +864,12 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->parentFixture->getLayoutColor();
+					}
+					g.setColour(drawColor);
 					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
 					String name = it.getKey()->displayName;
 					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
@@ -837,6 +885,12 @@ void LayoutViewer::paint(Graphics& g)
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->getLayoutColor();
+					}
+					g.setColour(drawColor);
 					g.drawRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, (float)1);
 					String name = it.getKey()->id->stringValue();
 					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);

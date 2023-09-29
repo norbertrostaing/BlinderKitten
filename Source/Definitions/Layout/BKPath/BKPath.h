@@ -51,6 +51,8 @@ class BKPath:
     BoolParameter* spreadSubFixtures;
     Point2DParameter* tilesSize;
     FloatParameter* textSize;
+    BoolParameter* overrideColor;
+    ColorParameter* pathColor;
     CommandSelectionManager selection;
 
     CriticalSection isComputing;

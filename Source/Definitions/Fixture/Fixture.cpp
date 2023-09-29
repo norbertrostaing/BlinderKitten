@@ -289,6 +289,17 @@ SubFixture* Fixture::getSubFixture(int subId) {
 	return subFixtures.getReference(subId);
 }
 
+Colour Fixture::getLayoutColor()
+{
+	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
+	if (ft!= nullptr) {
+		return ft->layoutColor->getColor();
+	}
+	else {
+		return Colour();
+	}
+}
+
 
 void Fixture::selectThis(bool addToSelection, bool notify) {
 	BaseItem::selectThis(addToSelection, notify);

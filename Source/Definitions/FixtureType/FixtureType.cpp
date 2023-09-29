@@ -24,10 +24,8 @@ FixtureType::FixtureType(var params) :
 	canBeDisabled = false;
 
 	itemDataType = "FixtureType";
+	layoutColor = addColorParameter("Layout color", "Default color in layout", Colours::orange);
 	
-	addStringParameter("Manufacturer", "Name of the Manufacturer", "");
-	addStringParameter("User infos", "Free text for you", "");
-
 	//chansManager = new BaseManager<FixtureTypeChannel>("Channels");
 	// ContainerAsyncListener* newListener = new ContainerAsyncListener();
 	// chansManager->addAsyncContainerListener();

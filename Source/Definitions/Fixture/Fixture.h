@@ -47,6 +47,7 @@ public:
 
     Array<SubFixture*> getAllSubFixtures();
     SubFixture* getSubFixture(int id);
+    Colour getLayoutColor();
 
     void selectThis(bool addToSelection=false, bool notify = true);
     void autoName();

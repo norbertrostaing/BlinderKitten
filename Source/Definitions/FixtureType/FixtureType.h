@@ -24,6 +24,8 @@ public:
     String objectType;
     var objectData;
     
+    ColorParameter* layoutColor;
+
     FixtureTypeChannelManager chansManager;
     FixtureTypeVirtualChannelManager virtualChansManager;
     String getTypeString() const override { return objectType; }

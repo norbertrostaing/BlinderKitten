@@ -57,6 +57,9 @@ BKPath::BKPath(var params) :
     addChildControllableContainer(&selection);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
 
+    overrideColor = addBoolParameter("Override color", "", false);
+    pathColor = addColorParameter("Tiles color", "", juce::Colours::lightcyan);
+
     updateDisplay();
 };
 
@@ -314,7 +317,7 @@ void BKPath::computeData()
 }
 
 void BKPath::onContainerParameterChangedInternal(Parameter* c) {
-    if (c == pathType) {
+    if (c == pathType || c == overrideColor) {
         updateDisplay();
     }
 }
@@ -336,6 +339,8 @@ void BKPath::updateDisplay() {
     circleRadius->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
     circleFrom->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
     circleTo->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
+
+    pathColor->hideInEditor = !overrideColor->boolValue();
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
