@@ -526,7 +526,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	} 
 	
 
-	if ((float)chaserRunXTimes->getValue() > 0) {
+	if (isChaser->boolValue() && (float)chaserRunXTimes->getValue() > 0) {
 		if (cueA == nullptr && isChaser->getValue()) {
 			if (chaserDirection->getValueData() == "bounce" && cues.items.size()>1) {
 				int nItems = cues.items.size();
