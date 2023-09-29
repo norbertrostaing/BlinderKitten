@@ -43,6 +43,7 @@ Task::Task(var params) :
 	cuelistAction->addOption("Flash Level", "flashlevel");
 	cuelistAction->addOption("LTP Level", "ltplevel");
 	cuelistAction->addOption("Cancel tasks", "canceltasks");
+	cuelistAction->addOption("Set Speed", "speed");
 
 	effectAction = addEnumParameter("Effect action", "");
 	effectAction->addOption("Start", "start");
@@ -111,6 +112,11 @@ void Task::updateDisplay() {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
+		}
+		else if (cuelistAction->getValue() == "speed") {
+			fade->hideInEditor = false;
+			targetValue->hideInEditor = false;
+			targetValue->setRange(0, INT32_MAX);
 		}
 		else {
 			fade->hideInEditor = true;
@@ -201,6 +207,9 @@ void Task::triggerGivenTask(String targetType, int targetId, String action, doub
 			}
 			else if (action == "canceltasks") {
 				Brain::getInstance()->stopTasks(targetId, id);
+			}
+			else if (action == "speed") {
+				target->chaserSpeed->setValue(value);
 			}
 		}
 	}

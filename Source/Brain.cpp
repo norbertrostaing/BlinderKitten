@@ -817,6 +817,9 @@ void Brain::startTask(Task* t, double startTime, int cuelistId)
                 } else if (actionType == "flashLevel") {
                     startValue = target->FlashLevel->getValue();
                     endValue = t->targetValue->getValue();
+                } else if (actionType == "speed") {
+                    startValue = target->chaserSpeed->getValue();
+                    endValue = t->targetValue->getValue();
                 }
             }
         }
