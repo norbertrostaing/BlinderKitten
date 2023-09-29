@@ -54,6 +54,7 @@ Layout::Layout(var params) :
 	addChildControllableContainer(&paths);
 	paths.selectItemWhenCreated = false;
 
+	textScale = addFloatParameter("Text scale","",  1, 0);
 	var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 

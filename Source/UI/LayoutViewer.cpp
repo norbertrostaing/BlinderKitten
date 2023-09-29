@@ -131,6 +131,10 @@ void LayoutViewer::comboBoxChanged(ComboBox* comboBoxThatHasChanged)
 
 void LayoutViewer::buttonStateChanged(Button* b)
 {
+}
+
+void LayoutViewer::buttonClicked(Button* b)
+{
 	repaint();
 	if (b == &editMode && selectedLayout != nullptr && editMode.getToggleState()) {
 		selectedLayout->selectThis();
@@ -419,6 +423,7 @@ void LayoutViewer::paint(Graphics& g)
 
 	float scaleTileX = selectedLayout->tilesScale->getValue()[0];
 	float scaleTileY = selectedLayout->tilesScale->getValue()[1];
+	float scaleText = selectedLayout->textScale->floatValue();
 
 	var dimensionX = selectedLayout->dimensionsX->getValue();
 	var dimensionY = selectedLayout->dimensionsY->getValue();
@@ -463,16 +468,12 @@ void LayoutViewer::paint(Graphics& g)
 	bottomRightY = originY + height;
 	uiScale = width/layoutWidth;
 
-	//g.setColour(Colour(64,64,64));
-	//g.fillRect(originX, originY, width, height);
 	g.reduceClipRegion(originX, originY, width, height);
-	g.setOrigin(originX, originY+height);
-	g.addTransform(AffineTransform::verticalFlip(1));
+	g.setOrigin(originX, originY);
 	g.fillAll(Colour(32, 32, 32));
 
 	clicg.reduceClipRegion(originX, originY, width, height);
-	clicg.setOrigin(originX, originY + height);
-	clicg.addTransform(AffineTransform::verticalFlip(1));
+	clicg.setOrigin(originX, originY);
 
 	float handleWidth = 10;
 	float halfHandleWidth = handleWidth/2;
@@ -497,13 +498,14 @@ void LayoutViewer::paint(Graphics& g)
 		float halfTileWidth = tileWidth/2;
 		float halfTileHeight = tileHeight/2;
 
+		g.setFont(p->textSize->floatValue()*scaleText);
 
 		bool drawPaths = viewPaths.getToggleState();
 		bool edit = editMode.getToggleState();
 
 		if (type == BKPath::PATH_POINT) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 
 			if (edit) {
 				clicg.setColour(getClickColour(p, CLIC_DRAG));
@@ -515,6 +517,18 @@ void LayoutViewer::paint(Graphics& g)
 			}
 			g.setColour(juce::Colours::orange);
 			g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
+			String name = "";
+			if (p->spreadSubFixtures->boolValue()) {
+				if (p->selection.computedSelectedSubFixtures.size()>0) {
+					name = p->selection.computedSelectedSubFixtures[0]->displayName;
+				}
+			}
+			else {
+				if (p->selection.computedSelectedSubFixtures.size() > 0) {
+					name = p->selection.computedSelectedSubFixtures[0]->parentFixture->id->stringValue();
+				}
+			}
+			g.drawText(name, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 
 			if (p == hoveredPath) {
 				g.setColour(handleColour);
@@ -524,9 +538,9 @@ void LayoutViewer::paint(Graphics& g)
 		}
 		if (type == BKPath::PATH_LINE) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 			float toX = jmap((float)p->lineEndPosition->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float toY = jmap((float)p->lineEndPosition->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float toY = jmap((float)p->lineEndPosition->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 			Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 
 			if (drawPaths) { // wanna draw lines ?
@@ -552,7 +566,7 @@ void LayoutViewer::paint(Graphics& g)
 					if (p->subFixtToPos.contains(sf)) {
 						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-						float Y = jmap((float)t->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
 							g.setColour(juce::Colours::lightgrey);
 							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
@@ -561,6 +575,8 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->displayName;
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -577,7 +593,7 @@ void LayoutViewer::paint(Graphics& g)
 					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
 						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-						float Y = jmap((float)t->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
 							g.setColour(juce::Colours::lightgrey);
 							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
@@ -586,6 +602,8 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->parentFixture->id->stringValue();
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -605,8 +623,8 @@ void LayoutViewer::paint(Graphics& g)
 
 		}
 		if (type == BKPath::PATH_ROD) {
-			Point tl(jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point tr(jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
+			Point tl(jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point tr(jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
 			Line<float> line(tl, tr);
 
 			if (drawPaths) { // wanna draw lines ?
@@ -616,8 +634,8 @@ void LayoutViewer::paint(Graphics& g)
 
 			clicg.setColour(getClickColour(p, CLIC_DRAG));
 			clicg.drawLine(line, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_ORIGIN));
-			clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+			//clicg.setColour(getClickColour(p, CLIC_ORIGIN));
+			//clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
 			clicg.setColour(getClickColour(p, CLIC_END));
 			clicg.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
 			float currentArrowX = -1;
@@ -629,7 +647,7 @@ void LayoutViewer::paint(Graphics& g)
 					if (p->subFixtToPos.contains(sf)) {
 						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-						float Y = jmap((float)t->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
 							g.setColour(juce::Colours::lightgrey);
 							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
@@ -638,6 +656,8 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->displayName;
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -654,7 +674,7 @@ void LayoutViewer::paint(Graphics& g)
 					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
 						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-						float Y = jmap((float)t->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
 							g.setColour(juce::Colours::lightgrey);
 							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
@@ -663,6 +683,8 @@ void LayoutViewer::paint(Graphics& g)
 						currentArrowY = Y;
 						g.setColour(juce::Colours::orange);
 						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->parentFixture->id->stringValue();
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -676,7 +698,7 @@ void LayoutViewer::paint(Graphics& g)
 				g.setColour(hoverColour);
 				g.drawLine(line, halfHandleWidth);
 				g.setColour(handleColour);
-				g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+				//g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
 			}
 
@@ -686,19 +708,19 @@ void LayoutViewer::paint(Graphics& g)
 				g.setColour(juce::Colours::lightgrey);
 				for (int iGrid = 0; iGrid < p->gridPath.size() - 1; iGrid++) {
 					float fromX = jmap(p->gridPath[iGrid]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float fromY = jmap(p->gridPath[iGrid]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float fromY = jmap(p->gridPath[iGrid]->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					float toX = jmap(p->gridPath[iGrid + 1]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 					g.drawLine(line, 0.5f);
 					drawMidArrow(g, fromX, fromY, toX, toY);
 				}
 			}
 
-			Point tl (jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point tr (jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point bl (jmap(p->gridBL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point br (jmap(p->gridBR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
+			Point tl (jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point tr (jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point bl (jmap(p->gridBL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBL.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point br (jmap(p->gridBR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBR.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
 			Point rotate(tr);
 			rotate -= br;
 			rotate /= 2;
@@ -709,8 +731,10 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->displayName;
+					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -722,8 +746,10 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.enter();
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->id->stringValue();
+					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -768,12 +794,12 @@ void LayoutViewer::paint(Graphics& g)
 
 		}
 		if (type == BKPath::PATH_CIRCLE) {
-			float from = -(p->circleFrom->floatValue() / 360.) * 2 * MathConstants<float>::pi;
-			float to = -(p->circleTo->floatValue() / 360.) * 2 * MathConstants<float>::pi;
+			float from = (p->circleFrom->floatValue() / 360.) * 2 * MathConstants<float>::pi;
+			float to = (p->circleTo->floatValue() / 360.) * 2 * MathConstants<float>::pi;
 			from += MathConstants<float>::pi / 2;
 			to += MathConstants<float>::pi / 2;
 			float X = jmap(p->position->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float Y = jmap(p->position->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float Y = jmap(p->position->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 			float W = p->circleRadius->floatValue() * uiScale;
 			Path path;
 			path.addArc(X - (W), Y - (W), W * 2, W * 2, from, to, true);
@@ -795,8 +821,10 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->displayName;
+					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -808,8 +836,10 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.enter();
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					g.drawRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->id->stringValue();
+					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight);

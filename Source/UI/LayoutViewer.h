@@ -57,7 +57,7 @@ public:
     void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override;
     Layout* selectedLayout = nullptr;
     void buttonStateChanged(Button*) override;
-    void buttonClicked(Button*) override {};
+    void buttonClicked(Button*) override;
 
     void selectLayout(int id);
 

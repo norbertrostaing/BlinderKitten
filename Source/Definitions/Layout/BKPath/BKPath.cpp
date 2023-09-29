@@ -50,9 +50,10 @@ BKPath::BKPath(var params) :
     circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
     circleTo = addFloatParameter("To angle", "Angle of the last element", 360, -360, 360);
 
-    d[0] = 5;    d[1] = 5;
+    d[0] = 20;    d[1] = 20;
     tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
     tilesSize->setDefaultValue(d);
+    textSize = addFloatParameter("Text size", "", 10, 0);
     addChildControllableContainer(&selection);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
 

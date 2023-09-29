@@ -39,6 +39,7 @@ public:
     Point2DParameter* dimensionsX;
     Point2DParameter* dimensionsY;
     Point2DParameter* tilesScale;
+    FloatParameter* textScale;
 
     BaseManager<BKPath> paths;
 

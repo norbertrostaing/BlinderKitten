@@ -50,6 +50,7 @@ class BKPath:
 
     BoolParameter* spreadSubFixtures;
     Point2DParameter* tilesSize;
+    FloatParameter* textSize;
     CommandSelectionManager selection;
 
     CriticalSection isComputing;
