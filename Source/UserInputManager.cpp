@@ -427,7 +427,9 @@ void UserInputManager::encoderValueChanged(int index, float newValue, String ori
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
 			String oldOrigin = "";
-			float value = Encoders::getInstance()->encoders[index]->getValue();
+			
+			float value = Encoders::getInstance()->encoders[index- Encoders::getInstance()->encodersOffset]->getValue();
+			
 			if (Encoders::getInstance()->lastOrigin.contains(c)) {
 				oldOrigin = Encoders::getInstance()->lastOrigin.getReference(c);
 			}
