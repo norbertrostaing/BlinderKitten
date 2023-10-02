@@ -267,9 +267,11 @@ void Fixture::updateName() {
 void Fixture::updateSubFixtureNames()
 {
 	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
-		it.getValue()->displayName = id->stringValue();
-		if (subFixtures.size() > 1) {
-			it.getValue()->displayName += "." + String(it.getKey());
+		if (it.getValue() != nullptr) {
+			it.getValue()->displayName = id->stringValue();
+			if (subFixtures.size() > 1) {
+				it.getValue()->displayName += "." + String(it.getKey());
+			}
 		}
 	}
 }
