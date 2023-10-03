@@ -491,7 +491,7 @@ void Encoders::updateEncodersValues() {
                 currentCommand->isComputing.enter();
                 for (int iFixt = 0; iFixt < currentCommand->selection.computedSelectedSubFixtures.size(); iFixt++) {
                     SubFixture* sf = currentCommand->selection.computedSelectedSubFixtures[iFixt];
-                    if (sf->channelsMap.contains(channels[channelId])) {
+                    if (sf != nullptr && sf->channelsMap.contains(channels[channelId])) {
                         SubFixtureChannel* sfc = sf->channelsMap.getReference(channels[channelId]);
                         n++;
                         value += sfc->postCuelistValue;
