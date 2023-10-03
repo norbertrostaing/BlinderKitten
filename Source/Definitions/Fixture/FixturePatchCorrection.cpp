@@ -57,7 +57,7 @@ void FixturePatchCorrection::onContainerParameterChangedInternal(Parameter* p) {
 		return;
 	}
 	Fixture* f = dynamic_cast<Fixture*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
-	SubFixture* sf = f->subFixtures.getReference(subFixtureId->getValue());
+	SubFixture* sf = f->subFixtures.contains(subFixtureId->getValue()) ? f->subFixtures.getReference(subFixtureId->getValue()) : nullptr;
 	if (sf == nullptr) { return; }
 	ChannelType* ct = dynamic_cast<ChannelType*>(channelType->targetContainer.get());
 	if (!sf->channelsMap.contains(ct)) {return; }
