@@ -249,12 +249,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		}
 	}
 
-	// PAS DU TOUT OPTI CA !!!
-	else if (firstWord == "virtbutton" && aList.size() > 3) {
+	else if (firstWord == "virtbutton" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualButtonGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -263,11 +262,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualButtonManager::getInstance()->setButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtabove" && aList.size() > 3) {
+	else if (firstWord == "virtabove" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -276,11 +275,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtbelow" && aList.size() > 3) {
+	else if (firstWord == "virtbelow" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -289,11 +288,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtrotary" && aList.size() > 3) {
+	else if (firstWord == "virtrotary" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -302,10 +301,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "", false);
 	}
 
-	else if (firstWord == "virtfader" && aList.size() > 3) {
+	else if (firstWord == "virtfader" && aList.size() >= 3 && m.size()>0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
