@@ -63,7 +63,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	String address = m.getAddressPattern().toString().toLowerCase();
 	//LOG(address);
 	aList.addTokens(m.getAddressPattern().toString().toLowerCase(), "/", "\"");
-	if (aList.size() < 3) return;
+	if (aList.size() < 2) return;
 
 	/*
 	cuelist
@@ -112,6 +112,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	String firstWord = aList[1];
 	if (firstWord == "key") {
 		processInput(aList[2]);
+	}
+	else if (firstWord == "grandmaster" && m.size() > 0) {
+		float val = OSCHelpers::getFloatArg(m[0]);
+		InputPanel::getInstance()->grandMaster.setValue(val);
 	}
 	else if (firstWord == "cuelist" && aList.size() > 3) {
 		int targetNumber = (int)((var)aList[2]);
