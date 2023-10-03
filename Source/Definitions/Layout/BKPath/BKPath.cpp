@@ -54,11 +54,14 @@ BKPath::BKPath(var params) :
     tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
     tilesSize->setDefaultValue(d);
     textSize = addFloatParameter("Text size", "", 10, 0);
-    addChildControllableContainer(&selection);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
 
     overrideColor = addBoolParameter("Override color", "", false);
     pathColor = addColorParameter("Tiles color", "", juce::Colours::lightcyan);
+    customText = addStringParameter("Custom Text", "Write your own text on your tile", "");
+
+    addChildControllableContainer(&selection);
+    addChildControllableContainer(&actionManager);
 
     updateDisplay();
 };
@@ -342,7 +345,16 @@ void BKPath::updateDisplay() {
 
     pathColor->hideInEditor = !overrideColor->boolValue();
 
+    actionManager.hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
+    customText->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
+
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
+void BKPath::clicked()
+{
+    actionManager.setValueAll(1.f);
+    actionManager.setValueAll(0.f);
 }
 
 void BKPath::rotateVect(Point<float>* vect, float angleInDegrees)

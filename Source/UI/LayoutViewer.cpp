@@ -210,6 +210,9 @@ void LayoutViewer::mouseDown(const MouseEvent& e)
 					UserInputManager::getInstance()->processInput(String(sf->subId));
 				}
 			}
+			else if (colourToPath.contains(c)) {
+				colourToPath.getReference(c)->clicked();
+			}
  		}
 		if (colourToPath.contains(c)) {
 
@@ -226,7 +229,7 @@ void LayoutViewer::mouseDown(const MouseEvent& e)
 			if (currentMouseAction == CLIC_BL) { fixedMouseX = p->gridTR.x; fixedMouseY = p->gridTR.y; }
 			if (currentMouseAction == CLIC_BR) { fixedMouseX = p->gridTL.x; fixedMouseY = p->gridTL.y; }
 
-			if (e.getNumberOfClicks() == 2) {
+			if (e.getNumberOfClicks() == 2 && editMode.getToggleState()) {
 				currentMousePath->selectThis();
 			}
 		}
@@ -346,6 +349,7 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 
 void LayoutViewer::mouseUp(const MouseEvent& e)
 {
+
 	currentMouseAction = CLIC_NOACTION;
 	currentMousePath = nullptr;
 }
@@ -529,7 +533,10 @@ void LayoutViewer::paint(Graphics& g)
 			g.setColour(drawColor);
 			g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
 			String name = "";
-			if (p->spreadSubFixtures->boolValue()) {
+			if (p->customText->stringValue() != "") {
+				name = p->customText->stringValue().trim();
+			}
+			else if (p->spreadSubFixtures->boolValue()) {
 				if (p->selection.computedSelectedSubFixtures.size()>0) {
 					name = p->selection.computedSelectedSubFixtures[0]->displayName;
 				}
