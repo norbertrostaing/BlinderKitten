@@ -318,7 +318,7 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 
 }
 
-void VirtualFaderSlider::feedback(float value, String origin="")
+void VirtualFaderSlider::feedback(var value, String origin="")
 {
 	if (Brain::getInstance()->loadingIsRunning) {return; }
 	if (!checkParentColumn()) {return;}

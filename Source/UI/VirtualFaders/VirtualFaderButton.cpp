@@ -452,6 +452,7 @@ void VirtualFaderButton::updateStatus(bool forceRefresh)
 
 }
 
+
 void VirtualFaderButton::feedback(ButtonStatus value)
 {
 	if (isCurrentlyLoadingData) { return; }
@@ -483,5 +484,34 @@ void VirtualFaderButton::feedback(ButtonStatus value)
 		UserInputManager::getInstance()->feedback(address0, sentValue, "");
 	}
 
+}
+
+void VirtualFaderButton::feedback(String text)
+{
+	if (isCurrentlyLoadingData) { return; }
+	if (!checkParentColumn()) { return; }
+
+	String address = "";
+	String address0 = "";
+
+
+	int page = parentColumn->pageNumber->intValue();
+	int col = parentColumn->colNumber->intValue();
+	bool isAbove = true;
+	int index = parentColumn->aboveButtons.items.indexOf(this);
+	if (index == -1) {
+		isAbove = false;
+		index = parentColumn->belowButtons.items.indexOf(this);
+	}
+
+	String aboveOrBelow = isAbove ? "vabovebutton" : "vbelowbutton";
+
+	address += "/" + aboveOrBelow + "/" + String(page) + "/" + String(col) + "/" + String(index + 1);
+	address0 += "/" + aboveOrBelow + "/0/" + String(col) + "/" + String(index + 1);
+
+	UserInputManager::getInstance()->feedback(address, text, "");
+	if (page == VirtualFaderColGrid::getInstance()->page) {
+		UserInputManager::getInstance()->feedback(address0, text, "");
+	}
 
 }

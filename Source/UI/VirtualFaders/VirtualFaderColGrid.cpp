@@ -126,17 +126,21 @@ void VirtualFaderColGrid::resetFeedbacks()
     for (int c = 0; c < cols; c++) {
         String address0 = "/vfader/0/" + String(c+1);
         UserInputManager::getInstance()->feedback(address0, 0, "");
+        UserInputManager::getInstance()->feedback(address0, "", "");
         for (int n = 0; n < nRotaries; n++) {
             address0 = "/vrotary/0/" + String(c+1) + "/" + String(n + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
+            UserInputManager::getInstance()->feedback(address0, "", "");
         }
         for (int n = 0; n < nAbove; n++) {
             address0 = "/vabovebutton/0/" + String(c + 1) + "/" + String(n + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
+            UserInputManager::getInstance()->feedback(address0, "", "");
         }
         for (int n = 0; n < nBelow; n++) {
             address0 = "/vbelowbutton/0/" + String(c + 1) + "/" + String(n + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
+            UserInputManager::getInstance()->feedback(address0, "", "");
         }
     }
 }
@@ -396,7 +400,7 @@ void VirtualFaderColGrid::fillCells() {
                         if (text != "") {
                             rotaryLabels[c]->getRawDataPointer()[n]->setText(text, juce::dontSendNotification);
                             rotaries[c]->getRawDataPointer()[n]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
-
+                            vs->feedback(text, "");
                         }
                     }
                 }
@@ -408,6 +412,7 @@ void VirtualFaderColGrid::fillCells() {
                         if (text != "") {
                             aboveButtons[c]->getRawDataPointer()[n]->setButtonText(text);
                             aboveButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
+                            vb->feedback(text);
                         }
                     }
                 }
@@ -416,6 +421,7 @@ void VirtualFaderColGrid::fillCells() {
                     String text = vf->fader.getBtnText(targType);
                     if (text != "") {
                         faderLabels[c]->setText(text, juce::dontSendNotification);
+                        vf->fader.feedback(text,"");
                         faders[c]->setColour(Slider::trackColourId, Colour(127, 127, 127));
                     }
                 }
@@ -424,10 +430,11 @@ void VirtualFaderColGrid::fillCells() {
                     if (!buttonToVFB.contains(belowButtons[c]->getRawDataPointer()[n])) {
                         VirtualFaderButton* vb = vf->belowButtons.items[n];
                         buttonToVFB.set(belowButtons[c]->getRawDataPointer()[n], vb);
-                        String btnText = vb->getBtnText(targType);
-                        if (btnText != "") {
-                            belowButtons[c]->getRawDataPointer()[n]->setButtonText(btnText);
+                        String text = vb->getBtnText(targType);
+                        if (text != "") {
+                            belowButtons[c]->getRawDataPointer()[n]->setButtonText(text);
                             belowButtons[c]->getRawDataPointer()[n]->removeColour(TextButton::buttonColourId);
+                            vb->feedback(text);
                         }
                     }
                 }

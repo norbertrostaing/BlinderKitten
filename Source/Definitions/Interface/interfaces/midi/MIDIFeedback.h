@@ -25,7 +25,7 @@ public:
     IntParameter* sourceRow;
     IntParameter* sourceNumber;
 
-    enum MidiType { NOTE, CONTROLCHANGE, PITCHWHEEL };
+    enum MidiType { NOTE, CONTROLCHANGE, PITCHWHEEL, TEXT };
     EnumParameter* midiType;
     IntParameter* channel;
     IntParameter* pitchOrNumber;
@@ -47,6 +47,9 @@ public:
     IntParameter* currentCueChannel;
     IntParameter* loadedCueChannel;
 
+    enum TextMode {MCU_ENC, MCU_FADER, MCU_ENCANDFADER};
+    EnumParameter* textMode;
+    IntParameter* mackieColumn;
 
     Point2DParameter* inputRange;
 
@@ -60,6 +63,9 @@ public:
     void updateDisplay();
     void onContainerParameterChangedInternal(Parameter*);
 
-    void processFeedback(String address, double value, String origin, bool logOutput);
+    void processFeedback(String address, var value, String origin, bool logOutput);
+    void sendText(String text);
+    void sendMCUFaderText(int col, String text);
+    void sendMCUEncoderText(int col, String text);
 
 };

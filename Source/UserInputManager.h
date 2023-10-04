@@ -67,5 +67,5 @@ public:
     void testPreset(Preset* p);
     void resetFocus();
 
-    void feedback(String address, double value, String origin);
+    void feedback(String address, var value, String origin);
 };
