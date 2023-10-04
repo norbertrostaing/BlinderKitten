@@ -188,6 +188,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->FlashLevel->setValue(val);
 			}
+			else if (action == "chaserspeed" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->chaserSpeed->setValue(val);
+			}
 
 		}
 		else {
