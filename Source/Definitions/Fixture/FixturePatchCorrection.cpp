@@ -37,6 +37,10 @@ FixturePatchCorrection::FixturePatchCorrection(var params) :
 	curve.selectItemWhenCreated = false;
 	curve.editorCanBeCollapsed = true;
 
+	curve.saveAndLoadRecursiveData = true;
+	saveAndLoadRecursiveData = true;
+
+
 	invertChannel = addBoolParameter("Invert Channel", "max is min, min is max", false);
 	offsetValue = addFloatParameter("Offset", "add an offset to the output", 0, -1, 1);
 	addChildControllableContainer(&curve);
