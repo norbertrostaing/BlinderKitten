@@ -117,6 +117,7 @@ void CarouselRow::computeData() {
     float wingSize = realTot / (float)nWings;
     realTot = ceil(realTot / (float)nWings);
     int roundedWingSize = round(wingSize);
+    roundedWingSize = jmax(1, roundedWingSize);
     // int flooredWingSize = floor(wingSize);
 
     Array<SubFixtureChannel*> targetChannels;
