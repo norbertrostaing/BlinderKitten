@@ -40,6 +40,9 @@ class EffectRow:
     HashMap<SubFixture*, double> computedPositions;
     CriticalSection isComputing;
 
+    Effect* parentEffect = nullptr;
+    void checkParentEffect();
+
     void computeData();
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*);

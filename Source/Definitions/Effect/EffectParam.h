@@ -44,6 +44,9 @@ class EffectParam:
     HashMap<SubFixtureChannel*, bool> subFixtureChannelAreWinged;
     HashMap<SubFixtureChannel*, bool> subFixtureChannelAreCentered;
 
+    Effect* parentEffect = nullptr;
+    void checkParentEffect();
+
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
 };

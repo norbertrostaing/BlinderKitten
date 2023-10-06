@@ -77,6 +77,7 @@ Carousel::~Carousel()
 {
 	stop();
 	rows.clear();
+	isOn = false;
 	Brain::getInstance()->unregisterCarousel(this);
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->carouselPoolWaiting.removeAllInstancesOf(this);
@@ -86,6 +87,12 @@ Carousel::~Carousel()
 		SubFixtureChannel* sfc = it.getKey();
 		sfc->carouselOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
+	}
+	for (int i = 0; i < rows.items.size(); i++) {
+		rows.items[i]->parentCarousel = nullptr;
+		for (int j = 0; j < rows.items[i]->paramContainer.items.size(); j++) {
+			rows.items[i]->paramContainer.items[j]->parentCarousel = nullptr;
+		}
 	}
 	CarouselGridView::getInstance()->updateCells();
 }
@@ -221,6 +228,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	std::shared_ptr<Array<CarouselRow*>> activeRows = chanToCarouselRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
 		CarouselRow * r = activeRows->getReference(rId);
+		r->checkParentCarousel();
 		double offset = totalElapsed;
 		offset += r->subFixtureChannelOffsets.getReference(fc);
 		while (offset < 0) {
@@ -232,6 +240,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		
 		for (int stepId = 0; stepId < r->paramContainer.items.size(); stepId++) {
 			CarouselStep* step = r->paramContainer.items[stepId];
+			step->checkParentCarousel();
 			if (step->relativeStartPosition <= offset) {
 				toApply = step;
 			}	
