@@ -39,11 +39,26 @@ void DMXEnttecProDevice::setPortConfig()
 
 void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 {
+	try
+	{
+		dmxPort->port->write(sendHeaderData, 5);
+		dmxPort->port->write(dmxDataOut, 512);
+		dmxPort->port->write(sendFooterData, 1);
+		dmxPort->port->flush();
+	}
+	catch (serial::IOException e)
+	{
+		DBG("IO Exception on Enttec " << e.what());
+	}
+	catch (serial::PortNotOpenedException)
+	{
+		DBG("Port Not Opend on OpenDMX");
+	}
+	catch (serial::SerialException e)
+	{
+		DBG("Serial Exception : " << e.what());
+	}
 
-	dmxPort->port->write(sendHeaderData, 5);
-	dmxPort->port->write(dmxDataOut, 512);
-	dmxPort->port->write(sendFooterData, 1);
-	dmxPort->port->flush();
 
 	/*
 	DBG("********");
