@@ -184,6 +184,7 @@ BKEngine::BKEngine() :
 	loadWindowButtonHeight = loadWindowContainer.addIntParameter("Button height", "", 40,30);
 
 	mainBrain = Brain::getInstance();
+	currentDMXChannelView = nullptr;
 
 	addChildControllableContainer(InterfaceManager::getInstance());
 	addChildControllableContainer(ChannelFamilyManager::getInstance());
@@ -266,8 +267,9 @@ BKEngine::~BKEngine()
 	Brain::getInstance()->stopThread(100);
 	Brain::getInstance()->clear();
 
-	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
-	DMXChannelView::deleteInstance();
+	if (currentDMXChannelView != nullptr) {
+		currentDMXChannelView->setCurrentInterface(nullptr);
+	}
 
 	ArtnetSocket::getInstance()->stopThread(100);
 
@@ -346,7 +348,10 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->stopThread(1);
 	Brain::getInstance()->clear();
 
-	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+	//DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+	if (currentDMXChannelView != nullptr) {
+		currentDMXChannelView->setCurrentInterface(nullptr);
+	}
 
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();

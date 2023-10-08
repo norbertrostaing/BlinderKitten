@@ -15,6 +15,8 @@
 #include "Brain.h"
  // #include "Module/ModuleIncludes.h"
 
+class DMXChannelView;
+
 struct geometryBreaks {
 	String name;
 	int breakNum;
@@ -32,6 +34,7 @@ public:
 	//Global Settings
 	//ControllableContainer defaultBehaviors;
 	Brain* mainBrain;
+	DMXChannelView* currentDMXChannelView;
 
 	ControllableContainer uiParamsContainer;
 	IntParameter* encodersNumber;
