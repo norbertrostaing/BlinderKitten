@@ -37,6 +37,10 @@ DMXChannelView::DMXChannelView() :
 
 DMXChannelView::~DMXChannelView()
 {
+	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	if (e->currentDMXChannelView == this) {
+		e->currentDMXChannelView = nullptr;
+	}
 	if (InterfaceManager::getInstanceWithoutCreating()) InterfaceManager::getInstance()->removeAsyncManagerListener(this);
 	setCurrentInterface(nullptr);
 }
