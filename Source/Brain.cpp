@@ -101,7 +101,7 @@ void Brain::brainLoop() {
     if (pleaseClearProgrammer) {
         pleaseClearProgrammer = false;
         if (Programmer* p = getProgrammerById(1)) {
-            p->clearCurrent();
+            MessageManager::callAsync([this,p]() {p->clearCurrent(); });
         }
     }
 
