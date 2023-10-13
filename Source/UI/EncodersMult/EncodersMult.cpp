@@ -20,6 +20,17 @@ EncodersMult::EncodersMult()
 	viewport.setViewedComponent(&cmdContainer);
     viewport.setBounds(0,20,100,100);
     cmdContainer.setSize(200,200);
+
+    addAndMakeVisible(sensitivity);
+    sensitivity.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    sensitivity.setRange(0, 1);
+    sensitivity.setValue(1, juce::dontSendNotification);
+    sensitivity.setColour(Slider::rotarySliderFillColourId, Colour(0,127,0));
+    sensitivity.setNumDecimalPlacesToDisplay(5);
+    sensitivity.addListener(this);
+    sensitivity.setWantsKeyboardFocus(false);
+    sensitivity.addMouseListener(this, false);
+
 }
 
 juce_ImplementSingleton(EncodersMult);
@@ -37,6 +48,18 @@ void EncodersMult::newMessage(const CommandManager::ManagerEvent& e)
     reconstructSubComponents();
 }
 
+float EncodersMult::setSensitivity(float v)
+{
+    sensitivity.setValue(v, juce::dontSendNotification);
+    currentSensitivity = v;
+    for (int i = 0; i < commandItems.size(); i++) {
+        for (int j = 0; j < commandItems[i]->encoders.size(); j++) {
+            commandItems[i]->encoders[j]->customScaleFactor = v;
+        }
+    }
+    return 0.0f;
+}
+
 void EncodersMult::resized()
 {
 	Rectangle<int> r = getLocalBounds();
@@ -44,9 +67,11 @@ void EncodersMult::resized()
     int maxWidth = r.getWidth();
     float w = 57;
     float h = 57;
-    int currentX = 0;
-    int currentY = 0;
+    sensitivity.setBounds(0, 20, w, h);
+    sensitivity.setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
 
+    int currentX = w;
+    int currentY = 0;
     for (int i = 0; i < encoders.size(); i++) {
         if (currentX + w > maxWidth) {
             currentY += 80; 
@@ -153,10 +178,14 @@ void EncodersMult::clear()
 
 void EncodersMult::sliderValueChanged(Slider* slider)
 {
+    if (slider == &sensitivity) {
+        setSensitivity(sensitivity.getValue());
+    }
     int index = encoders.indexOf(slider);
     if (index != -1) {
         float val = slider->getValue();
         double delta = val- lastValues[index];
+        delta *= currentSensitivity;
         lastValues.set(index, val);
         ChannelType* ct = channels[index];
         for (int i = 0; i < targetCommandManager->items.size(); i++) {

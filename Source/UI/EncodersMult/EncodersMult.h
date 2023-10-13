@@ -36,6 +36,9 @@ public:
     OwnedArray<EncodersMultCmd> commandItems;
     OwnedArray<Label> labels;
     OwnedArray<Slider> encoders;
+    Slider sensitivity;
+    float currentSensitivity = 1;
+    float setSensitivity(float v);
     Array<double> lastValues;
     Array<ChannelType*> channels;
     void resized() override;
