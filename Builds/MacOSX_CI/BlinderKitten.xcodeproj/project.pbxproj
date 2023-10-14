@@ -114,6 +114,7 @@
 		9D4582C47CE587B7C8035F62 /* MultiplicatorLinkManager.cpp */ = {isa = PBXBuildFile; fileRef = 6BE43C4DFB6DE7B838E57558; };
 		9D49F5B6963E99B2E91BF139 /* include_juce_core.mm */ = {isa = PBXBuildFile; fileRef = B1860B17D38898035828ED79; };
 		9D56EDFA8C2B03DAD36FC61C /* EncodersMultCmd.cpp */ = {isa = PBXBuildFile; fileRef = EFC5E0833382D16721B3369F; };
+		9DC79C66082366BD80DB5545 /* Security.framework */ = {isa = PBXBuildFile; fileRef = EDF255073E203504EC2B2D00; };
 		9E5A7EB2D4DE8258C8C127DF /* include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = 55CF79DE0B22DBDEAF4C74C5; };
 		9F66D6AB6C415D5A5B3E95A5 /* CommandManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = 70D598BB86E204F0BC11F5E7; };
 		A17177E61D73D12C31AE2E16 /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 38932A380E1BB6186445C4AF; };
@@ -152,6 +153,7 @@
 		D9C9A54D6DEC72524EE616B3 /* CarouselManager.cpp */ = {isa = PBXBuildFile; fileRef = 50ED73539A7F5278007C908C; };
 		D9F94B11A324BD07501E5860 /* PresetValue.cpp */ = {isa = PBXBuildFile; fileRef = 7AFC413AC8C5156599197A0E; };
 		DA907EAFD0653CC737B7CE3A /* CuelistGridView.cpp */ = {isa = PBXBuildFile; fileRef = A4D0A7FB9A3B36A7F4752EEF; };
+		DAD9ADC2E6F2445C971BA300 /* App */ = {isa = PBXBuildFile; fileRef = D285D0B36A15B0C5A4CC0894; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DD1D753FD64B4DEEC2A0513E /* VirtualButtonGrid.cpp */ = {isa = PBXBuildFile; fileRef = ABE76DCBEAF0674A7B5D1376; };
 		DD31A59D5C22AA6B9F9CA7D2 /* Layout.cpp */ = {isa = PBXBuildFile; fileRef = 405F025D532AD3E94C8D45B9; };
 		DD7505B99A634DDE59BB86ED /* App */ = {isa = PBXBuildFile; fileRef = 4B74D5B746567488A8E58CB2; };
@@ -180,6 +182,21 @@
 		FB298395462FBA9AFF2D22E3 /* VirtualButton.cpp */ = {isa = PBXBuildFile; fileRef = D2C729583028F64B5519FA2C; };
 		FC0FCA9105E87941C073B155 /* Task.cpp */ = {isa = PBXBuildFile; fileRef = 8085FCC7884FFB62D8A17AC0; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1EFE5A7DF78AF69043643390 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAD9ADC2E6F2445C971BA300,
+				DAD9ADC2E6F2445C971BA300,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0035ABB06ECA7EDCAB496C6A /* DMXEnttecProDevice.h */ /* DMXEnttecProDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXEnttecProDevice.h; path = ../../Source/Common/DMX/device/DMXEnttecProDevice.h; sourceTree = SOURCE_ROOT; };
@@ -515,6 +532,7 @@
 		CF831541A4F36F5D8B9AAFD6 /* CarouselAction.cpp */ /* CarouselAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CarouselAction.cpp; path = ../../Source/Definitions/Actions/CarouselAction.cpp; sourceTree = SOURCE_ROOT; };
 		D041B6D8BEFB63967BA51B65 /* Cuelist.h */ /* Cuelist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Cuelist.h; path = ../../Source/Definitions/Cuelist/Cuelist.h; sourceTree = SOURCE_ROOT; };
 		D1E1F881485F0C75421795BF /* mainIncludes.h */ /* mainIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = mainIncludes.h; path = ../../Source/mainIncludes.h; sourceTree = SOURCE_ROOT; };
+		D285D0B36A15B0C5A4CC0894 /* App */ /*  */ = {isa = PBXFileReference; lastKnownFileType = file; name = ""; path = ""; sourceTree = "<group>"; };
 		D2B68BFF6719C6500C9270AF /* OSCOutputEditor.cpp */ /* OSCOutputEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSCOutputEditor.cpp; path = ../../Source/Definitions/Interface/interfaces/osc/ui/OSCOutputEditor.cpp; sourceTree = SOURCE_ROOT; };
 		D2C729583028F64B5519FA2C /* VirtualButton.cpp */ /* VirtualButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualButton.cpp; path = ../../Source/UI/VirtualButtons/VirtualButton.cpp; sourceTree = SOURCE_ROOT; };
 		D396ABA2117E2BECCF95EB4E /* MTCSender.h */ /* MTCSender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MTCSender.h; path = ../../Source/Common/MIDI/MTCSender.h; sourceTree = SOURCE_ROOT; };
@@ -560,6 +578,7 @@
 		EA7B69199ED5B4C59D391EBA /* CuelistAction.cpp */ /* CuelistAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CuelistAction.cpp; path = ../../Source/Definitions/Actions/CuelistAction.cpp; sourceTree = SOURCE_ROOT; };
 		EBD6D22055646F12F15B281D /* InterfaceManagerUI.h */ /* InterfaceManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceManagerUI.h; path = ../../Source/Definitions/Interface/ui/InterfaceManagerUI.h; sourceTree = SOURCE_ROOT; };
 		ED6A0B82F8048D94BFA8D889 /* EffectAction.cpp */ /* EffectAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectAction.cpp; path = ../../Source/Definitions/Actions/EffectAction.cpp; sourceTree = SOURCE_ROOT; };
+		EDF255073E203504EC2B2D00 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EDF7659AF2BF069B48D54B7D /* FixtureManagerUI.h */ /* FixtureManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureManagerUI.h; path = ../../Source/Definitions/Fixture/FixtureManagerUI.h; sourceTree = SOURCE_ROOT; };
 		EEE214A22958197515F24C7E /* Encoders.cpp */ /* Encoders.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Encoders.cpp; path = ../../Source/UI/Encoders.cpp; sourceTree = SOURCE_ROOT; };
 		EFC5E0833382D16721B3369F /* EncodersMultCmd.cpp */ /* EncodersMultCmd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncodersMultCmd.cpp; path = ../../Source/UI/EncodersMult/EncodersMultCmd.cpp; sourceTree = SOURCE_ROOT; };
@@ -611,7 +630,10 @@
 				B6871AB9D48350F746E4C3E9,
 				95CC2B9FB1CA57C47ADE5FC8,
 				22BD2032445DFD50718DB3F0,
+				9DC79C66082366BD80DB5545,
 				77074B6B4BC78CC9957A6AC6,
+				DAD9ADC2E6F2445C971BA300,
+				DAD9ADC2E6F2445C971BA300,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,7 +1437,10 @@
 				036291D23F3C544893FEC2A3,
 				FC1C1685A486AC1E9558F20A,
 				F90CBF302738DAB7A626F836,
+				EDF255073E203504EC2B2D00,
 				E6100648C258327C6238CE1B,
+				D285D0B36A15B0C5A4CC0894,
+				D285D0B36A15B0C5A4CC0894,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1553,6 +1578,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF98C0F645906810C84A8F59;
 			buildPhases = (
+				1EFE5A7DF78AF69043643390,
 				0880CA070DD4964DA1272846,
 				9331EEEE4B92B920CE6590E5,
 				83DD2494ED336214866A7AC0,
@@ -1890,6 +1916,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
 				OTHER_LDFLAGS = "-lServus -weak_framework Metal -weak_framework MetalKit";
@@ -1952,6 +1979,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
@@ -2019,6 +2047,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/silicon/release\"",

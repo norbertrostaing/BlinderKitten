@@ -281,8 +281,8 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 		}
 		else if (type == BKPath::PATH_ROD) {
 			if (currentMouseAction == CLIC_DRAG) {
-				float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
-				float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
+				//float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
+				//float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
 
 				var v;
 				v.append(layoutX + deltaMouseX);
@@ -482,14 +482,14 @@ void LayoutViewer::paint(Graphics& g)
 	float handleWidth = 10;
 	float halfHandleWidth = handleWidth/2;
 
-	int currentClickColor = 1;
+	//int currentClickColor = 1;
 	colourToPath.clear();
 	colourToSubFixture.clear();
 	colourToFixture.clear();
 	colourToAction.clear();
 
-	for (int i = 0; i < selectedLayout->paths.items.size(); i++) {
-		BKPath* p = selectedLayout->paths.items[i];
+	for (int iPath = 0; iPath < selectedLayout->paths.items.size(); iPath++) {
+		BKPath* p = selectedLayout->paths.items[iPath];
 		BKPath::PathType type = p->pathType->getValueDataAsEnum<BKPath::PathType>(); //::PATH_LINE) 
 		Colour hoverColour((uint8)255, (uint8)255, (uint8)255, (uint8)63);
 		Colour handleColour((uint8)255, (uint8)255, (uint8)255);
@@ -578,8 +578,8 @@ void LayoutViewer::paint(Graphics& g)
 			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				for (int i = 0; i < p->selection.computedSelectedSubFixtures.size(); i++) {
-					SubFixture* sf = p->selection.computedSelectedSubFixtures[i];
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
 					if (p->subFixtToPos.contains(sf)) {
 						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -610,8 +610,8 @@ void LayoutViewer::paint(Graphics& g)
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				Array<Fixture*> drawedFixtures;
-				for (int i = 0; i < p->selection.computedSelectedSubFixtures.size(); i++) {
-					SubFixture* sf = p->selection.computedSelectedSubFixtures[i];
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
 					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
 						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -669,8 +669,8 @@ void LayoutViewer::paint(Graphics& g)
 			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				for (int i = 0; i < p->selection.computedSelectedSubFixtures.size(); i++) {
-					SubFixture* sf = p->selection.computedSelectedSubFixtures[i];
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
 					if (p->subFixtToPos.contains(sf)) {
 						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -701,8 +701,8 @@ void LayoutViewer::paint(Graphics& g)
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				Array<Fixture*> drawedFixtures;
-				for (int i = 0; i < p->selection.computedSelectedSubFixtures.size(); i++) {
-					SubFixture* sf = p->selection.computedSelectedSubFixtures[i];
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
 					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
 						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
 						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -869,20 +869,20 @@ void LayoutViewer::paint(Graphics& g)
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					Colour drawColor = juce::Colours::white;
 					if (overrideColor) { drawColor = overridenColor; }
 					else {
 						drawColor = it.getKey()->parentFixture->getLayoutColor();
 					}
 					g.setColour(drawColor);
-					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+					g.drawRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, (float)1);
 					String name = it.getKey()->displayName;
-					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					g.drawText(name, XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
-						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
 				p->isComputing.exit();
@@ -890,20 +890,20 @@ void LayoutViewer::paint(Graphics& g)
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					Colour drawColor = juce::Colours::white;
 					if (overrideColor) { drawColor = overridenColor; }
 					else {
 						drawColor = it.getKey()->getLayoutColor();
 					}
 					g.setColour(drawColor);
-					g.drawRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, (float)1);
+					g.drawRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, (float)1);
 					String name = it.getKey()->id->stringValue();
-					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					g.drawText(name, XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
-						clicg.fillRect(X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight);
+						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight);
 					}
 				}
 				p->isComputing.exit();
