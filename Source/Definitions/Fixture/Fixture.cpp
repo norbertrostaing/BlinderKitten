@@ -106,8 +106,10 @@ void Fixture::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 		for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
 			SubFixture* sf = it.getValue();
 			if (sf != nullptr) {
-				for (auto it2 = sf->channelsMap.begin(); it2 != sf->channelsMap.end(); it2.next()) {
-					Brain::getInstance()->pleaseUpdate(it2.getValue());
+				if (sf->channelsMap.size() > 0) {
+					for (auto it2 = sf->channelsMap.begin(); it2 != sf->channelsMap.end(); it2.next()) {
+						Brain::getInstance()->pleaseUpdate(it2.getValue());
+					}
 				}
 			}
 		}
