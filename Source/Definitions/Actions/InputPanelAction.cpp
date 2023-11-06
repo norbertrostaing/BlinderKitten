@@ -56,7 +56,13 @@ InputPanelAction::InputPanelAction(var params) :
     if (actionType == IP_RANDOMSEED) {
         randomSeed = addIntParameter("Random Seed", "Initialise all random events with this value",0,0);
     }
-
+    if (actionType == IP_SELECTWINDOW) {
+        targetWindow = addEnumParameter("Window", "Wich tab do you want to magically appear ?");
+        for (int i = 0; i < ShapeShifterFactory::getInstance()->defs.size(); i++) {
+            String windowName = ShapeShifterFactory::getInstance()->defs[i]->contentName;
+            targetWindow->addOption(windowName, windowName);
+        }
+    }
 }
 
 InputPanelAction::~InputPanelAction()
@@ -121,6 +127,12 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
     case IP_RANDOMSEED:
         if (val > 0) {
             Brain::getInstance()->resetRandomSeed(randomSeed->getValue());
+        }
+        break;
+
+    case IP_SELECTWINDOW:
+        if (val > 0) {
+            Brain::getInstance()->showWindow(targetWindow->stringValue());
         }
         break;
 
