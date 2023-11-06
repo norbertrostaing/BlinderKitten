@@ -34,6 +34,8 @@
 #include "../Mapper/Mapper.h"
 #include "../Fixture/FixtureManager.h"
 #include "../Fixture/Fixture.h"
+#include "UserInputManager.h"
+#include "UI/Encoders.h"
 
 #include "UI/VirtualButtons/VirtualButtonManager.h"
 #include "UI/VirtualButtons/VirtualButton.h"
@@ -51,8 +53,6 @@
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
 #include "UI/GridView/MapperGridView.h"
-
-
 
 juce_ImplementSingleton(DataTransferManager)
 
@@ -87,10 +87,6 @@ DataTransferManager::DataTransferManager() :
 
     targetUserId = addIntParameter("Target Id", "ID of the target", 0, 0);
 
-    paramfilter = addTargetParameter("Param filter", "Filter recorded values in preset by parameter family", ChannelFamilyManager::getInstance());
-    paramfilter->targetType = TargetParameter::CONTAINER;
-    paramfilter->maxDefaultSearchLevel = 0;
-
     groupCopyMode = addEnumParameter("Group merge mode", "Group record mode");
     groupCopyMode->addOption("Merge", "merge");
     groupCopyMode->addOption("Replace", "replace");
@@ -110,7 +106,7 @@ DataTransferManager::DataTransferManager() :
 
 void DataTransferManager::updateDisplay() {
     String tgt = targetType->getValue();
-    paramfilter->hideInEditor = !(tgt == "Preset");
+    //paramfilter->hideInEditor = !(tgt == "Preset");
     groupCopyMode->hideInEditor = !(tgt == "Group");
     presetCopyMode->hideInEditor = !(tgt == "Preset");
     cuelistCopyMode->hideInEditor = !(tgt == "Cuelist");
@@ -184,7 +180,10 @@ void DataTransferManager::execute() {
                 target->subFixtureValues.clear(); // erase data
             }
 
-            ChannelFamily* filter = dynamic_cast<ChannelFamily*>(paramfilter->targetContainer.get());
+            Array<ChannelFamily*> filters;
+            if (UserInputManager::getInstance()->currentProgrammer == source) {
+                filters.addArray(Encoders::getInstance()->selectedFilters);
+            }
 
             source->computeValues();
             for (auto it = source->computedValues.begin(); it != source->computedValues.end(); it.next()) {
@@ -193,7 +192,7 @@ void DataTransferManager::execute() {
                 std::shared_ptr<ChannelValue> cValue = it.getValue();
                 ChannelFamily* chanType = dynamic_cast<ChannelFamily*>(chan->channelType->parentContainer->parentContainer.get());
 
-                if (cValue->endValue != -1 && (filter == nullptr || filter == chanType)) {
+                if (cValue->endValue != -1 && (filters.size() == 0 || filters.contains(chanType))) {
                     int subfixtId = chan->parentSubFixture->subId;
                     int fixtId = dynamic_cast<Fixture*>(chan->parentSubFixture->parentFixture)->id->getValue();
                     PresetSubFixtureValues* pfv = nullptr;
