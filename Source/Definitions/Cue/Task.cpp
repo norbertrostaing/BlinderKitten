@@ -15,7 +15,8 @@
 Task::Task(var params) :
 	BaseItem(params.getProperty("name", "Task")),
 	objectType(params.getProperty("Task", "Task").toString()),
-	objectData(params)
+	objectData(params),
+	actionManager("Generic Actions")
 {
 	saveAndLoadRecursiveData = true;
 	
@@ -30,6 +31,7 @@ Task::Task(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Generic actions", "action");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
 	targetThru = addBoolParameter("target Thru", "multiple targets ?", false);
@@ -74,6 +76,7 @@ Task::Task(var params) :
 	delay = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
 	fade = addFloatParameter("Fade", "fade of th first element (in seconds)", 0, 0);
 
+	addChildControllableContainer(&actionManager);
 	updateDisplay();
 }
 
@@ -90,12 +93,16 @@ void Task::onContainerParameterChangedInternal(Parameter* c) {
 void Task::updateDisplay() {
 	String targType = targetType->getValue();
 
-	targetIdTo->hideInEditor = !targetThru->getValue();
+
+	targetId->hideInEditor = targType == "action";
+	targetThru->hideInEditor = targType == "action";
+	targetIdTo->hideInEditor = targType == "action" || !targetThru->getValue();
 
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+	actionManager.hideInEditor = targType != "action";
 
 	if (targType == "cuelist") {
 		if (cuelistAction->getValue() == "htplevel") {
@@ -170,6 +177,11 @@ void Task::updateDisplay() {
 			targetValue->hideInEditor = true;
 		}
 	}
+	else if (targType == "action") {
+		fade->hideInEditor = true;
+		targetValue->hideInEditor = true;
+		
+	}
 
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -182,7 +194,7 @@ void Task::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 }
 
 
-void Task::triggerGivenTask(String targetType, int targetId, String action, double value, int id)
+void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, String action, double value, int id)
 {
 	if (targetType == "cuelist") {
 		Cuelist* target = Brain::getInstance()->getCuelistById(targetId);
@@ -273,9 +285,13 @@ void Task::triggerGivenTask(String targetType, int targetId, String action, doub
 			}
 		}
 	}
+	else if (targetType == "action") {
+		if (parentTask != nullptr) {
+			parentTask->actionManager.setValueAll(1);
+		}
+	}
 	else {
-		LOG("coucou");
-
+		//LOG("coucou");
 	}
 }
 

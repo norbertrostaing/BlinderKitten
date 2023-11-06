@@ -866,9 +866,14 @@ void Brain::startTask(Task* t, double startTime, int cuelistId)
                 }
             }
         }
+        else if (targetType == "action") {
+            actionType = t->mapperAction->getValue();
+            valid = true;
+        }
 
         if (valid) {
             RunningTask* rt = runningTasks.add(new RunningTask());
+            rt->parentTask = t;
             rt->id = newTaskId();
             rt->cuelistId = cuelistId;
             rt->actionType = actionType;
