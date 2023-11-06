@@ -132,6 +132,10 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 				Command* com = commands.addItem();
 				com->loadJSONData(p->commands.items[i]->getJSONData());
 			}
+			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+			if (parentCuelist->cueA == this) {
+				parentCuelist->go(this,0,0);
+			}
 		}
 	}
 	else if (c == mergeBtn) {
@@ -141,6 +145,10 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 			for (int i = 0; i < p->commands.items.size(); i++) {
 				Command* com = commands.addItem();
 				com->loadJSONData(p->commands.items[i]->getJSONData());
+			}
+			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+			if (parentCuelist->cueA == this) {
+				parentCuelist->go(this, 0, 0);
 			}
 		}
 	}

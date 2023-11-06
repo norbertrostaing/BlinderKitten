@@ -264,6 +264,9 @@ void DataTransferManager::execute() {
                 c->loadJSONData(source->commands.items[i]->getJSONData());
             }
             target->selectThis();
+            if (target->cueA == targetCue) {
+                target->go(targetCue,0,0);
+            }
         }
         else if (trgType == "virtualbutton") {
             Cuelist* targetCuelist = nullptr;
