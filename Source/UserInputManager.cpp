@@ -430,7 +430,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue, String ori
 	
 	targetCommand = getProgrammer(true)->currentUserCommand;
 	if (targetCommand == nullptr) {return;}
-	if (mode < 2) { // bug ici ?
+	if (mode < 2 && Encoders::getInstance()->channels.size() > index) { // bug ici ?
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
 			String oldOrigin = "";

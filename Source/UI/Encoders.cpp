@@ -486,24 +486,28 @@ void Encoders::updateEncodersValues() {
             if (!filledEncoders.contains(ci)) {
 
                 int channelId = ci + encodersOffset;
-                double value = 0;
-                int n = 0;
-                currentCommand->isComputing.enter();
-                for (int iFixt = 0; iFixt < currentCommand->selection.computedSelectedSubFixtures.size(); iFixt++) {
-                    SubFixture* sf = currentCommand->selection.computedSelectedSubFixtures[iFixt];
-                    if (sf != nullptr && sf->channelsMap.contains(channels[channelId])) {
-                        SubFixtureChannel* sfc = sf->channelsMap.getReference(channels[channelId]);
-                        n++;
-                        value += sfc->postCuelistValue;
-                    }
-                }
-                currentCommand->isComputing.exit();
+                if (channelId < channels.size()) {
 
-                if (n > 0) {
-                    value = value / (float)n;
-                    if (encoderRange == 1) { value *= 100; }
-                    else if (encoderRange == 2) { value *= 255; }
-                    encoders[ci]->setValue(value, juce::dontSendNotification);
+                    ChannelType* channel = channels[channelId];
+                    double value = 0;
+                    int n = 0;
+                    currentCommand->isComputing.enter();
+                    for (int iFixt = 0; iFixt < currentCommand->selection.computedSelectedSubFixtures.size(); iFixt++) {
+                        SubFixture* sf = currentCommand->selection.computedSelectedSubFixtures[iFixt];
+                        if (sf != nullptr && sf->channelsMap.contains(channel)) {
+                            SubFixtureChannel* sfc = sf->channelsMap.getReference(channel);
+                            n++;
+                            value += sfc->postCuelistValue;
+                        }
+                    }
+                    currentCommand->isComputing.exit();
+
+                    if (n > 0) {
+                        value = value / (float)n;
+                        if (encoderRange == 1) { value *= 100; }
+                        else if (encoderRange == 2) { value *= 255; }
+                        encoders[ci]->setValue(value, juce::dontSendNotification);
+                    }
                 }
                 //encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
             }
