@@ -40,7 +40,7 @@ public:
 	IntParameter* encodersNumber;
 	IntParameter* gridCols;
 	FloatParameter* gridScale;
-	FloatParameter* panelScale;
+	//FloatParameter* panelScale;
 	FloatParameter* encodersScale;
 	IntParameter* encoderBigNumber;
 

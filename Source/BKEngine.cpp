@@ -131,8 +131,8 @@ BKEngine::BKEngine() :
 
 	encodersNumber = uiParamsContainer.addIntParameter("Encoders number", "How many encoders do you want ?", 10, 1);
 	encodersNumber->addParameterListener(this);
-	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
-	panelScale->addParameterListener(this);
+	//panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
+	//panelScale->addParameterListener(this);
 	encodersScale = uiParamsContainer.addFloatParameter("Encoders scale", "scale the encoders view", 1, 0.1, 3);
 	encodersScale->addParameterListener(this);
 	gridCols= uiParamsContainer.addIntParameter("Grid Columns", "Number of columns for grid viewss", 10, 1);
@@ -1178,10 +1178,11 @@ void BKEngine::exportSelection()
 
 void BKEngine::parameterValueChanged(Parameter* p) {
 	Engine::parameterValueChanged(p);
-	if (p == panelScale) {
+	/*if (p == panelScale) {
 		InputPanel::getInstance()->resized();
 	}
-	else if (p == encodersScale) {
+	else */
+	if (p == encodersScale) {
 		Encoders::getInstance()->resized();
 		//EncodersMult::getInstance()->resized();
 	}
