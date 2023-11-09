@@ -138,8 +138,7 @@ void DataTransferManager::execute() {
 
     if (srcType == "programmer") {
         Programmer* source = Brain::getInstance()->getProgrammerById(sourceId->getValue());
-        ScopedLock lock(source->computing);
-
+        
         if (source == nullptr) { LOG("Invalid Programmer ID"); return; }
         if (trgType == "group") {
             valid = true;
@@ -155,6 +154,7 @@ void DataTransferManager::execute() {
                 target->selection.clear(); // erase data
             }
 
+            ScopedLock lock(source->computing);
             for (int commandIndex = 0; commandIndex < source->commands.items.size(); commandIndex++) {
                 CommandSelectionManager* selections = &source->commands.items[commandIndex]->selection;
                 for (int selectionIndex = 0; selectionIndex < selections->items.size(); selectionIndex++) {
@@ -185,6 +185,7 @@ void DataTransferManager::execute() {
                 filters.addArray(Encoders::getInstance()->selectedFilters);
             }
 
+            ScopedLock lock(source->computing);
             source->computeValues();
             for (auto it = source->computedValues.begin(); it != source->computedValues.end(); it.next()) {
                 // HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
@@ -259,6 +260,7 @@ void DataTransferManager::execute() {
                 targetCue->commands.clear();
             }
 
+            ScopedLock lock(source->computing);
             for (int i = 0; i < source->commands.items.size(); i++) {
                 Command* c = targetCue->commands.addItem();
                 c->loadJSONData(source->commands.items[i]->getJSONData());
