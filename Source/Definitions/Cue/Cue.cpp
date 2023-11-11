@@ -97,7 +97,7 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 	else if (p == id) {
 		if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
 			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-			parentCuelist->reorderCues();
+			MessageManager::callAsync([this, parentCuelist]() {parentCuelist->reorderCues(); });
 		}
 	}
 }
