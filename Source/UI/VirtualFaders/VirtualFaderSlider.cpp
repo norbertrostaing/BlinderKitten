@@ -91,7 +91,7 @@ void VirtualFaderSlider::onContainerParameterChangedInternal(Parameter* c) {
 		updateDisplay();
 	}
 	VirtualFaderColManager::getInstance()->reconstructLibraries();
-	VirtualFaderColGrid::getInstance()->fillCells();
+	MessageManager::callAsync([this] {	VirtualFaderColGrid::getInstance()->fillCells();});
 }
 
 void VirtualFaderSlider::updateDisplay() {
