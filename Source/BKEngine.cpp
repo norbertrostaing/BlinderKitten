@@ -153,6 +153,8 @@ BKEngine::BKEngine() :
 	conductorNextCueColor->addParameterListener(this);
 	//conductorCurrentCueColor->addParameterListener(ConductorInfos::getInstance());
 
+	colorPickerContainer.saveAndLoadRecursiveData = true;
+
 	CPRedChannel = colorPickerContainer.addTargetParameter("Red channel", "", ChannelFamilyManager::getInstance());
 	CPRedChannel->targetType = TargetParameter::CONTAINER;
 	CPRedChannel->maxDefaultSearchLevel = 2;
@@ -1213,11 +1215,14 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 }
 
 void BKEngine::autoFillColorPickerValues()
-{
-	CPRedChannel->setValue("/color/channelTypes/red");
-	CPGreenChannel->setValue("/color/channelTypes/green");
-	CPBlueChannel->setValue("/color/channelTypes/blue");
-	CPCyanChannel->setValue("/color/channelTypes/cyan");
-	CPMagentaChannel->setValue("/color/channelTypes/magenta");
-	CPYellowChannel->setValue("/color/channelTypes/yellow");
+{	
+	ChannelFamily* col = ChannelFamilyManager::getInstance()->getItemWithName("Color");
+	if (col != nullptr) {
+		CPRedChannel->setValueFromTarget(col->definitions.getItemWithName("Red"));
+		CPGreenChannel->setValueFromTarget(col->definitions.getItemWithName("Green"));
+		CPBlueChannel->setValueFromTarget(col->definitions.getItemWithName("Blue"));
+		CPCyanChannel->setValueFromTarget(col->definitions.getItemWithName("Cyan"));
+		CPMagentaChannel->setValueFromTarget(col->definitions.getItemWithName("Magenta"));
+		CPYellowChannel->setValueFromTarget(col->definitions.getItemWithName("Yellow"));
+	}
 }
