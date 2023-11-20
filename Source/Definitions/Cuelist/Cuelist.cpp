@@ -1428,6 +1428,7 @@ void Cuelist::autoCreateChaser()
 			currentCue = cues.addItem();
 			currentCue->commands.items[0]->values.loadJSONData(chaseGenValue.getJSONData());
 			currentCue->setNiceName("empty");
+			currentCue->id->setValue(i+1);
 			csm = & currentCue->commands.items[0]->selection;
 			csm->clear();
 			currentBuddy = 0;
