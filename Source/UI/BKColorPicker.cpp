@@ -141,13 +141,17 @@ void BKColorPicker::mouseSetColor(double x, double y)
     ChannelType* cyanChannel = dynamic_cast<ChannelType*>(engine->CPCyanChannel->targetContainer.get());
     ChannelType* magentaChannel = dynamic_cast<ChannelType*>(engine->CPMagentaChannel->targetContainer.get());
     ChannelType* yellowChannel = dynamic_cast<ChannelType*>(engine->CPYellowChannel->targetContainer.get());
+    ChannelType* hueChannel = dynamic_cast<ChannelType*>(engine->CPHueChannel->targetContainer.get());
+    ChannelType* saturationChannel = dynamic_cast<ChannelType*>(engine->CPSaturationChannel->targetContainer.get());
 
     UserInputManager::getInstance()->changeChannelValue(redChannel, r);
     UserInputManager::getInstance()->changeChannelValue(greenChannel, g);
     UserInputManager::getInstance()->changeChannelValue(blueChannel, b);
     UserInputManager::getInstance()->changeChannelValue(cyanChannel, 1-r);
     UserInputManager::getInstance()->changeChannelValue(magentaChannel, 1-g);
-    UserInputManager::getInstance()->changeChannelValue(yellowChannel, 1-b);
+    UserInputManager::getInstance()->changeChannelValue(yellowChannel, 1 - b);
+    UserInputManager::getInstance()->changeChannelValue(hueChannel, x);
+    UserInputManager::getInstance()->changeChannelValue(saturationChannel, y);
 
     //LOG("color : "+ String(r) + " " + String(g) + " " + String(b) + " ");
 

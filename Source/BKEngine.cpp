@@ -179,6 +179,14 @@ BKEngine::BKEngine() :
 	CPYellowChannel->targetType = TargetParameter::CONTAINER;
 	CPYellowChannel->maxDefaultSearchLevel = 2;
 
+	CPHueChannel = colorPickerContainer.addTargetParameter("Hue channel", "", ChannelFamilyManager::getInstance());
+	CPHueChannel->targetType = TargetParameter::CONTAINER;
+	CPHueChannel->maxDefaultSearchLevel = 2;
+
+	CPSaturationChannel = colorPickerContainer.addTargetParameter("Saturation channel", "", ChannelFamilyManager::getInstance());
+	CPSaturationChannel->targetType = TargetParameter::CONTAINER;
+	CPSaturationChannel->maxDefaultSearchLevel = 2;
+
 
 	loadWindowWidth = loadWindowContainer.addIntParameter("Window Width", "", 810,100);
 	loadWindowHeight = loadWindowContainer.addIntParameter("Windows Height", "", 610,100);
@@ -1224,5 +1232,7 @@ void BKEngine::autoFillColorPickerValues()
 		CPCyanChannel->setValueFromTarget(col->definitions.getItemWithName("Cyan"));
 		CPMagentaChannel->setValueFromTarget(col->definitions.getItemWithName("Magenta"));
 		CPYellowChannel->setValueFromTarget(col->definitions.getItemWithName("Yellow"));
+		CPHueChannel->setValueFromTarget(col->definitions.getItemWithName("Hue"));
+		CPSaturationChannel->setValueFromTarget(col->definitions.getItemWithName("Sat"));
 	}
 }

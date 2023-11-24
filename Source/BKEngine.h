@@ -69,6 +69,8 @@ public:
 	TargetParameter* CPCyanChannel;
 	TargetParameter* CPMagentaChannel;
 	TargetParameter* CPYellowChannel;
+	TargetParameter* CPHueChannel;
+	TargetParameter* CPSaturationChannel;
 
 	ControllableContainer loadWindowContainer;
 	IntParameter* loadWindowWidth;
