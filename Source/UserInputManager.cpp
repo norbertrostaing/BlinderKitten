@@ -34,6 +34,7 @@
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 #include "UI/InputPanel.h"
 #include "Definitions/Assistant/Assistant.h"
+#include "UI/BKColorPicker.h"
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -420,6 +421,9 @@ void UserInputManager::commandValueChanged(Command* c) {
 	if (p != nullptr && p->currentUserCommand == c) {
 		Encoders::getInstance()->updateEncodersValues();
 		Encoders::getInstance()->updateCommandLine();
+		MessageManager::callAsync([this]() {
+			BKColorPicker::getInstance()->repaint(); 
+		});
 	}
 }
 

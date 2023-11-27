@@ -26,12 +26,12 @@ public:
     juce_DeclareSingleton(UserInputManager, true);
 
     StringArray currentCommand;
-    Command* targetCommand;
+    Command* targetCommand = nullptr;
 
     OwnedArray<StringArray *> otherCommands;
     OwnedArray<Command*> otherTargetCommands;
 
-    Programmer* currentProgrammer;
+    Programmer* currentProgrammer = nullptr;
 
     UserInputManager();
     ~UserInputManager();
