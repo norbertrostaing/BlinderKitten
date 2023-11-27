@@ -15,6 +15,7 @@
 #include "Definitions/Programmer/Programmer.h"
 #include "Definitions/Command/Command.h"
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "UI/BKColorPicker.h"
 
 //==============================================================================
 EncodersUI::EncodersUI(const String& contentName):
@@ -134,11 +135,6 @@ void Encoders::resized()
     if (engine != nullptr && engine->encodersScale != nullptr) {
         scale = engine->encodersScale->getValue();
     }
-    int nChildren = getNumChildComponents();
-    for (int i = 0; i < nChildren; i++) {
-        getChildComponent(i)->setTransform(AffineTransform::scale(scale));
-
-    }
 
     // This method is where you should set the bounds of any child
     // components that your component contains..
@@ -147,23 +143,26 @@ void Encoders::resized()
     //int x = 0;
     //int y = 0;
     int btnWidth = 40;
-    int btnValueWidth = 40;
-
     int margin = 5;
-   
+
+    int total = (11*btnWidth) + (3*margin);
+    float ratio = windowW / float(total);
+
+    btnWidth *= ratio;
+    margin *= ratio;
     commandLine.setBounds(0,40,windowW, 20);
 
-    btnMode.setBounds(windowW - (0 * margin) - (1 * btnValueWidth), 0, btnValueWidth, 20);
-    encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnValueWidth), 0, btnValueWidth, 20);
-    HLBtn.setBounds(windowW - (0 * margin) - (3 * btnValueWidth), 0, btnValueWidth, 20);
-    blindBtn.setBounds(windowW - (0 * margin) - (4 * btnValueWidth), 0, btnValueWidth, 20);
-    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (1 * btnWidth), 0, btnWidth, 20);
-    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (2 * btnWidth), 0, btnWidth, 20);
-    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (3 * btnWidth), 0, btnWidth, 20);
-    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnValueWidth) - (4 * btnWidth), 0, btnWidth, 20);
-    commandDownBtn.setBounds(windowW - (2 * margin) - (4 * btnValueWidth) - (5 * btnWidth), 0, btnWidth, 20);
-    commandUpBtn.setBounds(windowW - (2 * margin) - (4 * btnValueWidth) - (6 * btnWidth), 0, btnWidth, 20);
-    explodeCommandBtn.setBounds(windowW - (3 * margin) - (4 * btnValueWidth) - (7 * btnWidth), 0, btnWidth, 20);
+    btnMode.setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, 20);
+    encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, 20);
+    HLBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, 20);
+    blindBtn.setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, 20);
+    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (1 * btnWidth), 0, btnWidth, 20);
+    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (2 * btnWidth), 0, btnWidth, 20);
+    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (3 * btnWidth), 0, btnWidth, 20);
+    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (4 * btnWidth), 0, btnWidth, 20);
+    commandDownBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (5 * btnWidth), 0, btnWidth, 20);
+    commandUpBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (6 * btnWidth), 0, btnWidth, 20);
+    explodeCommandBtn.setBounds(windowW - (3 * margin) - (4 * btnWidth) - (7 * btnWidth), 0, btnWidth, 20);
 
     if (filterBtns.size() > 0) {
         float w = getWidth() / filterBtns.size();
@@ -175,11 +174,13 @@ void Encoders::resized()
 
     float w = 57;
     float h = 57;
+    w = windowW / nEncoders;
+    h = windowH - (80);
     for (int i = 0; i < nEncoders; i++) {
-        encoders[i]->setBounds(i*w, 80, w, h);
+        encoders[i]->setBounds(i*w, 80, w, h-20);
         encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
         labels[i]->setBounds(i*w, 60, w, 20);
-        labels[i]->setJustificationType(36);
+        labels[i]->setJustificationType(Justification::centred);
     }
 }
 
@@ -449,6 +450,9 @@ void Encoders::updateChannels()
     updateCommandLine();
     updateHLButton();
     Brain::getInstance()->virtualFadersNeedUpdate = true;
+    MessageManager::callAsync([this]() {
+        BKColorPicker::getInstance()->repaint();
+    });
 }
 
 void Encoders::updateEncodersValues() {
