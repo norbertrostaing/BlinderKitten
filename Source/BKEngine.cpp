@@ -642,7 +642,9 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
 		Fixture* f = FixtureManager::getInstance()->items[i];
 		for (int p = 0; p < f->patchs.items.size(); p++) {
-			f->patchs.items[p]->tryToEnablePatch();
+			if (f->patchs.items[p]->enabled->boolValue()) {
+				f->patchs.items[p]->tryToEnablePatch();
+			}
 		}
 	}
 

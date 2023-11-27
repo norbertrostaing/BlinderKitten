@@ -36,5 +36,6 @@ class FixturePatch:
     void onContainerParameterChangedInternal(Parameter* p);
     void tryToEnablePatch();
     void disableCurrentPatch();
+    int getFixtureId();
 
 };
