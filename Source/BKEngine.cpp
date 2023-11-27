@@ -104,7 +104,7 @@ BKEngine::BKEngine() :
 
 	GlobalSettings::getInstance()->altScaleFactor->setDefaultValue(0.002);
 
-	GlobalSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
+	ProjectSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
@@ -131,8 +131,8 @@ BKEngine::BKEngine() :
 
 	encodersNumber = uiParamsContainer.addIntParameter("Encoders number", "How many encoders do you want ?", 10, 1);
 	encodersNumber->addParameterListener(this);
-	panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
-	panelScale->addParameterListener(this);
+	//panelScale = uiParamsContainer.addFloatParameter("Input Panel scale", "scale Input panel view", 1, 0.1, 3);
+	//panelScale->addParameterListener(this);
 	encodersScale = uiParamsContainer.addFloatParameter("Encoders scale", "scale the encoders view", 1, 0.1, 3);
 	encodersScale->addParameterListener(this);
 	gridCols= uiParamsContainer.addIntParameter("Grid Columns", "Number of columns for grid viewss", 10, 1);
@@ -152,6 +152,8 @@ BKEngine::BKEngine() :
 	conductorNextCueColor = conductorInfosContainer.addColorParameter("Next cue color", "Text color for your next cue", Colour(196, 0, 0));
 	conductorNextCueColor->addParameterListener(this);
 	//conductorCurrentCueColor->addParameterListener(ConductorInfos::getInstance());
+
+	colorPickerContainer.saveAndLoadRecursiveData = true;
 
 	CPRedChannel = colorPickerContainer.addTargetParameter("Red channel", "", ChannelFamilyManager::getInstance());
 	CPRedChannel->targetType = TargetParameter::CONTAINER;
@@ -177,6 +179,14 @@ BKEngine::BKEngine() :
 	CPYellowChannel->targetType = TargetParameter::CONTAINER;
 	CPYellowChannel->maxDefaultSearchLevel = 2;
 
+	CPHueChannel = colorPickerContainer.addTargetParameter("Hue channel", "", ChannelFamilyManager::getInstance());
+	CPHueChannel->targetType = TargetParameter::CONTAINER;
+	CPHueChannel->maxDefaultSearchLevel = 2;
+
+	CPSaturationChannel = colorPickerContainer.addTargetParameter("Saturation channel", "", ChannelFamilyManager::getInstance());
+	CPSaturationChannel->targetType = TargetParameter::CONTAINER;
+	CPSaturationChannel->maxDefaultSearchLevel = 2;
+
 
 	loadWindowWidth = loadWindowContainer.addIntParameter("Window Width", "", 810,100);
 	loadWindowHeight = loadWindowContainer.addIntParameter("Windows Height", "", 610,100);
@@ -184,6 +194,7 @@ BKEngine::BKEngine() :
 	loadWindowButtonHeight = loadWindowContainer.addIntParameter("Button height", "", 40,30);
 
 	mainBrain = Brain::getInstance();
+	currentDMXChannelView = nullptr;
 
 	addChildControllableContainer(InterfaceManager::getInstance());
 	addChildControllableContainer(ChannelFamilyManager::getInstance());
@@ -266,8 +277,9 @@ BKEngine::~BKEngine()
 	Brain::getInstance()->stopThread(100);
 	Brain::getInstance()->clear();
 
-	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
-	DMXChannelView::deleteInstance();
+	if (currentDMXChannelView != nullptr) {
+		currentDMXChannelView->setCurrentInterface(nullptr);
+	}
 
 	ArtnetSocket::getInstance()->stopThread(100);
 
@@ -346,7 +358,10 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->stopThread(1);
 	Brain::getInstance()->clear();
 
-	DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+	//DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+	if (currentDMXChannelView != nullptr) {
+		currentDMXChannelView->setCurrentInterface(nullptr);
+	}
 
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();
@@ -627,7 +642,9 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
 		Fixture* f = FixtureManager::getInstance()->items[i];
 		for (int p = 0; p < f->patchs.items.size(); p++) {
-			f->patchs.items[p]->tryToEnablePatch();
+			if (f->patchs.items[p]->enabled->boolValue()) {
+				f->patchs.items[p]->tryToEnablePatch();
+			}
 		}
 	}
 
@@ -1173,10 +1190,11 @@ void BKEngine::exportSelection()
 
 void BKEngine::parameterValueChanged(Parameter* p) {
 	Engine::parameterValueChanged(p);
-	if (p == panelScale) {
+	/*if (p == panelScale) {
 		InputPanel::getInstance()->resized();
 	}
-	else if (p == encodersScale) {
+	else */
+	if (p == encodersScale) {
 		Encoders::getInstance()->resized();
 		//EncodersMult::getInstance()->resized();
 	}
@@ -1207,11 +1225,16 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 }
 
 void BKEngine::autoFillColorPickerValues()
-{
-	CPRedChannel->setValue("/color/channelTypes/red");
-	CPGreenChannel->setValue("/color/channelTypes/green");
-	CPBlueChannel->setValue("/color/channelTypes/blue");
-	CPCyanChannel->setValue("/color/channelTypes/cyan");
-	CPMagentaChannel->setValue("/color/channelTypes/magenta");
-	CPYellowChannel->setValue("/color/channelTypes/yellow");
+{	
+	ChannelFamily* col = ChannelFamilyManager::getInstance()->getItemWithName("Color");
+	if (col != nullptr) {
+		CPRedChannel->setValueFromTarget(col->definitions.getItemWithName("Red"));
+		CPGreenChannel->setValueFromTarget(col->definitions.getItemWithName("Green"));
+		CPBlueChannel->setValueFromTarget(col->definitions.getItemWithName("Blue"));
+		CPCyanChannel->setValueFromTarget(col->definitions.getItemWithName("Cyan"));
+		CPMagentaChannel->setValueFromTarget(col->definitions.getItemWithName("Magenta"));
+		CPYellowChannel->setValueFromTarget(col->definitions.getItemWithName("Yellow"));
+		CPHueChannel->setValueFromTarget(col->definitions.getItemWithName("Hue"));
+		CPSaturationChannel->setValueFromTarget(col->definitions.getItemWithName("Sat"));
+	}
 }

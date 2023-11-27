@@ -48,9 +48,13 @@ Layout::Layout(var params) :
 	var dy = -10; dy.append(10);
 	dimensionsY->setDefaultValue(dy);
 
+	tilesScale = addPoint2DParameter("Tiles scale", "");
+	var sc = 1; sc.append(1);
+	tilesScale->setDefaultValue(sc);
 	addChildControllableContainer(&paths);
 	paths.selectItemWhenCreated = false;
 
+	textScale = addFloatParameter("Text scale","",  1, 0);
 	var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 

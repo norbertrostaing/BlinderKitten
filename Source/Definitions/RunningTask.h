@@ -11,12 +11,15 @@
 #pragma once
 #include "JuceHeader.h"
 
+class Task;
+
 class RunningTask {
 public:
     RunningTask();
     ~RunningTask();
 
     int id = 0;
+    Task* parentTask = nullptr;
 
     float value=-0;
     float delay=0;

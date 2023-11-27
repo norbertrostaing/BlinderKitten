@@ -19,12 +19,12 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED};
+    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW};
     ActionType actionType;
     EnumParameter* targetButton;
     IntParameter* randomSeed;
     IntParameter* targetEncoder;
-
+    EnumParameter* targetWindow;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, bool isRelative);

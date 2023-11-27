@@ -34,6 +34,7 @@
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 #include "UI/InputPanel.h"
 #include "Definitions/Assistant/Assistant.h"
+#include "UI/BKColorPicker.h"
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -63,7 +64,7 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	String address = m.getAddressPattern().toString().toLowerCase();
 	//LOG(address);
 	aList.addTokens(m.getAddressPattern().toString().toLowerCase(), "/", "\"");
-	if (aList.size() < 3) return;
+	if (aList.size() < 2) return;
 
 	/*
 	cuelist
@@ -112,6 +113,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 	String firstWord = aList[1];
 	if (firstWord == "key") {
 		processInput(aList[2]);
+	}
+	else if (firstWord == "grandmaster" && m.size() > 0) {
+		float val = OSCHelpers::getFloatArg(m[0]);
+		InputPanel::getInstance()->grandMaster.setValue(val);
 	}
 	else if (firstWord == "cuelist" && aList.size() > 3) {
 		int targetNumber = (int)((var)aList[2]);
@@ -184,6 +189,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->FlashLevel->setValue(val);
 			}
+			else if (action == "chaserspeed" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->chaserSpeed->setValue(val);
+			}
 
 		}
 		else {
@@ -249,12 +258,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		}
 	}
 
-	// PAS DU TOUT OPTI CA !!!
-	else if (firstWord == "virtbutton" && aList.size() > 3) {
+	else if (firstWord == "virtbutton" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualButtonGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -263,11 +271,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualButtonManager::getInstance()->setButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtabove" && aList.size() > 3) {
+	else if (firstWord == "virtabove" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -276,11 +284,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtbelow" && aList.size() > 3) {
+	else if (firstWord == "virtbelow" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -289,11 +297,11 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtrotary" && aList.size() > 3) {
+	else if (firstWord == "virtrotary" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
 		int row = (int)((var)aList[3]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -302,10 +310,10 @@ void UserInputManager::processMessage(const OSCMessage& m)
 		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "", false);
 	}
 
-	else if (firstWord == "virtfader" && aList.size() > 3) {
+	else if (firstWord == "virtfader" && aList.size() >= 3 && m.size()>0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
-		int value = OSCHelpers::getFloatArg(m[0]);
+		float value = OSCHelpers::getFloatArg(m[0]);
 		if (aList.size() == 5) {
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
@@ -413,6 +421,9 @@ void UserInputManager::commandValueChanged(Command* c) {
 	if (p != nullptr && p->currentUserCommand == c) {
 		Encoders::getInstance()->updateEncodersValues();
 		Encoders::getInstance()->updateCommandLine();
+		MessageManager::callAsync([this]() {
+			BKColorPicker::getInstance()->repaint(); 
+		});
 	}
 }
 
@@ -423,11 +434,13 @@ void UserInputManager::encoderValueChanged(int index, float newValue, String ori
 	
 	targetCommand = getProgrammer(true)->currentUserCommand;
 	if (targetCommand == nullptr) {return;}
-	if (mode < 2) { // bug ici ?
+	if (index >=0 && mode < 2 && Encoders::getInstance()->channels.size() > index) { 
 		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
 		if (c != nullptr) {
 			String oldOrigin = "";
-			float value = Encoders::getInstance()->encoders[index]->getValue();
+			
+			float value = Encoders::getInstance()->encoders[index- Encoders::getInstance()->encodersOffset]->getValue();
+			
 			if (Encoders::getInstance()->lastOrigin.contains(c)) {
 				oldOrigin = Encoders::getInstance()->lastOrigin.getReference(c);
 			}
@@ -615,7 +628,7 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			bool pleaseAdd = true;
 			for (int i = p->currentUserCommand->selection.items.size() - 1; i >= 0; i--) {
 				CommandSelection* s = p->currentUserCommand->selection.items[i];
-				if (s->targetType->getValue() == "fixture" && (int)s->valueFrom->getValue() == id) {
+				if (false && s->targetType->getValue().toString() == "fixture" && (int)s->valueFrom->getValue() == id) {
 					pleaseAdd = false;
 					p->currentUserCommand->selection.removeItem(s);
 				}
@@ -715,7 +728,7 @@ void UserInputManager::resetFocus()
 	InputPanel::getInstance()->setFocusContainer(true);
 }
 
-void UserInputManager::feedback(String address, double value, String origin="")
+void UserInputManager::feedback(String address, var value, String origin="")
 {
 	InterfaceManager::getInstance()->feedback(address, value, origin);
 }

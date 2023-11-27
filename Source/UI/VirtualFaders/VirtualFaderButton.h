@@ -51,6 +51,7 @@ public:
     bool checkParentColumn();
 
     void feedback(ButtonStatus value);
+    void feedback(String text);
     void updateStatus(bool forceRefresh = false);
 
     String getTypeString() const override { return objectType; };

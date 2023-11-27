@@ -25,6 +25,7 @@ public:
 
     Fixture* parentFixture;
     int subId;
+    String displayName = "";
     OwnedArray<SubFixtureChannel> channelsContainer;
     HashMap<ChannelType*, SubFixtureChannel*> channelsMap;
 

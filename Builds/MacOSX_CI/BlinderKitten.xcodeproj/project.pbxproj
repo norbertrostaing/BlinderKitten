@@ -114,6 +114,7 @@
 		9D4582C47CE587B7C8035F62 /* MultiplicatorLinkManager.cpp */ = {isa = PBXBuildFile; fileRef = 6BE43C4DFB6DE7B838E57558; };
 		9D49F5B6963E99B2E91BF139 /* include_juce_core.mm */ = {isa = PBXBuildFile; fileRef = B1860B17D38898035828ED79; };
 		9D56EDFA8C2B03DAD36FC61C /* EncodersMultCmd.cpp */ = {isa = PBXBuildFile; fileRef = EFC5E0833382D16721B3369F; };
+		9DC79C66082366BD80DB5545 /* Security.framework */ = {isa = PBXBuildFile; fileRef = EDF255073E203504EC2B2D00; };
 		9E5A7EB2D4DE8258C8C127DF /* include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = 55CF79DE0B22DBDEAF4C74C5; };
 		9F66D6AB6C415D5A5B3E95A5 /* CommandManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = 70D598BB86E204F0BC11F5E7; };
 		A17177E61D73D12C31AE2E16 /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 38932A380E1BB6186445C4AF; };
@@ -128,6 +129,7 @@
 		AC3A2538752AEED8F22BDCE4 /* FixturePatch.cpp */ = {isa = PBXBuildFile; fileRef = BB88E9227FD8BEE252B334F6; };
 		B243DB325F8E427E2A319A3D /* VirtualFaderColGrid.cpp */ = {isa = PBXBuildFile; fileRef = DB9A0F86E957473ED860E49B; };
 		B494AFEBA23369A7F6FDE81E /* Group.cpp */ = {isa = PBXBuildFile; fileRef = 42AF358271815DD3E4D8629C; };
+		B5970B017278302AE1019BEE /* Metal.framework */ = {isa = PBXBuildFile; fileRef = 3FADA0EBFCF47D6792E70733; settings = { ATTRIBUTES = (Weak, ); }; };
 		B6871AB9D48350F746E4C3E9 /* IOKit.framework */ = {isa = PBXBuildFile; fileRef = 036291D23F3C544893FEC2A3; };
 		B6C79BB55EF2B92D7C8184E6 /* EffectAction.cpp */ = {isa = PBXBuildFile; fileRef = ED6A0B82F8048D94BFA8D889; };
 		B8ECFF8EA065F1D8DCAFCF66 /* CoreAudioKit.framework */ = {isa = PBXBuildFile; fileRef = 37DFAB8E922DD1452614070A; };
@@ -149,6 +151,7 @@
 		D174FA18D7670C20B1BFAC90 /* list_ports_win.cc */ = {isa = PBXBuildFile; fileRef = 3C6349112B0C6D567503E82B; };
 		D2670406E7A2779AADAE9E39 /* MultiplicatorAction.cpp */ = {isa = PBXBuildFile; fileRef = 9FBA8625820E163A1C6B3E3A; };
 		D36B7F6E7ACD8652F5DDFF87 /* CommandSelectionManager.cpp */ = {isa = PBXBuildFile; fileRef = 5941FA6A90768BF9A5502B6B; };
+		D50BF2669952BA61BE3DD3CB /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = E7884757F9B8B7D885716D90; settings = { ATTRIBUTES = (Weak, ); }; };
 		D9C9A54D6DEC72524EE616B3 /* CarouselManager.cpp */ = {isa = PBXBuildFile; fileRef = 50ED73539A7F5278007C908C; };
 		D9F94B11A324BD07501E5860 /* PresetValue.cpp */ = {isa = PBXBuildFile; fileRef = 7AFC413AC8C5156599197A0E; };
 		DA907EAFD0653CC737B7CE3A /* CuelistGridView.cpp */ = {isa = PBXBuildFile; fileRef = A4D0A7FB9A3B36A7F4752EEF; };
@@ -281,6 +284,7 @@
 		3E2076338F50A8BBE605DD0D /* juce_gui_extra */ /* juce_gui_extra */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_extra; path = ../../JUCE/modules/juce_gui_extra; sourceTree = SOURCE_ROOT; };
 		3E245F805B35A49EC499FBB1 /* GroupManager.h */ /* GroupManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupManager.h; path = ../../Source/Definitions/Group/GroupManager.h; sourceTree = SOURCE_ROOT; };
 		3E5FE455D1378375EA708271 /* unix.cc */ /* unix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unix.cc; path = ../../Source/Common/Serial/lib/serial/impl/unix.cc; sourceTree = SOURCE_ROOT; };
+		3FADA0EBFCF47D6792E70733 /* Metal.framework */ /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		405F025D532AD3E94C8D45B9 /* Layout.cpp */ /* Layout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Layout.cpp; path = ../../Source/Definitions/Layout/Layout.cpp; sourceTree = SOURCE_ROOT; };
 		40941D83FBAA1BA3CB3BAA81 /* ConductorInfos.h */ /* ConductorInfos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConductorInfos.h; path = ../../Source/UI/ConductorInfos.h; sourceTree = SOURCE_ROOT; };
 		40D2D0CB5ED75C1E00601B49 /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
@@ -552,6 +556,7 @@
 		E6911D05168FDF2FB76AB207 /* EncodersMultUI.cpp */ /* EncodersMultUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncodersMultUI.cpp; path = ../../Source/UI/EncodersMult/EncodersMultUI.cpp; sourceTree = SOURCE_ROOT; };
 		E70C3FAF3AAE783408D9E0A9 /* VirtualButtonManagerUI.cpp */ /* VirtualButtonManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualButtonManagerUI.cpp; path = ../../Source/UI/VirtualButtons/VirtualButtonManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		E77B5B5A8BB7AC45FC1EC566 /* juce_core */ /* juce_core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_core; path = ../../JUCE/modules/juce_core; sourceTree = SOURCE_ROOT; };
+		E7884757F9B8B7D885716D90 /* MetalKit.framework */ /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		E8079A1D8CD8856F2AB3549D /* CommandManager.cpp */ /* CommandManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandManager.cpp; path = ../../Source/Definitions/Command/CommandManager.cpp; sourceTree = SOURCE_ROOT; };
 		E84CEE9F82D17306BBEFDD88 /* include_juce_audio_devices.mm */ /* include_juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_devices.mm; path = ../../JuceLibraryCode/include_juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		E8D34820772B8C46B9C7E61E /* MIDIFeedbackManager.h */ /* MIDIFeedbackManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIFeedbackManager.h; path = ../../Source/Definitions/Interface/interfaces/midi/MIDIFeedbackManager.h; sourceTree = SOURCE_ROOT; };
@@ -560,6 +565,7 @@
 		EA7B69199ED5B4C59D391EBA /* CuelistAction.cpp */ /* CuelistAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CuelistAction.cpp; path = ../../Source/Definitions/Actions/CuelistAction.cpp; sourceTree = SOURCE_ROOT; };
 		EBD6D22055646F12F15B281D /* InterfaceManagerUI.h */ /* InterfaceManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceManagerUI.h; path = ../../Source/Definitions/Interface/ui/InterfaceManagerUI.h; sourceTree = SOURCE_ROOT; };
 		ED6A0B82F8048D94BFA8D889 /* EffectAction.cpp */ /* EffectAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectAction.cpp; path = ../../Source/Definitions/Actions/EffectAction.cpp; sourceTree = SOURCE_ROOT; };
+		EDF255073E203504EC2B2D00 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		EDF7659AF2BF069B48D54B7D /* FixtureManagerUI.h */ /* FixtureManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureManagerUI.h; path = ../../Source/Definitions/Fixture/FixtureManagerUI.h; sourceTree = SOURCE_ROOT; };
 		EEE214A22958197515F24C7E /* Encoders.cpp */ /* Encoders.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Encoders.cpp; path = ../../Source/UI/Encoders.cpp; sourceTree = SOURCE_ROOT; };
 		EFC5E0833382D16721B3369F /* EncodersMultCmd.cpp */ /* EncodersMultCmd.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncodersMultCmd.cpp; path = ../../Source/UI/EncodersMult/EncodersMultCmd.cpp; sourceTree = SOURCE_ROOT; };
@@ -611,7 +617,10 @@
 				B6871AB9D48350F746E4C3E9,
 				95CC2B9FB1CA57C47ADE5FC8,
 				22BD2032445DFD50718DB3F0,
+				9DC79C66082366BD80DB5545,
 				77074B6B4BC78CC9957A6AC6,
+				B5970B017278302AE1019BEE,
+				D50BF2669952BA61BE3DD3CB,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,7 +1424,10 @@
 				036291D23F3C544893FEC2A3,
 				FC1C1685A486AC1E9558F20A,
 				F90CBF302738DAB7A626F836,
+				EDF255073E203504EC2B2D00,
 				E6100648C258327C6238CE1B,
+				3FADA0EBFCF47D6792E70733,
+				E7884757F9B8B7D885716D90,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1572,6 +1584,7 @@
 		15E9F5E9EB836447D5145C11 = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "Norbert Rostaing";
 				TargetAttributes = {
@@ -1815,6 +1828,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
@@ -1846,6 +1860,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
@@ -1861,7 +1876,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.0.1b37",
+					"JUCE_APP_VERSION=1.0.1b43",
 					"JUCE_APP_VERSION_HEX=0x10001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1892,7 +1907,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
-				OTHER_LDFLAGS = "-lServus -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
 				USE_HEADERMAP = NO;
@@ -1907,6 +1922,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
@@ -1923,7 +1939,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.0.1b37",
+					"JUCE_APP_VERSION=1.0.1b43",
 					"JUCE_APP_VERSION_HEX=0x10001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1959,7 +1975,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
-				OTHER_LDFLAGS = "-lServus -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
 				USE_HEADERMAP = NO;
@@ -1974,6 +1990,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
@@ -1990,7 +2007,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.0.1b37",
+					"JUCE_APP_VERSION=1.0.1b43",
 					"JUCE_APP_VERSION_HEX=0x10001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -2024,9 +2041,9 @@
 					"\"../../External/servus/lib/silicon/release\"",
 				);
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
-				OTHER_LDFLAGS = "-lServus -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
 				USE_HEADERMAP = NO;
@@ -2057,6 +2074,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
@@ -2104,6 +2122,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;

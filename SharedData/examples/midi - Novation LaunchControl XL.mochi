@@ -8,21 +8,26 @@
         },
         {
           "value": [
-            "",
-            ""
+            "\\\\?\\usb#vid_1235&pid_0061#5&30719adf&0&3#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global",
+            "\\\\?\\usb#vid_1235&pid_0061#5&30719adf&0&3#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global"
           ],
           "controlAddress": "/device"
         }
       ],
-      "niceName": "M32 - Mackie MCU",
+      "niceName": "Novation LaunchControl XL",
       "containers": {
         "mappings": {
           "items": [
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
+                },
+                {
+                  "value": 77,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
@@ -33,7 +38,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -46,7 +51,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 1",
+              "niceName": "FADER 1",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -68,16 +73,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 1,
+                  "value": 78,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -90,7 +90,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -103,7 +103,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 2",
+              "niceName": "FADER 2",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -132,16 +132,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 2,
+                  "value": 79,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -154,7 +149,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -167,7 +162,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 3",
+              "niceName": "FADER 3",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -196,16 +191,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 4,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 3,
+                  "value": 80,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -218,7 +208,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -231,7 +221,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 4",
+              "niceName": "FADER 4",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -260,16 +250,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 5,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 4,
+                  "value": 81,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -282,7 +267,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -295,7 +280,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 5",
+              "niceName": "FADER 5",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -324,16 +309,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 6,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 5,
+                  "value": 82,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -346,7 +326,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -359,7 +339,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 6",
+              "niceName": "FADER 6",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -388,16 +368,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 6,
+                  "value": 83,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -410,7 +385,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -423,7 +398,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 7",
+              "niceName": "FADER 7",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -452,16 +427,11 @@
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
+                  "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/channel"
-                },
-                {
-                  "value": 7,
+                  "value": 84,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -474,7 +444,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -487,7 +457,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Fader 8",
+              "niceName": "FADER 8",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -516,36 +486,36 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
+                  "value": true,
+                  "controlAddress": "/enabled"
                 },
                 {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 16,
+                  "value": 13,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -572,36 +542,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 17,
+                  "value": 14,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -635,36 +601,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 18,
+                  "value": 15,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -698,36 +660,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 19,
+                  "value": 16,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -761,36 +719,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 20,
+                  "value": 17,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -824,36 +778,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 21,
+                  "value": 18,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -887,36 +837,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 22,
+                  "value": 19,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -950,36 +896,32 @@
             {
               "parameters": [
                 {
-                  "value": "Encoder",
-                  "controlAddress": "/mode"
-                },
-                {
                   "value": "Control Change",
                   "controlAddress": "/type"
                 },
                 {
-                  "value": 23,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
                 {
                   "value": [
-                    1.0,
-                    11.0
+                    0.0,
+                    10.0
                   ],
                   "controlAddress": "/upRange"
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
                 },
                 {
                   "value": [
-                    0.009999999776482582,
-                    0.2000000029802322
+                    0.0,
+                    0.1000000014901161
                   ],
                   "controlAddress": "/valueRange"
                 }
@@ -1013,706 +955,9 @@
             {
               "parameters": [
                 {
-                  "value": 32,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
+                  "value": "Control Change",
+                  "controlAddress": "/type"
                 },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 1",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 33,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 2",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 2,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 34,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 3",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 3,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 35,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 4",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 4,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 36,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 5",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 5,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 37,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 6",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 6,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 38,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 7",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 7,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 39,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Btn Encoder 8",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 8,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 24,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Sel col 1",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 25,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Sel col 2",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 2,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 26,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Sel col 3",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 3,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 27,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Sel col 4",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 4,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 28,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Sel col 5",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 5,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
                 {
                   "value": 29,
                   "hexMode": false,
@@ -1727,7 +972,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -1740,7 +985,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Sel col 6",
+              "niceName": "Encoder 9",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -1748,13 +993,13 @@
                     {
                       "parameters": [
                         {
-                          "value": 6,
+                          "value": 2,
                           "hexMode": false,
-                          "controlAddress": "/column"
+                          "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -1768,6 +1013,10 @@
             },
             {
               "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
                 {
                   "value": 30,
                   "hexMode": false,
@@ -1782,7 +1031,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -1795,7 +1044,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Sel col 7",
+              "niceName": "Encoder 10",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -1803,13 +1052,18 @@
                     {
                       "parameters": [
                         {
-                          "value": 7,
+                          "value": 2,
                           "hexMode": false,
                           "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -1823,6 +1077,10 @@
             },
             {
               "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
                 {
                   "value": 31,
                   "hexMode": false,
@@ -1837,7 +1095,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -1850,177 +1108,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Sel col 8",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 8,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Solo col 1",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 2,
-                          "hexMode": false,
-                          "controlAddress": "/number"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 9,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Solo col 2",
-              "editorIsCollapsed": true,
-              "containers": {
-                "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 2,
-                          "hexMode": false,
-                          "controlAddress": "/column"
-                        },
-                        {
-                          "value": 2,
-                          "hexMode": false,
-                          "controlAddress": "/number"
-                        }
-                      ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
-                    }
-                  ],
-                  "viewOffset": [
-                    0,
-                    0
-                  ],
-                  "viewZoom": 1.0
-                }
-              },
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 10,
-                  "hexMode": false,
-                  "controlAddress": "/pitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    10.0
-                  ],
-                  "controlAddress": "/upRange"
-                },
-                {
-                  "value": [
-                    65.0,
-                    75.0
-                  ],
-                  "controlAddress": "/downRange"
-                },
-                {
-                  "value": [
-                    0.0,
-                    0.1000000014901161
-                  ],
-                  "controlAddress": "/valueRange"
-                }
-              ],
-              "niceName": "Solo col 3",
+              "niceName": "Encoder 11",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2038,8 +1126,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2054,7 +1142,11 @@
             {
               "parameters": [
                 {
-                  "value": 11,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 32,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2067,7 +1159,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2080,7 +1172,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Solo col 4",
+              "niceName": "Encoder 12",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2098,8 +1190,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2114,7 +1206,11 @@
             {
               "parameters": [
                 {
-                  "value": 12,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 33,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2127,7 +1223,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2140,7 +1236,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Solo col 5",
+              "niceName": "Encoder 13",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2158,8 +1254,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2174,7 +1270,11 @@
             {
               "parameters": [
                 {
-                  "value": 13,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 34,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2187,7 +1287,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2200,7 +1300,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Solo col 6",
+              "niceName": "Encoder 14",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2218,8 +1318,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2234,7 +1334,11 @@
             {
               "parameters": [
                 {
-                  "value": 14,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 35,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2247,7 +1351,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2260,7 +1364,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Solo col 7",
+              "niceName": "Encoder 15",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2278,8 +1382,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2294,7 +1398,11 @@
             {
               "parameters": [
                 {
-                  "value": 15,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 36,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2307,7 +1415,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2320,7 +1428,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Solo col 8",
+              "niceName": "Encoder 16",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2338,8 +1446,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2354,7 +1462,11 @@
             {
               "parameters": [
                 {
-                  "value": 16,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2367,7 +1479,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2380,7 +1492,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 1",
+              "niceName": "Encoder 17",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2393,8 +1505,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2409,7 +1521,11 @@
             {
               "parameters": [
                 {
-                  "value": 17,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 50,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2422,7 +1538,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2435,7 +1551,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 2",
+              "niceName": "Encoder 18",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2453,8 +1569,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2469,7 +1585,11 @@
             {
               "parameters": [
                 {
-                  "value": 18,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 51,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2482,7 +1602,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2495,7 +1615,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 3",
+              "niceName": "Encoder 19",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2513,8 +1633,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2529,7 +1649,11 @@
             {
               "parameters": [
                 {
-                  "value": 19,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 52,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2542,7 +1666,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2555,7 +1679,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 4",
+              "niceName": "Encoder 20",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2573,8 +1697,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2589,7 +1713,11 @@
             {
               "parameters": [
                 {
-                  "value": 20,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 53,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2602,7 +1730,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2615,7 +1743,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 5",
+              "niceName": "Encoder 21",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2633,8 +1761,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2649,7 +1777,11 @@
             {
               "parameters": [
                 {
-                  "value": 21,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2662,7 +1794,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2675,7 +1807,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 6",
+              "niceName": "Encoder 22",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2693,8 +1825,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2709,7 +1841,11 @@
             {
               "parameters": [
                 {
-                  "value": 22,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2722,7 +1858,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2735,7 +1871,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 7",
+              "niceName": "Encoder 23",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2753,8 +1889,8 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
                   "viewOffset": [
@@ -2769,7 +1905,11 @@
             {
               "parameters": [
                 {
-                  "value": 23,
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
                 },
@@ -2782,7 +1922,7 @@
                 },
                 {
                   "value": [
-                    65.0,
+                    64.0,
                     75.0
                   ],
                   "controlAddress": "/downRange"
@@ -2795,7 +1935,7 @@
                   "controlAddress": "/valueRange"
                 }
               ],
-              "niceName": "Mute 8",
+              "niceName": "Encoder 24",
               "editorIsCollapsed": true,
               "containers": {
                 "actions": {
@@ -2813,10 +1953,1275 @@
                           "controlAddress": "/number"
                         }
                       ],
-                      "niceName": "Above Button Press",
-                      "type": "Above Button Press"
+                      "niceName": "Encoder Move",
+                      "type": "Encoder Move"
                     }
                   ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 41,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 42,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 43,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 44,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 57,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 5",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 58,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 6",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 59,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 7",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 60,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 8",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 73,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 9",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 1,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 74,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 10",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 75,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 11",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 3,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 76,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 12",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 4,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 89,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 13",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 5,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 90,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 14",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 6,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 91,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 15",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 7,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 92,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Button 16",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "items": [
+                    {
+                      "parameters": [
+                        {
+                          "value": 8,
+                          "hexMode": false,
+                          "controlAddress": "/column"
+                        },
+                        {
+                          "value": 2,
+                          "hexMode": false,
+                          "controlAddress": "/number"
+                        }
+                      ],
+                      "niceName": "Below Button Press",
+                      "type": "Below Button Press"
+                    }
+                  ],
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 105,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Side Button 1",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 106,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Side Button 2",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 107,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Side Button 3",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": 108,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Side Button 4",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 104,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Arrow up",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 105,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Arrow down",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 106,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Arrow left",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 107,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    64.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Arrow right",
+              "editorIsCollapsed": true,
+              "containers": {
+                "actions": {
                   "viewOffset": [
                     0,
                     0
@@ -2834,910 +3239,18 @@
           "viewZoom": 1.0
         },
         "feedbacks": {
+          "editorIsCollapsed": true,
           "items": [
             {
               "parameters": [
                 {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 1",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 2",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 3",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 4,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 4,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 4",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 5,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 5,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 4,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 5",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 6,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 6,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 5,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 6",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 6,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 7",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": "Pitch wheel",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/midiChannel"
-                },
-                {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    128.0,
-                    16368.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Fader 8",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 24,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
                   "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 1",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 2,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 25,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 2",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 26,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 3",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 4,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 27,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 4",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 5,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 28,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 5",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 6,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 29,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 6",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 30,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 7",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 31,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Sel 8",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Solo 1",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 9,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Solo 2",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 10,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Solo 3",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 4,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 11,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Solo 4",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 5,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 12,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Solo 5",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 6,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
                 },
                 {
                   "value": 13,
@@ -3747,50 +3260,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Solo 6",
+              "niceName": "Encoder 1",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
                 },
                 {
                   "value": 2,
                   "hexMode": false,
-                  "controlAddress": "/sourceNumber"
+                  "controlAddress": "/sourceColumn"
                 },
                 {
                   "value": 14,
@@ -3800,50 +3293,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Solo 7",
+              "niceName": "Encoder 2",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 8,
+                  "value": 3,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 2,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
                 },
                 {
                   "value": 15,
@@ -3853,45 +3326,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Solo 8",
+              "niceName": "Encoder 3",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 3,
+                  "value": 4,
                   "hexMode": false,
-                  "controlAddress": "/sourceNumber"
+                  "controlAddress": "/sourceColumn"
                 },
                 {
                   "value": 16,
@@ -3901,50 +3359,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Mute 1",
+              "niceName": "Encoder 4",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 2,
+                  "value": 5,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
                 },
                 {
                   "value": 17,
@@ -3954,50 +3392,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Mute 2",
+              "niceName": "Encoder 5",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 3,
+                  "value": 6,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
                 },
                 {
                   "value": 18,
@@ -4007,50 +3425,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Mute 3",
+              "niceName": "Encoder 6",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 4,
+                  "value": 7,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
                 },
                 {
                   "value": 19,
@@ -4060,50 +3458,30 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Mute 4",
+              "niceName": "Encoder 7",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 5,
+                  "value": 8,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
                 },
                 {
                   "value": 20,
@@ -4113,303 +3491,638 @@
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Mute 5",
+              "niceName": "Encoder 8",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
                 {
-                  "value": 6,
+                  "value": 1,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": 3,
+                  "value": 2,
                   "hexMode": false,
                   "controlAddress": "/sourceNumber"
                 },
                 {
-                  "value": 21,
+                  "value": 29,
                   "hexMode": false,
                   "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 1,
+                  "value": 20,
                   "hexMode": false,
                   "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
                 }
               ],
-              "niceName": "Mute 6",
+              "niceName": "Encoder 9",
               "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": "Virtual fader above button",
+                  "value": "Virtual rotary",
                   "controlAddress": "/sourceType"
                 },
-                {
-                  "value": 7,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 22,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Mute 7",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Virtual fader above button",
-                  "controlAddress": "/sourceType"
-                },
-                {
-                  "value": 8,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
-                },
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceNumber"
-                },
-                {
-                  "value": 23,
-                  "hexMode": false,
-                  "controlAddress": "/midiPitchOrNumber"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/onLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/offLoadedValue"
-                },
-                {
-                  "value": 1,
-                  "hexMode": false,
-                  "controlAddress": "/genericActionValue"
-                }
-              ],
-              "niceName": "Mute 8",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
-                },
-                {
-                  "value": [
-                    0.0,
-                    127.0
-                  ],
-                  "controlAddress": "/midiOutputRange"
-                }
-              ],
-              "niceName": "Strip 1",
-              "editorIsCollapsed": true,
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
                 {
                   "value": 2,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 30,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 10",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
                 },
                 {
                   "value": 2,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
-                }
-              ],
-              "niceName": "Strip 2",
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 3,
-                  "hexMode": false,
-                  "controlAddress": "/sourceColumn"
+                  "controlAddress": "/sourceNumber"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 31,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 3,
+                  "value": 20,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
+                  "controlAddress": "/onValue"
                 }
               ],
-              "niceName": "Strip 3",
+              "niceName": "Encoder 11",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
                 {
                   "value": 4,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
                     0.0,
-                    127.0
+                    3.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 12",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 33,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 13",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 34,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 14",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 35,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 15",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 36,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 16",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 49,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 17",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 50,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 18",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 51,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 19",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
                 },
                 {
                   "value": 4,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 52,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
                 }
               ],
-              "niceName": "Strip 4",
+              "niceName": "Encoder 20",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
                 {
                   "value": 5,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 53,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 21",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 6,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 54,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 22",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 55,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 23",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual rotary",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 56,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    3.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 20,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                }
+              ],
+              "niceName": "Encoder 24",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 41,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
@@ -4417,26 +4130,189 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 1",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 42,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 2",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 43,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 3",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 44,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 4",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
                 },
                 {
                   "value": 5,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 57,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
                 }
               ],
-              "niceName": "Strip 5",
+              "niceName": "Button 5",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
                 {
                   "value": 6,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 58,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
@@ -4444,26 +4320,337 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 6",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 59,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 7",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 60,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": false,
+                  "controlAddress": "/differentChannels"
+                },
+                {
+                  "value": 32,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 8",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 1,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 73,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 9",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 74,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 10",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 3,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 75,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 11",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 4,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 76,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 12",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 5,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 89,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 13",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
                 },
                 {
                   "value": 6,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
-                }
-              ],
-              "niceName": "Strip 6",
-              "type": "BaseItem"
-            },
-            {
-              "parameters": [
-                {
-                  "value": 7,
-                  "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 90,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
@@ -4473,24 +4660,40 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 7,
+                  "value": 18,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
                 }
               ],
-              "niceName": "Strip 7",
+              "niceName": "Button 14",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             },
             {
               "parameters": [
                 {
-                  "value": 8,
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 7,
                   "hexMode": false,
                   "controlAddress": "/sourceColumn"
                 },
                 {
-                  "value": "Text",
-                  "controlAddress": "/midiType"
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 91,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
                 },
                 {
                   "value": [
@@ -4500,12 +4703,61 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
-                  "value": 8,
+                  "value": 18,
                   "hexMode": false,
-                  "controlAddress": "/mcuColumn"
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
                 }
               ],
-              "niceName": "Strip 8",
+              "niceName": "Button 15",
+              "editorIsCollapsed": true,
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Virtual fader below button",
+                  "controlAddress": "/sourceType"
+                },
+                {
+                  "value": 8,
+                  "hexMode": false,
+                  "controlAddress": "/sourceColumn"
+                },
+                {
+                  "value": 2,
+                  "hexMode": false,
+                  "controlAddress": "/sourceNumber"
+                },
+                {
+                  "value": 92,
+                  "hexMode": false,
+                  "controlAddress": "/midiPitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/onValue"
+                },
+                {
+                  "value": 18,
+                  "hexMode": false,
+                  "controlAddress": "/offValue"
+                }
+              ],
+              "niceName": "Button 16",
+              "editorIsCollapsed": true,
               "type": "BaseItem"
             }
           ],

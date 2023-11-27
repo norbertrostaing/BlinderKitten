@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "Definitions/Command/CommandSelectionManager.h"
+#include "Common/CommonIncludes.h"
 
 class BKPath:
     public BaseItem
@@ -49,7 +50,13 @@ class BKPath:
     FloatParameter* circleTo;
 
     BoolParameter* spreadSubFixtures;
+    Point2DParameter* tilesSize;
+    FloatParameter* textSize;
+    BoolParameter* overrideColor;
+    ColorParameter* pathColor;
+    StringParameter* customText;
     CommandSelectionManager selection;
+    ActionManager actionManager;
 
     CriticalSection isComputing;
     HashMap<Fixture*, std::shared_ptr<Point<float>>> fixtToPos;
@@ -58,6 +65,8 @@ class BKPath:
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
+
+    void clicked();
 
     static void rotateVect(Point<float>* vect, float angleInDegrees);
     static float getVectAngle(Point<float>* vect);

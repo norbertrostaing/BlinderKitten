@@ -108,22 +108,24 @@ void InputPanel::paint (juce::Graphics& g)
 void InputPanel::resized()
 {
     
-    float scale = 1;
-    if (engine != nullptr && engine->panelScale != nullptr) {
-        scale = engine->panelScale->getValue();
-    }
+    bool fixedSize = false;
+
+    float scaleX = 1;
+    float scaleY = 1;
+
+    scaleX = getWidth() / 560.;
+    scaleY = getHeight() / 200.;
     int nChildren =getNumChildComponents ();
     for (int i = 0; i < nChildren; i++) {
-        getChildComponent(i)->setTransform(AffineTransform::scale(scale));
+        //getChildComponent(i)->setTransform(AffineTransform::scale(scaleX, scaleY));
 
     }
 
-
-    int margin = 20;
-    int h = 40;
-    int r = 40;
-    int sm = 40;
-    int lg = 120;
+    int margin = 20 * scaleX;
+    int h = 40 * scaleY;
+    int r = 40 * scaleY;
+    int sm = 40 * scaleX;
+    int lg = 120 * scaleX;
     int p2 = 2*lg + margin;
     int p3 = p2 + (4 * sm) + margin;
     // int mid = (p3 + lg)/2;

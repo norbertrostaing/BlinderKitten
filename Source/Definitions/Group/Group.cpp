@@ -36,6 +36,9 @@ Group::Group(var params) :
 	if (params.isVoid()) {
 		selection.addItem();
 	}
+	MessageManager::callAsync([this]() {GroupGridView::getInstance()->updateCells(); });
+	
+
 }
 
 Group::~Group()

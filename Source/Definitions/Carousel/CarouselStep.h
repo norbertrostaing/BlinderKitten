@@ -15,6 +15,7 @@
 class SubFixtureChannel;
 class SubFixture;
 class ChannelValue;
+class Carousel;
 
 class CarouselStep:
     public BaseItem
@@ -37,6 +38,9 @@ class CarouselStep:
     void computeValues(Array<SubFixture*> SubFixtures);
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
     CriticalSection isComputing;
+
+    Carousel * parentCarousel = nullptr;
+    void checkParentCarousel();
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

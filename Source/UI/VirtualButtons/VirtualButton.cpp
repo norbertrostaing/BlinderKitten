@@ -116,7 +116,8 @@ void VirtualButton::onContainerParameterChangedInternal(Parameter* c) {
 	if (c == colNumber || c == pageNumber || c == rowNumber || c == customText) {
 		updateName();
 	}
-	VirtualButtonGrid::getInstance()->fillCells();
+	MessageManager::callAsync([this]{VirtualButtonGrid::getInstance()->fillCells(); });
+	
 }
 
 void VirtualButton::updateDisplay() {

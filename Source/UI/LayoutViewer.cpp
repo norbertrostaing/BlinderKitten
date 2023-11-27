@@ -20,6 +20,14 @@ LayoutViewer::LayoutViewer() :
 	layoutsList.addListener(this);
 	addAndMakeVisible(&layoutsList);
 
+	editMode.setButtonText("Edit mode");
+	editMode.addListener(this);
+	addAndMakeVisible(&editMode);
+
+	viewPaths.setButtonText("Paths lines");
+	viewPaths.addListener(this);
+	addAndMakeVisible(&viewPaths);
+
 	rebuildLayoutsList();
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
 
@@ -73,9 +81,39 @@ Colour LayoutViewer::getClickColour(BKPath* path, ClicAction action)
 	temp /= 256;
 	int b = temp % 256;
 
-	colourToTarget.set(currentClicColour, path);
+	colourToPath.set(currentClicColour, path);
 	colourToAction.set(currentClicColour, action);
 	return Colour(r,g,b);
+}
+
+Colour LayoutViewer::getClickColour(SubFixture* sf)
+{
+	currentClicColour += 5;
+	uint32 temp = currentClicColour;
+	int r = temp % 256;
+	temp /= 256;
+	int g = temp % 256;
+	temp /= 256;
+	int b = temp % 256;
+
+	colourToSubFixture.set(currentClicColour, sf);
+	colourToAction.set(currentClicColour, CLIC_SELECT);
+	return Colour(r, g, b);
+}
+
+Colour LayoutViewer::getClickColour(Fixture* f)
+{
+	currentClicColour += 5;
+	uint32 temp = currentClicColour;
+	int r = temp % 256;
+	temp /= 256;
+	int g = temp % 256;
+	temp /= 256;
+	int b = temp % 256;
+
+	colourToFixture.set(currentClicColour, f);
+	colourToAction.set(currentClicColour, CLIC_SELECT);
+	return Colour(r, g, b);
 }
 
 void LayoutViewer::resetClickColour()
@@ -91,6 +129,18 @@ void LayoutViewer::comboBoxChanged(ComboBox* comboBoxThatHasChanged)
 	selectLayout(id);
 }
 
+void LayoutViewer::buttonStateChanged(Button* b)
+{
+}
+
+void LayoutViewer::buttonClicked(Button* b)
+{
+	repaint();
+	if (b == &editMode && selectedLayout != nullptr && editMode.getToggleState()) {
+		selectedLayout->selectThis();
+	}
+}
+
 void LayoutViewer::selectLayout(int id)
 {
 	if (selectedLayout != nullptr) {
@@ -101,6 +151,9 @@ void LayoutViewer::selectLayout(int id)
 		selectedLayout = l;
 		selectedLayout->addChangeListener(this);
 		selectedLayout->computeData();
+		if (editMode.getToggleState()) {
+			selectedLayout->selectThis();
+		}
 	}
 	else {
 		selectedLayout = nullptr;
@@ -113,7 +166,9 @@ void LayoutViewer::resized()
 	Rectangle<int> r = getLocalBounds();
 	Rectangle<int> hr = r.removeFromTop(20);
 
-	layoutsList.setBounds(hr.removeFromLeft(150).reduced(2));
+	layoutsList.setBounds(hr.removeFromLeft(80).reduced(2));
+	viewPaths.setBounds(hr.removeFromLeft(80).reduced(2));
+	editMode.setBounds(hr.removeFromLeft(80).reduced(2));
 }
 
 
@@ -137,23 +192,46 @@ void LayoutViewer::mouseDown(const MouseEvent& e)
 	
 	int c = (((b*256) + g )*256) + r;
 
-	if (colourToTarget.contains(c) && colourToAction.contains(c)) {
+	if (colourToAction.contains(c)) {
+		ClicAction a = colourToAction.getReference(c);
 
-		float layoutX = jmap(float(e.getDistanceFromDragStartX() + e.getMouseDownX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
-		float layoutY = jmap(float(e.getDistanceFromDragStartY() + e.getMouseDownY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
+		if (a == CLIC_SELECT) {
+			if (colourToFixture.contains(c)) {
+				Fixture* f = colourToFixture.getReference(c);
+				UserInputManager::getInstance()->gridViewCellPressed("fixture",f->id->intValue());
+				//UserInputManager::getInstance()->processInput("Fixture");
+				//UserInputManager::getInstance()->processInput(f->id->stringValue());
+			}
+			else if(colourToSubFixture.contains(c)) {
+				SubFixture* sf = colourToSubFixture.getReference(c);
+				UserInputManager::getInstance()->gridViewCellPressed("fixture", sf->parentFixture->id->intValue());
+				if (sf->parentFixture->subFixtures.size() > 1) {
+					UserInputManager::getInstance()->processInput("subfixture");
+					UserInputManager::getInstance()->processInput(String(sf->subId));
+				}
+			}
+			else if (colourToPath.contains(c)) {
+				colourToPath.getReference(c)->clicked();
+			}
+ 		}
+		if (colourToPath.contains(c)) {
 
-		currentMouseAction = colourToAction.getReference(c);
-		BKPath* p = colourToTarget.getReference(c);
-		currentMousePath = p;
-		deltaMouseX = (float)p->position->getValue()[0] - layoutX;
-		deltaMouseY = (float)p->position->getValue()[1] - layoutY;
-		if (currentMouseAction == CLIC_TL) { fixedMouseX = p->gridBR.x; fixedMouseY = p->gridBR.y; }
-		if (currentMouseAction == CLIC_TR) { fixedMouseX = p->gridBL.x; fixedMouseY = p->gridBL.y; }
-		if (currentMouseAction == CLIC_BL) { fixedMouseX = p->gridTR.x; fixedMouseY = p->gridTR.y; }
-		if (currentMouseAction == CLIC_BR) { fixedMouseX = p->gridTL.x; fixedMouseY = p->gridTL.y; }
+			float layoutX = jmap(float(e.getDistanceFromDragStartX() + e.getMouseDownX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
+			float layoutY = jmap(float(e.getDistanceFromDragStartY() + e.getMouseDownY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
 
-		if (e.getNumberOfClicks() == 2) {
-			currentMousePath->selectThis();
+			currentMouseAction = colourToAction.getReference(c);
+			BKPath* p = colourToPath.getReference(c);
+			currentMousePath = p;
+			deltaMouseX = (float)p->position->getValue()[0] - layoutX;
+			deltaMouseY = (float)p->position->getValue()[1] - layoutY;
+			if (currentMouseAction == CLIC_TL) { fixedMouseX = p->gridBR.x; fixedMouseY = p->gridBR.y; }
+			if (currentMouseAction == CLIC_TR) { fixedMouseX = p->gridBL.x; fixedMouseY = p->gridBL.y; }
+			if (currentMouseAction == CLIC_BL) { fixedMouseX = p->gridTR.x; fixedMouseY = p->gridTR.y; }
+			if (currentMouseAction == CLIC_BR) { fixedMouseX = p->gridTL.x; fixedMouseY = p->gridTL.y; }
+
+			if (e.getNumberOfClicks() == 2 && editMode.getToggleState()) {
+				currentMousePath->selectThis();
+			}
 		}
 	}
 }
@@ -203,8 +281,8 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 		}
 		else if (type == BKPath::PATH_ROD) {
 			if (currentMouseAction == CLIC_DRAG) {
-				float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
-				float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
+				//float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
+				//float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
 
 				var v;
 				v.append(layoutX + deltaMouseX);
@@ -217,7 +295,7 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 				delta.x -= (float)currentMousePath->position->getValue()[0];
 				delta.y -= (float)currentMousePath->position->getValue()[1];
 
-				currentMousePath->rodSize->setValue( delta.getDistanceFromOrigin());
+				currentMousePath->rodSize->setValue( delta.getDistanceFromOrigin() *2);
 				currentMousePath->rodAngle->setValue(radiansToDegrees( BKPath::getVectAngle(&delta)));
 			}
 
@@ -271,6 +349,7 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 
 void LayoutViewer::mouseUp(const MouseEvent& e)
 {
+
 	currentMouseAction = CLIC_NOACTION;
 	currentMousePath = nullptr;
 }
@@ -288,8 +367,8 @@ void LayoutViewer::mouseMove(const MouseEvent& e)
 
 		int c = (((b * 256) + g) * 256) + r;
 
-		if (colourToTarget.contains(c)) {
-			newHovered = colourToTarget.getReference(c);
+		if (colourToPath.contains(c) && editMode.getToggleState()) {
+			newHovered = colourToPath.getReference(c);
 		}
 		else {
 			newHovered = nullptr;
@@ -308,6 +387,29 @@ void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)
 	repaint();
 }
 
+void LayoutViewer::drawMidArrow(Graphics& g, Point<float>& from, Point<float>& to)
+{
+	Point<float> endArrow;
+	Line<float> line;
+	endArrow = ((to - from)/2.0f);
+	float arrSize = endArrow.getDistanceFromOrigin();
+	float ratio = (arrSize + 4) / arrSize;
+	endArrow *= ratio;
+	endArrow += from;
+	line.setStart(from);
+	line.setEnd(endArrow);
+	g.drawArrow(line, 0, 6, 8);
+}
+
+void LayoutViewer::drawMidArrow(Graphics& g, float fromX, float fromY, float toX, float toY)
+{
+	Point<float>from;
+	from.setXY(fromX, fromY);
+	Point<float>to;
+	to.setXY(toX, toY);
+	drawMidArrow(g, from, to);
+}
+
 void LayoutViewer::paint(Graphics& g)
 {
 	clicZones = Image(Image::ARGB, getWidth(), getHeight(), true);
@@ -322,6 +424,10 @@ void LayoutViewer::paint(Graphics& g)
 		g.drawText("No layout selected", getLocalBounds().toFloat(), Justification::centred, false);
 		return;
 	}
+
+	float scaleTileX = selectedLayout->tilesScale->getValue()[0];
+	float scaleTileY = selectedLayout->tilesScale->getValue()[1];
+	float scaleText = selectedLayout->textScale->floatValue();
 
 	var dimensionX = selectedLayout->dimensionsX->getValue();
 	var dimensionY = selectedLayout->dimensionsY->getValue();
@@ -366,41 +472,81 @@ void LayoutViewer::paint(Graphics& g)
 	bottomRightY = originY + height;
 	uiScale = width/layoutWidth;
 
-	//g.setColour(Colour(64,64,64));
-	//g.fillRect(originX, originY, width, height);
 	g.reduceClipRegion(originX, originY, width, height);
-	g.setOrigin(originX, originY+height);
-	g.addTransform(AffineTransform::verticalFlip(1));
+	g.setOrigin(originX, originY);
 	g.fillAll(Colour(32, 32, 32));
 
 	clicg.reduceClipRegion(originX, originY, width, height);
-	clicg.setOrigin(originX, originY + height);
-	clicg.addTransform(AffineTransform::verticalFlip(1));
-
-	float fixtWidth = 5;
-	float halfFixtWidth = fixtWidth/2;
+	clicg.setOrigin(originX, originY);
 
 	float handleWidth = 10;
 	float halfHandleWidth = handleWidth/2;
 
-	int currentClickColor = 1;
-	colourToTarget.clear();
+	//int currentClickColor = 1;
+	colourToPath.clear();
+	colourToSubFixture.clear();
+	colourToFixture.clear();
 	colourToAction.clear();
 
-	for (int i = 0; i < selectedLayout->paths.items.size(); i++) {
-		BKPath* p = selectedLayout->paths.items[i];
+	for (int iPath = 0; iPath < selectedLayout->paths.items.size(); iPath++) {
+		BKPath* p = selectedLayout->paths.items[iPath];
 		BKPath::PathType type = p->pathType->getValueDataAsEnum<BKPath::PathType>(); //::PATH_LINE) 
 		Colour hoverColour((uint8)255, (uint8)255, (uint8)255, (uint8)63);
 		Colour handleColour((uint8)255, (uint8)255, (uint8)255);
 
+		float tileWidth = p->tilesSize->getValue()[0];
+		float tileHeight = p->tilesSize->getValue()[1];
+
+		tileWidth *= scaleTileX;
+		tileHeight *= scaleTileY;
+		float halfTileWidth = tileWidth/2;
+		float halfTileHeight = tileHeight/2;
+
+		g.setFont(p->textSize->floatValue()*scaleText);
+
+		bool overrideColor = p->overrideColor->boolValue();
+		Colour overridenColor = juce::Colours::black;
+		if (p->overrideColor->boolValue()) {
+			overridenColor = p->pathColor->getColor();
+		}
+
+		bool drawPaths = viewPaths.getToggleState();
+		bool edit = editMode.getToggleState();
+
 		if (type == BKPath::PATH_POINT) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 
-			clicg.setColour(getClickColour(p, CLIC_DRAG));
-			clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
-			g.setColour(juce::Colours::orange);
-			g.drawRect(fromX - halfFixtWidth, fromY - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+			if (edit) {
+				clicg.setColour(getClickColour(p, CLIC_DRAG));
+				clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
+			}
+			else {
+				clicg.setColour(getClickColour(p, CLIC_SELECT));
+				clicg.fillRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight);
+			}
+			Colour drawColor = juce::Colours::white;
+			if (overrideColor) {drawColor = overridenColor; }
+			else if (p->selection.computedSelectedSubFixtures.size() > 0) {
+				drawColor = p->selection.computedSelectedSubFixtures[0]->parentFixture->getLayoutColor();
+			}
+			g.setColour(drawColor);
+			g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
+			String name = "";
+			if (p->customText->stringValue() != "") {
+				name = p->customText->stringValue().trim();
+			}
+			else if (p->spreadSubFixtures->boolValue()) {
+				if (p->selection.computedSelectedSubFixtures.size()>0) {
+					name = p->selection.computedSelectedSubFixtures[0]->displayName;
+				}
+			}
+			else {
+				if (p->selection.computedSelectedSubFixtures.size() > 0) {
+					name = p->selection.computedSelectedSubFixtures[0]->parentFixture->id->stringValue();
+				}
+			}
+			g.drawText(name, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 
 			if (p == hoveredPath) {
 				g.setColour(handleColour);
@@ -410,38 +556,86 @@ void LayoutViewer::paint(Graphics& g)
 		}
 		if (type == BKPath::PATH_LINE) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 			float toX = jmap((float)p->lineEndPosition->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float toY = jmap((float)p->lineEndPosition->getValue()[1], (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float toY = jmap((float)p->lineEndPosition->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 			Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 
-			if (true) { // wanna draw lines ?
+			if (drawPaths) { // wanna draw lines ?
 				g.setColour(juce::Colours::lightgrey);
 				g.drawLine(line, 0.5f);
 			}
 
-			clicg.setColour(getClickColour(p, CLIC_DRAG));
-			clicg.drawLine(line, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_ORIGIN));
-			clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_END));
-			clicg.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
-			g.setColour(juce::Colours::orange);
+			if (edit) {
+				clicg.setColour(getClickColour(p, CLIC_DRAG));
+				clicg.drawLine(line, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_ORIGIN));
+				clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_END));
+				clicg.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
+			}
+			float currentArrowX = -1;
+			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
+					if (p->subFixtToPos.contains(sf)) {
+						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
+						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
+							g.setColour(juce::Colours::lightgrey);
+							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
+						}
+						currentArrowX = X;
+						currentArrowY = Y;
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->displayName;
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						if (!edit) {
+							clicg.setColour(getClickColour(sf));
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						}
+					}
 				}
 				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				Array<Fixture*> drawedFixtures;
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
+					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
+						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
+						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
+							g.setColour(juce::Colours::lightgrey);
+							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
+						}
+						currentArrowX = X;
+						currentArrowY = Y;
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->parentFixture->id->stringValue();
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						if (!edit) {
+							clicg.setColour(getClickColour(sf->parentFixture));
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						}
+					}
 				}
 				p->isComputing.exit();
 			}
@@ -456,37 +650,83 @@ void LayoutViewer::paint(Graphics& g)
 
 		}
 		if (type == BKPath::PATH_ROD) {
-			Point tl(jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point tr(jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
+			Point tl(jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point tr(jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
 			Line<float> line(tl, tr);
 
-			if (true) { // wanna draw lines ?
+			if (drawPaths) { // wanna draw lines ?
 				g.setColour(juce::Colours::lightgrey);
 				g.drawLine(line, 0.5f);
 			}
 
 			clicg.setColour(getClickColour(p, CLIC_DRAG));
 			clicg.drawLine(line, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_ORIGIN));
-			clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+			//clicg.setColour(getClickColour(p, CLIC_ORIGIN));
+			//clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
 			clicg.setColour(getClickColour(p, CLIC_END));
 			clicg.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
-			g.setColour(juce::Colours::orange);
+			float currentArrowX = -1;
+			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
+					if (p->subFixtToPos.contains(sf)) {
+						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
+						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
+							g.setColour(juce::Colours::lightgrey);
+							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
+						}
+						currentArrowX = X;
+						currentArrowY = Y;
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->displayName;
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						if (!edit) {
+							clicg.setColour(getClickColour(sf));
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						}
+					}
 				}
 				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
-				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+				Array<Fixture*> drawedFixtures;
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
+					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
+						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
+						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
+							g.setColour(juce::Colours::lightgrey);
+							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
+						}
+						currentArrowX = X;
+						currentArrowY = Y;
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutColor();
+						}
+						g.setColour(drawColor);
+						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+						String name = sf->parentFixture->id->stringValue();
+						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						if (!edit) {
+							clicg.setColour(getClickColour(sf->parentFixture));
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						}
+					}
 				}
 				p->isComputing.exit();
 			}
@@ -495,28 +735,29 @@ void LayoutViewer::paint(Graphics& g)
 				g.setColour(hoverColour);
 				g.drawLine(line, halfHandleWidth);
 				g.setColour(handleColour);
-				g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+				//g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
 			}
 
 		}
 		if (type == BKPath::PATH_GRID) {
-			if (true) {
+			if (drawPaths) {
 				g.setColour(juce::Colours::lightgrey);
 				for (int iGrid = 0; iGrid < p->gridPath.size() - 1; iGrid++) {
 					float fromX = jmap(p->gridPath[iGrid]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float fromY = jmap(p->gridPath[iGrid]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float fromY = jmap(p->gridPath[iGrid]->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					float toX = jmap(p->gridPath[iGrid + 1]->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+					float toY = jmap(p->gridPath[iGrid + 1]->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 					Line<float> line(Point<float>(fromX, fromY), Point<float>(toX, toY));
 					g.drawLine(line, 0.5f);
+					drawMidArrow(g, fromX, fromY, toX, toY);
 				}
 			}
 
-			Point tl (jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point tr (jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point bl (jmap(p->gridBL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBL.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
-			Point br (jmap(p->gridBR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBR.y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height));
+			Point tl (jmap(p->gridTL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTL.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point tr (jmap(p->gridTR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridTR.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point bl (jmap(p->gridBL.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBL.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
+			Point br (jmap(p->gridBR.x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width), jmap(p->gridBR.y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height));
 			Point rotate(tr);
 			rotate -= br;
 			rotate /= 2;
@@ -527,8 +768,20 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->parentFixture->getLayoutColor();
+					}
+					g.setColour(drawColor);
+					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->displayName;
+					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					if (!edit) {
+						clicg.setColour(getClickColour(it.getKey()));
+						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+					}
 				}
 				p->isComputing.exit();
 			}
@@ -536,81 +789,122 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.enter();
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->getLayoutColor();
+					}
+					g.setColour(drawColor);
+					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->id->stringValue();
+					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					if (!edit) {
+						clicg.setColour(getClickColour(it.getKey()));
+						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+					}
 				}
 				p->isComputing.exit();
 			}
 
-			Path path;
-			path.startNewSubPath(tl);
-			path.lineTo(tr);
-			path.lineTo(br);
-			path.lineTo(bl);
-			path.closeSubPath();
-			clicg.setColour(getClickColour(p, CLIC_DRAG));
-			clicg.fillPath(path);
+			if (edit) {
+				Path path;
+				path.startNewSubPath(tl);
+				path.lineTo(tr);
+				path.lineTo(br);
+				path.lineTo(bl);
+				path.closeSubPath();
+				clicg.setColour(getClickColour(p, CLIC_DRAG));
+				clicg.fillPath(path);
 
-			clicg.setColour(getClickColour(p, CLIC_TL));
-			clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_TR));
-			clicg.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_BL));
-			clicg.fillEllipse(bl.x - halfHandleWidth, bl.y - halfHandleWidth, handleWidth, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_BR));
-			clicg.fillEllipse(br.x - halfHandleWidth, br.y - halfHandleWidth, handleWidth, handleWidth);
-			clicg.setColour(getClickColour(p, CLIC_ROTATE));
-			clicg.fillEllipse(rotate.x - halfHandleWidth, rotate.y - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_TL));
+				clicg.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_TR));
+				clicg.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_BL));
+				clicg.fillEllipse(bl.x - halfHandleWidth, bl.y - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_BR));
+				clicg.fillEllipse(br.x - halfHandleWidth, br.y - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_ROTATE));
+				clicg.fillEllipse(rotate.x - halfHandleWidth, rotate.y - halfHandleWidth, handleWidth, handleWidth);
 
-			if (p == hoveredPath) {
-				g.setColour(hoverColour);
-				g.fillPath(path);
-				g.setColour(handleColour);
-				g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
-				g.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
-				g.fillEllipse(bl.x - halfHandleWidth, bl.y - halfHandleWidth, handleWidth, handleWidth);
-				g.fillEllipse(br.x - halfHandleWidth, br.y - halfHandleWidth, handleWidth, handleWidth);
-				g.fillEllipse(rotate.x - halfHandleWidth, rotate.y - halfHandleWidth, handleWidth, handleWidth);
+				if (p == hoveredPath) {
+					g.setColour(hoverColour);
+					g.fillPath(path);
+					g.setColour(handleColour);
+					g.fillEllipse(tl.x - halfHandleWidth, tl.y - halfHandleWidth, handleWidth, handleWidth);
+					g.fillEllipse(tr.x - halfHandleWidth, tr.y - halfHandleWidth, handleWidth, handleWidth);
+					g.fillEllipse(bl.x - halfHandleWidth, bl.y - halfHandleWidth, handleWidth, handleWidth);
+					g.fillEllipse(br.x - halfHandleWidth, br.y - halfHandleWidth, handleWidth, handleWidth);
+					g.fillEllipse(rotate.x - halfHandleWidth, rotate.y - halfHandleWidth, handleWidth, handleWidth);
+				}
+
 			}
 
 		}
 		if (type == BKPath::PATH_CIRCLE) {
-			float from = -(p->circleFrom->floatValue() / 360.) * 2 * MathConstants<float>::pi;
-			float to = -(p->circleTo->floatValue() / 360.) * 2 * MathConstants<float>::pi;
+			float from = (p->circleFrom->floatValue() / 360.) * 2 * MathConstants<float>::pi;
+			float to = (p->circleTo->floatValue() / 360.) * 2 * MathConstants<float>::pi;
 			from += MathConstants<float>::pi / 2;
 			to += MathConstants<float>::pi / 2;
 			float X = jmap(p->position->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-			float Y = jmap(p->position->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
+			float Y = jmap(p->position->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
 			float W = p->circleRadius->floatValue() * uiScale;
 			Path path;
 			path.addArc(X - (W), Y - (W), W * 2, W * 2, from, to, true);
-			if (true) {
+			if (drawPaths) {
 				g.setColour(juce::Colours::lightgrey);
 				g.strokePath(path, PathStrokeType(0.5));
 			}
-			clicg.setColour(getClickColour(p, CLIC_DRAG));
-			clicg.strokePath(path, PathStrokeType(handleWidth));
+			if (edit) {
+				clicg.setColour(getClickColour(p, CLIC_DRAG));
+				clicg.strokePath(path, PathStrokeType(handleWidth));
+			}
 			if (p == hoveredPath) {
 				g.setColour(hoverColour);
 				g.strokePath(path, PathStrokeType(handleWidth));
 			}
 
-
+			g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->parentFixture->getLayoutColor();
+					}
+					g.setColour(drawColor);
+					g.drawRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->displayName;
+					g.drawText(name, XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					if (!edit) {
+						clicg.setColour(getClickColour(it.getKey()));
+						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight);
+					}
 				}
 				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
-					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
-					float Y = jmap((float)it.getValue()->y, (float)dimensionY[0], (float)dimensionY[1], (float)0, height);
-					g.drawRect(X - halfFixtWidth, Y - halfFixtWidth, fixtWidth, fixtWidth, (float)1);
+					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+					Colour drawColor = juce::Colours::white;
+					if (overrideColor) { drawColor = overridenColor; }
+					else {
+						drawColor = it.getKey()->getLayoutColor();
+					}
+					g.setColour(drawColor);
+					g.drawRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, (float)1);
+					String name = it.getKey()->id->stringValue();
+					g.drawText(name, XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					if (!edit) {
+						clicg.setColour(getClickColour(it.getKey()));
+						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight);
+					}
 				}
 				p->isComputing.exit();
 			}

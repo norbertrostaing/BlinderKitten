@@ -32,6 +32,7 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void updateName();
+    void updateSubFixtureNames();
     TargetParameter* devTypeParam;
 
     OwnedArray<SubFixture> subFixturesContainer;
@@ -46,6 +47,7 @@ public:
 
     Array<SubFixture*> getAllSubFixtures();
     SubFixture* getSubFixture(int id);
+    Colour getLayoutColor();
 
     void selectThis(bool addToSelection=false, bool notify = true);
     void autoName();

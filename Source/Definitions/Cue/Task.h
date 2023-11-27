@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Common/CommonIncludes.h"
 
 class Task :
     public BaseItem
@@ -39,6 +40,8 @@ public:
     FloatParameter* delay;
     FloatParameter* fade;
 
+    ActionManager actionManager;
+
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void updateDisplay();
@@ -46,6 +49,6 @@ public:
     String getTypeString() const override { return objectType; }
     static Task* create(var params) { return new Task(params); }
 
-    static void triggerGivenTask(String targetType, int targetId, String action, double targetValue, int id);
+    static void triggerGivenTask(Task* parent, String targetType, int targetId, String action, double targetValue, int id);
 };
 

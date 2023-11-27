@@ -69,6 +69,7 @@ EffectRow::EffectRow(var params) :
     }
 
     updateDisplay();
+    /*
     if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
         Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
         if (parentEffect->isOn) {
@@ -76,12 +77,20 @@ EffectRow::EffectRow(var params) :
         }
 
     }
+    */
 
 };
 
 EffectRow::~EffectRow()
 {
 };
+
+void EffectRow::checkParentEffect()
+{
+    if (parentEffect == nullptr && parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
+        parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
+    }
+}
 
 void EffectRow::computeData() {
     isComputing.enter();
@@ -95,7 +104,7 @@ void EffectRow::computeData() {
         isComputing.exit();
         return;
     }
-    Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer.get());
+    checkParentEffect();
     if (parentEffect == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         //double deltaPos = 0;
@@ -124,6 +133,7 @@ void EffectRow::computeData() {
                 float wingSize = realTot / (float)nWings;
                 realTot = ceil(realTot / (float)nWings);
                 int roundedWingSize = round(wingSize);
+                roundedWingSize = jmax(1, roundedWingSize);
                 int flooredWingSize = floor(wingSize);
 
 

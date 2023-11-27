@@ -32,7 +32,7 @@ BKPath::BKPath(var params) :
     rodAngle = addFloatParameter("Angle", "Angle of your rod", 0, -360, 360);
 
     d[0] = 4;    d[1] = 4;
-    gridSize = addPoint2DParameter("Size", "Size of yout grid");
+    gridSize = addPoint2DParameter("Size", "Size of your grid");
     gridSize->setDefaultValue(d);
     gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
     gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,-360,360);
@@ -50,8 +50,18 @@ BKPath::BKPath(var params) :
     circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
     circleTo = addFloatParameter("To angle", "Angle of the last element", 360, -360, 360);
 
-    addChildControllableContainer(&selection);
+    d[0] = 20;    d[1] = 20;
+    tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
+    tilesSize->setDefaultValue(d);
+    textSize = addFloatParameter("Text size", "", 10, 0);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
+
+    overrideColor = addBoolParameter("Override color", "", false);
+    pathColor = addColorParameter("Tiles color", "", juce::Colours::lightcyan);
+    customText = addStringParameter("Custom Text", "Write your own text on your tile", "");
+
+    addChildControllableContainer(&selection);
+    addChildControllableContainer(&actionManager);
 
     updateDisplay();
 };
@@ -191,23 +201,24 @@ void BKPath::computeData()
         }
         else if (o == GRID_TB) {
             deltaRow.x = nRows > 1 ? gridWidth / (float)(nRows-1) : 0;
-            deltaCol.y = gridHeight / (float)(nPerRow - 1);
+            deltaCol.y = -gridHeight / (float)(nPerRow - 1);
         }
         else if(o == GRID_BT) {
             deltaRow.x = nRows > 1 ? gridWidth / (float)(nRows-1) : 0;
-            deltaCol.y = -gridHeight / (float)(nPerRow - 1);
-            deltaOrigin.y += gridHeight;
+            deltaCol.y = gridHeight / (float)(nPerRow - 1);
+            deltaOrigin.y -= gridHeight;
         }
 
-        deltaRow *= -1;
+        deltaRow.y *= -1;
         if (gridInverseRows->boolValue()) {
             if (o == GRID_LR || o == GRID_RL) {
-                deltaOrigin.y += gridHeight;
+                deltaOrigin.y -= gridHeight;
+                deltaRow.y *= -1;
             }
             else if (o == GRID_TB || o == GRID_BT) {
                 deltaOrigin.x += gridWidth;
+                deltaRow.x *= -1;
             }
-            deltaRow *= -1;
         }
 
 
@@ -309,7 +320,7 @@ void BKPath::computeData()
 }
 
 void BKPath::onContainerParameterChangedInternal(Parameter* c) {
-    if (c == pathType) {
+    if (c == pathType || c == overrideColor) {
         updateDisplay();
     }
 }
@@ -332,7 +343,18 @@ void BKPath::updateDisplay() {
     circleFrom->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
     circleTo->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
 
+    pathColor->hideInEditor = !overrideColor->boolValue();
+
+    actionManager.hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
+    customText->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
+
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
+void BKPath::clicked()
+{
+    actionManager.setValueAll(1.f);
+    actionManager.setValueAll(0.f);
 }
 
 void BKPath::rotateVect(Point<float>* vect, float angleInDegrees)

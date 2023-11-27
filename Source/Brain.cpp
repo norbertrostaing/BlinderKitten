@@ -101,7 +101,7 @@ void Brain::brainLoop() {
     if (pleaseClearProgrammer) {
         pleaseClearProgrammer = false;
         if (Programmer* p = getProgrammerById(1)) {
-            p->clearCurrent();
+            MessageManager::callAsync([this,p]() {p->clearCurrent(); });
         }
     }
 
@@ -196,10 +196,12 @@ void Brain::brainLoop() {
         if (subFixtureChannelPoolUpdating[i] != nullptr && !subFixtureChannelPoolUpdating[i]->isDeleted) {
             subFixtureChannelPoolUpdating[i]->updateVal(now);
 
-            if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand!= nullptr) {
-                if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(subFixtureChannelPoolUpdating[i]->parentSubFixture)) {
+            if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr) {
+                UserInputManager::getInstance() -> currentProgrammer->computing.enter();
+                if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(subFixtureChannelPoolUpdating[i]->parentSubFixture)) {
                     encoderValuesNeedRefresh = true;
                 }
+                UserInputManager::getInstance()->currentProgrammer->computing.exit();
             }
         }
     }
@@ -817,6 +819,9 @@ void Brain::startTask(Task* t, double startTime, int cuelistId)
                 } else if (actionType == "flashLevel") {
                     startValue = target->FlashLevel->getValue();
                     endValue = t->targetValue->getValue();
+                } else if (actionType == "speed") {
+                    startValue = target->chaserSpeed->getValue();
+                    endValue = t->targetValue->getValue();
                 }
             }
         }
@@ -861,9 +866,14 @@ void Brain::startTask(Task* t, double startTime, int cuelistId)
                 }
             }
         }
+        else if (targetType == "action") {
+            actionType = t->mapperAction->getValue();
+            valid = true;
+        }
 
         if (valid) {
             RunningTask* rt = runningTasks.add(new RunningTask());
+            rt->parentTask = t;
             rt->id = newTaskId();
             rt->cuelistId = cuelistId;
             rt->actionType = actionType;

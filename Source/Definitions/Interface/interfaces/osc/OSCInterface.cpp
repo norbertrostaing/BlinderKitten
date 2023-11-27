@@ -43,10 +43,10 @@ OSCInterface::OSCInterface() :
 
 
 //Script
-scriptObject.setMethod("send", OSCInterface::sendOSCFromScript);
-scriptObject.setMethod("sendTo", OSCInterface::sendOSCToFromScript);
-scriptObject.setMethod("match", OSCInterface::matchOSCAddrFromScript);
-scriptObject.setMethod("register", OSCInterface::registerOSCCallbackFromScript);
+scriptObject.getDynamicObject()->setMethod("send", OSCInterface::sendOSCFromScript);
+scriptObject.getDynamicObject()->setMethod("sendTo", OSCInterface::sendOSCToFromScript);
+scriptObject.getDynamicObject()->setMethod("match", OSCInterface::matchOSCAddrFromScript);
+scriptObject.getDynamicObject()->setMethod("register", OSCInterface::registerOSCCallbackFromScript);
 
 //scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
@@ -354,11 +354,11 @@ var OSCInterface::sendOSCFromScript(const var::NativeFunctionArgs& a)
 			if (a.arguments[i].isArray())
 			{
 				Array<var>* arr = a.arguments[i].getArray();
-				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa));
+				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa, OSCHelpers::TF));
 			}
 			else
 			{
-				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i], OSCHelpers::TF));
 			}
 		}
 
@@ -388,11 +388,11 @@ var OSCInterface::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 			if (a.arguments[i].isArray())
 			{
 				Array<var>* arr = a.arguments[i].getArray();
-				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa));
+				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa, OSCHelpers::TF));
 			}
 			else
 			{
-				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i], OSCHelpers::TF));
 			}
 		}
 

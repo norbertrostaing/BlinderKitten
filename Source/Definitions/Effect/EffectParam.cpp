@@ -48,12 +48,7 @@ EffectParam::EffectParam(var params) :
 
 EffectParam::~EffectParam()
 {
-    if (parentContainer != nullptr
-        && parentContainer->parentContainer != nullptr
-        && parentContainer->parentContainer->parentContainer != nullptr
-        && parentContainer->parentContainer->parentContainer->parentContainer != nullptr
-        ) {
-        Effect* parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
+    if (parentEffect!= nullptr) {
         parentEffect->isComputing.enter();
         for (auto it = parentEffect->chanToFxParam.begin(); it != parentEffect->chanToFxParam.end(); it.next()) {
             it.getValue()->removeAllInstancesOf(this);
@@ -65,17 +60,27 @@ EffectParam::~EffectParam()
 };
 
 
+void EffectParam::checkParentEffect()
+{
+    if (parentEffect == nullptr && 
+        parentContainer != nullptr
+        && parentContainer->parentContainer != nullptr
+        && parentContainer->parentContainer->parentContainer != nullptr
+        && parentContainer->parentContainer->parentContainer->parentContainer != nullptr
+        ) {
+        parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
+    }
+
+}
+
 void EffectParam::onContainerParameterChangedInternal(Parameter* c) {
     if (c == effectMode) {
         updateDisplay();
     }
     if (c == elementsSpread || c == elementsStart || c == wings || c == buddying) {
-        if (parentContainer != nullptr
-            && parentContainer->parentContainer != nullptr
-            && parentContainer->parentContainer->parentContainer != nullptr
-            && parentContainer->parentContainer->parentContainer->parentContainer != nullptr
-            ) {
-            dynamic_cast<Effect*>(parentContainer->parentContainer->parentContainer->parentContainer.get())->pleaseComputeIfRunning();
+        checkParentEffect();
+        if (parentEffect != nullptr) {
+            parentEffect->pleaseComputeIfRunning();
         }
     }
 }

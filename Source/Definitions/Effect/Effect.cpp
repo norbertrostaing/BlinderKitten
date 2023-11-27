@@ -84,6 +84,13 @@ Effect::~Effect()
 		sfc->effectOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
+	for (int i = 0; i < values.items.size(); i++) {
+		values.items[i]->parentEffect = nullptr;
+		for (int j = 0; j < values.items[i]->paramContainer.items.size(); j++) {
+			values.items[i]->paramContainer.items[j]->parentEffect = nullptr;
+
+		}
+	}
 	EffectGridView::getInstance()->updateCells();
 }
 
@@ -212,7 +219,9 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 	std::shared_ptr<Array<EffectParam*>> params = chanToFxParam.getReference(fc);
 	for (int i = 0; i < params->size(); i++) {
 		EffectParam* p = params->getReference(i);
+		p->checkParentEffect();
 		EffectRow* row = dynamic_cast<EffectRow*>(p->parentContainer->parentContainer.get());
+		row->checkParentEffect();
 
 		double offset = totalElapsed*(double)row->speed->getValue();
 		double deltaOffset = p->subFixtureChannelOffsets.getReference(fc);

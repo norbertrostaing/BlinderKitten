@@ -56,6 +56,7 @@ void EffectGridView::updateCells() {
 
         }
     }
+    updateButtons();
 }
 
 void EffectGridView::updateButtons()

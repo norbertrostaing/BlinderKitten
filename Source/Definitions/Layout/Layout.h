@@ -38,9 +38,10 @@ public:
 
     Point2DParameter* dimensionsX;
     Point2DParameter* dimensionsY;
+    Point2DParameter* tilesScale;
+    FloatParameter* textScale;
 
     BaseManager<BKPath> paths;
-    StringParameter* categoryName;
 
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;

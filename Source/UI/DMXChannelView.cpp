@@ -12,6 +12,7 @@
 #include "Definitions/Interface/interfaces/dmx/DMXInterface.h"
 #include "Definitions/Fixture/FixtureManager.h"
 #include "Definitions/FixtureType/FixtureTypeManager.h"
+#include "BKEngine.h"
 
 DMXChannelView::DMXChannelView() :
 	ShapeShifterContentComponent("DMX Tester"),
@@ -31,10 +32,15 @@ DMXChannelView::DMXChannelView() :
 	viewport.setViewedComponent(&channelContainer);
 	addKeyListener(this);
 	InterfaceManager::getInstance()->addAsyncManagerListener(this);
+	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->currentDMXChannelView = this;
 }
 
 DMXChannelView::~DMXChannelView()
 {
+	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	if (e->currentDMXChannelView == this) {
+		e->currentDMXChannelView = nullptr;
+	}
 	if (InterfaceManager::getInstanceWithoutCreating()) InterfaceManager::getInstance()->removeAsyncManagerListener(this);
 	setCurrentInterface(nullptr);
 }
@@ -80,8 +86,8 @@ void DMXChannelView::resized()
 
 void DMXChannelView::setCurrentInterface(DMXInterface* i)
 {
-	clearSelection();
 	if (currentInterface == i) return;
+	clearSelection();
 
 	if (currentInterface != nullptr && !currentInterface->isClearing)
 	{

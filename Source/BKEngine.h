@@ -15,6 +15,8 @@
 #include "Brain.h"
  // #include "Module/ModuleIncludes.h"
 
+class DMXChannelView;
+
 struct geometryBreaks {
 	String name;
 	int breakNum;
@@ -32,12 +34,13 @@ public:
 	//Global Settings
 	//ControllableContainer defaultBehaviors;
 	Brain* mainBrain;
+	DMXChannelView* currentDMXChannelView;
 
 	ControllableContainer uiParamsContainer;
 	IntParameter* encodersNumber;
 	IntParameter* gridCols;
 	FloatParameter* gridScale;
-	FloatParameter* panelScale;
+	//FloatParameter* panelScale;
 	FloatParameter* encodersScale;
 	IntParameter* encoderBigNumber;
 
@@ -66,6 +69,8 @@ public:
 	TargetParameter* CPCyanChannel;
 	TargetParameter* CPMagentaChannel;
 	TargetParameter* CPYellowChannel;
+	TargetParameter* CPHueChannel;
+	TargetParameter* CPSaturationChannel;
 
 	ControllableContainer loadWindowContainer;
 	IntParameter* loadWindowWidth;

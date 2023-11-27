@@ -106,8 +106,10 @@ void Fixture::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 		for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
 			SubFixture* sf = it.getValue();
 			if (sf != nullptr) {
-				for (auto it2 = sf->channelsMap.begin(); it2 != sf->channelsMap.end(); it2.next()) {
-					Brain::getInstance()->pleaseUpdate(it2.getValue());
+				if (sf->channelsMap.size() > 0) {
+					for (auto it2 = sf->channelsMap.begin(); it2 != sf->channelsMap.end(); it2.next()) {
+						Brain::getInstance()->pleaseUpdate(it2.getValue());
+					}
 				}
 			}
 		}
@@ -252,7 +254,7 @@ void Fixture::checkChildrenSubFixtures() {
 			}
 		}
 	}
-
+	updateSubFixtureNames();
 }
 
 void Fixture::updateName() {
@@ -260,7 +262,20 @@ void Fixture::updateName() {
 	if (parentContainer != nullptr) {
 		dynamic_cast<FixtureManager*>(parentContainer.get())->reorderItems();
 	}
+	updateSubFixtureNames();
 	setNiceName(String((int)id->getValue()) + " - " + n);
+}
+
+void Fixture::updateSubFixtureNames()
+{
+	for (auto it = subFixtures.begin(); it != subFixtures.end(); it.next()) {
+		if (it.getValue() != nullptr) {
+			it.getValue()->displayName = id->stringValue();
+			if (subFixtures.size() > 1) {
+				it.getValue()->displayName += "." + String(it.getKey());
+			}
+		}
+	}
 }
 
 
@@ -276,6 +291,17 @@ Array<SubFixture*> Fixture::getAllSubFixtures() {
 
 SubFixture* Fixture::getSubFixture(int subId) {
 	return subFixtures.getReference(subId);
+}
+
+Colour Fixture::getLayoutColor()
+{
+	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
+	if (ft!= nullptr) {
+		return ft->layoutColor->getColor();
+	}
+	else {
+		return Colour();
+	}
 }
 
 

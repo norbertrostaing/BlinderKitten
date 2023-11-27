@@ -79,7 +79,9 @@ void FixturePatch::onContainerParameterChangedInternal(Parameter* p)
 		}
 	}
 	if (p == address || p == targetInterface) {
-		tryToEnablePatch();
+		if (enabled->boolValue()) {
+			tryToEnablePatch();
+		}
 	}
 	//LOG(p->niceName);
 }
@@ -104,9 +106,15 @@ void FixturePatch::disableCurrentPatch()
 	}
 }
 
+int FixturePatch::getFixtureId()
+{
+	if (parentContainer == nullptr) return 0;
+	Fixture* parentFixture = dynamic_cast<Fixture*>(parentContainer->parentContainer.get());
+	return parentFixture->id->intValue();
+}
+
 void FixturePatch::tryToEnablePatch()
 {
-	disableCurrentPatch();
 	int a = address->intValue();
 	if (a == 0) {
 		return;
@@ -114,6 +122,8 @@ void FixturePatch::tryToEnablePatch()
 	if (parentContainer == nullptr) {
 		return;
 	}
+
+	disableCurrentPatch();
 
 	Fixture* parentFixture = dynamic_cast<Fixture*>(parentContainer->parentContainer.get());
 	FixtureType* ft = dynamic_cast<FixtureType*>(parentFixture->devTypeParam->targetContainer.get());
@@ -133,14 +143,47 @@ void FixturePatch::tryToEnablePatch()
 	}
 
 	bool valid = true;
+	Array<FixturePatch*> patchs;
+	Array<int> fixtureIds; 
+
 	for (int i = 0; i < n; i++) {
 		if (inter->channelToFixturePatch[a + i] != nullptr && inter->channelToFixturePatch[a + i] != this) {
 			valid = false;
-			//LOG(inter->channelToFixturePatch[a + i]->parentContainer->parentContainer->niceName);
+			patchs.add(inter->channelToFixturePatch[a + i]);
+			fixtureIds.add(inter->channelToFixturePatch[a + i]->getFixtureId());
 		}
 	}
 
 	if (!valid) {
+		String ids = "";
+		for (int i = 0; i < fixtureIds.size(); i++) {
+			if (i == 0) ids = " by fixt ";
+			if (i>0) ids+= ", ";
+			ids += String(fixtureIds[i]);
+		}
+		const auto callback = juce::ModalCallbackFunction::create([this, patchs](int result) {
+			if (result == 1)
+			{
+				for (int i = 0; i < patchs.size(); i++) {
+					patchs[i]->enabled->setValue(false);
+				}
+				this->enabled->setValue(true);
+			}
+			else if (result == 2)
+			{
+			}
+				
+		});
+
+		juce::AlertWindow::showOkCancelBox(
+			juce::AlertWindow::WarningIcon,
+			"Be careful !",
+			"You can't patch at adress "+String(a)+", already taken"+ids+".",
+			"Overwrite",
+			"Cancel",
+			&ShapeShifterManager::getInstance()->mainContainer,
+			callback);
+
 		LOGERROR("You cannot patch on address "+String(a)+"... you're writing on other fixtures.");
 		return;
 	}

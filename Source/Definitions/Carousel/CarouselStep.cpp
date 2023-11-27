@@ -50,8 +50,23 @@ CarouselStep::CarouselStep(var params) :
 
 CarouselStep::~CarouselStep()
 {
+	if (parentCarousel != nullptr) {
+		parentCarousel->computeData();
+	}
 };
 
+
+void CarouselStep::checkParentCarousel()
+{
+	if (parentCarousel == nullptr && 
+		parentContainer != nullptr && 
+		parentContainer->parentContainer != nullptr &&
+		parentContainer->parentContainer->parentContainer != nullptr &&
+		parentContainer->parentContainer->parentContainer->parentContainer != nullptr
+		) {
+		parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
+	}
+}
 
 void CarouselStep::onContainerParameterChangedInternal(Parameter* c) {
 }

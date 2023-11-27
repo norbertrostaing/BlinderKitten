@@ -45,9 +45,9 @@ CarouselRow::CarouselRow(var params) :
 
     updateDisplay();
     if (parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
-        ownerCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
-        if (ownerCarousel->isOn) {
-            ownerCarousel->pleaseComputeIfRunning();
+        parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
+        if (parentCarousel->isOn) {
+            parentCarousel->pleaseComputeIfRunning();
         }
     }
 
@@ -55,22 +55,20 @@ CarouselRow::CarouselRow(var params) :
 
 CarouselRow::~CarouselRow()
 {
-    if (ownerCarousel != nullptr) {
-        ownerCarousel->isComputing.enter();
-        for (auto it = ownerCarousel->chanToCarouselRow.begin(); it != ownerCarousel->chanToCarouselRow.end(); it.next()) {
+    if (parentCarousel != nullptr) {
+        parentCarousel->isComputing.enter();
+        for (auto it = parentCarousel->chanToCarouselRow.begin(); it != parentCarousel->chanToCarouselRow.end(); it.next()) {
             it.getValue()->removeAllInstancesOf(this);
         }
-        if (ownerCarousel->isOn) {
-            ownerCarousel->pleaseComputeIfRunning();
+        if (parentCarousel->isOn) {
+            parentCarousel->pleaseComputeIfRunning();
         }
-        ownerCarousel->isComputing.exit();
+        parentCarousel->isComputing.exit();
     }
 };
 
 void CarouselRow::computeData() {
-    if (ownerCarousel == nullptr && parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
-        ownerCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
-    }
+    checkParentCarousel();
     isComputing.enter();
     computedPositions.clear();
     subFixtureChannelOffsets.clear();
@@ -119,6 +117,7 @@ void CarouselRow::computeData() {
     float wingSize = realTot / (float)nWings;
     realTot = ceil(realTot / (float)nWings);
     int roundedWingSize = round(wingSize);
+    roundedWingSize = jmax(1, roundedWingSize);
     // int flooredWingSize = floor(wingSize);
 
     Array<SubFixtureChannel*> targetChannels;
@@ -196,5 +195,12 @@ void CarouselRow::onControllableFeedbackUpdate( ControllableContainer* cc, Contr
 void CarouselRow::updateDisplay() {
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
+void CarouselRow::checkParentCarousel()
+{
+    if (parentCarousel == nullptr && parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
+        parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
+    }
 }
 

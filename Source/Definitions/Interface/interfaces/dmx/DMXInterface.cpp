@@ -342,8 +342,8 @@ void DMXInterface::repaintChannels(int chan, int n)
 		if (tester != nullptr) {
 			for (int i = 0; i < n; i++) {
 				tester->channelItems[chan+i]->value = dmxDevice->dmxDataOut[chan+i] / 255.;
-				tester->repaint();
 			}
+			MessageManager::callAsync([this]() {tester->repaint(); });
 		}
 	}
 

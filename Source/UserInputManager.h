@@ -26,12 +26,12 @@ public:
     juce_DeclareSingleton(UserInputManager, true);
 
     StringArray currentCommand;
-    Command* targetCommand;
+    Command* targetCommand = nullptr;
 
     OwnedArray<StringArray *> otherCommands;
     OwnedArray<Command*> otherTargetCommands;
 
-    Programmer* currentProgrammer;
+    Programmer* currentProgrammer = nullptr;
 
     UserInputManager();
     ~UserInputManager();
@@ -67,5 +67,5 @@ public:
     void testPreset(Preset* p);
     void resetFocus();
 
-    void feedback(String address, double value, String origin);
+    void feedback(String address, var value, String origin);
 };

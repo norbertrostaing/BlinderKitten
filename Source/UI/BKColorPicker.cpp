@@ -48,13 +48,53 @@ void BKColorPicker::paint (juce::Graphics& g)
     img.reduce(margin, margin);
     g.drawImage(ImageCache::getFromMemory(BinaryData::colorpicker_png, BinaryData::colorpicker_pngSize), img.toFloat());
     
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
+    Command* c = UserInputManager::getInstance()->targetCommand;
+    if (c == nullptr) return;
+    float red = -1;
+    float green = -1;
+    float blue = -1;
+    float cyan = -1;
+    float magenta = -1;
+    float yellow = -1;
+    float hue = -1;
+    float saturation = -1;
 
-       You should replace everything in this method with your own
-       drawing code..
-    */
+    for (int i = 0; i < c->values.items.size(); i++) {
+        CommandValue* cv = c->values.items[i];
+        if (cv->channelType->getValue() == engine->CPRedChannel->getValue()) {red = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPGreenChannel->getValue()) {green = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPBlueChannel->getValue()) {blue = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPCyanChannel->getValue()) {cyan = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPMagentaChannel->getValue()) {magenta = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPYellowChannel->getValue()) {yellow = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPHueChannel->getValue()) {hue = cv->valueFrom->getValue();}
+        if (cv->channelType->getValue() == engine->CPSaturationChannel->getValue()) {saturation = cv->valueFrom->getValue();}
+    }
 
+    if (red != -1 && green != -1 && blue != -1) {
+        Colour c = Colour(red * 255, green * 255, blue * 255);
+        float x = c.getHue();
+        float y = 1 - c.getSaturation();
+        x *= getWidth() - (2 * margin);
+        y *= getHeight() - (2 * margin);
+        g.drawEllipse(margin + x - 5, margin + y - 5, 10.0f, 10.0f, 1);
+    }
+    else if (cyan != -1 && magenta != -1 && yellow != -1) {
+        Colour c = Colour((1 - cyan) * 255, (1 - magenta) * 255, (1-yellow) * 255);
+        float x = c.getHue();
+        float y = 1 - c.getSaturation();
+        x *= getWidth() - (2 * margin);
+        y *= getHeight() - (2 * margin);
+        g.drawEllipse(margin + x - 5, margin + y - 5, 10.0f, 10.0f, 1);
+    }
+    else if (hue != -1 && saturation != -1) {
+        float x = hue;
+        float y = 1 - saturation;
+        x *= getWidth() - (2 * margin);
+        y *= getHeight() - (2 * margin);
+        g.drawEllipse(margin + x - 5, margin + y - 5, 10.0f, 10.0f, 1);
+
+    }
 }
 
 void BKColorPicker::resized()
@@ -131,19 +171,27 @@ void BKColorPicker::mouseSetColor(double x, double y)
     g = jmap(g, 0., 1., y, 1.);
     b = jmap(b, 0., 1., y, 1.);
 
+    if (dynamic_cast<ChannelType*>(engine->CPRedChannel->targetContainer.get()) == nullptr) {
+        engine -> autoFillColorPickerValues();
+    }
+
     ChannelType* redChannel = dynamic_cast<ChannelType*>(engine->CPRedChannel->targetContainer.get());
     ChannelType* greenChannel = dynamic_cast<ChannelType*>(engine->CPGreenChannel->targetContainer.get());
     ChannelType* blueChannel = dynamic_cast<ChannelType*>(engine->CPBlueChannel->targetContainer.get());
     ChannelType* cyanChannel = dynamic_cast<ChannelType*>(engine->CPCyanChannel->targetContainer.get());
     ChannelType* magentaChannel = dynamic_cast<ChannelType*>(engine->CPMagentaChannel->targetContainer.get());
     ChannelType* yellowChannel = dynamic_cast<ChannelType*>(engine->CPYellowChannel->targetContainer.get());
+    ChannelType* hueChannel = dynamic_cast<ChannelType*>(engine->CPHueChannel->targetContainer.get());
+    ChannelType* saturationChannel = dynamic_cast<ChannelType*>(engine->CPSaturationChannel->targetContainer.get());
 
     UserInputManager::getInstance()->changeChannelValue(redChannel, r);
     UserInputManager::getInstance()->changeChannelValue(greenChannel, g);
     UserInputManager::getInstance()->changeChannelValue(blueChannel, b);
     UserInputManager::getInstance()->changeChannelValue(cyanChannel, 1-r);
     UserInputManager::getInstance()->changeChannelValue(magentaChannel, 1-g);
-    UserInputManager::getInstance()->changeChannelValue(yellowChannel, 1-b);
+    UserInputManager::getInstance()->changeChannelValue(yellowChannel, 1 - b);
+    UserInputManager::getInstance()->changeChannelValue(hueChannel, x);
+    UserInputManager::getInstance()->changeChannelValue(saturationChannel, y);
 
     //LOG("color : "+ String(r) + " " + String(g) + " " + String(b) + " ");
 

@@ -34,7 +34,7 @@ public:
     void controlChangeReceived(const int& channel, const int& number, const int& value) override;
     void pitchWheelReceived(const int& channel, const int& value) override;
 
-    void feedback(String address, double value, String origin);
+    void feedback(String address, var value, String origin);
 
     String getTypeString() const override { return "MIDI"; }
     static MIDIInterface* create(var params) { return new MIDIInterface(); };

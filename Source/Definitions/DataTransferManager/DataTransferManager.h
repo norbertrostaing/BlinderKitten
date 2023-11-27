@@ -25,7 +25,6 @@ public:
 	EnumParameter* presetCopyMode;
 	EnumParameter* cuelistCopyMode;
 	EnumParameter* programmerMergeMode;
-	TargetParameter* paramfilter;
 	Trigger* go;
 
 	DataTransferManager();

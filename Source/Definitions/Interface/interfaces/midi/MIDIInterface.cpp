@@ -97,7 +97,7 @@ void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
     mappingManager.handlePitchWheel(channel, value, niceName);
 }
 
-void MIDIInterface::feedback(String address, double value, String origin = "")
+void MIDIInterface::feedback(String address, var value, String origin = "")
 {
     bool logOutput = logOutgoingData->boolValue();
     for (int i = 0; i < feedbackManager.items.size(); i++) {
