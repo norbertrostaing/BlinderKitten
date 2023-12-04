@@ -15,7 +15,7 @@ FixtureTypeChannelManager::~FixtureTypeChannelManager()
 void FixtureTypeChannelManager::calcDmxChannels() {
 	int current = 1;
 	for (int i = 0; i < items.size(); i++) {
-		items[i]->setNiceName("temp 1");
+		items[i]->setNiceName("temp "+String(i));
 	}
 	for (int i = 0; i < items.size(); i++) {
 		items[i]->dmxDelta->setValue(current);

@@ -926,7 +926,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					for (int i = 0; i < tempChannels.size(); i++) {
 						if (tempChannels[i].attribute != "") {
 							String attrName = tempChannels[i].attribute;
-							FixtureTypeChannel* ftc = ft->chansManager.addItem();
+							FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
 							if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
 
 							ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
@@ -937,7 +937,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 							}
 							if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
 								if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
-									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem();
+									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(),false, false);
 									subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
 									virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
 									virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
