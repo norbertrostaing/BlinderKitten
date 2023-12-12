@@ -926,7 +926,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					for (int i = 0; i < tempChannels.size(); i++) {
 						if (tempChannels[i].attribute != "") {
 							String attrName = tempChannels[i].attribute;
-							FixtureTypeChannel* ftc = ft->chansManager.addItem();
+							FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
 							if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
 
 							ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
@@ -937,7 +937,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 							}
 							if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
 								if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
-									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem();
+									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(),false, false);
 									subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
 									virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
 									virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
@@ -1228,13 +1228,37 @@ void BKEngine::autoFillColorPickerValues()
 {	
 	ChannelFamily* col = ChannelFamilyManager::getInstance()->getItemWithName("Color");
 	if (col != nullptr) {
-		CPRedChannel->setValueFromTarget(col->definitions.getItemWithName("Red"));
-		CPGreenChannel->setValueFromTarget(col->definitions.getItemWithName("Green"));
-		CPBlueChannel->setValueFromTarget(col->definitions.getItemWithName("Blue"));
-		CPCyanChannel->setValueFromTarget(col->definitions.getItemWithName("Cyan"));
-		CPMagentaChannel->setValueFromTarget(col->definitions.getItemWithName("Magenta"));
-		CPYellowChannel->setValueFromTarget(col->definitions.getItemWithName("Yellow"));
-		CPHueChannel->setValueFromTarget(col->definitions.getItemWithName("Hue"));
-		CPSaturationChannel->setValueFromTarget(col->definitions.getItemWithName("Sat"));
+		auto Red = col->definitions.getItemWithName("Red");
+		if (Red!= nullptr) {
+			CPRedChannel->setValueFromTarget(Red);
+		}
+		auto Green = col->definitions.getItemWithName("Green");
+		if (Green!= nullptr) {
+			CPGreenChannel->setValueFromTarget(Green);
+		}
+		auto Blue = col->definitions.getItemWithName("Blue");
+		if (Blue!= nullptr) {
+			CPBlueChannel->setValueFromTarget(Blue);
+		}
+		auto Cyan = col->definitions.getItemWithName("Cyan");
+		if (Cyan!= nullptr) {
+			CPCyanChannel->setValueFromTarget(Cyan);
+		}
+		auto Magenta = col->definitions.getItemWithName("Magenta");
+		if (Magenta!= nullptr) {
+			CPMagentaChannel->setValueFromTarget(Magenta);
+		}
+		auto Yellow = col->definitions.getItemWithName("Yellow");
+		if (Yellow!= nullptr) {
+			CPYellowChannel->setValueFromTarget(Yellow);
+		}
+		auto Hue = col->definitions.getItemWithName("Hue");
+		if (Hue!= nullptr) {
+			CPHueChannel->setValueFromTarget(Hue);
+		}
+		auto Sat = col->definitions.getItemWithName("Sat");
+		if (Sat!= nullptr) {
+			CPSaturationChannel->setValueFromTarget(Sat);
+		}
 	}
 }

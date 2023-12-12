@@ -131,55 +131,48 @@ void Encoders::paint (juce::Graphics& g)
 
 void Encoders::resized()
 {
-    float scale = 1;
-    if (engine != nullptr && engine->encodersScale != nullptr) {
-        scale = engine->encodersScale->getValue();
-    }
-
-    // This method is where you should set the bounds of any child
-    // components that your component contains..
     int windowH = getHeight();
     int windowW = getWidth();
-    //int x = 0;
-    //int y = 0;
     int btnWidth = 40;
     int margin = 5;
 
     int total = (11*btnWidth) + (3*margin);
     float ratio = windowW / float(total);
 
+    float btnHeight = windowH / 7.0;
+    btnHeight = jmin(20.0f, btnHeight);
+
     btnWidth *= ratio;
     margin *= ratio;
-    commandLine.setBounds(0,40,windowW, 20);
 
-    btnMode.setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, 20);
-    encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, 20);
-    HLBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, 20);
-    blindBtn.setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, 20);
-    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (1 * btnWidth), 0, btnWidth, 20);
-    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (2 * btnWidth), 0, btnWidth, 20);
-    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (3 * btnWidth), 0, btnWidth, 20);
-    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (4 * btnWidth), 0, btnWidth, 20);
-    commandDownBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (5 * btnWidth), 0, btnWidth, 20);
-    commandUpBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (6 * btnWidth), 0, btnWidth, 20);
-    explodeCommandBtn.setBounds(windowW - (3 * margin) - (4 * btnWidth) - (7 * btnWidth), 0, btnWidth, 20);
+    btnMode.setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, btnHeight);
+    encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
+    HLBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
+    blindBtn.setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, btnHeight);
+    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (1 * btnWidth), 0, btnWidth, btnHeight);
+    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (2 * btnWidth), 0, btnWidth, btnHeight);
+    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (3 * btnWidth), 0, btnWidth, btnHeight);
+    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (4 * btnWidth), 0, btnWidth, btnHeight);
+    commandDownBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
+    commandUpBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
+    explodeCommandBtn.setBounds(windowW - (3 * margin) - (4 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
+
+    commandLine.setBounds(0, 2 * btnHeight, windowW, btnHeight);
 
     if (filterBtns.size() > 0) {
         float w = getWidth() / filterBtns.size();
         for (int i = 0; i < filterBtns.size(); i++) {
             TextButton* t = filterBtns[i];
-            t->setBounds(i * w, 20, w, 20);
+            t->setBounds(i * w, btnHeight, w, btnHeight);
         }
     }
 
-    float w = 57;
-    float h = 57;
-    w = windowW / nEncoders;
-    h = windowH - (80);
+    float w = windowW / nEncoders; 
+    float h = windowH - (4*btnHeight);
     for (int i = 0; i < nEncoders; i++) {
-        encoders[i]->setBounds(i*w, 80, w, h-20);
-        encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
-        labels[i]->setBounds(i*w, 60, w, 20);
+        encoders[i]->setBounds(i*w, 4*btnHeight, w, h);
+        encoders[i]->setTextBoxStyle(Slider::TextBoxBelow, false, w-4, btnHeight);
+        labels[i]->setBounds(i*w, 3*btnHeight, w, btnHeight);
         labels[i]->setJustificationType(Justification::centred);
     }
 }

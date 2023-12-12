@@ -44,8 +44,9 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 
 	cuelistAction = addEnumParameter("Cuelist action", "");
 	cuelistAction->addOption("HTP Level", "htplevel");
-	cuelistAction->addOption("Flash Level", "flashlevel");
 	cuelistAction->addOption("LTP Level", "ltplevel");
+	cuelistAction->addOption("Flash Level", "flashlevel");
+	cuelistAction->addOption("HTP LTP Levels", "htpltplevel");
 	cuelistAction->addOption("Chaser Speed", "speed");
 	cuelistAction->addOption("Cross fade", "crossfade");
 	cuelistAction->addOption("Up fade", "upfade");
@@ -149,7 +150,7 @@ float VirtualFaderSlider::getTargetValue()
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
-			if (action == "htplevel") { 
+			if (action == "htplevel" || action == "htpltplevel") {
 				FloatParameter* t = targ->HTPLevel;
 				return t->getValue(); 
 			}
@@ -241,7 +242,7 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
 		if (targ != nullptr) {
 			String action = cuelistAction->getValue();
-			if (action == "htplevel") { 
+			if (action == "htplevel" || action == "htpltplevel") {
 				targ->nextHTPLevelController = origin;
 				value = isRelative ? targ->HTPLevel->floatValue()+value : value;
 				targ->HTPLevel->setValue(value);
@@ -251,7 +252,7 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 				value = isRelative ? targ->FlashLevel->floatValue() + value : value;
 				targ->FlashLevel->setValue(value);
 			}
-			if (action == "ltplevel") { 
+			if (action == "ltplevel" || action == "htpltplevel") {
 				targ->nextLTPLevelController = origin;
 				value = isRelative ? targ->LTPLevel->floatValue() + value : value;
 				targ->LTPLevel->setValue(value);
@@ -484,6 +485,15 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 			if (action == "htplevel") {
 				// LOG(targ->currentHTPLevelController << " " << origin);
 				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+			if (action == "htpltplevel") {
+				// LOG(targ->currentHTPLevelController << " " << origin);
+				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}

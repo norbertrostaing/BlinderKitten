@@ -47,6 +47,7 @@ DMXInterface::DMXInterface() :
 
 DMXInterface::~DMXInterface()
 {
+	tester = nullptr;
 }
 
 void DMXInterface::clearItem()
@@ -343,7 +344,11 @@ void DMXInterface::repaintChannels(int chan, int n)
 			for (int i = 0; i < n; i++) {
 				tester->channelItems[chan+i]->value = dmxDevice->dmxDataOut[chan+i] / 255.;
 			}
-			MessageManager::callAsync([this]() {tester->repaint(); });
+			MessageManager::callAsync([this]() {
+				if (tester != nullptr) {
+					tester->repaint();
+				}
+			});
 		}
 	}
 
