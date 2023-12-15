@@ -286,8 +286,8 @@ void Encoders::updateHLButton()
 void Encoders::updateBlindButton()
 {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
-        String mode = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
-        if (mode == "blind") {
+        String editMode = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
+        if (editMode == "blind") {
             blindBtn.setColour(TextButton::buttonColourId, Colour(127, 0, 0));
         }
         else {
@@ -348,6 +348,7 @@ void Encoders::updateFilterBtns()
             addAndMakeVisible(t);
         }
     }
+    resized();
 }
 
 void Encoders::updateEncoders() {
