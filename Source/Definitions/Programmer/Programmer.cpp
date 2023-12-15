@@ -222,7 +222,7 @@ void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 	if (c->niceName == "Channel type" || c->niceName == "Thru") {
 		UserInputManager::getInstance()->programmerCommandStructureChanged(this);
 	} 
-	else if (c->niceName != "Value"&& c->niceName != "Value to")
+	else if (cc->niceName == "Commands" && c->niceName != "Value" && c->niceName != "Value to")
 	{
 		UserInputManager::getInstance()->programmerCommandValueChanged(this);
 	}
