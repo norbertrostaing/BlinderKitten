@@ -29,8 +29,9 @@ public:
     Point2DParameter* downInputRange;
     Point2DParameter* encoderValueRange;
 
-    Point2DParameter* inputRange;
-    Point2DParameter* outputRange;
+    Point2DParameter* inputRange7b;
+    Point2DParameter* inputRange14b;
+    //Point2DParameter* outputRange;
 
     BoolParameter* learnMode;
 
