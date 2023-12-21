@@ -28,5 +28,6 @@ public:
     void setItemIndex(Cue* item, int newIndex, bool addToUndo = true);
     double calcId(double prev, double next);
 
+    void removeItemInternal(Cue*) override;
 
 };

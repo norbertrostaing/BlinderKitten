@@ -107,4 +107,16 @@ double CueManager::calcId(double prev, double next)
     return prev + delta;
 }
 
+void CueManager::removeItemInternal(Cue* c)
+{
+    if (this->parentContainer != nullptr) {
+        Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer.get());
+        if (parentCuelist->cueA == c) {
+            parentCuelist->cueA = nullptr;
+        }
+    }
+
+}
+
+
 
