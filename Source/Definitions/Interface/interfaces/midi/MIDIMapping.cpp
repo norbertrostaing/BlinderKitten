@@ -50,6 +50,9 @@ MIDIMapping::MIDIMapping() :
     learnMode->isSavable = false;
     learnMode->hideInEditor = true;
 
+    learnRange = addBoolParameter("Learn range", "enable this and move your fader to adapt your input range", false);
+    learnRange->isSavable = false;
+
     addChildControllableContainer(&actionManager);
 
     showInspectorOnSelect = false;
@@ -64,6 +67,9 @@ void MIDIMapping::onContainerParameterChangedInternal(Parameter* p) {
     if (p == mode || p == midiType) {
         updateDisplay();
     }
+    if (p == learnRange) {
+        nextInputReinitRange = learnRange->boolValue();
+    }
 }
 
 void MIDIMapping::updateDisplay()
@@ -77,7 +83,6 @@ void MIDIMapping::updateDisplay()
     pitchOrNumber->hideInEditor = midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
     inputRange7b->hideInEditor = midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
     inputRange14b->hideInEditor = midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL;
-
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
@@ -97,9 +102,24 @@ void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
     if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return;
     if (channel->intValue() != rcvChannel) return;
     if (pitchOrNumber->intValue() != pitch) return;
-    float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, velocity), inputRange7b->x, inputRange7b->y, 0, 1);
-    processValue(relValue, origin);
 
+    if (learnRange->boolValue()) {
+        if (nextInputReinitRange) {
+            nextInputReinitRange = false;
+            var v = var(); v.append(velocity); v.append(velocity);
+            inputRange7b->setValue(v);
+        }
+        else {
+            int min = jmin((int)inputRange7b->x, velocity);
+            int max = jmax((int)inputRange7b->y, velocity);
+            var v = var(); v.append(min); v.append(max);
+            inputRange7b->setValue(v);
+        }
+    }
+    else {
+        float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, velocity), inputRange7b->x, inputRange7b->y, 0, 1);
+        processValue(relValue, origin);
+    }
 }
 
 void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
@@ -116,8 +136,24 @@ void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
     if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return;
     if (channel->intValue() != rcvChannel) return;
     if (pitchOrNumber->intValue() != number) return;
-    float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, value), inputRange7b->x, inputRange7b->y, 0, 1);
-    processValue(relValue, origin);
+
+    if (learnRange->boolValue()) {
+        if (nextInputReinitRange) {
+            nextInputReinitRange = false;
+            var v = var(); v.append(value); v.append(value);
+            inputRange7b->setValue(v);
+        }
+        else {
+            int min = jmin((int)inputRange7b->x, value);
+            int max = jmax((int)inputRange7b->y, value);
+            var v = var(); v.append(min); v.append(max);
+            inputRange7b->setValue(v);
+        }
+    }
+    else {
+        float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, value), inputRange7b->x, inputRange7b->y, 0, 1);
+        processValue(relValue, origin);
+    }
 }
 
 void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
@@ -132,8 +168,24 @@ void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL) return;
     if (channel->intValue() != rcvChannel) return;
-    float relValue = jmap<float>(jlimit<float>(inputRange14b->x, inputRange14b->y, value), inputRange14b->x, inputRange14b->y, 0, 1);
-    processValue(relValue, origin);
+
+    if (learnRange->boolValue()) {
+        if (nextInputReinitRange) {
+            nextInputReinitRange = false;
+            var v = var(); v.append(value); v.append(value);
+            inputRange14b->setValue(v);
+        }
+        else {
+            int min = jmin((int)inputRange14b->x, value);
+            int max = jmax((int)inputRange14b->y, value);
+            var v = var(); v.append(min); v.append(max);
+            inputRange14b->setValue(v);
+        }
+    }
+    else {
+        float relValue = jmap<float>(jlimit<float>(inputRange14b->x, inputRange14b->y, value), inputRange14b->x, inputRange14b->y, 0, 1);
+        processValue(relValue, origin);
+    }
 }
 
 void MIDIMapping::processValue(float value, String origin) {

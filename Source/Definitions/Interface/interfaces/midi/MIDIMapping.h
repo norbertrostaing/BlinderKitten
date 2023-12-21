@@ -34,6 +34,9 @@ public:
     //Point2DParameter* outputRange;
 
     BoolParameter* learnMode;
+    BoolParameter* learnRange;
+
+    bool nextInputReinitRange = false;
 
     bool isValid;
     bool wasInRange;
