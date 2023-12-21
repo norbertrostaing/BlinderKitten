@@ -23,7 +23,7 @@ MIDIMapping::MIDIMapping() :
     midiType = addEnumParameter("Type", "Sets the type to check");
     midiType->addOption("Note", NOTE)->addOption("Control Change", CONTROLCHANGE)->addOption("Pitch wheel", PITCHWHEEL);
 
-    channel = addIntParameter("Channel", "The channel to use for this mapping.", 1, 1, 16);
+    channel = addIntParameter("Channel", "The channel to use for this mapping. 0 means all channels.", 1, 0, 16);
     pitchOrNumber = addIntParameter("Pitch Or Number", "The pitch (for notes) or number (for controlChange) to use for this mapping.", 0, 0, 127);
     
     inputRange7b = addPoint2DParameter("Input Range", "The range to get from input");
@@ -100,7 +100,7 @@ void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
     if (!enabled->boolValue()) return;
 
     if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return;
-    if (channel->intValue() != rcvChannel) return;
+    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return;
     if (pitchOrNumber->intValue() != pitch) return;
 
     if (learnRange->boolValue()) {
@@ -134,7 +134,7 @@ void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
 
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return;
-    if (channel->intValue() != rcvChannel) return;
+    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return;
     if (pitchOrNumber->intValue() != number) return;
 
     if (learnRange->boolValue()) {
@@ -167,7 +167,7 @@ void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
 
     if (!enabled->boolValue()) return;
     if (midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL) return;
-    if (channel->intValue() != rcvChannel) return;
+    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return;
 
     if (learnRange->boolValue()) {
         if (nextInputReinitRange) {
