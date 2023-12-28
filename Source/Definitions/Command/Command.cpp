@@ -62,6 +62,10 @@ Command::~Command()
 	//computedValues.clear();
 	computedValues.getLock().exit();
 
+	if (UserInputManager::getInstance()->targetCommand == this) {
+		UserInputManager::getInstance()->targetCommand = nullptr;
+	}
+
 }
 
 void Command::updateDisplay() {
