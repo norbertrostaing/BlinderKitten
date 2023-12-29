@@ -62,13 +62,10 @@ void LayoutViewer::rebuildLayoutsList()
 
 void LayoutViewer::newMessage(const LayoutManager::ManagerEvent& e)
 {
-	if (e.type == LayoutManager::ManagerEvent::ITEM_ADDED || e.type == LayoutManager::ManagerEvent::ITEM_REMOVED || e.type == LayoutManager::ManagerEvent::ITEMS_REORDERED)
-	{
-		if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED && e.getItem() == selectedLayout) {
-			selectedLayout = nullptr;
-		}
-		rebuildLayoutsList();
+	if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED || e.type == LayoutManager::ManagerEvent::ITEM_REMOVED) {
+		selectedLayout = nullptr;
 	}
+	rebuildLayoutsList();
 }
 
 Colour LayoutViewer::getClickColour(BKPath* path, ClicAction action)

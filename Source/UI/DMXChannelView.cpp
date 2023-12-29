@@ -167,11 +167,10 @@ void DMXChannelView::sendDMXValue(int channel, float value)
 
 void DMXChannelView::newMessage(const InterfaceManager::ManagerEvent& e)
 {
-	if (e.type == InterfaceManager::ManagerEvent::ITEM_ADDED || e.type == InterfaceManager::ManagerEvent::ITEM_REMOVED)
-
-	{
-		if (DMXInterface* d = dynamic_cast<DMXInterface*>(e.getItem())) rebuildDMXList();
+	if (e.type == InterfaceManager::ManagerEvent::ITEM_REMOVED || e.type == InterfaceManager::ManagerEvent::ITEMS_REMOVED) {
+		setCurrentInterface(nullptr);
 	}
+	rebuildDMXList();
 }
 
 void DMXChannelView::clearSelection()
