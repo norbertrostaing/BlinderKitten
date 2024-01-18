@@ -303,7 +303,7 @@ String VirtualButton::getBtnText() {
 				if (action == "load" || action == "loadandgo") {
 					float loadId = cueId->floatValue();
 					Cue* c = targ->getCueAfterId(loadId);
-					if (c != nullptr) {
+					if (c != nullptr && loadId >= 0) {
 						text += "\n" + c->niceName;
 					}
 				}
