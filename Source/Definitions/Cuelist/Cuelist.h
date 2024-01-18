@@ -214,6 +214,7 @@ public:
     Cue* getNextCue();
 
     Cue* getNextChaserCue();
+    Cue* getCueAfterId(float id);
 
     void autoCreateChaser();
 

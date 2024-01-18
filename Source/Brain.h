@@ -71,6 +71,7 @@ public:
     double now;
     bool loadingIsRunning = false;
 
+    bool reconstructVirtuals = false;
     bool virtualFadersNeedUpdate = false;
     bool virtualFaderButtonsNeedUpdate = false;
     bool virtualButtonsNeedUpdate = false;

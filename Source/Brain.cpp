@@ -220,6 +220,14 @@ void Brain::brainLoop() {
         }
     }
 
+    if (reconstructVirtuals) {
+        reconstructVirtuals = false;
+        MessageManager::callAsync([this]() {
+            VirtualFaderColGrid::getInstance()->fillCells();
+            VirtualButtonGrid::getInstance()->fillCells();
+            });
+    }
+
     if (virtualFadersNeedUpdate) {
         virtualFadersNeedUpdate = false;
         MessageManager::callAsync([this]() {VirtualFaderColGrid::getInstance()->updateSlidersValues(); });

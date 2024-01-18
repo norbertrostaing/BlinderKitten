@@ -329,6 +329,18 @@ String VirtualFaderButton::getBtnText(String columnType) {
 			action = cuelistAction->getValue();
 			if (targ != nullptr) {
 				text = targ->userName->getValue();
+				if (!targ->isChaser->boolValue() && targ->cues.items.size() > 1) {
+					if (action == "load" || action == "loadandgo") {
+						float loadId = cueId->floatValue();
+						Cue* c = targ->getCueAfterId(loadId);
+						if (c != nullptr) {
+							text += "\n" + c->niceName;
+						}
+					}
+					else if (targ->cueA != nullptr) {
+						text += "\n" + targ->cueA->niceName;
+					}
+				}
 			}
 		}
 		else if (targType == "effect") {

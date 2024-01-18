@@ -717,6 +717,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	}
 	isComputing.exit();
 
+	if (cues.items.size() > 1 && !isChaser->boolValue()) {
+		Brain::getInstance()->reconstructVirtuals = true;
+	}
+
 	const MessageManagerLock mmLock;
 	nextCue->resetValue();
 	nextCueId->resetValue();
@@ -1375,6 +1379,17 @@ Cue* Cuelist::getNextChaserCue() {
 		return nullptr;
 	}
 
+}
+
+Cue* Cuelist::getCueAfterId(float id)
+{
+	for (int i = 0; i < cues.items.size(); i++) {
+		if ((float)cues.items[i]->id->getValue() >= id) {
+			return cues.items[i];
+		}
+	}
+
+	return nullptr;
 }
 
 void Cuelist::autoCreateChaser()
