@@ -45,6 +45,7 @@ Cue::Cue(var params) :
 	canBeRandomlyCalled = addBoolParameter("Random callable", "Can this cue be called by the randomGo of its cuelist ?", true);
 	loadWindowBreakLine = addBoolParameter("New line load window", "If checked, this element will force a new line in the cuelist window", false);
 	goBtn = actionsContainer.addTrigger("GO", "trigger this cue");
+	cleanUnusedCommandsBtn = actionsContainer.addTrigger("Clean", "Clean the duplicates commands in this cue.");
 	loadBtn = actionsContainer.addTrigger("Load", "load the content of this cue in programmer");
 	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");
 	mergeBtn = actionsContainer.addTrigger("Merge", "The content of the programmer is added to this cue");
@@ -109,6 +110,10 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 		Cue* temp = this;
 		parentCuelist->go(temp);
 	}
+	else if (c == cleanUnusedCommandsBtn) {
+		computeValues();
+		cleanUnused();
+	}
 	else if (c == loadBtn) {
 		const MessageManagerLock mmlock;
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
@@ -164,10 +169,10 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 
 void Cue::computeValues() {
 	csComputing.enter();
-	//if (isComputing) {return;}
 	isComputing = true;
 	maxTiming = 0;
 	computedValues.clear();
+	channelToCommand.clear();
 	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
@@ -177,6 +182,7 @@ void Cue::computeValues() {
 			SubFixtureChannel* fc = it.getKey();
 			if (fc != nullptr) {
 				computedValues.set(fc, it.getValue());
+				channelToCommand.set(fc, cs[i]);
 			}
 		}
 	}
@@ -232,4 +238,27 @@ void Cue::endTransition() {
 	}
 	catch (...) {
 	}
+}
+
+void Cue::cleanUnused()
+{
+	Array<Command*> usedCommands;
+	csComputing.enter();
+
+	for (int i = 0; i < commands.items.size(); i++) {
+		commands.items[i]->cleanUnused();
+	}
+
+	for (auto it = channelToCommand.begin(); it != channelToCommand.end(); it.next()) {
+		usedCommands.addIfNotAlreadyThere(it.getValue());
+	}
+
+	for (int i = commands.items.size() - 1; i >= 0; i--) {
+		Command* c = commands.items[i];
+		if (!usedCommands.contains(c)) {
+			commands.removeItem(c);
+		}
+	}
+
+	csComputing.exit();
 }

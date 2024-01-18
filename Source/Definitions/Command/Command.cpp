@@ -89,6 +89,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	maxTiming = 0;
 	isComputing.enter();
 	computedValues.clear();
+	channelToCommandValue.clear();
 
 	if (!enabled->boolValue()) {
 		isComputing.exit();
@@ -220,6 +221,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						if (!computedValues.contains(fchan)) {
 							computedValues.set(fchan, std::make_shared<ChannelValue>());
 						}
+						channelToCommandValue.set(fchan, cv);
 						std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);
 						float val = valueFrom;
 						if (cv->thru->getValue() && SubFixtures.size() > 1) {
@@ -728,4 +730,26 @@ void Command::explodeSelection()
 		}
 	}
 	isComputing.exit();
+}
+
+void Command::cleanUnused()
+{
+	computeValues();
+	Array<CommandValue*> used;
+	bool changed = false;
+
+	for (auto it = channelToCommandValue.begin(); it != channelToCommandValue.end(); it.next()) {
+		used.addIfNotAlreadyThere(it.getValue());
+	}
+
+	for (int i = values.items.size() - 2; i >= 0; i--) {
+		if (!used.contains(values.items[i])) {
+			values.removeItem(values.items[i]);
+			changed = true;
+		}
+	}
+
+	if (changed) {
+		UserInputManager::getInstance()->commandSelectionChanged(this);
+	}
 }

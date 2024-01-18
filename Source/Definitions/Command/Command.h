@@ -42,6 +42,7 @@ public:
     CommandTiming timing;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
+    HashMap<SubFixtureChannel*, CommandValue*> channelToCommandValue;
     CriticalSection isComputing;
     bool toDelete = false;
 
@@ -86,6 +87,7 @@ public:
     String lastTarget = "";
 
     void explodeSelection();
+    void cleanUnused();
 
 };
 

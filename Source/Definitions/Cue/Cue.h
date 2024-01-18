@@ -45,9 +45,12 @@ public:
     Trigger* mergeBtn;
     Trigger* createAfterBtn;
     Trigger* createBeforeBtn;
+    Trigger* cleanUnusedCommandsBtn;
+
     bool isComputing = false;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
+    HashMap<SubFixtureChannel*, Command*> channelToCommand;
     CriticalSection csComputing;
 
     void triggerTriggered(Trigger* t) override;
@@ -58,6 +61,8 @@ public:
     void update(double now);
     void go();
     void endTransition();
+
+    void cleanUnused();
 
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }
