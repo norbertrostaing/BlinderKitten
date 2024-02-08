@@ -19,6 +19,7 @@
 #include "../Cuelist/Cuelist.h"
 #include "../Programmer/Programmer.h"
 #include "../Effect/Effect.h"
+#include "../Tracker/Tracker.h"
 #include "../ChannelValue.h"
 #include "UI/InputPanel.h"
 
@@ -160,6 +161,9 @@ void SubFixtureChannel::updateVal(double now) {
 	for (int i = 0; i < carouselStack.size(); i++) {
 		layers.addIfNotAlreadyThere(carouselStack.getReference(i)->layerId->getValue());
 	}
+	for (int i = 0; i < trackerStack.size(); i++) {
+		layers.addIfNotAlreadyThere(trackerStack.getReference(i)->layerId->getValue());
+	}
 	for (int i = 0; i < effectStack.size(); i++) {
 		layers.addIfNotAlreadyThere(effectStack.getReference(i)->layerId->getValue());
 	}
@@ -215,6 +219,12 @@ void SubFixtureChannel::updateVal(double now) {
 			for (int i = 0; i < carouselStack.size(); i++) {
 				if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
 					newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
+			}
+
+			for (int i = 0; i < trackerStack.size(); i++) {
+				if ((int)trackerStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = trackerStack.getReference(i)->applyToChannel(this, newValue, now);
 				}
 			}
 
@@ -329,6 +339,19 @@ void SubFixtureChannel::mapperOutOfStack(Mapper* f) {
 	cs.enter();
 	while (mapperStack.indexOf(f) >= 0) {
 		mapperStack.removeAllInstancesOf(f);
+	}
+	cs.exit();
+}
+
+void SubFixtureChannel::trackerOnTopOfStack(Tracker* f) {
+	trackerOutOfStack(f);
+	trackerStack.add(f);
+}
+
+void SubFixtureChannel::trackerOutOfStack(Tracker* f) {
+	cs.enter();
+	while (trackerStack.indexOf(f) >= 0) {
+		trackerStack.removeAllInstancesOf(f);
 	}
 	cs.exit();
 }

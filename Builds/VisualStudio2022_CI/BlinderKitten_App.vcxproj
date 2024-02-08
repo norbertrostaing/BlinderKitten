@@ -401,6 +401,9 @@
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPreset.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPresetManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPresetManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Tracker\Tracker.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Tracker\TrackerManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Tracker\TrackerManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\ChannelValue.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\RunningTask.cpp"/>
     <ClCompile Include="..\..\Source\BKEngine.cpp"/>
@@ -3512,6 +3515,9 @@
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPreset.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPresetManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPresetManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Tracker\Tracker.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Tracker\TrackerManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Tracker\TrackerManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\ChannelValue.h"/>
     <ClInclude Include="..\..\Source\Definitions\RunningTask.h"/>
     <ClInclude Include="..\..\Source\BKEngine.h"/>

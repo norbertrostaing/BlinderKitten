@@ -72,6 +72,10 @@ public:
 	TargetParameter* CPHueChannel;
 	TargetParameter* CPSaturationChannel;
 
+	ControllableContainer trackerContainer;
+	TargetParameter* TPanChannel;
+	TargetParameter* TTiltChannel;
+
 	ControllableContainer loadWindowContainer;
 	IntParameter* loadWindowWidth;
 	IntParameter* loadWindowHeight;
@@ -106,7 +110,7 @@ public:
 
 	void parameterValueChanged(Parameter* p);
 
-	void autoFillColorPickerValues();
+	void autoFillDefaultChannels();
 };
 
 struct tempChannel {

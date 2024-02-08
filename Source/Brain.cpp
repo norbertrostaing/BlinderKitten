@@ -167,6 +167,18 @@ void Brain::brainLoop() {
     }
     mapperPoolUpdating.clear();
 
+    if (trackerPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < trackerPoolWaiting.size(); i++) {
+            trackerPoolUpdating.add(trackerPoolWaiting[i]);
+        }
+        trackerPoolWaiting.clear();
+    }
+    for (int i = 0; i < trackerPoolUpdating.size(); i++) {
+        trackerPoolUpdating[i]->update(now);
+    }
+    trackerPoolUpdating.clear();
+
     if (programmerPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
         for (int i = 0; i < programmerPoolWaiting.size(); i++) {
@@ -704,6 +716,45 @@ void Brain::unregisterLayout(Layout* c) {
     }
 }
 
+void Brain::registerTracker(Tracker* p, int id, bool swap) {
+    int askedId = id;
+    if (trackers.getReference(id) == p) { return; }
+    if (trackers.containsValue(p)) {
+        trackers.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (trackers.contains(id) && trackers.getReference(id) != nullptr) {
+            Tracker* presentItem = trackers.getReference(id);
+            unregisterTracker(p);
+            registerTracker(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (trackers.contains(id) && trackers.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    trackers.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterTracker(Tracker* c) {
+    if (trackers.containsValue(c)) {
+        trackers.removeValue(c);
+    }
+}
+
+
+
+
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
     ScopedLock lock(usingCollections);
@@ -758,6 +809,14 @@ void Brain::pleaseUpdate(Mapper* f) {
     ScopedLock lock(usingCollections);
     if (!mapperPoolWaiting.contains(f)) {
         mapperPoolWaiting.add(f);
+    }
+}
+
+void Brain::pleaseUpdate(Tracker* f) {
+    if (f == nullptr || f->objectType != "Tracker") { return; }
+    ScopedLock lock(usingCollections);
+    if (!trackerPoolWaiting.contains(f)) {
+        trackerPoolWaiting.add(f);
     }
 }
 
@@ -1018,6 +1077,15 @@ Mapper* Brain::getMapperById(int id) {
 Layout* Brain::getLayoutById(int id) {
     if (layouts.contains(id)) {
         return layouts.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+Tracker* Brain::getTrackerById(int id) {
+    if (trackers.contains(id)) {
+        return trackers.getReference(id);
     }
     else {
         return nullptr;

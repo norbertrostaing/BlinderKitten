@@ -38,6 +38,7 @@
 #include "./Definitions/Effect/EffectManager.h"
 #include "./Definitions/Carousel/CarouselManager.h"
 #include "./Definitions/Mapper/MapperManager.h"
+#include "./Definitions/Tracker/TrackerManager.h"
 #include "./Definitions/Multiplicator/MultiplicatorManager.h"
 #include "./Definitions/Layout/LayoutManager.h"
 
@@ -88,6 +89,7 @@ BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
 	conductorInfosContainer("Conductor infos Settings"),
 	colorPickerContainer("Color Picker Settings"),
+	trackerContainer("Tracker Settings"),
 	virtualParamsContainer("Virtual Playbacks Settings"),
 	uiParamsContainer("UI Settings"),
 	loadWindowContainer("Cuelist load window")
@@ -106,6 +108,7 @@ BKEngine::BKEngine() :
 
 	ProjectSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
+	GlobalSettings::getInstance()->addChildControllableContainer(&trackerContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&loadWindowContainer);
@@ -187,6 +190,14 @@ BKEngine::BKEngine() :
 	CPSaturationChannel->targetType = TargetParameter::CONTAINER;
 	CPSaturationChannel->maxDefaultSearchLevel = 2;
 
+	TPanChannel = trackerContainer.addTargetParameter("Pan channel", "", ChannelFamilyManager::getInstance());
+	TPanChannel->targetType = TargetParameter::CONTAINER;
+	TPanChannel->maxDefaultSearchLevel = 2;
+
+	TTiltChannel = trackerContainer.addTargetParameter("Tilt channel", "", ChannelFamilyManager::getInstance());
+	TTiltChannel->targetType = TargetParameter::CONTAINER;
+	TTiltChannel->maxDefaultSearchLevel = 2;
+
 
 	loadWindowWidth = loadWindowContainer.addIntParameter("Window Width", "", 810,100);
 	loadWindowHeight = loadWindowContainer.addIntParameter("Windows Height", "", 610,100);
@@ -210,6 +221,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(EffectManager::getInstance());
 	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(MapperManager::getInstance());
+	addChildControllableContainer(TrackerManager::getInstance());
 	addChildControllableContainer(MultiplicatorManager::getInstance());
 	addChildControllableContainer(LayoutManager::getInstance());
 
@@ -296,6 +308,7 @@ BKEngine::~BKEngine()
 	MultiplicatorManager::deleteInstance();
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
+	TrackerManager::deleteInstance();
 	MapperManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
 	CuelistManager::deleteInstance();
@@ -365,6 +378,7 @@ void BKEngine::clearInternal()
 
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();
+	TrackerManager::getInstance()->clear();
 	MapperManager::getInstance()->clear();
 	MultiplicatorManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
@@ -396,7 +410,7 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->startThread();
 	Brain::getInstance()->skipLoop = false;
 
-	autoFillColorPickerValues();
+	autoFillDefaultChannels();
 }
 
 var BKEngine::getJSONData()
@@ -448,6 +462,9 @@ var BKEngine::getJSONData()
 	var tData = MapperManager::getInstance()->getJSONData();
 	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(MapperManager::getInstance()->shortName, tData);
 
+	var trackData = TrackerManager::getInstance()->getJSONData();
+	if (!trackData.isVoid() && trackData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(TrackerManager::getInstance()->shortName, trackData);
+
 	var multData = MultiplicatorManager::getInstance()->getJSONData();
 	if (!multData.isVoid() && multData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(MultiplicatorManager::getInstance()->shortName, multData);
 
@@ -491,7 +508,8 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
 	ProgressTask* fxTask = loadingTask->addTask("Effects");
 	ProgressTask* carTask = loadingTask->addTask("Carousels");
-	ProgressTask* trackTask = loadingTask->addTask("Mappers");
+	ProgressTask* mapTask = loadingTask->addTask("Mappers");
+	ProgressTask* trackTask = loadingTask->addTask("Trackers");
 	ProgressTask* multTask = loadingTask->addTask("Multiplicators");
 	ProgressTask* layTask = loadingTask->addTask("Layouts");
 	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
@@ -570,8 +588,13 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	carTask->setProgress(1);
 	carTask->end();
 
-	trackTask->start();
+	mapTask->start();
 	MapperManager::getInstance()->loadJSONData(data.getProperty(MapperManager::getInstance()->shortName, var()));
+	mapTask->setProgress(1);
+	mapTask->end();
+
+	trackTask->start();
+	TrackerManager::getInstance()->loadJSONData(data.getProperty(TrackerManager::getInstance()->shortName, var()));
 	trackTask->setProgress(1);
 	trackTask->end();
 
@@ -633,7 +656,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	Brain::getInstance()->updateAllChannels();
 	//EncodersMult::getInstance()->updateChannels();
 
-	autoFillColorPickerValues();
+	autoFillDefaultChannels();
 	Encoders::getInstance()->updateChannels();
 	EncodersMult::getInstance()->targetChanged();
 
@@ -721,6 +744,7 @@ void BKEngine::importMochi(var data)
 	TimingPresetManager::getInstance()->addItemsFromData(data.getProperty(TimingPresetManager::getInstance()->shortName, var()));
 	CarouselManager::getInstance()->addItemsFromData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
 	MapperManager::getInstance()->addItemsFromData(data.getProperty(MapperManager::getInstance()->shortName, var()));
+	TrackerManager::getInstance()->addItemsFromData(data.getProperty(TrackerManager::getInstance()->shortName, var()));
 	MultiplicatorManager::getInstance()->addItemsFromData(data.getProperty(MultiplicatorManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
@@ -734,7 +758,7 @@ void BKEngine::importMochi(var data)
 	CarouselGridView::getInstance()->updateCells();
 	MapperGridView::getInstance()->updateCells();
 
-	autoFillColorPickerValues();
+	autoFillDefaultChannels();
 }
 
 void BKEngine::importGDTF(File f)
@@ -1224,7 +1248,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 
 }
 
-void BKEngine::autoFillColorPickerValues()
+void BKEngine::autoFillDefaultChannels()
 {	
 	ChannelFamily* col = ChannelFamilyManager::getInstance()->getItemWithName("Color");
 	if (col != nullptr) {
@@ -1261,4 +1285,17 @@ void BKEngine::autoFillColorPickerValues()
 			CPSaturationChannel->setValueFromTarget(Sat);
 		}
 	}
+
+	ChannelFamily* pos = ChannelFamilyManager::getInstance()->getItemWithName("Position");
+	if (pos != nullptr) {
+		auto Pan = pos->definitions.getItemWithName("Pan");
+		if (Pan != nullptr) {
+			TPanChannel->setValueFromTarget(Pan);
+		}
+		auto Tilt = pos->definitions.getItemWithName("Tilt");
+		if (Tilt != nullptr) {
+			TTiltChannel->setValueFromTarget(Tilt);
+		}
+	}
+
 }

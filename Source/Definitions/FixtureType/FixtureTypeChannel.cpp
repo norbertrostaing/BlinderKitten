@@ -13,6 +13,7 @@
 #include "FixtureTypeChannelManager.h"
 #include "FixtureTypeVirtualChannelManager.h"
 #include "FixtureType.h"
+#include "Tracker/TrackerManager.h"
 
 
 FixtureTypeChannel::FixtureTypeChannel(var params) :
@@ -50,6 +51,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     virtualMaster->targetType = TargetParameter::CONTAINER;
     virtualMaster->maxDefaultSearchLevel = 2;
 
+    physicalRange = addPoint2DParameter("Physical range", "Range output (degrees for pan, tilt, zoom etc...");
 };
 
 FixtureTypeChannel::~FixtureTypeChannel()
@@ -62,5 +64,8 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
         if (p != nullptr) {
             p->calcDmxChannels();
         }
+    }
+    else if (p == physicalRange) {
+        TrackerManager::getInstance()->recomputeAllTrackers();
     }
 }

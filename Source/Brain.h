@@ -26,6 +26,9 @@
 #include "Definitions/RunningTask.h"
 #include "Definitions/Cue/Task.h"
 #include "Definitions/Layout/Layout.h"
+#include "Definitions/Tracker/Tracker.h"
+
+
 class Brain :
     public Thread
 {
@@ -47,6 +50,7 @@ public:
     HashMap<int, Effect*>effects;
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
+    HashMap<int, Tracker*>trackers;
     HashMap<int, Layout*>layouts;
 
     Array<Cuelist*> cuelistPoolUpdating;
@@ -63,6 +67,8 @@ public:
     Array<Carousel*> carouselPoolWaiting;
     Array<Mapper*> mapperPoolUpdating;
     Array<Mapper*> mapperPoolWaiting;
+    Array<Tracker*> trackerPoolUpdating;
+    Array<Tracker*> trackerPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
     Array<SubFixtureChannel*> grandMasterChannels;
@@ -110,6 +116,8 @@ public:
     void unregisterMapper(Mapper* p);
     void registerLayout(Layout* p, int id, bool swap = false);
     void unregisterLayout(Layout* p);
+    void registerTracker(Tracker* p, int id, bool swap = false);
+    void unregisterTracker(Tracker* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(SubFixtureChannel* f);
@@ -118,6 +126,7 @@ public:
     void pleaseUpdate(Effect* f);
     void pleaseUpdate(Carousel* c);
     void pleaseUpdate(Mapper* c);
+    void pleaseUpdate(Tracker* c);
 
     void updateAllChannels();
 
@@ -137,6 +146,7 @@ public:
     Carousel* getCarouselById(int id);
     Mapper* getMapperById(int id);
     Layout* getLayoutById(int id);
+    Tracker* getTrackerById(int id);
 
     void swoppedCuelist(Cuelist* c);
     void unswoppedCuelist(Cuelist* c);

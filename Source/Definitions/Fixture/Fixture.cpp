@@ -21,6 +21,7 @@
 #include "FixtureMultiEditor.h"
 #include "UI/GridView/FixtureGridView.h"
 #include "BKEngine.h"
+#include "Tracker/TrackerManager.h"
 
 
 Fixture::Fixture(var params) :
@@ -46,6 +47,9 @@ Fixture::Fixture(var params) :
 	devTypeParam -> targetType = TargetParameter::CONTAINER;
 	devTypeParam -> maxDefaultSearchLevel = 0;
 	
+	position = addPoint3DParameter("Position", "Position in meters.");
+	rotation = addPoint3DParameter("Rotation", "Rotation in degrees.");
+
 	// to add a manager with defined data
 	patchs.selectItemWhenCreated = false;
 	addChildControllableContainer(&patchs);
@@ -97,6 +101,9 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	else if(p == id) 
 	{
 		Brain::getInstance()->registerFixture(this, id->getValue(), true);
+	}
+	else if (p == position || p == rotation) {
+		TrackerManager::getInstance()->recomputeAllTrackers();
 	}
 }
 

@@ -172,7 +172,7 @@ void BKColorPicker::mouseSetColor(double x, double y)
     b = jmap(b, 0., 1., y, 1.);
 
     if (dynamic_cast<ChannelType*>(engine->CPRedChannel->targetContainer.get()) == nullptr) {
-        engine -> autoFillColorPickerValues();
+        engine -> autoFillDefaultChannels();
     }
 
     if (engine->CPRedChannel->stringValue() != "") {

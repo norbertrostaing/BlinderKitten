@@ -35,6 +35,9 @@ public:
     void updateSubFixtureNames();
     TargetParameter* devTypeParam;
 
+    Point3DParameter* position;
+    Point3DParameter* rotation;
+
     OwnedArray<SubFixture> subFixturesContainer;
     HashMap<int, SubFixture*> subFixtures;
     BaseManager<FixturePatch> patchs;

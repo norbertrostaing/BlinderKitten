@@ -670,6 +670,18 @@
           <FILE id="khpHjA" name="TimingPresetManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/TimingPreset/TimingPresetManagerUI.h"/>
         </GROUP>
+        <GROUP id="{C0C7B219-6AA1-FED5-1B9E-249CD2F5643C}" name="Tracker">
+          <FILE id="tdIlIL" name="Tracker.cpp" compile="1" resource="0" file="Source/Definitions/Tracker/Tracker.cpp"/>
+          <FILE id="MSEWQa" name="Tracker.h" compile="0" resource="0" file="Source/Definitions/Tracker/Tracker.h"/>
+          <FILE id="VelHY8" name="TrackerManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Tracker/TrackerManager.cpp"/>
+          <FILE id="V1yqnC" name="TrackerManager.h" compile="0" resource="0"
+                file="Source/Definitions/Tracker/TrackerManager.h"/>
+          <FILE id="xZnr5A" name="TrackerManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Tracker/TrackerManagerUI.cpp"/>
+          <FILE id="mTL5lQ" name="TrackerManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Tracker/TrackerManagerUI.h"/>
+        </GROUP>
         <FILE id="juVtit" name="ChannelValue.cpp" compile="1" resource="0"
               file="Source/Definitions/ChannelValue.cpp"/>
         <FILE id="FdAQrs" name="ChannelValue.h" compile="0" resource="0" file="Source/Definitions/ChannelValue.h"/>

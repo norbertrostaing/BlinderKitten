@@ -196,6 +196,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/TimingPreset_47a547e1.o \
   $(JUCE_OBJDIR)/TimingPresetManager_60d1bd16.o \
   $(JUCE_OBJDIR)/TimingPresetManagerUI_b457496a.o \
+  $(JUCE_OBJDIR)/Tracker_764dddf3.o \
+  $(JUCE_OBJDIR)/TrackerManager_23498ec4.o \
+  $(JUCE_OBJDIR)/TrackerManagerUI_b8216798.o \
   $(JUCE_OBJDIR)/ChannelValue_6d2d5a86.o \
   $(JUCE_OBJDIR)/RunningTask_1a6b9796.o \
   $(JUCE_OBJDIR)/BKEngine_e62bccd4.o \
@@ -859,6 +862,21 @@ $(JUCE_OBJDIR)/TimingPresetManager_60d1bd16.o: ../../Source/Definitions/TimingPr
 $(JUCE_OBJDIR)/TimingPresetManagerUI_b457496a.o: ../../Source/Definitions/TimingPreset/TimingPresetManagerUI.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling TimingPresetManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Tracker_764dddf3.o: ../../Source/Definitions/Tracker/Tracker.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling Tracker.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TrackerManager_23498ec4.o: ../../Source/Definitions/Tracker/TrackerManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling TrackerManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TrackerManagerUI_b8216798.o: ../../Source/Definitions/Tracker/TrackerManagerUI.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling TrackerManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ChannelValue_6d2d5a86.o: ../../Source/Definitions/ChannelValue.cpp

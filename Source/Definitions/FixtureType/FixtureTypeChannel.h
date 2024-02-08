@@ -33,6 +33,9 @@ class FixtureTypeChannel:
     EnumParameter* fadeOrSnap;
     IntParameter* dmxDelta;
     TargetParameter* virtualMaster;
+
+    Point2DParameter* physicalRange;
+
     void onContainerParameterChangedInternal(Parameter* p);
 
 };
