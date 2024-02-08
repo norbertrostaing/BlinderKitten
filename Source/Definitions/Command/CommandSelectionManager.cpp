@@ -246,6 +246,38 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				selections[selId]->lastRandom.clear();
 				selections[selId]->lastRandom.addArray(filteredSelection);
 			}
+			else if (selections[selId]->filter->getValue() == "outcondition") {
+				Array<SubFixture*> filteredSelection;
+				ChannelType* chan = dynamic_cast<ChannelType*>(selections[selId]->conditionChannel->targetContainer.get());
+				float val = selections[selId]->conditionValue->floatValue();
+				CommandSelection::ConditionTest test = selections[selId]->conditionTest->getValueDataAsEnum<CommandSelection::ConditionTest>();
+				if (chan != nullptr) {
+					for (int i = 0; i < tempSelection.size(); i++) {
+						bool valid = false;
+						SubFixture* sf = tempSelection[i];
+						if (sf->channelsMap.contains(chan)) {
+							SubFixtureChannel* sfc = sf->channelsMap.getReference(chan);
+							if (sfc != nullptr) {
+								float sfcVal = sfc->value;
+								switch (test) {
+									case CommandSelection::EQUAL: valid = sfcVal == val; break;
+									case CommandSelection::DIFFERENT: valid = sfcVal != val; break;
+									case CommandSelection::LESS: valid = sfcVal < val; break;
+									case CommandSelection::MORE: valid = sfcVal > val; break;
+									case CommandSelection::LESSEQ: valid = sfcVal <= val; break;
+									case CommandSelection::MOREEQ: valid = sfcVal >= val; break;
+								}
+							}
+						}
+						if (valid) {
+							filteredSelection.add(sf);
+						}
+					}
+
+				}
+				tempSelection = filteredSelection;
+
+			}
 
 			else if (selections[selId]->filter->getValue() == "layoutdir") {
 				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());

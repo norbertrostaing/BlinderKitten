@@ -1,4 +1,4 @@
-/*
+﻿/*
   ==============================================================================
 
     CommandTypeChannel.cpp
@@ -9,6 +9,7 @@
 */
 
 #include "CommandSelection.h"
+#include "ChannelFamily/ChannelFamilyManager.h"
 
 CommandSelection::CommandSelection(var params) :
     BaseItem(params.getProperty("name", "Selection")),
@@ -38,6 +39,7 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Pattern", "pattern");
     filter->addOption("Shuffle", "shuffle");
     filter->addOption("Pick Random", "random");
+    filter->addOption("Output Condition", "outcondition");
     filter->addOption("Layout Direction", "layoutdir");
     filter->addOption("Layout Circle", "layoutcircle");
     filter->addOption("Layout Droplet wave", "layoutpoint");
@@ -49,6 +51,21 @@ CommandSelection::CommandSelection(var params) :
     randomBuddy = addIntParameter("Buddying", "They stay together", 1, 1);
     randomBlock = addIntParameter("Block", "Repetitions", 1, 1);
     randomWing = addIntParameter("Wings", "Symmetries", 1, 1);
+
+    conditionChannel = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
+    conditionChannel->maxDefaultSearchLevel = 2;
+    conditionChannel->targetType = TargetParameter::CONTAINER;
+
+    conditionTest = addEnumParameter("Test", "");
+    conditionTest->addOption("equal to", EQUAL);
+    conditionTest->addOption("defferent than", DIFFERENT);
+    conditionTest->addOption("less than", LESS);
+    conditionTest->addOption("greater than", MORE);
+    conditionTest->addOption("less or equal to", LESSEQ);
+    conditionTest->addOption("greater or equal to", MOREEQ);
+    conditionValue = addFloatParameter("Value","",0,0,1);
+
+
     layoutId = addIntParameter("Layout ID", "Id ot desired layout", 0, 0);
     layoutDirection = addFloatParameter("Direction angle", "angle of selection direction", 0, -360, 360);
     //layoutUseOnlySelection = addBoolParameter("Use selected only", "If checked, the min and max indexes will be contrained on selection and not on all elements of the layout", true);
@@ -72,6 +89,7 @@ void CommandSelection::updateDisplay()
     bool th = thru->getValue();
     bool mult = thru->getValue() || targetType->getValue()=="group";
     bool pat = filter->getValue() == "divide" || filter->getValue() == "pattern";
+    bool cond = filter->getValue() == "outcondition";
     bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
     bool randNum = filter->getValue() == "random";
     bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" || filter->getValue() == "layoutperlin";
@@ -79,6 +97,7 @@ void CommandSelection::updateDisplay()
     bool layoutCir = filter->getValue() == "layoutcircle";
     bool layoutPnt = filter->getValue() == "layoutpoint";
     bool layoutPerl = filter->getValue() == "layoutperlin";
+
 
     randSeed = randSeed && mult;
     randNum = randNum && mult;
@@ -113,6 +132,9 @@ void CommandSelection::updateDisplay()
     layoutPerlinScale->hideInEditor = !layoutPerl;
     layoutPerlinSeed->hideInEditor = !layoutPerl;
 
+    conditionChannel->hideInEditor = !cond;
+    conditionTest->hideInEditor = !cond;
+    conditionValue->hideInEditor = !cond;
     //layoutUseOnlySelection->hideInEditor = !layout || layoutPerl;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));

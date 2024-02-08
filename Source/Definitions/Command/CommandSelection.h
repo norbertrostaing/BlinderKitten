@@ -43,6 +43,11 @@ class CommandSelection:
     IntParameter* randomBlock;
     IntParameter* randomWing;
 
+    TargetParameter* conditionChannel;
+    enum ConditionTest{EQUAL, DIFFERENT, MORE, LESS, MOREEQ, LESSEQ};
+    EnumParameter* conditionTest;
+    FloatParameter* conditionValue;
+
     IntParameter* layoutId;
     FloatParameter* layoutDirection;
     
