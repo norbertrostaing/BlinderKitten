@@ -11,7 +11,7 @@
 #include "FixtureTypeVirtualChannel.h"
 #include "../ChannelFamily/ChannelFamilyManager.h"
 #include "FixtureTypeVirtualChannelManager.h"
-
+#include "Fixture/FixtureManager.h"
 
 FixtureTypeVirtualChannel::FixtureTypeVirtualChannel(var params) :
     BaseItem(params.getProperty("name", "Virt Channel 1")),
@@ -39,5 +39,8 @@ FixtureTypeVirtualChannel::~FixtureTypeVirtualChannel()
 };
 
 void FixtureTypeVirtualChannel::onContainerParameterChangedInternal(Parameter* p) {
+    if (p == defaultValue) {
+        FixtureManager::getInstance()->defaultValueChanged(this);
+    }
 
 }

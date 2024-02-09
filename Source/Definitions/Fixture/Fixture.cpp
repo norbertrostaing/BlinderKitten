@@ -178,6 +178,7 @@ void Fixture::checkChildrenSubFixtures() {
 				chan->parentParamDefinition = param;
 				chan->snapOnly = c->fadeOrSnap->getValue().toString() == "snap";
 				chan->parentFixtureTypeChannel = nullptr;
+				chan->parentFixtureTypeVirtualChannel = c;
 				chan->parentFixture = this;
 				chan->parentSubFixture = subFixt;
 				chan->subFixtureId = subId;

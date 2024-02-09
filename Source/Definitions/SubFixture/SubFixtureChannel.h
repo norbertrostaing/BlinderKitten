@@ -13,6 +13,7 @@
 class ChannelFamily;
 class ChannelType;
 class FixtureTypeChannel;
+class FixtureTypeVirtualChannel;
 class Fixture;
 class Cuelist;
 class Programmer;
@@ -44,6 +45,7 @@ public:
     ChannelFamily* parentParamType = nullptr;
     ChannelType* parentParamDefinition = nullptr;
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
+    FixtureTypeVirtualChannel* parentFixtureTypeVirtualChannel = nullptr;
     Fixture* parentFixture = nullptr;
     SubFixture* parentSubFixture = nullptr;
     int subFixtureId = 0;

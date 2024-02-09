@@ -11,6 +11,9 @@
 #pragma once
 #include "Fixture.h"
 
+class FixtureTypeChannel;
+class FixtureTypeVirtualChannel;
+
 class FixtureManager :
     public BaseManager<Fixture>
 {
@@ -22,4 +25,8 @@ public:
 
     void addItemInternal(Fixture* o, var data) override;
     void removeItemInternal(Fixture* o) override;
+
+    void defaultValueChanged(FixtureTypeChannel* ftc);
+    void defaultValueChanged(FixtureTypeVirtualChannel* ftc);
+
 };

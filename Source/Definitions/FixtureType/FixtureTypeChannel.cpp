@@ -14,7 +14,7 @@
 #include "FixtureTypeVirtualChannelManager.h"
 #include "FixtureType.h"
 #include "Tracker/TrackerManager.h"
-
+#include "Fixture/FixtureManager.h"
 
 FixtureTypeChannel::FixtureTypeChannel(var params) :
     BaseItem(params.getProperty("name", "Channel")),
@@ -67,5 +67,8 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     }
     else if (p == physicalRange) {
         TrackerManager::getInstance()->recomputeAllTrackers();
+    }
+    else if (p == defaultValue) {
+        FixtureManager::getInstance()->defaultValueChanged(this);
     }
 }
