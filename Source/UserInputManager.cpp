@@ -269,7 +269,7 @@ void UserInputManager::processMessage(const OSCMessage& m, const juce::String& c
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->sizeValue->setValue(val);
 			}
-			else if (action == "xyz") { 
+			else if (action == "xyz" && m.size()>2) { 
 				float x = OSCHelpers::getFloatArg(m[0]);
 				float y = OSCHelpers::getFloatArg(m[1]);
 				float z = OSCHelpers::getFloatArg(m[2]);
