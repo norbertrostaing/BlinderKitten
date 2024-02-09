@@ -258,6 +258,29 @@ void UserInputManager::processMessage(const OSCMessage& m, const juce::String& c
 		}
 	}
 
+	else if (firstWord == "tracker" && aList.size() > 3) {
+		int targetNumber = (int)((var)aList[2]);
+		Tracker* target = Brain::getInstance()->getTrackerById(targetNumber);
+		if (target != nullptr) {
+			String action = aList[3].toLowerCase();
+			if (action == "start") { target->start(); }
+			else if (action == "stop") { target->stop(); }
+			else if (action == "size" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->sizeValue->setValue(val);
+			}
+			else if (action == "xyz") { 
+				float x = OSCHelpers::getFloatArg(m[0]);
+				float y = OSCHelpers::getFloatArg(m[1]);
+				float z = OSCHelpers::getFloatArg(m[2]);
+				target->targetPosition->setVector(x, y, z);
+			}
+		}
+		else {
+			LOGWARNING("Tracker " + String(targetNumber) + " doesn't exist");
+		}
+	}
+
 	else if (firstWord == "virtbutton" && aList.size() > 3 && m.size() > 0) {
 		int page = VirtualButtonGrid::getInstance()->page;
 		int col = (int)((var)aList[2]);
