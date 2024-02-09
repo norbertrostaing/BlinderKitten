@@ -1,4 +1,4 @@
-/*
+﻿/*
  ==============================================================================
 
  Engine.cpp
@@ -901,6 +901,17 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 							int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
 							int dmxAdress = 0;
 							int resolution = 0;
+
+							float physicalFrom = 0;
+							float physicalTo = 0;
+							if (logicalChannelNode->getNumChildElements() == 1) {
+								auto chanFunctionTag = logicalChannelNode->getFirstChildElement();
+								if (chanFunctionTag->hasTagName("ChannelFunction")) {
+									physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
+									physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
+								}
+							}
+
 							if (DMXOffset == "") {
 								// virtual
 							}
@@ -924,6 +935,8 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 										tc.resolution = resolution;
 										tc.subFixtId = subFixtureNames.indexOf(breaks[i].name) + 1;
 										tc.initialFunction = initialFunction;
+										tc.physicalFrom = physicalFrom;
+										tc.physicalTo = physicalTo;
 										int index = dmxAdress;
 										index += breaks[i].offset;
 										index -= 2;
@@ -936,6 +949,8 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 									tc.attribute = attribute;
 									tc.resolution = resolution;
 									tc.initialFunction = initialFunction;
+									tc.physicalFrom = physicalFrom;
+									tc.physicalTo = physicalTo;
 									if (subFixtureNames.indexOf(geometry) == -1) { subFixtureNames.add(geometry); }
 									tc.subFixtId = subFixtureNames.indexOf(geometry) + 1;
 									int index = dmxAdress - 1;
@@ -955,6 +970,10 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 							ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
 							ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+							var phys;
+							phys.append(tempChannels[i].physicalFrom);
+							phys.append(tempChannels[i].physicalTo);
+							ftc->physicalRange->setValue(phys);
 							if (tempChannels[i].resolution == 2)
 							{
 								ftc->resolution->setValue("16bits");
@@ -1041,100 +1060,10 @@ void BKEngine::importMVR(File f)
 										auto child = childListNode->getChildElement(indexChild);
 										String childType = child->getTagName().toLowerCase();
 										if (childType == "fixture") {
-											bool valid = true;
-											int id = 0;
-											String spec = "";
-											String mode = "";
-											if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
-											else { valid = false; }
-											if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
-											else { valid = false; }
-											String name = child->getStringAttribute("name");
-
-											id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
-											if (id == 0) {
-												id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
-											}
-
-											if (valid) {
-
-												if (id == 0) {
-													id = 1000;
-													while (fixturesMap.contains(id)) {
-														id++;
-													}
-												}
-
-												String ftName = spec + " - " + mode;
-												FixtureType* ft = nullptr;
-												if (!fixtureTypesMap.contains(ftName)) {
-													int gdtfIndex = archive->getIndexOfFileName(spec);
-													if (gdtfIndex != -1) {
-														InputStream* s = archive->createStreamForEntry(gdtfIndex);
-														ft = importGDTF(s, mode);
-														s->~InputStream();
-
-													}
-													if (ft == nullptr) {
-														ft = FixtureTypeManager::getInstance()->addItem();
-														ft->setNiceName(ftName);
-													}
-													fixtureTypesMap.set(ftName, ft);
-												}
-												ft = fixtureTypesMap.getReference(ftName);
-
-												Fixture* fixt;
-												if (!fixturesMap.contains(id)) {
-													fixt = FixtureManager::getInstance()->addItem();
-													fixturesMap.set(id, fixt);
-													fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
-													fixt->id->setValue(id);
-													fixt->userName->setValue(name);
-													fixt->devTypeParam->setValueFromTarget(ft);
-												}
-
-												if (child->getChildByName("Addresses") != nullptr) {
-													auto addressesNode = child->getChildByName("Addresses");
-													std::shared_ptr<Array<int>> fixtAddresses = fixtureAddressesMap.getReference(id);
-													for (int indexAddress = 0; indexAddress < addressesNode->getNumChildElements(); indexAddress++) {
-														auto tag = addressesNode->getChildElement(indexAddress);
-														int address = tag->getAllSubText().trim().getIntValue();
-														maxAddress = jmax(address, maxAddress);
-														fixtAddresses->addIfNotAlreadyThere(address);
-													}
-												}
-
-												if (child->getChildByName("Matrix") != nullptr) {
-													auto matrixNode = child->getChildByName("Matrix");
-													String matrixValue = matrixNode->getAllSubText();
-													matrixValue = matrixValue.replace("}{", ",");
-													matrixValue = matrixValue.replace("}", "");
-													matrixValue = matrixValue.replace("{", "");
-													auto matVals = StringArray::fromTokens(matrixValue, ",", "");
-
-													if (matVals.size() == 12 && fixt != nullptr) {
-														if (frontLayout == nullptr) {
-															frontLayout = LayoutManager::getInstance()->addItem();
-															frontLayout->userName->setValue("MVR Front layout");
-														}
-														if (topLayout == nullptr) {
-															topLayout = LayoutManager::getInstance()->addItem();
-															topLayout->userName->setValue("MVR Top layout");
-														}
-														if (sideLayout == nullptr) {
-															sideLayout = LayoutManager::getInstance()->addItem();
-															sideLayout->userName->setValue("MVR Side layout");
-														}
-														float x = matVals[9].getFloatValue()/1000;
-														float y = matVals[10].getFloatValue()/1000;
-														float z = matVals[11].getFloatValue()/1000;
-
-														frontLayout->createPathForFixture(fixt, x, z);
-														topLayout->createPathForFixture(fixt, x, y);
-														sideLayout->createPathForFixture(fixt, y, z);
-													}
-												}
-											}
+											importFixtureFromMVR(child, archive, maxAddress, fixtureTypesMap, fixturesMap, fixtureAddressesMap, frontLayout, topLayout, sideLayout);
+										}
+										else if(childType == "groupobject") {
+											importGroupObjectFromMVR(child, archive, maxAddress, fixtureTypesMap, fixturesMap, fixtureAddressesMap, frontLayout, topLayout, sideLayout);
 										}
 									}
 								}
@@ -1178,6 +1107,126 @@ void BKEngine::importMVR(File f)
 	if (sideLayout != nullptr) { sideLayout->fitToContent(); }
 
 	LOG("Import done !");
+}
+
+void BKEngine::importFixtureFromMVR(XmlElement* child, std::shared_ptr<ZipFile> archive, int& maxAddress, HashMap<String, FixtureType*>& fixtureTypesMap, HashMap<int, Fixture*>& fixturesMap, HashMap<int, std::shared_ptr<Array<int>>>& fixtureAddressesMap, Layout*& frontLayout, Layout*& topLayout, Layout*& sideLayout)
+{
+	bool valid = true;
+	int id = 0;
+	String spec = "";
+	String mode = "";
+	if (child->getChildByName("GDTFSpec") != nullptr) { spec = child->getChildByName("GDTFSpec")->getAllSubText().trim(); }
+	else { valid = false; }
+	if (child->getChildByName("GDTFMode") != nullptr) { mode = child->getChildByName("GDTFMode")->getAllSubText().trim(); }
+	else { valid = false; }
+	String name = child->getStringAttribute("name");
+
+	id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
+	if (id == 0) {
+		id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
+	}
+
+	if (valid) {
+
+		if (id == 0) {
+			id = 1000;
+			while (fixturesMap.contains(id)) {
+				id++;
+			}
+		}
+
+		String ftName = spec + " - " + mode;
+		FixtureType* ft = nullptr;
+		if (!fixtureTypesMap.contains(ftName)) {
+			int gdtfIndex = archive->getIndexOfFileName(spec);
+			if (gdtfIndex != -1) {
+				InputStream* s = archive->createStreamForEntry(gdtfIndex);
+				ft = importGDTF(s, mode);
+				s->~InputStream();
+
+			}
+			if (ft == nullptr) {
+				ft = FixtureTypeManager::getInstance()->addItem();
+				ft->setNiceName(ftName);
+			}
+			fixtureTypesMap.set(ftName, ft);
+		}
+		ft = fixtureTypesMap.getReference(ftName);
+
+		Fixture* fixt;
+		if (!fixturesMap.contains(id)) {
+			fixt = FixtureManager::getInstance()->addItem();
+			fixturesMap.set(id, fixt);
+			fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
+			fixt->id->setValue(id);
+			fixt->userName->setValue(name);
+			fixt->devTypeParam->setValueFromTarget(ft);
+		}
+
+		if (child->getChildByName("Addresses") != nullptr) {
+			auto addressesNode = child->getChildByName("Addresses");
+			std::shared_ptr<Array<int>> fixtAddresses = fixtureAddressesMap.getReference(id);
+			for (int indexAddress = 0; indexAddress < addressesNode->getNumChildElements(); indexAddress++) {
+				auto tag = addressesNode->getChildElement(indexAddress);
+				int address = tag->getAllSubText().trim().getIntValue();
+				maxAddress = jmax(address, maxAddress);
+				fixtAddresses->addIfNotAlreadyThere(address);
+			}
+		}
+
+		if (child->getChildByName("Matrix") != nullptr) {
+			auto matrixNode = child->getChildByName("Matrix");
+			String matrixValue = matrixNode->getAllSubText();
+			matrixValue = matrixValue.replace("}{", ",");
+			matrixValue = matrixValue.replace("}", "");
+			matrixValue = matrixValue.replace("{", "");
+			auto matVals = StringArray::fromTokens(matrixValue, ",", "");
+
+			if (matVals.size() == 12 && fixt != nullptr) {
+				if (frontLayout == nullptr) {
+					frontLayout = LayoutManager::getInstance()->addItem();
+					frontLayout->userName->setValue("MVR Front layout");
+				}
+				if (topLayout == nullptr) {
+					topLayout = LayoutManager::getInstance()->addItem();
+					topLayout->userName->setValue("MVR Top layout");
+				}
+				if (sideLayout == nullptr) {
+					sideLayout = LayoutManager::getInstance()->addItem();
+					sideLayout->userName->setValue("MVR Side layout");
+				}
+				float x = matVals[9].getDoubleValue() / 1000;
+				float y = matVals[10].getDoubleValue() / 1000;
+				float z = matVals[11].getDoubleValue() / 1000;
+
+				float rY = asin(matVals[2].getDoubleValue()); //Angle de rotation autour de l'axe Y (Yaw) : θy=arcsin⁡(−r31)θy​=arcsin(−r31​)
+				float rX = atan2(matVals[5].getDoubleValue(), matVals[8].getDoubleValue());//Angle de rotation autour de l'axe X (Pitch) : θx=arctan⁡2(r32,r33)θx​=arctan2(r32​,r33​)
+				float rZ = atan2(matVals[1].getDoubleValue(), matVals[0].getDoubleValue());//Angle de rotation autour de l'axe Z (Roll) : θz=arctan⁡2(r21,r11)θz​=arctan2(r21​,r11​)
+
+				fixt->position->setVector(x, y, z);
+				fixt->rotation->setVector(radiansToDegrees(rX), radiansToDegrees(rY), radiansToDegrees(rZ));
+
+				frontLayout->createPathForFixture(fixt, x, z);
+				topLayout->createPathForFixture(fixt, x, y);
+				sideLayout->createPathForFixture(fixt, y, z);
+			}
+		}
+	}
+}
+
+void BKEngine::importGroupObjectFromMVR(XmlElement* elmt, std::shared_ptr<ZipFile> archive, int& maxAddress, HashMap<String, FixtureType*>& fixtureTypesMap, HashMap<int, Fixture*>& fixturesMap, HashMap<int, std::shared_ptr<Array<int>>>& fixtureAddressesMap, Layout*& frontLayout, Layout*& topLayout, Layout*& sideLayout)
+{
+	int nChildren = elmt->getNumChildElements();
+	for (int indexChild = 0; indexChild < nChildren; indexChild++) {
+		auto child = elmt->getChildElement(indexChild);
+		String childType = child->getTagName().toLowerCase();
+		if (childType == "fixture") {
+			importFixtureFromMVR(child, archive, maxAddress, fixtureTypesMap, fixturesMap, fixtureAddressesMap, frontLayout, topLayout, sideLayout);
+		}
+		else {
+			importGroupObjectFromMVR(child, archive, maxAddress, fixtureTypesMap, fixturesMap, fixtureAddressesMap, frontLayout, topLayout, sideLayout);
+		}
+	}
 }
 
 void BKEngine::exportSelection()

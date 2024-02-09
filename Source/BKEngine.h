@@ -104,6 +104,26 @@ public:
 	FixtureType* importGDTF(InputStream* stream, String modeName);
 	FixtureType* importGDTFContent(InputStream* stream, String modeName);
 	void importMVR(File f);
+	void importFixtureFromMVR(XmlElement* child,
+		std::shared_ptr<ZipFile> archive,
+		int& maxAddress,
+		HashMap<String, FixtureType*>& fixtureTypesMap,
+		HashMap<int, Fixture*>& fixturesMap,
+		HashMap<int, std::shared_ptr<Array<int>> >& fixtureAddressesMap,
+		Layout*& frontLayout,
+		Layout*& topLayout,
+		Layout*& sideLayout
+	);
+	void importGroupObjectFromMVR(XmlElement* child,
+		std::shared_ptr<ZipFile> archive,
+		int& maxAddress,
+		HashMap<String, FixtureType*>& fixtureTypesMap,
+		HashMap<int, Fixture*>& fixturesMap,
+		HashMap<int, std::shared_ptr<Array<int>> >& fixtureAddressesMap,
+		Layout*& frontLayout,
+		Layout*& topLayout,
+		Layout*& sideLayout
+	);
 	void exportSelection();
 
 	void getBreakOffset(XmlElement* tag, String geometryName, int dmxBreak, Array<geometryBreaks>* subs);
@@ -119,5 +139,7 @@ struct tempChannel {
 	int subFixtId = 0;
 	int resolution = 8;
 	int virtualDimmer = -1;
+	float physicalFrom = 0;
+	float physicalTo = 0;
 };
 
