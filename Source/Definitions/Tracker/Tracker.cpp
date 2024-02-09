@@ -184,7 +184,7 @@ void Tracker::computeData() {
 				Fixture* f = sf->parentFixture;
 
 				Vector3D<float> fixtPosition = f->position->getVector(); 
-				Vector3D<float> fixtRotation = f->rotation->getVector(); 
+				Vector3D<float> fixtRotation = -f->rotation->getVector(); 
 				fixtRotation.x = degreesToRadians(fixtRotation.x);
 				fixtRotation.y = degreesToRadians(fixtRotation.y);
 				fixtRotation.z = degreesToRadians(fixtRotation.z);
@@ -202,14 +202,14 @@ void Tracker::computeData() {
 
 				Point<float> panPos = Point<float>(rotated.x, rotated.y);
 				float dist = (sqrt((rotated.x * rotated.x) + (rotated.y * rotated.y)));
-				float panAngle  = radiansToDegrees( std::atan2(rotated.y, rotated.x));
-				float tiltAngle = 90+radiansToDegrees( std::atan2(rotated.z, dist));
-				float minPan = sfcPan->parentFixtureTypeChannel->physicalRange->x;
-				float maxPan = sfcPan->parentFixtureTypeChannel->physicalRange->y;
+				float panAngle  = -(90+radiansToDegrees( std::atan2(rotated.y, rotated.x)));
+				float tiltAngle = -(90+radiansToDegrees(std::atan2(rotated.z, dist)));
+				float minPan =  sfcPan->parentFixtureTypeChannel->physicalRange->x;
+				float maxPan =  sfcPan->parentFixtureTypeChannel->physicalRange->y;
 				float minTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->x;
 				float maxTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->y;
 
-				//LOG("origin pan : " << panAngle << "    origin tilt : "<< tiltAngle);
+				LOG("origin pan : " << panAngle << "    origin tilt : "<< tiltAngle);
 				if (minPan < maxPan) {
 					while (panAngle < minPan) (panAngle += 360.0f);
 					while (panAngle > maxPan) (panAngle -= 360.0f);
