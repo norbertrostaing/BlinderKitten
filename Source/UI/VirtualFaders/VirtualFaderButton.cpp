@@ -35,6 +35,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Tracker", "tracker");
 	targetType->addOption("Generic Actions", "actions");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
@@ -79,6 +80,11 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	mapperAction->addOption("Stop", "stop");
 	mapperAction->addOption("Toggle", "toggle");
 
+	trackerAction = addEnumParameter("Tracker Action", "");
+	trackerAction->addOption("Start", "start");
+	trackerAction->addOption("Stop", "stop");
+	trackerAction->addOption("Toggle", "toggle");
+
 	addChildControllableContainer(&actionManager);
 
 	// id = addIntParameter("ID", "ID of this VirtualFaderButton", 1, 1);
@@ -120,6 +126,7 @@ void VirtualFaderButton::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+	trackerAction->hideInEditor = targType != "tracker";
 
 	actionManager.hideInEditor = targType != "actions";
 	targetId->hideInEditor = isColumn || targType == "disabled" || targType == "actions";
@@ -241,6 +248,22 @@ void VirtualFaderButton::pressed() {
 			}
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			if (action == "start") { targ->start(); }
+			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
+		}
+	}
 }
 
 void VirtualFaderButton::released() {
@@ -293,6 +316,13 @@ void VirtualFaderButton::released() {
 			// if (action == "start") { targ->start(); }
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			// if (action == "start") { targ->start(); }
+		}
+	}
 
 }
 
@@ -316,6 +346,9 @@ String VirtualFaderButton::getBtnText(String columnType) {
 		}
 		else if (targType == "mapper") {
 			action = mapperAction->getValue();
+		}
+		else if (targType == "tracker") {
+			action = trackerAction->getValue();
 		}
 
 		return action;
@@ -360,6 +393,13 @@ String VirtualFaderButton::getBtnText(String columnType) {
 		else if (targType == "mapper") {
 			Mapper* targ = Brain::getInstance()->getMapperById(targId);
 			action = mapperAction->getValue();
+			if (targ != nullptr) {
+				text = targ->userName->getValue();
+			}
+		}
+		else if (targType == "tracker") {
+			Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+			action = trackerAction->getValue();
 			if (targ != nullptr) {
 				text = targ->userName->getValue();
 			}
@@ -451,6 +491,12 @@ void VirtualFaderButton::updateStatus(bool forceRefresh)
 	}
 	else if (targType == "mapper") {
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
 		if (targ != nullptr) {
 			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
 		}

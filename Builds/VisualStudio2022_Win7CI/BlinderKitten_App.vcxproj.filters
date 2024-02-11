@@ -1204,6 +1204,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\TrackerAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
@@ -4891,6 +4894,9 @@
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\TrackerAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h">

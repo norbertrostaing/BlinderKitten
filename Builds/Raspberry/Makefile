@@ -117,6 +117,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MapperAction_7d027a1.o \
   $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o \
   $(JUCE_OBJDIR)/TapTempoMultiple_3a521832.o \
+  $(JUCE_OBJDIR)/TrackerAction_c5bb14e.o \
   $(JUCE_OBJDIR)/VirtualButtonAction_1210c9b3.o \
   $(JUCE_OBJDIR)/VirtualFaderAction_b95e624b.o \
   $(JUCE_OBJDIR)/Assistant_feae32ff.o \
@@ -467,6 +468,11 @@ $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o: ../../Source/Definitions/Actions/
 $(JUCE_OBJDIR)/TapTempoMultiple_3a521832.o: ../../Source/Definitions/Actions/TapTempoMultiple.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling TapTempoMultiple.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TrackerAction_c5bb14e.o: ../../Source/Definitions/Actions/TrackerAction.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling TrackerAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/VirtualButtonAction_1210c9b3.o: ../../Source/Definitions/Actions/VirtualButtonAction.cpp

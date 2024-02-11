@@ -62,6 +62,7 @@
 		412ABFC882BE7CECCCBD8123 /* EffectGridView.cpp */ = {isa = PBXBuildFile; fileRef = 80FAD0782C385AF0B5AC86A1; };
 		4171C0B5BAE18B415F3009FC /* include_juce_organicui4.cpp */ = {isa = PBXBuildFile; fileRef = 5902880D8C6266E7A543E631; };
 		41A19F920D5D54BCE2420716 /* Cocoa.framework */ = {isa = PBXBuildFile; fileRef = 4125AB51D6944811413E65AA; };
+		41F15F1C7F291B2C37689D4C /* TrackerAction.cpp */ = {isa = PBXBuildFile; fileRef = C7B740747EF76E26953F01CB; };
 		4352E1880792564700E5DA92 /* FixtureTypeVirtualChannel.cpp */ = {isa = PBXBuildFile; fileRef = 057F2CB0E802728D25A3B09F; };
 		4439D46ACE708C6603C3BE2B /* BKColorPicker.cpp */ = {isa = PBXBuildFile; fileRef = 13615B57BB162ED3F6D80A5A; };
 		451EE70320581B15FA89D3F0 /* CommandTiming.cpp */ = {isa = PBXBuildFile; fileRef = 7B147D04AE90D16A4FBC0371; };
@@ -378,6 +379,7 @@
 		7277EF38C546554465660410 /* MIDIMapping.cpp */ /* MIDIMapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIMapping.cpp; path = ../../Source/Definitions/Interface/interfaces/midi/MIDIMapping.cpp; sourceTree = SOURCE_ROOT; };
 		730739037940A2973797AA62 /* DMXMapping.h */ /* DMXMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXMapping.h; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXMapping.h; sourceTree = SOURCE_ROOT; };
 		73F9DFB3556EDCD24CEEFE6A /* include_juce_data_structures.mm */ /* include_juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_data_structures.mm; path = ../../JuceLibraryCode/include_juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
+		73FD31CA836E9A090215E22E /* TrackerAction.h */ /* TrackerAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TrackerAction.h; path = ../../Source/Definitions/Actions/TrackerAction.h; sourceTree = SOURCE_ROOT; };
 		7443C228FD8855FA3BA8E1E5 /* VirtualFaderButton.h */ /* VirtualFaderButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualFaderButton.h; path = ../../Source/UI/VirtualFaders/VirtualFaderButton.h; sourceTree = SOURCE_ROOT; };
 		74526EB172026A49BD8ED506 /* ChannelFamilyManagerUI.h */ /* ChannelFamilyManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelFamilyManagerUI.h; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.h; sourceTree = SOURCE_ROOT; };
 		74BE1046DD4EBC61E123D598 /* CuelistAction.h */ /* CuelistAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistAction.h; path = ../../Source/Definitions/Actions/CuelistAction.h; sourceTree = SOURCE_ROOT; };
@@ -506,6 +508,7 @@
 		C3F4E0B7220A005B961C1F49 /* TrackerManager.cpp */ /* TrackerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrackerManager.cpp; path = ../../Source/Definitions/Tracker/TrackerManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6DEAF58E7E2C03A08D4EC20 /* VirtualFaderColManager.cpp */ /* VirtualFaderColManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderColManager.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderColManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6E8B1EF1AE52D6DE06C84F5 /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
+		C7B740747EF76E26953F01CB /* TrackerAction.cpp */ /* TrackerAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrackerAction.cpp; path = ../../Source/Definitions/Actions/TrackerAction.cpp; sourceTree = SOURCE_ROOT; };
 		C8B2ED4E370397EC190BCC93 /* Group.h */ /* Group.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Group.h; path = ../../Source/Definitions/Group/Group.h; sourceTree = SOURCE_ROOT; };
 		C8BA219AFD2EC2DE763463AA /* GroupGridView.h */ /* GroupGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupGridView.h; path = ../../Source/UI/GridView/GroupGridView.h; sourceTree = SOURCE_ROOT; };
 		C8FEDBC9D061B6B84169EC2D /* include_juce_audio_processors_ara.cpp */ /* include_juce_audio_processors_ara.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_ara.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_ara.cpp; sourceTree = SOURCE_ROOT; };
@@ -843,6 +846,8 @@
 				0E6A745B3C95316A09A16D22,
 				BFC78652CA4EA1563B4F7100,
 				95844B8F9AEEF440460D9AC8,
+				C7B740747EF76E26953F01CB,
+				73FD31CA836E9A090215E22E,
 				DBBAB663E6FF9BF8F7D6E374,
 				379A02A752CB9A8665C4CBD3,
 				88326861ED691379FDD3FE51,
@@ -1713,6 +1718,7 @@
 				172939FB619E288DEABA5AFA,
 				D2670406E7A2779AADAE9E39,
 				4D596A9BF29491C0F092F228,
+				41F15F1C7F291B2C37689D4C,
 				CBE33BFAAD53BF982A32FFBB,
 				1F3EBDA0AD3D103030D32E41,
 				2B97209FC411228963664A72,

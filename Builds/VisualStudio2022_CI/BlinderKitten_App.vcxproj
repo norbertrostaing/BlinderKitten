@@ -265,6 +265,7 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\TrackerAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualFaderAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Assistant\Assistant.cpp"/>
@@ -3417,6 +3418,7 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\TrackerAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualFaderAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Assistant\Assistant.h"/>

@@ -36,6 +36,7 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Tracker", "tracker");
 	targetType->addOption("Generic Actions", "actions");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
@@ -62,8 +63,11 @@ VirtualFaderSlider::VirtualFaderSlider(var params) :
 
 	maxSpeed = addFloatParameter("Max Speed","Speed when your fader is up high",600,0);
 
-	mapperAction = addEnumParameter("Carousel Action", "");
+	mapperAction = addEnumParameter("Mapper Action", "");
 	mapperAction->addOption("Size", "size");
+
+	trackerAction = addEnumParameter("Tracker Action", "");
+	trackerAction->addOption("Size", "size");
 
 	addChildControllableContainer(&actionManager);
 
@@ -112,6 +116,7 @@ void VirtualFaderSlider::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+	trackerAction->hideInEditor = targType != "tracker";
 
 	actionManager.hideInEditor = targType != "actions";
 	targetId->hideInEditor = isColumn || targType == "disabled" || targType == "actions";
@@ -206,6 +211,13 @@ float VirtualFaderSlider::getTargetValue()
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
+			if (action == "size") { return targ->sizeValue->getValue(); }
+		}
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
 			if (action == "size") { return targ->sizeValue->getValue(); }
 		}
 	}
@@ -309,7 +321,18 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
-			if (action == "size") { 
+			if (action == "size") {
+				targ->nextSizeController = origin;
+				value = isRelative ? targ->sizeValue->floatValue() + value : value;
+				targ->sizeValue->setValue(value);
+			}
+		}
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			if (action == "size") {
 				targ->nextSizeController = origin;
 				value = isRelative ? targ->sizeValue->floatValue() + value : value;
 				targ->sizeValue->setValue(value);
@@ -380,6 +403,13 @@ void VirtualFaderSlider::released() {
 			// if (action == "start") { targ->start(); }
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			// if (action == "start") { targ->start(); }
+		}
+	}
 
 }
 
@@ -403,6 +433,9 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		}
 		else if (targType == "mapper") {
 			action = mapperAction->getValue();
+		}
+		else if (targType == "tracker") {
+			action = trackerAction->getValue();
 		}
 
 		return action;
@@ -443,6 +476,13 @@ String VirtualFaderSlider::getBtnText(String columnType) {
 		else if (targType == "mapper") {
 			Mapper* targ = Brain::getInstance()->getMapperById(targId);
 			action = mapperAction->getValue();
+			if (targ != nullptr) {
+				text = targ->userName->getValue();
+			}
+		}
+		else if (targType == "tracker") {
+			Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+			action = trackerAction->getValue();
 			if (targ != nullptr) {
 				text = targ->userName->getValue();
 			}
@@ -570,6 +610,18 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
+			if (action == "size") {
+				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+					return true;
+				}
+			}
+		}
+		else { return true; }
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
 			if (action == "size") {
 				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
 					return true;

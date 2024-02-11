@@ -33,6 +33,7 @@ public:
     EnumParameter * effectAction;
     EnumParameter* carouselAction;
     EnumParameter* mapperAction;
+    EnumParameter* trackerAction;
     FloatParameter* maxSpeed;
 
     ActionManager actionManager;

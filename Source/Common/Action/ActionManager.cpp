@@ -16,6 +16,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/EffectAction.h"
 #include "Definitions/Actions/CarouselAction.h"
 #include "Definitions/Actions/MapperAction.h"
+#include "Definitions/Actions/TrackerAction.h"
 #include "Definitions/Actions/VirtualButtonAction.h"
 #include "Definitions/Actions/VirtualFaderAction.h"
 #include "Definitions/Actions/InputPanelAction.h"
@@ -85,6 +86,11 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Stop", &MapperAction::create)->addParam("actionType", MapperAction::TRK_STOP));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Toggle", &MapperAction::create)->addParam("actionType", MapperAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Size", &MapperAction::create)->addParam("actionType", MapperAction::TRK_SIZE));
+
+    defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Start", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_START));
+    defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Stop", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Toggle", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_TOGGLE));
+    defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Size", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_SIZE));
 
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));

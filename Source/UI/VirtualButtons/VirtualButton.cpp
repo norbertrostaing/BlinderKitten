@@ -79,6 +79,11 @@ VirtualButton::VirtualButton(var params) :
 	mapperAction->addOption("Stop", "stop");
 	mapperAction->addOption("Toggle", "toggle");
 
+	trackerAction = addEnumParameter("Tracker Action", "");
+	trackerAction->addOption("Start", "start");
+	trackerAction->addOption("Stop", "stop");
+	trackerAction->addOption("Toggle", "toggle");
+
 	addChildControllableContainer(&actionManager);
 	// id = addIntParameter("ID", "ID of this VirtualButton", 1, 1);
 	// userName = addStringParameter("Name", "Name of this VirtualButton","New VirtualButton");
@@ -127,6 +132,7 @@ void VirtualButton::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+	trackerAction->hideInEditor = targType != "tracker";
 	actionManager.hideInEditor = targType != "actions";
 	targetId->hideInEditor = targType == "disabled" || targType == "actions";
 
@@ -237,6 +243,22 @@ void VirtualButton::pressed() {
 			}
 		}
 	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
+			if (action == "start") { targ->start(); }
+			if (action == "stop") { targ->stop(); }
+			if (action == "toggle") {
+				if (targ->isOn) {
+					targ->stop();
+				}
+				else {
+					targ->start();
+				}
+			}
+		}
+	}
 
 }
 
@@ -278,6 +300,13 @@ void VirtualButton::released() {
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
+			// if (action == "start") { targ->start(); }
+		}
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		if (targ != nullptr) {
+			String action = trackerAction->getValue();
 			// if (action == "start") { targ->start(); }
 		}
 	}
@@ -327,14 +356,21 @@ String VirtualButton::getBtnText() {
 			text = targ->userName->getValue();
 		}
 	}
-	else if(targType == "mapper") {
+	else if (targType == "mapper") {
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
 		action = mapperAction->getValue();
 		if (targ != nullptr) {
 			text = targ->userName->getValue();
 		}
 	}
-	
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
+		action = trackerAction->getValue();
+		if (targ != nullptr) {
+			text = targ->userName->getValue();
+		}
+	}
+
 	if (text != "") {
 		// text = action + "\n" + text;
 	}
@@ -405,6 +441,12 @@ void VirtualButton::updateStatus(bool forceRefresh)
 	}
 	else if (targType == "mapper") {
 		Mapper* targ = Brain::getInstance()->getMapperById(targId);
+		if (targ != nullptr) {
+			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
+		}
+	}
+	else if (targType == "tracker") {
+		Tracker* targ = Brain::getInstance()->getTrackerById(targId);
 		if (targ != nullptr) {
 			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
 		}
