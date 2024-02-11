@@ -209,7 +209,7 @@ void Tracker::computeData() {
 				float minTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->x;
 				float maxTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->y;
 
-				LOG("origin pan : " << panAngle << "    origin tilt : "<< tiltAngle);
+				//LOG("origin pan : " << panAngle << "    origin tilt : "<< tiltAngle);
 				if (minPan < maxPan) {
 					while (panAngle < minPan) (panAngle += 360.0f);
 					while (panAngle > maxPan) (panAngle -= 360.0f);

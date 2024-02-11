@@ -31,6 +31,7 @@ Task::Task(var params) :
 	targetType->addOption("Effect", "effect");
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
+	targetType->addOption("Tracker", "tracker");
 	targetType->addOption("Generic actions", "action");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
@@ -71,6 +72,12 @@ Task::Task(var params) :
 	mapperAction->addOption("Toggle", "toggle");
 	mapperAction->addOption("Set Size", "size");
 
+	trackerAction = addEnumParameter("Tracker Action", "");
+	trackerAction->addOption("Start", "start");
+	trackerAction->addOption("Stop", "stop");
+	trackerAction->addOption("Toggle", "toggle");
+	trackerAction->addOption("Set Size", "size");
+
 	targetValue = addFloatParameter("Target Value", "fade of th first element (in seconds)", 0, 0);
 
 	delay = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
@@ -85,7 +92,7 @@ Task::~Task()
 }
 
 void Task::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction || c == targetThru) {
+	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction || c == trackerAction || c == targetThru) {
 		updateDisplay();
 	}
 }
@@ -102,6 +109,7 @@ void Task::updateDisplay() {
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
+	trackerAction->hideInEditor = targType != "tracker";
 	actionManager.hideInEditor = targType != "action";
 
 	if (targType == "cuelist") {
@@ -167,6 +175,18 @@ void Task::updateDisplay() {
 	}
 	else if (targType == "mapper") {
 		if (mapperAction->getValue() == "size") {
+			fade->hideInEditor = false;
+			targetValue->hideInEditor = false;
+			targetValue->setRange(0, 1);
+		}
+		else {
+			fade->hideInEditor = true;
+			fade->setValue(0);
+			targetValue->hideInEditor = true;
+		}
+	}
+	else if (targType == "tracker") {
+		if (trackerAction->getValue() == "size") {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
@@ -273,6 +293,20 @@ void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, S
 	}
 	else if (targetType == "mapper") {
 		Mapper* target = Brain::getInstance()->getMapperById(targetId);
+		if (target != nullptr) {
+			if (action == "start" && value == 1) {
+				target->start();
+			}
+			else if (action == "stop" && value == 1) {
+				target->stop();
+			}
+			else if (action == "size") {
+				target->sizeValue->setValue(value);
+			}
+		}
+	}
+	else if (targetType == "tracker") {
+		Tracker* target = Brain::getInstance()->getTrackerById(targetId);
 		if (target != nullptr) {
 			if (action == "start" && value == 1) {
 				target->start();
