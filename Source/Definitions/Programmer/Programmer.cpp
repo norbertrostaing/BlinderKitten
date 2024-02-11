@@ -146,9 +146,6 @@ void Programmer::triggerTriggered(Trigger* t) {
 		DataTransferManager::getInstance()->sourceType->setValue("Programmer");
 		DataTransferManager::getInstance()->selectThis();
 	}
-	if (t == cliGo) {
-		runCliCommand();
-	}
 }
 
 void Programmer::onContainerParameterChangedInternal(Parameter* p) {
@@ -225,7 +222,10 @@ void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 	else if (cc->niceName == "Commands" && c->niceName != "Value" && c->niceName != "Value to")
 	{
 		UserInputManager::getInstance()->programmerCommandValueChanged(this);
+	} else if (c == cliGo) {
+		runCliCommand();
 	}
+
 }
 
 void Programmer::render(double now) {

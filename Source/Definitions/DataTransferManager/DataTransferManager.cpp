@@ -375,6 +375,7 @@ void DataTransferManager::execute() {
             if (trg != nullptr) {
                 trg->targetId->setValue(sId);
                 trg->targetType->setValueWithData("cuelist");
+                trg->checkParentColumn();
                 trg->parentColumn->selectThis();
             }
             else {
@@ -382,10 +383,11 @@ void DataTransferManager::execute() {
                 if (trgf != nullptr) {
                     trgf->targetId->setValue(sId);
                     trgf->targetType->setValueWithData("cuelist");
+                    trgf->checkParentColumn();
                     trgf->parentColumn->selectThis();
                 }
             }
-            
+
         }
     }
     else if (srcType == "effect") {
@@ -429,6 +431,7 @@ void DataTransferManager::execute() {
             if (trg != nullptr) {
                 trg->targetId->setValue(sId);
                 trg->targetType->setValueWithData("effect");
+                trg->checkParentColumn();
                 trg->parentColumn->selectThis();
             }
             else {
@@ -436,111 +439,116 @@ void DataTransferManager::execute() {
                 if (trgf != nullptr) {
                     trgf->targetId->setValue(sId);
                     trgf->targetType->setValueWithData("effect");
+                    trgf->checkParentColumn();
                     trgf->parentColumn->selectThis();
                 }
             }
 
         }
-    }
+        }
     else if (srcType == "carousel") {
-        Carousel* src = Brain::getInstance()->getCarouselById(sId);
-        if (src == nullptr) {
-            LOGERROR("Carousel " + String(sId) + " doesn't exist !");
-            return;
-        }
+            Carousel* src = Brain::getInstance()->getCarouselById(sId);
+            if (src == nullptr) {
+                LOGERROR("Carousel " + String(sId) + " doesn't exist !");
+                return;
+            }
 
-        if (trgType == "carousel") {
-            valid = true;
-            Carousel* trg = Brain::getInstance()->getCarouselById(tId);
-            if (trg == nullptr) {
-                trg = CarouselManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(sId);
-                trg->id->setValue(tId);
-                trg->userName->setValue(src->userName->getValue());
-                trg->selectThis();
-            }
-        }
-        else if (trgType == "virtualbutton") {
-            valid = true;
-            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("carousel");
-            trg->selectThis();
-        }
-        else if (trgType == "virtualfadercol") {
-            valid = true;
-            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
-            if (trg != nullptr) {
-                trg->targetId->setValue(sId);
-                trg->targetType->setValueWithData("carousel");
-                trg->selectThis();
-            }
-        }
-        else if (trgType == "virtualfaderelement") {
-            valid = true;
-            VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
-            if (trg != nullptr) {
-                trg->targetId->setValue(sId);
-                trg->targetType->setValueWithData("carousel");
-                trg->parentColumn->selectThis();
-            }
-            else {
-                VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
-                if (trgf != nullptr) {
-                    trgf->targetId->setValue(sId);
-                    trgf->targetType->setValueWithData("carousel");
-                    trgf->parentColumn->selectThis();
+            if (trgType == "carousel") {
+                valid = true;
+                Carousel* trg = Brain::getInstance()->getCarouselById(tId);
+                if (trg == nullptr) {
+                    trg = CarouselManager::getInstance()->addItemFromData(src->getJSONData());
+                    src->id->setValue(sId);
+                    trg->id->setValue(tId);
+                    trg->userName->setValue(src->userName->getValue());
+                    trg->selectThis();
                 }
             }
+            else if (trgType == "virtualbutton") {
+                valid = true;
+                VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+                trg->targetId->setValue(sId);
+                trg->targetType->setValueWithData("carousel");
+                trg->selectThis();
+            }
+            else if (trgType == "virtualfadercol") {
+                valid = true;
+                VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+                if (trg != nullptr) {
+                    trg->targetId->setValue(sId);
+                    trg->targetType->setValueWithData("carousel");
+                    trg->selectThis();
+                }
+            }
+            else if (trgType == "virtualfaderelement") {
+                valid = true;
+                VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+                if (trg != nullptr) {
+                    trg->targetId->setValue(sId);
+                    trg->targetType->setValueWithData("carousel");
+                    trg->checkParentColumn();
+                    trg->parentColumn->selectThis();
+                }
+                else {
+                    VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                    if (trgf != nullptr) {
+                        trgf->targetId->setValue(sId);
+                        trgf->targetType->setValueWithData("carousel");
+                        trgf->checkParentColumn();
+                        trgf->parentColumn->selectThis();
+                    }
+                }
 
-        }
-    }
+            }
+            }
     else if (srcType == "mapper") {
-        Mapper* src = Brain::getInstance()->getMapperById(sId);
-        if (src == nullptr) {
-            LOGERROR("Mapper " + String(sId) + " doesn't exist !");
-            return;
-        }
-        if (trgType == "mapper") {
-            valid = true;
-            Mapper* trg = Brain::getInstance()->getMapperById(tId);
-            if (trg == nullptr) {
-                trg = MapperManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(sId);
-                trg->id->setValue(tId);
-                trg->userName->setValue(src->userName->getValue());
-                trg->selectThis();
-            }
-        }
-        else if (trgType == "virtualbutton") {
-            valid = true;
-            VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
-            trg->targetId->setValue(sId);
-            trg->targetType->setValueWithData("mapper");
-            trg->selectThis();
-        }
-        else if (trgType == "virtualfadercol") {
-            valid = true;
-            VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
-            if (trg != nullptr) {
-                trg->targetId->setValue(sId);
-                trg->targetType->setValueWithData("mapper");
-                trg->selectThis();
-            }
-        }
-        else if (trgType == "virtualfaderelement") {
-            valid = true;
-            VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
-            if (trg != nullptr) {
-                trg->targetId->setValue(sId);
-                trg->targetType->setValueWithData("mapper");
-                trg->parentColumn->selectThis();
-            }
-            else {
-                VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
-                if (trgf != nullptr) {
-                    trgf->targetId->setValue(sId);
-                    trgf->targetType->setValueWithData("mapper");
+                Mapper* src = Brain::getInstance()->getMapperById(sId);
+                if (src == nullptr) {
+                    LOGERROR("Mapper " + String(sId) + " doesn't exist !");
+                    return;
+                }
+                if (trgType == "mapper") {
+                    valid = true;
+                    Mapper* trg = Brain::getInstance()->getMapperById(tId);
+                    if (trg == nullptr) {
+                        trg = MapperManager::getInstance()->addItemFromData(src->getJSONData());
+                        src->id->setValue(sId);
+                        trg->id->setValue(tId);
+                        trg->userName->setValue(src->userName->getValue());
+                        trg->selectThis();
+                    }
+                }
+                else if (trgType == "virtualbutton") {
+                    valid = true;
+                    VirtualButton* trg = VirtualButtonGrid::getInstance()->getVirtualButton(tId, true);
+                    trg->targetId->setValue(sId);
+                    trg->targetType->setValueWithData("mapper");
+                    trg->selectThis();
+                }
+                else if (trgType == "virtualfadercol") {
+                    valid = true;
+                    VirtualFaderCol* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(tId, true);
+                    if (trg != nullptr) {
+                        trg->targetId->setValue(sId);
+                        trg->targetType->setValueWithData("mapper");
+                        trg->selectThis();
+                    }
+                }
+                else if (trgType == "virtualfaderelement") {
+                    valid = true;
+                    VirtualFaderButton* trg = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
+                    if (trg != nullptr) {
+                        trg->targetId->setValue(sId);
+                        trg->targetType->setValueWithData("mapper");
+                        trg->checkParentColumn();
+                        trg->parentColumn->selectThis();
+                    }
+                    else {
+                        VirtualFaderSlider* trgf = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+                        if (trgf != nullptr) {
+                            trgf->targetId->setValue(sId);
+                            trgf->targetType->setValueWithData("mapper");
+                            trgf->checkParentColumn();
                     trgf->parentColumn->selectThis();
                 }
             }
