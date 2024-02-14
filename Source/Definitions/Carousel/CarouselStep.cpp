@@ -152,6 +152,7 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 						val = jmap(position, val, valueTo);
 					}
 					finalValue->endValue = val;
+					finalValue->htpOverride = cv->HTPOverride->boolValue();
 				}
 			}
 

@@ -225,6 +225,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	isComputing.enter();
 	float calcValue = currentVal;
+	bool htpOver = false;
 	std::shared_ptr<Array<CarouselRow*>> activeRows = chanToCarouselRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
 		CarouselRow * r = activeRows->getReference(rId);
@@ -254,7 +255,9 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
 		if (cVal != nullptr) {
 			float fadeValue = 1;
-			
+			if (cVal->htpOverride) {
+				htpOver = true;
+			}
 			float fadeWidth = toApply->fadeRatio->getValue();
 			float pos = (offset-toApply->relativeStartPosition) / toApply->relativeDuration;
 			if (pos < fadeWidth) {
@@ -275,7 +278,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	float s = sizeValue->getValue();
 	s *= currentSizeMult;
 	if (s>1) {s = 1;}
-	if (fc->isHTP) {
+	if (fc->isHTP && !htpOver) {
 		calcValue *= s;
 		currentVal = jmax(calcValue, currentVal);
 	}
