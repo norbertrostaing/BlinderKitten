@@ -1162,6 +1162,9 @@ void BKEngine::importFixtureFromMVR(XmlElement* child, std::shared_ptr<ZipFile> 
 			fixt->userName->setValue(name);
 			fixt->devTypeParam->setValueFromTarget(ft);
 		}
+		else {
+			fixt = fixturesMap.getReference(id);
+		}
 
 		if (child->getChildByName("Addresses") != nullptr) {
 			auto addressesNode = child->getChildByName("Addresses");
@@ -1203,8 +1206,10 @@ void BKEngine::importFixtureFromMVR(XmlElement* child, std::shared_ptr<ZipFile> 
 				float rX = atan2(matVals[5].getDoubleValue(), matVals[8].getDoubleValue());//Angle de rotation autour de l'axe X (Pitch) : θx=arctan⁡2(r32,r33)θx​=arctan2(r32​,r33​)
 				float rZ = atan2(matVals[1].getDoubleValue(), matVals[0].getDoubleValue());//Angle de rotation autour de l'axe Z (Roll) : θz=arctan⁡2(r21,r11)θz​=arctan2(r21​,r11​)
 
-				fixt->position->setVector(x, y, z);
-				fixt->rotation->setVector(radiansToDegrees(rX), radiansToDegrees(rY), radiansToDegrees(rZ));
+				if (fixt != nullptr) {
+					fixt->position->setVector(x, y, z);
+					fixt->rotation->setVector(radiansToDegrees(rX), radiansToDegrees(rY), radiansToDegrees(rZ));
+				}
 
 				frontLayout->createPathForFixture(fixt, x, z);
 				topLayout->createPathForFixture(fixt, x, y);
