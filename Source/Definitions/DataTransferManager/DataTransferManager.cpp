@@ -93,6 +93,7 @@ DataTransferManager::DataTransferManager() :
 
     presetCopyMode = addEnumParameter("Preset merge mode", "Preset record mode");
     presetCopyMode->addOption("Merge", "merge");
+    presetCopyMode->addOption("Update", "update");
     presetCopyMode->addOption("Replace", "replace");
 
     cuelistCopyMode = addEnumParameter("Cuelist merge mode", "Cuelist record mode");
@@ -180,6 +181,8 @@ void DataTransferManager::execute() {
                 target->subFixtureValues.clear(); // erase data
             }
 
+            bool updateOnly = presetCopyMode->getValue() == "update";
+
             Array<ChannelFamily*> filters;
             if (UserInputManager::getInstance()->currentProgrammer == source) {
                 filters.addArray(Encoders::getInstance()->selectedFilters);
@@ -204,24 +207,26 @@ void DataTransferManager::execute() {
                             pfv = target->subFixtureValues.items[i];
                         }
                     }
-                    if (pfv == nullptr) {
+                    if (pfv == nullptr && !updateOnly) {
                         pfv = target->subFixtureValues.addItem();
                         pfv->targetFixtureId->setValue(fixtId);
                         pfv->targetSubFixtureId->setValue(subfixtId);
                         pfv->values.clear();
                     }
 
-                    PresetValue* pv = nullptr;
-                    for (int i = 0; i < pfv->values.items.size(); i++) {
-                        if (dynamic_cast<ChannelType*>(pfv->values.items[i]->param->targetContainer.get()) == chan->channelType) {
-                            pv = pfv->values.items[i];
+                    if (pfv != nullptr) {
+                        PresetValue* pv = nullptr;
+                        for (int i = 0; i < pfv->values.items.size(); i++) {
+                            if (dynamic_cast<ChannelType*>(pfv->values.items[i]->param->targetContainer.get()) == chan->channelType) {
+                                pv = pfv->values.items[i];
+                            }
                         }
+                        if (pv == nullptr) {
+                            pv = pfv->values.addItem();
+                            pv->param->setValueFromTarget(chan->channelType);
+                        }
+                        pv->paramValue->setValue(cValue->endValue);
                     }
-                    if (pv == nullptr) {
-                        pv = pfv->values.addItem();
-                        pv->param->setValueFromTarget(chan->channelType);
-                    }
-                    pv->paramValue->setValue(cValue->endValue);
                 }
             target->reorderPresetContent();
             target->updateDisplay();
