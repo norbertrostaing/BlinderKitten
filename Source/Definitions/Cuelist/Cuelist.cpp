@@ -1032,7 +1032,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		outIsOff= true;
 	}
 
-	float totTime = (cv->delay + cv->fade);
+	float totTime = (cv->TSEnd - cv->TSInit);
 	cv->currentPosition = 0;
 	if (totTime > 0) {
 		cv->currentPosition = (now - cv->TSInit) / (totTime);
