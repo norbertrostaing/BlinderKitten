@@ -29,9 +29,19 @@ public:
     TextEditor targetId;
     FloatSliderUI* currentFade = nullptr;
 
+    FloatSliderUI* nextHTPInDelay = nullptr;
+    FloatSliderUI* nextHTPOutDelay = nullptr;
+    FloatSliderUI* nextLTPDelay = nullptr;
+
+    FloatSliderUI* nextHTPInFade = nullptr;
+    FloatSliderUI* nextHTPOutFade = nullptr;
+    FloatSliderUI* nextLTPFade = nullptr;
+
+
     void paint (juce::Graphics&) override;
     void resized() override;
     void linkFadeSlider();
+    void linkSlidersTimings();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConductorInfos)

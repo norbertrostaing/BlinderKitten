@@ -50,15 +50,19 @@ Cuelist::Cuelist(var params) :
 	layerId = addIntParameter("Layer", "Higher layer, higer priority", 1, 1);
 	updateName();
 
-	currentCueName = conductorInfos.addStringParameter("Current cue", "Current Cue name", "", false);
-	currentCueName->isSavable = false;
-	currentCueText = conductorInfos.addStringParameter("Current cue text", "What's happening during this cue ?", "", false);
-	currentCueText->multiline = true;
-	currentCueText->isSavable = false;
-	nextCueGo = conductorInfos.addStringParameter("Next go", "action needed to go to next cue", "", false);
-	nextCueGo->isSavable = false;
-	nextCueName = conductorInfos.addStringParameter("Next Cue", "Next cue name", "", false);
-	nextCueName->isSavable = false;
+	conductorCurrentCueId = conductorInfos.addFloatParameter("Current ID", "ID of the current cue.", 0);
+	conductorCurrentCueId->isSavable = false;
+	conductorCurrentCueName = conductorInfos.addStringParameter("Current cue", "Current Cue name", "", false);
+	conductorCurrentCueName->isSavable = false;
+	conductorCurrentCueText = conductorInfos.addStringParameter("Current cue text", "What's happening during this cue ?", "", false);
+	conductorCurrentCueText->multiline = true;
+	conductorCurrentCueText->isSavable = false;
+	conductorNextCueId = conductorInfos.addFloatParameter("Next ID", "ID of the current cue.", 0);
+	conductorNextCueId->isSavable = false;
+	conductorNextCueGo = conductorInfos.addStringParameter("Next go", "action needed to go to next cue", "", false);
+	conductorNextCueGo->isSavable = false;
+	conductorNextCueName = conductorInfos.addStringParameter("Next Cue", "Next cue name", "", false);
+	conductorNextCueName->isSavable = false;
 	addChildControllableContainer(&conductorInfos);
 
 	isChaser = chaserOptions.addBoolParameter("Is Chaser", "Turn this cuelist in a wonderful chaser", false);
@@ -1255,12 +1259,14 @@ void Cuelist::loadRandom() {
 void Cuelist::fillTexts() {
 	if (isDeleting) {return;}
 	if (cueA != nullptr) {
-		currentCueName->setValue(cueA->niceName);
-		currentCueText->setValue(cueA->cueText->getValue());
+		conductorCurrentCueId->setValue(cueA->id->floatValue());
+		conductorCurrentCueName->setValue(cueA->niceName);
+		conductorCurrentCueText->setValue(cueA->cueText->getValue());
 	}
 	else {
-		currentCueName->setValue("");
-		currentCueText->setValue("");
+		conductorCurrentCueId->setValue(-1);
+		conductorCurrentCueName->setValue("");
+		conductorCurrentCueText->setValue("");
 	}
 	Cue* n = dynamic_cast<Cue*>(nextCue->targetContainer.get());
 	float nextId = nextCueId->getValue();
@@ -1275,14 +1281,17 @@ void Cuelist::fillTexts() {
 		n = getNextCue();
 	}
 	if (n) {
-		nextCueGo->setValue(n->goText->getValue());
-		nextCueName->setValue(n->niceName);
+		conductorNextCueId->setValue(n->id->floatValue());
+		conductorNextCueGo->setValue(n->goText->getValue());
+		conductorNextCueName->setValue(n->niceName);
 	}
 	else {
-		nextCueGo->setValue("");
-		nextCueName->setValue("");
+		conductorNextCueId->setValue(-1);
+		conductorNextCueGo->setValue("");
+		conductorNextCueName->setValue("");
 	}
 	if ((int)id->getValue() == ConductorInfos::getInstance()->engine->conductorCuelistId->intValue()) {
+		ConductorInfos::getInstance()->linkSlidersTimings();
 		ConductorInfos::getInstance()->repaint();
 	}
 }

@@ -138,10 +138,12 @@ public:
     Cue* cueB = nullptr;
 
     ControllableContainer conductorInfos;
-    StringParameter* currentCueName;
-    StringParameter* currentCueText;
-    StringParameter* nextCueGo;
-    StringParameter* nextCueName;
+    StringParameter* conductorCurrentCueName;
+    StringParameter* conductorCurrentCueText;
+    FloatParameter* conductorCurrentCueId;
+    StringParameter* conductorNextCueGo;
+    StringParameter* conductorNextCueName;
+    FloatParameter* conductorNextCueId;
 
     float xFade = 0;
     double currentTimeElapsed = 0;

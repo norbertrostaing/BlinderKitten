@@ -63,50 +63,47 @@ void ConductorInfos::paint (juce::Graphics& g)
 
     float timingHeight = nextCueHeight + nextCueGoHeight;
     float timingElementSize = timingHeight / 3;
-    float timingWidth = timingElementSize * 5;
+    float timingWidth = w/3;
 
     g.setColour (engine->conductorCurrentCueColor->getColor());
 
     g.setFont (titleSize);
-    g.drawFittedText(target->currentCueName->getValue(), 0, 0, w, currentCueHeight, juce::Justification::centredTop, true);
+    String currId = "";
+    if (target->conductorCurrentCueId->floatValue() >= 0) {
+        currId = String(target->conductorCurrentCueId->floatValue()) + " - ";
+    }
+    g.drawFittedText(currId+ target->conductorCurrentCueName->getValue(), 0, 0, w, currentCueHeight, juce::Justification::centredTop, true);
 
     g.setFont(textSize);
-    g.drawFittedText(target->currentCueText->getValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centredTop, true);
+    g.drawFittedText(target->conductorCurrentCueText->getValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centredTop, true);
 
     g.setColour(engine->conductorNextCueColor->getColor());
 
     float topNext = h - nextCueHeight - nextCueGoHeight;
 
     g.setFont(titleSize);
-    g.drawFittedText(target->nextCueGo->getValue(), 0, topNext, w-timingWidth, nextCueGoHeight, juce::Justification::centredTop, true);
+    g.drawFittedText(target->conductorNextCueGo->getValue(), 0, topNext, w-timingWidth, nextCueGoHeight, juce::Justification::centredTop, true);
 
     g.setFont(textSize);
-    g.drawFittedText(target->nextCueName->getValue(), 0, h - nextCueHeight, w-timingWidth, nextCueHeight, juce::Justification::centredTop, true);
+    String nextId = "";
+    if (target->conductorNextCueId->floatValue() >= 0) {
+        nextId = String(target->conductorNextCueId->floatValue()) + " - ";
+    }
+    g.drawFittedText(nextId + target->conductorNextCueName->getValue(), 0, h - nextCueHeight, w-timingWidth, nextCueHeight, juce::Justification::centredTop, true);
 
     if (nextCue != nullptr) {
+
+        int timeW = (w / 3) / 4;
+        int timeH = timingHeight / 3;
+
         g.setFont(timingElementSize*0.5);
-        g.drawFittedText("Up", w - (3 * timingElementSize), topNext, timingElementSize, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText("Down", w - (2*timingElementSize), topNext, timingElementSize, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText("LTP", w - (1*timingElementSize), topNext, timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText("Up", w - (3 * timeW), h-(3*timeH), timeW, timeH, juce::Justification::centred, true);
+        g.drawFittedText("Down", w - (2 * timeW), h-(3*timeH), timeW, timeH, juce::Justification::centred, true);
+        g.drawFittedText("LTP", w - (1 * timeW), h-(3*timeH), timeW, timeH, juce::Justification::centred, true);
         //int r = Random::getSystemRandom().nextInt(100);
 
-        g.drawFittedText("Delay", w - (5 * timingElementSize), topNext+timingElementSize, timingElementSize*2, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText("Fade", w - (5 * timingElementSize), topNext + (2*timingElementSize), timingElementSize*2, timingElementSize, juce::Justification::centred, true);
-
-        float ltpDelay = round(nextCue->ltpDelay->floatValue() * 100) / 100.;
-        float ltpFade = round(nextCue->ltpFade->floatValue() * 100) / 100.;
-        float htpInDelay = round(nextCue->htpInDelay->floatValue() * 100) / 100.;
-        float htpOutDelay = round(nextCue->htpOutDelay->floatValue() * 100) / 100.;
-        float htpInFade = round(nextCue->htpInFade->floatValue() * 100) / 100.;
-        float htpOutFade = round(nextCue->htpOutFade->floatValue() * 100) / 100.;
-    
-        g.drawFittedText(String(htpInDelay), w - (3 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText(String(htpOutDelay), w - (2 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText(String(ltpDelay), w - (1 * timingElementSize), topNext + timingElementSize, timingElementSize, timingElementSize, juce::Justification::centred, true);
-
-        g.drawFittedText(String(htpInFade), w - (3 * timingElementSize), topNext + (2*timingElementSize), timingElementSize, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText(String(htpOutFade), w - (2 * timingElementSize), topNext + (2*timingElementSize), timingElementSize, timingElementSize, juce::Justification::centred, true);
-        g.drawFittedText(String(ltpFade), w - (1 * timingElementSize), topNext + (2*timingElementSize), timingElementSize, timingElementSize, juce::Justification::centred, true);
+        g.drawFittedText("Delay", w - (4 * timeW), h - (2 * timeH), timeW, timeH, juce::Justification::centred, true);
+        g.drawFittedText("Fade", w - (4 * timeW), h - (1 * timeH), timeW, timeH, juce::Justification::centred, true);
     }
 
 
@@ -116,10 +113,33 @@ void ConductorInfos::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
-    int h = getHeight();
-    int w = getWidth();
+
+    float textSize = engine->conductorTextSize->getValue();
+    float titleSize = engine->conductorTitleSize->getValue();
+
+    float w = getLocalBounds().getWidth();
+    float h = getLocalBounds().getHeight() - 20;
+
+    float currentCueHeight = titleSize + 10;
+    float nextCueHeight = textSize + 10;
+    float nextCueGoHeight = titleSize + 10;
+    float currentCueTextHeight = h - currentCueHeight - nextCueHeight - nextCueGoHeight;
+
+
+    if (currentCueTextHeight < currentCueHeight) {
+        currentCueHeight = h / 4;
+        nextCueHeight = h / 4;
+        nextCueGoHeight = h / 4;
+        currentCueTextHeight = h / 4;
+    }
+
+    float timingHeight = nextCueHeight + nextCueGoHeight;
+
+    int timeW = (w/3)/4;
+    int timeH = timingHeight / 3;
+
     if (h > w) { // portrait
-        int s = jmin(w-70, 200);
+        int s = jmin(int(w-70), 200);
         s = jmax(100,s);
         targetId.setBounds(10, 0, s, s);
     }
@@ -127,9 +147,13 @@ void ConductorInfos::resized()
         targetId.setBounds(0, 0, h, h);
     }
 
-    if (currentFade != nullptr) {
-        currentFade->setBounds(0,h-20,w,20);
-    }
+    if (currentFade != nullptr) { currentFade->setBounds(0, h , w, 20); }
+    if (nextHTPInDelay != nullptr) { nextHTPInDelay->setBounds(w - (3 * timeW), h - (2 * timeH), timeW, timeH); }
+    if (nextHTPOutDelay != nullptr) { nextHTPOutDelay->setBounds(w - (2 * timeW), h - (2 * timeH), timeW, timeH); }
+    if (nextLTPDelay != nullptr) { nextLTPDelay->setBounds(w - (1 * timeW), h - (2 * timeH), timeW, timeH); }
+    if (nextHTPInFade != nullptr) { nextHTPInFade->setBounds(w - (3 * timeW), h - (1 * timeH), timeW, timeH); }
+    if (nextHTPOutFade != nullptr) { nextHTPOutFade->setBounds(w - (2 * timeW), h - (1 * timeH), timeW, timeH); }
+    if (nextLTPFade != nullptr) { nextLTPFade->setBounds(w - (1 * timeW), h - (1 * timeH), timeW, timeH); }
 }
 
 void ConductorInfos::linkFadeSlider()
@@ -155,5 +179,56 @@ void ConductorInfos::linkFadeSlider()
     currentFade->useCustomBGColor = true;
 
     addAndMakeVisible(currentFade);
+    resized();
+}
+
+void ConductorInfos::linkSlidersTimings()
+{
+    if (nextHTPInDelay != nullptr) { removeChildComponent(nextHTPInDelay); delete nextHTPInDelay; }
+    nextHTPInDelay = nullptr;
+    if (nextHTPOutDelay != nullptr) { removeChildComponent(nextHTPOutDelay); delete nextHTPOutDelay; }
+    nextHTPOutDelay = nullptr;
+    if (nextLTPDelay != nullptr) { removeChildComponent(nextLTPDelay); delete nextLTPDelay; }
+    nextLTPDelay = nullptr;
+    if (nextHTPInFade != nullptr) { removeChildComponent(nextHTPInFade); delete nextHTPInFade; }
+    nextHTPInFade = nullptr;
+    if (nextHTPOutFade != nullptr) { removeChildComponent(nextHTPOutFade); delete nextHTPOutFade; }
+    nextHTPOutFade = nullptr;
+    if (nextLTPFade != nullptr) { removeChildComponent(nextLTPFade); delete nextLTPFade; }
+    nextLTPFade = nullptr;
+
+    int targetCueId = engine->conductorCuelistId->getValue();
+    Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+    if (target == nullptr) {return;}
+    Cue* nextCue = target->getNextCue();
+    if (nextCue == nullptr) {return;}
+
+    nextHTPInDelay = nextCue->htpInDelay->createSlider();
+    nextHTPOutDelay = nextCue->htpOutDelay->createSlider();
+    nextLTPDelay = nextCue->ltpDelay->createSlider();
+    nextHTPInFade = nextCue->htpInFade->createSlider();
+    nextHTPOutFade = nextCue->htpOutFade->createSlider();
+    nextLTPFade = nextCue->ltpFade->createSlider();
+
+    nextHTPInDelay->showLabel = false;
+    nextHTPOutDelay->showLabel = false;
+    nextLTPDelay->showLabel = false;
+    nextHTPInFade->showLabel = false;
+    nextHTPOutFade->showLabel = false;
+    nextLTPFade->showLabel = false;
+
+    nextHTPInDelay->customScaleFactor = 0.000000001;
+    nextHTPOutDelay->customScaleFactor = 0.000000001;
+    nextLTPDelay->customScaleFactor = 0.000000001;
+    nextHTPInFade->customScaleFactor = 0.000000001;
+    nextHTPOutFade->customScaleFactor = 0.000000001;
+    nextLTPFade->customScaleFactor = 0.000000001;
+
+    addAndMakeVisible(nextHTPInDelay);
+    addAndMakeVisible(nextHTPOutDelay);
+    addAndMakeVisible(nextLTPDelay);
+    addAndMakeVisible(nextHTPInFade);
+    addAndMakeVisible(nextHTPOutFade);
+    addAndMakeVisible(nextLTPFade);
     resized();
 }
