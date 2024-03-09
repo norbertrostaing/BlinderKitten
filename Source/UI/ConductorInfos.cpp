@@ -114,8 +114,8 @@ void ConductorInfos::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
-    float textSize = engine->conductorTextSize->stringValue();
-    float titleSize = engine->conductorTitleSize->stringValue();
+    float textSize = engine->conductorTextSize->floatValue();
+    float titleSize = engine->conductorTitleSize->floatValue();
 
     float w = getLocalBounds().getWidth();
     float h = getLocalBounds().getHeight() - 20;
