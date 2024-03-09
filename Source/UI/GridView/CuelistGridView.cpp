@@ -46,7 +46,7 @@ void CuelistGridView::updateCells() {
             gridButtons[i]->removeColour(TextButton::textColourOnId);
             gridButtons[i]->removeColour(TextButton::textColourOffId);
 
-            gridButtons[i]->setButtonText(String(i + 1) + "\n" + g->userName->getValue().toString());
+            gridButtons[i]->setButtonText(String(i + 1) + "\n" + g->userName->stringValue());
         }
         else {
             gridButtons[i]->setButtonText(String(i + 1));
