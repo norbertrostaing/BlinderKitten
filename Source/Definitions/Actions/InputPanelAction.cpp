@@ -48,6 +48,7 @@ InputPanelAction::InputPanelAction(var params) :
         targetButton->addOption("Backspace", "Backspace");
         targetButton->addOption("Enter", "Enter");
         targetButton->addOption("Clear", "Clear");
+        targetButton->addOption("ClearAll", "ClearAll");
         targetButton->addOption("Record", "Record");
         targetButton->addOption("Edit", "Edit");
         targetButton->addOption("Copy", "Copy");

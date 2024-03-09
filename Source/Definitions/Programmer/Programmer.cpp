@@ -446,7 +446,13 @@ void Programmer::selectCommand(Command* c)
 void Programmer::processUserInput(String s) {
 	s = s.toLowerCase();
 	const MessageManagerLock mmLock;
-	if (cliActionType->getValue() != "") {
+	if (s == "clearall") 
+		{
+		MessageManager::callAsync([this](){
+			clearAll();
+			});
+		}
+	else if (cliActionType->getValue() != "") {
 		getCliAsTexts();
 		String action = cliActionType->getValue();
 		if (s.containsOnly("1234567890")) {
