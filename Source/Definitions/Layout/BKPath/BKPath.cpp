@@ -29,13 +29,13 @@ BKPath::BKPath(var params) :
     lineEndPosition->setDefaultValue(d);
 
     rodSize = addFloatParameter("Rod size", "", 1,0);
-    rodAngle = addFloatParameter("Angle", "Angle of your rod", 0, -360, 360);
+    rodAngle = addFloatParameter("Rod Angle", "Angle of your rod", 0, -360, 360);
 
     d[0] = 4;    d[1] = 4;
     gridSize = addPoint2DParameter("Size", "Size of your grid");
     gridSize->setDefaultValue(d);
     gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
-    gridAngle = addFloatParameter("Angle", "Angle of your grid", 0,-360,360);
+    gridAngle = addFloatParameter("Grid Angle", "Angle of your grid", 0,-360,360);
     gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",8,2);
     gridOrientation = addEnumParameter("Orientation", "Grid orientation");
     gridOrientation->addOption("Left to right", GRID_LR)
