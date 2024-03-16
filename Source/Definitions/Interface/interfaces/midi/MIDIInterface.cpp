@@ -13,10 +13,16 @@
 MIDIInterface::MIDIInterface() :
     Interface(getTypeString()),
     inputDevice(nullptr),
-    outputDevice(nullptr)
+    outputDevice(nullptr),
+    dataContainer("Start sysex content")
 {
     deviceParam = new MIDIDeviceParameter("Device");
+
     addParameter(deviceParam);
+    numBytes = addIntParameter("Start sysex", "Sysex message to send at startup, F0 and F7 are automatically added at the begin and the end, so don't fill them :) .", 0, 0);
+
+    addChildControllableContainer(&dataContainer);
+    updateBytesParams();
 
     addChildControllableContainer(&mappingManager);
     addChildControllableContainer(&feedbackManager);
@@ -57,6 +63,7 @@ void MIDIInterface::updateDevices()
         {
             outputDevice->open();
             NLOG(niceName, "Now writing to MIDI Device : " << outputDevice->name);
+            sendStartupBytes();
         }
     }
 }
@@ -67,6 +74,18 @@ void MIDIInterface::onContainerParameterChangedInternal(Parameter* p)
     {
         updateDevices();
     }
+    if (p == numBytes) 
+    {
+        updateBytesParams();
+    }
+}
+
+void MIDIInterface::sendStartupBytes()
+{
+    if (numBytes->intValue() == 0) return;
+    Array<uint8> data;
+    for (auto& c : dataContainer.controllables) data.add(((IntParameter*)c)->intValue());
+    outputDevice->sendSysEx(data);
 }
 
 void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const int &velocity)
@@ -104,4 +123,22 @@ void MIDIInterface::feedback(String address, var value, String origin = "")
         MIDIFeedback* f = feedbackManager.items[i];
         f->processFeedback(address, value, origin, logOutput);
     }
+}
+
+
+void MIDIInterface::updateBytesParams()
+{
+    while (dataContainer.controllables.size() > numBytes->intValue())
+    {
+        dataContainer.controllables[dataContainer.controllables.size() - 1]->remove();
+    }
+
+    while (dataContainer.controllables.size() < numBytes->intValue())
+    {
+        String index = String(dataContainer.controllables.size());
+        IntParameter* p = new IntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
+        p->hexMode = true;
+        dataContainer.addParameter(p); // after hexMode
+    }
+
 }

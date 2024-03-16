@@ -25,9 +25,14 @@ public:
     MIDIInputDevice* inputDevice;
     MIDIOutputDevice* outputDevice;
 
-    void updateDevices();
+    IntParameter* numBytes;
+    ControllableContainer dataContainer;
 
+    void updateDevices();
+    void updateBytesParams();
     void onContainerParameterChangedInternal(Parameter *) override;
+
+    void sendStartupBytes();
 
     void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
     void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
