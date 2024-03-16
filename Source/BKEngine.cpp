@@ -671,6 +671,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 		}
 	}
 
+	auto midiInterfaces = InterfaceManager::getInterfacesOfType<MIDIInterface>();
+	for (int i = 0; i < midiInterfaces.size(); i++) {
+		midiInterfaces[i]->sendStartupBytes();
+	}
+
 	for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
 		VirtualButtonManager::getInstance()->items[i]->updateDisplay();
 	}

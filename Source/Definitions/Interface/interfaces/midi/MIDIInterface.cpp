@@ -83,6 +83,8 @@ void MIDIInterface::onContainerParameterChangedInternal(Parameter* p)
 void MIDIInterface::sendStartupBytes()
 {
     if (numBytes->intValue() == 0) return;
+    if (outputDevice == nullptr) return; 
+
     Array<uint8> data;
     for (auto& c : dataContainer.controllables) data.add(((IntParameter*)c)->intValue());
     outputDevice->sendSysEx(data);
