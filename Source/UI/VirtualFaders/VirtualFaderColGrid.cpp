@@ -687,13 +687,16 @@ void VirtualFaderColGrid::copyElmt(int idFrom, int idTo)
 VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
 {
     if (id < 1 || id > cols) { return nullptr; }
-    VirtualFaderCol* vf = columnToVFC.getReference(id);
-    String mode = "disabled";
-    BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
-    if (e->faderSelectionMode->getValueData() == "column") {
-        mode = "column";
+    VirtualFaderCol* vf = nullptr;
+    if (columnToVFC.contains(id)) {
+        vf = columnToVFC.getReference(id);
     }
-    if (create) {
+    if (vf == nullptr && create) {
+        String mode = "disabled";
+        BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+        if (e->faderSelectionMode->getValueData() == "column") {
+            mode = "column";
+        }
         vf = VirtualFaderColManager::getInstance()->addItem();
         vf->pageNumber->setValue(page);
         vf->colNumber->setValue(id);
@@ -732,7 +735,7 @@ VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool c
         }
         else if (n < nRotaries + nAbove) {
             n -= nRotaries;
-            while (vfc->aboveButtons.items.size() < n) {
+            while (vfc->aboveButtons.items.size() < nAbove) {
                 vfc->aboveButtons.addItem();
             }
             vfb = vfc->aboveButtons.items[n];
@@ -742,7 +745,7 @@ VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool c
         }
         else {
             n -= nAbove + nRotaries + 1;
-            while (vfc->belowButtons.items.size() < n) {
+            while (vfc->belowButtons.items.size() < nBelow) {
                 vfc->belowButtons.addItem();
             }
             vfb = vfc->belowButtons.items[n];
