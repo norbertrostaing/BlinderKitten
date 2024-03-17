@@ -113,6 +113,46 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
         Encoders::getInstance()->updateChannels();
         break;
 
+    case ENC_HL:
+        if (val > 0) {
+            Encoders::getInstance()->HLBtn.triggerClick();
+        }
+        break;
+    case ENC_BLIND:
+        if (val > 0) {
+            Encoders::getInstance()->blindBtn.triggerClick();
+        }
+        break;
+    case ENC_RANGE:
+        if (val > 0) {
+            Encoders::getInstance()->encoderRangeBtn.triggerClick();
+        }
+        break;
+    case ENC_THRU:
+        if (val > 0) {
+            Encoders::getInstance()->btnMode.triggerClick();
+        }
+        break;
+    case ENC_EXPLODE:
+        if (val > 0) {
+            Encoders::getInstance()->explodeCommandBtn.triggerClick();
+        }
+        break;
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
 
     }
 

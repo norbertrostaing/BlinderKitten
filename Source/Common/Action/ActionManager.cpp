@@ -124,6 +124,11 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder toggle filter nth", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TOGGLEFILTERNUM));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder toggle filter family", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TOGGLEFILTERFAMILY));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder clear filters", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_CLEARFILTERS));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder HighLight", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_HL));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Blind", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_BLIND));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Range", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_RANGE));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Thru", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_THRU));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Explode", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_EXPLODE));
 
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
