@@ -370,6 +370,11 @@ void Programmer::clearAll() {
 	Brain::getInstance()->pleaseUpdate(this);
 	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
 	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+	if (Encoders::getInstance()->mode != 0) {
+		Encoders::getInstance()->mode = 0;
+		Encoders::getInstance()->updateModeButton();
+	}
 }
 
 void Programmer::clearCurrent() {
@@ -392,6 +397,11 @@ void Programmer::clearCurrent() {
 	UserInputManager::getInstance()->commandValueChanged(currentUserCommand);
 	UserInputManager::getInstance()->commandSelectionChanged(currentUserCommand);
 	Brain::getInstance()->virtualFadersNeedUpdate = true;
+	if (Encoders::getInstance()->mode != 0) {
+		Encoders::getInstance()->mode = 0;
+		Encoders::getInstance()->updateModeButton();
+	}
+
 }
 
 void Programmer::selectNextCommand()
