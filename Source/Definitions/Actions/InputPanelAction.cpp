@@ -137,6 +137,22 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
         }
         break;
 
+    case IP_SAVE:
+        if (val > 0) {
+            MessageManager::callAsync([](){
+            if (Engine::mainEngine->getFile().exists())
+            {
+                juce::Result r = Engine::mainEngine->saveDocument(Engine::mainEngine->getFile());
+                if (r.ok()) LOG("Session saved");
+                else if (r.failed()) LOGERROR("Session save error : " << r.getErrorMessage());
+            }
+            else
+            {
+                LOGWARNING("Please save first manually to use the save session command");
+            }
+            });
+        }
+        break;
     }
 
 }
