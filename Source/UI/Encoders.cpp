@@ -88,6 +88,9 @@ Encoders::Encoders():
     explodeCommandBtn.addListener(this);
     explodeCommandBtn.setButtonText("<>");
     explodeCommandBtn.setWantsKeyboardFocus(false);
+
+    addAndMakeVisible(&commandNumber);
+    commandNumber.setJustificationType(juce::Justification::centred);
     initEncoders();
 }
 
@@ -136,7 +139,7 @@ void Encoders::resized()
     int btnWidth = 40;
     int margin = 5;
 
-    int total = (11*btnWidth) + (3*margin);
+    int total = (12*btnWidth) + (3*margin);
     float ratio = windowW / float(total);
 
     float btnHeight = windowH / 7.0;
@@ -145,6 +148,7 @@ void Encoders::resized()
     btnWidth *= ratio;
     margin *= ratio;
 
+    commandNumber.setBounds(0,0, btnWidth, btnHeight);
     btnMode.setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, btnHeight);
     encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
     HLBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
@@ -400,6 +404,14 @@ void Encoders::updateEncoders() {
         //labels[i]->repaint();
     }
     //repaint();
+    String cmdNumText = "";
+    if (UserInputManager::getInstance()->currentProgrammer != nullptr && currentCommand != nullptr) {
+        int index = UserInputManager::getInstance()->currentProgrammer->commands.items.indexOf(currentCommand);
+        index = index +1;
+        int tot = UserInputManager::getInstance()->currentProgrammer->commands.items.size();
+        cmdNumText = String(index)+"/"+String(tot);
+    }
+    commandNumber.setText(cmdNumText, juce::NotificationType::dontSendNotification);
     updateEncodersValues();
 
 

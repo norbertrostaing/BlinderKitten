@@ -67,6 +67,8 @@ public:
     TextButton commandDownBtn;
     TextButton explodeCommandBtn;
 
+    Label commandNumber;
+
     int nEncoders = 10;
     int encodersOffset = 0;
     int mode = 0;
