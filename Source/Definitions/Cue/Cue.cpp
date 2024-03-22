@@ -46,7 +46,7 @@ Cue::Cue(var params) :
 	loadWindowBreakLine = addBoolParameter("New line load window", "If checked, this element will force a new line in the cuelist window", false);
 	goBtn = actionsContainer.addTrigger("GO", "trigger this cue");
 	cleanUnusedCommandsBtn = actionsContainer.addTrigger("Clean", "Clean the duplicates commands in this cue.");
-	loadBtn = actionsContainer.addTrigger("Load", "load the content of this cue in programmer");
+	loadBtn = actionsContainer.addTrigger("Load content", "load the content of this cue in programmer");
 	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");
 	mergeBtn = actionsContainer.addTrigger("Merge", "The content of the programmer is added to this cue");
 	createBeforeBtn = actionsContainer.addTrigger("Create Before", "Create a cue before this one with the content of the programmer");
@@ -115,18 +115,8 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 		cleanUnused();
 	}
 	else if (c == loadBtn) {
-		const MessageManagerLock mmlock;
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
-		if (p != nullptr) {
-			p->clearAll();
-			for (int i = 0; i < commands.items.size(); i++) {
-				Command* com = p->commands.addItem();
-				com->loadJSONData(commands.items[i]->getJSONData());
-			}
-
-		p->selectNextCommand();
-		UserInputManager::getInstance()->programmerCommandStructureChanged(p);
-		}
+		loadContent(p);
 	}
 	else if (c == replaceBtn) {
 		const MessageManagerLock mmlock;
@@ -261,4 +251,22 @@ void Cue::cleanUnused()
 	}
 
 	csComputing.exit();
+}
+
+void Cue::loadContent(Programmer* p)
+{
+	MessageManager::callAsync([this, p](){
+		if (p != nullptr) 
+			{
+			p->clearAll();
+			for (int i = 0; i < commands.items.size(); i++) 
+				{
+				Command* com = p->commands.addItem();
+				com->loadJSONData(commands.items[i]->getJSONData());
+				}
+
+			p->selectNextCommand();
+			UserInputManager::getInstance()->programmerCommandStructureChanged(p);
+			}
+		});
 }

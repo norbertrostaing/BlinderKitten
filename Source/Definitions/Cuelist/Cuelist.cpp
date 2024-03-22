@@ -1482,6 +1482,16 @@ void Cuelist::autoCreateChaser()
 	blocks.clear();
 }
 
+void Cuelist::loadContent(Programmer *p)
+{
+	if (cueA != nullptr) {
+		cueA->loadContent(p);
+	}
+	else if (cues.items.size() > 0) {
+		cues.items[0]->loadContent(p);
+	}
+}
+
 void Cuelist::tapTempo() {
 	double now = Time::getMillisecondCounterHiRes();
 	double delta = now - lastTapTempo;

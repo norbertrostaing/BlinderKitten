@@ -220,6 +220,8 @@ public:
 
     void autoCreateChaser();
 
+    void loadContent( Programmer* p);
+
     static Cuelist* create(var params) { return new Cuelist(params); }
 
 };

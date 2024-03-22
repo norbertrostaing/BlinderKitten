@@ -70,6 +70,7 @@ Programmer::Programmer(var params) :
 	cliActionType->addOption("Update", "update");
 	cliActionType->addOption("Replace", "replace");
 	cliActionType->addOption("Edit", "edit");
+	cliActionType->addOption("Load content", "loadcontent");
 	cliActionType->addOption("Delete", "delete");
 
 	cliParamAType = cliContainer.addEnumParameter("Param A type", "What kind of object do you want to target");
@@ -526,7 +527,8 @@ void Programmer::processUserInput(String s) {
 		}
 		else if (s == "edit") {
 			if (userCanPressAction) {
-				cliActionType->setValueWithData(s);
+				if (action == "edit") { cliActionType->setValueWithData("loadcontent"); }
+				else { cliActionType->setValueWithData("edit"); }
 			}
 			else {
 				LOGERROR(s+ " not allowed");
@@ -676,8 +678,12 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->presetCopyMode->setValueWithData("merge");
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "add" : "replace");
 		DataTransferManager::getInstance()->execute();
-
-
+	}
+	else if (action == "loadcontent") {
+		Cuelist* c = Brain::getInstance()->getCuelistById(targetId);
+		if (c != nullptr) {
+			c->loadContent(this);
+		}
 	}
 	else if (action == "move") {
 		DataTransferManager::getInstance()->moveObject(targetType, targetId, cliParamBType->getValue(), (int)cliParamBId->getValue());
