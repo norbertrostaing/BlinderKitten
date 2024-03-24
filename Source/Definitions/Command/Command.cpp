@@ -179,8 +179,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 
 				std::shared_ptr<HashMap<ChannelType*, float>> valuesFrom = std::make_shared <HashMap<ChannelType*, float>>();
 				std::shared_ptr <HashMap<ChannelType*, float>> valuesTo = std::make_shared <HashMap<ChannelType*, float>>();
-				String test = cv->presetOrValue->getValue();
-				if (cv->presetOrValue->getValue() == "preset") {
+				String test = cv->presetOrValue->stringValue();
+				if (cv->presetOrValue->stringValue() == "preset") {
 
 					std::shared_ptr < HashMap<ChannelType*, float>> tempValuesFrom = pFrom != nullptr ? pFrom->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
 					std::shared_ptr < HashMap<ChannelType*, float>> tempValuesTo = pTo != nullptr ? pTo->getSubFixtureValues(SubFixtures[indexFixt]) : nullptr;
@@ -199,11 +199,11 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				
 				}
 
-				if (cv->presetOrValue->getValue() == "value") {
+				if (cv->presetOrValue->stringValue() == "value") {
 					valuesFrom->set(rawChan, cv->valueFrom->getValue());
 					valuesTo->set(rawChan, cv->valueTo->getValue());
 				}
-				else if (cv->presetOrValue->getValue() == "release") {
+				else if (cv->presetOrValue->stringValue() == "release") {
 					valuesFrom->set(rawChan, -1);
 					valuesTo->set(rawChan, -1);
 				}
@@ -234,15 +234,15 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						float delay = delayFrom;
 						if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
 							if (!fchan->isHTP) {
-								delay = (float)callingCue->ltpDelay->getValue()*1000.;
+								delay = callingCue->ltpDelay->floatValue() >= 0 ? callingCue->ltpDelay->floatValue()*1000. : callingCue->htpInDelay->floatValue()*1000.;
 							}
 							else {
 								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
 								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
-									delay = (float)callingCue->htpInDelay->getValue() * 1000.;
+									delay = callingCue->htpInDelay->floatValue() * 1000.;
 								}
 								else {
-									delay = (float)callingCue->htpOutDelay->getValue() * 1000.;
+									delay = callingCue->htpOutDelay->floatValue() >= 0 ? callingCue->htpOutDelay->floatValue() * 1000. : callingCue->htpInDelay->floatValue() * 1000.;
 								}
 							}
 						}
@@ -261,15 +261,15 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						}
 						else if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
 							if (!fchan->isHTP) {
-								fade = (float)callingCue->ltpFade->getValue() * 1000.;
+								fade = callingCue->ltpFade->floatValue() >= 0 ? callingCue->ltpFade->floatValue() * 1000. : callingCue->htpInFade->floatValue() * 1000.;
 							}
 							else {
 								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
 								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
-									fade = (float)callingCue->htpInFade->getValue() * 1000.;
+									fade = callingCue->htpInFade->floatValue() * 1000.;
 								}
 								else {
-									fade = (float)callingCue->htpOutFade->getValue() * 1000.;
+									fade = callingCue->htpOutFade->floatValue() >= 0 ? callingCue->htpOutFade->floatValue() * 1000. : callingCue->htpInFade->floatValue() * 1000.;
 								}
 							}
 						}

@@ -678,12 +678,12 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					}
 					else {
 						if (it.getKey()->isHTP) {
-							fadeTime = (float)c->htpOutFade->getValue() * 1000;
-							delayTime = (float)c->htpOutDelay->getValue() * 1000;
+							fadeTime = c->htpOutFade->floatValue() >= 0 ? c->htpOutFade->floatValue() * 1000. : c->htpInFade->floatValue() * 1000.;
+							delayTime = c->htpOutDelay->floatValue() >= 0 ? c->htpOutDelay->floatValue() * 1000. : c->htpInDelay->floatValue() * 1000.;
 						}
 						else {
-							fadeTime = (float)c->ltpFade->getValue() * 1000;
-							delayTime = (float)c->ltpDelay->getValue() * 1000;
+							fadeTime = c->ltpFade->floatValue() >= 0 ? c->ltpFade->floatValue() * 1000. : c->htpInFade->floatValue() * 1000.;
+							delayTime = c->ltpDelay->floatValue() >= 0 ? c->ltpDelay->floatValue() * 1000. : c->htpInDelay->floatValue() * 1000.;
 						}
 					}
 
