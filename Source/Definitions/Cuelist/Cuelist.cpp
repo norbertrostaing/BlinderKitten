@@ -725,6 +725,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		Brain::getInstance()->reconstructVirtuals = true;
 	}
 
+	if (!isChaser->boolValue() && c != nullptr) {
+		c->writeTimeStamp();
+	}
+
 	const MessageManagerLock mmLock;
 	nextCue->resetValue();
 	nextCueId->resetValue();

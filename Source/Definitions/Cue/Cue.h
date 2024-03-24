@@ -66,6 +66,8 @@ public:
 
     void loadContent(Programmer *p);
 
+    void writeTimeStamp();
+
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }
     double maxTiming = 0;
@@ -79,6 +81,7 @@ public:
     FloatParameter* ltpFade;
 
     ControllableContainer timingContainer;
+    StringParameter* lastTriggeredTS;
 
 };
 

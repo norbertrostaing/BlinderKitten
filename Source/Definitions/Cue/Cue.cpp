@@ -33,6 +33,8 @@ Cue::Cue(var params) :
 	goText = addStringParameter("Go text", "Fill here the action on stage needed for the cue", "");
 	cueText = addStringParameter("Cue text", "What's happening during this cue ?", "");
 	cueText->multiline = true;
+	lastTriggeredTS = addStringParameter("Last triggered", "When did this cue was triggered for the last time ?", "");
+	lastTriggeredTS->enabled = false;
 
 	autoFollow = addEnumParameter("Auto Follow", "Does the cuelist stops the execution of the cuelist or auto triggers the next one");
 	autoFollow->addOption("Wait for go", "none");
@@ -269,4 +271,11 @@ void Cue::loadContent(Programmer* p)
 			UserInputManager::getInstance()->programmerCommandStructureChanged(p);
 			}
 		});
+}
+
+void Cue::writeTimeStamp()
+{
+	MessageManager::callAsync([this](){
+		lastTriggeredTS->setValue(Time::getCurrentTime().formatted("%Y-%m-%d %H:%M:%S"));
+	});
 }
