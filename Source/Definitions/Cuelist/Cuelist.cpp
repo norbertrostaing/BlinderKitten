@@ -1294,9 +1294,11 @@ void Cuelist::fillTexts() {
 		conductorNextCueGo->setValue("");
 		conductorNextCueName->setValue("");
 	}
-	if ((int)id->getValue() == ConductorInfos::getInstance()->engine->conductorCuelistId->intValue()) {
-		ConductorInfos::getInstance()->linkSlidersTimings();
-		ConductorInfos::getInstance()->repaint();
+	if (id->intValue() == ConductorInfos::getInstance()->engine->conductorCuelistId->intValue()) {
+		MessageManager::callAsync([](){
+			ConductorInfos::getInstance()->linkSlidersTimings();
+			ConductorInfos::getInstance()->repaint();
+			});
 	}
 }
 
