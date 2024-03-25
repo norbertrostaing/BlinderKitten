@@ -81,8 +81,10 @@ void MIDIMapping::updateDisplay()
     encoderValueRange->hideInEditor = m == LINEAR;
 
     pitchOrNumber->hideInEditor = midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
-    inputRange7b->hideInEditor = midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
-    inputRange14b->hideInEditor = midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL;
+    inputRange7b->hideInEditor = midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL || m != LINEAR;
+    inputRange14b->hideInEditor = midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL || m != LINEAR;
+
+    learnRange->hideInEditor = m != LINEAR;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

@@ -98,7 +98,8 @@ void MIDIFeedback::updateDisplay() {
 
     channel->hideInEditor = isText;
     pitchOrNumber->hideInEditor = isText;
-    differentChannels->hideInEditor = isText;
+    differentChannels->hideInEditor = !isButton;
+    channel->hideInEditor = isButton && differentChannels->boolValue();
 
     outputRange -> hideInEditor = isButton || isText;
     onValue -> hideInEditor = !isButton;
