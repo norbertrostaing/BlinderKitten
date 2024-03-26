@@ -231,6 +231,7 @@ void DataTransferManager::execute() {
             target->reorderPresetContent();
             target->updateDisplay();
             target->selectThis();
+            LOG("Preset recorded");
             }
         }
         else if (trgType == "cuelist") {
@@ -274,6 +275,11 @@ void DataTransferManager::execute() {
             if (target->cueA == targetCue) {
                 target->go(targetCue,0,0);
             }
+
+            if (copyMode == "add") { LOG("New cue created"); }
+            else if (copyMode == "replace") { LOG("Cue content replaced by programmer"); }
+            else { LOG("Programmer content added to cue");  }
+
         }
         else if (trgType == "virtualbutton") {
             Cuelist* targetCuelist = nullptr;

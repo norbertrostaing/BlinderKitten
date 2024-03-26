@@ -269,6 +269,7 @@ void Cue::loadContent(Programmer* p)
 
 			p->selectNextCommand();
 			UserInputManager::getInstance()->programmerCommandStructureChanged(p);
+			LOG("Cue content loaded in programmer");
 			}
 		});
 }
