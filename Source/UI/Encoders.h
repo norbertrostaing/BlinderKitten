@@ -57,6 +57,7 @@ public:
     TextButton blindBtn;
     TextButton btnMode;
     TextButton encoderRangeBtn;
+    TextButton numbersOrNamesBtn;
 
     TextButton littleMoveLeftBtn;
     TextButton littleMoveRightBtn;
@@ -72,6 +73,7 @@ public:
     int nEncoders = 10;
     int encodersOffset = 0;
     int mode = 0;
+    int numberOrNames = 0;
 
     void initEncoders();
     void paint (juce::Graphics&) override;
@@ -82,6 +84,7 @@ public:
     void updateEncoders();
     void updateChannels();
     void updateModeButton();
+    void updateNumbersOrNamesButton();
     void updateHLButton();
     void updateBlindButton();
     void updateRangeButton();

@@ -59,8 +59,9 @@ public:
     void triggerTriggered(Trigger* t);
     static Command* create(var params) { return new Command(params); }
 
-    StringArray getCommandAsTexts();
+    StringArray getCommandAsTexts(bool useNames = false);
     StringArray getCommandSelectionAsTexts();
+    String getUserName(String type, int id);
     //Trigger* viewCommandBtn;
     Trigger* explodeSelectionBtn;
     String formatValue(float f);

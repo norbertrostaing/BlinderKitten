@@ -331,7 +331,7 @@ void Command::triggerTriggered(Trigger* t)
 	}
 }
 
-StringArray Command::getCommandAsTexts() {
+StringArray Command::getCommandAsTexts(bool useNames) {
 	StringArray words;
 	userCantPress();
 	if (selection.items.size() > 0) {
@@ -349,6 +349,8 @@ StringArray Command::getCommandAsTexts() {
 	}
 
 	userCanPressSelectionType = true;
+	String userName = "";
+	String type = "";
 	for (int i = 0; i < selection.items.size(); i++) {
 		CommandSelection* s = selection.items[i];
 		currentUserSelection = s;
@@ -365,7 +367,10 @@ StringArray Command::getCommandAsTexts() {
 		userCanPressNumber = true;
 		currentUserTarget = s->valueFrom;
 		if ((int)s->valueFrom->value > 0) {
-			words.add(s->valueFrom->value);
+			type = words.getReference(words.size() - 1);
+			userName = useNames ? getUserName(type, s->valueFrom->intValue()) : "";
+			if (userName != "") { words.set(words.size() - 1, userName); }
+			else { words.add(s->valueFrom->stringValue()); }
 			lastTarget = "selectionValueFrom";
 			userCanPressSelectionType = false;
 			userCanPressThru = true;
@@ -380,7 +385,9 @@ StringArray Command::getCommandAsTexts() {
 				userCanPressNumber = true;
 				currentUserTarget = s->valueTo;
 				if ((int)s->valueTo->value > 0) {
-					words.add(s->valueTo->value);
+					userName = useNames ? getUserName(type, s->valueTo->intValue()) : "";
+					if (userName != "") { words.add(userName); }
+					else { words.add(s->valueTo->stringValue()); }
 					lastTarget = "selectionValueTo";
 					userCantPress();
 					userCanPressNumber = true;
@@ -442,7 +449,10 @@ StringArray Command::getCommandAsTexts() {
 			userCanPressNumber = true;
 			currentUserTarget = v->presetIdFrom;
 			if ((int)v->presetIdFrom->value > 0) {
-				words.add(v->presetIdFrom->value);
+				type = "preset";
+				userName = useNames ? getUserName(type, v->presetIdFrom->intValue()) : "";
+				if (userName != "") { words.set(words.size() - 1, userName); }
+				else { words.add(v->presetIdFrom->stringValue()); }
 				lastTarget = "valuePresetFrom";
 				userCanPressThru = true;
 				currentUserThru = v->thru;
@@ -456,7 +466,9 @@ StringArray Command::getCommandAsTexts() {
 					userCanPressNumber = true;
 					currentUserTarget = v->presetIdTo;
 					if ((int)v->presetIdTo->value > 0) {
-						words.add(v->presetIdTo->value);
+						userName = useNames ? getUserName(type, v->presetIdTo->intValue()) : "";
+						if (userName != "") { words.add(userName); }
+						else { words.add(v->presetIdTo->stringValue()); }
 						lastTarget = "valuePresetTo";
 						userCantPress();
 						userCanPressNumber = true;
@@ -566,6 +578,31 @@ StringArray Command::getCommandSelectionAsTexts() {
 
 	return words;
 
+}
+
+String Command::getUserName(String type, int id)
+{
+	String userName = "";
+	if (type == "group") {
+		Group* g = Brain::getInstance()->getGroupById(id);
+		if (g != nullptr) {
+			userName = g->userName->stringValue();
+		}
+	}
+	else if (type == "fixture") {
+		Fixture* f = Brain::getInstance()->getFixtureById(id);
+		if (f != nullptr) {
+			userName = f->userName->stringValue();
+		}
+	}
+	else if (type == "preset") {
+		Preset* p = Brain::getInstance()->getPresetById(id);
+		if (p != nullptr) {
+			userName = p->userName->stringValue();
+		}
+	}
+
+	return userName;
 }
 
 void Command::userCantPress() {

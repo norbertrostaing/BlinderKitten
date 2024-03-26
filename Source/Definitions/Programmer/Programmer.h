@@ -91,7 +91,7 @@ public:
     Command* currentUserCommand = nullptr;
     void processUserInput(String s);
 
-    String getTextCommand();
+    String getTextCommand(bool useNames = false);
     void checkCurrentUserCommand();
 };
 

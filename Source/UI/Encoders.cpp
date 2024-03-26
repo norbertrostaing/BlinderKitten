@@ -34,6 +34,11 @@ Encoders::Encoders():
 {
     addAndMakeVisible(&commandLine);
 
+    addAndMakeVisible(&numbersOrNamesBtn);
+    numbersOrNamesBtn.addListener(this);
+    numbersOrNamesBtn.setButtonText("123");
+    numbersOrNamesBtn.setWantsKeyboardFocus(false);
+
     addAndMakeVisible(&HLBtn);
     HLBtn.addListener(this);
     HLBtn.setButtonText("HL");
@@ -139,7 +144,7 @@ void Encoders::resized()
     int btnWidth = 40;
     int margin = 5;
 
-    int total = (12*btnWidth) + (3*margin);
+    int total = (13*btnWidth) + (3*margin);
     float ratio = windowW / float(total);
 
     float btnHeight = windowH / 7.0;
@@ -150,16 +155,17 @@ void Encoders::resized()
 
     commandNumber.setBounds(0,0, btnWidth, btnHeight);
     btnMode.setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, btnHeight);
-    encoderRangeBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
-    HLBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
-    blindBtn.setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, btnHeight);
-    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (1 * btnWidth), 0, btnWidth, btnHeight);
-    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (2 * btnWidth), 0, btnWidth, btnHeight);
-    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (3 * btnWidth), 0, btnWidth, btnHeight);
-    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (4 * btnWidth) - (4 * btnWidth), 0, btnWidth, btnHeight);
-    commandDownBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
-    commandUpBtn.setBounds(windowW - (2 * margin) - (4 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
-    explodeCommandBtn.setBounds(windowW - (3 * margin) - (4 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
+    numbersOrNamesBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
+    encoderRangeBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
+    HLBtn.setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, btnHeight);
+    blindBtn.setBounds(windowW - (0 * margin) - (5 * btnWidth), 0, btnWidth, btnHeight);
+    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (1 * btnWidth), 0, btnWidth, btnHeight);
+    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (2 * btnWidth), 0, btnWidth, btnHeight);
+    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (3 * btnWidth), 0, btnWidth, btnHeight);
+    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (4 * btnWidth), 0, btnWidth, btnHeight);
+    commandDownBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
+    commandUpBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
+    explodeCommandBtn.setBounds(windowW - (3 * margin) - (5 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
 
     commandLine.setBounds(0, 2 * btnHeight, windowW, btnHeight);
 
@@ -201,6 +207,11 @@ void Encoders::buttonClicked(Button* b) {
     else if (b == &btnMode) {
         mode = (mode + 1) % 2;
         updateModeButton();
+    }
+    else if (b == &numbersOrNamesBtn) {
+        numberOrNames = (numberOrNames + 1) % 2;
+        updateNumbersOrNamesButton();
+        updateCommandLine();
     }
     else if (b == &bigMoveLeftBtn) {
         int bigOffset = engine->encoderBigNumber->getValue();
@@ -271,6 +282,17 @@ void Encoders::updateModeButton() {
         btnMode.setButtonText("Time");
     }
     updateEncoders();
+}
+
+void Encoders::updateNumbersOrNamesButton()
+{
+    if (numberOrNames == 0) {
+        numbersOrNamesBtn.setButtonText("123");
+    }
+    else if (numberOrNames == 1) {
+        numbersOrNamesBtn.setButtonText("Abc");
+    }
+    updateCommandLine();
 }
 
 void Encoders::updateHLButton()
@@ -532,7 +554,8 @@ void Encoders::updateEncodersValues() {
 void Encoders::updateCommandLine()
 {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
-        String txt = UserInputManager::getInstance()->getProgrammer(true)->getTextCommand();
+        bool useNames = numberOrNames == 1;
+        String txt = UserInputManager::getInstance()->getProgrammer(true)->getTextCommand(useNames);
         commandLine.setText(txt, juce::dontSendNotification);
     }
 }

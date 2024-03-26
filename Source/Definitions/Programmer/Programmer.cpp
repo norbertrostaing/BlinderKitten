@@ -634,7 +634,7 @@ void Programmer::processUserInput(String s) {
 	// currentUserCommand->userPress(s);
 }
 
-String Programmer::getTextCommand() {
+String Programmer::getTextCommand(bool useNames) {
 	StringArray txts;
 	String txt = "";
 	if (cliActionType->getValue() != "") {
@@ -642,7 +642,7 @@ String Programmer::getTextCommand() {
 	}
 	else if (currentUserCommand == nullptr) { return ""; }
 	else {
-		txts = currentUserCommand->getCommandAsTexts();
+		txts = currentUserCommand->getCommandAsTexts(useNames);
 	}
 	for (int i = 0; i < txts.size(); i++) {
 		if (i != 0) {
