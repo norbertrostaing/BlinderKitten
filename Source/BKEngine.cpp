@@ -661,6 +661,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	EncodersMult::getInstance()->targetChanged();
 
 	ConductorInfos::getInstance()->linkFadeSlider();
+	ConductorInfos::getInstance()->updateStyle();
 
 	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
 		Fixture* f = FixtureManager::getInstance()->items[i];
@@ -694,7 +695,8 @@ void BKEngine::controllableFeedbackUpdate(ControllableContainer* cc, Controllabl
 {
 	if (isClearing || isLoadingFile) return;
 	if (cc == &conductorInfosContainer) {
-		ConductorInfos::getInstance()->repaint();
+		ConductorInfos::getInstance()->updateStyle();
+		//ConductorInfos::getInstance()->repaint();
 	}
 }
 

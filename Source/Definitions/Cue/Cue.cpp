@@ -280,3 +280,13 @@ void Cue::writeTimeStamp()
 		lastTriggeredTS->setValue(Time::getCurrentTime().formatted("%Y-%m-%d %H:%M:%S"));
 	});
 }
+
+String Cue::getCommandsText(bool useName)
+{
+	String ret = "";
+	for (int i = 0; i < commands.items.size(); i++) {
+		if (ret != "") {ret += "\n"; }
+		ret += commands.items[i]->getCommandAsTexts(useName).joinIntoString(" ");
+	}
+	return ret;
+}

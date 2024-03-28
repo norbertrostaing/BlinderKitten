@@ -18,7 +18,9 @@ public:
 };
 
 
-class ConductorInfos  : public juce::Component
+class ConductorInfos  : 
+    public juce::Component,
+    public Label::Listener
 {
 public:
     juce_DeclareSingleton(ConductorInfos, true);
@@ -26,7 +28,23 @@ public:
     ~ConductorInfos() override;
 
     BKEngine* engine = nullptr;
-    TextEditor targetId;
+
+    Label currentCueName;
+    Label currentCueId;
+    Label currentCueText;
+    Label commands;
+    Label nextCueGo;
+    Label nextCueName;
+
+    TextButton displayBtn;
+    int displayMode = 0;
+
+    Label upLabel;
+    Label downLabel;
+    Label ltpLabel;
+    Label fadeLabel;
+    Label delayLabel;
+
     FloatSliderUI* currentFade = nullptr;
 
     FloatSliderUI* nextHTPInDelay = nullptr;
@@ -40,8 +58,14 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    void updateStyle();
     void linkFadeSlider();
-    void linkSlidersTimings();
+    void updateContent();
+
+    void updateDisplayBtn();
+
+    void labelTextChanged(Label* l) override;
+
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConductorInfos)

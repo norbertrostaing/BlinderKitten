@@ -354,8 +354,8 @@ StringArray Command::getCommandAsTexts(bool useNames) {
 	for (int i = 0; i < selection.items.size(); i++) {
 		CommandSelection* s = selection.items[i];
 		currentUserSelection = s;
-		if (s->plusOrMinus->getValue() == "-" || words.size() > 0) {
-			words.add(s->plusOrMinus->getValueData());
+		if (s->plusOrMinus->getValueKey() == "-" || words.size() > 0) {
+			words.add(s->plusOrMinus->getValueKey());
 			lastTarget = "selectionPlusOrMinus";
 			userCantPress();
 			userCanPressSelectionType = true;

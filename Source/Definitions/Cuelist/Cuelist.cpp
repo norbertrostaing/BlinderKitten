@@ -1296,7 +1296,7 @@ void Cuelist::fillTexts() {
 	}
 	if (id->intValue() == ConductorInfos::getInstance()->engine->conductorCuelistId->intValue()) {
 		MessageManager::callAsync([](){
-			ConductorInfos::getInstance()->linkSlidersTimings();
+			ConductorInfos::getInstance()->updateContent();
 			ConductorInfos::getInstance()->repaint();
 			});
 	}

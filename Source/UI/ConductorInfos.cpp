@@ -17,7 +17,69 @@ juce_ImplementSingleton(ConductorInfos);
 
 ConductorInfos::ConductorInfos()
 {
-    //addAndMakeVisible(targetId);
+    addAndMakeVisible(displayBtn);
+    addAndMakeVisible(currentCueName);
+    addAndMakeVisible(currentCueId);
+    addAndMakeVisible(currentCueText);
+    addAndMakeVisible(nextCueGo);
+    addAndMakeVisible(nextCueName);
+    addAndMakeVisible(commands);
+
+    currentCueName.addListener(this);
+    currentCueId.addListener(this);
+    currentCueText.addListener(this);
+    nextCueGo.addListener(this);
+    nextCueName.addListener(this);
+
+    displayBtn.onClick = [this](){
+        displayMode = (displayMode +1) % 3;
+        updateDisplayBtn();
+        resized();
+    };
+
+    currentCueText.onEditorShow = [this](){
+        currentCueText.getCurrentTextEditor()->setCaretVisible(true);
+        currentCueText.getCurrentTextEditor()->setMultiLine(true);
+        currentCueText.getCurrentTextEditor()->setShiftReturnKeyStartsNewLine(true);
+        };
+
+    addAndMakeVisible(upLabel);
+    addAndMakeVisible(downLabel);
+    addAndMakeVisible(ltpLabel);
+    addAndMakeVisible(fadeLabel);
+    addAndMakeVisible(delayLabel);
+
+    displayBtn.setButtonText("Text");
+
+    currentCueName.setText("", juce::NotificationType::dontSendNotification);
+    currentCueId.setText("", juce::NotificationType::dontSendNotification);
+    currentCueText.setText("", juce::NotificationType::dontSendNotification);
+    nextCueGo.setText("", juce::NotificationType::dontSendNotification);
+    nextCueName.setText("", juce::NotificationType::dontSendNotification);
+    upLabel.setText("up", juce::NotificationType::dontSendNotification);
+    downLabel.setText("down", juce::NotificationType::dontSendNotification);
+    ltpLabel.setText("ltp", juce::NotificationType::dontSendNotification);
+    fadeLabel.setText("fade", juce::NotificationType::dontSendNotification);
+    delayLabel.setText("delay", juce::NotificationType::dontSendNotification);
+
+    currentCueName.setJustificationType(juce::Justification::centred);
+    currentCueId.setJustificationType(juce::Justification::centred);
+    currentCueText.setJustificationType(juce::Justification::centred);
+    nextCueGo.setJustificationType(juce::Justification::centred);
+    nextCueName.setJustificationType(juce::Justification::centred);
+    commands.setJustificationType(juce::Justification::centred);
+
+    upLabel.setJustificationType(juce::Justification::centredRight);
+    downLabel.setJustificationType(juce::Justification::centredRight);
+    ltpLabel.setJustificationType(juce::Justification::centred);
+    fadeLabel.setJustificationType(juce::Justification::centred);
+    delayLabel.setJustificationType(juce::Justification::centred);
+
+    currentCueName.setEditable(false, true, false);
+    currentCueText.setEditable(false, true, false);
+    nextCueGo.setEditable(false, true, false);
+    nextCueName.setEditable(false, true, false);
+
 }
 
 ConductorInfos::~ConductorInfos()
@@ -26,11 +88,25 @@ ConductorInfos::~ConductorInfos()
         removeChildComponent(currentFade);
         delete currentFade;
     }
+    if (nextHTPInDelay != nullptr) { removeChildComponent(nextHTPInDelay); delete nextHTPInDelay; }
+    nextHTPInDelay = nullptr;
+    if (nextHTPOutDelay != nullptr) { removeChildComponent(nextHTPOutDelay); delete nextHTPOutDelay; }
+    nextHTPOutDelay = nullptr;
+    if (nextLTPDelay != nullptr) { removeChildComponent(nextLTPDelay); delete nextLTPDelay; }
+    nextLTPDelay = nullptr;
+    if (nextHTPInFade != nullptr) { removeChildComponent(nextHTPInFade); delete nextHTPInFade; }
+    nextHTPInFade = nullptr;
+    if (nextHTPOutFade != nullptr) { removeChildComponent(nextHTPOutFade); delete nextHTPOutFade; }
+    nextHTPOutFade = nullptr;
+    if (nextLTPFade != nullptr) { removeChildComponent(nextLTPFade); delete nextLTPFade; }
+    nextLTPFade = nullptr;
+
 }
 
 void ConductorInfos::paint (juce::Graphics& g)
 {
     if (engine == nullptr) { return; }
+    if (engine != nullptr) { return; }
     g.fillAll(juce::Colours::black);   // clear the background
 
     int targetCueId = engine->conductorCuelistId->intValue();
@@ -52,7 +128,6 @@ void ConductorInfos::paint (juce::Graphics& g)
     float nextCueHeight = textSize +10;
     float nextCueGoHeight = titleSize +10;
     float currentCueTextHeight = h - currentCueHeight - nextCueHeight - nextCueGoHeight;
-
 
     if (currentCueTextHeight < currentCueHeight) {
         currentCueHeight = h/4;
@@ -125,7 +200,6 @@ void ConductorInfos::resized()
     float nextCueGoHeight = titleSize + 10;
     float currentCueTextHeight = h - currentCueHeight - nextCueHeight - nextCueGoHeight;
 
-
     if (currentCueTextHeight < currentCueHeight) {
         currentCueHeight = h / 4;
         nextCueHeight = h / 4;
@@ -138,14 +212,40 @@ void ConductorInfos::resized()
     int timeW = (w/3)/4;
     int timeH = timingHeight / 3;
 
-    if (h > w) { // portrait
-        int s = jmin(int(w-70), 200);
-        s = jmax(100,s);
-        targetId.setBounds(10, 0, s, s);
+    int idW = titleSize*2;
+
+    displayBtn.setBounds(w-idW, 0, idW, 20);
+    currentCueId.setBounds(0, 0, idW, floor(currentCueHeight));
+    currentCueName.setBounds(idW, 0, floor(w-(2*idW)), floor(currentCueHeight));
+    nextCueGo.setBounds(0, floor(currentCueHeight + currentCueTextHeight), floor(2 * w/3), floor(nextCueHeight));
+    nextCueName.setBounds(0, floor(h - nextCueHeight), floor(2 * w/3), floor(nextCueHeight));
+
+    if (displayMode == 0) {
+        currentCueText.setVisible(true); 
+        currentCueText.setBounds(0, floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
+        commands.setVisible(false); 
+        commands.setBounds(0, 0, 0, 0);
     }
-    else {
-        targetId.setBounds(0, 0, h, h);
+    else if (displayMode == 1) {
+        currentCueText.setVisible(false); 
+        currentCueText.setBounds(0, 0, 0, 0);
+        commands.setVisible(true); 
+        commands.setBounds(0, floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
     }
+    else if (displayMode == 2) {
+        currentCueText.setVisible(true); 
+        currentCueText.setBounds(0, floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
+        commands.setVisible(true); 
+        commands.setBounds(floor(w / 2), floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
+    }
+
+
+    upLabel.setBounds(w - (3 * timeW), h - (3 * timeH), timeW, timeH);
+    downLabel.setBounds(w - (2 * timeW), h - (3 * timeH), timeW, timeH);
+    ltpLabel.setBounds(w - (1 * timeW), h - (3 * timeH), timeW, timeH);
+    delayLabel.setBounds(w - (4 * timeW), h - (2 * timeH), timeW, timeH);
+    fadeLabel.setBounds(w - (4 * timeW), h - (1 * timeH), timeW, timeH);
+
 
     if (currentFade != nullptr) { currentFade->setBounds(0, h , w, 20); }
     if (nextHTPInDelay != nullptr) { nextHTPInDelay->setBounds(w - (3 * timeW), h - (2 * timeH), timeW, timeH); }
@@ -154,6 +254,35 @@ void ConductorInfos::resized()
     if (nextHTPInFade != nullptr) { nextHTPInFade->setBounds(w - (3 * timeW), h - (1 * timeH), timeW, timeH); }
     if (nextHTPOutFade != nullptr) { nextHTPOutFade->setBounds(w - (2 * timeW), h - (1 * timeH), timeW, timeH); }
     if (nextLTPFade != nullptr) { nextLTPFade->setBounds(w - (1 * timeW), h - (1 * timeH), timeW, timeH); }
+}
+
+void ConductorInfos::updateStyle()
+{
+    Colour curr = engine->conductorCurrentCueColor->getColor();
+    Colour next = engine->conductorNextCueColor->getColor();
+    currentCueId.setColour(juce::Label::ColourIds::textColourId, curr);
+    currentCueName.setColour(juce::Label::ColourIds::textColourId, curr);
+    currentCueText.setColour(juce::Label::ColourIds::textColourId, curr);
+    commands.setColour(juce::Label::ColourIds::textColourId, next);
+    nextCueName.setColour(juce::Label::ColourIds::textColourId, next);
+    nextCueGo.setColour(juce::Label::ColourIds::textColourId, next);
+    upLabel.setColour(juce::Label::ColourIds::textColourId, next);
+    downLabel.setColour(juce::Label::ColourIds::textColourId, next);
+    ltpLabel.setColour(juce::Label::ColourIds::textColourId, next);
+    delayLabel.setColour(juce::Label::ColourIds::textColourId, next);
+    fadeLabel.setColour(juce::Label::ColourIds::textColourId, next);
+
+    float textSize = engine->conductorTextSize->floatValue();
+    float titleSize = engine->conductorTitleSize->floatValue();
+
+    currentCueId.setFont(Font(titleSize, 0));
+    currentCueName.setFont(Font(titleSize, 0));
+    currentCueText.setFont(Font(textSize, 0));
+    nextCueGo.setFont(Font(titleSize, 0));
+    nextCueName.setFont(Font(textSize, 0));
+    commands.setFont(Font(textSize, 0));
+
+
 }
 
 void ConductorInfos::linkFadeSlider()
@@ -182,7 +311,7 @@ void ConductorInfos::linkFadeSlider()
     resized();
 }
 
-void ConductorInfos::linkSlidersTimings()
+void ConductorInfos::updateContent()
 {
     if (nextHTPInDelay != nullptr) { removeChildComponent(nextHTPInDelay); delete nextHTPInDelay; }
     nextHTPInDelay = nullptr;
@@ -200,8 +329,20 @@ void ConductorInfos::linkSlidersTimings()
     int targetCueId = engine->conductorCuelistId->intValue();
     Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
     if (target == nullptr) {return;}
+    Cue* currentCue = target->cueA;
     Cue* nextCue = target->getNextCue();
-    if (nextCue == nullptr) {return;}
+
+    if (currentCue != nullptr) {
+        currentCueId.setText(currentCue->id->stringValue(), juce::NotificationType::dontSendNotification);
+        currentCueName.setText(currentCue->niceName, juce::NotificationType::dontSendNotification);
+        currentCueText.setText(currentCue->cueText->stringValue(), juce::NotificationType::dontSendNotification);
+    }
+
+    if (nextCue == nullptr) { return; }
+
+    nextCueGo.setText(nextCue->goText->stringValue(), juce::NotificationType::dontSendNotification);
+    nextCueName.setText(nextCue->niceName, juce::NotificationType::dontSendNotification);
+    commands.setText("Next cue : \n" + nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
 
     nextHTPInDelay = nextCue->htpInDelay->createSlider();
     nextHTPOutDelay = nextCue->htpOutDelay->createSlider();
@@ -231,4 +372,25 @@ void ConductorInfos::linkSlidersTimings()
     addAndMakeVisible(nextHTPOutFade);
     addAndMakeVisible(nextLTPFade);
     resized();
+}
+
+void ConductorInfos::updateDisplayBtn()
+{
+    if (displayMode == 0) { displayBtn.setButtonText("Text"); }
+    else if (displayMode == 1) { displayBtn.setButtonText("Commands"); }
+    else if (displayMode == 2) { displayBtn.setButtonText("Both"); }
+}
+
+void ConductorInfos::labelTextChanged(Label* l)
+{
+    int targetCueId = engine->conductorCuelistId->intValue();
+    Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+    if (target == nullptr) { return; }
+    Cue* currentCue = target->cueA;
+    Cue* nextCue = target->getNextCue();
+
+    if (nextCue != nullptr && l == &nextCueName)  { nextCue->setNiceName(l->getText()); }
+    if (nextCue != nullptr && l == &nextCueGo) { nextCue->goText->setValue(l->getText()); }
+    if (currentCue != nullptr && l == &currentCueName) { currentCue->setNiceName(l->getText()); }
+    if (currentCue != nullptr && l == &currentCueText) { currentCue->cueText->setValue(l->getText()); }
 }
