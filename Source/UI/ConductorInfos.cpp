@@ -25,6 +25,11 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(nextCueName);
     addAndMakeVisible(commands);
 
+    addAndMakeVisible(inspectPrevBtn);
+    addAndMakeVisible(inspectCurrBtn);
+    addAndMakeVisible(inspectNextBtn);
+    addAndMakeVisible(inspectCuelistBtn);
+
     currentCueName.addListener(this);
     currentCueId.addListener(this);
     currentCueText.addListener(this);
@@ -43,6 +48,11 @@ ConductorInfos::ConductorInfos()
         currentCueText.getCurrentTextEditor()->setShiftReturnKeyStartsNewLine(true);
         };
 
+    inspectPrevBtn.onClick = [this]() {inspect(-1); };
+    inspectCurrBtn.onClick = [this]() {inspect(0); };
+    inspectNextBtn.onClick = [this]() {inspect(1); };
+    inspectCuelistBtn.onClick = [this]() {inspectCuelist(); };
+
     addAndMakeVisible(upLabel);
     addAndMakeVisible(downLabel);
     addAndMakeVisible(ltpLabel);
@@ -50,6 +60,10 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(delayLabel);
 
     displayBtn.setButtonText("Text");
+    inspectPrevBtn.setButtonText("Inspect Prev.");
+    inspectCurrBtn.setButtonText("Inspect Curr.");
+    inspectNextBtn.setButtonText("Inspect Next");
+    inspectCuelistBtn.setButtonText("Inspect Cuelist");
 
     currentCueName.setText("", juce::NotificationType::dontSendNotification);
     currentCueId.setText("", juce::NotificationType::dontSendNotification);
@@ -193,7 +207,7 @@ void ConductorInfos::resized()
     float titleSize = engine->conductorTitleSize->floatValue();
 
     float w = getLocalBounds().getWidth();
-    float h = getLocalBounds().getHeight() - 20;
+    float h = getLocalBounds().getHeight() - 40;
 
     float currentCueHeight = titleSize + 10;
     float nextCueHeight = textSize + 10;
@@ -203,7 +217,7 @@ void ConductorInfos::resized()
     if (currentCueTextHeight < currentCueHeight) {
         currentCueHeight = h / 4;
         nextCueHeight = h / 4;
-        nextCueGoHeight = h / 4;
+        nextCueGoHeight = h / 4; 
         currentCueTextHeight = h / 4;
     }
 
@@ -212,17 +226,22 @@ void ConductorInfos::resized()
     int timeW = (w/3)/4;
     int timeH = timingHeight / 3;
 
-    int idW = titleSize*2;
+    int idW = titleSize*3;
 
-    displayBtn.setBounds(w-idW, 0, idW, 20);
-    currentCueId.setBounds(0, 0, idW, floor(currentCueHeight));
-    currentCueName.setBounds(idW, 0, floor(w-(2*idW)), floor(currentCueHeight));
-    nextCueGo.setBounds(0, floor(currentCueHeight + currentCueTextHeight), floor(2 * w/3), floor(nextCueHeight));
+    displayBtn.setBounds(w * 0 / 5, 0, w / 5, 20);
+    inspectPrevBtn.setBounds(w * 1 / 5, 0, w / 5, 20);
+    inspectCurrBtn.setBounds(w * 2 / 5, 0, w / 5, 20);
+    inspectNextBtn.setBounds(w * 3 / 5, 0, w / 5, 20);
+    inspectCuelistBtn.setBounds(w * 4 / 5, 0, w / 5, 20);
+
+    currentCueId.setBounds(0, 20, idW, floor(currentCueHeight));
+    currentCueName.setBounds(idW, 20, w-idW, floor(currentCueHeight));
+    nextCueGo.setBounds(0, 20+floor(currentCueHeight + currentCueTextHeight), floor(2 * w/3), floor(nextCueHeight));
     nextCueName.setBounds(0, floor(h - nextCueHeight), floor(2 * w/3), floor(nextCueHeight));
 
     if (displayMode == 0) {
         currentCueText.setVisible(true); 
-        currentCueText.setBounds(0, floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
+        currentCueText.setBounds(0, 20+floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
         commands.setVisible(false); 
         commands.setBounds(0, 0, 0, 0);
     }
@@ -230,13 +249,13 @@ void ConductorInfos::resized()
         currentCueText.setVisible(false); 
         currentCueText.setBounds(0, 0, 0, 0);
         commands.setVisible(true); 
-        commands.setBounds(0, floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
+        commands.setBounds(0, 20+floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
     }
     else if (displayMode == 2) {
         currentCueText.setVisible(true); 
-        currentCueText.setBounds(0, floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
+        currentCueText.setBounds(0, 20+floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
         commands.setVisible(true); 
-        commands.setBounds(floor(w / 2), floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
+        commands.setBounds(floor(w / 2), 20+floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
     }
 
 
@@ -393,4 +412,28 @@ void ConductorInfos::labelTextChanged(Label* l)
     if (nextCue != nullptr && l == &nextCueGo) { nextCue->goText->setValue(l->getText()); }
     if (currentCue != nullptr && l == &currentCueName) { currentCue->setNiceName(l->getText()); }
     if (currentCue != nullptr && l == &currentCueText) { currentCue->cueText->setValue(l->getText()); }
+}
+
+void ConductorInfos::inspect(int delta)
+{
+    int targetCueId = engine->conductorCuelistId->intValue();
+    Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+    if (target == nullptr) { return; }
+    Cue* currentCue = target->cueA;
+    int index = -1;
+    if (currentCue != nullptr) {
+        index = target->cues.items.indexOf(currentCue);
+    }
+    index += delta;
+    if (index >= 0 && index < target->cues.items.size()) {
+        target->cues.items[index]->selectThis();
+    }
+}
+
+void ConductorInfos::inspectCuelist()
+{
+    int targetCueId = engine->conductorCuelistId->intValue();
+    Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+    if (target == nullptr) { return; }
+    target->selectThis();
 }

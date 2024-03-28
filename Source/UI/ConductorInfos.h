@@ -38,6 +38,10 @@ public:
 
     TextButton displayBtn;
     int displayMode = 0;
+    TextButton inspectPrevBtn;
+    TextButton inspectCurrBtn;
+    TextButton inspectNextBtn;
+    TextButton inspectCuelistBtn;
 
     Label upLabel;
     Label downLabel;
@@ -65,6 +69,9 @@ public:
     void updateDisplayBtn();
 
     void labelTextChanged(Label* l) override;
+
+    void inspect(int delta);
+    void inspectCuelist();
 
 
 private:
