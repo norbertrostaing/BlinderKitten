@@ -117,6 +117,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Reset random Seed", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_RANDOMSEED));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Select Window", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SELECTWINDOW));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Save", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SAVE));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Load from active cues", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_LOADFROMACTIVECUES));
 
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Select", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_SELECT));

@@ -153,6 +153,13 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
             });
         }
         break;
+
+    case IP_LOADFROMACTIVECUES:
+        if (val > 0) {
+            Brain::getInstance()->loadFromActiveCues();
+        }
+        break;
+
     }
 
 }

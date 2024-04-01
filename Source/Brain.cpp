@@ -1202,3 +1202,54 @@ void Brain::showWindow(String name)
         }
     }
 }
+
+void Brain::loadFromActiveCues() 
+{
+    const MessageManagerLock mmlock;
+    Programmer *p = UserInputManager::getInstance()->getProgrammer(false);
+    if (p != nullptr) {
+        p->clearAll();
+        
+        for (auto *cl: cuelists) {
+
+            if (cl != nullptr && (bool)cl->isCuelistOn->getValue() && cl->cueA != nullptr) {
+                auto *c = cl->cueA;
+
+                /* Go trough all the commands of all active cues 
+                   This is not perfect, as it doesn't take in account timings
+                   but only HTP level of the CueList */
+                auto commandsSize = c->commands.items.size();
+                for (int i = 0; i < commandsSize; i++) {
+                    Command* com = p->commands.addItem();
+                    Command* cueCommand = c->commands.items[i];
+                    if (cueCommand != nullptr) {
+                        com->loadJSONData(cueCommand->getJSONData());
+
+                        auto valuesSize = com->values.items.size();
+                        for (int j = 0; j < valuesSize; j++) {
+                            auto &valueItem = *com->values.items[j];
+                            ChannelType* param = dynamic_cast<ChannelType*>(valueItem.channelType->targetContainer.get());
+                            /* Preset are not yet supported 
+                               Yet maybe not the right way to do that */
+                            if (valueItem.presetOrValue->getValue() == "value" &&
+                                param->priority->getValue() == "HTP" &&
+                                !valueItem.HTPOverride->getValue()) {
+                                double htpLevelValue = static_cast<double>(cl->HTPLevel->getValue());
+
+                                valueItem.valueFrom->setValue(static_cast<double>(valueItem.valueFrom->getValue()) * htpLevelValue);
+                                valueItem.valueTo->setValue(static_cast<double>(valueItem.valueTo->getValue()) * htpLevelValue);
+
+                                const juce::String valueFromStr = static_cast<juce::String>(valueItem.valueFrom->getValue());
+                                const juce::String htpLevelStr = static_cast<juce::String>(htpLevelValue);
+                                DBG("value : " + valueFromStr + "\nHTPLevel : " + htpLevelStr);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        p->selectNextCommand();
+        UserInputManager::getInstance()->programmerCommandStructureChanged(p);
+    }
+}
+

@@ -171,4 +171,6 @@ public:
     void resetRandomSeed(int seed);
 
     void showWindow(String name);
+
+    void loadFromActiveCues();
 };
