@@ -375,7 +375,7 @@ void BKEngine::clearInternal()
 	if (currentDMXChannelView != nullptr) {
 		currentDMXChannelView->setCurrentInterface(nullptr);
 	}
-
+	Brain::getInstance()->isClearing = true;
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();
 	TrackerManager::getInstance()->clear();
@@ -406,6 +406,7 @@ void BKEngine::clearInternal()
 	EffectGridView::getInstance()->updateCells();
 	CarouselGridView::getInstance()->updateCells();
 	MapperGridView::getInstance()->updateCells();
+	Brain::getInstance()->isClearing = false;
 	Brain::getInstance()->clear();
 	Brain::getInstance()->startThread();
 	Brain::getInstance()->skipLoop = false;

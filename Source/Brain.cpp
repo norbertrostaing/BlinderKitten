@@ -37,6 +37,7 @@ Brain :: ~Brain() {
 
 void Brain::clear()
 {
+    isClearing = true;
     ScopedLock lock(usingCollections);
     subFixtures.clear();
     groups.clear();
@@ -64,6 +65,7 @@ void Brain::clear()
     mapperPoolUpdating.clear();
     mapperPoolWaiting.clear();
     swoppableChannels.clear();
+    isClearing = false;
 }
 
 void Brain::clearUpdates()

@@ -13,6 +13,9 @@
 
 juce_ImplementSingleton(FixtureTypeManager);
 
+#include "Brain.h"
+#include "UserInputManager.h"
+
 
 FixtureTypeManager::FixtureTypeManager() :
     BaseManager("FixtureType")
@@ -36,6 +39,9 @@ void FixtureTypeManager::addItemInternal(FixtureType* o, var data)
 
 void FixtureTypeManager::removeItemInternal(FixtureType* o)
 {
+    if (!Brain::getInstance()->isClearing && !Brain::getInstance()->loadingIsRunning) {
+        UserInputManager::getInstance()->processInput("ClearAll");
+    }
     // o->removeObjectListener(this);
 }
 

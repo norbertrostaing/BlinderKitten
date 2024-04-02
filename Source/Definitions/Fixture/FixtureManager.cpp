@@ -3,6 +3,7 @@
 #include "UI/GridView/FixtureGridView.h"
 #include "Definitions/FixtureType/FixtureTypeChannel.h"
 #include "Definitions/FixtureType/FixtureTypeVirtualChannel.h"
+#include "UserInputManager.h"
 #include "Brain.h"
 
 juce_ImplementSingleton(FixtureManager);
@@ -34,6 +35,9 @@ void FixtureManager::addItemInternal(Fixture* o, var data)
 void FixtureManager::removeItemInternal(Fixture* o)
 {
     // o->removeObjectListener(this);
+    if (!Brain::getInstance()->isClearing && !Brain::getInstance()->loadingIsRunning) {
+        UserInputManager::getInstance()->processInput("ClearAll");
+    }
     FixtureGridView::getInstance()->updateCells();
 
 }
