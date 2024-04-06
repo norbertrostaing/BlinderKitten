@@ -91,6 +91,8 @@ public:
     void updateEncodersValues();
     void updateCommandLine();
     void mouseDoubleClick(const MouseEvent &e);
+    void clearFilters();
+    void toggleFilter(ChannelFamily* cf, bool forceSolo = false);
 
     void offsetEncoders(int n);
 

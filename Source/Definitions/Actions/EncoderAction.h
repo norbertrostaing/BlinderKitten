@@ -27,6 +27,7 @@ public:
     IntParameter* selectionDelta;
     IntParameter* filterNumber;
     TargetParameter* filterFamily;
+    BoolParameter* soloMode;
 
 
     void triggerInternal() override;

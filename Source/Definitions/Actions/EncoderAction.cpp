@@ -29,11 +29,13 @@ EncoderAction::EncoderAction(var params) :
     }
     else if (actionType == ENC_TOGGLEFILTERNUM) {
         filterNumber = addIntParameter("Filter", "Wich filter do you want to toggle ?", 1, 1);
+        soloMode = addBoolParameter("Solo", "Disable other filters whene selected",false);
     }
     else if (actionType == ENC_TOGGLEFILTERFAMILY) {
         filterFamily = addTargetParameter("Family", "Wich filter do you want to toggle ?", ChannelFamilyManager::getInstance());
         filterFamily->targetType = TargetParameter::CONTAINER;
         filterFamily->maxDefaultSearchLevel = 0;
+        soloMode = addBoolParameter("Solo", "Disable other filters whene selected", false);
     }
 }
 
@@ -86,11 +88,13 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
 
     case ENC_TOGGLEFILTERNUM:
         if (val > 0) {
-            int i;
-            i = filterNumber->intValue() - 1;
-            if (i < Encoders::getInstance()->filterBtns.size()) {
-                Encoders::getInstance()->filterBtns[i]->triggerClick();
+            int i = filterNumber->intValue() - 1;
+            if (i < Encoders::getInstance()->availableFilters.size()) {
+                Encoders::getInstance()->toggleFilter(Encoders::getInstance()->availableFilters[i], soloMode->boolValue());
             }
+            //if (i < Encoders::getInstance()->filterBtns.size()) {
+            //    Encoders::getInstance()->filterBtns[i]->triggerClick();
+            //}
         }
         
     break;
@@ -98,13 +102,7 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
     case ENC_TOGGLEFILTERFAMILY:
         if (val > 0) {
             ChannelFamily* cf = dynamic_cast<ChannelFamily*>(filterFamily->targetContainer.get());
-            if (cf != nullptr) {
-                for (int i = 0; i < Encoders::getInstance()->filterBtns.size(); i++) {
-                    if (Encoders::getInstance()->filterBtns[i]->getButtonText() == cf->niceName) {
-                        Encoders::getInstance()->filterBtns[i]->triggerClick();
-                    }
-                }
-            }
+            Encoders::getInstance()->toggleFilter(cf, soloMode->boolValue());
         }
         break;
 

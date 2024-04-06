@@ -572,6 +572,28 @@ void Encoders::mouseDoubleClick(const MouseEvent& e)
 
 }
 
+void Encoders::clearFilters()
+{
+    selectedFilters.clear();
+    updateChannels();
+}
+
+void Encoders::toggleFilter(ChannelFamily* cf, bool forceSolo)
+{
+    if (availableFilters.indexOf(cf) == -1) return;
+    bool newState = selectedFilters.indexOf(cf) == -1;
+    if (forceSolo) {
+        selectedFilters.clear();
+    }
+    if (newState) {
+        selectedFilters.add(cf);
+    }
+    else {
+        selectedFilters.removeAllInstancesOf(cf);
+    }
+    MessageManager::callAsync([this](){ updateChannels();});
+}
+
 void Encoders::offsetEncoders(int n)
 {
     encodersOffset = jmax(0, encodersOffset + n);
