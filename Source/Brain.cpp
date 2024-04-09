@@ -1204,3 +1204,39 @@ void Brain::showWindow(String name)
         }
     }
 }
+
+void Brain::loadRunningCuelistsInProgrammer()
+{
+    loadRunningCuelistsInProgrammer(UserInputManager::getInstance()->getProgrammer(true));
+}
+
+void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
+{
+    Array<std::shared_ptr<Command>> activeCommands;
+    for (Fixture* f : fixtures) 
+    {
+        for (SubFixture* sf : f->subFixtures)
+        {
+            for (SubFixtureChannel* sfc : sf->channelsMap)
+            {
+                if (sfc->activeCommand != nullptr)
+                {
+                    activeCommands.addIfNotAlreadyThere(sfc->activeCommand);
+                }
+            }
+        }
+    }
+
+    MessageManager::callAsync([this, activeCommands]()
+    {
+        Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
+        p->commands.clear();
+        for (std::shared_ptr<Command> cmd : activeCommands)
+        {
+            if (cmd != nullptr) {
+                p->commands.addItemFromData(cmd->getJSONData(), false);
+            }
+        }
+    });
+    
+}

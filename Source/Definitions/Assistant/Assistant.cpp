@@ -128,8 +128,9 @@ Assistant::Assistant() :
     killCuelistsBtn = controlsCC.addTrigger("Kill all cuelists", "");
     stopEffectsBtn = controlsCC.addTrigger("Stop all effects", "");
     stopCarouselsBtn = controlsCC.addTrigger("Stop all carousels", "");
-    randomSeed = controlsCC.addIntParameter("Random Seed", "", 0, 0);
-    resetRandomBtn = controlsCC.addTrigger("Reset Random Seed", "");
+    randomSeed = controlsCC.addIntParameter("Random seed", "", 0, 0);
+    resetRandomBtn = controlsCC.addTrigger("Reset random seed", "");
+    loadRunningCuelistsBtn = controlsCC.addTrigger("Load all cuelists", "");
 
     updateDisplay();
 }
@@ -239,6 +240,9 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
     }
     else if (c == resetRandomBtn) {
         Brain::getInstance()->resetRandomSeed(randomSeed->getValue());
+    }
+    else if (c == loadRunningCuelistsBtn) {
+        Brain::getInstance()->loadRunningCuelistsInProgrammer();
     }
 }
 

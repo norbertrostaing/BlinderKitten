@@ -982,11 +982,12 @@ void Cuelist::autoLoadCueB() {
 	fillTexts();
 }
 
-float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flashValues) {
+float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool& isApplied, bool flashValues) {
 	float val = currentVal;
 	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
 	
 	bool keepUpdate = false;
+	isApplied = false;
 
 	float localValue = 0;
 	std::shared_ptr<ChannelValue> cv;
@@ -1068,11 +1069,13 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	cv->value = localValue;
 
 	if (HTP) {
+		isApplied = localValue >= val;
 		val = jmax(val, localValue);
 	}
 	else {
 		// float ratio = LTPLevel->getValue();
 		// val = jmap(ratio,valueFrom,localValue);
+		isApplied = true;
 		val = localValue;
 	}
 
@@ -1080,18 +1083,6 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		Brain::getInstance()->pleaseUpdate(fc);
 	}
 	return val;
-}
-
-void Cuelist::cleanActiveValues() {
-	Array<SubFixtureChannel*> temp;
-	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		if (it.getValue()->value == -1) {
-			temp.add(it.getKey());
-		}
-	}
-	for (int i = 0; i < temp.size(); i++) {
-		activeValues.remove(temp[i]);
-	}
 }
 
 void Cuelist::insertProgCueBefore(Cue* c)

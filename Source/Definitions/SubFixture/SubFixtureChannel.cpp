@@ -22,6 +22,7 @@
 #include "../Tracker/Tracker.h"
 #include "../ChannelValue.h"
 #include "UI/InputPanel.h"
+#include "Command/Command.h"
 
 SubFixtureChannel::SubFixtureChannel():
 	virtualChildren()
@@ -171,6 +172,7 @@ void SubFixtureChannel::updateVal(double now) {
 	layers.sort();
 	
 	bool checkSwop = Brain::getInstance()->isSwopping && swopKillable;
+	activeCommand = nullptr;
 
 	for (int l = 0; l< layers.size(); l++)
 		{
@@ -182,10 +184,14 @@ void SubFixtureChannel::updateVal(double now) {
 			Cuelist* c = cuelistStack.getReference(i);
 			if ((int)c->layerId->getValue() == currentLayer) {
 				if (!checkSwop || c->isSwopping) {
-					newValue = c->applyToChannel(this, newValue, now);
+					bool isApplied;
+					newValue = c->applyToChannel(this, newValue, now, isApplied);
 					std::shared_ptr<ChannelValue> cv = c->activeValues.getReference(this);
-					if (cv != nullptr && cv->isEnded) {
-						overWritten = i - 1;
+					if (cv != nullptr && isApplied) {
+						activeCommand = cv->parentCommand;
+						if (cv->isEnded) {
+							overWritten = i - 1;
+						}
 					}
 				}
 			}
@@ -216,15 +222,15 @@ void SubFixtureChannel::updateVal(double now) {
 				}
 			}
 
-			for (int i = 0; i < carouselStack.size(); i++) {
-				if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
-					newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
-				}
-			}
-
 			for (int i = 0; i < trackerStack.size(); i++) {
 				if ((int)trackerStack.getReference(i)->layerId->getValue() == currentLayer) {
 					newValue = trackerStack.getReference(i)->applyToChannel(this, newValue, now);
+				}
+			}
+
+			for (int i = 0; i < carouselStack.size(); i++) {
+				if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
+					newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
 				}
 			}
 

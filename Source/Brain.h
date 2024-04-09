@@ -172,4 +172,7 @@ public:
     void resetRandomSeed(int seed);
 
     void showWindow(String name);
+
+    void loadRunningCuelistsInProgrammer();
+    void loadRunningCuelistsInProgrammer(Programmer* p);
 };
