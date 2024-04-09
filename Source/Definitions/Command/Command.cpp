@@ -223,7 +223,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						}
 						channelToCommandValue.set(fchan, cv);
 						std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);
-						finalValue->parentCommand.reset(this);
+						finalValue->parentCommand = this;
 						float val = valueFrom;
 						if (cv->thru->getValue() && SubFixtures.size() > 1) {
 							float position = normalizedPosition;

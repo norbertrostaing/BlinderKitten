@@ -1212,7 +1212,7 @@ void Brain::loadRunningCuelistsInProgrammer()
 
 void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
 {
-    Array<std::shared_ptr<Command>> activeCommands;
+    Array<Command*> activeCommands;
     for (Fixture* f : fixtures) 
     {
         for (SubFixture* sf : f->subFixtures)
@@ -1227,16 +1227,21 @@ void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
         }
     }
 
+    if (activeCommands.size() == 0) return;
+
     MessageManager::callAsync([this, activeCommands]()
     {
         Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
         p->commands.clear();
-        for (std::shared_ptr<Command> cmd : activeCommands)
+        for (Command* cmd : activeCommands)
         {
             if (cmd != nullptr) {
                 p->commands.addItemFromData(cmd->getJSONData(), false);
             }
         }
+        p->selectCommand(activeCommands[0]);
+        UserInputManager::getInstance()->programmerCommandStructureChanged(p);
+        //UserInputManager::getInstance()->
     });
     
 }

@@ -65,7 +65,7 @@ public:
     Array<Tracker*> trackerStack;
     Array<Cuelist*> cuelistFlashStack;
 
-    std::shared_ptr<Command> activeCommand = nullptr;
+    Command* activeCommand = nullptr;
 
     void updateVal(double now);
 

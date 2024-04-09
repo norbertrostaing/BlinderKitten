@@ -10,8 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
-
-class Command;
+#include "Command/Command.h"
 
 class ChannelValue {
 public:
@@ -39,5 +38,5 @@ public:
     bool isTransitionOut = false;
     bool htpOverride = false;
 
-    std::shared_ptr<Command> parentCommand;
+    Command* parentCommand;
 };
