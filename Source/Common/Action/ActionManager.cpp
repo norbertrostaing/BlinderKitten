@@ -115,6 +115,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Stop All Effects", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_STOPFX));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Stop All Carousels", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_STOPCAR));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Reset random Seed", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_RANDOMSEED));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Load all cuelists in programmer", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_LOADALLCUELISTS));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Select Window", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SELECTWINDOW));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Save", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SAVE));
 

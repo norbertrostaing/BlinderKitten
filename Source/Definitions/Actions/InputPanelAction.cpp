@@ -131,6 +131,12 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
         }
         break;
 
+    case IP_LOADALLCUELISTS:
+        if (val > 0) {
+            Brain::getInstance()->loadRunningCuelistsInProgrammer();
+        }
+        break;
+
     case IP_SELECTWINDOW:
         if (val > 0) {
             Brain::getInstance()->showWindow(targetWindow->stringValue());

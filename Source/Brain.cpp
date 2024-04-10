@@ -1212,36 +1212,83 @@ void Brain::loadRunningCuelistsInProgrammer()
 
 void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
 {
-    Array<Command*> activeCommands;
-    for (Fixture* f : fixtures) 
-    {
-        for (SubFixture* sf : f->subFixtures)
+
+    //for (Fixture* f : fixtures) 
+    //{
+    //    for (SubFixture* sf : f->subFixtures)
+    //    {
+    //        for (SubFixtureChannel* sfc : sf->channelsMap)
+    //        {
+    //            if (sfc->activeCommand != nullptr)
+    //            {
+    //                activeCommands.addIfNotAlreadyThere(sfc->activeCommand);
+    //            }
+    //        }
+    //    }
+    //}
+
+    //if (activeCommands.size() == 0) return;
+    MessageManager::callAsync([this]()
         {
-            for (SubFixtureChannel* sfc : sf->channelsMap)
+
+        Array<Command*> activeCommands;
+        HashMap<Command*, double> htpLevel;
+        HashMap<Command*, double> ltpLevel;
+
+        for (Cuelist* c : cuelists) 
+        {
+            if (c->isCuelistOn->boolValue()) 
             {
-                if (sfc->activeCommand != nullptr)
+                c->isComputing.enter();
+                for (auto it = c->activeValues.begin(); it != c->activeValues.end(); it.next()) 
                 {
-                    activeCommands.addIfNotAlreadyThere(sfc->activeCommand);
+                    SubFixtureChannel* sfc = it.getKey();
+                    Command* com = sfc->activeCommand;
+                    if (com != nullptr && activeCommands.indexOf(com) == -1)
+                    {
+                        activeCommands.addIfNotAlreadyThere(com);
+                        htpLevel.set(com, c->HTPLevel->floatValue());
+                        ltpLevel.set(com, c->LTPLevel->floatValue());
+                    }
                 }
+                c->isComputing.exit();
             }
         }
-    }
 
-    if (activeCommands.size() == 0) return;
-
-    MessageManager::callAsync([this, activeCommands]()
-    {
         Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
+        p->currentUserCommand = nullptr;
         p->commands.clear();
         for (Command* cmd : activeCommands)
         {
-            if (cmd != nullptr) {
-                p->commands.addItemFromData(cmd->getJSONData(), false);
+            if (cmd != nullptr) 
+            {
+                Command* newCmd = p->commands.addItemFromData(cmd->getJSONData(), false);
+                for (int i = 0; i < p->commands.items.size(); i++) 
+                {
+                    for (CommandValue* cv : newCmd->values.items) 
+                    {
+                        String type = cv->presetOrValue->getValueData();
+                        if (cv->presetOrValue->getValueData() == "value") {
+                            ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+                            if (ct != nullptr) {
+                                String prio = ct->priority->getValueData();
+                                float lvl = 1.0;
+                                if (prio == "HTP") {
+                                    lvl = htpLevel.contains(cmd) ? htpLevel.getReference(cmd) : 1.0;
+                                }
+                                else {
+                                    lvl = ltpLevel.contains(cmd) ? ltpLevel.getReference(cmd) : 1.0;
+                                }
+                                cv->valueFrom->setValue(cv->valueFrom->floatValue() * lvl);
+                                cv->valueTo->setValue(cv->valueTo->floatValue() * lvl);
+                            }
+                        }
+                    }
+                }
             }
         }
         p->selectCommand(activeCommands[0]);
         UserInputManager::getInstance()->programmerCommandStructureChanged(p);
-        //UserInputManager::getInstance()->
     });
     
 }
