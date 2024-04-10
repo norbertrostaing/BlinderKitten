@@ -22,6 +22,7 @@ class Effect;
 class Carousel;
 class Mapper;
 class Tracker;
+class Command;
 
 class SubFixtureChannel{
 public:
@@ -63,6 +64,8 @@ public:
     Array<Mapper*> mapperStack;
     Array<Tracker*> trackerStack;
     Array<Cuelist*> cuelistFlashStack;
+
+    Command* activeCommand = nullptr;
 
     void updateVal(double now);
 

@@ -83,6 +83,7 @@ public:
 	Trigger* stopCarouselsBtn;
 	IntParameter* randomSeed;
 	Trigger* resetRandomBtn;
+	Trigger* loadRunningCuelistsBtn;
 
 	bool pleasePatchFixtures = false;
 	bool pleaseCreatePalette = false;

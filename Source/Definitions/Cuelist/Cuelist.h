@@ -179,8 +179,7 @@ public:
     void kill(bool forceRefreshChannels = true);
     void update();
     void autoLoadCueB();
-    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool flash = false);
-    void cleanActiveValues();
+    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool& isApplied, bool flash = false);
 
     void reorderCues();
 

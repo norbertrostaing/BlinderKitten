@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "Command/Command.h"
 
 class ChannelValue {
 public:
@@ -36,4 +37,6 @@ public:
 
     bool isTransitionOut = false;
     bool htpOverride = false;
+
+    Command* parentCommand;
 };
