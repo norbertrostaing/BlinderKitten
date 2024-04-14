@@ -1303,6 +1303,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 		if (p == conductorCuelistId) {
 			ConductorInfos::getInstance()->linkFadeSlider();
 		}
+		ConductorInfos::getInstance()->updateStyle();
 		ConductorInfos::getInstance()->resized();
 		ConductorInfos::getInstance()->repaint();
 	} else if (p == encodersNumber) {
