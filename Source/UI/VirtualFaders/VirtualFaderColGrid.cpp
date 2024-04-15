@@ -515,7 +515,7 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
                 bool isAbove = buttonIsAbove.getReference(t);
                 int index = buttonToIndex.getReference(t);
                 p->processUserInput("virtualfaderelement");
-                p->processUserInput(String(index));
+                p->processUserInput(String(index+1));
                 if (p->userCanPressGo) {
                     p->processUserInput("enter");
                 }
@@ -567,7 +567,7 @@ void VirtualFaderColGrid::sliderClicked(Slider* s)
                 }
             }
             else {
-                int index = sliderToIndex.getReference(s);
+                int index = sliderToIndex.getReference(s)+1;
                 if (p->cliParamAType->getValueData().toString() != "virtualfaderelement" || p->cliParamAId->intValue() != index) {
                     p->processUserInput("virtualfaderelement");
                     p->processUserInput(String(index));
@@ -631,12 +631,14 @@ void VirtualFaderColGrid::copyCol(int idFrom, int idTo) {
 
 void VirtualFaderColGrid::editElmt(int id)
 {
+    id--;
     int col = id / (1 + nRotaries+nAbove+nBelow);
     editCol(col+1);
 }
 
 void VirtualFaderColGrid::deleteElmt(int id)
 {
+    id--;
     if (indexToButton.contains(id) && indexToButton.getReference(id) != nullptr) {
         TextButton* b = indexToButton.getReference(id);
         if (buttonToVFB.contains(b)) {
@@ -659,6 +661,8 @@ void VirtualFaderColGrid::deleteElmt(int id)
 
 void VirtualFaderColGrid::moveElmt(int idFrom, int idTo)
 {
+    idFrom--;
+    idTo--;
     VirtualFaderButton* vfbFrom = getVirtualFaderButton(idFrom, false);
     VirtualFaderSlider* vfsFrom = getVirtualFaderSlider(idFrom, false);
 
@@ -719,6 +723,7 @@ VirtualFaderCol* VirtualFaderColGrid::getVirtualFaderCol(int id, bool create)
 
 VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool create)
 {
+    index--;
     if (!indexToButton.contains(index)) {return nullptr; }
     TextButton* clicked = indexToButton.getReference(index);
     if (clicked == nullptr) {return nullptr; }
@@ -757,6 +762,7 @@ VirtualFaderButton* VirtualFaderColGrid::getVirtualFaderButton(int index, bool c
 
 VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool create)
 {
+    index--;
     if (!indexToSlider.contains(index)) { return nullptr; }
     Slider* clicked = indexToSlider.getReference(index);
     if (clicked == nullptr) { return nullptr; }
