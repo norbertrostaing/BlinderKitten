@@ -67,6 +67,9 @@ Preset::Preset(var params) :
 	addChildControllableContainer(&subFixtureValues);
 
 	Brain::getInstance()->registerPreset(this, id->getValue());
+	if (!Engine::mainEngine->isLoadingFile) {
+		PresetGridView::getInstance()->updateCells();
+	}
 	if (params.isVoid()) {
 		subFixtureValues.addItem();
 	}
