@@ -94,31 +94,51 @@ void FixtureGridView::resized()
     int btnSizeW = w / nByRow;
     int margin = (w % btnSizeW) / 2;
 
-    int x = 0;
-    int y = -1;
-    int maxY = 0;
     // int currentX = 0;
     int lastValidId = -5;
-    for (int i = 0; i <= fixtIdMax; i++) {
-        if (hashMapButtons.contains(i)) {
-            TextButton* b = hashMapButtons.getReference(i);
-            b->setVisible(true);
+    
 
-            if (i == lastValidId + 1) {
-                x = (x + 1) % nByRow;
-                if (x == 0) { y += 1; }
+    OwnedArray<Array<TextButton*>> groupedButtons;
+    for (int i = 0; i <= fixtIdMax; i++) 
+    {
+        if (hashMapButtons.contains(i)) 
+        {
+            TextButton* b = hashMapButtons.getReference(i);
+            if (i > lastValidId + 1) {
+                groupedButtons.add(new Array<TextButton*>());
             }
-            else {
-                x = 0;
-                y += 1;
-            }
+            groupedButtons.getLast()->add(b);
+            lastValidId = i;
+        }
+
+    }
+
+    int x = 0;
+    int y = 0;
+    int maxY = 0;
+
+    for (int g = 0; g < groupedButtons.size(); g++) {
+        Array<TextButton*>* group = groupedButtons[g];
+        if (x != 0 && group->size() + x + 1 <= nByRow) {
+            x++;
+        }
+        else {
+            if (x != 0)  y += 1;
+            x = 0;
+        }
+        for (int i = 0; i < group->size(); i++) {
+            TextButton* b = group->getReference(i);
             int drawX = margin + (x * btnSizeW);
             int drawY = y * btnSizeH - scroll.getCurrentRangeStart();
             b->setBounds(drawX, drawY, btnSizeW, btnSizeH);
             maxY = (y + 1) * btnSizeH;
+            x = (x + 1) % nByRow;
+            if (x == 0) { y += 1; }
             lastValidId = i;
+
         }
     }
+
     scroll.setCurrentRange(scroll.getCurrentRangeStart(), h, juce::dontSendNotification);
     scroll.setRangeLimits(0, maxY, juce::dontSendNotification);
 }
