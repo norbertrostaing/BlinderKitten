@@ -131,6 +131,8 @@ public:
     bool downFadeCanMove = true;
     bool crossFadeCanMove = true;
 
+    float stuckUpFade = 0;
+    float stuckDownFade = 0;
 
     Trigger* renumberCuesBtn;
 

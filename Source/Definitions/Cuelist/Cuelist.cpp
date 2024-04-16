@@ -514,6 +514,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	currentManualInTransition= 0;
 	currentManualOutTransition = 0;
 	stopTransition = false;
+	stuckUpFade = 0;
+	stuckDownFade = 0;
 	transitionRunning = true;
 	currentFade->setValue(0, false);
 	upFadeCanMove = false;
@@ -1196,12 +1198,22 @@ void Cuelist::manualTransition(float ratioIn, float ratioOut)
 	if (!transitionRunning) {
 		userGo();
 	}
-	stopTransition = true;
-	if (ratioIn != -1) { 
-		currentManualInTransition = ratioIn; 
+	if (!stopTransition) {
+		if (ratioIn > currentFade->floatValue() || ratioOut > currentFade->floatValue()) {
+		stopTransition = true;
+		stuckUpFade = currentFade->floatValue();
+		stuckDownFade = currentFade->floatValue();
+		currentManualInTransition = stuckUpFade;
+		currentManualOutTransition = stuckDownFade;
+		}
 	}
-	if (ratioOut != -1) { 
+	if (ratioIn != -1 && ratioIn > stuckUpFade) { 
+		currentManualInTransition = ratioIn; 
+		stuckUpFade = 0;
+	}
+	if (ratioOut != -1 && ratioOut > stuckDownFade) { 
 		currentManualOutTransition = ratioOut; 
+		stuckDownFade = 0;
 	}
 	updateAllChannels();
 }
