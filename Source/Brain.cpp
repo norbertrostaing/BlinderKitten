@@ -1263,25 +1263,22 @@ void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
             if (cmd != nullptr) 
             {
                 Command* newCmd = p->commands.addItemFromData(cmd->getJSONData(), false);
-                for (int i = 0; i < p->commands.items.size(); i++) 
+                for (CommandValue* cv : newCmd->values.items) 
                 {
-                    for (CommandValue* cv : newCmd->values.items) 
-                    {
-                        String type = cv->presetOrValue->getValueData();
-                        if (cv->presetOrValue->getValueData() == "value") {
-                            ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-                            if (ct != nullptr) {
-                                String prio = ct->priority->getValueData();
-                                float lvl = 1.0;
-                                if (prio == "HTP") {
-                                    lvl = htpLevel.contains(cmd) ? htpLevel.getReference(cmd) : 1.0;
-                                }
-                                else {
-                                    lvl = ltpLevel.contains(cmd) ? ltpLevel.getReference(cmd) : 1.0;
-                                }
-                                cv->valueFrom->setValue(cv->valueFrom->floatValue() * lvl);
-                                cv->valueTo->setValue(cv->valueTo->floatValue() * lvl);
+                    String type = cv->presetOrValue->getValueData();
+                    if (cv->presetOrValue->getValueData() == "value") {
+                        ChannelType* ct = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+                        if (ct != nullptr) {
+                            String prio = ct->priority->getValueData();
+                            float lvl = 1.0;
+                            if (prio == "HTP") {
+                                lvl = htpLevel.contains(cmd) ? htpLevel.getReference(cmd) : 1.0;
                             }
+                            else {
+                                lvl = ltpLevel.contains(cmd) ? ltpLevel.getReference(cmd) : 1.0;
+                            }
+                            cv->valueFrom->setValue(cv->valueFrom->floatValue() * lvl);
+                            cv->valueTo->setValue(cv->valueTo->floatValue() * lvl);
                         }
                     }
                 }
