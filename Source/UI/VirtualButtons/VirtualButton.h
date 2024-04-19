@@ -29,6 +29,8 @@ public:
     IntParameter * rowNumber;
     IntParameter * colNumber;
     StringParameter * customText;
+    BoolParameter * customColorEnabled;
+    ColorParameter * customColor;
 
     EnumParameter * targetType;
     IntParameter * targetId;
@@ -48,6 +50,9 @@ public:
     void pressed();
     void released();
     String getBtnText();
+    bool useCustomColor();
+    juce::Colour getCustomColor();
+
     void updateStatus(bool forceRefresh = false);
     void feedback(ButtonStatus value);
 

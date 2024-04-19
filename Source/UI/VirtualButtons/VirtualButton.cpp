@@ -32,6 +32,8 @@ VirtualButton::VirtualButton(var params) :
 	rowNumber = addIntParameter("Row number", "", 0,0);
 	colNumber = addIntParameter("Col number", "", 0,0);
 	customText = addStringParameter("Custom Text", "Write your own text on your button", "");
+	customColorEnabled = addBoolParameter("Use custom color", "Do you want to override the button color ?", false);
+	customColor = addColorParameter("Custom color", "Custom color in VirtualButton grid", juce::Colour(32, 32, 32));
 
 	targetType = addEnumParameter("Target type", "");
 	targetType->addOption("Cuelist", "cuelist");
@@ -312,6 +314,14 @@ void VirtualButton::released() {
 		}
 	}
 
+}
+
+bool VirtualButton::useCustomColor() {
+	return this->customColorEnabled->boolValue();
+}
+
+juce::Colour VirtualButton::getCustomColor() {
+	return this->customColor->getColor();
 }
 
 String VirtualButton::getBtnText() {
