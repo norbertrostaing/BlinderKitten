@@ -118,7 +118,6 @@ void VirtualButtonGrid::fillCells() {
     buttonToVirtualButton.clear();
     pageDisplayBtn.setButtonText("Page "+String(page));
     for (int i = 0; i < gridButtons.size(); i++) {
-        //gridButtons[i]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
         gridButtons[i]->setButtonText("");
     }
     for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
@@ -130,8 +129,8 @@ void VirtualButtonGrid::fillCells() {
             if (r != 0 && c != 0 && r <= rows && c <= cols) {
                 int index = ((r-1)*cols)+(c-1);
                 if (! buttonToVirtualButton.contains(gridButtons[index])) {
-                    //gridButtons[index]->removeColour(TextButton::buttonColourId);
                     gridButtons[index]->setButtonText(btnText);
+                    gridButtons[index]->setColour(TextButton::buttonColourId, vb->getCustomColor());
                     buttonToVirtualButton.set(gridButtons[index], vb);
                 }
             }
@@ -275,7 +274,11 @@ void VirtualButtonGrid::updateButtons()
     for (int i = 0; i < gridButtons.size(); i++) {
         if (buttonToVirtualButton.contains(gridButtons[i]) && buttonToVirtualButton.getReference(gridButtons[i]) != nullptr) {
             VirtualButton* vb = buttonToVirtualButton.getReference(gridButtons[i]);
-            if (vb->currentStatus == VirtualButton::BTN_GENERIC) {
+
+            if (vb->useCustomColor()) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, vb->getCustomColor());
+            } 
+            else if (vb->currentStatus == VirtualButton::BTN_GENERIC) {
                 gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 80));
             }
             else if (vb->currentStatus == VirtualButton::BTN_ON) {
@@ -294,14 +297,14 @@ void VirtualButtonGrid::updateButtons()
                 gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 120, 64));
             }
             else if (vb->currentStatus == VirtualButton::BTN_LOADEDCUE) {
-                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 120));
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 64, 255));
             }
             else {
                 gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
             }
         }
         else {
-            gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32));
+            gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(32, 32, 32)); // If there is no button in this grid
         }
 
     }
