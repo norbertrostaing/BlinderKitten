@@ -115,7 +115,7 @@ void VirtualButton::updateName() {
 }
 
 void VirtualButton::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType || c == cuelistAction) {
+	if (c == targetType || c == cuelistAction || c == customColorEnabled) {
 		updateDisplay();
 	}
 	if (c == colNumber || c == pageNumber || c == rowNumber) {
@@ -143,6 +143,7 @@ void VirtualButton::updateDisplay() {
 	isLoad = isLoad && (cuelistAction->getValue() == "load" || cuelistAction->getValue() == "loadandgo");
 
 	cueId->hideInEditor = !isLoad;
+	customColor->hideInEditor = !customColorEnabled->boolValue();
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
