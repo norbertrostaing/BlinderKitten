@@ -37,6 +37,7 @@ public:
 
     BoolParameter* isCarouselOn;
     bool isOn = false;
+    bool isFlashing = false;
 
     Trigger* startBtn;
     Trigger* stopBtn;
@@ -44,6 +45,7 @@ public:
     BoolParameter* autoStartAndStop;
     FloatParameter* speed;
     FloatParameter* sizeValue;
+    FloatParameter* flashValue;
     String currentSizeController = "";
     String nextSizeController = "";
     float lastSize = 0;
@@ -76,6 +78,8 @@ public:
     void stop();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
+
+    void flash(bool on);
 
     static Carousel* create(var params) { return new Carousel(params); }
     

@@ -73,6 +73,10 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
         }
         break;
 
+    case FX_FLASH:
+        target->flash(val>0);
+        break;
+
     case FX_TAPTEMPO:
         if (val > 0 && (float)previousValue == 0) {
             target->tapTempo();

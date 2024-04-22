@@ -63,6 +63,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	effectAction->addOption("Start", "start");
 	effectAction->addOption("Stop", "stop");
 	effectAction->addOption("Toggle", "toggle");
+	effectAction->addOption("Flash", "flash");
 	effectAction->addOption("Tap tempo", "taptempo");
 	effectAction->addOption("Double Speed", "doublespeed");
 	effectAction->addOption("Half Speed", "halfspeed");
@@ -71,6 +72,7 @@ VirtualFaderButton::VirtualFaderButton(var params) :
 	carouselAction->addOption("Start", "start");
 	carouselAction->addOption("Stop", "stop");
 	carouselAction->addOption("Toggle", "toggle");
+	carouselAction->addOption("Flash", "flash");
 	carouselAction->addOption("Tap tempo", "taptempo");
 	carouselAction->addOption("Double Speed", "doublespeed");
 	carouselAction->addOption("Half Speed", "halfspeed");
@@ -208,6 +210,7 @@ void VirtualFaderButton::pressed() {
 					targ->start();
 				}
 			}
+			if (action == "flash") { targ->flash(true); }
 			if (action == "taptempo") { targ->tapTempo(); }
 			if (action == "doublespeed") { targ->speed->setValue((double)targ->speed->getValue() * 2); }
 			if (action == "halfspeed") { targ->speed->setValue((double)targ->speed->getValue() / 2); }
@@ -227,6 +230,7 @@ void VirtualFaderButton::pressed() {
 					targ->start();
 				}
 			}
+			if (action == "flash") { targ->flash(false); }
 			if (action == "taptempo") { targ->tapTempo(); }
 			if (action == "doublespeed") { targ->speed->setValue((double)targ->speed->getValue() * 2); }
 			if (action == "halfspeed") { targ->speed->setValue((double)targ->speed->getValue() / 2); }
@@ -299,6 +303,7 @@ void VirtualFaderButton::released() {
 		Effect* targ = Brain::getInstance()->getEffectById(targId);
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
+			if (action == "flash") { targ->flash(false); }
 			// if (action == "start") { targ->start(); }
 		}
 	}

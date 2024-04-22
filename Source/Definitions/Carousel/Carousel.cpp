@@ -52,6 +52,7 @@ Carousel::Carousel(var params) :
 
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the Carousel when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Carousel", 1, 0, 1);
+	flashValue = addFloatParameter("Flash", "Flash master of this Carousel", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this Carousel in cycles/minutes", 5, 0);
 
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
@@ -277,6 +278,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 
 	float s = sizeValue->getValue();
 	s *= currentSizeMult;
+	if (isFlashing) { s = flashValue->floatValue(); }
 	if (s>1) {s = 1;}
 	if (fc->isHTP && !htpOver) {
 		calcValue *= s;
@@ -308,5 +310,22 @@ void Carousel::tapTempo() {
 		delta = delta * (int)beatPerCycle->getValue();
 		double cpm = 60000. / delta;
 		speed->setValue(cpm);
+	}
+}
+
+
+void Carousel::flash(bool on)
+{
+	if (on) {
+		if (!isOn) {
+			start();
+		}
+		isFlashing = true;
+	}
+	else {
+		isFlashing = false;
+		if (autoStartAndStop->boolValue() && sizeValue->floatValue() == 0) {
+			stop();
+		}
 	}
 }

@@ -81,6 +81,10 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
         }
         break;
 
+    case CAR_FLASH:
+        target->flash(val > 0);
+        break;
+
     case CAR_SIZE:
         if (isRelative) {
             target->nextSizeController = origin;

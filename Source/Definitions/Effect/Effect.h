@@ -38,6 +38,7 @@ public:
 
     BoolParameter* isEffectOn;
     bool isOn = false;
+    bool isFlashing = false;
 
     Trigger* startBtn;
     Trigger* stopBtn;
@@ -45,6 +46,7 @@ public:
     BoolParameter* autoStartAndStop;
     FloatParameter* speed;
     FloatParameter* sizeValue;
+    FloatParameter* flashValue;
     BoolParameter* noLoop;
     String currentSizeController = "";
     String nextSizeController = "";
@@ -78,6 +80,8 @@ public:
     void stop();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
+
+    void flash(bool on);
 
     static Effect* create(var params) { return new Effect(params); }
     

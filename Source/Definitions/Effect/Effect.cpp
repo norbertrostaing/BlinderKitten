@@ -51,6 +51,7 @@ Effect::Effect(var params) :
 
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the effect when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this Effect", 1, 0, 1);
+	flashValue = addFloatParameter("Flash", "Flash master of this Effect", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this effect in cycles/minutes", 5, 0);
 	noLoop = addBoolParameter("No loop", "Play this effect only once", false);
 
@@ -290,6 +291,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 
 		float size = sizeValue->getValue();
 		size *= currentSizeMult;
+		if (isFlashing) { size = flashValue->floatValue(); }
 
 		if (p->effectMode->getValue() == "relative") {
 			value *= (double)size;
@@ -331,5 +333,21 @@ void Effect::tapTempo() {
 		delta = delta * (int)beatPerCycle->getValue();
 		double cpm = 60000. / delta;
 		speed->setValue(cpm);
+	}
+}
+
+void Effect::flash(bool on)
+{
+	if (on) {
+		if (!isOn) {
+			start();
+		}
+		isFlashing = true;
+	}
+	else {
+		isFlashing = false;
+		if (autoStartAndStop->boolValue() && sizeValue->floatValue() == 0) {
+			stop();
+		}
 	}
 }
