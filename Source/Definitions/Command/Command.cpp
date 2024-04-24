@@ -737,6 +737,7 @@ void Command::explodeSelection()
 	BaseManager<Command>* parentManager = dynamic_cast<BaseManager<Command>*>(parentContainer.get());
 	int index = parentManager->items.indexOf(this)+1;
 	computeValues();
+	if (selection.computedSelectedSubFixtures.size()<2) {return;}
 	isComputing.enter();
 	ChannelFamilyManager::getInstance()->updateOrderedElements();
 	for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {

@@ -60,6 +60,8 @@ void EncodersMultCmd::commandContentChanged()
         encoders.remove(i); // maybe kill some things ?
     }
     if (targetCommand != nullptr) {
+        explodeBtn.setEnabled(targetCommand->selection.computedSelectedSubFixtures.size()>1);
+
         for (int i = 0; i < targetCommand->values.items.size(); i++) {
             CommandValue *cv = targetCommand->values.items[i];
             if (cv->presetOrValue->getValue() == "value") {
