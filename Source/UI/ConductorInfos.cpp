@@ -209,9 +209,9 @@ void ConductorInfos::resized()
     float w = getLocalBounds().getWidth();
     float h = getLocalBounds().getHeight() - 40;
 
-    float currentCueHeight = titleSize + 10;
-    float nextCueHeight = textSize + 10;
-    float nextCueGoHeight = titleSize + 10;
+    float currentCueHeight = titleSize + 20;
+    float nextCueHeight = textSize + 20;
+    float nextCueGoHeight = titleSize + 20;
     float currentCueTextHeight = h - currentCueHeight - nextCueHeight - nextCueGoHeight;
 
     if (currentCueTextHeight < currentCueHeight) {
