@@ -37,6 +37,7 @@ public:
     OwnedArray<Label> labels;
     OwnedArray<Slider> encoders;
     Slider sensitivity;
+    Label sensitivityLabel;
     float currentSensitivity = 1;
     float setSensitivity(float v);
     Array<double> lastValues;

@@ -31,6 +31,11 @@ EncodersMult::EncodersMult()
     sensitivity.setWantsKeyboardFocus(false);
     sensitivity.addMouseListener(this, false);
 
+    addAndMakeVisible(sensitivityLabel);
+    sensitivityLabel.setText("Sensit.", juce::dontSendNotification);
+    sensitivityLabel.attachToComponent(&sensitivity, false);
+    sensitivityLabel.setWantsKeyboardFocus(false);
+
 }
 
 juce_ImplementSingleton(EncodersMult);
