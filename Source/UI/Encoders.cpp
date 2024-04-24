@@ -81,12 +81,12 @@ Encoders::Encoders():
 
     addAndMakeVisible(&commandUpBtn);
     commandUpBtn.addListener(this);
-    commandUpBtn.setButtonText("Com -");
+    commandUpBtn.setButtonText("Cmd -");
     commandUpBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&commandDownBtn);
     commandDownBtn.addListener(this);
-    commandDownBtn.setButtonText("Com +");
+    commandDownBtn.setButtonText("Cmd +");
     commandDownBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&explodeCommandBtn);
