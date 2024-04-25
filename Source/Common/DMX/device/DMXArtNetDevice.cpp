@@ -119,7 +119,7 @@ void ArtnetSocket::sendArtPollReply(String ip)
 			artPollReplyPacket[11] = ips[i].address[1];
 			artPollReplyPacket[12] = ips[i].address[2];
 			artPollReplyPacket[13] = ips[i].address[3];
-			DatagramSocket tempSender = new DatagramSocket(true);
+			DatagramSocket tempSender = DatagramSocket(true);
 			tempSender.bindToPort(0, ip2);
 			tempSender.write("255.255.255.255", 6454, artPollReplyPacket, 287);
 		}

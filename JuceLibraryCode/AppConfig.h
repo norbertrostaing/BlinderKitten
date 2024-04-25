@@ -43,7 +43,7 @@
 
 #define JUCE_USE_DARK_SPLASH_SCREEN 1
 
-#define JUCE_PROJUCER_VERSION 0x70008
+#define JUCE_PROJUCER_VERSION 0x7000c
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics          1
@@ -243,6 +243,10 @@
 
 #ifndef    JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING
  //#define JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING 0
+#endif
+
+#ifndef    JUCE_FLOAT_COLOURS
+ //#define JUCE_FLOAT_COLOURS 0
 #endif
 
 //==============================================================================
