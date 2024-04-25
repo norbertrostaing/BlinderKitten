@@ -809,11 +809,12 @@
         <CONFIGURATION isDebug="1" name="Debug"/>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release"
                        osxCompatibility="10.10 SDK" targetName="BlinderKitten" binaryPath="Release"
-                       defines="JUCE_DISABLE_ASSERTIONS=1" macOSDeploymentTarget="10.10"/>
+                       defines="JUCE_DISABLE_ASSERTIONS=1&#10;JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
+                       macOSDeploymentTarget="10.10"/>
         <CONFIGURATION isDebug="0" name="ReleaseSilicon" targetName="BlinderKitten"
                        libraryPath="../../External/servus/lib/silicon/release" optimisation="3"
-                       binaryPath="Release" defines="JUCE_DISABLE_ASSERTIONS=1" osxCompatibility="10.10 SDK"
-                       macOSDeploymentTarget="10.10"/>
+                       binaryPath="Release" defines="JUCE_DISABLE_ASSERTIONS=1&#10;JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
+                       osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
