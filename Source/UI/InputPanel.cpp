@@ -177,8 +177,17 @@ void InputPanel::resized()
 void InputPanel::sliderValueChanged(Slider* slider)
 {
     if (slider == &grandMaster) {
-        Brain::getInstance()->grandMasterChanged();
+        setGrandMaster(-1, "");
     }
     //UserInputManager::getInstance()->encoderValueChanged(index, slider->getValue());
 
+}
+
+void InputPanel::setGrandMaster(float value, String origin)
+{
+    if (value >= 0) {
+        grandMaster.setValue(value, juce::dontSendNotification);
+    }
+    Brain::getInstance()->grandMasterChanged();
+    UserInputManager::getInstance()->feedback("/grandmaster", grandMaster.getValue(), origin);
 }

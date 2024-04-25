@@ -92,11 +92,12 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
             {
             float v = InputPanel::getInstance()->grandMaster.getValue() + val;
             v = jlimit<float>(0,1,v);
-            InputPanel::getInstance()->grandMaster.setValue(v);
+            
+            InputPanel::getInstance()->setGrandMaster(v, origin);
             }
         else 
             {
-            InputPanel::getInstance()->grandMaster.setValue(val);
+            InputPanel::getInstance()->setGrandMaster(val, origin);
             }
         }
         break;

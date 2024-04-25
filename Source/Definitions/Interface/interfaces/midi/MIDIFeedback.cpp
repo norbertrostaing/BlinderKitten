@@ -25,6 +25,7 @@ MIDIFeedback::MIDIFeedback() :
                     ->addOption("Virtual fader below button", VBELOWBUTTON)
                     ->addOption("Virtual button", VBUTTON)
                     ->addOption("Encoder", ENCODER)
+                    ->addOption("Grand Master", GRANDMASTER)
         ;
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
@@ -84,9 +85,9 @@ void MIDIFeedback::updateDisplay() {
     
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
     sourceId->hideInEditor = true ;
-    sourcePage->hideInEditor = source == ENCODER;
-    sourceCol->hideInEditor = source == ENCODER;
-    sourceRow->hideInEditor = source != VBUTTON;
+    sourcePage->hideInEditor = source == ENCODER || source == GRANDMASTER;
+    sourceCol->hideInEditor = source == ENCODER || source == GRANDMASTER;
+    sourceRow->hideInEditor = source != VBUTTON || source == GRANDMASTER;
     sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON && source != ENCODER;
 
     MidiType type = midiType->getValueDataAsEnum<MidiType>();
@@ -245,8 +246,12 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
-    else {
-
+    else if (source == GRANDMASTER && !sameDevice) {
+        localAddress = "/grandmaster";
+        if (address == localAddress) {
+            valid = true;
+            sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
+        }
     }
 
     if (valid && (sendValue != lastSentValue || sendChannel != lastSentChannel )) {
