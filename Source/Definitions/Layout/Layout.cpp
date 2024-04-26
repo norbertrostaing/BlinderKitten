@@ -21,8 +21,7 @@
 
 Layout::Layout(var params) :
 	BaseItem(params.getProperty("name", "Layout")),
-	objectType(params.getProperty("Layouts", "Layout").toString()),
-	// parameters("Parameters"),
+	objectType(params.getProperty("type", "Layout").toString()),
 	paths("Paths"),
 	objectData(params),
 	subFixtToPos(4096, SubFixture::MyHashGenerator())
@@ -55,7 +54,7 @@ Layout::Layout(var params) :
 	paths.selectItemWhenCreated = false;
 
 	textScale = addFloatParameter("Text scale","",  1, 0);
-	var objectsData = params.getProperty("objects", var());
+	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 
 }
