@@ -29,7 +29,7 @@ MIDIMapping::MIDIMapping() :
     inputRange7b = addPoint2DParameter("Input Range", "The range to get from input");
     inputRange7b->setBounds(0, 0, 127, 127);
     inputRange7b->setPoint(0, 127);
-    inputRange14b = addPoint2DParameter("Input Range", "The range to get from input");
+    inputRange14b = addPoint2DParameter("Input Range 14b", "The range to get from input");
     inputRange14b->setBounds(0, 0, 16383, 16383);
     inputRange14b->setPoint(0, 16383);
 
