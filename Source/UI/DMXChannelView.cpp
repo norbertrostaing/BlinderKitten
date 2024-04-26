@@ -425,11 +425,19 @@ void DMXChannelItem::paint(Graphics& g)
 	Rectangle<int> r = getLocalBounds().reduced(2);
 
 	Colour c = BG_COLOR.darker();
+	String fixtName = "";
+	String channelType = "";
 	//c = Colour(32,64,32);
 	if (channelView->currentInterface != nullptr) {
-		if (channelView->currentInterface->channelToFixturePatch[channel] != nullptr) {
+		FixturePatch* p = channelView->currentInterface->channelToFixturePatch[channel];
+		if (p != nullptr) {
 			c = BG_COLOR.brighter(0.2f);
+			if (p->address->intValue() == channel) {
+				fixtName = String(p->getFixtureId());
+			}
 		}
+		ChannelType * ct = channelView->currentInterface->channelToChannelType[channel];
+		channelType = ct != nullptr ? ct->niceName : "";
 	}
 
 	if (isMouseOver()) c = c.brighter(.4f);
@@ -448,5 +456,18 @@ void DMXChannelItem::paint(Graphics& g)
 	g.setColour(Colours::white.withAlpha(.8f));
 	g.setFont(jlimit<float>(12, 20, getHeight() - 30));
 	g.drawText(String(channel), getLocalBounds().toFloat(), Justification::centred, false);
+
+	if (fixtName != "") {
+		g.setColour(Colours::white.withAlpha(.6f));
+		g.setFont(jlimit<float>(10, 10, getHeight() - 30));
+		g.drawText(fixtName, getLocalBounds().reduced(1).toFloat(), Justification::topLeft, false);
+	}
+
+	if (channelType != "") {
+		g.setColour(Colours::white.withAlpha(.6f));
+		g.setFont(jlimit<float>(8, 10, getHeight() - 30));
+		g.drawText(channelType, getLocalBounds().reduced(1).toFloat(), Justification::bottomLeft, false);
+	}
+
 }
 

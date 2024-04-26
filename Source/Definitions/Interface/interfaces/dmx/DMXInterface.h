@@ -14,6 +14,7 @@
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/DMXChannelView.h"
 #include "DMXMappingManager.h"
+#include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
 
 class FixturePatch;
 
@@ -38,6 +39,7 @@ public:
 
     DMXMappingManager mappingManager;
     Array<FixturePatch* > channelToFixturePatch;
+    Array<ChannelType* >channelToChannelType;
 
     void clearItem() override;
 

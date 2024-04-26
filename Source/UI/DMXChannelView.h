@@ -24,6 +24,7 @@ public:
     int channel;
     float valueAtMouseDown;
     float value;
+    String fixtName = "";
 
     bool tmpFlash;
 

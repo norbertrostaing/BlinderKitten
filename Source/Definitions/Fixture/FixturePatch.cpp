@@ -93,6 +93,7 @@ void FixturePatch::disableCurrentPatch()
 		for (int i = 0; i < currentAdresses.size(); i++) {
 			if (inter->channelToFixturePatch[currentAdresses[i]] == this) {
 				inter->channelToFixturePatch.set(currentAdresses[i], nullptr);
+				inter->channelToChannelType.set(currentAdresses[i], nullptr);
 				inter->sendDMXValue(currentAdresses[i], 0);
 			}
 			else {
@@ -132,12 +133,15 @@ void FixturePatch::tryToEnablePatch()
 	if (ft == nullptr) {return;}
 	if (inter == nullptr) {return;}
 
+	Array<ChannelType *> channelTypes;
 	int n = 0;
 	for (int i = 0; i < ft->chansManager.items.size(); i++) {
 		FixtureTypeChannel* chan = ft->chansManager.items[i];
 		int c = chan->dmxDelta->intValue();
+		channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
 		if (chan->resolution->getValue() == "16bits") {
 			c+=1;
+			channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
 		}
 		n = jmax(n,c);
 	}
@@ -192,6 +196,9 @@ void FixturePatch::tryToEnablePatch()
 
 	for (int i = 0; i < n; i++) {
 		inter->channelToFixturePatch.set(a+i,this);
+		if (channelTypes.size() > i) {
+			inter->channelToChannelType.set(a+i, channelTypes[i]);
+		}
 		currentAdresses.add(a+i);
 	}
 

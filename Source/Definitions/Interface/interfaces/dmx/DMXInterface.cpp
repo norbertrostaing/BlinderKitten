@@ -41,6 +41,7 @@ DMXInterface::DMXInterface() :
 
 	for (int i = 0; i <= 512; i++) {
 		channelToFixturePatch.add(nullptr);
+		channelToChannelType.add(nullptr);
 	}
 
 }
