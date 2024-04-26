@@ -465,13 +465,13 @@ void DMXChannelItem::paint(Graphics& g)
 
 	if (fixtName != "") {
 		g.setColour(Colours::white.withAlpha(.6f));
-		g.setFont(jlimit<float>(10, 10, getHeight() - 30));
+		g.setFont(jlimit<float>(10, 16, getHeight() - 30));
 		g.drawText(fixtName, getLocalBounds().reduced(1).toFloat(), Justification::topLeft, false);
 	}
 
 	if (channelType != "") {
 		g.setColour(Colours::white.withAlpha(.6f));
-		g.setFont(jlimit<float>(8, 10, getHeight() - 30));
+		g.setFont(jlimit<float>(10, 16, getHeight() - 30));
 		g.drawText(channelType, getLocalBounds().reduced(1).toFloat(), Justification::bottomLeft, false);
 	}
 
