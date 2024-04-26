@@ -64,7 +64,7 @@ void DMXChannelView::resized()
 	if (flashValue != nullptr)
 	{
 		hr.removeFromLeft(8);
-		flashValue->setBounds(hr.removeFromLeft(150).reduced(2));
+		flashValue->setBounds(hr.removeFromLeft(150).reduced(1));
 	}
 
 
@@ -111,6 +111,9 @@ void DMXChannelView::setCurrentInterface(DMXInterface* i)
 		//testingUI.reset(currentInterface->channelTestingMode->createButtonToggle());
 		//addAndMakeVisible(testingUI.get());
 		flashValue.reset(currentInterface->channelTestingFlashValue->createSlider());
+		flashValue->useCustomFGColor = true;
+		flashValue->customFGColor = Colour(0,127,0);
+		//flashValue->setColour(FloatSliderUI)
 		addAndMakeVisible(flashValue.get());
 
 		currentInterface->repaintChannels(1,512);
@@ -284,17 +287,20 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 		}
 		}
 		else if (channelView->selectedItems.contains(this)) {
-			updateDMXValue(0);
+			updateDMXValue(savedValue);
+
 			channelView->selectedItems.removeAllInstancesOf(this);
 			tmpFlash = false;
 		}
 		else if (e.mods.isCtrlDown()) {
+			savedValue = value;
 			updateDMXValue(channelView->getFlashValue());
 			channelView->selectedItems.add(this);
 			tmpFlash = true;
 		}
 		else {
 			channelView->clearSelection();
+			savedValue = value;
 			updateDMXValue(channelView->getFlashValue());
 			channelView->selectedItems.add(this);
 			tmpFlash = true;

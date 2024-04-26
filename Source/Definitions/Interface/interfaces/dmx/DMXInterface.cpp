@@ -28,7 +28,7 @@ DMXInterface::DMXInterface() :
 	channelTestingMode = addBoolParameter("Channel Testing Mode", "Is testing with the Channel view ?", false);
 	channelTestingMode->hideInEditor = true;
 
-	channelTestingFlashValue = addFloatParameter("Channel Testing Flash Value", "Flash value of channel testing", 1, 0, 1);
+	channelTestingFlashValue = addFloatParameter("Testing Value", "Flash value of channel testing", 1, 0, 1);
 	channelTestingFlashValue->hideInEditor = true;
 
 	thruManager.reset(new ControllableContainer("Pass-through"));
