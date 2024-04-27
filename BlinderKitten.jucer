@@ -129,6 +129,9 @@
         <FILE id="yt8yKK" name="Encoders.h" compile="0" resource="0" file="Source/UI/Encoders.h"/>
         <FILE id="R1P4dS" name="InputPanel.cpp" compile="1" resource="0" file="Source/UI/InputPanel.cpp"/>
         <FILE id="NMQyY5" name="InputPanel.h" compile="0" resource="0" file="Source/UI/InputPanel.h"/>
+        <FILE id="sTJqey" name="LabelAndTime.cpp" compile="1" resource="0"
+              file="Source/UI/LabelAndTime.cpp"/>
+        <FILE id="KZrCUJ" name="LabelAndTime.h" compile="0" resource="0" file="Source/UI/LabelAndTime.h"/>
         <FILE id="U9IfWo" name="LayoutViewer.cpp" compile="1" resource="0"
               file="Source/UI/LayoutViewer.cpp"/>
         <FILE id="j7853L" name="LayoutViewer.h" compile="0" resource="0" file="Source/UI/LayoutViewer.h"/>

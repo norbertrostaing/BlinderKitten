@@ -63,6 +63,7 @@ public:
     void gridViewCellPressed(String type, int id);
 
     double lastCuelistLoadWindowTS = 0;
+    double lastLabelAndTimeWindowTS = 0;
 
     void testPreset(Preset* p);
     void resetFocus();

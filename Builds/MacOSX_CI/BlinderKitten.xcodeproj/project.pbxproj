@@ -120,6 +120,7 @@
 		9E5A7EB2D4DE8258C8C127DF /* include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = 55CF79DE0B22DBDEAF4C74C5; };
 		9F66D6AB6C415D5A5B3E95A5 /* CommandManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = 70D598BB86E204F0BC11F5E7; };
 		A17177E61D73D12C31AE2E16 /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 38932A380E1BB6186445C4AF; };
+		A2463FB3BF5DFDBD5FF69435 /* LabelAndTime.cpp */ = {isa = PBXBuildFile; fileRef = E299CD850A1384C8E67F0515; };
 		A3A6E170784844752D2F1376 /* CommandLine.cpp */ = {isa = PBXBuildFile; fileRef = 22AA1B82128BA4AA2BC17A37; };
 		A56EF251AE213C412B55FEDC /* CuelistManager.cpp */ = {isa = PBXBuildFile; fileRef = 4EEF195FE87227D24525C463; };
 		A58EB6D329016820661DB64A /* FixtureType.cpp */ = {isa = PBXBuildFile; fileRef = 580A7738712B044BC5D57AED; };
@@ -558,7 +559,9 @@
 		E0A18BBC03E9615B6466272E /* ChannelFamilyManagerUI.cpp */ /* ChannelFamilyManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChannelFamilyManagerUI.cpp; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		E0C85FB8D7A184A8FCBA5446 /* TimingPresetManagerUI.h */ /* TimingPresetManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimingPresetManagerUI.h; path = ../../Source/Definitions/TimingPreset/TimingPresetManagerUI.h; sourceTree = SOURCE_ROOT; };
 		E1109E4FDA6AEEBB3A86F01B /* EncodersMult.cpp */ /* EncodersMult.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncodersMult.cpp; path = ../../Source/UI/EncodersMult/EncodersMult.cpp; sourceTree = SOURCE_ROOT; };
+		E1D11321A7ACF990B9160F6E /* LabelAndTime.h */ /* LabelAndTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelAndTime.h; path = ../../Source/UI/LabelAndTime.h; sourceTree = SOURCE_ROOT; };
 		E26D7940AC826DECC5DA4570 /* CommandLine.h */ /* CommandLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandLine.h; path = ../../Source/UI/CommandLine.h; sourceTree = SOURCE_ROOT; };
+		E299CD850A1384C8E67F0515 /* LabelAndTime.cpp */ /* LabelAndTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LabelAndTime.cpp; path = ../../Source/UI/LabelAndTime.cpp; sourceTree = SOURCE_ROOT; };
 		E2C6478802669AB0941D034C /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
 		E3409709D8C77C13AB908F3D /* PresetManagerUI.h */ /* PresetManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PresetManagerUI.h; path = ../../Source/Definitions/Preset/PresetManagerUI.h; sourceTree = SOURCE_ROOT; };
 		E46B16F9ED0A96569BBBB9DA /* CuelistManagerUI.cpp */ /* CuelistManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CuelistManagerUI.cpp; path = ../../Source/Definitions/Cuelist/CuelistManagerUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -1580,6 +1583,8 @@
 				112E31B097432893CF74EF8F,
 				FE0E0BC9EEF2E509D305F039,
 				42EDB3A518404235694CB547,
+				E299CD850A1384C8E67F0515,
+				E1D11321A7ACF990B9160F6E,
 				66A99752EE9116904075A593,
 				FCAD6499A587B5F6D7B1FCD0,
 			);
@@ -1701,6 +1706,7 @@
 				7A7EE8FA053F31344B7AD140,
 				690F88328C92B92D7BBAAC60,
 				C4CB15121D17654C6E091FA7,
+				A2463FB3BF5DFDBD5FF69435,
 				0E3AF8AF0B0F9924A362F52A,
 				6F79BE3F94B03AA855A176F3,
 				EA7F96E3F55C9548B94EB629,

@@ -42,6 +42,7 @@ namespace BlinderKittenCommandId
 	static const int keyEdit = 0x60202;
 	static const int keyCopy = 0x60203;
 	static const int keyDelete = 0x60204;
+	static const int keyLabel = 0x60205;
 
 	static const int keyFixture = 0x60301;
 	static const int keyGroup = 0x60302;
@@ -50,7 +51,7 @@ namespace BlinderKittenCommandId
 	static const int keyCue = 0x60305;
 	static const int keyEffect = 0x60306;
 	static const int keyCarousel = 0x60307;
-	static const int keyMapper= 0x60308;
+	static const int keyMapper = 0x60308;
 	static const int keyAssistant = 0x60309;
 
 	static const int keyHighlight = 0x60320;
@@ -195,6 +196,12 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	case BlinderKittenCommandId::keyDelete:
 		result.setInfo("Delete", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("d").getKeyCode(), ModifierKeys::altModifier);
+		break;
+
+	case BlinderKittenCommandId::keyLabel:
+		result.setInfo("Label", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("l").getKeyCode(), ModifierKeys::noModifiers);
+		result.addDefaultKeypress(KeyPress::createFromDescription("l").getKeyCode(), ModifierKeys::altModifier);
 		break;
 
 
@@ -366,6 +373,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		BlinderKittenCommandId::keyEdit,
 		BlinderKittenCommandId::keyCopy,
 		BlinderKittenCommandId::keyDelete,
+		BlinderKittenCommandId::keyLabel,
 
 		BlinderKittenCommandId::keyAssistant,
 		BlinderKittenCommandId::keyFixture,
@@ -545,6 +553,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::keyCopy: {		UserInputManager::getInstance()->processInput("copy"); }break;
 	case BlinderKittenCommandId::keyEdit: {		UserInputManager::getInstance()->processInput("edit"); }break;
 	case BlinderKittenCommandId::keyDelete: {	UserInputManager::getInstance()->processInput("delete"); }break;
+	case BlinderKittenCommandId::keyLabel: {	UserInputManager::getInstance()->processInput("label"); }break;
 
 	case BlinderKittenCommandId::key1: {		UserInputManager::getInstance()->processInput("1"); }break;
 	case BlinderKittenCommandId::key2: {		UserInputManager::getInstance()->processInput("2"); }break;

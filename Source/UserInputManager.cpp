@@ -54,6 +54,9 @@ void UserInputManager::processInput(String s) {
 	if (s.toLowerCase() == "assistant") {
 		Assistant::getInstance()->selectThis();
 	}
+	if (s.toLowerCase() == "label") {
+		dynamic_cast<BKEngine*>(Engine::mainEngine)->showLabelAndTime();
+	}
 
 	getProgrammer(true)->processUserInput(s);
 }

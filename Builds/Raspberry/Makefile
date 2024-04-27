@@ -100,6 +100,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/DMXChannelView_4a36d235.o \
   $(JUCE_OBJDIR)/Encoders_6bf10993.o \
   $(JUCE_OBJDIR)/InputPanel_276fbbd6.o \
+  $(JUCE_OBJDIR)/LabelAndTime_69a3566c.o \
   $(JUCE_OBJDIR)/LayoutViewer_b08c5698.o \
   $(JUCE_OBJDIR)/list_ports_linux_203b2613.o \
   $(JUCE_OBJDIR)/list_ports_osx_d93ade33.o \
@@ -383,6 +384,11 @@ $(JUCE_OBJDIR)/Encoders_6bf10993.o: ../../Source/UI/Encoders.cpp
 $(JUCE_OBJDIR)/InputPanel_276fbbd6.o: ../../Source/UI/InputPanel.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling InputPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LabelAndTime_69a3566c.o: ../../Source/UI/LabelAndTime.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling LabelAndTime.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LayoutViewer_b08c5698.o: ../../Source/UI/LayoutViewer.cpp

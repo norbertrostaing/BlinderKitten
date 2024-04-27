@@ -82,6 +82,9 @@
 #include "UI/DMXChannelView.h"
 #include "Assistant/Assistant.h"
 #include "UI/CuelistLoadWindow.h"
+#include "UI/LabelAndTime.h"
+
+
 
 ControllableContainer* getAppSettings();
 
@@ -345,6 +348,7 @@ BKEngine::~BKEngine()
 	InputPanel::deleteInstance();
 	Assistant::deleteInstance();
 	CuelistLoadWindow::deleteInstance();
+	LabelAndTimeWindow::deleteInstance();
 
 	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();
@@ -1362,4 +1366,28 @@ void BKEngine::autoFillDefaultChannels()
 		}
 	}
 
+}
+
+void BKEngine::showLabelAndTime()
+{
+	LabelAndTimeWindow::getInstance()->showWindow();
+}
+
+void BKEngine::selectCue(Cue* c, selectionMode s)
+{
+	if (s == SET) {
+		selectedCues.clear();
+		selectedCues.add(c);
+	}
+	else if (s == ADD) {
+		if (selectedCues.contains(c)) {
+			selectedCues.removeAllInstancesOf(c);
+		}
+		else {
+			selectedCues.add(c);
+		}
+	}
+	else if (s == ADDMULTIPLE) {
+		LOG("not implemented yet");
+	}
 }

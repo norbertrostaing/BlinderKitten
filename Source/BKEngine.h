@@ -131,6 +131,11 @@ public:
 	void parameterValueChanged(Parameter* p);
 
 	void autoFillDefaultChannels();
+
+	void showLabelAndTime();
+	Array<Cue*> selectedCues;
+	enum selectionMode{SET, ADD, ADDMULTIPLE};
+	void selectCue(Cue* c, selectionMode s);
 };
 
 struct tempChannel {

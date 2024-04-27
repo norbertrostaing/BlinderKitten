@@ -276,6 +276,8 @@ void DataTransferManager::execute() {
                 target->go(targetCue,0,0);
             }
 
+            dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(targetCue, BKEngine::SET);
+
             if (copyMode == "add") { LOG("New cue created"); }
             else if (copyMode == "replace") { LOG("Cue content replaced by programmer"); }
             else { LOG("Programmer content added to cue");  }

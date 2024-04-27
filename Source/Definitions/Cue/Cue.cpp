@@ -13,6 +13,7 @@
 #include "../Cuelist/Cuelist.h"
 #include "../../Brain.h"
 #include "UserInputManager.h"
+#include "BKEngine.h"
 
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue 1")),
@@ -75,6 +76,7 @@ Cue::Cue(var params) :
 	if (params.isVoid()) {
 		commands.addItem();
 	}
+	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(this, BKEngine::SET);
 }
 
 Cue::~Cue()
@@ -84,6 +86,7 @@ Cue::~Cue()
 	Brain::getInstance()->cuePoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->cuePoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
+	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectedCues.removeAllInstancesOf(this);
 
 }
 
@@ -290,3 +293,4 @@ String Cue::getCommandsText(bool useName)
 	}
 	return ret;
 }
+

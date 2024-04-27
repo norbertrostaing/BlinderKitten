@@ -1090,6 +1090,9 @@
     <ClCompile Include="..\..\Source\UI\InputPanel.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\UI\LabelAndTime.cpp">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\UI\LayoutViewer.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
@@ -4828,6 +4831,9 @@
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\InputPanel.h">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\LabelAndTime.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\LayoutViewer.h">

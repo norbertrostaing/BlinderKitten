@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\Source\UI\DMXChannelView.cpp"/>
     <ClCompile Include="..\..\Source\UI\Encoders.cpp"/>
     <ClCompile Include="..\..\Source\UI\InputPanel.cpp"/>
+    <ClCompile Include="..\..\Source\UI\LabelAndTime.cpp"/>
     <ClCompile Include="..\..\Source\UI\LayoutViewer.cpp"/>
     <ClCompile Include="..\..\Source\Common\Action\Action.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -3420,6 +3421,7 @@
     <ClInclude Include="..\..\Source\UI\DMXChannelView.h"/>
     <ClInclude Include="..\..\Source\UI\Encoders.h"/>
     <ClInclude Include="..\..\Source\UI\InputPanel.h"/>
+    <ClInclude Include="..\..\Source\UI\LabelAndTime.h"/>
     <ClInclude Include="..\..\Source\UI\LayoutViewer.h"/>
     <ClInclude Include="..\..\Source\Common\Action\Action.h"/>
     <ClInclude Include="..\..\Source\Common\Action\ActionManager.h"/>
