@@ -759,3 +759,14 @@ void UserInputManager::feedback(String address, var value, String origin="")
 {
 	InterfaceManager::getInstance()->feedback(address, value, origin);
 }
+
+void UserInputManager::loadContentConductor()
+{
+	Programmer* p = getProgrammer(true);
+	if (p== nullptr) return;
+	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	if (e == nullptr) return;
+	Cuelist* c = Brain::getInstance()->getCuelistById(e->conductorCuelistId->intValue());
+	if (c == nullptr ) return;
+	c->loadContent(p);
+}
