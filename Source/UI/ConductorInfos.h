@@ -42,6 +42,7 @@ public:
     TextButton inspectCurrBtn;
     TextButton inspectNextBtn;
     TextButton inspectCuelistBtn;
+    TextButton loadCurrentCueBtn;
 
     Label upLabel;
     Label downLabel;

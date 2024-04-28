@@ -1,6 +1,7 @@
 #include <JuceHeader.h>
 #include "ConductorInfos.h"
 #include "Brain.h"
+#include "UserInputManager.h"
 
 //==============================================================================
 ConductorInfosUI::ConductorInfosUI(const String& contentName):
@@ -29,6 +30,7 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(inspectCurrBtn);
     addAndMakeVisible(inspectNextBtn);
     addAndMakeVisible(inspectCuelistBtn);
+    addAndMakeVisible(loadCurrentCueBtn);
 
     currentCueName.addListener(this);
     currentCueId.addListener(this);
@@ -52,6 +54,9 @@ ConductorInfos::ConductorInfos()
     inspectCurrBtn.onClick = [this]() {inspect(0); };
     inspectNextBtn.onClick = [this]() {inspect(1); };
     inspectCuelistBtn.onClick = [this]() {inspectCuelist(); };
+    loadCurrentCueBtn.onClick = [this]() { 
+        UserInputManager::getInstance()->loadContentConductor();
+    };
 
     addAndMakeVisible(upLabel);
     addAndMakeVisible(downLabel);
@@ -64,6 +69,7 @@ ConductorInfos::ConductorInfos()
     inspectCurrBtn.setButtonText("Inspect Curr.");
     inspectNextBtn.setButtonText("Inspect Next");
     inspectCuelistBtn.setButtonText("Inspect Cuelist");
+    loadCurrentCueBtn.setButtonText("Load content current cue");
 
     currentCueName.setText("", juce::NotificationType::dontSendNotification);
     currentCueId.setText("", juce::NotificationType::dontSendNotification);
@@ -228,11 +234,12 @@ void ConductorInfos::resized()
 
     int idW = titleSize*3;
 
-    displayBtn.setBounds(w * 0 / 5, 0, w / 5, 20);
-    inspectPrevBtn.setBounds(w * 1 / 5, 0, w / 5, 20);
-    inspectCurrBtn.setBounds(w * 2 / 5, 0, w / 5, 20);
-    inspectNextBtn.setBounds(w * 3 / 5, 0, w / 5, 20);
-    inspectCuelistBtn.setBounds(w * 4 / 5, 0, w / 5, 20);
+    displayBtn.setBounds(w * 0 / 6, 0, w / 6, 20);
+    inspectPrevBtn.setBounds(w * 1 / 6, 0, w / 6, 20);
+    inspectCurrBtn.setBounds(w * 2 / 6, 0, w / 6, 20);
+    inspectNextBtn.setBounds(w * 3 / 6, 0, w / 6, 20);
+    inspectCuelistBtn.setBounds(w * 4 / 6, 0, w / 6, 20);
+    loadCurrentCueBtn.setBounds(w * 5 / 6, 0, w / 6, 20);
 
     currentCueId.setBounds(0, 20, idW, floor(currentCueHeight));
     currentCueName.setBounds(idW, 20, w-idW, floor(currentCueHeight));
