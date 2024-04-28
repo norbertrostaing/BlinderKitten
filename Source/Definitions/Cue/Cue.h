@@ -14,7 +14,8 @@
 #include "Task.h"
 
 class Cue:
-    public BaseItem
+    public BaseItem,
+    public ChangeBroadcaster
 {
 public:
     Cue(var params = var());
@@ -65,6 +66,8 @@ public:
     void cleanUnused();
 
     void loadContent(Programmer *p);
+    void replaceContent(Programmer* p);
+    void mergeContent(Programmer* p);
 
     void writeTimeStamp();
 
@@ -84,6 +87,8 @@ public:
 
     ControllableContainer timingContainer;
     StringParameter* lastTriggeredTS;
+
+    void onContainerNiceNameChanged() override;
 
 };
 

@@ -15,7 +15,8 @@
 #include "Definitions/Command/CommandValueManager.h"
 
 class Cuelist:
-    public BaseItem
+    public BaseItem,
+    public ChangeBroadcaster
 {
 public:
     Cuelist(var params = var());

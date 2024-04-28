@@ -17,6 +17,7 @@
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/ConductorInfos.h"
 #include "UserInputManager.h"
+#include "UI/CuelistSheet/CuelistSheet.h"
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
@@ -40,6 +41,8 @@ Cuelist::Cuelist(var params) :
 	editorIsCollapsed = true;
 	itemDataType = "Cuelist";
 	canBeDisabled = false;
+
+	cues.parentCuelist = this;
 
 	conductorInfos.editorIsCollapsed = true;
 	chaserOptions.editorIsCollapsed = true;
@@ -239,6 +242,12 @@ Cuelist::~Cuelist()
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
 	CuelistGridView::getInstance()->updateCells();
+	if (CuelistSheet::getInstance()->targetCuelist == this) {
+		CuelistSheet::getInstance()->targetCuelist == nullptr;
+	}
+	if (CuelistSheet::getInstance()->targetCuelist == this) {
+		CuelistSheet::getInstance()->targetCuelist = nullptr;
+	}
 
 }
 
@@ -729,6 +738,12 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	if (!isChaser->boolValue() && c != nullptr) {
 		c->writeTimeStamp();
+	}
+
+	if (CuelistSheet::getInstance()->targetCuelist == this) {
+		MessageManager::callAsync([this](){
+			CuelistSheet::getInstance()->updateRunningCue();
+		});
 	}
 
 	const MessageManagerLock mmLock;

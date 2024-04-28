@@ -21,6 +21,15 @@
     </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
       <GROUP id="{C2CABB5D-DC86-5E72-CD97-9285EFEFA23C}" name="UI">
+        <GROUP id="{55FFD8CC-4DDE-E74E-2496-A7D17EC27418}" name="CuelistSheet">
+          <FILE id="BEavPn" name="CuelistSheet.cpp" compile="1" resource="0"
+                file="Source/UI/CuelistSheet/CuelistSheet.cpp"/>
+          <FILE id="StnDNI" name="CuelistSheet.h" compile="0" resource="0" file="Source/UI/CuelistSheet/CuelistSheet.h"/>
+          <FILE id="oTJUKm" name="CuelistSheetLine.cpp" compile="1" resource="0"
+                file="Source/UI/CuelistSheet/CuelistSheetLine.cpp"/>
+          <FILE id="hYV0ti" name="CuelistSheetLine.h" compile="0" resource="0"
+                file="Source/UI/CuelistSheet/CuelistSheetLine.h"/>
+        </GROUP>
         <GROUP id="{FA710006-47BB-972E-5B98-AD2004F1E014}" name="EncodersMult">
           <FILE id="cbFEVr" name="EncodersMult.cpp" compile="1" resource="0"
                 file="Source/UI/EncodersMult/EncodersMult.cpp"/>

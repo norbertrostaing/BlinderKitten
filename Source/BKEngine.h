@@ -136,6 +136,8 @@ public:
 	Array<Cue*> selectedCues;
 	enum selectionMode{SET, ADD, ADDMULTIPLE};
 	void selectCue(Cue* c, selectionMode s);
+	void selectAllCuesOfCuelist(Cuelist* c);
+	void clearCueSelection();
 };
 
 struct tempChannel {

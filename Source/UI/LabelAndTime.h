@@ -55,7 +55,7 @@ public:
     TextEditor htpDownFadeEdit;
     TextEditor ltpFadeEdit;
 
-    void showWindow();
+    void showWindow(int element = 0);
     void buttonClicked(Button*);
 
     int posX = 0;

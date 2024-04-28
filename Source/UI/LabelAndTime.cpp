@@ -147,7 +147,7 @@ void LabelAndTimeWindow::applyValues()
         if (nameString.trim() != "") {
             
             String name = multiple ? nameString + " " + String(i + 1) : nameString;
-            c->setNiceName(nameString);
+            c->setNiceName(name);
         }
         
         if (inDelayString != "") {
@@ -206,7 +206,7 @@ bool LabelAndTimeWindow::newValue(String input, float& currentVal)
     return true;
 }
 
-void LabelAndTimeWindow::showWindow()
+void LabelAndTimeWindow::showWindow(int element)
 {
     double now = Time::getMillisecondCounterHiRes();
     if (UserInputManager::getInstance()->lastLabelAndTimeWindowTS + 500 < now) {
@@ -223,7 +223,17 @@ void LabelAndTimeWindow::showWindow()
         if (posX != 0 && posY != 0) {
             findParentComponentOfClass<DialogWindow>()->setBounds(posX, posY, w, h);
         }
-        nameEdit.grabKeyboardFocus();
+
+        switch (element) {
+        case 0:        nameEdit.grabKeyboardFocus();    break;
+        case 1:        htpUpDelayEdit.grabKeyboardFocus();    break;
+        case 2:        htpDownDelayEdit.grabKeyboardFocus();    break;
+        case 3:        ltpDelayEdit.grabKeyboardFocus();    break;
+        case 4:        htpUpFadeEdit.grabKeyboardFocus();    break;
+        case 5:        htpDownFadeEdit.grabKeyboardFocus();    break;
+        case 6:        ltpFadeEdit.grabKeyboardFocus();    break;
+
+        }
     }
 }
 

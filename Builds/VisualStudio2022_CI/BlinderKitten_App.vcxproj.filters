@@ -5,6 +5,9 @@
     <Filter Include="BlinderKitten\Ressources">
       <UniqueIdentifier>{5299208D-7A64-A3CA-9B99-9DCE51320651}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\UI\CuelistSheet">
+      <UniqueIdentifier>{883CCB5E-D504-1F37-D2D5-DF5CA3708BF1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\UI\EncodersMult">
       <UniqueIdentifier>{F2290AC6-3BB8-A0AD-955C-2DE8E079180E}</UniqueIdentifier>
     </Filter>
@@ -1006,6 +1009,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\UI\CuelistSheet\CuelistSheet.cpp">
+      <Filter>BlinderKitten\Source\UI\CuelistSheet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\CuelistSheet\CuelistSheetLine.cpp">
+      <Filter>BlinderKitten\Source\UI\CuelistSheet</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\UI\EncodersMult\EncodersMult.cpp">
       <Filter>BlinderKitten\Source\UI\EncodersMult</Filter>
     </ClCompile>
@@ -4749,6 +4758,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UI\CuelistSheet\CuelistSheet.h">
+      <Filter>BlinderKitten\Source\UI\CuelistSheet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\CuelistSheet\CuelistSheetLine.h">
+      <Filter>BlinderKitten\Source\UI\CuelistSheet</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\UI\EncodersMult\EncodersMult.h">
       <Filter>BlinderKitten\Source\UI\EncodersMult</Filter>
     </ClInclude>

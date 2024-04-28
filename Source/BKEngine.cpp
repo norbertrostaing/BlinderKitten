@@ -76,6 +76,7 @@
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 #include "UI/ConductorInfos.h"
+#include "UI/CuelistSheet/CuelistSheet.h"
 #include "UI/BKColorPicker.h"
 
 #include "UserInputManager.h"
@@ -251,6 +252,7 @@ BKEngine::BKEngine() :
 
 	ConductorInfos::getInstance()->engine = this;
 	BKColorPicker::getInstance()->engine = this;
+	CuelistSheet::getInstance()->engine = this;
 
 	// MIDIManager::getInstance(); //Trigger constructor, declare settings
 
@@ -325,6 +327,7 @@ BKEngine::~BKEngine()
 	CurvePresetManager::deleteInstance();
 
 	ConductorInfos::deleteInstance();
+	CuelistSheet::deleteInstance();
 	BKColorPicker::deleteInstance();
 
 	InterfaceManager::deleteInstance();
@@ -668,6 +671,9 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ConductorInfos::getInstance()->linkFadeSlider();
 	ConductorInfos::getInstance()->updateStyle();
 
+	CuelistSheet::getInstance()->updateContent();
+	CuelistSheet::getInstance()->updateStyle();
+
 	for (int i = 0; i < FixtureManager::getInstance()->items.size(); i++) {
 		Fixture* f = FixtureManager::getInstance()->items[i];
 		for (int p = 0; p < f->patchs.items.size(); p++) {
@@ -701,6 +707,7 @@ void BKEngine::controllableFeedbackUpdate(ControllableContainer* cc, Controllabl
 	if (isClearing || isLoadingFile) return;
 	if (cc == &conductorInfosContainer) {
 		ConductorInfos::getInstance()->updateStyle();
+		CuelistSheet::getInstance()->updateStyle();
 		//ConductorInfos::getInstance()->repaint();
 	}
 }
@@ -1306,10 +1313,14 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor) {
 		if (p == conductorCuelistId) {
 			ConductorInfos::getInstance()->linkFadeSlider();
+			CuelistSheet::getInstance()->updateContent();
 		}
 		ConductorInfos::getInstance()->updateStyle();
 		ConductorInfos::getInstance()->resized();
 		ConductorInfos::getInstance()->repaint();
+		CuelistSheet::getInstance()->updateStyle();
+		CuelistSheet::getInstance()->resized();
+		CuelistSheet::getInstance()->repaint();
 	} else if (p == encodersNumber) {
 		Encoders::getInstance()->initEncoders();
 	}
@@ -1375,9 +1386,25 @@ void BKEngine::showLabelAndTime()
 
 void BKEngine::selectCue(Cue* c, selectionMode s)
 {
-	if (s == SET) {
-		selectedCues.clear();
-		selectedCues.add(c);
+	if (s == ADDMULTIPLE && selectedCues.size()>0) {
+		Cue* cFrom = selectedCues[selectedCues.size() - 1];
+		Cuelist* parentTo = dynamic_cast<Cuelist*>(c->parentContainer->parentContainer.get());
+		Cuelist* parentFrom = dynamic_cast<Cuelist*>(cFrom->parentContainer->parentContainer.get());
+
+		if (parentFrom == parentTo) {
+			float idFrom = cFrom->id->floatValue();
+			float idTo = c->id->floatValue();
+			for (int i = 0; i < parentTo->cues.items.size(); i++) {
+				Cue* t = parentTo->cues.items[i];
+				if (t->id->floatValue() > idFrom && t->id->floatValue() <= idTo) {
+					selectedCues.addIfNotAlreadyThere(t);
+				}
+			}
+		}
+		else {
+			selectedCues.clear();
+			selectedCues.add(c);
+		}
 	}
 	else if (s == ADD) {
 		if (selectedCues.contains(c)) {
@@ -1387,7 +1414,25 @@ void BKEngine::selectCue(Cue* c, selectionMode s)
 			selectedCues.add(c);
 		}
 	}
-	else if (s == ADDMULTIPLE) {
-		LOG("not implemented yet");
+	else {
+		selectedCues.clear();
+		selectedCues.add(c);
 	}
+
+	CuelistSheet::getInstance()->updateSelection();
+}
+
+void BKEngine::selectAllCuesOfCuelist(Cuelist* c)
+{
+	selectedCues.clear();
+	for (int i = 0; i < c->cues.items.size(); i++) {
+		selectedCues.add(c->cues.items[i]);
+	}
+	CuelistSheet::getInstance()->updateSelection();
+}
+
+void BKEngine::clearCueSelection()
+{
+	selectedCues.clear();
+	CuelistSheet::getInstance()->updateSelection();
 }

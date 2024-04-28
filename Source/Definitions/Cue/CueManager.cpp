@@ -20,6 +20,7 @@ void CueManager::askForMoveBefore(BaseItem* c) {
     float c2Id = c2->id->getValue();
     c1->id->setValue(c2Id);
     c2->id->setValue(c1Id);
+    parentCuelist->sendChangeMessage();
 };
 
 void CueManager::askForMoveAfter(BaseItem* c) {
@@ -30,6 +31,7 @@ void CueManager::askForMoveAfter(BaseItem* c) {
     float c2Id = c2->id->getValue();
     c1->id->setValue(c2Id);
     c2->id->setValue(c1Id);
+    parentCuelist->sendChangeMessage();
 };
 
 void CueManager::addItemInternal(Cue* c, var data) {
@@ -41,12 +43,14 @@ void CueManager::addItemInternal(Cue* c, var data) {
     } 
     BaseManager::addItemInternal(c, data);
     c->id->setValue(newId);
+    parentCuelist->sendChangeMessage();
 }
 
 void CueManager::askForDuplicateItem(BaseItem* item)
 {
     BaseManager::askForDuplicateItem(item);
     correctCueIds();
+    parentCuelist->sendChangeMessage();
 }
 
 void CueManager::correctCueIds()
@@ -95,6 +99,7 @@ void CueManager::setItemIndex(Cue* item, int newIndex, bool addToUndo)
         double prev = items[newIndex - 1]->id->getValue();
         item->id -> setValue(calcId(prev, next));
     }
+    parentCuelist->sendChangeMessage();
 }
 
 double CueManager::calcId(double prev, double next)
@@ -115,7 +120,7 @@ void CueManager::removeItemInternal(Cue* c)
             parentCuelist->cueA = nullptr;
         }
     }
-
+    parentCuelist->sendChangeMessage();
 }
 
 

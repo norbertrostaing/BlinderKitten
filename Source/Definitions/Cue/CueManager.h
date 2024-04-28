@@ -20,6 +20,8 @@ public:
     CueManager();
     ~CueManager();
 
+    Cuelist* parentCuelist = nullptr;
+
     void askForMoveBefore(BaseItem*) override;
     void askForMoveAfter(BaseItem*) override;
     void addItemInternal(Cue* c, var data);

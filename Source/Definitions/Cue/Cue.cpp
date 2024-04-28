@@ -14,6 +14,7 @@
 #include "../../Brain.h"
 #include "UserInputManager.h"
 #include "BKEngine.h"
+#include "UI/CuelistSheet/CuelistSheet.h"
 
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue 1")),
@@ -87,6 +88,7 @@ Cue::~Cue()
 	Brain::getInstance()->cuePoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
 	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectedCues.removeAllInstancesOf(this);
+	CuelistSheet::getInstance()->cueDeleted(this);
 
 }
 
@@ -104,6 +106,7 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 		if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
 			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 			MessageManager::callAsync([this, parentCuelist]() {parentCuelist->reorderCues(); });
+			sendChangeMessage();
 		}
 	}
 }
@@ -127,29 +130,14 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 		const MessageManagerLock mmlock;
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
 		if (p != nullptr) {
-			commands.clear();
-			for (int i = 0; i < p->commands.items.size(); i++) {
-				Command* com = commands.addItem();
-				com->loadJSONData(p->commands.items[i]->getJSONData());
-			}
-			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-			if (parentCuelist->cueA == this) {
-				parentCuelist->go(this,0,0);
-			}
+			replaceContent(p);
 		}
 	}
 	else if (c == mergeBtn) {
 		const MessageManagerLock mmlock;
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
 		if (p != nullptr) {
-			for (int i = 0; i < p->commands.items.size(); i++) {
-				Command* com = commands.addItem();
-				com->loadJSONData(p->commands.items[i]->getJSONData());
-			}
-			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-			if (parentCuelist->cueA == this) {
-				parentCuelist->go(this, 0, 0);
-			}
+			mergeContent(p);
 		}
 	}
 	else if (c == createBeforeBtn) {
@@ -159,6 +147,9 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 	else if (c == createAfterBtn) {
 		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 		parentCuelist->insertProgCueAfter(this);
+	}
+	else if (c == htpInDelay || c == htpOutDelay || c == ltpDelay || c == htpInFade || c == htpOutFade || c == ltpFade) {
+		sendChangeMessage();
 	}
 }
 
@@ -277,6 +268,24 @@ void Cue::loadContent(Programmer* p)
 		});
 }
 
+void Cue::replaceContent(Programmer* p)
+{
+	commands.clear();
+	mergeContent(p);
+}
+
+void Cue::mergeContent(Programmer* p)
+{
+	for (int i = 0; i < p->commands.items.size(); i++) {
+		Command* com = commands.addItem();
+		com->loadJSONData(p->commands.items[i]->getJSONData());
+	}
+	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	if (parentCuelist->cueA == this) {
+		parentCuelist->go(this, 0, 0);
+	}
+}
+
 void Cue::writeTimeStamp()
 {
 	MessageManager::callAsync([this](){
@@ -292,5 +301,10 @@ String Cue::getCommandsText(bool useName)
 		ret += commands.items[i]->getCommandAsTexts(useName).joinIntoString(" ");
 	}
 	return ret;
+}
+
+void Cue::onContainerNiceNameChanged()
+{
+	sendChangeMessage();
 }
 

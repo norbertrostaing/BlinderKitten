@@ -72,6 +72,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/CuelistSheet_c446831d.o \
+  $(JUCE_OBJDIR)/CuelistSheetLine_cec00931.o \
   $(JUCE_OBJDIR)/EncodersMult_c99223bd.o \
   $(JUCE_OBJDIR)/EncodersMultCmd_6c9aa0c7.o \
   $(JUCE_OBJDIR)/EncodersMultUI_ee98a251.o \
@@ -245,6 +247,16 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(JUCE_OBJDIR)/execinfo.cmd $
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/CuelistSheet_c446831d.o: ../../Source/UI/CuelistSheet/CuelistSheet.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling CuelistSheet.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CuelistSheetLine_cec00931.o: ../../Source/UI/CuelistSheet/CuelistSheetLine.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling CuelistSheetLine.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/EncodersMult_c99223bd.o: ../../Source/UI/EncodersMult/EncodersMult.cpp
 	-$(V_AT)mkdir -p $(@D)
