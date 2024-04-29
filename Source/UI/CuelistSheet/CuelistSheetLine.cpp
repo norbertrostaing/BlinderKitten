@@ -205,7 +205,10 @@ void CuelistSheetLine::showCuePopup()
 	p.addSeparator();
 	p.addItem("Load content",[this, targetCuelist](){targetCue->loadContent(UserInputManager::getInstance()->getProgrammer(true));});
 	p.addSeparator();
-	p.addItem("Replace", [this, targetCuelist]() {targetCue->replaceContent(UserInputManager::getInstance()->getProgrammer(true));});
+	p.addItem("Insert before", [this, targetCuelist]() {targetCuelist->insertProgCueBefore(targetCue); });
+	p.addItem("Insert after", [this, targetCuelist]() {targetCuelist->insertProgCueAfter(targetCue); });
+	p.addSeparator();
+	p.addItem("Replace", [this, targetCuelist]() {targetCue->replaceContent(UserInputManager::getInstance()->getProgrammer(true)); });
 	p.addItem("Merge", [this, targetCuelist]() {targetCue->mergeContent(UserInputManager::getInstance()->getProgrammer(true)); });
 
 	p.showMenuAsync(PopupMenu::Options(), [this](int result){});
