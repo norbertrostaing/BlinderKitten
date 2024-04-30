@@ -138,71 +138,6 @@ void ConductorInfos::paint (juce::Graphics& g)
         return;
     }
 
-    Cue* nextCue = target->getNextCue();
-
-    float textSize = engine->conductorTextSize->floatValue();
-    float titleSize = engine->conductorTitleSize->floatValue();
-
-    float w = getLocalBounds().getWidth();
-    float h = getLocalBounds().getHeight() - 20;
-
-    float currentCueHeight = titleSize +10;
-    float nextCueHeight = textSize +10;
-    float nextCueGoHeight = titleSize +10;
-    float currentCueTextHeight = h - currentCueHeight - nextCueHeight - nextCueGoHeight;
-
-    if (currentCueTextHeight < currentCueHeight) {
-        currentCueHeight = h/4;
-        nextCueHeight = h/4;
-        nextCueGoHeight = h/4;
-        currentCueTextHeight = h/4;
-    }
-
-    float timingHeight = nextCueHeight + nextCueGoHeight;
-    float timingElementSize = timingHeight / 3;
-    float timingWidth = w/3;
-
-    g.setColour (engine->conductorCurrentCueColor->getColor());
-
-    g.setFont (titleSize);
-    String currId = "";
-    if (target->conductorCurrentCueId->floatValue() >= 0) {
-        currId = String(target->conductorCurrentCueId->floatValue()) + " - ";
-    }
-    g.drawFittedText(currId+ target->conductorCurrentCueName->stringValue(), 0, 0, w, currentCueHeight, juce::Justification::centredTop, true);
-
-    g.setFont(textSize);
-    g.drawFittedText(target->conductorCurrentCueText->stringValue(), 0, currentCueHeight, w, currentCueTextHeight, juce::Justification::centredTop, true);
-
-    g.setColour(engine->conductorNextCueColor->getColor());
-
-    float topNext = h - nextCueHeight - nextCueGoHeight;
-
-    g.setFont(titleSize);
-    g.drawFittedText(target->conductorNextCueGo->stringValue(), 0, topNext, w-timingWidth, nextCueGoHeight, juce::Justification::centredTop, true);
-
-    g.setFont(textSize);
-    String nextId = "";
-    if (target->conductorNextCueId->floatValue() >= 0) {
-        nextId = String(target->conductorNextCueId->floatValue()) + " - ";
-    }
-    g.drawFittedText(nextId + target->conductorNextCueName->stringValue(), 0, h - nextCueHeight, w-timingWidth, nextCueHeight, juce::Justification::centredTop, true);
-
-    if (nextCue != nullptr) {
-
-        int timeW = (w / 3) / 4;
-        int timeH = timingHeight / 3;
-
-        g.setFont(timingElementSize*0.5);
-        g.drawFittedText("Up", w - (3 * timeW), h-(3*timeH), timeW, timeH, juce::Justification::centred, true);
-        g.drawFittedText("Down", w - (2 * timeW), h-(3*timeH), timeW, timeH, juce::Justification::centred, true);
-        g.drawFittedText("LTP", w - (1 * timeW), h-(3*timeH), timeW, timeH, juce::Justification::centred, true);
-        //int r = Random::getSystemRandom().nextInt(100);
-
-        g.drawFittedText("Delay", w - (4 * timeW), h - (2 * timeH), timeW, timeH, juce::Justification::centred, true);
-        g.drawFittedText("Fade", w - (4 * timeW), h - (1 * timeH), timeW, timeH, juce::Justification::centred, true);
-    }
-
 
 }
 
@@ -245,8 +180,8 @@ void ConductorInfos::resized()
 
     currentCueId.setBounds(0, 20, idW, floor(currentCueHeight));
     currentCueName.setBounds(idW, 20, w-idW, floor(currentCueHeight));
-    nextCueGo.setBounds(0, 20+floor(currentCueHeight + currentCueTextHeight), floor(2 * w/3), floor(nextCueHeight));
-    nextCueName.setBounds(0, floor(h - nextCueHeight), floor(2 * w/3), floor(nextCueHeight));
+    nextCueGo.setBounds(0, 20+floor(currentCueHeight + currentCueTextHeight), floor(2 * w/3), floor(nextCueGoHeight));
+    nextCueName.setBounds(0, 20 + floor(currentCueHeight + currentCueTextHeight + nextCueGoHeight), floor(2 * w/3), floor(nextCueHeight));
 
     float currCommandRatio = getCurrCommandHeightRatio();
     int currCmdHeight = currentCueTextHeight * currCommandRatio;
@@ -278,20 +213,20 @@ void ConductorInfos::resized()
     }
 
 
-    upLabel.setBounds(w - (3 * timeW), h - (3 * timeH), timeW, timeH);
-    downLabel.setBounds(w - (2 * timeW), h - (3 * timeH), timeW, timeH);
-    ltpLabel.setBounds(w - (1 * timeW), h - (3 * timeH), timeW, timeH);
-    delayLabel.setBounds(w - (4 * timeW), h - (2 * timeH), timeW, timeH);
-    fadeLabel.setBounds(w - (4 * timeW), h - (1 * timeH), timeW, timeH);
+    upLabel.setBounds(w - (3 * timeW), 20 + h - (3 * timeH), timeW, timeH);
+    downLabel.setBounds(w - (2 * timeW), 20 + h - (3 * timeH), timeW, timeH);
+    ltpLabel.setBounds(w - (1 * timeW), 20 + h - (3 * timeH), timeW, timeH);
+    delayLabel.setBounds(w - (4 * timeW), 20 + h - (2 * timeH), timeW, timeH);
+    fadeLabel.setBounds(w - (4 * timeW), 20 + h - (1 * timeH), timeW, timeH);
 
 
-    if (currentFade != nullptr) { currentFade->setBounds(0, h , w, 20); }
-    if (nextHTPInDelay != nullptr) { nextHTPInDelay->setBounds(w - (3 * timeW), h - (2 * timeH), timeW, timeH); }
-    if (nextHTPOutDelay != nullptr) { nextHTPOutDelay->setBounds(w - (2 * timeW), h - (2 * timeH), timeW, timeH); }
-    if (nextLTPDelay != nullptr) { nextLTPDelay->setBounds(w - (1 * timeW), h - (2 * timeH), timeW, timeH); }
-    if (nextHTPInFade != nullptr) { nextHTPInFade->setBounds(w - (3 * timeW), h - (1 * timeH), timeW, timeH); }
-    if (nextHTPOutFade != nullptr) { nextHTPOutFade->setBounds(w - (2 * timeW), h - (1 * timeH), timeW, timeH); }
-    if (nextLTPFade != nullptr) { nextLTPFade->setBounds(w - (1 * timeW), h - (1 * timeH), timeW, timeH); }
+    if (currentFade != nullptr) { currentFade->setBounds(0, getHeight()-20 , w, 20); }
+    if (nextHTPInDelay != nullptr) { nextHTPInDelay->setBounds(w - (3 * timeW),20+ h - (2 * timeH), timeW, timeH); }
+    if (nextHTPOutDelay != nullptr) { nextHTPOutDelay->setBounds(w - (2 * timeW),20+ h - (2 * timeH), timeW, timeH); }
+    if (nextLTPDelay != nullptr) { nextLTPDelay->setBounds(w - (1 * timeW),20+ h - (2 * timeH), timeW, timeH); }
+    if (nextHTPInFade != nullptr) { nextHTPInFade->setBounds(w - (3 * timeW),20+ h - (1 * timeH), timeW, timeH); }
+    if (nextHTPOutFade != nullptr) { nextHTPOutFade->setBounds(w - (2 * timeW),20+ h - (1 * timeH), timeW, timeH); }
+    if (nextLTPFade != nullptr) { nextLTPFade->setBounds(w - (1 * timeW),20+ h - (1 * timeH), timeW, timeH); }
 }
 
 void ConductorInfos::updateStyle()
@@ -387,7 +322,7 @@ void ConductorInfos::updateContent()
         text += target->commandHistory[i]->getCommandAsTexts(true).joinIntoString(" ")+" \n";
     }
     currCommands.setText(text, juce::NotificationType::dontSendNotification);
-    nextCommands.setText("Next cue : \n" + nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
+    nextCommands.setText(nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
 
     nextHTPInDelay = nextCue->htpInDelay->createSlider();
     nextHTPOutDelay = nextCue->htpOutDelay->createSlider();

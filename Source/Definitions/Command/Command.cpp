@@ -446,6 +446,7 @@ StringArray Command::getCommandAsTexts(bool useNames) {
 	for (int i = 0; i < values.items.size(); i++) {
 		CommandValue* v = values.items[i];
 		currentUserValue = v;
+		if (i>0) {words.getReference(words.size()-1) = String(words[words.size() - 1])+","; }
 		if (v->presetOrValue->getValue() == "preset") {
 			words.add("preset");
 			lastTarget = "valuePreset";
