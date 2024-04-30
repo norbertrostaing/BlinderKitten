@@ -61,7 +61,7 @@ void UserInputManager::processInput(String s) {
 	getProgrammer(true)->processUserInput(s);
 }
 
-void UserInputManager::processMessage(const OSCMessage& m, const juce::String& clientId)
+void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::String& clientId)
 {
 	StringArray aList;
 	String address = m.getAddressPattern().toString().toLowerCase();

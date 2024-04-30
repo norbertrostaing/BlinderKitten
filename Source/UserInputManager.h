@@ -36,8 +36,8 @@ public:
     UserInputManager();
     ~UserInputManager();
 
-	void processInput(String s);
-    void processMessage(const OSCMessage& m, const juce::String& clientId) override;
+    void processInput(String s);
+    void processMessage(const juce::OSCMessage& m, const juce::String& clientId) override;
 
     void encoderValueChanged(int index, float absVal, String origin);
     void changeChannelValue(ChannelType* chan, float absVal);
