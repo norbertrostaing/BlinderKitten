@@ -280,6 +280,8 @@ void Programmer::release(double now) {
 		temp->startValue = temp->value;
 		temp->isEnded = false;
 
+		temp->fadeCurve = nullptr;
+
 		activeValues.set(it.getKey(), temp);
 		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
@@ -331,7 +333,9 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 			cv->currentPosition = 1;
 		}
 		float fade = float(now - cv->TSStart) / float(cv->TSEnd - cv->TSStart);
-		fade = cv->fadeCurve->getValueAtPosition(fade);
+		if (cv->fadeCurve != nullptr) {
+			fade = cv->fadeCurve->getValueAtPosition(fade);
+		}
 		localValue = jmap(fade, valueFrom, valueTo);
 		keepUpdate = true;
 		// Brain::getInstance()->pleaseUpdate(this);

@@ -29,7 +29,7 @@ public:
     int64 TSEnd = 0;
 
     bool invertCurve = false;
-    Automation* fadeCurve;
+    Automation* fadeCurve = nullptr;
 
     bool isEnded = false;
     bool isOverWritten = false;
