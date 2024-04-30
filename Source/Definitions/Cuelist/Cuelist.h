@@ -119,6 +119,7 @@ public:
     FloatParameter* offFade;
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> activeValues;
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> flashingValues;
+    Array<Command*> commandHistory;
     CriticalSection isComputing;
 
     TargetParameter* currentCue;

@@ -38,5 +38,5 @@ public:
     bool isTransitionOut = false;
     bool htpOverride = false;
 
-    Command* parentCommand;
+    Command* parentCommand = nullptr;
 };

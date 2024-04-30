@@ -32,7 +32,8 @@ public:
     Label currentCueName;
     Label currentCueId;
     Label currentCueText;
-    Label commands;
+    Label currCommands;
+    Label nextCommands;
     Label nextCueGo;
     Label nextCueName;
 
@@ -74,6 +75,7 @@ public:
     void inspect(int delta);
     void inspectCuelist();
 
+    float getCurrCommandHeightRatio();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConductorInfos)

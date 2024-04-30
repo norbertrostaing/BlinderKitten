@@ -672,6 +672,11 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		}
 		c->csComputing.exit();
 		c->go();
+
+		for (int i = 0; i < c->commands.items.size(); i++) {
+			commandHistory.removeAllInstancesOf(c->commands.items[i]);
+			commandHistory.add(c->commands.items[i]);
+		}
 	}
 	
 	if (trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue() || c->releaseCurrentTracking->boolValue()) {
@@ -680,6 +685,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				std::shared_ptr<ChannelValue> temp = it.getValue();
 				if (temp != nullptr && temp -> endValue != -1) {
 					temp->isTransitionOut = true;
+					temp->parentCommand = nullptr;
 					float fadeTime = 0;
 					float delayTime = 0;
 					if (isChaser->getValue()) {
@@ -733,6 +739,20 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		Brain::getInstance()->pleaseUpdate(c);
 
 	}
+
+	Array<Command*> usefulCommands;
+	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		Command* c = it.getValue()->parentCommand;
+		if (c != nullptr) usefulCommands.addIfNotAlreadyThere(c);
+	}
+
+	for (int i = commandHistory.size() - 1; i >= 0; i--) {
+		Command* c = commandHistory[i];
+		if (!usefulCommands.contains(c)) {
+			commandHistory.removeRange(i,1);
+		}
+	}
+
 	isComputing.exit();
 
 	if (cues.items.size() > 1 && !isChaser->boolValue()) {

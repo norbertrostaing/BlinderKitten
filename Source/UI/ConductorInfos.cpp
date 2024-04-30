@@ -24,7 +24,8 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(currentCueText);
     addAndMakeVisible(nextCueGo);
     addAndMakeVisible(nextCueName);
-    addAndMakeVisible(commands);
+    addAndMakeVisible(currCommands);
+    addAndMakeVisible(nextCommands);
 
     addAndMakeVisible(inspectPrevBtn);
     addAndMakeVisible(inspectCurrBtn);
@@ -87,7 +88,8 @@ ConductorInfos::ConductorInfos()
     currentCueText.setJustificationType(juce::Justification::centred);
     nextCueGo.setJustificationType(juce::Justification::centred);
     nextCueName.setJustificationType(juce::Justification::centred);
-    commands.setJustificationType(juce::Justification::centred);
+    currCommands.setJustificationType(juce::Justification::centred);
+    nextCommands.setJustificationType(juce::Justification::centred);
 
     upLabel.setJustificationType(juce::Justification::centredRight);
     downLabel.setJustificationType(juce::Justification::centredRight);
@@ -246,23 +248,33 @@ void ConductorInfos::resized()
     nextCueGo.setBounds(0, 20+floor(currentCueHeight + currentCueTextHeight), floor(2 * w/3), floor(nextCueHeight));
     nextCueName.setBounds(0, floor(h - nextCueHeight), floor(2 * w/3), floor(nextCueHeight));
 
+    float currCommandRatio = getCurrCommandHeightRatio();
+    int currCmdHeight = currentCueTextHeight * currCommandRatio;
+    int nextCmdHeight = currentCueTextHeight - currCmdHeight;
+
     if (displayMode == 0) {
         currentCueText.setVisible(true); 
         currentCueText.setBounds(0, 20+floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
-        commands.setVisible(false); 
-        commands.setBounds(0, 0, 0, 0);
+        currCommands.setVisible(false);
+        nextCommands.setVisible(false);
+        currCommands.setBounds(0, 0, 0, 0);
+        nextCommands.setBounds(0, 0, 0, 0);
     }
     else if (displayMode == 1) {
         currentCueText.setVisible(false); 
         currentCueText.setBounds(0, 0, 0, 0);
-        commands.setVisible(true); 
-        commands.setBounds(0, 20+floor(currentCueHeight), floor(w), floor(currentCueTextHeight));
+        currCommands.setVisible(true);
+        currCommands.setBounds(0, 20 + floor(currentCueHeight), floor(w), floor(currCmdHeight));
+        nextCommands.setVisible(true);
+        nextCommands.setBounds(0, 20 + floor(currentCueHeight + currCmdHeight), floor(w), floor(nextCmdHeight));
     }
     else if (displayMode == 2) {
         currentCueText.setVisible(true); 
         currentCueText.setBounds(0, 20+floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
-        commands.setVisible(true); 
-        commands.setBounds(floor(w / 2), 20+floor(currentCueHeight), floor(w/2), floor(currentCueTextHeight));
+        currCommands.setVisible(true);
+        currCommands.setBounds(floor(w / 2), 20 + floor(currentCueHeight), floor(w / 2), floor(currCmdHeight));
+        nextCommands.setVisible(true);
+        nextCommands.setBounds(floor(w / 2), 20 + floor(currentCueHeight+currCmdHeight), floor(w / 2), floor(nextCmdHeight));
     }
 
 
@@ -289,7 +301,8 @@ void ConductorInfos::updateStyle()
     currentCueId.setColour(juce::Label::ColourIds::textColourId, curr);
     currentCueName.setColour(juce::Label::ColourIds::textColourId, curr);
     currentCueText.setColour(juce::Label::ColourIds::textColourId, curr);
-    commands.setColour(juce::Label::ColourIds::textColourId, next);
+    currCommands.setColour(juce::Label::ColourIds::textColourId, curr);
+    nextCommands.setColour(juce::Label::ColourIds::textColourId, next);
     nextCueName.setColour(juce::Label::ColourIds::textColourId, next);
     nextCueGo.setColour(juce::Label::ColourIds::textColourId, next);
     upLabel.setColour(juce::Label::ColourIds::textColourId, next);
@@ -306,7 +319,8 @@ void ConductorInfos::updateStyle()
     currentCueText.setFont(Font(textSize, 0));
     nextCueGo.setFont(Font(titleSize, 0));
     nextCueName.setFont(Font(textSize, 0));
-    commands.setFont(Font(textSize, 0));
+    currCommands.setFont(Font(textSize, 0));
+    nextCommands.setFont(Font(textSize, 0));
 
 
 }
@@ -368,7 +382,12 @@ void ConductorInfos::updateContent()
 
     nextCueGo.setText(nextCue->goText->stringValue(), juce::NotificationType::dontSendNotification);
     nextCueName.setText(nextCue->niceName, juce::NotificationType::dontSendNotification);
-    commands.setText("Next cue : \n" + nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
+    String text = "";
+    for (int i = 0; i < target->commandHistory.size(); i++) {
+        text += target->commandHistory[i]->getCommandAsTexts(true).joinIntoString(" ")+" \n";
+    }
+    currCommands.setText(text, juce::NotificationType::dontSendNotification);
+    nextCommands.setText("Next cue : \n" + nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
 
     nextHTPInDelay = nextCue->htpInDelay->createSlider();
     nextHTPOutDelay = nextCue->htpOutDelay->createSlider();
@@ -443,4 +462,17 @@ void ConductorInfos::inspectCuelist()
     Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
     if (target == nullptr) { return; }
     target->selectThis();
+}
+
+float ConductorInfos::getCurrCommandHeightRatio()
+{
+    String curr = currCommands.getText();
+    String next = nextCommands.getText();
+    int currLines = 1;
+    int nextLines = 1;
+    while (curr.indexOf("\n") != -1) { curr = curr.substring(curr.indexOf("\n") + 1); currLines++; }
+    while (next.indexOf("\n") != -1) { next = next.substring(next.indexOf("\n") + 1); nextLines++; }
+
+    float ratio = float(currLines) / float(currLines + nextLines);
+    return ratio;
 }
