@@ -30,6 +30,7 @@ Command::Command(var params) :
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
 	itemDataType = "Command";
+	nameCanBeChangedByUser = false;
 
 	//viewCommandBtn = addTrigger("Log command text", "display the textual content of this command in the log windows");
 	explodeSelectionBtn = addTrigger("Explode Selection", "Transform this command in one command per subfixture");
@@ -323,6 +324,8 @@ void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllab
 	else {
 
 	}
+	String name = getCommandAsTexts(true).joinIntoString(" ");
+	setNiceName(name);
 }
 
 void Command::triggerTriggered(Trigger* t)
