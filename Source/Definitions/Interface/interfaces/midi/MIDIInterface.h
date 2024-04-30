@@ -28,6 +28,8 @@ public:
     IntParameter* numBytes;
     ControllableContainer dataContainer;
 
+    StringParameter* infos;
+
     void updateDevices();
     void updateBytesParams();
     void onContainerParameterChangedInternal(Parameter *) override;

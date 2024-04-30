@@ -19,6 +19,9 @@ MIDIInterface::MIDIInterface() :
     deviceParam = new MIDIDeviceParameter("Device");
 
     addParameter(deviceParam);
+    infos = addStringParameter("Infos", "Note informations about your controler here.", "");
+    infos->multiline = true;
+
     numBytes = addIntParameter("Start sysex", "Sysex message to send at startup, F0 and F7 are automatically added at the begin and the end, so don't fill them :) .", 0, 0);
 
     addChildControllableContainer(&dataContainer);
