@@ -516,6 +516,22 @@ StringArray Command::getCommandAsTexts(bool useNames) {
 				}
 			}
 		}
+		else if (v->presetOrValue->getValue() == "release") {
+			ChannelType* c = dynamic_cast<ChannelType*>(v->channelType->targetContainer.get());
+			if (c != nullptr) {
+				words.add(c->niceName);
+				lastTarget = "valueRaw";
+				userCantPress();
+				userCanPressValue = true;
+				currentUserTarget = v->valueFrom;
+				userCanPressValueType = true;
+				words.add("release");
+				lastTarget = "valueRawFrom";
+				userCanPressTimingType = true;
+				userCanPressThru = false;
+				userCanHaveAnotherCommand = true;
+			}
+		}
 	}
 
 	return words;
