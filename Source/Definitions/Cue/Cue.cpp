@@ -38,6 +38,8 @@ Cue::Cue(var params) :
 	lastTriggeredTS = addStringParameter("Last triggered", "When did this cue was triggered for the last time ?", "");
 	lastTriggeredTS->enabled = false;
 
+	releaseCurrentTracking = addBoolParameter("Release Trcking", "If checked, all tracked values will be released when this cue is triggered", false);
+
 	autoFollow = addEnumParameter("Auto Follow", "Does the cuelist stops the execution of the cuelist or auto triggers the next one");
 	autoFollow->addOption("Wait for go", "none");
 	autoFollow->addOption("End of transitions", "auto");

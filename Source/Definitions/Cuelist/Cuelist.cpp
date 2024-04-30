@@ -596,6 +596,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	if (needRebuildTracking) {
 		for (int i = 0; i <= nextIndex-1; i++) {
 			Cue* tempCue = cues.items[i];
+			if (tempCue->releaseCurrentTracking->boolValue()) {
+				newActiveValues.clear();
+			}
 			tempCue->computeValues();
 			tempCue->csComputing.enter();
 			for (auto it = tempCue->computedValues.begin(); it != tempCue->computedValues.end(); it.next()) {
@@ -671,7 +674,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		c->go();
 	}
 	
-	if (trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue()) {
+	if (trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue() || c->releaseCurrentTracking->boolValue()) {
 		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 			if (!newActiveValues.contains(it.getKey())) {
 				std::shared_ptr<ChannelValue> temp = it.getValue();

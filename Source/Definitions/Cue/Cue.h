@@ -39,6 +39,8 @@ public:
     double TSAutoFollowStart;
     double TSAutoFollowEnd;
 
+    BoolParameter* releaseCurrentTracking;
+
     ControllableContainer actionsContainer;
     Trigger* goBtn;
     Trigger* loadBtn;
