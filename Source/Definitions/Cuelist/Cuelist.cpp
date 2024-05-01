@@ -673,9 +673,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		c->csComputing.exit();
 		c->go();
 
-		for (int i = 0; i < c->commands.items.size(); i++) {
-			commandHistory.removeAllInstancesOf(c->commands.items[i]);
-			commandHistory.add(c->commands.items[i]);
+		for (int i = 0; i < c->commandHistory.size(); i++) {
+			commandHistory.removeAllInstancesOf(c->commandHistory[i]);
+			commandHistory.add(c->commandHistory[i]);
 		}
 	}
 	

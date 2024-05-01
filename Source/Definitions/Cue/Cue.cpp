@@ -15,6 +15,7 @@
 #include "UserInputManager.h"
 #include "BKEngine.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
+#include "Cuelist/CuelistManager.h"
 
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue 1")),
@@ -39,6 +40,11 @@ Cue::Cue(var params) :
 	lastTriggeredTS->enabled = false;
 
 	releaseCurrentTracking = addBoolParameter("Release Trcking", "If checked, all tracked values will be released when this cue is triggered", false);
+	
+	reuseCue = addTargetParameter("Use cue commands", "The commands of selected cue will be appplied before this cue", CuelistManager::getInstance());
+	reuseCue->targetType = TargetParameter::CONTAINER;
+	reuseCue->maxDefaultSearchLevel = 2;
+	reuseCue->typesFilter = StringArray("Cue");
 
 	autoFollow = addEnumParameter("Auto Follow", "Does the cuelist stops the execution of the cuelist or auto triggers the next one");
 	autoFollow->addOption("Wait for go", "none");
@@ -156,15 +162,43 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 }
 
 void Cue::computeValues() {
+	Array<Cue*> histo;
+	computeValues(histo, this);
+}
+
+void Cue::computeValues(Array<Cue*> history, Cue* callingCue) {
+	if (history.contains(this)) return;
+	history.add(this);
 	csComputing.enter();
 	isComputing = true;
 	maxTiming = 0;
 	computedValues.clear();
 	channelToCommand.clear();
-	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	commandHistory.clear();
+	if (callingCue == nullptr) callingCue = this;
+
+	if (reuseCue->getValue() != "") {
+		Cue* original = dynamic_cast<Cue*>(reuseCue->targetContainer.get());
+		if (original != nullptr) {
+			original->computeValues(history, callingCue);
+			original->csComputing.enter();
+			for (auto it = original->computedValues.begin(); it != original->computedValues.end(); it.next()) {
+				computedValues.set(it.getKey(), it.getValue());
+			}
+			for (auto it = original->channelToCommand.begin(); it != original->channelToCommand.end(); it.next()) {
+				channelToCommand.set(it.getKey(), it.getValue());
+			}
+			commandHistory.addArray(original->commandHistory);
+			original->csComputing.exit();
+		}
+	}
+
+	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(callingCue->parentContainer->parentContainer.get());
 	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
-		cs[i]->computeValues(parentCuelist, this);
+		commandHistory.removeAllInstancesOf(cs[i]);
+		commandHistory.add(cs[i]);
+		cs[i]->computeValues(parentCuelist, callingCue);
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
 		for (auto it = cs[i]->computedValues.begin(); it != cs[i]->computedValues.end(); it.next()) {
 			SubFixtureChannel* fc = it.getKey();
@@ -298,6 +332,10 @@ void Cue::writeTimeStamp()
 String Cue::getCommandsText(bool useName)
 {
 	String ret = "";
+	Cue* original = dynamic_cast<Cue*>(reuseCue->targetContainer.get());
+	if (original != nullptr) {
+		ret += original->getCommandsText(useName);
+	}
 	for (int i = 0; i < commands.items.size(); i++) {
 		if (ret != "") {ret += "\n"; }
 		ret += commands.items[i]->getCommandAsTexts(useName).joinIntoString(" ");

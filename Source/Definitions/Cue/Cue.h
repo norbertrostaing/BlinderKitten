@@ -40,6 +40,7 @@ public:
     double TSAutoFollowEnd;
 
     BoolParameter* releaseCurrentTracking;
+    TargetParameter* reuseCue;
 
     ControllableContainer actionsContainer;
     Trigger* goBtn;
@@ -56,11 +57,14 @@ public:
     HashMap<SubFixtureChannel*, Command*> channelToCommand;
     CriticalSection csComputing;
 
+    Array<Command*> commandHistory;
+
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c);
 
     void computeValues();
+    void computeValues(Array<Cue*> history, Cue* callingCue);
     void update(double now);
     void go();
     void endTransition();
