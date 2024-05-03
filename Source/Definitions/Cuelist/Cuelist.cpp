@@ -742,8 +742,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	Array<Command*> usefulCommands;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		Command* c = it.getValue()->parentCommand;
-		if (c != nullptr) usefulCommands.addIfNotAlreadyThere(c);
+		if (it.getValue() != nullptr) {
+			Command* c = it.getValue()->parentCommand;
+			if (c != nullptr) usefulCommands.addIfNotAlreadyThere(c);
+		}
 	}
 
 	for (int i = commandHistory.size() - 1; i >= 0; i--) {
