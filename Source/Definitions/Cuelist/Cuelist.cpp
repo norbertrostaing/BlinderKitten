@@ -593,7 +593,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> newActiveValues;
 
-	if (needRebuildTracking) {
+	if (needRebuildTracking && !c->releaseCurrentTracking->boolValue()) {
 		for (int i = 0; i <= nextIndex-1; i++) {
 			Cue* tempCue = cues.items[i];
 			if (tempCue->releaseCurrentTracking->boolValue()) {
