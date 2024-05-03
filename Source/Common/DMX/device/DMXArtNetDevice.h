@@ -57,7 +57,7 @@ public:
 	//StringParameter * nodeName;
 
 	StringParameter* remoteHost;
-//	IntParameter * remotePort;
+	IntParameter * remotePort;
 	IntParameter* outputNet;
 	IntParameter* outputSubnet;
 	IntParameter* outputUniverse;

@@ -140,7 +140,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	inputCC->enabled->setValue(false);
 
 	remoteHost = outputCC->addStringParameter("Remote Host", "IP to which send the Art-Net to", "127.0.0.1");
-//	remotePort = outputCC->addIntParameter("Remote Port", "Local port to receive ArtNet data", 6454, 0, 65535);
+	remotePort = outputCC->addIntParameter("Remote Port", "Remote port to send ArtNet data", 6454, 0, 65535);
 	outputNet = outputCC->addIntParameter("Net", "The net to send to, from 0 to 15", 0, 0, 127);
 	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
 	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
@@ -233,7 +233,7 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 	artnetPacket[17] = 0;
 
 	ArtnetSocket::getInstance()->isSending.enter();
-	ArtnetSocket::getInstance()->socket->write(remoteHost->stringValue(), 6454, artnetPacket, 530);
+	ArtnetSocket::getInstance()->socket->write(remoteHost->stringValue(), remotePort->intValue(), artnetPacket, 530);
 	ArtnetSocket::getInstance()->isSending.exit();
 }
 
