@@ -39,7 +39,7 @@ Cue::Cue(var params) :
 	lastTriggeredTS = addStringParameter("Last triggered", "When did this cue was triggered for the last time ?", "");
 	lastTriggeredTS->enabled = false;
 
-	releaseCurrentTracking = addBoolParameter("Release Trcking", "If checked, all tracked values will be released when this cue is triggered", false);
+	releaseCurrentTracking = addBoolParameter("Release Tracking", "If checked, all tracked values will be released when this cue is triggered", false);
 	
 	reuseCue = addTargetParameter("Use cue commands", "The commands of selected cue will be appplied before this cue", CuelistManager::getInstance());
 	reuseCue->targetType = TargetParameter::CONTAINER;
