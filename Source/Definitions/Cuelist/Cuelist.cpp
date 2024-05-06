@@ -1046,10 +1046,6 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		return currentVal;
 	}
 
-	if (cv != nullptr && cv->htpOverride) {
-		HTP = false;
-	}
-
 	if (stopTransition) {
 		double ratio = cv->isTransitionOut ? currentManualOutTransition : currentManualInTransition;
 		now = TSTransitionStart + (TSTransitionDuration * ratio);
@@ -1116,7 +1112,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	}
 	cv->value = localValue;
 
-	if (HTP) {
+	if (HTP && !cv->htpOverride) {
 		isApplied = localValue >= val;
 		val = jmax(val, localValue);
 	}
