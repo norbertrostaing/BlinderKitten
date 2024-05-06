@@ -38,6 +38,7 @@ Assistant::Assistant() :
     patcherCC("Patch Helper"),
     paletteMakerCC("Palette maker"),
     masterMakerCC("Masters maker"),
+    soloPaletteMakerCC("SoloPool palette maker"),
     fixtureSwapperCC("Fixture Type Swapper"),
     midiMapperCC("Midi mappings"),
     asciiCC("ASCII import / export"),
@@ -77,6 +78,12 @@ Assistant::Assistant() :
     masterMakerCC.addChildControllableContainer(&masterValue);
     masterBtn = masterMakerCC.addTrigger("Create Masters", "create a master cuelist for each group with these values");
     addChildControllableContainer(&masterMakerCC);
+
+    soloPalettePoolId = soloPaletteMakerCC.addIntParameter("Pool ID", "", 1, 0);
+    soloPaletteCuelistId = soloPaletteMakerCC.addIntParameter("Palette ID", "Id for your soloPalette, if already taken, search for a number above. Leave at 0 for auto number.", 0, 0);
+    soloPaletteName = soloPaletteMakerCC.addStringParameter("Palette Name", "Name your soloPalette here, leave empty to have an auto name", "");
+    soloPaletteBtn = soloPaletteMakerCC.addTrigger("Create Palette", "Create a new cuelist with selected soloPool");
+    addChildControllableContainer(&soloPaletteMakerCC);
 
     swapperOld = fixtureSwapperCC.addTargetParameter("Replace fixtures", "", FixtureTypeManager::getInstance());
     swapperOld->targetType = TargetParameter::CONTAINER;
@@ -203,6 +210,9 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
     else if ((Trigger*)c == paletteBtn) {
         pleaseCreatePalette = true;
         startThread();
+    }
+    else if ((Trigger*)c == soloPaletteBtn) {
+        MessageManager::callAsync([this]() {createSoloPalette(); });
     }
     else if ((Trigger*)c == masterBtn) {
         pleaseCreateMasters = true;
@@ -576,6 +586,104 @@ void Assistant::swapFixtures()
     else {
         LOGWARNING("You must specify a new fixture type");
     }
+
+}
+
+void Assistant::createSoloPalette()
+{
+
+    int poolId = soloPalettePoolId->intValue();
+    if (poolId == 0) { LOGERROR("you must type a valid group id";); return; }
+
+    LOG("Start creating palette, please wait...");
+
+    String cuelistName = "Palette SoloPool " + String(poolId);
+
+    Cuelist* cl = CuelistManager::getInstance()->addItem();
+    int askedId = soloPaletteCuelistId->intValue();
+    if (askedId > cl->id->intValue()) {
+        while (Brain::getInstance()->getCuelistById(askedId) != nullptr) {
+            askedId++;
+        }
+        cl->id->setValue(askedId);
+    }
+
+    if (soloPaletteName->stringValue() != "") {
+        cuelistName = soloPaletteName->stringValue();
+    }
+    cl->userName->setValue(cuelistName);
+    cl->cues.clear();
+    cl->deselectThis();
+    // supprimer premier cue
+    Brain::getInstance()->usingCollections.enter();
+    int id = 1;
+    bool nextIsNewLine = false;
+    for (auto it = Brain::getInstance()->cuelists.begin(); it != Brain::getInstance()->cuelists.end(); it.next()) {
+        Cuelist* target = it.getValue();
+        if (target->soloPool->intValue() == poolId) {
+            const MessageManagerLock mmLock;
+            String name = target->userName->stringValue();
+            Cue* c = cl->cues.addItem();
+            c->commands.clear();
+            c->editorIsCollapsed = true;
+            c->setNiceName(name);
+            c->loadWindowBreakLine->setValue(nextIsNewLine);
+            c->id->setValue(id);
+            id++;
+            nextIsNewLine = false;
+            Task* t = c->tasks.addItem();
+            t->targetType->setValueWithData("cuelist");
+            t->targetId->setValue(target->id->intValue());
+            t->cuelistAction->setValueWithData("go");
+        }
+    }
+
+    nextIsNewLine = true;
+    for (auto it = Brain::getInstance()->effects.begin(); it != Brain::getInstance()->effects.end(); it.next()) {
+        Effect* target = it.getValue();
+        if (target->soloPool->intValue() == poolId) {
+            const MessageManagerLock mmLock;
+            String name = target->userName->stringValue();
+            Cue* c = cl->cues.addItem();
+            c->commands.clear();
+            c->editorIsCollapsed = true;
+            c->setNiceName(name);
+            c->loadWindowBreakLine->setValue(nextIsNewLine);
+            c->id->setValue(id);
+            id++;
+            nextIsNewLine = false;
+            Task* t = c->tasks.addItem();
+            t->targetType->setValueWithData("effect");
+            t->targetId->setValue(target->id->intValue());
+            t->effectAction->setValueWithData("start");
+        }
+    }
+
+    nextIsNewLine = true;
+    for (auto it = Brain::getInstance()->carousels.begin(); it != Brain::getInstance()->carousels.end(); it.next()) {
+        Carousel* target = it.getValue();
+        if (target->soloPool->intValue() == poolId) {
+            const MessageManagerLock mmLock;
+            String name = target->userName->stringValue();
+            Cue* c = cl->cues.addItem();
+            c->commands.clear();
+            c->editorIsCollapsed = true;
+            c->setNiceName(name);
+            c->loadWindowBreakLine->setValue(nextIsNewLine);
+            c->id->setValue(id);
+            id++;
+            nextIsNewLine = false;
+            Task* t = c->tasks.addItem();
+            t->targetType->setValueWithData("carousel");
+            t->targetId->setValue(target->id->intValue());
+            t->carouselAction->setValueWithData("start");
+        }
+    }
+
+    Brain::getInstance()->usingCollections.exit();
+
+    cl->selectThis();
+    LOG("Palette created :)");
 
 }
 

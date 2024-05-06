@@ -45,6 +45,12 @@ public:
 	BoolParameter* paletteKeepEmpty;
 	Trigger* paletteBtn;
 
+	ControllableContainer soloPaletteMakerCC;
+	IntParameter* soloPalettePoolId;
+	IntParameter* soloPaletteCuelistId;
+	StringParameter* soloPaletteName;
+	Trigger* soloPaletteBtn;
+
 	ControllableContainer masterMakerCC;
 	IntParameter* masterFirstGroupId;
 	IntParameter* masterLastGroupId;
@@ -89,6 +95,7 @@ public:
 	bool pleaseCreatePalette = false;
 	bool pleaseCreateMasters = false;
 	bool pleaseSwapFixtures = false;
+	bool pleaseCreateSoloPalette = false;
 	bool pleaseCreateMidiMappings = false;
 	bool pleaseImportAscii = false;
 
@@ -102,6 +109,7 @@ public:
 	void createMasters();
 	void createMidiMappings();
 	void swapFixtures();
+	void createSoloPalette();
 
 	void importAscii();
 	void exportAscii();
