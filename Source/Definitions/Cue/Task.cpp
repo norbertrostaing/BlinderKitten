@@ -220,7 +220,7 @@ void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, S
 		Cuelist* target = Brain::getInstance()->getCuelistById(targetId);
 		if (target != nullptr) {
 			if (action == "go" && value == 1) {
-				target->go();
+				target->userGo();
 			}
 			else if (action == "off" && value == 1) {
 				target->off();

@@ -58,6 +58,8 @@ Carousel::Carousel(var params) :
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "");
 
+	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0,0);
+
 	addChildControllableContainer(&speedMult);
 	addChildControllableContainer(&sizeMult);
 	rows.selectItemWhenCreated = false;
@@ -154,6 +156,7 @@ void Carousel::start() {
 	isCarouselOn->setValue(true);
 	totalElapsed = 0;
 	computeData();
+	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCarouselStarted(soloPool->intValue(), this);
 }
 
 void Carousel::stop() {

@@ -175,4 +175,9 @@ public:
 
     void loadRunningCuelistsInProgrammer();
     void loadRunningCuelistsInProgrammer(Programmer* p);
+
+    void soloPoolCuelistStarted(int poolId, Cuelist* c);
+    void soloPoolEffectStarted(int poolId, Effect* c);
+    void soloPoolCarouselStarted(int poolId, Carousel* c);
+    void soloPoolCheck(int poolId, String excludeType, int excludeId);
 };

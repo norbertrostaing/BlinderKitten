@@ -57,6 +57,8 @@ public:
     double TSLastUpdate;
     double totalElapsed;
 
+    IntParameter* soloPool;
+
     HashMap<SubFixtureChannel*, std::shared_ptr<Array<EffectParam*>>> chanToFxParam;
     CriticalSection isComputing;
 

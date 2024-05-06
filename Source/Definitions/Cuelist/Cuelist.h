@@ -34,6 +34,8 @@ public:
     int registeredId = 0;
     StringParameter* userName;
     void updateName();
+
+    IntParameter* soloPool;
     
     ControllableContainer chaserOptions;
     BoolParameter* isChaser;

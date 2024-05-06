@@ -181,6 +181,8 @@ Cuelist::Cuelist(var params) :
 
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
+	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
+
 	// offFadeCurve = new Automation();
 	offFadeCurve.saveAndLoadRecursiveData = true;
 	offFadeCurve.setNiceName("Off curve");
@@ -440,6 +442,7 @@ void Cuelist::userGo()
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(-1, -1);
 }
 
@@ -449,6 +452,7 @@ void Cuelist::userGo(Cue* c)
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(c, -1, -1);
 }
 
@@ -458,6 +462,7 @@ void Cuelist::userGo(float delay, float fade)
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(delay, fade);
 }
 
@@ -468,6 +473,7 @@ void Cuelist::userGo(Cue* c, float delay, float fade)
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(c, delay, fade);
 }
 

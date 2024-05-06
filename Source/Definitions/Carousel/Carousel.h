@@ -51,6 +51,8 @@ public:
     float lastSize = 0;
     BaseManager<CarouselRow> rows;
 
+    IntParameter* soloPool;
+
     FloatParameter* currentPosition;
     double TSLastUpdate;
     double totalElapsed;

@@ -1289,3 +1289,50 @@ void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
     });
     
 }
+
+void Brain::soloPoolCuelistStarted(int poolId, Cuelist* c)
+{
+    soloPoolCheck(poolId, "Cuelist", c->id->intValue());
+}
+
+void Brain::soloPoolEffectStarted(int poolId, Effect* c)
+{
+    soloPoolCheck(poolId, "Effect", c->id->intValue());
+}
+
+void Brain::soloPoolCarouselStarted(int poolId, Carousel* c)
+{
+    soloPoolCheck(poolId, "Carousel", c->id->intValue());
+}
+
+void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
+{
+    if (poolId == 0) return; 
+    usingCollections.enter();
+    for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
+        Cuelist* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isCuelistOn->boolValue()) {
+            if (excludeType != "Cuelist" || excludeId != c->id->intValue()) {
+                c->off();
+            }
+        }
+    }
+    for (auto it = effects.begin(); it != effects.end(); it.next()) {
+        Effect* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isEffectOn->boolValue()) {
+            if (excludeType != "Effect" || excludeId != c->id->intValue()) {
+                c->stop();
+            }
+        }
+    }
+    for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
+        Carousel* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isCarouselOn->boolValue()) {
+            if (excludeType != "Carousel" || excludeId != c->id->intValue()) {
+                c->stop();
+            }
+        }
+    }
+
+    usingCollections.exit();
+}

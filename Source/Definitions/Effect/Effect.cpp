@@ -58,6 +58,8 @@ Effect::Effect(var params) :
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "");
 
+	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
+
 	values.selectItemWhenCreated = false;
 	addChildControllableContainer(&speedMult);
 	addChildControllableContainer(&sizeMult);
@@ -152,6 +154,7 @@ void Effect::start() {
 	isEffectOn->setValue(true);
 	totalElapsed = 0;
 	computeData();
+	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolEffectStarted(soloPool->intValue(), this);
 }
 
 void Effect::stop() {
