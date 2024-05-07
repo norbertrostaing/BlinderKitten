@@ -67,10 +67,10 @@ Cue::Cue(var params) :
 	commands.selectItemWhenCreated = false;
 	tasks.selectItemWhenCreated = false;
 
-	htpInDelay = timingContainer.addFloatParameter("HTP in delay", "Default delay for HTP rising values",0,0);
+	htpInDelay = timingContainer.addFloatParameter("HTP in delay", "Default delay for HTP rising values", -1, -1);
 	htpOutDelay = timingContainer.addFloatParameter("HTP out delay", "Default delay for HTP falling values (-1 means use HTP in delay)", -1, -1);
 	ltpDelay = timingContainer.addFloatParameter("LTP delay", "Default delay for LTP values (-1 means use HTP in delay)", -1, -1);
-	htpInFade = timingContainer.addFloatParameter("HTP in fade", "Default delay for HTP rising values", 0, 0);
+	htpInFade = timingContainer.addFloatParameter("HTP in fade", "Default delay for HTP rising values",  -1,  -1);
 	htpOutFade = timingContainer.addFloatParameter("HTP out fade", "Default delay for HTP falling values (-1 means use HTP in fade)", -1, -1);
 	ltpFade = timingContainer.addFloatParameter("LTP fade", "Default delay for LTP values (-1 means use HTP in fade)", -1, -1);
 

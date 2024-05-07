@@ -381,6 +381,12 @@ void Assistant::createPalette()
     cl->userName->setValue(cuelistName);
     cl->cues.clear();
     cl->deselectThis();
+
+    if (timePreset != 0) {
+        cl->timing.presetOrValue->setValueWithKey("Preset");
+        cl->timing.presetId->setValue(timePreset);
+    }
+
     // supprimer premier cue
     bool nextIsNewLine = false;
     for (int i = presetFrom; i != presetTo + delta; i += delta) {
@@ -399,10 +405,10 @@ void Assistant::createPalette()
             c->commands.items[0]->selection.items[0]->valueFrom->setValue(groupId);
             c->commands.items[0]->values.items[0]->presetOrValue->setValueWithKey("Preset");
             c->commands.items[0]->values.items[0]->presetIdFrom->setValue(i);
-            if (timePreset != 0) {
-                c->commands.items[0]->timing.presetOrValue->setValueWithKey("Preset");
-                c->commands.items[0]->timing.presetId->setValue(timePreset);
-            }
+            //if (timePreset != 0) {
+            //    c->commands.items[0]->timing.presetOrValue->setValueWithKey("Preset");
+            //    c->commands.items[0]->timing.presetId->setValue(timePreset);
+            //}
 
             bool log = true;
             if (!paletteKeepEmpty->boolValue()) {

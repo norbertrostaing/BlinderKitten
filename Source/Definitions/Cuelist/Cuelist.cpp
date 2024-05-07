@@ -34,7 +34,8 @@ Cuelist::Cuelist(var params) :
 	offFadeCurve(),
 	chaseGenValue(),
 	cues(),
-	speedMult("Speed multiplicators")
+	speedMult("Speed multiplicators"),
+	timing()
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -118,7 +119,9 @@ Cuelist::Cuelist(var params) :
 	chaserGenContainer.saveAndLoadRecursiveData = true;
 	chaseGenValue.saveAndLoadRecursiveData = true;
 
-
+	timing.presetOrValue->removeOption("Cue timing");
+	timing.presetOrValue->setValue("Raw Timing");
+	addChildControllableContainer(&timing);
 	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
@@ -1105,7 +1108,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	}
 	else {
 		float fade = double(now - cv->TSStart) / double(cv -> TSEnd - cv->TSStart);
-		fade = cv->fadeCurve->getValueAtPosition(fade);
+		if (cv->fadeCurve != nullptr) fade = cv->fadeCurve->getValueAtPosition(fade);
 		localValue = jmap(fade, valueFrom, valueTo);
 		keepUpdate = true;
 		Brain::getInstance()->pleaseUpdate(this);

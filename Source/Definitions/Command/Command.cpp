@@ -110,11 +110,66 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	float fadeFrom = 0;
 	float fadeTo = 0;
 
-	Automation* fadeCurve;
-	Automation* fadeRepartCurve;
-	Automation* delayRepartCurve;
+	Automation* fadeCurve = nullptr;
+	Automation* fadeRepartCurve = nullptr;
+	Automation* delayRepartCurve = nullptr;
 
-	String timingMode = timing.presetOrValue->getValue();
+	String timingMode = "";
+
+	float delayHTPIn = -1;
+	float delayHTPOut = -1;
+	float delayLTP = -1;
+	float fadeHTPIn = -1;
+	float fadeHTPOut = -1;
+	float fadeLTP = -1;
+
+	if (callingCue != nullptr) {
+		delayHTPIn = callingCue->htpInDelay->floatValue() >= 0 ? callingCue->htpInDelay->floatValue() : -1;
+		delayHTPOut = callingCue->htpOutDelay->floatValue() >= 0 ? callingCue->htpOutDelay->floatValue() : delayHTPIn;
+		delayLTP = callingCue->ltpDelay->floatValue() >= 0 ? callingCue->ltpDelay->floatValue() : delayHTPIn;
+		fadeHTPIn = callingCue->htpInFade->floatValue() >= 0 ? callingCue->htpInFade->floatValue() : -1;
+		fadeHTPOut = callingCue->htpOutFade->floatValue() >= 0 ? callingCue->htpOutFade->floatValue() : fadeHTPIn;
+		fadeLTP = callingCue->ltpFade->floatValue() >= 0 ? callingCue->ltpFade->floatValue() : fadeHTPIn;
+	}
+
+	if (callingCuelist != nullptr) {
+		timingMode = callingCuelist->timing.presetOrValue->getValue();
+		if (timingMode == "preset") {
+			TimingPreset* tp = Brain::getInstance()->getTimingPresetById(callingCuelist->timing.presetId->getValue());
+			if (tp != nullptr) {
+				float delayMult = tp->delayMult.getValue();
+				float fadeMult = tp->fadeMult.getValue();
+				delayThru = tp->thruDelay->getValue();
+				delaySym = tp->symmetryDelay->getValue();
+				delayFrom = (float)tp->delayFrom->getValue() * 1000 * delayMult;
+				delayTo = (float)tp->delayTo->getValue() * 1000 * delayMult;
+				fadeThru = tp->thruFade->getValue();
+				fadeSym = tp->symmetryFade->getValue();
+				fadeFrom = (float)tp->fadeFrom->getValue() * 1000 * fadeMult;
+				fadeTo = (float)tp->fadeTo->getValue() * 1000 * fadeMult;
+				fadeCurve = &tp->curveFade;
+				fadeRepartCurve = &tp->curveFadeRepart;
+				delayRepartCurve = &tp->curveDelayRepart;
+			}
+		}
+		else if (timingMode == "raw") {
+			float delayMult = callingCuelist->timing.delayMult.getValue();
+			float fadeMult = callingCuelist->timing.fadeMult.getValue();
+			delayThru = callingCuelist->timing.thruDelay->getValue();
+			delaySym = callingCuelist->timing.symmetryDelay->getValue();
+			delayFrom = (float)callingCuelist->timing.delayFrom->getValue() * 1000 * delayMult;
+			delayTo = (float)callingCuelist->timing.delayTo->getValue() * 1000 * delayMult;
+			fadeThru = callingCuelist->timing.thruFade->getValue();
+			fadeSym = callingCuelist->timing.symmetryFade->getValue();
+			fadeFrom = (float)callingCuelist->timing.fadeFrom->getValue() * 1000 * fadeMult;
+			fadeTo = (float)callingCuelist->timing.fadeTo->getValue() * 1000 * fadeMult;
+			fadeCurve = &callingCuelist->timing.curveFade;
+			fadeRepartCurve = &callingCuelist->timing.curveFadeRepart;
+			delayRepartCurve = &callingCuelist->timing.curveDelayRepart;
+		}
+	}
+
+	timingMode = timing.presetOrValue->getValue();
 
 	if (timingMode == "preset") {
 		TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timing.presetId->getValue());
@@ -234,57 +289,68 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						finalValue->endValue = val;
 
 						float delay = delayFrom;
-						if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
-							if (!fchan->isHTP) {
-								delay = callingCue->ltpDelay->floatValue() >= 0 ? callingCue->ltpDelay->floatValue()*1000. : callingCue->htpInDelay->floatValue()*1000.;
-							}
-							else {
-								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
-								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
-									delay = callingCue->htpInDelay->floatValue() * 1000.;
-								}
-								else {
-									delay = callingCue->htpOutDelay->floatValue() >= 0 ? callingCue->htpOutDelay->floatValue() * 1000. : callingCue->htpInDelay->floatValue() * 1000.;
-								}
-							}
-						}
-						else if (delayThru && SubFixtures.size() > 1) {
+						if (delayThru && SubFixtures.size() > 1) {
 							float position = normalizedPosition;
 							if (delaySym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, SubFixtures.size()); }
 							position = timing.curveDelayRepart.getValueAtPosition(position);
 							position = delayRepartCurve->getValueAtPosition(position);
 							delay = jmap(position, delayFrom, delayTo);
 						}
-						finalValue->delay = delay;
-
-						float fade = fadeFrom;
-						if (fchan->snapOnly) {
-							fade = 0;
-						}
-						else if (timingMode == "cue" && callingCuelist != nullptr && callingCue != nullptr) {
+						if (timingMode == "cue" && callingCuelist != nullptr) {
 							if (!fchan->isHTP) {
-								fade = callingCue->ltpFade->floatValue() >= 0 ? callingCue->ltpFade->floatValue() * 1000. : callingCue->htpInFade->floatValue() * 1000.;
+								if (delayLTP != -1) delay = delayLTP*1000. ;
 							}
 							else {
 								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
 								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
-									fade = callingCue->htpInFade->floatValue() * 1000.;
+									if (delayHTPIn != -1) delay = delayHTPIn * 1000.;
 								}
 								else {
-									fade = callingCue->htpOutFade->floatValue() >= 0 ? callingCue->htpOutFade->floatValue() * 1000. : callingCue->htpInFade->floatValue() * 1000.;
+									if (delayHTPOut != -1) delay = delayHTPOut * 1000.;
 								}
 							}
 						}
-						else if (fadeThru && SubFixtures.size() > 1) {
-							float position = normalizedPosition;
-							if (fadeSym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, SubFixtures.size()); }
-							position = timing.curveFadeRepart.getValueAtPosition(position);
-							position = fadeRepartCurve->getValueAtPosition(position);
-							fade = jmap(position, fadeFrom, fadeTo);
+						finalValue->delay = delay;
+
+						float fade = fadeFrom;
+						finalValue->fadeCurve = fadeCurve;
+						if (fchan->snapOnly) {
+							fade = 0;
+						}
+						else {
+							if (fadeThru && SubFixtures.size() > 1) {
+								float position = normalizedPosition;
+								if (fadeSym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, SubFixtures.size()); }
+								position = timing.curveFadeRepart.getValueAtPosition(position);
+								position = fadeRepartCurve->getValueAtPosition(position);
+								fade = jmap(position, fadeFrom, fadeTo);
+							}
+							if (timingMode == "cue" && callingCuelist != nullptr) {
+								if (!fchan->isHTP) {
+									if (fadeLTP != -1 ) {
+										fade = fadeLTP * 1000.;
+										finalValue->fadeCurve = nullptr;
+										}
+								}
+								else {
+									std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+									if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+										if (fadeHTPIn != -1) {
+											fade = fadeHTPIn * 1000.;
+											finalValue->fadeCurve = nullptr;
+										}
+									}
+									else {
+										if (fadeHTPOut != -1) {
+											fade = fadeHTPOut * 1000.;
+											finalValue->fadeCurve = nullptr;
+										}
+									}
+								}
+							}
 						}
 
 						finalValue->fade = fade;
-						finalValue->fadeCurve = &timing.curveFade;
 						if (fchan->isHTP) {
 							if (callingCuelist != nullptr && callingCue != nullptr) {
 								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);

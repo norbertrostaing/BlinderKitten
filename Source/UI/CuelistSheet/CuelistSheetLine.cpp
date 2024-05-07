@@ -129,10 +129,10 @@ void CuelistSheetLine::updateContent()
 	float htpOutFade = int(100 * targetCue->htpOutFade->floatValue()) / 100.;
 	float ltpFade = int(100 * targetCue->ltpFade->floatValue()) / 100.;
 
-	htpUpDelayLabel.setText(String(htpInDelay), juce::dontSendNotification);
+	htpUpDelayLabel.setText(htpInDelay < 0 ? "-" : String(htpInDelay), juce::dontSendNotification);
 	htpDownDelayLabel.setText(htpOutDelay < 0 ? "-" : String(htpOutDelay), juce::dontSendNotification);
 	ltpDelayLabel.setText(ltpDelay < 0 ? "-" : String(ltpDelay), juce::dontSendNotification);
-	htpUpFadeLabel.setText(String(htpInFade), juce::dontSendNotification);
+	htpUpFadeLabel.setText(htpInFade < 0 ? "-" : String(htpInFade), juce::dontSendNotification);
 	htpDownFadeLabel.setText(htpOutFade < 0 ? "-" : String(htpOutFade), juce::dontSendNotification);
 	ltpFadeLabel.setText(ltpFade < 0 ? "-" : String(ltpFade), juce::dontSendNotification);
 

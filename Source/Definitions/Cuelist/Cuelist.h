@@ -159,6 +159,8 @@ public:
     double TSTransitionEnd;
     double TSLateCompensation = 0;
 
+    CommandTiming timing;
+
     String getTypeString() const override { return objectType; }
 
     void userGo();
