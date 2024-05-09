@@ -1425,6 +1425,7 @@ void BKEngine::selectCue(Cue* c, selectionMode s)
 void BKEngine::selectAllCuesOfCuelist(Cuelist* c)
 {
 	selectedCues.clear();
+	if (c == nullptr) return;
 	for (int i = 0; i < c->cues.items.size(); i++) {
 		selectedCues.add(c->cues.items[i]);
 	}
