@@ -108,6 +108,8 @@ BKEngine::BKEngine() :
 	Engine::mainEngine = this;
 	BKEngine::mainEngine = this;
 
+	Desktop::setScreenSaverEnabled(false);
+
 	GlobalSettings::getInstance()->altScaleFactor->setDefaultValue(0.002);
 
 	ProjectSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
