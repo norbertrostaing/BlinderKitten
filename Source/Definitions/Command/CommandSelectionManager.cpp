@@ -86,15 +86,17 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				if (selections[selId]->subSel->getValue()) {
 					int subFrom = selections[selId]->subFrom->getValue();
 					int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->intValue() : subFrom;
-					int subMod = subFrom <= subThru ? 1 : -1;
+
+					int min = jmin(subFrom, subThru);
+					int max = jmax(subFrom, subThru);
+
 					Array<SubFixture*> tempSelectionFiltered;
-					for (int subId = subFrom; subId != subThru + subMod; subId = subId + subMod) {
-						for (int tempId = 0; tempId < tempSelection.size(); tempId++) {
-							if (tempSelection[tempId]->subId == subId) {
-								tempSelectionFiltered.add(tempSelection[tempId]);
-							}
+					for (int i = 0; i < tempSelection.size(); i++) {
+						if (tempSelection[i]->subId >= min && tempSelection[i]->subId <= max) {
+							tempSelectionFiltered.add(tempSelection[i]);
 						}
 					}
+
 					tempSelection.clear();
 					tempSelection.addArray(tempSelectionFiltered);
 				}
