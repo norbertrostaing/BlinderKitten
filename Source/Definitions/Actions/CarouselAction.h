@@ -19,7 +19,7 @@ public:
     CarouselAction(var params = var());
     ~CarouselAction();
 
-    enum ActionType { CAR_START, CAR_STOP, CAR_SIZE, CAR_FLASH, CAR_SPEED, CAR_DOUBLESPEED, CAR_HALFSPEED, CAR_TAPTEMPO, CAR_TOGGLE, CAR_BBW };
+    enum ActionType { CAR_START, CAR_STOP, CAR_SIZE, CAR_FLASH, CAR_SWOP, CAR_SPEED, CAR_DOUBLESPEED, CAR_HALFSPEED, CAR_TAPTEMPO, CAR_TOGGLE, CAR_BBW };
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;

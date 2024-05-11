@@ -207,7 +207,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		Effect* target = Brain::getInstance()->getEffectById(targetNumber);
 		if (target != nullptr) {
 			String action = aList[3].toLowerCase();
-				if (action == "start") { target->start(); }
+				if (action == "start") { target->userStart(); }
 			else if (action == "stop") { target->stop(); }
 			else if (action == "taptempo") { target->tapTempo(); }
 			else if (action == "size" && m.size() > 0) {
@@ -228,7 +228,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		Carousel* target = Brain::getInstance()->getCarouselById(targetNumber);
 		if (target != nullptr) {
 			String action = aList[3].toLowerCase();
-			if (action == "start") { target->start(); }
+			if (action == "start") { target->userStart(); }
 			else if (action == "stop") { target->stop(); }
 			else if (action == "taptempo") { target->tapTempo(); }
 			else if (action == "size" && m.size() > 0) {

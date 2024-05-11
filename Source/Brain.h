@@ -73,6 +73,8 @@ public:
     Array<SubFixtureChannel*> swoppableChannels;
     Array<SubFixtureChannel*> grandMasterChannels;
     Array<Cuelist*> swoppedCuelists;
+    Array<Effect*> swoppedEffects;
+    Array<Carousel*> swoppedCarousels;
 
     double now;
     bool loadingIsRunning = false;
@@ -150,7 +152,11 @@ public:
     Tracker* getTrackerById(int id);
 
     void swoppedCuelist(Cuelist* c);
+    void swoppedEffect(Effect* c);
+    void swoppedCarousel(Carousel* c);
     void unswoppedCuelist(Cuelist* c);
+    void unswoppedEffect(Effect* c);
+    void unswoppedCarousel(Carousel* c);
     bool isSwopping = false;
 
     static float symPosition(int index, int nElements);

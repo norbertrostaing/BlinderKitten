@@ -124,7 +124,7 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 				stop();
 			}
 			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
-				start();
+				userStart();
 			}
 		}
 		lastSize = p->getValue();
@@ -139,7 +139,7 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 
 void Carousel::triggerTriggered(Trigger* t) {
 	if (t == startBtn) {
-		start();
+		userStart();
 	}
 	else if (t == stopBtn) {
 		stop();
@@ -148,6 +148,11 @@ void Carousel::triggerTriggered(Trigger* t) {
 		tapTempo();
 	}
 	else {}
+}
+
+void Carousel::userStart() {
+	userPressedGo = true;
+	start();
 }
 
 void Carousel::start() {
@@ -161,6 +166,7 @@ void Carousel::start() {
 
 void Carousel::stop() {
 	isOn = false;
+	userPressedGo = false;
 	isCarouselOn->setValue(false);
 	for (auto it = chanToCarouselRow.begin(); it != chanToCarouselRow.end(); it.next()) {
 		if (it.getKey() != nullptr) {
@@ -317,17 +323,25 @@ void Carousel::tapTempo() {
 }
 
 
-void Carousel::flash(bool on)
+void Carousel::flash(bool on, bool swop)
 {
 	if (on) {
 		if (!isOn) {
 			start();
 		}
 		isFlashing = true;
+		if (swop) {
+			isSwopping = true;
+			Brain::getInstance()->swoppedCarousel(this);
+		}
 	}
 	else {
 		isFlashing = false;
-		if (autoStartAndStop->boolValue() && sizeValue->floatValue() == 0) {
+		if (isSwopping) {
+			isSwopping = false;
+			Brain::getInstance()->unswoppedCarousel(this);
+		}
+		if (!userPressedGo) {
 			stop();
 		}
 	}

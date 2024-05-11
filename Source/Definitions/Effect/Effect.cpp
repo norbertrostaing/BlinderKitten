@@ -121,7 +121,7 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 				stop();
 			}
 			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
-				start();
+				userStart();
 			}
 		}
 		lastSize = p->getValue();
@@ -136,7 +136,7 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 
 void Effect::triggerTriggered(Trigger* t) {
 	if (t == startBtn) {
-		start();
+		userStart();
 	}
 	else if (t == stopBtn) {
 		stop();
@@ -148,6 +148,11 @@ void Effect::triggerTriggered(Trigger* t) {
 }
 
 
+void Effect::userStart() {
+	userPressedGo = true;
+	start();
+}
+
 void Effect::start() {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
 	isOn = true;
@@ -158,6 +163,7 @@ void Effect::start() {
 }
 
 void Effect::stop() {
+	userPressedGo = false;
 	isOn = false;
 	isEffectOn->setValue(false);
 	for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
@@ -339,17 +345,25 @@ void Effect::tapTempo() {
 	}
 }
 
-void Effect::flash(bool on)
+void Effect::flash(bool on, bool swop)
 {
 	if (on) {
 		if (!isOn) {
 			start();
 		}
 		isFlashing = true;
+		if (swop) {
+			isSwopping = true;
+			Brain::getInstance()->swoppedEffect(this);
+		}
 	}
 	else {
 		isFlashing = false;
-		if (autoStartAndStop->boolValue() && sizeValue->floatValue() == 0) {
+		if (isSwopping) {
+			isSwopping = false;
+			Brain::getInstance()->unswoppedEffect(this);
+		}
+		if (!userPressedGo) {
 			stop();
 		}
 	}

@@ -52,7 +52,7 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
     {
     case FX_START:
         if (val > 0 && (float)previousValue == 0) {
-            target->start();
+            target->userStart();
         }
         break;
 
@@ -68,13 +68,17 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
                 target->stop();
             }
             else {
-                target->start();
+                target->userStart();
             }
         }
         break;
 
     case FX_FLASH:
-        target->flash(val>0);
+        target->flash(val > 0);
+        break;
+
+    case FX_SWOP:
+        target->flash(val > 0, true);
         break;
 
     case FX_TAPTEMPO:

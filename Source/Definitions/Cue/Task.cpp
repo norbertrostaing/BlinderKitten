@@ -249,7 +249,7 @@ void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, S
 		Effect* target = Brain::getInstance()->getEffectById(targetId);
 		if (target != nullptr) {
 			if (action == "start" && value == 1) {
-				target->start();
+				target->userStart();
 			}
 			else if (action == "stop" && value == 1) {
 				target->stop();
@@ -272,7 +272,7 @@ void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, S
 		Carousel* target = Brain::getInstance()->getCarouselById(targetId);
 		if (target != nullptr) {
 			if (action == "start" && value == 1) {
-				target->start();
+				target->userStart();
 			}
 			else if (action == "stop" && value == 1) {
 				target->stop();

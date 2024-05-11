@@ -66,6 +66,7 @@ VirtualButton::VirtualButton(var params) :
 	effectAction->addOption("Stop", "stop");
 	effectAction->addOption("Toggle", "toggle");
 	effectAction->addOption("Flash", "flash");
+	effectAction->addOption("Swop", "swop");
 	effectAction->addOption("Tap tempo", "taptempo");
 	effectAction->addOption("Double Speed", "doublespeed");
 	effectAction->addOption("Half Speed", "halfspeed");
@@ -75,6 +76,7 @@ VirtualButton::VirtualButton(var params) :
 	carouselAction->addOption("Stop", "stop");
 	carouselAction->addOption("Toggle", "toggle");
 	carouselAction->addOption("Flash", "flash");
+	carouselAction->addOption("Swop", "swop");
 	carouselAction->addOption("Tap tempo", "taptempo");
 	carouselAction->addOption("Double Speed", "doublespeed");
 	carouselAction->addOption("Half Speed", "halfspeed");
@@ -199,17 +201,18 @@ void VirtualButton::pressed() {
 		Effect* targ = Brain::getInstance()->getEffectById(targId);
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
-			if (action == "start") { targ->start(); }
+			if (action == "start") { targ->userStart(); }
 			if (action == "stop") { targ->stop(); }
 			if (action == "toggle") {
 				if (targ->isOn) {
 					targ->stop();
 				}
 				else {
-					targ->start();
+					targ->userStart();
 				}
 			}
-			if (action == "flash") {targ->flash(true); }
+			if (action == "flash") { targ->flash(true); }
+			if (action == "swop") { targ->flash(true, true); }
 			if (action == "taptempo") { targ->tapTempo(); }
 			if (action == "doublespeed") { targ->speed->setValue((double)targ->speed->getValue() * 2); }
 			if (action == "halfspeed") { targ->speed->setValue((double)targ->speed->getValue() / 2); }
@@ -219,17 +222,18 @@ void VirtualButton::pressed() {
 		Carousel* targ = Brain::getInstance()->getCarouselById(targId);
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
-			if (action == "start") { targ->start(); }
+			if (action == "start") { targ->userStart(); }
 			if (action == "stop") { targ->stop(); }
 			if (action == "toggle") {
 				if (targ->isOn) {
 					targ->stop();
 				}
 				else {
-					targ->start();
+					targ->userStart();
 				}
 			}
 			if (action == "flash") { targ->flash(true); }
+			if (action == "swop") { targ->flash(true, true); }
 			if (action == "taptempo") { targ->tapTempo(); }
 			if (action == "doublespeed") { targ->speed->setValue((double)targ->speed->getValue() * 2); }
 			if (action == "halfspeed") { targ->speed->setValue((double)targ->speed->getValue() / 2); }
@@ -295,6 +299,7 @@ void VirtualButton::released() {
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
 			if (action == "flash") { targ->flash(false); }
+			if (action == "swop") { targ->flash(false, true); }
 			// if (action == "start") { targ->start(); }
 		}
 	}
@@ -303,6 +308,7 @@ void VirtualButton::released() {
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
 			if (action == "flash") { targ->flash(false); }
+			if (action == "swop") { targ->flash(false, true); }
 			// if (action == "start") { targ->start(); }
 		}
 	}

@@ -1107,10 +1107,57 @@ void Brain::swoppedCuelist(Cuelist* c) {
     isSwopping = true;
 }
 
+void Brain::swoppedEffect(Effect* c) {
+    usingCollections.enter();
+    if (!swoppedEffects.contains(c)) {
+        swoppedEffects.add(c);
+    }
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels.getReference(i));
+    }
+    usingCollections.exit();
+    isSwopping = true;
+}
+
+void Brain::swoppedCarousel(Carousel* c) {
+    usingCollections.enter();
+    if (!swoppedCarousels.contains(c)) {
+        swoppedCarousels.add(c);
+    }
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels.getReference(i));
+    }
+    usingCollections.exit();
+    isSwopping = true;
+}
+
+
 void Brain::unswoppedCuelist(Cuelist* c) {
     usingCollections.enter();
     swoppedCuelists.removeAllInstancesOf(c);
-    isSwopping = swoppedCuelists.size() > 0;
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() > 0;
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels.getReference(i));
+    }
+    usingCollections.exit();
+
+}
+
+void Brain::unswoppedEffect(Effect* c) {
+    usingCollections.enter();
+    swoppedEffects.removeAllInstancesOf(c);
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() > 0;
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels.getReference(i));
+    }
+    usingCollections.exit();
+
+}
+
+void Brain::unswoppedCarousel(Carousel* c) {
+    usingCollections.enter();
+    swoppedCarousels.removeAllInstancesOf(c);
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }

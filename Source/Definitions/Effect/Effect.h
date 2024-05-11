@@ -39,6 +39,7 @@ public:
     BoolParameter* isEffectOn;
     bool isOn = false;
     bool isFlashing = false;
+    bool isSwopping = false;
 
     Trigger* startBtn;
     Trigger* stopBtn;
@@ -78,12 +79,14 @@ public:
     bool computed = false;
     bool computing = false;
     void pleaseComputeIfRunning();
+    void userStart();
     void start();
     void stop();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
 
-    void flash(bool on);
+    void flash(bool on, bool swop = false);
+    bool userPressedGo = false;
 
     static Effect* create(var params) { return new Effect(params); }
     

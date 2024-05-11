@@ -54,7 +54,7 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
     {
     case CAR_START:
         if (val > 0 && (float)previousValue == 0) {
-            target->start();
+            target->userStart();
         }
         break;
 
@@ -70,7 +70,7 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
                 target->stop();
             }
             else {
-                target->start();
+                target->userStart();
             }
         }
         break;
@@ -83,6 +83,10 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
 
     case CAR_FLASH:
         target->flash(val > 0);
+        break;
+
+    case CAR_SWOP:
+        target->flash(val > 0, true);
         break;
 
     case CAR_SIZE:

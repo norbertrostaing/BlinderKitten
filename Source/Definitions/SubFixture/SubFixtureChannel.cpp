@@ -228,18 +228,22 @@ void SubFixtureChannel::updateVal(double now) {
 				}
 			}
 
-			for (int i = 0; i < carouselStack.size(); i++) {
+		}
+		for (int i = 0; i < carouselStack.size(); i++) {
 				if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
-					newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+					if (!checkSwop || carouselStack[i]->isSwopping) {
+						newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+					}
 				}
 			}
 
 			for (int i = 0; i < effectStack.size(); i++) {
 				if ((int)effectStack.getReference(i)->layerId->getValue() == currentLayer) {
-					newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
+					if (!checkSwop || effectStack[i]->isSwopping) {
+						newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
+					}
 				}
 			}
-		}
 
 	}
 
