@@ -249,6 +249,7 @@ void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
 	}
 
 	if (targId == 0) {return;}
+	const MessageManagerLock mmLock;
 
 	if (targType == "cuelist") {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
