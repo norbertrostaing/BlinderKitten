@@ -528,6 +528,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		}
 		TSLateCompensation = 0;
 	}
+
+
+	isComputing.enter();
 	TSTransitionStart = now;
 	currentManualInTransition= 0;
 	currentManualOutTransition = 0;
@@ -544,7 +547,6 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	if (speedMultVal < 0.00001) { speedMultVal = 0.00001; }
 	speedMultVal = 1/speedMultVal;
 
-	isComputing.enter();
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	} 
@@ -736,17 +738,11 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	}
 	
 	TSTransitionDuration = TSTransitionEnd - TSTransitionStart;
+	Array<SubFixtureChannel*> toUpdate;
 	
 	for (auto it = newActiveValues.begin(); it != newActiveValues.end(); it.next()) {
 		activeValues.set(it.getKey(), it.getValue());
-		Brain::getInstance()->pleaseUpdate(it.getKey());
-	}
-
-	if (isChaser->getValue() && c != nullptr) {
-		c->TSAutoFollowStart = now;
-		c->TSAutoFollowEnd = now + (chaserStepDuration*speedMultVal);
-		Brain::getInstance()->pleaseUpdate(c);
-
+		toUpdate.add(it.getKey());
 	}
 
 	Array<Command*> usefulCommands;
@@ -765,6 +761,17 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	}
 
 	isComputing.exit();
+
+	if (isChaser->getValue() && c != nullptr) {
+		c->TSAutoFollowStart = now;
+		c->TSAutoFollowEnd = now + (chaserStepDuration * speedMultVal);
+		Brain::getInstance()->pleaseUpdate(c);
+
+	}
+
+	for (int i = 0; i < toUpdate.size(); i++) {
+		Brain::getInstance()->pleaseUpdate(toUpdate[i]);
+	}
 
 	if (cues.items.size() > 1 && !isChaser->boolValue()) {
 		Brain::getInstance()->reconstructVirtuals = true;
@@ -947,6 +954,7 @@ void Cuelist::off() {
 
 
 void Cuelist::update() {
+	isComputing.enter();
 	if (pleaseUpdateHTPs) {
 		updateHTPs();
 	}
@@ -1002,6 +1010,7 @@ void Cuelist::update() {
 			wannaOffFlash = false;
 		}
 	}
+	isComputing.exit();
 }
 
 void Cuelist::autoLoadCueB() {
@@ -1310,16 +1319,9 @@ void Cuelist::loadRandom() {
 
 void Cuelist::fillTexts() {
 	if (isDeleting) {return;}
-	if (cueA != nullptr) {
-		conductorCurrentCueId->setValue(cueA->id->floatValue());
-		conductorCurrentCueName->setValue(cueA->niceName);
-		conductorCurrentCueText->setValue(cueA->cueText->getValue());
-	}
-	else {
-		conductorCurrentCueId->setValue(-1);
-		conductorCurrentCueName->setValue("");
-		conductorCurrentCueText->setValue("");
-	}
+	conductorCurrentCueId->setValue(cueA == nullptr ? -1 : cueA->id->floatValue());
+	conductorCurrentCueName->setValue(cueA == nullptr ? "" : cueA->niceName);
+	conductorCurrentCueText->setValue(cueA == nullptr ? "" : cueA->cueText->getValue());
 	Cue* n = dynamic_cast<Cue*>(nextCue->targetContainer.get());
 	float nextId = nextCueId->getValue();
 	if (nextId > 0) {
