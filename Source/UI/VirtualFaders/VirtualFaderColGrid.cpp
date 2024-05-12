@@ -812,7 +812,7 @@ void VirtualFaderColGrid::updateSlidersValues()
         float v = 0;
         if (s != nullptr) {
             v = s->getTargetValue();
-            s->feedback(v, "");
+            //s->feedback(v, "");
         }
         faders[i]->setValue(v, juce::dontSendNotification);
 
@@ -821,7 +821,7 @@ void VirtualFaderColGrid::updateSlidersValues()
             v = 0;
             if (s != nullptr) {
                 v = s->getTargetValue();
-                s->feedback(v, "");
+                //s->feedback(v, "");
             }
             rotaries[i]->getRawDataPointer()[r]->setValue(v, juce::dontSendNotification);
 
