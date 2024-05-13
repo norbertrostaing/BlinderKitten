@@ -67,6 +67,7 @@ public:
     int chaserRemainingSteps = 0;
     void tapTempo();
     double lastTapTempo;
+    Array<double> tapTempoHistory;
 
     Trigger* goBtn;
     Trigger* goBackBtn;

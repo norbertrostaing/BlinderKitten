@@ -137,6 +137,8 @@ BKEngine::BKEngine() :
 	virtualFaderSize->addParameterListener(this);
 	virtualFaderBelow = virtualParamsContainer.addIntParameter("Below button numbers", "Number of buttons below the fader in each fader column", 1, 0);
 	virtualFaderBelow->addParameterListener(this);
+	tapTempoHistory = virtualParamsContainer.addIntParameter("Tap tempo history", "number of hits in history to calculate tempo", 8, 1);
+	tapTempoHistory->addParameterListener(this);
 
 	encodersNumber = uiParamsContainer.addIntParameter("Encoders number", "How many encoders do you want ?", 10, 1);
 	encodersNumber->addParameterListener(this);

@@ -1553,8 +1553,18 @@ void Cuelist::tapTempo() {
 	double delta = now - lastTapTempo;
 	lastTapTempo = now;
 	if (delta < 3000) {
+		BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+		int historySize = e->tapTempoHistory->intValue();
 		delta = delta / (double)chaserStepPerTap->getValue();
+		tapTempoHistory.add(delta);
+		while (tapTempoHistory.size() > historySize) tapTempoHistory.remove(0);
+		delta = 0;
+		for (int i = 0; i < tapTempoHistory.size(); i++) delta += tapTempoHistory[i];
+		delta = delta / tapTempoHistory.size();
 		double cpm = 60000. / delta;
 		chaserSpeed->setValue(cpm);
+	}
+	else {
+		tapTempoHistory.clear();
 	}
 }

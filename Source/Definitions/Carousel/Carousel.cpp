@@ -17,6 +17,7 @@
 #include "../CurvePreset/CurvePreset.h"
 #include "../ChannelValue.h"
 #include "UI/GridView/CarouselGridView.h"
+#include "BKEngine.h"
 
 Carousel::Carousel(var params) :
 	BaseItem(params.getProperty("name", "Carousel")),
@@ -316,9 +317,19 @@ void Carousel::tapTempo() {
 	double delta = now - lastTapTempo;
 	lastTapTempo = now;
 	if (delta < 3000) {
-		delta = delta * (int)beatPerCycle->getValue();
+		BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+		int historySize = e->tapTempoHistory->intValue();
+		delta = delta * beatPerCycle->intValue();
+		tapTempoHistory.add(delta);
+		while (tapTempoHistory.size() > historySize) tapTempoHistory.remove(0);
+		delta = 0;
+		for (int i = 0; i < tapTempoHistory.size(); i++) delta += tapTempoHistory[i];
+		delta = delta / tapTempoHistory.size();
 		double cpm = 60000. / delta;
 		speed->setValue(cpm);
+	}
+	else {
+		tapTempoHistory.clear();
 	}
 }
 

@@ -62,6 +62,7 @@ public:
     CriticalSection isComputing;
 
     double lastTapTempo;
+    Array<double> tapTempoHistory;
     Trigger* tapTempoBtn;
     IntParameter* beatPerCycle;
 
