@@ -178,7 +178,7 @@
     <ClCompile Include="..\..\Source\UI\VirtualFaders\VirtualFaderColManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\UI\VirtualFaders\VirtualFaderSlider.cpp"/>
     <ClCompile Include="..\..\Source\UI\BKColorPicker.cpp"/>
-    <ClCompile Include="..\..\Source\UI\CommandLine.cpp"/>
+    <ClCompile Include="..\..\Source\UI\Clock.cpp"/>
     <ClCompile Include="..\..\Source\UI\ConductorInfos.cpp"/>
     <ClCompile Include="..\..\Source\UI\CuelistLoadWindow.cpp"/>
     <ClCompile Include="..\..\Source\UI\DMXChannelView.cpp"/>
@@ -3420,7 +3420,7 @@
     <ClInclude Include="..\..\Source\UI\VirtualFaders\VirtualFaderColManagerUI.h"/>
     <ClInclude Include="..\..\Source\UI\VirtualFaders\VirtualFaderSlider.h"/>
     <ClInclude Include="..\..\Source\UI\BKColorPicker.h"/>
-    <ClInclude Include="..\..\Source\UI\CommandLine.h"/>
+    <ClInclude Include="..\..\Source\UI\Clock.h"/>
     <ClInclude Include="..\..\Source\UI\ConductorInfos.h"/>
     <ClInclude Include="..\..\Source\UI\CuelistLoadWindow.h"/>
     <ClInclude Include="..\..\Source\UI\DMXChannelView.h"/>

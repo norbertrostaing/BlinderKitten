@@ -19,7 +19,6 @@
 #include "Definitions/Tracker/TrackerManagerUI.h"
 #include "Definitions/Multiplicator/MultiplicatorManagerUI.h"
 #include "Definitions/Layout/LayoutManagerUI.h"
-#include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI/EncodersMult/EncodersMultUI.h"
 #include "UI/InputPanel.h"
@@ -42,6 +41,7 @@
 #include "UI/DMXChannelView.h"
 #include "UI/LayoutViewer.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
+#include "UI/Clock.h"
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -148,6 +148,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("DMX Tester", &DMXChannelView::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Layout Viewer", &LayoutViewer::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelist sheet", &CuelistSheetUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Clock", &ClockUI::create));
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Interfaces", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Channels config", "Lists");
@@ -185,6 +186,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("DMX Tester", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Layout Viewer", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Cuelist sheet", "Panels");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Clock", "Panels");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Outliner", "");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Dashboard", "");

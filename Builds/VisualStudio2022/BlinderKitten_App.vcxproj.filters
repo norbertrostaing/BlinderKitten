@@ -1081,7 +1081,7 @@
     <ClCompile Include="..\..\Source\UI\BKColorPicker.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\UI\CommandLine.cpp">
+    <ClCompile Include="..\..\Source\UI\Clock.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\ConductorInfos.cpp">
@@ -4830,7 +4830,7 @@
     <ClInclude Include="..\..\Source\UI\BKColorPicker.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\UI\CommandLine.h">
+    <ClInclude Include="..\..\Source\UI\Clock.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\ConductorInfos.h">

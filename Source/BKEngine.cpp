@@ -55,7 +55,6 @@
 #include "./Common/Action/Action.h"
 #include "./Common/Action/ActionManager.h"
 
-#include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI/EncodersMult/EncodersMult.h"
 #include "UI/InputPanel.h"
@@ -84,6 +83,7 @@
 #include "Assistant/Assistant.h"
 #include "UI/CuelistLoadWindow.h"
 #include "UI/LabelAndTime.h"
+#include "UI/Clock.h"
 
 
 
@@ -350,12 +350,12 @@ BKEngine::~BKEngine()
 	CarouselGridView::deleteInstance();
 	MapperGridView::deleteInstance();
 
-	CommandLine::deleteInstance();
 	Encoders::deleteInstance();
 	InputPanel::deleteInstance();
 	Assistant::deleteInstance();
 	CuelistLoadWindow::deleteInstance();
 	LabelAndTimeWindow::deleteInstance();
+	Clock::deleteInstance();
 
 	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();

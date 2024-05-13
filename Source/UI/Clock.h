@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    CommandLine.h
+    Clock.h
     Created: 19 Feb 2022 12:19:42am
     Author:  No
 
@@ -15,30 +15,33 @@
 //==============================================================================
 /*
 */
-class CommandLineUI : public ShapeShifterContent
+class ClockUI : public ShapeShifterContent
 {
 public:
-    CommandLineUI(const String& contentName);
-    ~CommandLineUI();
+    ClockUI(const String& contentName);
+    ~ClockUI();
 
-    static CommandLineUI* create(const String& name) { return new CommandLineUI(name); }
+    static ClockUI* create(const String& name) { return new ClockUI(name); }
 
 
 };
 
 
-class CommandLine  : public juce::Component
+class Clock  : public juce::Component,
+    juce::Timer
 {
 public:
-    juce_DeclareSingleton(CommandLine, true);
-    CommandLine();
-    ~CommandLine() override;
+    juce_DeclareSingleton(Clock, true);
+    Clock();
+    ~Clock() override;
 
-    Slider test;
+    Label hms;
 
     void paint (juce::Graphics&) override;
     void resized() override;
+    void timerCallback() override;
+    void fillText();
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CommandLine)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Clock)
 };

@@ -120,8 +120,8 @@
         <FILE id="qfx9JQ" name="BKColorPicker.cpp" compile="1" resource="0"
               file="Source/UI/BKColorPicker.cpp"/>
         <FILE id="wbgqAn" name="BKColorPicker.h" compile="0" resource="0" file="Source/UI/BKColorPicker.h"/>
-        <FILE id="A43BIc" name="CommandLine.cpp" compile="1" resource="0" file="Source/UI/CommandLine.cpp"/>
-        <FILE id="AFY6oF" name="CommandLine.h" compile="0" resource="0" file="Source/UI/CommandLine.h"/>
+        <FILE id="AAvC3T" name="Clock.cpp" compile="1" resource="0" file="Source/UI/Clock.cpp"/>
+        <FILE id="NIOemw" name="Clock.h" compile="0" resource="0" file="Source/UI/Clock.h"/>
         <FILE id="datAZp" name="ConductorInfos.cpp" compile="1" resource="0"
               file="Source/UI/ConductorInfos.cpp"/>
         <FILE id="mbq0lK" name="ConductorInfos.h" compile="0" resource="0"

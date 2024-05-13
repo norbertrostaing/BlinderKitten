@@ -25,7 +25,6 @@
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
 #include "Definitions/Fixture/FixtureManager.h"
 #include "Definitions/Fixture/Fixture.h"
-#include "UI/CommandLine.h"
 #include "UI/Encoders.h"
 #include "UI//EncodersMult/EncodersMult.h"
 #include "UI/VirtualButtons/VirtualButtonManager.h"
