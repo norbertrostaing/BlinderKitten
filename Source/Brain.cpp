@@ -760,8 +760,8 @@ void Brain::unregisterTracker(Tracker* c) {
 
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
+    ScopedLock lock(usingCollections);
     if (!cuelistPoolWaiting.contains(c)) {
-        ScopedLock lock(usingCollections);
         cuelistPoolWaiting.add(c);
     }
 }
@@ -769,56 +769,56 @@ void Brain::pleaseUpdate(Cuelist* c) {
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if (f == nullptr || f->isDeleted || f->objectType != "SubFixtureChannel") { return; }
     if (f == nullptr) { return; };
+    ScopedLock lock(usingCollections);
     if (!subFixtureChannelPoolWaiting.contains(f)) {
-        ScopedLock lock(usingCollections);
         subFixtureChannelPoolWaiting.add(f);
     }
 }
 
 void Brain::pleaseUpdate(Cue* c) {
     if (c == nullptr || c->objectType != "Cue") { return; }
+    ScopedLock lock(usingCollections);
     if (!cuePoolWaiting.contains(c)) {
-        ScopedLock lock(usingCollections);
         cuePoolWaiting.add(c);
     }
 }
 
 void Brain::pleaseUpdate(Programmer* c) {
     if (c == nullptr || c->objectType != "Programmer") { return; }
+    ScopedLock lock(usingCollections);
     if (!programmerPoolWaiting.contains(c)) {
-        ScopedLock lock(usingCollections);
         programmerPoolWaiting.add(c);
     }
 }
 
 void Brain::pleaseUpdate(Effect* f) {
     if (f == nullptr || f->objectType != "Effect") { return; }
+    ScopedLock lock(usingCollections);
     if (!effectPoolWaiting.contains(f)) {
-        ScopedLock lock(usingCollections);
         effectPoolWaiting.add(f);
     }
 }
 
 void Brain::pleaseUpdate(Carousel* f) {
     if (f == nullptr || f->objectType != "Carousel") { return; }
+    ScopedLock lock(usingCollections);
     if (!carouselPoolWaiting.contains(f)) {
-        ScopedLock lock(usingCollections);
         carouselPoolWaiting.add(f);
     }
 }
 
 void Brain::pleaseUpdate(Mapper* f) {
     if (f == nullptr || f->objectType != "Mapper") { return; }
+    ScopedLock lock(usingCollections);
     if (!mapperPoolWaiting.contains(f)) {
-        ScopedLock lock(usingCollections);
         mapperPoolWaiting.add(f);
     }
 }
 
 void Brain::pleaseUpdate(Tracker* f) {
     if (f == nullptr || f->objectType != "Tracker") { return; }
+    ScopedLock lock(usingCollections);
     if (!trackerPoolWaiting.contains(f)) {
-        ScopedLock lock(usingCollections);
         trackerPoolWaiting.add(f);
     }
 }
