@@ -329,7 +329,6 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case 0x40004: // bypass deleteing item with backspace 
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
-		result.setActive(false);
 		//result.defaultKeypresses.remove(1);
 		// result.defaultKeypresses.remove(0);
 		break;
