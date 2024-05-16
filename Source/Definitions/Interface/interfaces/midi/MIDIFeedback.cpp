@@ -136,7 +136,9 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
 {
     String localAddress = "";
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
-    MIDIInterface* inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    if (inter == nullptr) {
+        inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    }
 
     bool valid = false;
     int sendValue = 0;
@@ -150,7 +152,6 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
     if (!isText && midiType->getValueDataAsEnum<MidiType>() == TEXT) { return; }
 
     double floatValue = varValue;
-
     if (source == VFADER && !sameDevice) {
         localAddress = "/vfader/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue());
         if (address == localAddress) {
@@ -302,7 +303,9 @@ void MIDIFeedback::sendText(String text)
 
 void MIDIFeedback::sendMCUFaderText(int col, String text)
 {
-    MIDIInterface* inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    if (inter == nullptr) {
+        inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    }
     auto dev = inter->deviceParam->outputDevice;
     if (dev == nullptr) {
         return;
@@ -322,7 +325,9 @@ void MIDIFeedback::sendMCUFaderText(int col, String text)
 
 void MIDIFeedback::sendMCUEncoderText(int col, String text)
 {
-    MIDIInterface* inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    if (inter == nullptr) {
+        inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    }
     auto dev = inter->deviceParam->outputDevice;
     if (dev == nullptr) {
         return;

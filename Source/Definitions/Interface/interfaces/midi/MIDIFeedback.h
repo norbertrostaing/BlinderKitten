@@ -9,6 +9,7 @@
 */
 
 #pragma once
+class MIDIInterface;
 
 class MIDIFeedback :
     public BaseItem
@@ -16,6 +17,8 @@ class MIDIFeedback :
 public:
     MIDIFeedback();
     ~MIDIFeedback();
+
+    MIDIInterface* inter = nullptr;
 
     enum FeedbackSource { VFADER, VROTARY, VABOVEBUTTON, VBELOWBUTTON, VBUTTON, ENCODER, GRANDMASTER};
     EnumParameter* feedbackSource;

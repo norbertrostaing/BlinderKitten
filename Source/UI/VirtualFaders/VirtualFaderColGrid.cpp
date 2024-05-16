@@ -797,6 +797,7 @@ VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool c
 void VirtualFaderColGrid::updateSlidersValues()
 {
     const MessageManagerLock mmLock;
+    bool fb = false;
 
     for (int i = 0; i < cols; i++) {
         VirtualFaderCol* vfc = columnToVFC.getReference(i+1);
@@ -812,7 +813,9 @@ void VirtualFaderColGrid::updateSlidersValues()
         float v = 0;
         if (s != nullptr) {
             v = s->getTargetValue();
-            s->feedback(v, "");
+            if (faders[i]->getValue() != v) {
+                s->feedback(v, "");
+            }
         }
         faders[i]->setValue(v, juce::dontSendNotification);
 
@@ -821,7 +824,9 @@ void VirtualFaderColGrid::updateSlidersValues()
             v = 0;
             if (s != nullptr) {
                 v = s->getTargetValue();
-                s->feedback(v, "");
+                if (rotaries[i]->getRawDataPointer()[r]->getValue() != v) {
+                    s->feedback(v, "");
+                }
             }
             rotaries[i]->getRawDataPointer()[r]->setValue(v, juce::dontSendNotification);
 
