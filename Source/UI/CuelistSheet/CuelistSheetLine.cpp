@@ -208,6 +208,8 @@ void CuelistSheetLine::showCuePopup()
 	p.addItem("Insert before", [this, targetCuelist]() {targetCuelist->insertProgCueBefore(targetCue); });
 	p.addItem("Insert after", [this, targetCuelist]() {targetCuelist->insertProgCueAfter(targetCue); });
 	p.addSeparator();
+	p.addItem("Delete", [this, targetCuelist]() {targetCue->remove(); });
+	p.addSeparator();
 	p.addItem("Replace", [this, targetCuelist]() {targetCue->replaceContent(UserInputManager::getInstance()->getProgrammer(true)); });
 	p.addItem("Merge", [this, targetCuelist]() {targetCue->mergeContent(UserInputManager::getInstance()->getProgrammer(true)); });
 
