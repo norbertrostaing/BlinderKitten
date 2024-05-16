@@ -39,3 +39,21 @@ class FixturePatch:
     int getFixtureId();
 
 };
+
+class FixturePatchManager :
+    public BaseManager<FixturePatch>
+{
+public:
+    juce_DeclareSingleton(FixturePatchManager, true);
+
+    FixturePatchManager();
+    FixturePatchManager(const juce::String& name);
+    ~FixturePatchManager();
+
+    void askForMoveBefore(BaseItem*) override;
+    void askForMoveAfter(BaseItem*) override;
+    void addItemInternal(FixturePatch* c, var data);
+    void askForDuplicateItem(BaseItem* item);
+    void setItemIndex(FixturePatch* item, int newIndex, bool addToUndo = true);
+
+};

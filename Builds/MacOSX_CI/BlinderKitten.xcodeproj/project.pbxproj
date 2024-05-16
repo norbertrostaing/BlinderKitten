@@ -44,6 +44,7 @@
 		24420BF3B29A256EA162775B /* include_juce_gui_extra.mm */ = {isa = PBXBuildFile; fileRef = 1DB026441A50459643325797; };
 		2447B1B2A179CCF99AF65202 /* FixtureGridView.cpp */ = {isa = PBXBuildFile; fileRef = 181A07662AAC881A0B6981AA; };
 		25133B89C8D3887B5B0CB58D /* MapperStep.cpp */ = {isa = PBXBuildFile; fileRef = 3DAD360B9AEE6137414EA321; };
+		2751F1BD91EB49A53091CE29 /* PatchSheetLine.cpp */ = {isa = PBXBuildFile; fileRef = E16D57EE29DE1741DB0B04A5; };
 		2982C802010481D683D21D85 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = 40D2D0CB5ED75C1E00601B49; };
 		2AC3B0DD9079B5988999DD8C /* CarouselStep.cpp */ = {isa = PBXBuildFile; fileRef = FE864E507EED71B60040AA83; };
 		2B97209FC411228963664A72 /* Assistant.cpp */ = {isa = PBXBuildFile; fileRef = A7CB1C5A633570CE502446DC; };
@@ -84,6 +85,7 @@
 		6967D5F076DFD94BCFD9187C /* CueManager.cpp */ = {isa = PBXBuildFile; fileRef = 7D68C3CCC195AB0B42D3B29D; };
 		6B61C2B741D4FF3FBE0BCEE6 /* CurvePresetManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = F0B23BA8C8BF4489319FEA9D; };
 		6C3389D2BF969451055393BF /* InterfaceIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 1A2E45C794338F9D9EEFBC9B; };
+		6C5FAA6D7A6F62546D16E4B7 /* PatchSheet.cpp */ = {isa = PBXBuildFile; fileRef = 05BF01E3E25501C9539528DA; };
 		6E1C654FA6D9B3DD9E4ABFF5 /* MainComponentCommands.cpp */ = {isa = PBXBuildFile; fileRef = 895575A86AEAD001F77EE12B; };
 		6F79BE3F94B03AA855A176F3 /* list_ports_linux.cc */ = {isa = PBXBuildFile; fileRef = BDD2B5577988CD1CF0AEE831; };
 		702FC97CEC79C9BCC0F380C1 /* FixtureTypeChannelManager.cpp */ = {isa = PBXBuildFile; fileRef = B8CEFDA69D0DC456DBC25FED; };
@@ -210,6 +212,7 @@
 		054C87A417E0FC75D2BD3009 /* VirtualFaderColManagerUI.cpp */ /* VirtualFaderColManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderColManagerUI.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderColManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		057A38661B7D28CDC346016D /* ComponentSelectorUI.cpp */ /* ComponentSelectorUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentSelectorUI.cpp; path = ../../Source/Common/ComponentSelector/ui/ComponentSelectorUI.cpp; sourceTree = SOURCE_ROOT; };
 		057F2CB0E802728D25A3B09F /* FixtureTypeVirtualChannel.cpp */ /* FixtureTypeVirtualChannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeVirtualChannel.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeVirtualChannel.cpp; sourceTree = SOURCE_ROOT; };
+		05BF01E3E25501C9539528DA /* PatchSheet.cpp */ /* PatchSheet.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatchSheet.cpp; path = ../../Source/UI/PatchSheet/PatchSheet.cpp; sourceTree = SOURCE_ROOT; };
 		05CCB08C1EB2783DCDD6DD81 /* CarouselManagerUI.h */ /* CarouselManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CarouselManagerUI.h; path = ../../Source/Definitions/Carousel/CarouselManagerUI.h; sourceTree = SOURCE_ROOT; };
 		0613D01E75FCE992624A213C /* VirtualButtonManager.h */ /* VirtualButtonManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualButtonManager.h; path = ../../Source/UI/VirtualButtons/VirtualButtonManager.h; sourceTree = SOURCE_ROOT; };
 		06CE97A9D26E59D31845791D /* DMXMapping.cpp */ /* DMXMapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXMapping.cpp; path = ../../Source/Definitions/Interface/interfaces/dmx/DMXMapping.cpp; sourceTree = SOURCE_ROOT; };
@@ -267,6 +270,7 @@
 		2B0DF320C8619FF9CB956909 /* MIDIFeedback.h */ /* MIDIFeedback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIFeedback.h; path = ../../Source/Definitions/Interface/interfaces/midi/MIDIFeedback.h; sourceTree = SOURCE_ROOT; };
 		2B363C47719FBE2D11BDBFE3 /* CuelistGridView.h */ /* CuelistGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistGridView.h; path = ../../Source/UI/GridView/CuelistGridView.h; sourceTree = SOURCE_ROOT; };
 		2CB931C3AB3641819A6E1109 /* include_juce_organicui.cpp */ /* include_juce_organicui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui.cpp; path = ../../JuceLibraryCode/include_juce_organicui.cpp; sourceTree = SOURCE_ROOT; };
+		2EB73025A0F8E8B6BE42F5B1 /* PatchSheetLine.h */ /* PatchSheetLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PatchSheetLine.h; path = ../../Source/UI/PatchSheet/PatchSheetLine.h; sourceTree = SOURCE_ROOT; };
 		2EC0136804299C7DA734EFE5 /* CurvePresetManager.cpp */ /* CurvePresetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CurvePresetManager.cpp; path = ../../Source/Definitions/CurvePreset/CurvePresetManager.cpp; sourceTree = SOURCE_ROOT; };
 		2EC92D9653B743C5673D1EBC /* InterfaceUI.cpp */ /* InterfaceUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InterfaceUI.cpp; path = ../../Source/Definitions/Interface/ui/InterfaceUI.cpp; sourceTree = SOURCE_ROOT; };
 		2F44FA5E5E803F1ACEF33E05 /* MapperRow.h */ /* MapperRow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapperRow.h; path = ../../Source/Definitions/Mapper/MapperRow.h; sourceTree = SOURCE_ROOT; };
@@ -478,6 +482,7 @@
 		AD561ABAED2745E121CE95A7 /* Fixture.cpp */ /* Fixture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Fixture.cpp; path = ../../Source/Definitions/Fixture/Fixture.cpp; sourceTree = SOURCE_ROOT; };
 		AD861E96EB2578CD4E903BF6 /* FixtureMultiEditor.h */ /* FixtureMultiEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureMultiEditor.h; path = ../../Source/Definitions/Fixture/FixtureMultiEditor.h; sourceTree = SOURCE_ROOT; };
 		ADB3F0D5C6D1C22D19EDA773 /* GenericAction.h */ /* GenericAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenericAction.h; path = ../../Source/Definitions/Actions/GenericAction.h; sourceTree = SOURCE_ROOT; };
+		AEB0A988388E3068B6320462 /* PatchSheet.h */ /* PatchSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PatchSheet.h; path = ../../Source/UI/PatchSheet/PatchSheet.h; sourceTree = SOURCE_ROOT; };
 		AED5F19D85468BD94B808BB9 /* FixtureTypeManagerUI.cpp */ /* FixtureTypeManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeManagerUI.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		AF0ACD9868DA66DDB69479BF /* SerialInterface.cpp */ /* SerialInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialInterface.cpp; path = ../../Source/Definitions/Interface/interfaces/serial/SerialInterface.cpp; sourceTree = SOURCE_ROOT; };
 		B0B243B44EA568048CA8BE61 /* MTCReceiver.h */ /* MTCReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MTCReceiver.h; path = ../../Source/Common/MIDI/MTCReceiver.h; sourceTree = SOURCE_ROOT; };
@@ -566,6 +571,7 @@
 		E0A18BBC03E9615B6466272E /* ChannelFamilyManagerUI.cpp */ /* ChannelFamilyManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChannelFamilyManagerUI.cpp; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		E0C85FB8D7A184A8FCBA5446 /* TimingPresetManagerUI.h */ /* TimingPresetManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimingPresetManagerUI.h; path = ../../Source/Definitions/TimingPreset/TimingPresetManagerUI.h; sourceTree = SOURCE_ROOT; };
 		E1109E4FDA6AEEBB3A86F01B /* EncodersMult.cpp */ /* EncodersMult.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncodersMult.cpp; path = ../../Source/UI/EncodersMult/EncodersMult.cpp; sourceTree = SOURCE_ROOT; };
+		E16D57EE29DE1741DB0B04A5 /* PatchSheetLine.cpp */ /* PatchSheetLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatchSheetLine.cpp; path = ../../Source/UI/PatchSheet/PatchSheetLine.cpp; sourceTree = SOURCE_ROOT; };
 		E1D11321A7ACF990B9160F6E /* LabelAndTime.h */ /* LabelAndTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelAndTime.h; path = ../../Source/UI/LabelAndTime.h; sourceTree = SOURCE_ROOT; };
 		E299CD850A1384C8E67F0515 /* LabelAndTime.cpp */ /* LabelAndTime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LabelAndTime.cpp; path = ../../Source/UI/LabelAndTime.cpp; sourceTree = SOURCE_ROOT; };
 		E2C6478802669AB0941D034C /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
@@ -1099,6 +1105,17 @@
 			name = Interface;
 			sourceTree = "<group>";
 		};
+		89C9C43C104B1CB6053EF752 /* PatchSheet */ = {
+			isa = PBXGroup;
+			children = (
+				05BF01E3E25501C9539528DA,
+				AEB0A988388E3068B6320462,
+				E16D57EE29DE1741DB0B04A5,
+				2EB73025A0F8E8B6BE42F5B1,
+			);
+			name = PatchSheet;
+			sourceTree = "<group>";
+		};
 		8D1FCAA3076B55FE4AAEBA90 /* ChannelFamily */ = {
 			isa = PBXGroup;
 			children = (
@@ -1585,6 +1602,7 @@
 				D503B486C37C3255F89F6A14,
 				950346BD5CE06C0BD439C910,
 				CD9A2C98AC7F16AF751AA52A,
+				89C9C43C104B1CB6053EF752,
 				0D4A11AC24582730EA3A6213,
 				7C921613769477991DD630DD,
 				13615B57BB162ED3F6D80A5A,
@@ -1709,6 +1727,8 @@
 				1A9BA58BBF4225291A991FC2,
 				72A36ECFF806C88045F2704E,
 				F60DC70F92C843C12612C071,
+				6C5FAA6D7A6F62546D16E4B7,
+				2751F1BD91EB49A53091CE29,
 				FB298395462FBA9AFF2D22E3,
 				DD1D753FD64B4DEEC2A0513E,
 				2FAEBCAB66A7EC540282C966,

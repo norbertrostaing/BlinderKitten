@@ -14,6 +14,9 @@
     <Filter Include="BlinderKitten\Source\UI\GridView">
       <UniqueIdentifier>{A2944900-8176-2119-D58B-B43DC6B801F0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\UI\PatchSheet">
+      <UniqueIdentifier>{11F8296C-5C36-0C25-CAED-14792EA34EE2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\UI\VirtualButtons">
       <UniqueIdentifier>{DF951739-92BD-4E54-2231-D7D8082A033F}</UniqueIdentifier>
     </Filter>
@@ -1047,6 +1050,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\GridView\PresetGridView.cpp">
       <Filter>BlinderKitten\Source\UI\GridView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\PatchSheet\PatchSheet.cpp">
+      <Filter>BlinderKitten\Source\UI\PatchSheet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\PatchSheet\PatchSheetLine.cpp">
+      <Filter>BlinderKitten\Source\UI\PatchSheet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\VirtualButtons\VirtualButton.cpp">
       <Filter>BlinderKitten\Source\UI\VirtualButtons</Filter>
@@ -4796,6 +4805,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\GridView\PresetGridView.h">
       <Filter>BlinderKitten\Source\UI\GridView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\PatchSheet\PatchSheet.h">
+      <Filter>BlinderKitten\Source\UI\PatchSheet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\PatchSheet\PatchSheetLine.h">
+      <Filter>BlinderKitten\Source\UI\PatchSheet</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\VirtualButtons\VirtualButton.h">
       <Filter>BlinderKitten\Source\UI\VirtualButtons</Filter>

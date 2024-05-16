@@ -5,6 +5,7 @@
 #include "Definitions/FixtureType/FixtureTypeVirtualChannel.h"
 #include "UserInputManager.h"
 #include "Brain.h"
+#include "UI/PatchSheet/PatchSheet.h"
 
 juce_ImplementSingleton(FixtureManager);
 
@@ -29,7 +30,7 @@ void FixtureManager::addItemInternal(Fixture* o, var data)
 {
     reorderItems();
     FixtureGridView::getInstance()->updateCells();
-
+    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::removeItemInternal(Fixture* o)
@@ -39,7 +40,29 @@ void FixtureManager::removeItemInternal(Fixture* o)
         UserInputManager::getInstance()->processInput("ClearAll");
     }
     FixtureGridView::getInstance()->updateCells();
+    PatchSheet::getInstance()->rebuildLines();
 
+}
+
+void FixtureManager::askForMoveBefore(BaseItem*)
+{
+    PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixtureManager::askForMoveAfter(BaseItem*)
+{
+    PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixtureManager::askForDuplicateItem(BaseItem* item)
+{
+    PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixtureManager::setItemIndex(Fixture* item, int newIndex, bool addToUndo)
+{
+    BaseManager::setItemIndex(item, newIndex, addToUndo);
+    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)

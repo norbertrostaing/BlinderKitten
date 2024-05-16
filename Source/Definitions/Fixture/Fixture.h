@@ -40,7 +40,7 @@ public:
 
     OwnedArray<SubFixture> subFixturesContainer;
     HashMap<int, SubFixture*> subFixtures;
-    BaseManager<FixturePatch> patchs;
+    FixturePatchManager patchs;
     String getTypeString() const override { return objectType; }
 
     void applyPatchs();

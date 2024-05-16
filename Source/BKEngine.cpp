@@ -76,6 +76,7 @@
 
 #include "UI/ConductorInfos.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
+#include "UI/PatchSheet/PatchSheet.h"
 #include "UI/BKColorPicker.h"
 
 #include "UserInputManager.h"
@@ -332,6 +333,7 @@ BKEngine::~BKEngine()
 
 	ConductorInfos::deleteInstance();
 	CuelistSheet::deleteInstance();
+	PatchSheet::deleteInstance();
 	BKColorPicker::deleteInstance();
 
 	InterfaceManager::deleteInstance();

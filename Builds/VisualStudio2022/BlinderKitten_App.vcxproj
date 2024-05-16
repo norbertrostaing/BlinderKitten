@@ -169,6 +169,8 @@
     <ClCompile Include="..\..\Source\UI\GridView\GroupGridView.cpp"/>
     <ClCompile Include="..\..\Source\UI\GridView\MapperGridView.cpp"/>
     <ClCompile Include="..\..\Source\UI\GridView\PresetGridView.cpp"/>
+    <ClCompile Include="..\..\Source\UI\PatchSheet\PatchSheet.cpp"/>
+    <ClCompile Include="..\..\Source\UI\PatchSheet\PatchSheetLine.cpp"/>
     <ClCompile Include="..\..\Source\UI\VirtualButtons\VirtualButton.cpp"/>
     <ClCompile Include="..\..\Source\UI\VirtualButtons\VirtualButtonGrid.cpp"/>
     <ClCompile Include="..\..\Source\UI\VirtualButtons\VirtualButtonManager.cpp"/>
@@ -3411,6 +3413,8 @@
     <ClInclude Include="..\..\Source\UI\GridView\GroupGridView.h"/>
     <ClInclude Include="..\..\Source\UI\GridView\MapperGridView.h"/>
     <ClInclude Include="..\..\Source\UI\GridView\PresetGridView.h"/>
+    <ClInclude Include="..\..\Source\UI\PatchSheet\PatchSheet.h"/>
+    <ClInclude Include="..\..\Source\UI\PatchSheet\PatchSheetLine.h"/>
     <ClInclude Include="..\..\Source\UI\VirtualButtons\VirtualButton.h"/>
     <ClInclude Include="..\..\Source\UI\VirtualButtons\VirtualButtonGrid.h"/>
     <ClInclude Include="..\..\Source\UI\VirtualButtons\VirtualButtonManager.h"/>

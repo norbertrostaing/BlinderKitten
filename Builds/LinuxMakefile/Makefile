@@ -85,6 +85,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/GroupGridView_5fc98182.o \
   $(JUCE_OBJDIR)/MapperGridView_2ac6085e.o \
   $(JUCE_OBJDIR)/PresetGridView_d172ffc.o \
+  $(JUCE_OBJDIR)/PatchSheet_2c03483d.o \
+  $(JUCE_OBJDIR)/PatchSheetLine_d2553e51.o \
   $(JUCE_OBJDIR)/VirtualButton_57e0460.o \
   $(JUCE_OBJDIR)/VirtualButtonGrid_861b1346.o \
   $(JUCE_OBJDIR)/VirtualButtonManager_c5a2c3b7.o \
@@ -311,6 +313,16 @@ $(JUCE_OBJDIR)/MapperGridView_2ac6085e.o: ../../Source/UI/GridView/MapperGridVie
 $(JUCE_OBJDIR)/PresetGridView_d172ffc.o: ../../Source/UI/GridView/PresetGridView.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PresetGridView.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PatchSheet_2c03483d.o: ../../Source/UI/PatchSheet/PatchSheet.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling PatchSheet.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PatchSheetLine_d2553e51.o: ../../Source/UI/PatchSheet/PatchSheetLine.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling PatchSheetLine.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/VirtualButton_57e0460.o: ../../Source/UI/VirtualButtons/VirtualButton.cpp

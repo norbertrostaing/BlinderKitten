@@ -13,6 +13,7 @@
 // #include "../ChannelFamily/ChannelFamilyManager.h"
 #include "Fixture.h"
 #include "Definitions/FixtureType/FixtureType.h"
+#include "UI/PatchSheet/PatchSheet.h"
 
 FixturePatch::FixturePatch(var params) :
 	BaseItem(params.getProperty("name", "Patch")),
@@ -44,26 +45,14 @@ FixturePatch::FixturePatch(var params) :
 		targetInterface->setValueFromTarget(interfaces[0]);
 	}
 
-
-
-	/*curve->editorIsCollapsed = true;
-	curve->setNiceName("Response curve");
-	curve->allowKeysOutside = false;
-	curve->isSelectable = false;
-	curve->length->setValue(1);
-	curve->addKey(0, 0, false);
-	curve->items[0]->easingType->setValueWithData(Easing::LINEAR);
-	curve->addKey(1, 1, false);
-	curve->selectItemWhenCreated = false;
-	curve->editorCanBeCollapsed = true;
-	*/
-
+	PatchSheet::getInstance()->rebuildLines();
 
 };
 
 FixturePatch::~FixturePatch()
 {
 	disableCurrentPatch();
+	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatch::onContainerParameterChangedInternal(Parameter* p)
@@ -212,3 +201,43 @@ void FixturePatch::tryToEnablePatch()
 
 }
 
+FixturePatchManager::FixturePatchManager():
+	BaseManager("Patch")
+{
+}
+
+FixturePatchManager::FixturePatchManager(const juce::String& name):
+	BaseManager(name)
+{
+}
+
+FixturePatchManager::~FixturePatchManager()
+{
+	PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixturePatchManager::askForMoveBefore(BaseItem*)
+{
+	PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixturePatchManager::askForMoveAfter(BaseItem*)
+{
+	PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixturePatchManager::addItemInternal(FixturePatch* c, var data)
+{
+	PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixturePatchManager::askForDuplicateItem(BaseItem* item)
+{
+	BaseManager::askForDuplicateItem(item);
+	PatchSheet::getInstance()->rebuildLines();
+}
+
+void FixturePatchManager::setItemIndex(FixturePatch* item, int newIndex, bool addToUndo)
+{
+	PatchSheet::getInstance()->rebuildLines();
+}

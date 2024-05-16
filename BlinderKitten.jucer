@@ -74,6 +74,14 @@
           <FILE id="BXrKtJ" name="PresetGridView.h" compile="0" resource="0"
                 file="Source/UI/GridView/PresetGridView.h"/>
         </GROUP>
+        <GROUP id="{EE0113DF-BAB4-232C-8F2E-7452E78EBD3E}" name="PatchSheet">
+          <FILE id="w51wJU" name="PatchSheet.cpp" compile="1" resource="0" file="Source/UI/PatchSheet/PatchSheet.cpp"/>
+          <FILE id="MuzKxn" name="PatchSheet.h" compile="0" resource="0" file="Source/UI/PatchSheet/PatchSheet.h"/>
+          <FILE id="Q6nD8C" name="PatchSheetLine.cpp" compile="1" resource="0"
+                file="Source/UI/PatchSheet/PatchSheetLine.cpp"/>
+          <FILE id="MKAX18" name="PatchSheetLine.h" compile="0" resource="0"
+                file="Source/UI/PatchSheet/PatchSheetLine.h"/>
+        </GROUP>
         <GROUP id="{DE55AD18-F1DB-71A0-45E6-09BF8140287E}" name="VirtualButtons">
           <FILE id="RAt7pp" name="VirtualButton.cpp" compile="1" resource="0"
                 file="Source/UI/VirtualButtons/VirtualButton.cpp"/>
