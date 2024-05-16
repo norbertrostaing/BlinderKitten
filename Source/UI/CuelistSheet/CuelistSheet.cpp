@@ -221,6 +221,9 @@ void CuelistSheet::updateRunningCue()
             lines[i]->isRunning = isRunning;
             lines[i]->repaint();
         }
+        if (isRunning) {
+            viewport.setViewPosition(0, lines[i]->getY() - viewport.getHeight()/2);
+        }
     }
 }
 
