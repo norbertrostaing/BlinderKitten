@@ -197,13 +197,14 @@ void Preset::computeValues() {
 
 
 	}
-
+	isComputing.exit();
 }
 
-	std::shared_ptr < HashMap<ChannelType*, float>> Preset::getSubFixtureValues(SubFixture* f) {
+std::shared_ptr < HashMap<ChannelType*, float>> Preset::getSubFixtureValues(SubFixture* f) {
 	std::shared_ptr < HashMap<ChannelType*, float>> values = std::make_shared<HashMap<ChannelType*, float>>();
+	isComputing.enter();
 	for (auto it = computedUniversalValues.begin(); it != computedUniversalValues.end(); it.next()) {
-		values->set(it.getKey(), it.getValue());
+		values->set(it.getKey(), it.getValue()); // ici
 	}
 
 	FixtureType* dt = dynamic_cast<FixtureType*>(f->parentFixture->devTypeParam->targetContainer.get());
@@ -221,6 +222,7 @@ void Preset::computeValues() {
 		}
 	}
 
+	isComputing.exit();
 	return values;
 }
 

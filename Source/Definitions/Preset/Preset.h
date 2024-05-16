@@ -41,6 +41,7 @@ public:
     HashMap<FixtureType*, std::shared_ptr <HashMap<ChannelType*, float>>> computedFixtureTypeValues;
     HashMap<FixtureType*, std::shared_ptr <HashMap<String, std::shared_ptr <HashMap<ChannelType*, float>>>>> computedSubFixtureTypeValues;
     HashMap<ChannelType*, float> computedUniversalValues;
+    CriticalSection isComputing;
 
     std::shared_ptr <HashMap<ChannelType*, float>> getSubFixtureValues(SubFixture* f);
 
