@@ -21,7 +21,7 @@ PatchSheetLine::PatchSheetLine(Fixture* f, FixturePatch* fp, PatchSheet* parent)
 
 	addMouseListener(this, true);
 
-	if (f->patchs.items.indexOf(fp) == 0) {
+	if (fp == nullptr || f->patchs.items.indexOf(fp) == 0) {
 		idControler = f->id->createLabelUI();
 		idControler->showLabel = false;
 		nameControler = f->userName->createStringParameterUI();
@@ -200,7 +200,14 @@ void PatchSheetLine::showLinePopup()
 {
 	PopupMenu p;
 	p.addItem("Inspect fixture", [this]() {targetFixture->selectThis(); });
-	p.addItem("Inspect patch", [this]() {targetFixturePatch->selectThis(); });
+	if (targetFixturePatch != nullptr) {
+		p.addItem("Inspect patch", [this]() {if (targetFixturePatch != nullptr) targetFixturePatch->selectThis(); });
+	}
+	p.addSeparator();
+	p.addItem("Add Patch", [this]() {targetFixture->patchs.addItem(); });
+	if (targetFixturePatch != nullptr) {
+		p.addItem("Delete patch", [this]() {if (targetFixturePatch != nullptr) targetFixturePatch->remove(); });
+	}
 	/*
 	p.addItem("Load as next cue", [this, targetCuelist]() {targetCuelist->nextCue->setValueFromTarget(targetCue);});
 	p.addItem("Load and go", [this, targetCuelist]() {targetCuelist->nextCue->setValueFromTarget(targetCue); targetCuelist->go();});

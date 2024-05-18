@@ -135,6 +135,12 @@ void PatchSheet::rebuildLines()
             linesContainer.addAndMakeVisible(l);
             l->updateContent();
         }
+        if (f->patchs.items.size() == 0) {
+            PatchSheetLine* l = new PatchSheetLine(f, nullptr, this);
+            lines.add(l);
+            linesContainer.addAndMakeVisible(l);
+            l->updateContent();
+        }
     }
     resized();
     updateSelection();
