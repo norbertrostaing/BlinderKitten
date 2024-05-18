@@ -56,6 +56,9 @@ Carousel::Carousel(var params) :
 	flashValue = addFloatParameter("Flash", "Flash master of this Carousel", 1, 0, 1);
 	speed = addFloatParameter("Speed", "Speed of this Carousel in cycles/minutes", 5, 0);
 
+	fadeInTime = addFloatParameter("Fade in", "Fade in time in seconds", 0, 0);
+	fadeOutTime = addFloatParameter("Fade out", "Fade out time in seconds", 0, 0);
+
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "");
 
@@ -122,10 +125,10 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {
 			if (isOn && (float)sizeValue->getValue() == 0) {
-				stop();
+				kill();
 			}
 			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
-				userStart();
+				userStart(false);
 			}
 		}
 		lastSize = p->getValue();
@@ -151,13 +154,21 @@ void Carousel::triggerTriggered(Trigger* t) {
 	else {}
 }
 
-void Carousel::userStart() {
+void Carousel::userStart(bool useFadeIn) {
 	userPressedGo = true;
-	start();
+	start(useFadeIn);
 }
 
-void Carousel::start() {
+void Carousel::start(bool useFadeIn) {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
+	if (useFadeIn && fadeInTime->floatValue() > 0) {
+		TSStartFadeIn = TSLastUpdate;
+		TSEndFadeIn = TSLastUpdate + (fadeInTime->floatValue() * 1000);
+	}
+	else {
+		TSStartFadeIn = 0;
+		TSEndFadeIn = 0;
+	}
 	isOn = true;
 	isCarouselOn->setValue(true);
 	totalElapsed = 0;
@@ -166,6 +177,16 @@ void Carousel::start() {
 }
 
 void Carousel::stop() {
+	if (fadeOutTime->floatValue() > 0) {
+		TSStartFadeOut = Time::getMillisecondCounterHiRes();
+		TSEndFadeOut = TSStartFadeOut + (fadeOutTime->floatValue() * 1000);
+	}
+	else {
+		kill();
+	}
+}
+
+void Carousel::kill() {
 	isOn = false;
 	userPressedGo = false;
 	isCarouselOn->setValue(false);
@@ -174,6 +195,10 @@ void Carousel::stop() {
 			it.getKey()->carouselOutOfStack(this);
 		}
 	}
+	TSStartFadeIn = 0;
+	TSStartFadeOut = 0;
+	TSEndFadeIn = 0;
+	TSEndFadeOut = 0;
 }
 
 void Carousel::update(double now) {
@@ -193,6 +218,10 @@ void Carousel::update(double now) {
 			double delta = deltaTime / duration;
 			totalElapsed += delta;
 			currentPosition->setValue(fmodf(totalElapsed, 1.0));
+		}
+
+		if (TSEndFadeOut > 0 && TSEndFadeOut < now) {
+			kill();
 		}
 	}
 	else {
@@ -234,6 +263,11 @@ void Carousel::computeData() {
 float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToCarouselRow.contains(fc)) {return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
+
+	float fadeSize = 1;
+	if (TSStartFadeIn < now && TSEndFadeIn > now) fadeSize = jmap(now, TSStartFadeIn, TSEndFadeIn, 0.0, 1.0);
+	if (TSStartFadeOut < now && TSEndFadeOut > now) fadeSize = jmap(now, TSStartFadeOut, TSEndFadeOut, 1.0, 0.0);
+
 	isComputing.enter();
 	float calcValue = currentVal;
 	bool htpOver = false;
@@ -290,6 +324,9 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	s *= currentSizeMult;
 	if (isFlashing) { s = flashValue->floatValue(); }
 	if (s>1) {s = 1;}
+
+	s *= fadeSize;
+
 	if (fc->isHTP && !htpOver) {
 		calcValue *= s;
 		currentVal = jmax(calcValue, currentVal);
@@ -338,7 +375,7 @@ void Carousel::flash(bool on, bool swop)
 {
 	if (on) {
 		if (!isOn) {
-			start();
+			start(false);
 		}
 		isFlashing = true;
 		if (swop) {
@@ -353,7 +390,7 @@ void Carousel::flash(bool on, bool swop)
 			Brain::getInstance()->unswoppedCarousel(this);
 		}
 		if (!userPressedGo) {
-			stop();
+			kill();
 		}
 	}
 }

@@ -56,6 +56,9 @@ Effect::Effect(var params) :
 	speed = addFloatParameter("Speed", "Speed of this effect in cycles/minutes", 5, 0);
 	noLoop = addBoolParameter("No loop", "Play this effect only once", false);
 
+	fadeInTime = addFloatParameter("Fade in", "Fade in time in seconds", 0, 0);
+	fadeOutTime = addFloatParameter("Fade out", "Fade out time in seconds", 0, 0);
+
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "");
 
@@ -119,10 +122,10 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {
 			if (isOn && (float)sizeValue->getValue() == 0) {
-				stop();
+				kill();
 			}
 			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
-				userStart();
+				userStart(false);
 			}
 		}
 		lastSize = p->getValue();
@@ -149,13 +152,21 @@ void Effect::triggerTriggered(Trigger* t) {
 }
 
 
-void Effect::userStart() {
+void Effect::userStart(bool useFadeIn) {
 	userPressedGo = true;
-	start();
+	start(useFadeIn);
 }
 
-void Effect::start() {
+void Effect::start(bool useFadeIn) {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
+	if (useFadeIn && fadeInTime->floatValue()>0) {
+		TSStartFadeIn = TSLastUpdate;
+		TSEndFadeIn = TSLastUpdate+(fadeInTime->floatValue()*1000);
+	}
+	else {
+		TSStartFadeIn = 0;
+		TSEndFadeIn = 0;
+	}
 	isOn = true;
 	isEffectOn->setValue(true);
 	totalElapsed = 0;
@@ -164,6 +175,16 @@ void Effect::start() {
 }
 
 void Effect::stop() {
+	if (fadeOutTime->floatValue() > 0) {
+		TSStartFadeOut = Time::getMillisecondCounterHiRes();
+		TSEndFadeOut = TSStartFadeOut + (fadeOutTime->floatValue() * 1000);
+	}
+	else {
+		kill();
+	}
+}
+
+void Effect::kill() {
 	userPressedGo = false;
 	isOn = false;
 	isEffectOn->setValue(false);
@@ -171,6 +192,10 @@ void Effect::stop() {
 		it.getKey()->effectOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
+	TSStartFadeIn = 0;
+	TSStartFadeOut = 0;
+	TSEndFadeIn = 0;
+	TSEndFadeOut = 0;
 }
 
 void Effect::update(double now) {
@@ -190,6 +215,10 @@ void Effect::update(double now) {
 			double delta = deltaTime / duration;
 			totalElapsed += delta;
 			currentPosition->setValue(fmodf(totalElapsed, 1.0));
+		}
+
+		if (TSEndFadeOut > 0 && TSEndFadeOut < now) {
+			kill();
 		}
 	}
 	else {
@@ -225,6 +254,11 @@ void Effect::computeData() {
 
 float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	isComputing.enter();
+
+	float fadeSize = 1;
+	if (TSStartFadeIn < now && TSEndFadeIn > now) fadeSize = jmap(now, TSStartFadeIn, TSEndFadeIn, 0.0, 1.0);
+	if (TSStartFadeOut < now && TSEndFadeOut > now) fadeSize = jmap(now, TSStartFadeOut, TSEndFadeOut, 1.0, 0.0);
+
 	if (!chanToFxParam.contains(fc)) { isComputing.exit(); return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	std::shared_ptr<Array<EffectParam*>> params = chanToFxParam.getReference(fc);
@@ -303,6 +337,8 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		size *= currentSizeMult;
 		if (isFlashing) { size = flashValue->floatValue(); }
 
+		size *= fadeSize;
+
 		if (p->effectMode->getValue() == "relative") {
 			value *= (double)size;
 			value *= (double)p->curveSize->getValue();
@@ -360,7 +396,7 @@ void Effect::flash(bool on, bool swop)
 {
 	if (on) {
 		if (!isOn) {
-			start();
+			start(false);
 		}
 		isFlashing = true;
 		if (swop) {

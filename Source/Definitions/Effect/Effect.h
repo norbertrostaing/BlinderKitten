@@ -52,6 +52,14 @@ public:
     String currentSizeController = "";
     String nextSizeController = "";
     float lastSize = 0;
+
+    FloatParameter* fadeInTime;
+    FloatParameter* fadeOutTime;
+    double TSStartFadeIn = 0;
+    double TSStartFadeOut = 0;
+    double TSEndFadeIn = 0;
+    double TSEndFadeOut = 0;
+
     BaseManager<EffectRow> values;
 
     FloatParameter* currentPosition;
@@ -80,9 +88,10 @@ public:
     bool computed = false;
     bool computing = false;
     void pleaseComputeIfRunning();
-    void userStart();
-    void start();
+    void userStart(bool useFadeIn = true);
+    void start(bool useFadeIn = true);
     void stop();
+    void kill();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
 
