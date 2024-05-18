@@ -138,6 +138,7 @@ void Preset::checkIfProgrammerNeedUpdate()
 }
 
 void Preset::computeValues() {
+	isComputing.enter();
 	computedSubFixtureValues.clear();
 	computedFixtureTypeValues.clear();
 	computedSubFixtureTypeValues.clear();
