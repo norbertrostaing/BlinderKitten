@@ -268,6 +268,7 @@ void Programmer::release(double now) {
 	if (now == 0) {
 		now = Brain::getInstance()->now;
 	}
+	ScopedLock lock(computing);
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		std::shared_ptr<ChannelValue> temp = it.getValue();
 		float fadeTime = releaseTime->getValue();
@@ -295,6 +296,7 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 	bool keepUpdate = false;
 
 	float localValue = 0;
+	ScopedLock lock(computing);
 	if (!activeValues.contains(fc)) { return currentVal; }
 	std::shared_ptr<ChannelValue> cv = activeValues.getReference(fc);
 
