@@ -3,6 +3,7 @@
 #include "Brain.h"
 #include "UI/LabelAndTime.h"
 #include "Fixture/FixtureManager.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
 
 //==============================================================================
 PatchSheetUI::PatchSheetUI(const String& contentName):
@@ -19,8 +20,9 @@ juce_ImplementSingleton(PatchSheet);
 
 PatchSheet::PatchSheet()
 {
-    addAndMakeVisible(labelAndTimeBtn);
-    addAndMakeVisible(inspectCuelistBtn);
+    addAndMakeVisible(csvExportBtn);
+    csvExportBtn.setButtonText("Export to CSV");
+    //addAndMakeVisible(inspectCuelistBtn);
     
     addAndMakeVisible(idLabel); idLabel.setText("ID", juce::dontSendNotification);
     addAndMakeVisible(nameLabel); nameLabel.setText("Name", juce::dontSendNotification);
@@ -48,7 +50,7 @@ PatchSheet::PatchSheet()
     isSelected.setWantsKeyboardFocus(false);
     */
 
-    labelAndTimeBtn.onClick = [this]() { rebuildLines(); };
+    csvExportBtn.onClick = [this]() { exportToCSV(); };
     //inspectCuelistBtn.onClick = [this]() {inspectCuelist(); };
 
     //labelAndTimeBtn.setButtonText("Edit Label and time");
@@ -79,8 +81,8 @@ void PatchSheet::resized()
     int width = getLocalBounds().getWidth();
     int height = getLocalBounds().getHeight();
 
-    labelAndTimeBtn.setBounds(width * 3 / 5, 0, width / 5, 20);
-    inspectCuelistBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
+    csvExportBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
+    //inspectCuelistBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
 
     int w = width / 10;
     //w = jmin(45, w);
@@ -180,15 +182,61 @@ void PatchSheet::changeListenerCallback(ChangeBroadcaster* source)
     rebuildLines();
 }
 
-void PatchSheet::cueDeleted(Cue* c)
+void PatchSheet::exportToCSV()
 {
-    for (int i = 0; i < lines.size(); i++) {
-        //if (lines[i]->targetCue == c) lines[i]->targetCue = nullptr;
-    }
-    rebuildLines();
-}
+    FileChooser fc("Save patsc as CSV", File::getCurrentWorkingDirectory(), "*.csv");
+    if (!fc.browseForFileToSave(true)) return;
 
-void PatchSheet::updateRunningCue()
-{
+    String output = "";
+    output += "ID,";
+    output += "Name,";
+    output += "Fixture type,";
+    output += "Universe,";
+    output += "Address,";
+    output += "Long Address\n";
+
+    Array<DMXInterface*> universes = InterfaceManager::getInstance()->getInterfacesOfType<DMXInterface>();
+
+    for (int iFixt = 0; iFixt < FixtureManager::getInstance()->items.size(); iFixt++) {
+        Fixture* f = FixtureManager::getInstance()->items[iFixt];
+        FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
+        String ftName = ft != nullptr ? ft->niceName : "";
+        for (int iPatch = 0; iPatch < f->patchs.items.size(); iPatch++) {
+            FixturePatch* fp = f->patchs.items[iPatch];
+            DMXInterface* inter = dynamic_cast<DMXInterface*>(fp->targetInterface->targetContainer.get());
+            int interfaceIndex = universes.indexOf(inter);
+            output += f->id->stringValue() + ",";
+            output += f->userName->stringValue() + ",";
+            output += ftName + ",";
+            if (inter != nullptr) {
+                output += inter->niceName;
+            }
+            output += ",";
+            output += fp->address->stringValue() + ",";
+            if (interfaceIndex >= 0) {
+                output += String(interfaceIndex+1)+"."+ fp->address->stringValue();
+            }
+            output += "\n";
+        }
+        if (f->patchs.items.size() == 0) {
+            output += f->id->stringValue() + ",";
+            output += f->userName->stringValue() + ",";
+            output += ftName+",";
+            output += ",,\n";
+        }
+    }
+
+    File file = fc.getResult();
+    if (file.exists()) file.deleteFile();
+    file.create();	
+    std::unique_ptr<OutputStream> os(file.createOutputStream());
+    if (os == nullptr)
+    {
+        LOGERROR("Error saving document, please try again");
+        return;
+    }
+
+    os->writeString(output);
+    os->flush();
 }
 

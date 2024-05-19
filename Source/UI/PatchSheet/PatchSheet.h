@@ -30,7 +30,7 @@ public:
     PatchSheet();
     ~PatchSheet() override;
 
-    TextButton labelAndTimeBtn;
+    TextButton csvExportBtn;
     TextButton inspectCuelistBtn;
 
     Label idLabel;
@@ -59,8 +59,7 @@ public:
 
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
-    void cueDeleted(Cue* c);
-    void updateRunningCue();
+    void exportToCSV();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PatchSheet)
