@@ -268,7 +268,8 @@ void Programmer::release(double now) {
 	if (now == 0) {
 		now = Brain::getInstance()->now;
 	}
-	ScopedLock lock(computing);
+	computing.enter();
+	Array<SubFixtureChannel*> toUpdate;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		std::shared_ptr<ChannelValue> temp = it.getValue();
 		float fadeTime = releaseTime->getValue();
@@ -284,9 +285,12 @@ void Programmer::release(double now) {
 		temp->fadeCurve = nullptr;
 
 		activeValues.set(it.getKey(), temp);
-		Brain::getInstance()->pleaseUpdate(it.getKey());
+		toUpdate.add(it.getKey());
 	}
-
+	computing.exit();
+	for (SubFixtureChannel* sfc : toUpdate) {
+		Brain::getInstance()->pleaseUpdate(sfc);
+	}
 }
 
 
