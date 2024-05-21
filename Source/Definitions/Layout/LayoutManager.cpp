@@ -12,12 +12,16 @@
 
 juce_ImplementSingleton(LayoutManager);
 
+int compare(Layout* A, Layout* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 LayoutManager::LayoutManager() :
     BaseManager("2D Plans")    {
     itemDataType = "Layout";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
+    autoReorderOnAdd = true;
 }
 
 LayoutManager::~LayoutManager()
@@ -27,6 +31,7 @@ LayoutManager::~LayoutManager()
 
 void LayoutManager::addItemInternal(Layout* o, var data)
 {
+    reorderItems();
     // o->addLayoutListener(this);
     // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
 }
