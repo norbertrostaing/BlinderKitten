@@ -63,6 +63,7 @@ void MapperStep::updateDisplay() {
 
 
 void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
+	isComputing.enter();
 	computedValues.clear();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 
@@ -148,5 +149,6 @@ void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 			}
 		}
 	}
+	isComputing.exit();
 }
 

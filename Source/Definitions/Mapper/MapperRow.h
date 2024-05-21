@@ -31,6 +31,7 @@ class MapperRow:
 
     HashMap<SubFixture*, double> computedPositions;
     HashMap<SubFixtureChannel*,double> subFixtureChannelOffsets;
+    CriticalSection isComputing;
 
     void computeData();
 

@@ -36,6 +36,7 @@ class MapperStep:
 
     void computeValues(Array<SubFixture*> SubFixtures);
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
+    CriticalSection isComputing;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

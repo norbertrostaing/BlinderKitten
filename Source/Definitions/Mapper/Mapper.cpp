@@ -64,11 +64,13 @@ Mapper::~Mapper()
 	Brain::getInstance()->mapperPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->mapperPoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
+	isComputing.enter();
 	for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 		SubFixtureChannel* sfc = it.getKey();
 		sfc->mapperOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
+	isComputing.exit();
 
 }
 
@@ -124,11 +126,13 @@ void Mapper::start() {
 void Mapper::stop() {
 	isOn = false;
 	isMapperOn->setValue(false);
+	isComputing.enter();
 	for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 		if (it.getKey() != nullptr) {
 			it.getKey()->mapperOutOfStack(this);
 		}
 	}
+	isComputing.exit();
 }
 
 void Mapper::update(double now) {
@@ -148,29 +152,33 @@ void Mapper::pleaseComputeIfRunning() {
 }
 
 void Mapper::computeData() {
-	if (computing) {return;}
 	computed = true;
-	computing = true;
+	isComputing.enter();
 	chanToMapperRow.clear();
 	for (int i = 0; i < rows.items.size(); i++) {
 		rows.items[i]->computeData();
 	}
+	isComputing.exit();
 	if (isOn) {
+		Array<SubFixtureChannel*> toUpdate;
+		isComputing.enter();
 		for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 			if (it.getKey() != nullptr) {
 				it.getKey()->mapperOnTopOfStack(this);
-				Brain::getInstance()->pleaseUpdate(it.getKey());
+				toUpdate.addIfNotAlreadyThere(it.getKey());
 			}
 		}
+		isComputing.exit();
+		for (SubFixtureChannel* sfc : toUpdate) Brain::getInstance()->pleaseUpdate(sfc);
+
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	computing = false;
 }
 
 float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToMapperRow.contains(fc)) {return currentVal; }
-	if (computing) { return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
+	isComputing.enter();
 	float calcValue = currentVal;
 	std::shared_ptr<Array<MapperRow*>> activeRows = chanToMapperRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
@@ -190,6 +198,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 				}
 
 				if (toApply == nullptr) {
+					isComputing.exit();
 					return currentVal;
 				}
 				std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
@@ -222,7 +231,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 	else {
 		currentVal = jmap(s, currentVal, calcValue);
 	}
-
+	isComputing.exit();
 	return currentVal;
 }
 

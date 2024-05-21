@@ -54,6 +54,7 @@ MapperRow::~MapperRow()
 };
 
 void MapperRow::computeData() {
+    isComputing.enter();
     computedPositions.clear();
     subFixtureChannelOffsets.clear();
 
@@ -125,7 +126,7 @@ void MapperRow::computeData() {
         }
     }
 
-
+    isComputing.exit();
 
 
 }
@@ -134,7 +135,6 @@ void MapperRow::onControllableFeedbackUpdate( ControllableContainer* cc, Control
 }
 
 void MapperRow::updateDisplay() {
-
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 

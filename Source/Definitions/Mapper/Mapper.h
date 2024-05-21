@@ -48,6 +48,7 @@ public:
     BaseManager<MapperRow> rows;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<Array<MapperRow*>>> chanToMapperRow;
+    CriticalSection isComputing;
 
     String getTypeString() const override { return objectType; }
 
@@ -55,7 +56,6 @@ public:
     void update(double now);
     void computeData();
     bool computed = false;
-    bool computing = false;
     void pleaseComputeIfRunning();
     void start();
     void stop();
