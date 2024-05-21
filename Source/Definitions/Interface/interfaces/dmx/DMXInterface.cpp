@@ -343,13 +343,19 @@ void DMXInterface::repaintChannels(int chan, int n)
 	if (channelTestingMode->boolValue()) {
 		if (tester != nullptr) {
 			for (int i = 0; i < n; i++) {
-				tester->channelItems[chan+i]->value = dmxDevice->dmxDataOut[chan+i] / 255.;
+				int ad = chan + i;
+				tester->channelItems[ad]->value = dmxDevice->dmxDataOut[ad] / 255.;
+				MessageManager::callAsync([this, ad]() {
+					if (tester != nullptr) {
+						tester->channelItems[ad]->repaint();
+					}
+				});
 			}
-			MessageManager::callAsync([this]() {
-				if (tester != nullptr) {
-					tester->repaint();
-				}
-			});
+			//tester->repaint();
+			//MessageManager::callAsync([this]() {
+			//	if (tester != nullptr) {
+			//	}
+			//});
 		}
 	}
 
