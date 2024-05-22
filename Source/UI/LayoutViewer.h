@@ -12,12 +12,15 @@
 #include "JuceHeader.h"
 #include "Definitions/Layout/LayoutManager.h"
 
+class BKEngine;
+
 class LayoutViewer :
     public ShapeShifterContentComponent,
     public ComboBox::Listener,
     public ToggleButton::Listener,
     public LayoutManager::AsyncListener,
-    public ChangeListener
+    public ChangeListener,
+    public Timer
 
 {
 public:
@@ -30,6 +33,8 @@ public:
     
     ToggleButton viewPaths;
     ToggleButton editMode;
+
+    BKEngine* engine;
 
     ClicAction currentMouseAction = CLIC_NOACTION;
     BKPath* currentMousePath = nullptr;
@@ -76,12 +81,17 @@ public:
     void drawMidArrow(Graphics& g, float fromX, float fromY, float toX, float toY);
 
     void paint(Graphics& g) override;
-    
+    void stopAndCheckTimer();
+
+    void drawFixture(Graphics& g, Fixture* f, float x, float y, float w, float h, Colour c);
+    void drawSubFixture(Graphics& g, SubFixture* sf, float x, float y, float w, float h, Colour c);
+
     float topLeftX = 0;
     float topLeftY = 0;
     float bottomRightX = 0;
     float bottomRightY = 0;
 
+    void timerCallback();
     static LayoutViewer* create(const String& name) {return new LayoutViewer(); }
 
 };

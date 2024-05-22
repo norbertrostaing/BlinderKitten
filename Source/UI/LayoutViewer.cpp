@@ -11,6 +11,7 @@
 #include "LayoutViewer.h"
 #include "Brain.h"
 #include "UserInputManager.h"
+#include "BKEngine.h"
 
 LayoutViewer::LayoutViewer() :
 	ShapeShifterContentComponent("Layout Viewer")
@@ -31,6 +32,8 @@ LayoutViewer::LayoutViewer() :
 	rebuildLayoutsList();
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
 
+	engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	stopAndCheckTimer();
 }
 
 LayoutViewer::~LayoutViewer()
@@ -156,6 +159,7 @@ void LayoutViewer::selectLayout(int id)
 		selectedLayout = nullptr;
 	}
 	repaint();
+	stopAndCheckTimer();
 }
 
 void LayoutViewer::resized()
@@ -382,6 +386,7 @@ void LayoutViewer::mouseMove(const MouseEvent& e)
 void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)
 {
 	repaint();
+	stopAndCheckTimer();
 }
 
 void LayoutViewer::drawMidArrow(Graphics& g, Point<float>& from, Point<float>& to)
@@ -592,10 +597,7 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						g.setColour(drawColor);
-						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
-						String name = sf->displayName;
-						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -624,10 +626,7 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						g.setColour(drawColor);
-						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
-						String name = sf->parentFixture->id->stringValue();
-						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						drawFixture(g, sf->parentFixture, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -683,10 +682,7 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						g.setColour(drawColor);
-						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
-						String name = sf->displayName;
-						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -715,10 +711,7 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						g.setColour(drawColor);
-						g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
-						String name = sf->parentFixture->id->stringValue();
-						g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+						drawFixture(g, sf->parentFixture, X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -771,10 +764,7 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->parentFixture->getLayoutColor();
 					}
-					g.setColour(drawColor);
-					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
-					String name = it.getKey()->displayName;
-					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					drawSubFixture(g, it.getKey(), X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -792,10 +782,7 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->getLayoutColor();
 					}
-					g.setColour(drawColor);
-					g.drawRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, (float)1);
-					String name = it.getKey()->id->stringValue();
-					g.drawText(name, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					drawFixture(g, it.getKey(), X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -873,10 +860,7 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->parentFixture->getLayoutColor();
 					}
-					g.setColour(drawColor);
-					g.drawRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, (float)1);
-					String name = it.getKey()->displayName;
-					g.drawText(name, XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					drawSubFixture(g, it.getKey(), XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, drawColor);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight);
@@ -894,10 +878,7 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->getLayoutColor();
 					}
-					g.setColour(drawColor);
-					g.drawRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, (float)1);
-					String name = it.getKey()->id->stringValue();
-					g.drawText(name, XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+					drawFixture(g, it.getKey(), XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, drawColor);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight);
@@ -907,5 +888,61 @@ void LayoutViewer::paint(Graphics& g)
 			}
 		}
 	}
+}
+
+void LayoutViewer::stopAndCheckTimer()
+{
+	stopTimer();
+	if (selectedLayout != nullptr && selectedLayout->viewOutput->boolValue()) {
+		startTimerHz(30);
+	}
+	else {
+		repaint();
+	}
+}
+
+void LayoutViewer::drawFixture(Graphics& g, Fixture* f, float x, float y, float w, float h, Colour c)
+{
+	if (selectedLayout == nullptr) return;
+	bool fillBox = selectedLayout->viewOutput->boolValue();
+
+	if (fillBox) {
+		float sfCount = f->subFixtures.size();
+		if (sfCount == 0) return;
+		int i = 0;
+		float wSub = w / sfCount;
+		for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
+			Colour fill = it.getValue()->getOutputColor();
+			g.setColour(fill);
+			g.fillRect(x + (i * wSub), y, wSub, h);
+			i++;
+
+		}
+	}
+	g.setColour(c);
+	g.drawRect(x, y, w, h, (float)1);
+	String name = f->id->stringValue();
+	g.drawText(name, x, y, w, h, juce::Justification::centred);
+}
+
+void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y, float w, float h, Colour c)
+{
+	if (selectedLayout == nullptr) return;
+	bool fillBox = selectedLayout->viewOutput->boolValue();
+
+	if (fillBox) {
+		Colour fill = sf->getOutputColor();
+		g.setColour(fill);
+		g.fillRect(x, y, w, h);
+	}
+	g.setColour(c);
+	g.drawRect(x, y, w, h, (float)1);
+	String name = sf->displayName;
+	g.drawText(name, x, y, w, h, juce::Justification::centred);
+}
+
+void LayoutViewer::timerCallback()
+{
+	repaint();
 }
 

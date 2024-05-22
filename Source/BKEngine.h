@@ -75,6 +75,7 @@ public:
 	TargetParameter* CPSaturationChannel;
 
 	ControllableContainer trackerContainer;
+	TargetParameter* IntensityChannel;
 	TargetParameter* TPanChannel;
 	TargetParameter* TTiltChannel;
 

@@ -28,5 +28,5 @@ public:
     String displayName = "";
     OwnedArray<SubFixtureChannel> channelsContainer;
     HashMap<ChannelType*, SubFixtureChannel*> channelsMap;
-
+    Colour getOutputColor();
 };

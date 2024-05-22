@@ -54,6 +54,8 @@ Layout::Layout(var params) :
 	paths.selectItemWhenCreated = false;
 
 	textScale = addFloatParameter("Text scale","",  1, 0);
+
+	viewOutput = addBoolParameter("View output", "if checked, box will change color with fixture output", false);
 	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 

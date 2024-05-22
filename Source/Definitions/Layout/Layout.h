@@ -41,6 +41,8 @@ public:
     Point2DParameter* tilesScale;
     FloatParameter* textScale;
 
+    BoolParameter* viewOutput;
+
     BaseManager<BKPath> paths;
 
     void onContainerParameterChangedInternal(Parameter* p) override;

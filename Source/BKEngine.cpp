@@ -199,6 +199,10 @@ BKEngine::BKEngine() :
 	CPSaturationChannel->targetType = TargetParameter::CONTAINER;
 	CPSaturationChannel->maxDefaultSearchLevel = 2;
 
+	IntensityChannel = trackerContainer.addTargetParameter("Intensity channel", "", ChannelFamilyManager::getInstance());
+	IntensityChannel->targetType = TargetParameter::CONTAINER;
+	IntensityChannel->maxDefaultSearchLevel = 2;
+
 	TPanChannel = trackerContainer.addTargetParameter("Pan channel", "", ChannelFamilyManager::getInstance());
 	TPanChannel->targetType = TargetParameter::CONTAINER;
 	TPanChannel->maxDefaultSearchLevel = 2;
@@ -1382,6 +1386,16 @@ void BKEngine::autoFillDefaultChannels()
 			TTiltChannel->setValueFromTarget(Tilt);
 		}
 	}
+
+	ChannelFamily* dim = ChannelFamilyManager::getInstance()->getItemWithName("Dimmer");
+	if (dim != nullptr) {
+		auto Intensity = dim->definitions.getItemWithName("Intensity");
+		if (Intensity != nullptr) {
+			IntensityChannel->setValueFromTarget(Intensity);
+		}
+	}
+
+
 
 }
 

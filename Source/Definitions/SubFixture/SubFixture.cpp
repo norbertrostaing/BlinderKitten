@@ -13,6 +13,7 @@
 #include "../../Brain.h"
 #include "Fixture/Fixture.h"
 #include "UserInputManager.h"
+#include "BKEngine.h"
 
 SubFixture::SubFixture() :
 	channelsMap()
@@ -33,6 +34,52 @@ SubFixture::~SubFixture()
 			UserInputManager::getInstance()->currentProgrammer->currentUserCommand->computeValues();
 		}
 	}
+}
+
+Colour SubFixture::getOutputColor()
+{
+	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	float r = 0;
+	float g = 0;
+	float b = 0;
+
+	ChannelType* intensity = dynamic_cast<ChannelType*>(e->IntensityChannel->targetContainer.get());
+	ChannelType* red = dynamic_cast<ChannelType*>(e->CPRedChannel->targetContainer.get());
+	ChannelType* green = dynamic_cast<ChannelType*>(e->CPGreenChannel->targetContainer.get());
+	ChannelType* blue = dynamic_cast<ChannelType*>(e->CPBlueChannel->targetContainer.get());
+	ChannelType* cyan = dynamic_cast<ChannelType*>(e->CPCyanChannel->targetContainer.get());
+	ChannelType* magenta = dynamic_cast<ChannelType*>(e->CPMagentaChannel->targetContainer.get());
+	ChannelType* yellow = dynamic_cast<ChannelType*>(e->CPYellowChannel->targetContainer.get());
+
+	bool colorIsSet = false;
+
+	if (red != nullptr && green != nullptr && blue != nullptr) {
+		if (channelsMap.contains(red)) { colorIsSet = true; r = channelsMap.getReference(red)->value; }
+		if (channelsMap.contains(green)) { colorIsSet = true; g = channelsMap.getReference(green)->value; }
+		if (channelsMap.contains(blue)) { colorIsSet = true; b = channelsMap.getReference(blue)->value; }
+	}
+	
+	if (!colorIsSet && cyan != nullptr && magenta != nullptr && yellow != nullptr) {
+		r = 255; g = 255; b= 255;
+		if (channelsMap.contains(cyan)) { colorIsSet = true; r = 1-channelsMap.getReference(cyan)->value; }
+		if (channelsMap.contains(magenta)) { colorIsSet = true; g = 1-channelsMap.getReference(magenta)->value; }
+		if (channelsMap.contains(yellow)) { colorIsSet = true; b = 1-channelsMap.getReference(yellow)->value; }
+	}
+
+	if (intensity != nullptr) {
+		if (!colorIsSet) {r = 1; g = 1; b = 1;}
+		if (channelsMap.contains(intensity)) {
+			float v = channelsMap.getReference(intensity)->value;
+			colorIsSet = true;
+			r *= v;
+			g *= v;
+			b *= v;
+		}
+	}
+
+	if (!colorIsSet) {r = 0; g = 0; b = 0;}
+
+	return Colour(255*r, 255*g, 255*b);
 }
 
 int SubFixture::MyHashGenerator::generateHash(SubFixture* key, int upperLimit) const
