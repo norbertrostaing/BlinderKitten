@@ -17,20 +17,26 @@ FixtureType::FixtureType(var params) :
 	objectType(params.getProperty("type", "FixtureType").toString()),
 	objectData(params),
 	chansManager(),
-	virtualChansManager()
+	virtualChansManager(),
+	helpContainer("Editor Help")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
 	canBeDisabled = false;
-
+	
 	itemDataType = "FixtureType";
 	layoutColor = addColorParameter("Layout color", "Default color in layout", Colours::orange);
 	
+	templateId = helpContainer.addIntParameter("Template ID", "Use the subfixture with this id as template", 0, 0);
+	copyToId = helpContainer.addIntParameter("Copy until ID", "Duplicate the template until the copy has this ID", 0, 0);
+	copyTemplateButton = helpContainer.addTrigger("Copy template", "");
 	//chansManager = new BaseManager<FixtureTypeChannel>("Channels");
 	// ContainerAsyncListener* newListener = new ContainerAsyncListener();
 	// chansManager->addAsyncContainerListener();
 	addChildControllableContainer(&chansManager);
 	addChildControllableContainer(&virtualChansManager);
+	addChildControllableContainer(&helpContainer);
+	helpContainer.saveAndLoadRecursiveData = false;
 }
 
 FixtureType::~FixtureType()
@@ -48,4 +54,51 @@ void FixtureType::updateVirtualLists() {
 		chansManager.items[i]->virtualMaster->setValue(value);
 	}
 
+}
+
+void FixtureType::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	if (c == copyTemplateButton) {
+		copyTemplate();
+		copyToId->setValue(0);
+	}
+}
+
+void FixtureType::copyTemplate()
+{
+	int from = templateId->intValue();
+	int to = copyToId->intValue();
+	if (to <= from) 
+	{
+		LOG("Copy to must be higher than template ID");
+		return;
+	}
+	for (int subId = from + 1; subId <= to; subId++) {
+		HashMap<FixtureTypeVirtualChannel*, FixtureTypeVirtualChannel*> virtualChans;
+		Array< FixtureTypeVirtualChannel*> virtToCopy;
+		for (FixtureTypeVirtualChannel* c : virtualChansManager.items) {
+			if (c->subFixtureId->intValue() == from) {
+				virtToCopy.add(c);
+			}
+		}
+		for (FixtureTypeVirtualChannel* c : virtToCopy) {
+			FixtureTypeVirtualChannel* newC = virtualChansManager.addItemFromData(c->getJSONData(), false);
+			newC->subFixtureId->setValue(subId);
+			virtualChans.set(c, newC);
+		}
+		Array< FixtureTypeChannel*> toCopy;
+		for (FixtureTypeChannel* c : chansManager.items) {
+			if (c->subFixtureId->intValue() == from) {
+				toCopy.add(c);
+			}
+		}
+		for (FixtureTypeChannel* c : toCopy) {
+			FixtureTypeChannel* newC = chansManager.addItemFromData(c->getJSONData(), false);
+			newC->subFixtureId->setValue(subId);
+			FixtureTypeVirtualChannel* v = dynamic_cast<FixtureTypeVirtualChannel*>(c->virtualMaster->targetContainer.get());
+			if (v != nullptr && virtualChans.contains(v)) {
+				newC->virtualMaster->setValueFromTarget(virtualChans.getReference(v));
+			}
+		}
+	}
 }

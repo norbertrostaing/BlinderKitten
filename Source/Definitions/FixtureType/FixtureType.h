@@ -26,13 +26,21 @@ public:
     
     ColorParameter* layoutColor;
 
+    IntParameter* templateId;
+    IntParameter* copyToId;
+    Trigger* copyTemplateButton;
+
     FixtureTypeChannelManager chansManager;
     FixtureTypeVirtualChannelManager virtualChansManager;
+    ControllableContainer helpContainer;
+
     String getTypeString() const override { return objectType; }
 
     static FixtureType* create(var params) { return new FixtureType(params); }
     void afterLoadJSONDataInternal();
     void updateVirtualLists();
 
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void copyTemplate();
 };
 
