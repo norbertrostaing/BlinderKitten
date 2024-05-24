@@ -532,24 +532,27 @@ void LayoutViewer::paint(Graphics& g)
 			else if (p->selection.computedSelectedSubFixtures.size() > 0) {
 				drawColor = p->selection.computedSelectedSubFixtures[0]->parentFixture->getLayoutColor();
 			}
-			g.setColour(drawColor);
-			g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
-			String name = "";
-			if (p->customText->stringValue() != "") {
-				name = p->customText->stringValue().trim();
-			}
-			else if (p->spreadSubFixtures->boolValue()) {
-				if (p->selection.computedSelectedSubFixtures.size()>0) {
-					name = p->selection.computedSelectedSubFixtures[0]->displayName;
-				}
-			}
-			else {
-				if (p->selection.computedSelectedSubFixtures.size() > 0) {
-					name = p->selection.computedSelectedSubFixtures[0]->parentFixture->id->stringValue();
-				}
-			}
-			g.drawText(name, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
 
+			bool drawed = false;
+
+			if (p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0 ) {
+				drawed = true;
+				drawSubFixture(g, p->selection.computedSelectedSubFixtures[0], fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor);
+			}
+			if (!drawed && !p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0) {
+				drawed = true;
+				drawFixture(g, p->selection.computedSelectedSubFixtures[0]->parentFixture, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor);
+			}
+			if (!drawed) {
+				g.setColour(drawColor);
+				g.drawRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, (float)1);
+				String name = "";
+				if (p->customText->stringValue() != "") {
+					name = p->customText->stringValue().trim();
+				}
+				g.drawText(name, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
+
+			}
 			if (p == hoveredPath) {
 				g.setColour(handleColour);
 				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
