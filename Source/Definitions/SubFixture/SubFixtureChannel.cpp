@@ -51,18 +51,49 @@ SubFixtureChannel::~SubFixtureChannel()
 	for (auto it = Brain::getInstance()->cuelists.begin(); it != Brain::getInstance()->cuelists.end(); it.next()) {
 		Cuelist* c = it.getValue();
 		c->isComputing.enter();
-		if (c->activeValues.contains(this)) {
-			c->activeValues.remove(this);
-		}
+		if (c->activeValues.contains(this)) c->activeValues.remove(this);
 		c->isComputing.exit();
 	}
 	for (auto it = Brain::getInstance()->programmers.begin(); it != Brain::getInstance()->programmers.end(); it.next()) {
 		Programmer* c = it.getValue();
 		c->computing.enter();
-		if (c->activeValues.contains(this)) {
-			c->activeValues.remove(this);
-		}
+		if (c->activeValues.contains(this)) c->activeValues.remove(this);
+		if (c->computedValues.contains(this)) c->computedValues.remove(this);
 		c->computing.exit();
+	}
+	for (auto it = Brain::getInstance()->effects.begin(); it != Brain::getInstance()->effects.end(); it.next()) {
+		Effect* c = it.getValue();
+		c->isComputing.enter();
+		if (c->chanToFxParam.contains(this)) c->chanToFxParam.remove(this);
+		c->isComputing.exit();
+	}
+	for (auto it = Brain::getInstance()->carousels.begin(); it != Brain::getInstance()->carousels.end(); it.next()) {
+		Carousel* c = it.getValue();
+		c->isComputing.enter();
+		if (c->chanToCarouselRow.contains(this)) c->chanToCarouselRow.remove(this);
+		c->isComputing.exit();
+		for (CarouselRow* row : c->rows.items) {
+			row->isComputing.enter();
+			if (row->subFixtureChannelOffsets.contains(this)) row->subFixtureChannelOffsets.remove(this);
+			row->isComputing.exit();
+			for (CarouselStep* step : row->paramContainer.items) {
+				step->isComputing.enter();
+				if (step->computedValues.contains(this)) step->computedValues.remove(this);
+				step->isComputing.exit();
+			}
+		}
+	}
+	for (auto it = Brain::getInstance()->mappers.begin(); it != Brain::getInstance()->mappers.end(); it.next()) {
+		Mapper* c = it.getValue();
+		c->isComputing.enter();
+		if (c->chanToMapperRow.contains(this)) c->chanToMapperRow.remove(this);
+		c->isComputing.exit();
+	}
+	for (auto it = Brain::getInstance()->trackers.begin(); it != Brain::getInstance()->trackers.end(); it.next()) {
+		Tracker* c = it.getValue();
+		c->isComputing.enter();
+		if (c->chanToVal.contains(this)) c->chanToVal.remove(this);
+		c->isComputing.exit();
 	}
 
 	cs.exit();
