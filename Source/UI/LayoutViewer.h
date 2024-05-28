@@ -33,6 +33,7 @@ public:
     
     ToggleButton viewPaths;
     ToggleButton editMode;
+    TextButton exportBtn;
 
     BKEngine* engine;
 
@@ -67,6 +68,8 @@ public:
     void selectLayout(int id);
 
     void resized() override;
+    int currentWidth = 0; 
+    int currentHeight = 0;
     //void mouseEnter(const MouseEvent& e) override;
     void mouseExit(const MouseEvent& e) override;
     void mouseDown(const MouseEvent& e) override;
@@ -85,6 +88,8 @@ public:
 
     void drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, float y, float w, float h, float angle, Colour c);
     void drawSubFixture(Graphics& g, SubFixture* sf, float x, float y, float w, float h, Colour c);
+
+    void exportToPNG();
 
     float topLeftX = 0;
     float topLeftY = 0;

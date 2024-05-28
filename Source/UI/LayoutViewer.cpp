@@ -29,6 +29,10 @@ LayoutViewer::LayoutViewer() :
 	viewPaths.addListener(this);
 	addAndMakeVisible(&viewPaths);
 
+	exportBtn.setButtonText("Export");
+	addAndMakeVisible(exportBtn);
+	exportBtn.onClick = [this](){ exportToPNG();};
+
 	rebuildLayoutsList();
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
 
@@ -167,9 +171,13 @@ void LayoutViewer::resized()
 	Rectangle<int> r = getLocalBounds();
 	Rectangle<int> hr = r.removeFromTop(20);
 
+	currentWidth = getWidth();
+	currentHeight = getHeight();
+
 	layoutsList.setBounds(hr.removeFromLeft(80).reduced(2));
 	viewPaths.setBounds(hr.removeFromLeft(80).reduced(2));
 	editMode.setBounds(hr.removeFromLeft(80).reduced(2));
+	exportBtn.setBounds(hr.removeFromLeft(80).reduced(2));
 
 	if (selectedLayout != nullptr) {
 		selectedLayout->sizeChanged();
@@ -1078,6 +1086,24 @@ void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y,
 	g.drawRect(x, y, w, h, (float)1);
 	String name = sf->displayName;
 	g.drawText(name, x, y, w, h, juce::Justification::centred);
+}
+
+void LayoutViewer::exportToPNG()
+{
+	FileChooser fc("Save Layout as PNG", File::getCurrentWorkingDirectory(), "*.png");
+	if (!fc.browseForFileToSave(true)) return;
+
+	File file = fc.getResult();
+	if (file.exists()) file.deleteFile();
+
+	Image myImage(Image::RGB, currentWidth, currentHeight, true);
+	Graphics g(myImage);
+
+	paint(g);
+
+	FileOutputStream stream(file);
+	PNGImageFormat pngWriter;
+	pngWriter.writeImageToStream(myImage, stream);
 }
 
 void LayoutViewer::timerCallback()
