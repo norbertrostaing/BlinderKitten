@@ -56,6 +56,14 @@ Layout::Layout(var params) :
 	textScale = addFloatParameter("Text scale","",  1, 0);
 
 	viewOutput = addBoolParameter("View output", "if checked, box will change color with fixture output", false);
+
+	backgroundImageFile = addFileParameter("Background image", "");
+	backgroundAlpha = addFloatParameter("Background transparency", "", 1,0,1);
+	viewGrid = addBoolParameter("View grid", "", false);
+	gridSize = addPoint2DParameter("Grid size", "");
+	var gs = 1; gs.append(1);
+	gridSize->setDefaultValue(gs);
+	gridColor = addColorParameter("Grid color", "", Colour(127,127,127));
 	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 
@@ -83,6 +91,15 @@ void Layout::onContainerParameterChangedInternal(Parameter* p)
 	if (p == userName || p == id) {
 		updateName();
 	}
+	if (p == backgroundImageFile) {
+		File f = backgroundImageFile->getFile();
+		if (f.exists()) {
+			backgroundImage = ImageFileFormat::loadFrom(f);
+		} else {
+			backgroundImage = Image();
+		}
+	}
+	sizeChanged();
 	sendChangeMessage();
 	
 }
@@ -280,6 +297,13 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioPerlin(f
 	}
 
 	return ret;
+}
+
+void Layout::sizeChanged()
+{
+	for (BKPath* p : paths.items) {
+		p->clearFixtImages();
+	}
 }
 
 

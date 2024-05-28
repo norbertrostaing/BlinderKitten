@@ -170,6 +170,10 @@ void LayoutViewer::resized()
 	layoutsList.setBounds(hr.removeFromLeft(80).reduced(2));
 	viewPaths.setBounds(hr.removeFromLeft(80).reduced(2));
 	editMode.setBounds(hr.removeFromLeft(80).reduced(2));
+
+	if (selectedLayout != nullptr) {
+		selectedLayout->sizeChanged();
+	}
 }
 
 
@@ -484,6 +488,48 @@ void LayoutViewer::paint(Graphics& g)
 
 	clicg.reduceClipRegion(originX, originY, width, height);
 	clicg.setOrigin(originX, originY);
+
+	// ici
+	if (selectedLayout->backgroundImage.isValid()) {
+		g.saveState();
+		g.setOpacity(selectedLayout->backgroundAlpha->floatValue());
+		g.drawImageWithin(selectedLayout->backgroundImage, 0,0,width, height,RectanglePlacement());
+		g.restoreState();
+	}
+
+	if (selectedLayout->viewGrid->boolValue()) {
+		float currentX = 0;
+		float currentY = 0;
+		g.setColour(selectedLayout->gridColor->getColor());
+		float fromX = (float)selectedLayout->dimensionsX->getValue()[0];
+		float toX = (float)selectedLayout->dimensionsX->getValue()[1];
+		float fromY = (float)selectedLayout->dimensionsY->getValue()[0];
+		float toY = (float)selectedLayout->dimensionsY->getValue()[1];
+		float gridX = selectedLayout->gridSize->getValue()[0];
+		float gridY = selectedLayout->gridSize->getValue()[1];
+		if (gridX > 0) {
+			while (currentX < jmax(abs(toX), abs(fromX))) {
+				float x = jmap(currentX, fromX, toX, 0.0f, width);
+				g.drawLine(x, 0, x, height, 1);
+				if (currentX != 0) {
+					x = jmap(-currentX, fromX, toX, 0.0f, width);
+					g.drawLine(x, 0, x, height, 1);
+				}
+				currentX += gridX;
+			}
+		}
+		if (gridY > 0) {
+			while (currentY < jmax(abs(toY), abs(fromY))) {
+				float y = jmap(currentY, fromY, toY, 0.0f, height);
+				g.drawLine(0, y, width, y, 1);
+				if (currentY != 0) {
+					y = jmap(-currentY, fromY, toY, 0.0f, height);
+					g.drawLine(0, y, width, y, 1);
+				}
+				currentY += gridY;
+			}
+		}
+	}
 
 	float handleWidth = 10;
 	float halfHandleWidth = handleWidth/2;

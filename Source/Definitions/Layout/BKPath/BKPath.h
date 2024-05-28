@@ -74,6 +74,7 @@ class BKPath:
     void updateDisplay();
 
     void clicked();
+    void clearFixtImages();
 
     static void rotateVect(Point<float>* vect, float angleInDegrees);
     static float getVectAngle(Point<float>* vect);

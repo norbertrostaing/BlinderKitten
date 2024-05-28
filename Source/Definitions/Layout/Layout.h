@@ -43,6 +43,13 @@ public:
 
     BoolParameter* viewOutput;
 
+    FileParameter* backgroundImageFile;
+    Image backgroundImage;
+    FloatParameter* backgroundAlpha;
+    BoolParameter* viewGrid;
+    Point2DParameter* gridSize;
+    ColorParameter* gridColor;
+
     BaseManager<BKPath> paths;
 
     void onContainerParameterChangedInternal(Parameter* p) override;
@@ -60,5 +67,7 @@ public:
 
     String getTypeString() const override { return objectType; }
     static Layout* create(var params) { return new Layout(params); }
+
+    void sizeChanged();
 };
 

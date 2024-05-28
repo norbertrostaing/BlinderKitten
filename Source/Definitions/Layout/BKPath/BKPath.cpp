@@ -325,9 +325,7 @@ void BKPath::onContainerParameterChangedInternal(Parameter* c) {
     if (c == pathType || c == overrideColor) {
         updateDisplay();
     }
-    fixtTransform.clear();
-    fixtImageBorder.clear();
-    fixtImageContent.clear();
+    clearFixtImages();
 }
 
 void BKPath::updateDisplay() {
@@ -360,6 +358,13 @@ void BKPath::clicked()
 {
     actionManager.setValueAll(1.f);
     actionManager.setValueAll(0.f);
+}
+
+void BKPath::clearFixtImages()
+{
+    fixtTransform.clear();
+    fixtImageBorder.clear();
+    fixtImageContent.clear();
 }
 
 void BKPath::rotateVect(Point<float>* vect, float angleInDegrees)
