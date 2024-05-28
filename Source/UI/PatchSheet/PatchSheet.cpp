@@ -184,7 +184,7 @@ void PatchSheet::changeListenerCallback(ChangeBroadcaster* source)
 
 void PatchSheet::exportToCSV()
 {
-    FileChooser fc("Save patsc as CSV", File::getCurrentWorkingDirectory(), "*.csv");
+    FileChooser fc("Save patch as CSV", File::getCurrentWorkingDirectory(), "*.csv");
     if (!fc.browseForFileToSave(true)) return;
 
     String output = "";
