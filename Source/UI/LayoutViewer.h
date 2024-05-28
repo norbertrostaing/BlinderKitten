@@ -83,7 +83,7 @@ public:
     void paint(Graphics& g) override;
     void stopAndCheckTimer();
 
-    void drawFixture(Graphics& g, Fixture* f, float x, float y, float w, float h, Colour c);
+    void drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, float y, float w, float h, float angle, Colour c);
     void drawSubFixture(Graphics& g, SubFixture* sf, float x, float y, float w, float h, Colour c);
 
     float topLeftX = 0;

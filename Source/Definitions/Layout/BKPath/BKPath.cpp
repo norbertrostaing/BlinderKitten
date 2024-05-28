@@ -59,6 +59,8 @@ BKPath::BKPath(var params) :
     overrideColor = addBoolParameter("Override color", "", false);
     pathColor = addColorParameter("Tiles color", "", juce::Colours::lightcyan);
     customText = addStringParameter("Custom Text", "Write your own text on your tile", "");
+    fixturesAngleFrom = addFloatParameter("Fixture rotation from", "Angle of first element", 0, -360, 360);
+    fixturesAngleTo = addFloatParameter("Fixture rotation to", "Angle of the last element", 0, -360, 360);
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&actionManager);
@@ -323,6 +325,9 @@ void BKPath::onContainerParameterChangedInternal(Parameter* c) {
     if (c == pathType || c == overrideColor) {
         updateDisplay();
     }
+    fixtTransform.clear();
+    fixtImageBorder.clear();
+    fixtImageContent.clear();
 }
 
 void BKPath::updateDisplay() {

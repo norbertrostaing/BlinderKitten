@@ -25,6 +25,12 @@ public:
     var objectData;
     
     ColorParameter* layoutColor;
+    FileParameter* layoutIconParameter;
+
+    bool useLayoutIcon = false;
+    Image layoutIconImage;
+    Image layoutBorderImage;
+    Image layoutContentImage;
 
     IntParameter* templateId;
     IntParameter* copyToId;
@@ -40,6 +46,7 @@ public:
     void afterLoadJSONDataInternal();
     void updateVirtualLists();
 
+    void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void copyTemplate();
 };

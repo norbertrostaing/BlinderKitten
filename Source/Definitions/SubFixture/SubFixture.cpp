@@ -34,6 +34,7 @@ SubFixture::~SubFixture()
 			UserInputManager::getInstance()->currentProgrammer->currentUserCommand->computeValues();
 		}
 	}
+	Brain::getInstance()->layoutViewerNeedRefresh = true;
 }
 
 Colour SubFixture::getOutputColor()

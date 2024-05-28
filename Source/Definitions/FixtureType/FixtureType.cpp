@@ -26,6 +26,7 @@ FixtureType::FixtureType(var params) :
 	
 	itemDataType = "FixtureType";
 	layoutColor = addColorParameter("Layout color", "Default color in layout", Colours::orange);
+	layoutIconParameter = addFileParameter("Layout icon", "Load a custom png do display in the layout");
 	
 	templateId = helpContainer.addIntParameter("Template ID", "Use the subfixture with this id as template", 0, 0);
 	copyToId = helpContainer.addIntParameter("Copy until ID", "Duplicate the template until the copy has this ID", 0, 0);
@@ -54,6 +55,47 @@ void FixtureType::updateVirtualLists() {
 		chansManager.items[i]->virtualMaster->setValue(value);
 	}
 
+}
+
+void FixtureType::onContainerParameterChangedInternal(Parameter* p)
+{
+	if (p == layoutIconParameter) {
+		File f = layoutIconParameter->getFile();
+		useLayoutIcon = false;
+		if (f.exists()) {
+			layoutIconImage = ImageFileFormat::loadFrom(f);
+			if (layoutIconImage.isValid()) {
+				int limit = 100;
+				int w = layoutIconImage.getWidth();
+				int h = layoutIconImage.getHeight();
+				if (w > limit || h > limit) {
+					if (w > h) {
+						h = limit * h / w;
+						w = limit;
+					}
+					else {
+						w = limit * w / h;
+						h = limit;
+					}
+					layoutBorderImage = layoutIconImage.rescaled(w,h);
+					layoutContentImage = layoutIconImage.rescaled(w, h);
+
+				}
+				else {
+					layoutBorderImage = layoutIconImage.createCopy();
+					layoutContentImage = layoutIconImage.createCopy();
+				}
+				Colour c(1.0, 1.0, 1.0);
+				for (int x = 0; x < layoutIconImage.getWidth(); x++) {
+					for (int y = 0; y < layoutIconImage.getHeight(); y++) {
+						layoutBorderImage.setPixelAt(x, y, c.withAlpha(layoutContentImage.getPixelAt(x, y).getFloatRed()));
+						layoutContentImage.setPixelAt(x, y, c.withAlpha(layoutContentImage.getPixelAt(x, y).getFloatGreen()));
+					}
+				}
+				useLayoutIcon = true;
+			}
+		}
+	}
 }
 
 void FixtureType::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)

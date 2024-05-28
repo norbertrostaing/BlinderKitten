@@ -414,6 +414,10 @@ void LayoutViewer::drawMidArrow(Graphics& g, float fromX, float fromY, float toX
 
 void LayoutViewer::paint(Graphics& g)
 {
+	if (Brain::getInstance()->layoutViewerNeedRefresh == true && selectedLayout!=nullptr) {
+		Brain::getInstance()->layoutViewerNeedRefresh = false;
+		selectedLayout->computeData();
+	}
 	clicZones = Image(Image::ARGB, getWidth(), getHeight(), true);
 	Graphics clicg = Graphics(clicZones);
 	g.fillAll(Colour(0,0,0));
@@ -492,6 +496,7 @@ void LayoutViewer::paint(Graphics& g)
 
 	for (int iPath = 0; iPath < selectedLayout->paths.items.size(); iPath++) {
 		BKPath* p = selectedLayout->paths.items[iPath];
+		if (!p->enabled->boolValue()) continue;
 		BKPath::PathType type = p->pathType->getValueDataAsEnum<BKPath::PathType>(); //::PATH_LINE) 
 		Colour hoverColour((uint8)255, (uint8)255, (uint8)255, (uint8)63);
 		Colour handleColour((uint8)255, (uint8)255, (uint8)255);
@@ -541,7 +546,8 @@ void LayoutViewer::paint(Graphics& g)
 			}
 			if (!drawed && !p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0) {
 				drawed = true;
-				drawFixture(g, p->selection.computedSelectedSubFixtures[0]->parentFixture, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor);
+				float angle = p->fixturesAngleFrom->floatValue();
+				drawFixture(g, p->selection.computedSelectedSubFixtures[0]->parentFixture,p , fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, angle, drawColor);
 			}
 			if (!drawed) {
 				g.setColour(drawColor);
@@ -629,7 +635,8 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						drawFixture(g, sf->parentFixture, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor);
+						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
+						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -714,7 +721,8 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						drawFixture(g, sf->parentFixture, X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor);
+						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
+						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -777,6 +785,7 @@ void LayoutViewer::paint(Graphics& g)
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
+				int iFixt = 0;
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
@@ -785,7 +794,9 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->getLayoutColor();
 					}
-					drawFixture(g, it.getKey(), X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor);
+					iFixt++;
+					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
+					drawFixture(g, it.getKey(),p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -873,6 +884,7 @@ void LayoutViewer::paint(Graphics& g)
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
+				int iFixt = 0;
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
@@ -881,11 +893,13 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->getLayoutColor();
 					}
-					drawFixture(g, it.getKey(), XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, drawColor);
+					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
+					drawFixture(g, it.getKey(),p , XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, angle, drawColor);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight);
 					}
+					iFixt++;
 				}
 				p->isComputing.exit();
 			}
@@ -904,26 +918,102 @@ void LayoutViewer::stopAndCheckTimer()
 	}
 }
 
-void LayoutViewer::drawFixture(Graphics& g, Fixture* f, float x, float y, float w, float h, Colour c)
+void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, float y, float w, float h, float angle, Colour c)
 {
 	if (selectedLayout == nullptr) return;
 	bool fillBox = selectedLayout->viewOutput->boolValue();
+	bool drawed = false;
 
-	if (fillBox) {
-		float sfCount = f->subFixtures.size();
-		if (sfCount == 0) return;
-		int i = 0;
-		float wSub = w / sfCount;
-		for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
-			Colour fill = it.getValue()->getOutputColor();
-			g.setColour(fill);
-			g.fillRect(x + (i * wSub), y, wSub, h);
-			i++;
+	FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
 
+	if (ft != nullptr && ft->useLayoutIcon) {
+		g.setColour(c);
+
+		if (!path->fixtImageContent.contains(f)) {
+			int size = sqrt(pow(ft->layoutContentImage.getWidth(), 2) + pow(ft->layoutContentImage.getHeight(), 2));
+			Image i(Image::PixelFormat::ARGB, size, size, true);
+			Graphics tempG(i);
+			AffineTransform t;
+			t = t.translated(-ft->layoutContentImage.getWidth() / 2, -ft->layoutContentImage.getHeight() / 2);
+			t = t.rotated(degreesToRadians(angle));
+			//t = t.translated(ft->layoutContentImage.getWidth() / 2, ft->layoutContentImage.getHeight() / 2);
+			t = t.translated(size / 2, size / 2);
+			tempG.setColour(c);
+			tempG.drawImageTransformed(ft->layoutContentImage, t, false);
+			path->fixtImageContent.set(f, i);
 		}
+
+		if (!path->fixtImageBorder.contains(f)) {
+			int size = sqrt(pow(ft->layoutBorderImage.getWidth(), 2) + pow(ft->layoutBorderImage.getHeight(), 2));
+			Image i(Image::PixelFormat::ARGB, size, size, true);
+			Graphics tempG(i);
+			AffineTransform t;
+			t = t.translated(-ft->layoutBorderImage.getWidth() / 2, -ft->layoutBorderImage.getHeight() / 2);
+			t = t.rotated(degreesToRadians(angle));
+			//t = t.translated(ft->layoutBorderImage.getWidth() / 2, ft->layoutBorderImage.getHeight() / 2);
+			t = t.translated(size / 2, size / 2);
+			tempG.setColour(c);
+			tempG.drawImageTransformed(ft->layoutBorderImage, t, true);
+			path->fixtImageBorder.set(f, i);
+		}
+
+		if (!path->fixtTransform.contains(f)) {
+			Rectangle<float> r(x, y, w, h);
+			RectanglePlacement placement(0);
+			AffineTransform t;
+			Image i = path->fixtImageBorder.getReference(f);
+			t = t.translated(-i.getWidth() / 2, -i.getHeight() / 2);
+			//t = t.rotated(degreesToRadians(angle));
+			t = t.translated(i.getWidth() / 2, i.getHeight() / 2);
+			t = t.followedBy(placement.getTransformToFit(i.getBounds().toFloat(), r));
+			path->fixtTransform.set(f, t);
+		}
+
+		if (fillBox) {
+			//g.saveState();
+
+			float sfCount = f->subFixtures.size();
+			if (sfCount > 0) {
+				Image tempImage = path->fixtImageContent.getReference(f).createCopy();
+				Graphics tempGraphics(tempImage);
+				tempGraphics.reduceClipRegion(path->fixtImageContent.getReference(f), AffineTransform());
+				int i = 0;
+				float wSub = tempImage.getWidth() / sfCount;
+				float imgH = tempImage.getHeight();
+				//g.reduceClipRegion(path->fixtImageContent.getReference(f), path->fixtTransform.getReference(f));
+				for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
+					Colour fill = it.getValue()->getOutputColor();
+					tempGraphics.setColour(fill);
+					tempGraphics.fillRect(0.0 + (i * wSub), 0.0, wSub, imgH);
+					i++;
+				}
+				g.drawImageTransformed(tempImage, path->fixtTransform.getReference(f), false);
+			}
+			//g.restoreState();
+		}
+
+
+		g.drawImageTransformed(path->fixtImageBorder.getReference(f), path->fixtTransform.getReference(f), false);
+		//g.drawImageWithin(ft->layoutBorderImage, x, y, w, h, RectanglePlacement::fillDestination, true);
 	}
-	g.setColour(c);
-	g.drawRect(x, y, w, h, (float)1);
+	else {
+		if (fillBox) {
+			float sfCount = f->subFixtures.size();
+			if (sfCount == 0) return;
+			int i = 0;
+			float wSub = w / sfCount;
+			for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
+				Colour fill = it.getValue()->getOutputColor();
+				g.setColour(fill);
+				g.fillRect(x + (i * wSub), y, wSub, h);
+				i++;
+
+			}
+		}
+		g.setColour(c);
+		g.drawRect(x, y, w, h, (float)1);
+	}
+
 	String name = f->id->stringValue();
 	g.drawText(name, x, y, w, h, juce::Justification::centred);
 }

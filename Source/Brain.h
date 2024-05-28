@@ -88,6 +88,7 @@ public:
     bool cuelistGridNeedRefresh = false;
     bool carouselGridNeedRefresh = false;
     bool effectGridNeedRefresh = false;
+    bool layoutViewerNeedRefresh = false;
 
     void run() override;
     void brainLoop();

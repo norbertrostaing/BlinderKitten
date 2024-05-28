@@ -49,6 +49,9 @@ class BKPath:
     FloatParameter* circleFrom;
     FloatParameter* circleTo;
 
+    FloatParameter* fixturesAngleFrom;
+    FloatParameter* fixturesAngleTo;
+
     BoolParameter* spreadSubFixtures;
     Point2DParameter* tilesSize;
     FloatParameter* textSize;
@@ -61,6 +64,10 @@ class BKPath:
     CriticalSection isComputing;
     HashMap<Fixture*, std::shared_ptr<Point<float>>> fixtToPos;
     HashMap<SubFixture*, std::shared_ptr<Point<float>>> subFixtToPos;
+    HashMap<Fixture*, AffineTransform> fixtTransform;
+    HashMap<Fixture*, Image> fixtImageBorder;
+    HashMap<Fixture*, Image> fixtImageContent;
+
     void computeData();
 
     void onContainerParameterChangedInternal(Parameter*);
