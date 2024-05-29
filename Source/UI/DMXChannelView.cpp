@@ -93,7 +93,7 @@ void DMXChannelView::setCurrentInterface(DMXInterface* i)
 	{
 		currentInterface->channelTestingMode->setValue(false);
 		currentInterface->removeInspectableListener(this);
-
+		currentInterface->tester = nullptr;
 		//removeChildComponent(testingUI.get());
 		//testingUI.reset();
 		removeChildComponent(flashValue.get());
