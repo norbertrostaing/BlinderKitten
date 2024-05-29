@@ -54,6 +54,7 @@ public:
 
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+    void onContainerNiceNameChanged() override;
 
     void computeData();
     void fitToContent();

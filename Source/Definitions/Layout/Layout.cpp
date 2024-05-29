@@ -30,6 +30,7 @@ Layout::Layout(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
+	nameCanBeChangedByUser = false;
 
 	itemDataType = "Layout";
 	canBeDisabled = false;
@@ -52,7 +53,7 @@ Layout::Layout(var params) :
 	tilesScale->setDefaultValue(sc);
 	addChildControllableContainer(&paths);
 	paths.selectItemWhenCreated = false;
-
+	
 	textScale = addFloatParameter("Text scale","",  1, 0);
 
 	viewOutput = addBoolParameter("View output", "if checked, box will change color with fixture output", false);
@@ -108,6 +109,11 @@ void Layout::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Con
 {
 	computeData();
 	sendChangeMessage();
+}
+
+void Layout::onContainerNiceNameChanged()
+{
+	LayoutManager::getInstance()->managerNotifier.addMessage(new LayoutManager::ManagerEvent(LayoutManager::ManagerEvent::NEEDS_UI_UPDATE));
 }
 
 void Layout::computeData()

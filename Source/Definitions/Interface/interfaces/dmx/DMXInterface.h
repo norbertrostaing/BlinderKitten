@@ -44,6 +44,7 @@ public:
     void clearItem() override;
 
     void onContainerParameterChanged(Parameter* p) override;
+    void onContainerNiceNameChanged() override;
     
     void setCurrentDMXDevice(DMXDevice* d);
 

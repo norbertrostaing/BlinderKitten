@@ -71,6 +71,11 @@ void DMXInterface::onContainerParameterChanged(Parameter* p)
 	}
 }
 
+void DMXInterface::onContainerNiceNameChanged()
+{
+	InterfaceManager::getInstance()->managerNotifier.addMessage(new InterfaceManager::ManagerEvent(InterfaceManager::ManagerEvent::NEEDS_UI_UPDATE));
+}
+
 void DMXInterface::setCurrentDMXDevice(DMXDevice* d)
 {
 	if (dmxDevice.get() == d) return;
