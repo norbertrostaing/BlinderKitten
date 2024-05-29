@@ -58,6 +58,8 @@ class BKPath:
     BoolParameter* overrideColor;
     ColorParameter* pathColor;
     StringParameter* customText;
+    EnumParameter* labelPosition;
+    enum LabelPosition {CENTER, TOP, RIGHT, BOTTOM, LEFT};
     CommandSelectionManager selection;
     ActionManager actionManager;
 

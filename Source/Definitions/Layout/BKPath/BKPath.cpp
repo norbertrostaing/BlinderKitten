@@ -61,6 +61,8 @@ BKPath::BKPath(var params) :
     customText = addStringParameter("Custom Text", "Write your own text on your tile", "");
     fixturesAngleFrom = addFloatParameter("Fixture rotation from", "Angle of first element", 0, -360, 360);
     fixturesAngleTo = addFloatParameter("Fixture rotation to", "Angle of the last element", 0, -360, 360);
+    labelPosition = addEnumParameter("Label position", "Position of your labels for this path");
+    labelPosition->addOption("Centered", CENTER)->addOption("Top", TOP)->addOption("Bottom", BOTTOM)->addOption("Left", LEFT)->addOption("Right", RIGHT);
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&actionManager);

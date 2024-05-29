@@ -552,6 +552,7 @@ void LayoutViewer::paint(Graphics& g)
 		BKPath* p = selectedLayout->paths.items[iPath];
 		if (!p->enabled->boolValue()) continue;
 		BKPath::PathType type = p->pathType->getValueDataAsEnum<BKPath::PathType>(); //::PATH_LINE) 
+		BKPath::LabelPosition labelPos = p->labelPosition->getValueDataAsEnum<BKPath::LabelPosition>();
 		Colour hoverColour((uint8)255, (uint8)255, (uint8)255, (uint8)63);
 		Colour handleColour((uint8)255, (uint8)255, (uint8)255);
 
@@ -596,12 +597,12 @@ void LayoutViewer::paint(Graphics& g)
 
 			if (p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0 ) {
 				drawed = true;
-				drawSubFixture(g, p->selection.computedSelectedSubFixtures[0], fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor);
+				drawSubFixture(g, p->selection.computedSelectedSubFixtures[0], fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 			}
 			if (!drawed && !p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0) {
 				drawed = true;
 				float angle = p->fixturesAngleFrom->floatValue();
-				drawFixture(g, p->selection.computedSelectedSubFixtures[0]->parentFixture,p , fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, angle, drawColor);
+				drawFixture(g, p->selection.computedSelectedSubFixtures[0]->parentFixture,p , fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);
 			}
 			if (!drawed) {
 				g.setColour(drawColor);
@@ -660,7 +661,7 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor);
+						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -690,7 +691,7 @@ void LayoutViewer::paint(Graphics& g)
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
 						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
-						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor);
+						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -746,7 +747,7 @@ void LayoutViewer::paint(Graphics& g)
 						else {
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
-						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor);
+						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -776,7 +777,7 @@ void LayoutViewer::paint(Graphics& g)
 							drawColor = sf->parentFixture->getLayoutColor();
 						}
 						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
-						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor);
+						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor, labelPos);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -829,7 +830,7 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->parentFixture->getLayoutColor();
 					}
-					drawSubFixture(g, it.getKey(), X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor);
+					drawSubFixture(g, it.getKey(), X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor, labelPos);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -850,7 +851,7 @@ void LayoutViewer::paint(Graphics& g)
 					}
 					iFixt++;
 					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
-					drawFixture(g, it.getKey(),p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor);
+					drawFixture(g, it.getKey(),p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor, labelPos);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -928,7 +929,7 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->parentFixture->getLayoutColor();
 					}
-					drawSubFixture(g, it.getKey(), XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, drawColor);
+					drawSubFixture(g, it.getKey(), XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, drawColor, labelPos);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight);
@@ -948,7 +949,7 @@ void LayoutViewer::paint(Graphics& g)
 						drawColor = it.getKey()->getLayoutColor();
 					}
 					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
-					drawFixture(g, it.getKey(),p , XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, angle, drawColor);
+					drawFixture(g, it.getKey(),p , XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, angle, drawColor, labelPos);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight);
@@ -972,7 +973,7 @@ void LayoutViewer::stopAndCheckTimer()
 	}
 }
 
-void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, float y, float w, float h, float angle, Colour c)
+void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, float y, float w, float h, float angle, Colour c, BKPath::LabelPosition pos)
 {
 	if (selectedLayout == nullptr) return;
 	bool fillBox = selectedLayout->viewOutput->boolValue();
@@ -1069,10 +1070,11 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 	}
 
 	String name = f->id->stringValue();
-	g.drawText(name, x, y, w, h, juce::Justification::centred);
+	drawName(g, name, x, y, w, h, c, pos);
+
 }
 
-void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y, float w, float h, Colour c)
+void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y, float w, float h, Colour c, BKPath::LabelPosition pos)
 {
 	if (selectedLayout == nullptr) return;
 	bool fillBox = selectedLayout->viewOutput->boolValue();
@@ -1085,7 +1087,38 @@ void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y,
 	g.setColour(c);
 	g.drawRect(x, y, w, h, (float)1);
 	String name = sf->displayName;
-	g.drawText(name, x, y, w, h, juce::Justification::centred);
+	drawName(g, name, x, y, w, h, c, pos);
+}
+
+void LayoutViewer::drawName(Graphics& g, String& name, float x, float y, float w, float h, Colour c, BKPath::LabelPosition pos)
+{
+	juce::Justification j = juce::Justification::centred;
+	switch (pos) {
+	case BKPath::LabelPosition::LEFT:
+		j = juce::Justification::centredRight;
+		x -= w;
+		break;
+	case BKPath::LabelPosition::RIGHT:
+		j = juce::Justification::centredLeft;
+		x += w;
+		break;
+	case BKPath::LabelPosition::TOP:
+		j = juce::Justification::centredBottom;
+		y -= h;
+		break;
+	case BKPath::LabelPosition::BOTTOM:
+		j = juce::Justification::centredTop;
+		y += h;
+		break;
+	}
+
+	g.setColour(Colour(0, 0, 0));
+	g.drawText(name, x - 1, y - 1, w, h, j);
+	g.drawText(name, x - 1, y + 1, w, h, j);
+	g.drawText(name, x + 1, y - 1, w, h, j);
+	g.drawText(name, x + 1, y + 1, w, h, j);
+	g.setColour(c);
+	g.drawText(name, x, y, w, h, j);
 }
 
 void LayoutViewer::exportToPNG()
