@@ -84,10 +84,13 @@ void DMXChannelView::resized()
 	viewport.setBounds(r);
 }
 
-void DMXChannelView::setCurrentInterface(DMXInterface* i)
+void DMXChannelView::setCurrentInterface(DMXInterface* i, bool clearSel)
 {
 	if (currentInterface == i) return;
-	clearSelection();
+
+	if (clearSel) {
+		clearSelection();
+	}
 
 	if (currentInterface != nullptr && !currentInterface->isClearing)
 	{

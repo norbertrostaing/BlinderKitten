@@ -384,14 +384,15 @@ void BKEngine::clearInternal()
 
 	// ModuleRouterManager::getInstance()->clear();
 	// ModuleManager::getInstance()->clear();
+	//DMXChannelView::getInstance()->setCurrentInterface(nullptr);
+	if (currentDMXChannelView != nullptr) {
+		currentDMXChannelView->setCurrentInterface(nullptr, false);
+	}
+
 	Brain::getInstance()->skipLoop = true;
 	Brain::getInstance()->stopThread(1);
 	Brain::getInstance()->clear();
 
-	//DMXChannelView::getInstance()->setCurrentInterface(nullptr);
-	if (currentDMXChannelView != nullptr) {
-		currentDMXChannelView->setCurrentInterface(nullptr);
-	}
 	Brain::getInstance()->isClearing = true;
 	VirtualFaderColManager::getInstance()->clear();
 	VirtualButtonManager::getInstance()->clear();

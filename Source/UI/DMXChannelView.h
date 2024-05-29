@@ -72,7 +72,7 @@ public:
 
     void resized() override;
 
-    void setCurrentInterface(DMXInterface* i);
+    void setCurrentInterface(DMXInterface* i, bool clearSel=true);
 
     void rebuildDMXList();
     void rebuildChannelItems();
