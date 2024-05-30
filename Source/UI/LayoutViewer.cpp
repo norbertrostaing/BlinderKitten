@@ -1030,6 +1030,7 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 			float sfCount = f->subFixtures.size();
 			if (sfCount > 0) {
 				Image tempImage = path->fixtImageContent.getReference(f).createCopy();
+				tempImage.clear(tempImage.getBounds(), Colour::fromRGBA(0, 0, 0, 0));
 				Graphics tempGraphics(tempImage);
 				tempGraphics.reduceClipRegion(path->fixtImageContent.getReference(f), AffineTransform());
 				int i = 0;

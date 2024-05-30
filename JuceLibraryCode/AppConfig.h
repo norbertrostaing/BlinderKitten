@@ -246,7 +246,7 @@
 #endif
 
 #ifndef    JUCE_FLOAT_COLOURS
- //#define JUCE_FLOAT_COLOURS 0
+ #define   JUCE_FLOAT_COLOURS 1
 #endif
 
 //==============================================================================

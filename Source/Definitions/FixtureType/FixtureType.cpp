@@ -86,10 +86,11 @@ void FixtureType::onContainerParameterChangedInternal(Parameter* p)
 					layoutContentImage = layoutIconImage.createCopy();
 				}
 				Colour c(1.0, 1.0, 1.0);
-				for (int x = 0; x < layoutIconImage.getWidth(); x++) {
-					for (int y = 0; y < layoutIconImage.getHeight(); y++) {
-						layoutBorderImage.setPixelAt(x, y, c.withAlpha(layoutContentImage.getPixelAt(x, y).getFloatRed()));
-						layoutContentImage.setPixelAt(x, y, c.withAlpha(layoutContentImage.getPixelAt(x, y).getFloatGreen()));
+				for (int x = 0; x < layoutContentImage.getWidth(); x++) {
+					for (int y = 0; y < layoutContentImage.getHeight(); y++) {
+						Colour pixel = layoutContentImage.getPixelAt(x, y);
+						layoutBorderImage.setPixelAt(x, y, c.withAlpha(pixel.getFloatRed() * pixel.getFloatAlpha()));
+						layoutContentImage.setPixelAt(x, y, c.withAlpha(pixel.getFloatGreen() * pixel.getFloatAlpha()));
 					}
 				}
 				useLayoutIcon = true;
