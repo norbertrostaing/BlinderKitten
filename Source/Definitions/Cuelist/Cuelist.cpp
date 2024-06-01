@@ -153,6 +153,8 @@ Cuelist::Cuelist(var params) :
 	// flashOffBtn = addTrigger("flash Off", "press flash");
 	// swopOnBtn = addTrigger("Swop ON", "press swop");
 	// swopOffBtn = addTrigger("Swop Off", "release swop");
+	tempMergeTrack = addTrigger("Temp merge track", "Merge the content of the programmer in this cue, values will be tracked");
+	tempMergeNoTrack = addTrigger("Temp merge no track", "Merge the content of the programmer in this cue, values will not be tracked (off at the next go)");
 
 	nextCue = addTargetParameter("Next Cue", "Cue triggered when button go pressed", &cues);
 	nextCue->maxDefaultSearchLevel = 0;
@@ -412,6 +414,14 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	}
 	else if (t == loadRandomBtn) {
 		loadRandom();
+	}
+	else if (t == tempMergeTrack) {
+		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+		tempMergeProgrammer(p, true);
+	}
+	else if (t == tempMergeNoTrack) {
+		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+		tempMergeProgrammer(p, false);
 	}
 	else {}
 }
@@ -1546,6 +1556,23 @@ void Cuelist::loadContent(Programmer *p)
 	else if (cues.items.size() > 0) {
 		cues.items[0]->loadContent(p);
 	}
+}
+
+void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
+{
+	if (p == nullptr) {return;}
+	Array<SubFixtureChannel*> toUpdate;
+	isComputing.enter();
+	p->computing.enter();
+	for (auto it = p->activeValues.begin(); it != p->activeValues.end(); it.next()) {
+		SubFixtureChannel* sfc = it.getKey();
+		std::shared_ptr<ChannelValue> cv = std::make_shared<ChannelValue>();
+		cv->endValue = it.getValue()->endValue;
+		activeValues.set(sfc, cv);
+		sfc->cuelistOnTopOfStack(this);
+	}
+	p->computing.exit();
+	isComputing.exit();
 }
 
 void Cuelist::tapTempo() {

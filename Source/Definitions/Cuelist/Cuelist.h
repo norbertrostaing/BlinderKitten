@@ -80,6 +80,9 @@ public:
     Trigger* killBtn;
     Trigger* toggleBtn;
 
+    Trigger* tempMergeTrack;
+    Trigger* tempMergeNoTrack;
+
     Trigger* loadBtn;
     Trigger* loadAndGoBtn;
     Trigger* loadRandomBtn;
@@ -229,6 +232,7 @@ public:
     void autoCreateChaser();
 
     void loadContent( Programmer* p);
+    void tempMergeProgrammer(Programmer* p, bool trackValues = true);
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 
