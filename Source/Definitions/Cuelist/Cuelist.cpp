@@ -700,50 +700,60 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		}
 	}
 	
-	if (trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue() || c->releaseCurrentTracking->boolValue()) {
-		for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-			if (!newActiveValues.contains(it.getKey())) {
-				std::shared_ptr<ChannelValue> temp = it.getValue();
-				if (temp != nullptr && temp -> endValue != -1) {
-					temp->isTransitionOut = true;
-					temp->parentCommand = nullptr;
-					float fadeTime = 0;
-					float delayTime = 0;
-					if (isChaser->getValue()) {
-						fadeTime = chaserFadeOutDuration;
-						temp->fadeCurve = &chaserFadeOutCurve;
-					}
-					else if (c == nullptr) {
-						fadeTime = (float)offFade->getValue() * 1000;
-						temp->fadeCurve = &offFadeCurve;
+	bool releaseTracking = trackingType == "none" || c == nullptr || needRebuildTracking || isChaser->getValue() || c->releaseCurrentTracking->boolValue();
+
+	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
+		if (!newActiveValues.contains(it.getKey())) {
+			std::shared_ptr<ChannelValue> temp = it.getValue();
+			if (temp != nullptr && temp -> endValue != -1 && (releaseTracking || temp->canBeTracked == false)) {
+				temp->isTransitionOut = true;
+				temp->parentCommand = nullptr;
+				float fadeTime = 0;
+				float delayTime = 0;
+				if (isChaser->getValue()) {
+					fadeTime = chaserFadeOutDuration;
+					temp->fadeCurve = &chaserFadeOutCurve;
+				}
+				else if (c == nullptr) {
+					fadeTime = (float)offFade->getValue() * 1000;
+					temp->fadeCurve = &offFadeCurve;
+				}
+				else {
+					if (it.getKey()->isHTP) {
+						if (c->htpOutFade->floatValue() >= 0) { fadeTime = c->htpOutFade->floatValue() * 1000.; }
+						else if (c->htpInFade->floatValue() >= 0) { fadeTime = c->htpInFade->floatValue() * 1000.; }
+						else { fadeTime = (float)offFade->getValue() * 1000; }
+
+						if (c->htpOutDelay->floatValue() >= 0) { delayTime = c->htpOutDelay->floatValue() * 1000.; }
+						else if (c->htpInDelay->floatValue() >= 0) { delayTime = c->htpInDelay->floatValue() * 1000.; }
+						else { delayTime = 0; }
 					}
 					else {
-						if (it.getKey()->isHTP) {
-							fadeTime = c->htpOutFade->floatValue() >= 0 ? c->htpOutFade->floatValue() * 1000. : c->htpInFade->floatValue() * 1000.;
-							delayTime = c->htpOutDelay->floatValue() >= 0 ? c->htpOutDelay->floatValue() * 1000. : c->htpInDelay->floatValue() * 1000.;
-						}
-						else {
-							fadeTime = c->ltpFade->floatValue() >= 0 ? c->ltpFade->floatValue() * 1000. : c->htpInFade->floatValue() * 1000.;
-							delayTime = c->ltpDelay->floatValue() >= 0 ? c->ltpDelay->floatValue() * 1000. : c->htpInDelay->floatValue() * 1000.;
-						}
+						if (c->ltpFade->floatValue() >= 0) { fadeTime = c->ltpFade->floatValue() * 1000.; }
+						else if (c->htpInFade->floatValue() >= 0) { fadeTime = c->htpInFade->floatValue() * 1000.; }
+						else { fadeTime = (float)offFade->getValue() * 1000; }
+
+						if (c->ltpDelay->floatValue() >= 0) { delayTime = c->ltpDelay->floatValue() * 1000.; }
+						else if (c->htpInDelay->floatValue() >= 0) { delayTime = c->htpInDelay->floatValue() * 1000.; }
+						else { delayTime = 0; }
 					}
-
-					float delay = forcedDelay != -1 ? forcedDelay : delayTime;
-					float fade = forcedFade != -1 ? forcedFade : fadeTime;
-					delay *= speedMultVal;
-					fade *= speedMultVal;
-					temp->TSInit = now;
-					temp->TSStart = now + delay;
-					temp->TSEnd = now + fade + delay;
-					TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
-					temp->endValue = -1;
-					temp->startValue = temp->value;
-					temp->isEnded = false;
-
-					newActiveValues.set(it.getKey(), temp);
 				}
 
+				float delay = forcedDelay != -1 ? forcedDelay : delayTime;
+				float fade = forcedFade != -1 ? forcedFade : fadeTime;
+				delay *= speedMultVal;
+				fade *= speedMultVal;
+				temp->TSInit = now;
+				temp->TSStart = now + delay;
+				temp->TSEnd = now + fade + delay;
+				TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
+				temp->endValue = -1;
+				temp->startValue = temp->value;
+				temp->isEnded = false;
+
+				newActiveValues.set(it.getKey(), temp);
 			}
+
 		}
 	}
 	
@@ -1568,6 +1578,7 @@ void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
 		SubFixtureChannel* sfc = it.getKey();
 		std::shared_ptr<ChannelValue> cv = std::make_shared<ChannelValue>();
 		cv->endValue = it.getValue()->endValue;
+		cv->canBeTracked = trackValues;
 		activeValues.set(sfc, cv);
 		sfc->cuelistOnTopOfStack(this);
 	}

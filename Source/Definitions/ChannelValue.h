@@ -38,5 +38,7 @@ public:
     bool isTransitionOut = false;
     bool htpOverride = false;
 
+    bool canBeTracked = true;
+
     Command* parentCommand = nullptr;
 };
