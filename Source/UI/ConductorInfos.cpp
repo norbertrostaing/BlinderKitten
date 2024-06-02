@@ -27,10 +27,8 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(currCommands);
     addAndMakeVisible(nextCommands);
 
-    addAndMakeVisible(inspectPrevBtn);
-    addAndMakeVisible(inspectCurrBtn);
-    addAndMakeVisible(inspectNextBtn);
-    addAndMakeVisible(inspectCuelistBtn);
+    addAndMakeVisible(inspectBtn);
+    addAndMakeVisible(updateBtn);
     addAndMakeVisible(loadCurrentCueBtn);
 
     currentCueName.addListener(this);
@@ -59,6 +57,30 @@ ConductorInfos::ConductorInfos()
         UserInputManager::getInstance()->loadContentConductor();
     };
 
+    inspectBtn.onClick = [this]() {
+        PopupMenu p;
+        p.addItem("Current cue", [this]() { inspect(0); });
+        p.addSeparator();
+        p.addItem("Previous cue", [this]() { inspect(-1); });
+        p.addItem("Next cue", [this]() { inspect(1); });
+        p.addSeparator();
+        p.addItem("Cuelist", [this]() { inspectCuelist(); });
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+        };
+
+    updateBtn.onClick = [this]() {
+        PopupMenu p;
+        p.addItem("Merge", [this]() { updateClicked(MERGE); });
+        p.addItem("Replace", [this]() { updateClicked(REPLACE); });
+        p.addSeparator();
+        p.addItem("Insert before", [this]() { updateClicked(INSERTBEFORE); });
+        p.addItem("Insert after", [this]() { updateClicked(INSERTAFTER); });
+        p.addSeparator();
+        p.addItem("Temp update tracked", [this]() { updateClicked(TEMPTRACKED); });
+        p.addItem("Temp update not tracked", [this]() { updateClicked(TEMPNOTTRACKED);});
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+        };
+
     addAndMakeVisible(upLabel);
     addAndMakeVisible(downLabel);
     addAndMakeVisible(ltpLabel);
@@ -66,11 +88,9 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(delayLabel);
 
     displayBtn.setButtonText("Text");
-    inspectPrevBtn.setButtonText("Inspect Prev.");
-    inspectCurrBtn.setButtonText("Inspect Curr.");
-    inspectNextBtn.setButtonText("Inspect Next");
-    inspectCuelistBtn.setButtonText("Inspect Cuelist");
     loadCurrentCueBtn.setButtonText("Load content current cue");
+    inspectBtn.setButtonText("Inspect");
+    updateBtn.setButtonText("Update");
 
     currentCueName.setText("", juce::NotificationType::dontSendNotification);
     currentCueId.setText("", juce::NotificationType::dontSendNotification);
@@ -171,12 +191,10 @@ void ConductorInfos::resized()
 
     int idW = titleSize*3;
 
-    displayBtn.setBounds(w * 0 / 6, 0, w / 6, 20);
-    inspectPrevBtn.setBounds(w * 1 / 6, 0, w / 6, 20);
-    inspectCurrBtn.setBounds(w * 2 / 6, 0, w / 6, 20);
-    inspectNextBtn.setBounds(w * 3 / 6, 0, w / 6, 20);
-    inspectCuelistBtn.setBounds(w * 4 / 6, 0, w / 6, 20);
-    loadCurrentCueBtn.setBounds(w * 5 / 6, 0, w / 6, 20);
+    displayBtn.setBounds(w * 0 / 5, 0, w / 5, 20);
+    inspectBtn.setBounds(w * 1 / 5, 0, w / 5, 20);
+    loadCurrentCueBtn.setBounds(w * 3 / 5, 0, w / 5, 20);
+    updateBtn.setBounds(w * 4 / 5, 0, w / 5, 20);
 
     currentCueId.setBounds(0, 20, idW, floor(currentCueHeight));
     currentCueName.setBounds(idW, 20, w-idW, floor(currentCueHeight));
@@ -410,4 +428,39 @@ float ConductorInfos::getCurrCommandHeightRatio()
 
     float ratio = float(currLines) / float(currLines + nextLines);
     return ratio;
+}
+
+void ConductorInfos::updateClicked(updateAction wich)
+{
+    int targetCueId = engine->conductorCuelistId->intValue();
+    Cuelist* targetCuelist = Brain::getInstance()->getCuelistById(targetCueId);
+    if (targetCuelist == nullptr) { return; }
+    Cue* currentCue = targetCuelist->cueA;
+    if (currentCue == nullptr) return;
+    Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+    if (p == nullptr) {return;}
+
+    switch (wich)
+    {
+    case ConductorInfos::MERGE: 
+        currentCue->mergeContent(p);
+        break;
+    case ConductorInfos::REPLACE:
+        currentCue->replaceContent(p);
+        break;
+    case ConductorInfos::INSERTBEFORE:
+        targetCuelist->insertProgCueBefore(currentCue);
+        break;
+    case ConductorInfos::INSERTAFTER:
+        targetCuelist->insertProgCueAfter(currentCue);
+        break;
+    case ConductorInfos::TEMPTRACKED:
+        targetCuelist->tempMergeProgrammer(p, true);
+        break;
+    case ConductorInfos::TEMPNOTTRACKED:
+        targetCuelist->tempMergeProgrammer(p, false);
+        break;
+    default:
+        break;
+    }
 }

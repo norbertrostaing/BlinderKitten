@@ -43,6 +43,8 @@ public:
     TextButton inspectCurrBtn;
     TextButton inspectNextBtn;
     TextButton inspectCuelistBtn;
+    TextButton inspectBtn;
+    TextButton updateBtn;
     TextButton loadCurrentCueBtn;
 
     Label upLabel;
@@ -76,6 +78,8 @@ public:
     void inspectCuelist();
 
     float getCurrCommandHeightRatio();
+    enum updateAction{MERGE, REPLACE, INSERTBEFORE, INSERTAFTER, TEMPTRACKED, TEMPNOTTRACKED};
+    void updateClicked(updateAction wich);
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConductorInfos)
