@@ -166,6 +166,7 @@ void CuelistSheet::rebuildLines()
     }
     resized();
     updateSelection();
+    updateRunningCue();
 }
 
 void CuelistSheet::inspect(int delta)
