@@ -1158,7 +1158,7 @@ void LayoutViewer::itemDropped(const SourceDetails& source)
 		var id = source.description.getProperty("id", 0);
 		BKPath* path = selectedLayout->paths.addItem();
 		CommandSelection* sel = path->selection.addItem();
-		path->setNiceName(targetType+" "+id);
+		path->setNiceName(targetType+" "+id.toString());
 		sel->valueFrom->setValue(id);
 		if (targetType == "Group") sel->targetType->setValueWithKey("Group");
 
