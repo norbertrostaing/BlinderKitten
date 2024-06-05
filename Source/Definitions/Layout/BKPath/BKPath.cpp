@@ -320,6 +320,16 @@ void BKPath::computeData()
         }
 
     }
+
+    if (!spreadSubFixtures->boolValue()) {
+        for (auto it = fixtToPos.begin(); it != fixtToPos.end(); it.next()) {
+            Fixture* f = it.getKey();
+            for (auto it2 = f->subFixtures.begin(); it2 != f->subFixtures.end(); it2.next()) {
+                SubFixture* sf = it2.getValue();
+                subFixtToPos.set(sf, it.getValue());
+            }
+        }
+    }
     isComputing.exit();
 }
 
