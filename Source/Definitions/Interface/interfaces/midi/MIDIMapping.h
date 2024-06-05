@@ -43,9 +43,9 @@ public:
 
     ActionManager actionManager;
 
-    void handleNote(int channel, int pitch, int velocity, String origin);
-    void handleCC(int channel, int number, int value, String origin);
-    void handlePitchWheel(int channel, int value, String origin);
+    bool handleNote(int channel, int pitch, int velocity, String origin);
+    bool handleCC(int channel, int number, int value, String origin);
+    bool handlePitchWheel(int channel, int value, String origin);
     void processValue(float value, String origin);
     void handleValue(float value, String origin, bool isRelative);
 

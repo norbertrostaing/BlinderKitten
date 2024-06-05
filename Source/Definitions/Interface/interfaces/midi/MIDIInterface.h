@@ -25,6 +25,8 @@ public:
     MIDIInputDevice* inputDevice;
     MIDIOutputDevice* outputDevice;
 
+    BoolParameter* autoAdd;
+
     IntParameter* numBytes;
     ControllableContainer dataContainer;
 

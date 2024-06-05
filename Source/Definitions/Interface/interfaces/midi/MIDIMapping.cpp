@@ -89,7 +89,7 @@ void MIDIMapping::updateDisplay()
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
-void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String origin)
+bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -99,11 +99,11 @@ void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
         learnMode->setValue(false);
     }
 
-    if (!enabled->boolValue()) return;
+    if (!enabled->boolValue()) return false;
 
-    if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return;
-    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return;
-    if (pitchOrNumber->intValue() != pitch) return;
+    if (midiType->getValueDataAsEnum<MidiType>() != NOTE) return false;
+    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return false;
+    if (pitchOrNumber->intValue() != pitch) return false;
 
     if (learnRange->boolValue()) {
         if (nextInputReinitRange) {
@@ -122,9 +122,10 @@ void MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
         float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, velocity), inputRange7b->x, inputRange7b->y, 0, 1);
         processValue(relValue, origin);
     }
+    return true;
 }
 
-void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
+bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -134,10 +135,10 @@ void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
         learnMode->setValue(false);
     }
 
-    if (!enabled->boolValue()) return;
-    if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return;
-    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return;
-    if (pitchOrNumber->intValue() != number) return;
+    if (!enabled->boolValue()) return false;
+    if (midiType->getValueDataAsEnum<MidiType>() != CONTROLCHANGE) return false;
+    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return false;
+    if (pitchOrNumber->intValue() != number) return false;
 
     if (learnRange->boolValue()) {
         if (nextInputReinitRange) {
@@ -156,9 +157,10 @@ void MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
         float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, value), inputRange7b->x, inputRange7b->y, 0, 1);
         processValue(relValue, origin);
     }
+    return true;
 }
 
-void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
+bool MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
 {
     if (learnMode->boolValue())
     {
@@ -167,9 +169,9 @@ void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
         learnMode->setValue(false);
     }
 
-    if (!enabled->boolValue()) return;
-    if (midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL) return;
-    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return;
+    if (!enabled->boolValue()) return false;
+    if (midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL) return false;
+    if (channel->intValue() != rcvChannel && channel->intValue() != 0) return false;
 
     if (learnRange->boolValue()) {
         if (nextInputReinitRange) {
@@ -188,6 +190,7 @@ void MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
         float relValue = jmap<float>(jlimit<float>(inputRange14b->x, inputRange14b->y, value), inputRange14b->x, inputRange14b->y, 0, 1);
         processValue(relValue, origin);
     }
+    return true;
 }
 
 void MIDIMapping::processValue(float value, String origin) {

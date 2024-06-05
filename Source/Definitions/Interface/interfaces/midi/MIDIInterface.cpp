@@ -22,6 +22,8 @@ MIDIInterface::MIDIInterface() :
     infos = addStringParameter("Infos", "Note informations about your controler here.", "");
     infos->multiline = true;
 
+    autoAdd = addBoolParameter("Auto add", "Create mappings when receive notes, cc or pitchbends", false);
+
     numBytes = addIntParameter("Start sysex", "Sysex message to send at startup, F0 and F7 are automatically added at the begin and the end, so don't fill them :) .", 0, 0);
 
     addChildControllableContainer(&dataContainer);
@@ -97,28 +99,59 @@ void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const i
 {
     if (!enabled->boolValue()) {return;}
     if (logIncomingData->boolValue()) NLOG(niceName, "Note On received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
-    mappingManager.handleNote(channel, pitch, velocity, niceName);
+    bool processed = mappingManager.handleNote(channel, pitch, velocity, niceName);
+    if (autoAdd->boolValue() && !processed) {
+        MessageManagerLock mmlock;
+        MIDIMapping* m = mappingManager.addItem();
+        m->midiType->setValueWithData(MIDIMapping::MidiType::NOTE);
+        m->channel->setValue(channel);
+        m->pitchOrNumber->setValue(pitch);
+        m->setNiceName("Note " + String(pitch) + " Channel " + String(channel));
+    }
 }
 
 void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const int &velocity)
 {
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Note Off received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
-    mappingManager.handleNote(channel, pitch, 0, niceName);
+    bool processed = mappingManager.handleNote(channel, pitch, 0, niceName);
+    if (autoAdd->boolValue() && !processed) {
+        MessageManagerLock mmlock;
+        MIDIMapping* m = mappingManager.addItem();
+        m->midiType->setValueWithData(MIDIMapping::MidiType::NOTE);
+        m->channel->setValue(channel);
+        m->pitchOrNumber->setValue(pitch);
+        m->setNiceName("Note "+String(pitch)+" Channel "+String(channel));
+    }
 }
 
 void MIDIInterface::controlChangeReceived(const int &channel, const int &number, const int &value)
 {
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Control Change received, channel : " << channel << ", number : " << number << ", value : " << value);
-    mappingManager.handleCC(channel, number, value, niceName);
+    bool processed = mappingManager.handleCC(channel, number, value, niceName);
+    if (autoAdd->boolValue() && !processed) {
+        MessageManagerLock mmlock;
+        MIDIMapping* m = mappingManager.addItem();
+        m->midiType->setValueWithData(MIDIMapping::MidiType::CONTROLCHANGE);
+        m->channel->setValue(channel);
+        m->pitchOrNumber->setValue(number);
+        m->setNiceName("Control change " + String(number) + " Channel " + String(channel));
+    }
 }
 
 void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
 {
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
-    mappingManager.handlePitchWheel(channel, value, niceName);
+    bool processed = mappingManager.handlePitchWheel(channel, value, niceName);
+    if (autoAdd->boolValue() && !processed) {
+        MessageManagerLock mmlock;
+        MIDIMapping* m = mappingManager.addItem();
+        m->midiType->setValueWithData(MIDIMapping::MidiType::PITCHWHEEL);
+        m->channel->setValue(channel);
+        m->setNiceName("Pitch wheel " + String(channel));
+    }
 }
 
 void MIDIInterface::feedback(String address, var value, String origin = "")
