@@ -27,7 +27,8 @@ public:
 
 
 class GridViewButton :
-    public TextButton
+    public TextButton,
+    public DragAndDropContainer
 {
 public:
     GridViewButton();
@@ -36,6 +37,8 @@ public:
     int id = 0;
 
     void paint(juce::Graphics&) override;
+
+    void mouseDrag(const MouseEvent& e);
 };
 
 class GridView  : 

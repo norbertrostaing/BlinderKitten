@@ -30,7 +30,7 @@ juce_ImplementSingleton(GroupGridView);
 GroupGridView::GroupGridView()
 {
     numberOfCells = 200;
-    targetType = "group";
+    targetType = "Group";
     completeGridMode = true;
 }
 

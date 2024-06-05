@@ -39,6 +39,20 @@ void GridViewButton::paint(juce::Graphics& g)
     g.drawFittedText(String(id), getLocalBounds(), Justification::topRight,1);
 }
 
+void GridViewButton::mouseDrag(const MouseEvent& e)
+{
+    GridView* parent = findParentComponentOfClass<GridView>();
+    if (parent != nullptr && e.getDistanceFromDragStart() > 10 && !isDragAndDropActive())
+    {
+        var dragData(new DynamicObject());
+        dragData.getDynamicObject()->setProperty("type", "GridViewButton");
+        dragData.getDynamicObject()->setProperty("targetType", parent->targetType);
+        dragData.getDynamicObject()->setProperty("id", id);
+
+        startDragging(dragData, this, ScaledImage(), true);
+    }
+}
+
 
 
 

@@ -1140,6 +1140,39 @@ void LayoutViewer::exportToPNG()
 	pngWriter.writeImageToStream(myImage, stream);
 }
 
+bool LayoutViewer::isInterestedInDragSource(const SourceDetails& source)
+{
+	if (source.description.getProperty("type", "") == "GridViewButton") {
+		String targetType = source.description.getProperty("targetType", "");
+		if (targetType == "Fixture") return true;
+		if (targetType == "Group") return true;
+	}
+	return false;
+}
+
+void LayoutViewer::itemDropped(const SourceDetails& source)
+{
+	if (selectedLayout == nullptr) return;
+	if (source.description.getProperty("type", "") == "GridViewButton") {
+		String targetType = source.description.getProperty("targetType", "");
+		var id = source.description.getProperty("id", 0);
+		BKPath* path = selectedLayout->paths.addItem();
+		CommandSelection* sel = path->selection.addItem();
+		path->setNiceName(targetType+" "+id);
+		sel->valueFrom->setValue(id);
+		if (targetType == "Group") sel->targetType->setValueWithKey("Group");
+
+		Point<int> mousePos = getMouseXYRelative();
+		float layoutX = jmap(float(mousePos.x), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
+		float layoutY = jmap(float(mousePos.y), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
+		var pos = layoutX;
+		pos.append(layoutY);
+		path->position->setValue(pos);
+		path->selectThis();
+
+	}
+}
+
 void LayoutViewer::timerCallback()
 {
 	repaint();

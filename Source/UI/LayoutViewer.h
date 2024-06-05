@@ -20,7 +20,8 @@ class LayoutViewer :
     public ToggleButton::Listener,
     public LayoutManager::AsyncListener,
     public ChangeListener,
-    public Timer
+    public Timer,
+    public DragAndDropTarget
 
 {
 public:
@@ -95,6 +96,9 @@ public:
     float topLeftY = 0;
     float bottomRightX = 0;
     float bottomRightY = 0;
+
+    bool isInterestedInDragSource(const SourceDetails& source) override;
+    void itemDropped(const SourceDetails& source) override;
 
     void timerCallback();
     static LayoutViewer* create(const String& name) {return new LayoutViewer(); }
