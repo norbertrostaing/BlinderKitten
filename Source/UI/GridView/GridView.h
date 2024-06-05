@@ -26,6 +26,18 @@ public:
 };
 
 
+class GridViewButton :
+    public TextButton
+{
+public:
+    GridViewButton();
+    ~GridViewButton();
+
+    int id = 0;
+
+    void paint(juce::Graphics&) override;
+};
+
 class GridView  : 
     public juce::Component,
     //public BaseItem,
@@ -38,7 +50,7 @@ public:
     ~GridView() override;
 
     BKEngine* engine = nullptr;
-    OwnedArray<TextButton> gridButtons;
+    OwnedArray<GridViewButton> gridButtons;
     ScrollBar scroll;
 
     bool completeGridMode = true;

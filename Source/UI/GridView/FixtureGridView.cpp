@@ -45,7 +45,6 @@ void FixtureGridView::initArrays() {
     gridButtons.clear();
     hashMapButtons.clear();
     cs.exit();
-
 }
 
 
@@ -61,12 +60,13 @@ void FixtureGridView::updateCells() {
         int id = f->id->getValue();
         fixtIdMax = jmax(id, fixtIdMax);
 
-        TextButton* b = new TextButton();
+        GridViewButton* b = new GridViewButton();
         gridButtons.add(b);
+        b->id = id;
 
         hashMapButtons.set(id, b);
         b->addListener(this);
-        b->setButtonText(String(id)+" "+f->userName->stringValue());
+        b->setButtonText(f->userName->stringValue());
         addAndMakeVisible(b);
     }
     cs.exit();

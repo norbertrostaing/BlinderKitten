@@ -46,10 +46,10 @@ void MapperGridView::updateCells() {
             gridButtons[i]->removeColour(TextButton::textColourOnId);
             gridButtons[i]->removeColour(TextButton::textColourOffId);
 
-            gridButtons[i]->setButtonText(String(i + 1) + "\n" + g->userName->getValue().toString());
+            gridButtons[i]->setButtonText(g->userName->getValue().toString());
         }
         else {
-            gridButtons[i]->setButtonText(String(i + 1));
+            gridButtons[i]->setButtonText("");
             gridButtons[i]->setColour(TextButton::buttonColourId, Colour(40, 40, 40));
             gridButtons[i]->setColour(TextButton::textColourOnId, Colour(96, 96, 96));
             gridButtons[i]->setColour(TextButton::textColourOffId, Colour(96, 96, 96));

@@ -24,6 +24,24 @@ GridViewUI::~GridViewUI()
 {
 }
 
+
+GridViewButton::GridViewButton()
+{
+}
+
+GridViewButton::~GridViewButton()
+{
+}
+
+void GridViewButton::paint(juce::Graphics& g)
+{
+    TextButton::paint(g);
+    g.drawFittedText(String(id), getLocalBounds(), Justification::topRight,1);
+}
+
+
+
+
 juce_ImplementSingleton(GridView);
 
 GridView::GridView():
@@ -49,7 +67,8 @@ GridView::~GridView()
 void GridView::initArrays() {
     gridButtons.clear();
     for (int i = 0; i < numberOfCells; i++) {
-        TextButton* b = new TextButton();
+        GridViewButton* b = new GridViewButton();
+        b->id = i+1;
         gridButtons.add(b);
         b->addListener(this);
         addAndMakeVisible(b);
@@ -133,7 +152,7 @@ void GridView::scrollBarMoved(ScrollBar* scrollBarThatHasMoved, double newRangeS
 }
 
 void GridView::buttonClicked(juce::Button* button) {
-    int id = gridButtons.indexOf((TextButton*)button);
+    int id = gridButtons.indexOf((GridViewButton*)button);
     cellClicked(id+1);
     UserInputManager::getInstance()->resetFocus();
 }
@@ -145,3 +164,4 @@ void GridView::cellClicked(int id) {
 void GridView::updateCells() {
     
 }
+
