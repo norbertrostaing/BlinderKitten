@@ -57,3 +57,15 @@ void MapperGridView::updateCells() {
         }
     }
 }
+
+void MapperGridView::showContextMenu(int id)
+{
+    Mapper* target = Brain::getInstance()->getMapperById(id);
+    if (target != nullptr) {
+        PopupMenu p;
+        p.addItem("Start", [target]() {target->start(); });
+        p.addItem("Stop", [target]() {target->stop(); });
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+    }
+
+}

@@ -76,3 +76,14 @@ void CarouselGridView::updateButtons()
         }
     }
 }
+
+void CarouselGridView::showContextMenu(int id)
+{
+    Carousel* target = Brain::getInstance()->getCarouselById(id);
+    if (target != nullptr) {
+        PopupMenu p;
+        p.addItem("Start", [target]() {target->start(); });
+        p.addItem("Stop", [target]() {target->stop(); });
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+    }
+}

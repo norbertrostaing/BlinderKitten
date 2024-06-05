@@ -38,6 +38,8 @@ public:
 
     void paint(juce::Graphics&) override;
 
+    void mouseDown(const MouseEvent& e);
+    void mouseUp(const MouseEvent& e);
     void mouseDrag(const MouseEvent& e);
 };
 
@@ -69,6 +71,8 @@ public:
     void scrollBarMoved(ScrollBar* scrollBarThatHasMoved, double newRangeStart );
     void mouseWheelMove(const MouseEvent& event,const MouseWheelDetails& wheel);
     void buttonClicked(juce::Button* button) override;
+
+    virtual void showContextMenu(int id);
     virtual void cellClicked(int id);
     virtual void updateCells();
 

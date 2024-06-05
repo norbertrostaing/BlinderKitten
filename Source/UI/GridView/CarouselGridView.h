@@ -37,6 +37,8 @@ public:
     
     void updateCells() override;
     void updateButtons();
+    void showContextMenu(int id);
+
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CarouselGridView)

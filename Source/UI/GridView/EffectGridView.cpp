@@ -75,3 +75,14 @@ void EffectGridView::updateButtons()
     }
 
 }
+
+void EffectGridView::showContextMenu(int id)
+{
+    Effect* target = Brain::getInstance()->getEffectById(id);
+    if (target != nullptr) {
+        PopupMenu p;
+        p.addItem("Start", [target]() {target->start(); });
+        p.addItem("Stop", [target]() {target->stop(); });
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+    }
+}

@@ -39,6 +39,26 @@ void GridViewButton::paint(juce::Graphics& g)
     g.drawFittedText(String(id), getLocalBounds(), Justification::topRight,1);
 }
 
+void GridViewButton::mouseDown(const MouseEvent& e)
+{
+    if (e.mods.isRightButtonDown()) {
+        return;
+    }
+    Button::mouseDown(e);
+}
+
+void GridViewButton::mouseUp(const MouseEvent& e)
+{
+    if (e.mods.isRightButtonDown()) {
+        GridView* p = findParentComponentOfClass<GridView>();
+        if (p != nullptr) {
+            p->showContextMenu(id);
+        }
+        return;
+    }
+    Button::mouseUp(e);
+}
+
 void GridViewButton::mouseDrag(const MouseEvent& e)
 {
     GridView* parent = findParentComponentOfClass<GridView>();
@@ -52,7 +72,6 @@ void GridViewButton::mouseDrag(const MouseEvent& e)
         startDragging(dragData, this, ScaledImage(), true);
     }
 }
-
 
 
 
@@ -171,6 +190,10 @@ void GridView::buttonClicked(juce::Button* button) {
     UserInputManager::getInstance()->resetFocus();
 }
 
+void GridView::showContextMenu(int id)
+{
+}
+
 void GridView::cellClicked(int id) {
     UserInputManager::getInstance()->gridViewCellPressed(targetType, id);
 }
@@ -178,4 +201,5 @@ void GridView::cellClicked(int id) {
 void GridView::updateCells() {
     
 }
+
 

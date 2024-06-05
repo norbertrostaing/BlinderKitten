@@ -13,6 +13,7 @@
 #include "Brain.h"
 #include "Definitions/Cuelist/Cuelist.h"
 #include "Definitions/Cuelist/CuelistManager.h"
+#include "UserInputManager.h"
 
 //==============================================================================
 CuelistGridViewUI::CuelistGridViewUI(const String& contentName):
@@ -74,4 +75,29 @@ void CuelistGridView::updateButtons()
         }
     }
 
+}
+
+void CuelistGridView::showContextMenu(int id)
+{
+    Cuelist* target = Brain::getInstance()->getCuelistById(id);
+    if (target != nullptr) {
+        PopupMenu p;
+        p.addItem("Go", [target]() {target->go(); });
+        p.addItem("Load", [target]() {target->showLoad(); });
+        p.addItem("Load and go", [target]() {target->showLoadAndGo(); });
+        if (target->cueA != nullptr) {
+            Cue* cueA = target->cueA;
+            p.addItem("Off", [target]() {target->off(); });
+            p.addSeparator();
+            p.addItem("Load content", [cueA]() {cueA->loadContent(UserInputManager::getInstance()->getProgrammer(true)); });
+            p.addSeparator();
+            p.addItem("Replace", [cueA]() {cueA->replaceContent(UserInputManager::getInstance()->getProgrammer(true)); });
+            p.addItem("Merge", [cueA]() {cueA->mergeContent(UserInputManager::getInstance()->getProgrammer(true)); });
+            p.addSeparator();
+            p.addItem("Temp merge track", [target]() {target->tempMergeProgrammer(UserInputManager::getInstance()->getProgrammer(true), true); });
+            p.addItem("Temp merge no track", [target]() {target->tempMergeProgrammer(UserInputManager::getInstance()->getProgrammer(true), false); });
+        }
+
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+    }
 }
