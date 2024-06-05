@@ -213,7 +213,7 @@ void Brain::brainLoop() {
 
             if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr) {
                 UserInputManager::getInstance() -> currentProgrammer->computing.enter();
-                if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(subFixtureChannelPoolUpdating[i]->parentSubFixture)) {
+                if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(sfc->parentSubFixture)) {
                     encoderValuesNeedRefresh = true;
                 }
                 UserInputManager::getInstance()->currentProgrammer->computing.exit();
