@@ -54,7 +54,7 @@ BKPath::BKPath(var params) :
     tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
     tilesSize->setDefaultValue(d);
     textSize = addFloatParameter("Text size", "", 10, 0);
-    spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", true);
+    spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", false);
 
     overrideColor = addBoolParameter("Override color", "", false);
     pathColor = addColorParameter("Tiles color", "", juce::Colours::lightcyan);
