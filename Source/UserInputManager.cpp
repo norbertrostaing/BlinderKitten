@@ -457,14 +457,16 @@ void UserInputManager::encoderValueChanged(int index, float newValue, String ori
 	if (Encoders::getInstance()->channels.size() <= index) { return; }
 	int mode = Encoders::getInstance()->mode;
 	
+	//index += Encoders::getInstance()->encodersOffset;
+	int offset = Encoders::getInstance()->encodersOffset;
 	targetCommand = getProgrammer(true)->currentUserCommand;
 	if (targetCommand == nullptr) {return;}
-	if (index >=0 && mode < 2 && Encoders::getInstance()->channels.size() > index) { 
-		ChannelType* c = Encoders::getInstance()->channels.getReference(index);
+	if (index >=0 && mode < 2 && Encoders::getInstance()->channels.size() > index+offset) { 
+		ChannelType* c = Encoders::getInstance()->channels.getReference(index+offset);
 		if (c != nullptr) {
 			String oldOrigin = "";
 			
-			float value = Encoders::getInstance()->encoders[index- Encoders::getInstance()->encodersOffset]->getValue();
+			float value = Encoders::getInstance()->encoders[index]->getValue();
 			
 			if (Encoders::getInstance()->lastOrigin.contains(c)) {
 				oldOrigin = Encoders::getInstance()->lastOrigin.getReference(c);

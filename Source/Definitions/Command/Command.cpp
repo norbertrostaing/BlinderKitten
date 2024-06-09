@@ -50,7 +50,7 @@ Command::Command(var params) :
 
 	maxTiming = 0;
 	updateDisplay();
-	listeners.clear();
+	//listeners.clear();
 }
 
 Command::~Command()

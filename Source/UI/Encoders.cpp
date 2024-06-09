@@ -189,7 +189,7 @@ void Encoders::resized()
 
 void Encoders::sliderValueChanged(Slider* slider)
 {   
-    int index = encoders.indexOf(slider)+encodersOffset;
+    int index = encoders.indexOf(slider);
     double v = slider->getValue();
     if (encoderRange == 1) { v /= 100.; }
     else if (encoderRange == 2) { v /= 255.; }
@@ -382,7 +382,7 @@ void Encoders::updateEncoders() {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         currentCommand = UserInputManager::getInstance()->currentProgrammer->currentUserCommand;
     }
-    encodersOffset = jmin(encodersOffset, channels.size()-nEncoders);
+    encodersOffset = jmin(encodersOffset, channels.size()-1);
     encodersOffset = jmax(encodersOffset, 0);
 
     lastOrigin.clear();
