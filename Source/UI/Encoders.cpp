@@ -564,7 +564,7 @@ void Encoders::mouseDoubleClick(const MouseEvent& e)
 {
     Slider* s = dynamic_cast<Slider* >(e.eventComponent);
 
-    int index = encoders.indexOf(s) + encodersOffset;
+    int index = encoders.indexOf(s);
     UserInputManager::getInstance()->encoderValueChanged(index, -2, "");
     updateChannels();
     updateEncoders();
