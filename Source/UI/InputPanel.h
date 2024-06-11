@@ -71,6 +71,7 @@ public:
     TextButton btnAssistant;
 
     Slider grandMaster;
+    TextButton blackoutBtn;
 
     void paint (juce::Graphics&) override;
     void resized() override;

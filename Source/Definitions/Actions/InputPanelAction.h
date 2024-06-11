@@ -19,7 +19,7 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS};
+    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE};
     ActionType actionType;
     EnumParameter* targetButton;
     IntParameter* randomSeed;

@@ -300,6 +300,9 @@ void SubFixtureChannel::updateVal(double now) {
 	if (reactToGrandMaster) {
 		double gm = InputPanel::getInstance()->grandMaster.getValue();
 		newValue *= gm;
+		if (InputPanel::getInstance()->blackoutBtn.getToggleState()) {
+			newValue = 0;
+		}
 	}
 
 	cs.exit();

@@ -114,6 +114,8 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Button Press", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_PRESS));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Grand Master", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_GM));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Black out temp", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_BLACKOUTTEMP));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Black out toggle", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_BLACKOUTTOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Off All cuelists", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_OFFCL));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Kill All Cuelists", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_KILLCL));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Stop All Effects", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_STOPFX));

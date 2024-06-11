@@ -70,6 +70,11 @@ InputPanel::InputPanel()
     grandMaster.addListener(this);
     grandMaster.setWantsKeyboardFocus(false);
 
+    addAndMakeVisible(blackoutBtn);
+    blackoutBtn.setButtonText("BO");
+    blackoutBtn.addListener(this);
+    blackoutBtn.setToggleable(true);
+    blackoutBtn.setClickingTogglesState(true);
 
 }
 
@@ -88,6 +93,9 @@ void InputPanel::buttonClicked(juce::Button* button) {
     }
     else if (button == &btnClear && k.isShiftDown()) {
         UserInputManager::getInstance()->processInput("clearall");
+    }
+    else if (button == &blackoutBtn) {
+        Brain::getInstance()->grandMasterChanged();
     }
     else {
         UserInputManager::getInstance()->processInput(button->getButtonText());
@@ -167,7 +175,8 @@ void InputPanel::resized()
     btnBackspace.setBounds  (1 * sm + p2, 4 * r, sm, h);
     btnEnter.setBounds      (2 * sm + p2, 4 * r, sm*2, h);
 
-    grandMaster.setBounds   (0 * lg + p3, 4 * r, lg, h);
+    grandMaster.setBounds(0 * lg + p3, 4 * r, lg/2, h);
+    blackoutBtn.setBounds(0 * lg + p3 + lg/2, 4 * r, lg/2, h);
 
 
     // This method is where you should set the bounds of any child

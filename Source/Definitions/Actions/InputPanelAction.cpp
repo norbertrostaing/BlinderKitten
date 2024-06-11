@@ -102,6 +102,21 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
         }
         break;
 
+    case IP_BLACKOUTTEMP:
+    {
+        const MessageManagerLock mmLock;
+
+        InputPanel::getInstance()->blackoutBtn.setToggleState(val > 0, juce::sendNotification);
+        break;
+    }
+    case IP_BLACKOUTTOGGLE:
+    {
+        const MessageManagerLock mmLock;
+
+        if (val > 0) InputPanel::getInstance()->blackoutBtn.setToggleState(!InputPanel::getInstance()->blackoutBtn.getToggleState(), juce::sendNotification);
+        break;
+    }
+
     case IP_OFFCL:
         if (val > 0) {
             Brain::getInstance()->offAllCuelists();
