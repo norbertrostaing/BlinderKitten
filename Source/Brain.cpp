@@ -465,6 +465,7 @@ void Brain::unregisterCuelist(Cuelist* c) {
     if (cuelists.containsValue(c)) {
         cuelists.removeValue(c);
     }
+    reconstructVirtuals = true;
 }
 
 void Brain::registerProgrammer(Programmer* p, int id, bool swap) {
@@ -609,6 +610,7 @@ void Brain::unregisterEffect(Effect* c) {
     if (effects.containsValue(c)) {
         effects.removeValue(c);
     }
+    reconstructVirtuals = true;
 }
 
 void Brain::registerCarousel(Carousel* p, int id, bool swap) {
@@ -645,6 +647,7 @@ void Brain::unregisterCarousel(Carousel* c) {
     if (carousels.containsValue(c)) {
         carousels.removeValue(c);
     }
+    reconstructVirtuals = true;
 }
 
 void Brain::registerMapper(Mapper* p, int id, bool swap) {
@@ -681,6 +684,7 @@ void Brain::unregisterMapper(Mapper* c) {
     if (mappers.containsValue(c)) {
         mappers.removeValue(c);
     }
+    reconstructVirtuals = true;
 }
 
 void Brain::registerLayout(Layout* p, int id, bool swap) {
