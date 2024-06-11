@@ -467,7 +467,10 @@ void UserInputManager::encoderValueChanged(int index, float newValue, String ori
 			String oldOrigin = "";
 			
 			float value = Encoders::getInstance()->encoders[index]->getValue();
-			
+			if (Encoders::getInstance()->encoderRange == 1) value /= 100.;
+			if (Encoders::getInstance()->encoderRange == 2) value /= 255.;
+
+
 			if (Encoders::getInstance()->lastOrigin.contains(c)) {
 				oldOrigin = Encoders::getInstance()->lastOrigin.getReference(c);
 			}
