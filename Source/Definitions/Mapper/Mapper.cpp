@@ -242,4 +242,5 @@ void Mapper::updateName() {
 		dynamic_cast<MapperManager*>(parentContainer.get())->reorderItems();
 	}
 	setNiceName(String((int)id->getValue()) + " - " + n);
+	Brain::getInstance()->reconstructVirtuals = true;
 }

@@ -347,6 +347,7 @@ void Carousel::updateName() {
 		dynamic_cast<CarouselManager*>(parentContainer.get())->reorderItems();
 	}
 	setNiceName(String((int)id->getValue()) + " - " + n);
+	Brain::getInstance()->reconstructVirtuals = true;
 }
 
 void Carousel::tapTempo() {

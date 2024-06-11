@@ -1309,6 +1309,7 @@ void Cuelist::updateName() {
 		dynamic_cast<CuelistManager*>(parentContainer.get())->reorderItems();
 	}
 	setNiceName(String((int)id->getValue()) + " - " + n);
+	Brain::getInstance()->reconstructVirtuals = true;
 }
 
 void Cuelist::renumberCues() {

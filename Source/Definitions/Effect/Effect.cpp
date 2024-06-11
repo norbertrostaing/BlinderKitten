@@ -368,6 +368,7 @@ void Effect::updateName() {
 		dynamic_cast<EffectManager*>(parentContainer.get())->reorderItems();
 	}
 	setNiceName(String((int)id->getValue()) + " - " + n);
+	Brain::getInstance()->reconstructVirtuals = true;
 }
 
 
