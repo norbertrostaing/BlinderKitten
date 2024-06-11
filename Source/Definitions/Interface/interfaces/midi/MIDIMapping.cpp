@@ -206,25 +206,27 @@ void MIDIMapping::processValue(float value, String origin) {
         float downX = downInputRange->x / divider;
         float downY = downInputRange->y / divider;
 
+        float newValue = 0;
+
         if (value >= upX && value <= upY) {
             isRelative = true;
-            value = jmap<float>(value, upX, upY, encoderValueRange->x, encoderValueRange->y);
-            handleValue(value, origin, true);
+            newValue = jmap<float>(value, upX, upY, encoderValueRange->x, encoderValueRange->y);
+            handleValue(newValue, origin, true);
         }
         if (value >= downX && value <= downY) {
             isRelative = true;
-            value = -jmap<float>(value, downX, downY, encoderValueRange->x, encoderValueRange->y);
-            handleValue(value, origin, true);
+            newValue = -jmap<float>(value, downX, downY, encoderValueRange->x, encoderValueRange->y);
+            handleValue(newValue, origin, true);
         }
         if (value >= upY && value <= upX) {
             isRelative = true;
-            value = jmap<float>(value, upY, upX, encoderValueRange->y, encoderValueRange->x);
-            handleValue(value, origin, true);
+            newValue = jmap<float>(value, upY, upX, encoderValueRange->y, encoderValueRange->x);
+            handleValue(newValue, origin, true);
         }
         if (value >= downY && value <= downX) {
             isRelative = true;
-            value = -jmap<float>(value, downY, downX, encoderValueRange->y, encoderValueRange->x);
-            handleValue(value, origin, true);
+            newValue = -jmap<float>(value, downY, downX, encoderValueRange->y, encoderValueRange->x);
+            handleValue(newValue, origin, true);
         }
     }
     else {
