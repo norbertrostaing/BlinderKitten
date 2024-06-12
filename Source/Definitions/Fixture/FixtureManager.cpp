@@ -71,6 +71,7 @@ void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)
         Fixture* f = items[i];
         for (auto itSf = f->subFixtures.begin(); itSf != f->subFixtures.end(); itSf.next()) {
             SubFixture* sf = itSf.getValue();
+            if (sf == nullptr) continue;
             for (auto itSfc = sf->channelsMap.begin(); itSfc != sf->channelsMap.end(); itSfc.next()) {
                 SubFixtureChannel *sfc = itSfc.getValue();
                 if (sfc->parentFixtureTypeChannel == ftc) {

@@ -217,7 +217,7 @@ void SubFixtureChannel::updateVal(double now) {
 				if (!checkSwop || c->isSwopping) {
 					bool isApplied;
 					newValue = c->applyToChannel(this, newValue, now, isApplied);
-					std::shared_ptr<ChannelValue> cv = c->activeValues.getReference(this);
+					std::shared_ptr<ChannelValue> cv = c->activeValues.contains(this) ? c->activeValues.getReference(this) : nullptr;
 					if (cv != nullptr && isApplied) {
 						activeCommand = cv->parentCommand;
 						if (cv->isEnded) {
@@ -232,7 +232,7 @@ void SubFixtureChannel::updateVal(double now) {
 
 		for (int i = 0; i <= overWritten; i++) {
 			if ((int)cuelistStack.getReference(i)->layerId->getValue() == currentLayer) {
-				std::shared_ptr<ChannelValue> cv = cuelistStack.getReference(i)->activeValues.getReference(this);
+				std::shared_ptr<ChannelValue> cv = cuelistStack.getReference(i)->activeValues.contains(this) ? cuelistStack.getReference(i)->activeValues.getReference(this) : nullptr;
 				if (cv != nullptr && !cv->isOverWritten) {
 					cv->isOverWritten = true;
 					Brain::getInstance()->pleaseUpdate(cuelistStack.getReference(i));

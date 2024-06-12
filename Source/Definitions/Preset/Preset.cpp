@@ -158,7 +158,7 @@ void Preset::computeValues() {
 			fixt = Brain::getInstance()->getFixtureById(fixtureId);
 			if (fixt != nullptr) {
 				type = dynamic_cast<FixtureType*>(fixt -> devTypeParam -> targetContainer.get());
-				subFixt = fixt->subFixtures.getReference(subFixtId);
+				subFixt = fixt->subFixtures.contains(subFixtId) ? fixt->subFixtures.getReference(subFixtId): nullptr;
 			}
 		}
 		

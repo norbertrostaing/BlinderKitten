@@ -333,7 +333,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 										}
 								}
 								else {
-									std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+									std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.contains(fchan) ? callingCuelist->activeValues.getReference(fchan) : nullptr;
 									if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
 										if (fadeHTPIn != -1) {
 											fade = fadeHTPIn * 1000.;
@@ -353,7 +353,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						finalValue->fade = fade;
 						if (fchan->isHTP) {
 							if (callingCuelist != nullptr && callingCue != nullptr) {
-								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.contains(fchan) ? callingCuelist->activeValues.getReference(fchan) : nullptr;
 								if (currentCuelistVal != nullptr && currentCuelistVal->endValue > finalValue->endValue) {
 									finalValue->isTransitionOut = true;
 								}
@@ -845,7 +845,7 @@ void Command::explodeSelection()
 				if (chan != nullptr && computedValues.contains(chan)) {
 					CommandValue* cv = newCommand->values.addItem();
 					cv->channelType->setValueFromTarget(chan->channelType);
-					std::shared_ptr<ChannelValue> chanVal = computedValues.getReference(chan);
+					std::shared_ptr<ChannelValue> chanVal = computedValues.contains(chan) ? computedValues.getReference(chan) : nullptr;
 					if (chanVal != nullptr) {
 						cv->valueFrom->setValue(chanVal->endValue);
 					}

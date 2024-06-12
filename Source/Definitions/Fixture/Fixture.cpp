@@ -150,7 +150,7 @@ void Fixture::checkChildrenSubFixtures() {
 	for (int i = 0; i < t->virtualChansManager.items.size(); i++) {
 		FixtureTypeVirtualChannel* c = t->virtualChansManager.items[i];
 		int subId = c->subFixtureId->getValue();
-		SubFixture* subFixt = subFixtures.getReference(subId);
+		SubFixture* subFixt = subFixtures.contains(subId) ? subFixtures.getReference(subId) : nullptr;
 		if (subFixt == nullptr) {
 			subFixt = new SubFixture();
 			subFixturesContainer.add(subFixt);
@@ -298,7 +298,7 @@ Array<SubFixture*> Fixture::getAllSubFixtures() {
 }
 
 SubFixture* Fixture::getSubFixture(int subId) {
-	return subFixtures.getReference(subId);
+	return subFixtures.contains(subId) ? subFixtures.getReference(subId) : nullptr;
 }
 
 Colour Fixture::getLayoutColor()
