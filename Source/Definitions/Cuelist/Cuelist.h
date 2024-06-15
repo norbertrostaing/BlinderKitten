@@ -236,6 +236,8 @@ public:
     void loadContent( Programmer* p);
     void tempMergeProgrammer(Programmer* p, bool trackValues = true);
 
+    void forceCueId(Cue*c, float id);
+
     static Cuelist* create(var params) { return new Cuelist(params); }
 
 };

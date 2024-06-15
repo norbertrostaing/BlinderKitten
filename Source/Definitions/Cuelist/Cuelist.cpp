@@ -261,6 +261,8 @@ Cuelist::~Cuelist()
 
 void Cuelist::reorderCues() {
 	cues.reorderItems();
+	cues.correctCueIds();
+	sendChangeMessage();
 	//cues->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, cues.get()));
 }
 
@@ -1591,6 +1593,18 @@ void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
 	}
 	p->computing.exit();
 	isComputing.exit();
+}
+
+void Cuelist::forceCueId(Cue* c, float id)
+{
+	for (int i = 0; i < cues.items.size(); i++) {
+		if (cues.items[i]->id->floatValue() == id) {
+			float nextId = i < cues.items.size()-2 ? cues.items[i+1]->id->floatValue() : cues.items[i]->id->floatValue()+2;
+			float newId = id + ((nextId - id) / 2);
+			cues.items[i]->id->setValue(newId);
+		}
+	}
+	c->id->setValue(id);
 }
 
 void Cuelist::tapTempo() {

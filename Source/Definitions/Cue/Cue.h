@@ -96,5 +96,7 @@ public:
 
     void onContainerNiceNameChanged() override;
 
+    void checkId();
+
 };
 

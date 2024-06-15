@@ -35,14 +35,7 @@ void CueManager::askForMoveAfter(BaseItem* c) {
 };
 
 void CueManager::addItemInternal(Cue* c, var data) {
-    if ((float)c->id->getValue() != 0) {return;}
-    float newId = 1;
-    if (items.size() > 0) {
-        Cue* lastCue = items[items.size() - 1];
-        newId = (float)lastCue->id->getValue() + 1;
-    } 
-    BaseManager::addItemInternal(c, data);
-    c->id->setValue(newId);
+    correctCueIds();
     parentCuelist->sendChangeMessage();
 }
 
@@ -55,6 +48,31 @@ void CueManager::askForDuplicateItem(BaseItem* item)
 
 void CueManager::correctCueIds()
 {
+    if (items.size() == 0) return;
+    float lastValidId = items[0]->id->floatValue();
+    Array<Cue*> invalidCueIds;
+
+    for (int i = 1; i < items.size(); i++) {
+        float id = items[i]->id->getValue();
+        float prevId = items[i - 1]->id->getValue();
+
+        if (id > prevId) { // tout va bien
+            for (int j = 0; j < invalidCueIds.size(); j++) {
+                invalidCueIds[j]->id->setValue(jmap(float(j+1),0.0f, float(invalidCueIds.size()+1), lastValidId, id));
+            }
+            invalidCueIds.clear();
+            lastValidId = id;
+        }
+        else { // cheh
+            invalidCueIds.add(items[i]);
+        }
+    }
+    for (int j = 0; j < invalidCueIds.size(); j++) {
+        invalidCueIds[j]->id->setValue(lastValidId+1+j);
+    }
+    return;
+
+    
     for (int i = 1; i < items.size(); i++) {
         float id = items[i]->id->getValue();
         float prevId = items[i-1]->id->getValue();
@@ -105,11 +123,13 @@ void CueManager::setItemIndex(Cue* item, int newIndex, bool addToUndo)
 double CueManager::calcId(double prev, double next)
 {
     double delta = (next - prev) / 2;
-    if (delta >= 1) { delta = 1; }
-    else if (delta >= 0.1) { delta = 0.1; }
-    else if (delta >= 0.01) { delta = 0.01; }
-    else if (delta >= 0.001) { delta = 0.001; }
-    return prev + delta;
+    if (delta <= 0) return prev + 1;
+    float ret = prev + (delta/2);
+    if (delta >= 1) { ret = floor( prev + 1); }
+    else if (delta >= 0.1) { ret = prev + 0.1; }
+    else if (delta >= 0.01) { ret = prev + 0.01; }
+    else if (delta >= 0.001) { ret = prev + 0.001; }
+    return ret;
 }
 
 void CueManager::removeItemInternal(Cue* c)

@@ -119,7 +119,10 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 	else if (p == id) {
 		if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
 			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-			MessageManager::callAsync([this, parentCuelist]() {parentCuelist->reorderCues(); });
+			parentCuelist->forceCueId(this, id->floatValue());
+			MessageManager::callAsync([this, parentCuelist]() {
+				parentCuelist->reorderCues(); 
+			});
 			sendChangeMessage();
 		}
 	}
@@ -352,5 +355,10 @@ String Cue::getCommandsText(bool useName)
 void Cue::onContainerNiceNameChanged()
 {
 	sendChangeMessage();
+}
+
+void Cue::checkId()
+{
+	
 }
 
