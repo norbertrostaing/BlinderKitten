@@ -155,6 +155,7 @@ Cuelist::Cuelist(var params) :
 	// swopOffBtn = addTrigger("Swop Off", "release swop");
 	tempMergeTrack = addTrigger("Temp merge track", "Merge the content of the programmer in this cue, values will be tracked");
 	tempMergeNoTrack = addTrigger("Temp merge no track", "Merge the content of the programmer in this cue, values will not be tracked (off at the next go)");
+	cleanAllBtn = addTrigger("Clean all cues", "Delete all unused commands in all cues");
 
 	nextCue = addTargetParameter("Next Cue", "Cue triggered when button go pressed", &cues);
 	nextCue->maxDefaultSearchLevel = 0;
@@ -422,6 +423,11 @@ void Cuelist::triggerTriggered(Trigger* t) {
 	else if (t == tempMergeNoTrack) {
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
 		tempMergeProgrammer(p, false);
+	}
+	else if (t == cleanAllBtn) {
+		for (Cue* c : cues.items) {
+			c->cleanUnused();
+		}
 	}
 	else {}
 }

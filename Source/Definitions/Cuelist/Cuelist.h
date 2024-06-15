@@ -86,6 +86,8 @@ public:
     Trigger* loadBtn;
     Trigger* loadAndGoBtn;
     Trigger* loadRandomBtn;
+    Trigger* cleanAllBtn;
+
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
