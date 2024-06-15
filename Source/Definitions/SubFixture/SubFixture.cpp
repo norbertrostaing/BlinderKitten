@@ -34,6 +34,17 @@ SubFixture::~SubFixture()
 			UserInputManager::getInstance()->currentProgrammer->currentUserCommand->computeValues();
 		}
 	}
+
+	for (auto it = Brain::getInstance()->layouts.begin(); it != Brain::getInstance()->layouts.end(); it.next()) {
+		Layout* l = it.getValue();
+		l->isComputing.enter();
+		if (l->subFixtToPos.contains(this)) l->subFixtToPos.remove(this);
+		l->isComputing.exit();
+		for (BKPath* p : l->paths.items) {
+			p->subFixtToPos.remove(this);
+		}
+	}
+
 	Brain::getInstance()->layoutViewerNeedRefresh = true;
 }
 

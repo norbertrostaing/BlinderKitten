@@ -76,6 +76,8 @@ public:
     Array<Effect*> swoppedEffects;
     Array<Carousel*> swoppedCarousels;
 
+    Array<Command*> allCommands;
+
     double now;
     bool loadingIsRunning = false;
     bool isClearing = false;

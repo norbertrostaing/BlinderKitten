@@ -96,6 +96,13 @@ SubFixtureChannel::~SubFixtureChannel()
 		c->isComputing.exit();
 	}
 
+	for (Command* c : Brain::getInstance()->allCommands) {
+		c->isComputing.enter();
+		c->channelToCommandValue.remove(this);
+		c->computedValues.remove(this);
+		c->isComputing.exit();
+	}
+
 	cs.exit();
 
 }

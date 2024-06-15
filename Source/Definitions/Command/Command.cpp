@@ -51,11 +51,15 @@ Command::Command(var params) :
 	maxTiming = 0;
 	updateDisplay();
 	//listeners.clear();
+
+	Brain::getInstance()->allCommands.add(this);
+
 }
 
 Command::~Command()
 {
 	toDelete = true;
+	Brain::getInstance()->allCommands.removeAllInstancesOf(this);
 	computedValues.getLock().enter();
 	for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 		//delete it.getValue();
