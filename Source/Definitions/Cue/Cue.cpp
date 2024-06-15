@@ -274,6 +274,7 @@ void Cue::endTransition() {
 void Cue::cleanUnused()
 {
 	Array<Command*> usedCommands;
+	computeValues();
 	csComputing.enter();
 
 	for (int i = 0; i < commands.items.size(); i++) {
