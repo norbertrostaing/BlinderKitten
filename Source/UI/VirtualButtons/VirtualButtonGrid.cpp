@@ -136,7 +136,7 @@ void VirtualButtonGrid::fillCells() {
             }
         }
     }
-    updateButtons();
+    updateButtons(true);
 }
 
 void VirtualButtonGrid::buttonClicked(juce::Button* button) {
@@ -264,17 +264,14 @@ VirtualButton* VirtualButtonGrid::getVirtualButton(int id, bool create)
     return vb;
 }
 
-void VirtualButtonGrid::updateButtons()
+void VirtualButtonGrid::updateButtons(bool forceFeedbacks)
 {
     const MessageManagerLock mmLock;
 
-    for (int i = 0; i < VirtualButtonManager::getInstance()->items.size(); i++) {
-        VirtualButtonManager::getInstance()->items[i]->updateStatus();
-    }
     for (int i = 0; i < gridButtons.size(); i++) {
         if (buttonToVirtualButton.contains(gridButtons[i]) && buttonToVirtualButton.getReference(gridButtons[i]) != nullptr) {
             VirtualButton* vb = buttonToVirtualButton.getReference(gridButtons[i]);
-
+            vb -> updateStatus(forceFeedbacks);
             if (vb->useCustomColor()) {
                 gridButtons[i]->setColour(TextButton::buttonColourId, vb->getCustomColor());
             } 

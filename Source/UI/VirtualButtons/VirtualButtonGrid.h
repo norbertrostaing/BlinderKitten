@@ -71,7 +71,7 @@ public:
 
     VirtualButton* getVirtualButton(int index, bool create = false);
 
-    void updateButtons();
+    void updateButtons( bool forceFeedbacks = false);
     void resetFeedbacks();
 
 

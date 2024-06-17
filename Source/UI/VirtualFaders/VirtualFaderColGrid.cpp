@@ -145,16 +145,16 @@ void VirtualFaderColGrid::resetFeedbacks()
     }
 }
 
-void VirtualFaderColGrid::updateButtons()
+void VirtualFaderColGrid::updateButtons(bool forceFeedbacks)
 {
     const MessageManagerLock mmLock;
     {
         for (int i = 0; i < VirtualFaderColManager::getInstance()->items.size(); i++) {
             for (int a = 0; a < VirtualFaderColManager::getInstance()->items[i]->aboveButtons.items.size(); a++) {
-                VirtualFaderColManager::getInstance()->items[i]->aboveButtons.items[a]->updateStatus();
+                VirtualFaderColManager::getInstance()->items[i]->aboveButtons.items[a]->updateStatus(forceFeedbacks);
             }
             for (int b = 0; b < VirtualFaderColManager::getInstance()->items[i]->belowButtons.items.size(); b++) {
-                VirtualFaderColManager::getInstance()->items[i]->belowButtons.items[b]->updateStatus();
+                VirtualFaderColManager::getInstance()->items[i]->belowButtons.items[b]->updateStatus(forceFeedbacks);
             }
         }
         for (int c = 0; c < aboveButtons.size(); c++) {
@@ -444,7 +444,7 @@ void VirtualFaderColGrid::fillCells() {
     }
     resized();
     updateSlidersValues();
-    updateButtons();
+    updateButtons(true);
 }
 
 void VirtualFaderColGrid::buttonClicked(juce::Button* button) {

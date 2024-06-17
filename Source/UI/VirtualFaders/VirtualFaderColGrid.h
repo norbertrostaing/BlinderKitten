@@ -110,7 +110,7 @@ public:
     void goToPage(int n);
 
     void resetFeedbacks();
-    void updateButtons();
+    void updateButtons(bool forceFeedbacks = false);
 
 
 
