@@ -79,6 +79,7 @@ public:
     void sliderValueChanged(Slider* slider) override;
 
     void setGrandMaster(float value, String origin);
+    void updateButtonsText();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputPanel)

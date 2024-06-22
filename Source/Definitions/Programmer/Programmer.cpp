@@ -27,6 +27,7 @@ il faudrait que le formulaire soit pré rempli genre
 #include "../DataTransferManager/DataTransferManager.h"
 #include "ProgrammerManager.h"
 #include "UI/Encoders.h"
+#include "UI/InputPanel.h"
 
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
@@ -226,6 +227,9 @@ void Programmer::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 		UserInputManager::getInstance()->programmerCommandValueChanged(this);
 	} else if (c == cliGo) {
 		runCliCommand();
+	}
+	else if (c == cliActionType) {
+		InputPanel::getInstance()->updateButtonsText();
 	}
 
 }

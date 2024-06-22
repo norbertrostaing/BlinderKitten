@@ -97,6 +97,15 @@ void InputPanel::buttonClicked(juce::Button* button) {
     else if (button == &blackoutBtn) {
         Brain::getInstance()->grandMasterChanged();
     }
+    else if (button == &btnCopy) {
+        UserInputManager::getInstance()->processInput("copy");
+    }
+    else if (button == &btnRecord) {
+        UserInputManager::getInstance()->processInput("record");
+    }
+    else if (button == &btnEdit) {
+        UserInputManager::getInstance()->processInput("edit");
+    }
     else {
         UserInputManager::getInstance()->processInput(button->getButtonText());
     }
@@ -199,4 +208,24 @@ void InputPanel::setGrandMaster(float value, String origin)
     }
     Brain::getInstance()->grandMasterChanged();
     UserInputManager::getInstance()->feedback("/grandmaster", grandMaster.getValue(), origin);
+}
+
+void InputPanel::updateButtonsText()
+{
+    String copyText = "Copy";
+    String editText = "Edit";
+    String recordText = "Record";
+    Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+    if (p != nullptr) {
+        String action = p->cliActionType->getValueData().toString();
+        if (action == "move") copyText = "Move";
+        if (action == "loadcontent") editText = "Load content";
+        if (action == "update") recordText = "Update";
+        if (action == "replace") recordText = "Replace";
+
+    }
+
+    btnCopy.setButtonText(copyText);
+    btnEdit.setButtonText(editText);
+    btnRecord.setButtonText(recordText);
 }
