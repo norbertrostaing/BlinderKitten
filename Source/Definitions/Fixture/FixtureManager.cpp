@@ -100,5 +100,11 @@ void FixtureManager::defaultValueChanged(FixtureTypeVirtualChannel* ftc)
     }
 }
 
+void FixtureManager::reorderItems()
+{
+    BaseManager::reorderItems();
+    PatchSheet::getInstance()->rebuildLines();
+}
+
 
 

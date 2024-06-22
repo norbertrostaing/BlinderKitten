@@ -33,4 +33,6 @@ public:
     void defaultValueChanged(FixtureTypeChannel* ftc);
     void defaultValueChanged(FixtureTypeVirtualChannel* ftc);
 
+    void reorderItems() override;
+
 };
