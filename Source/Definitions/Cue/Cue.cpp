@@ -31,7 +31,7 @@ Cue::Cue(var params) :
 	editorIsCollapsed = false;
 	itemDataType = "Cue";
 	
-	id = addFloatParameter("ID", "Id of this cue", 0, 0);
+	id = addFloatParameter("ID", "Id of this cue", 1, 0);
 
 	goText = addStringParameter("Go text", "Fill here the action on stage needed for the cue", "");
 	cueText = addStringParameter("Cue text", "What's happening during this cue ?", "");

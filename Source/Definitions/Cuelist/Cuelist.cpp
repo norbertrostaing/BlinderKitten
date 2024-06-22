@@ -21,7 +21,7 @@
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";
-	return A->id->getValue() > B->id->getValue() ? 1 : -1;
+	return A->id->floatValue() >= B->id->floatValue() ? 1 : -1;
 }
 
 Cuelist::Cuelist(var params) :
