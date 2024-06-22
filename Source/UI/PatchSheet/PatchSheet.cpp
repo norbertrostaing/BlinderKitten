@@ -4,6 +4,7 @@
 #include "UI/LabelAndTime.h"
 #include "Fixture/FixtureManager.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
+#include "Definitions/Assistant/Assistant.h"
 
 //==============================================================================
 PatchSheetUI::PatchSheetUI(const String& contentName):
@@ -20,8 +21,12 @@ juce_ImplementSingleton(PatchSheet);
 
 PatchSheet::PatchSheet()
 {
-    addAndMakeVisible(csvExportBtn);
     csvExportBtn.setButtonText("Export to CSV");
+    addOneBtn.setButtonText("Add one");
+    addMultBtn.setButtonText("Add multiple");
+    addAndMakeVisible(csvExportBtn);
+    addAndMakeVisible(addOneBtn);
+    addAndMakeVisible(addMultBtn);
     //addAndMakeVisible(inspectCuelistBtn);
     
     addAndMakeVisible(idLabel); idLabel.setText("ID", juce::dontSendNotification);
@@ -51,6 +56,8 @@ PatchSheet::PatchSheet()
     */
 
     csvExportBtn.onClick = [this]() { exportToCSV(); };
+    addOneBtn.onClick = [this]() { FixtureManager::getInstance()->addItem(); };
+    addMultBtn.onClick = [this]() { Assistant::getInstance()->patcherCC.selectThis(); };
     //inspectCuelistBtn.onClick = [this]() {inspectCuelist(); };
 
     //labelAndTimeBtn.setButtonText("Edit Label and time");
@@ -81,7 +88,9 @@ void PatchSheet::resized()
     int width = getLocalBounds().getWidth();
     int height = getLocalBounds().getHeight();
 
-    csvExportBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
+    csvExportBtn.setBounds(width * 0 / 5, 0, width / 5, 20);
+    addOneBtn.setBounds(width * 3 / 5, 0, width / 5, 20);
+    addMultBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
     //inspectCuelistBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
 
     int w = width / 10;

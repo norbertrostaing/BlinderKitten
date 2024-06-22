@@ -31,7 +31,8 @@ public:
     ~PatchSheet() override;
 
     TextButton csvExportBtn;
-    TextButton inspectCuelistBtn;
+    TextButton addOneBtn;
+    TextButton addMultBtn;
 
     Label idLabel;
     Label nameLabel;
