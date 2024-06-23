@@ -527,7 +527,23 @@ void Programmer::processUserInput(String s) {
 				else { cliActionType->setValueWithData("record"); }
 			}
 			else {
-				LOGERROR(s+ " not allowed");
+				LOGERROR(s + " not allowed");
+			}
+		}
+		else if (s == "update") {
+			if (userCanPressAction) {
+				cliActionType->setValueWithData("update");
+			}
+			else {
+				LOGERROR(s + " not allowed");
+			}
+		}
+		else if (s == "replace") {
+			if (userCanPressAction) {
+				cliActionType->setValueWithData("replace");
+			}
+			else {
+				LOGERROR(s + " not allowed");
 			}
 		}
 		else if (s == "copy") {
@@ -561,7 +577,7 @@ void Programmer::processUserInput(String s) {
 		return;
 	}
 
-	if (s == "record" || s == "copy" || s == "edit" || s == "delete") {
+	if (s == "record" || s == "update" || s == "replace" || s == "copy" || s == "move" || s == "edit" || s == "loadcontent" || s == "delete") {
 		cliActionType->setValueWithData(s);
 		UserInputManager::getInstance()->updateCommandLine();
 	}
