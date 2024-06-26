@@ -566,10 +566,10 @@ void LayoutViewer::paint(Graphics& g)
 
 		g.setFont(p->textSize->floatValue()*scaleText);
 
-		bool overrideColor = p->overrideColor->boolValue();
+		bool overrideColor = p->overrideStrokeColor->boolValue();
 		Colour overridenColor = juce::Colours::black;
-		if (p->overrideColor->boolValue()) {
-			overridenColor = p->pathColor->getColor();
+		if (p->overrideStrokeColor->boolValue()) {
+			overridenColor = p->strokeColor->getColor();
 		}
 
 		bool drawPaths = viewPaths.getToggleState();
@@ -590,7 +590,7 @@ void LayoutViewer::paint(Graphics& g)
 			Colour drawColor = juce::Colours::white;
 			if (overrideColor) {drawColor = overridenColor; }
 			else if (p->selection.computedSelectedSubFixtures.size() > 0) {
-				drawColor = p->selection.computedSelectedSubFixtures[0]->parentFixture->getLayoutColor();
+				drawColor = p->selection.computedSelectedSubFixtures[0]->parentFixture->getLayoutStrokeColor();
 			}
 
 			bool drawed = false;
@@ -659,7 +659,7 @@ void LayoutViewer::paint(Graphics& g)
 						Colour drawColor = juce::Colours::white;
 						if (overrideColor) { drawColor = overridenColor; }
 						else {
-							drawColor = sf->parentFixture->getLayoutColor();
+							drawColor = sf->parentFixture->getLayoutStrokeColor();
 						}
 						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 						if (!edit) {
@@ -688,7 +688,7 @@ void LayoutViewer::paint(Graphics& g)
 						Colour drawColor = juce::Colours::white;
 						if (overrideColor) { drawColor = overridenColor; }
 						else {
-							drawColor = sf->parentFixture->getLayoutColor();
+							drawColor = sf->parentFixture->getLayoutStrokeColor();
 						}
 						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
 						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);
@@ -745,7 +745,7 @@ void LayoutViewer::paint(Graphics& g)
 						Colour drawColor = juce::Colours::white;
 						if (overrideColor) { drawColor = overridenColor; }
 						else {
-							drawColor = sf->parentFixture->getLayoutColor();
+							drawColor = sf->parentFixture->getLayoutStrokeColor();
 						}
 						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 						if (!edit) {
@@ -774,7 +774,7 @@ void LayoutViewer::paint(Graphics& g)
 						Colour drawColor = juce::Colours::white;
 						if (overrideColor) { drawColor = overridenColor; }
 						else {
-							drawColor = sf->parentFixture->getLayoutColor();
+							drawColor = sf->parentFixture->getLayoutStrokeColor();
 						}
 						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
 						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, angle, drawColor, labelPos);
@@ -819,7 +819,7 @@ void LayoutViewer::paint(Graphics& g)
 			rotate /= 2;
 			rotate += br;
 
-			g.setColour(juce::Colours::orange);
+			//g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
@@ -828,7 +828,7 @@ void LayoutViewer::paint(Graphics& g)
 					Colour drawColor = juce::Colours::white;
 					if (overrideColor) { drawColor = overridenColor; }
 					else {
-						drawColor = it.getKey()->parentFixture->getLayoutColor();
+						drawColor = it.getKey()->parentFixture->getLayoutStrokeColor();
 					}
 					drawSubFixture(g, it.getKey(), X - halfTileWidth, Y - halfTileWidth, tileWidth, tileHeight, drawColor, labelPos);
 					if (!edit) {
@@ -847,7 +847,7 @@ void LayoutViewer::paint(Graphics& g)
 					Colour drawColor = juce::Colours::white;
 					if (overrideColor) { drawColor = overridenColor; }
 					else {
-						drawColor = it.getKey()->getLayoutColor();
+						drawColor = it.getKey()->getLayoutStrokeColor();
 					}
 					iFixt++;
 					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
@@ -918,7 +918,7 @@ void LayoutViewer::paint(Graphics& g)
 				g.strokePath(path, PathStrokeType(handleWidth));
 			}
 
-			g.setColour(juce::Colours::orange);
+			//g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
 				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
@@ -927,7 +927,7 @@ void LayoutViewer::paint(Graphics& g)
 					Colour drawColor = juce::Colours::white;
 					if (overrideColor) { drawColor = overridenColor; }
 					else {
-						drawColor = it.getKey()->parentFixture->getLayoutColor();
+						drawColor = it.getKey()->parentFixture->getLayoutStrokeColor();
 					}
 					drawSubFixture(g, it.getKey(), XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, drawColor, labelPos);
 					if (!edit) {
@@ -946,7 +946,7 @@ void LayoutViewer::paint(Graphics& g)
 					Colour drawColor = juce::Colours::white;
 					if (overrideColor) { drawColor = overridenColor; }
 					else {
-						drawColor = it.getKey()->getLayoutColor();
+						drawColor = it.getKey()->getLayoutStrokeColor();
 					}
 					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
 					drawFixture(g, it.getKey(),p , XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, angle, drawColor, labelPos);
@@ -980,7 +980,6 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 	bool drawed = false;
 
 	FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
-
 	if (ft != nullptr && ft->useLayoutIcon) {
 		g.setColour(c);
 
@@ -1027,6 +1026,8 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 		if (fillBox) {
 			//g.saveState();
 
+			Colour forcedFillColor = path->fillColor->getColor();
+
 			float sfCount = f->subFixtures.size();
 			if (sfCount > 0) {
 				Image tempImage = path->fixtImageContent.getReference(f).createCopy();
@@ -1039,6 +1040,12 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 				//g.reduceClipRegion(path->fixtImageContent.getReference(f), path->fixtTransform.getReference(f));
 				for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
 					Colour fill = it.getValue()->getOutputColor();
+					if (path->overrideFillColor->boolValue()) {
+						float r = fill.getFloatRed() * forcedFillColor.getFloatRed();
+						float g = fill.getFloatGreen() * forcedFillColor.getFloatGreen();
+						float b = fill.getFloatBlue() * forcedFillColor.getFloatBlue();
+						fill = Colour(r,g,b, 1.0f,1.0f);
+					}
 					tempGraphics.setColour(fill);
 					tempGraphics.fillRect(0.0 + (i * wSub), 0.0, wSub, imgH);
 					i++;

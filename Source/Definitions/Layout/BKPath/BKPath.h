@@ -55,8 +55,10 @@ class BKPath:
     BoolParameter* spreadSubFixtures;
     Point2DParameter* tilesSize;
     FloatParameter* textSize;
-    BoolParameter* overrideColor;
-    ColorParameter* pathColor;
+    BoolParameter* overrideStrokeColor;
+    ColorParameter* strokeColor;
+    BoolParameter* overrideFillColor;
+    ColorParameter* fillColor;
     StringParameter* customText;
     EnumParameter* labelPosition;
     enum LabelPosition {CENTER, TOP, RIGHT, BOTTOM, LEFT};

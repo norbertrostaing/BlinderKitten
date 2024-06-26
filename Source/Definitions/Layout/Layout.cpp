@@ -132,6 +132,7 @@ void Layout::computeData()
 				subFixtToPos.set(it.getKey(), it.getValue());
 			}
 			p->isComputing.exit();
+			p->clearFixtImages();
 		}
 	}
 

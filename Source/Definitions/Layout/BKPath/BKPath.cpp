@@ -56,8 +56,10 @@ BKPath::BKPath(var params) :
     textSize = addFloatParameter("Text size", "", 10, 0);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", false);
 
-    overrideColor = addBoolParameter("Override color", "", false);
-    pathColor = addColorParameter("Tiles color", "", juce::Colours::lightcyan);
+    overrideStrokeColor = addBoolParameter("Override stroke color", "", false);
+    strokeColor = addColorParameter("Stroke color", "", juce::Colours::lightcyan);
+    overrideFillColor = addBoolParameter("Override fill color", "", false);
+    fillColor = addColorParameter("Fill color", "", juce::Colours::white);
     customText = addStringParameter("Custom Text", "Write your own text on your tile", "");
     fixturesAngleFrom = addFloatParameter("Fixture rotation from", "Angle of first element", 0, -360, 360);
     fixturesAngleTo = addFloatParameter("Fixture rotation to", "Angle of the last element", 0, -360, 360);
@@ -334,7 +336,7 @@ void BKPath::computeData()
 }
 
 void BKPath::onContainerParameterChangedInternal(Parameter* c) {
-    if (c == pathType || c == overrideColor) {
+    if (c == pathType || c == overrideStrokeColor || c == overrideFillColor ) {
         updateDisplay();
     }
     clearFixtImages();
@@ -358,7 +360,8 @@ void BKPath::updateDisplay() {
     circleFrom->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
     circleTo->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
 
-    pathColor->hideInEditor = !overrideColor->boolValue();
+    strokeColor->hideInEditor = !overrideStrokeColor->boolValue();
+    fillColor->hideInEditor = !overrideFillColor->boolValue();
 
     actionManager.hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
     customText->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;

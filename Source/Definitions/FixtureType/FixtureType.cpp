@@ -25,7 +25,8 @@ FixtureType::FixtureType(var params) :
 	canBeDisabled = false;
 	
 	itemDataType = "FixtureType";
-	layoutColor = addColorParameter("Layout color", "Default color in layout", Colours::orange);
+	layoutStrokeColor = addColorParameter("Layout stroke color", "Default stroke color in layout", Colours::orange);
+	layoutFillColor = addColorParameter("Layout fill color", "Default fill color in layout", Colours::white);
 	layoutIconParameter = addFileParameter("Layout icon", "Load a custom png do display in the layout");
 	
 	templateId = helpContainer.addIntParameter("Template ID", "Use the subfixture with this id as template", 0, 0);
@@ -96,6 +97,10 @@ void FixtureType::onContainerParameterChangedInternal(Parameter* p)
 				useLayoutIcon = true;
 			}
 		}
+		Brain::getInstance()->layoutViewerNeedRefresh = true;
+	}
+	if (p == layoutFillColor || p == layoutStrokeColor) {
+		Brain::getInstance()->layoutViewerNeedRefresh = true;
 	}
 }
 

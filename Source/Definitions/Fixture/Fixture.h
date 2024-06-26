@@ -33,7 +33,14 @@ public:
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void updateName();
     void updateSubFixtureNames();
+    void updateDisplay();
+
     TargetParameter* devTypeParam;
+
+    BoolParameter* useCustomLayoutStrokeColor;
+    ColorParameter* layoutStrokeColor;
+    BoolParameter* useCustomLayoutFillColor;
+    ColorParameter* layoutFillColor;
 
     Point3DParameter* position;
     Point3DParameter* rotation;
@@ -50,7 +57,8 @@ public:
 
     Array<SubFixture*> getAllSubFixtures();
     SubFixture* getSubFixture(int id);
-    Colour getLayoutColor();
+    Colour getLayoutStrokeColor();
+    Colour getLayoutFillColor();
 
     void selectThis(bool addToSelection=false, bool notify = true);
     void autoName();

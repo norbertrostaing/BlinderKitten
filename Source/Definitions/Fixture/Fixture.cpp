@@ -47,6 +47,11 @@ Fixture::Fixture(var params) :
 	devTypeParam -> targetType = TargetParameter::CONTAINER;
 	devTypeParam -> maxDefaultSearchLevel = 0;
 	
+	useCustomLayoutStrokeColor = addBoolParameter("Custom stroke Color", "", false);
+	layoutStrokeColor = addColorParameter("Stroke Color", "", Colours::orange);
+	useCustomLayoutFillColor = addBoolParameter("Custom fill Color", "", false);
+	layoutFillColor = addColorParameter("Fill color", "", Colours::white);
+
 	position = addPoint3DParameter("Position", "Position in meters.");
 	rotation = addPoint3DParameter("Rotation", "Rotation in degrees.");
 
@@ -58,7 +63,7 @@ Fixture::Fixture(var params) :
 	Brain::getInstance()->registerFixture(this, id->getValue());
 	checkChildrenSubFixtures();
 
-	
+	updateDisplay();
 }
 
 void Fixture::afterLoadJSONDataInternal() {
@@ -104,6 +109,12 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	}
 	else if (p == position || p == rotation) {
 		TrackerManager::getInstance()->recomputeAllTrackers();
+	}
+	if (p == useCustomLayoutStrokeColor || p == useCustomLayoutFillColor) {
+		updateDisplay();
+	}
+	if (p == layoutFillColor || layoutStrokeColor) {
+		Brain::getInstance()->layoutViewerNeedRefresh = true;
 	}
 }
 
@@ -286,6 +297,14 @@ void Fixture::updateSubFixtureNames()
 	}
 }
 
+void Fixture::updateDisplay()
+{
+	layoutFillColor->hideInEditor = !useCustomLayoutFillColor->boolValue();
+	layoutStrokeColor->hideInEditor = !useCustomLayoutStrokeColor->boolValue();
+
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
 
 Array<SubFixture*> Fixture::getAllSubFixtures() {
 	Array<SubFixture*> ret;
@@ -301,14 +320,31 @@ SubFixture* Fixture::getSubFixture(int subId) {
 	return subFixtures.contains(subId) ? subFixtures.getReference(subId) : nullptr;
 }
 
-Colour Fixture::getLayoutColor()
+Colour Fixture::getLayoutStrokeColor()
 {
 	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
-	if (ft!= nullptr) {
-		return ft->layoutColor->getColor();
+	if (useCustomLayoutStrokeColor->boolValue()) {
+		return layoutStrokeColor->getColor();
+	}
+	else if (ft!= nullptr) {
+		return ft->layoutStrokeColor->getColor();
 	}
 	else {
-		return Colour();
+		return Colours::white;
+	}
+}
+
+Colour Fixture::getLayoutFillColor()
+{
+	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
+	if (useCustomLayoutFillColor) {
+		return layoutFillColor->getColor();
+	}
+	else if (ft != nullptr) {
+		return ft->layoutFillColor->getColor();
+	}
+	else {
+		return Colours::white;
 	}
 }
 

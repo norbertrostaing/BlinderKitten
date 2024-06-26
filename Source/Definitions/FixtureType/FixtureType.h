@@ -24,7 +24,8 @@ public:
     String objectType;
     var objectData;
     
-    ColorParameter* layoutColor;
+    ColorParameter* layoutStrokeColor;
+    ColorParameter* layoutFillColor;
     FileParameter* layoutIconParameter;
 
     bool useLayoutIcon = false;

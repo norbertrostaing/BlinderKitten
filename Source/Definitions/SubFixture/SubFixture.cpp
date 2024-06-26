@@ -72,7 +72,7 @@ Colour SubFixture::getOutputColor()
 	}
 	
 	if (!colorIsSet && cyan != nullptr && magenta != nullptr && yellow != nullptr) {
-		r = 255; g = 255; b= 255;
+		r = 1; g = 1; b= 1;
 		if (channelsMap.contains(cyan)) { colorIsSet = true; r = 1-channelsMap.getReference(cyan)->value; }
 		if (channelsMap.contains(magenta)) { colorIsSet = true; g = 1-channelsMap.getReference(magenta)->value; }
 		if (channelsMap.contains(yellow)) { colorIsSet = true; b = 1-channelsMap.getReference(yellow)->value; }
@@ -89,7 +89,16 @@ Colour SubFixture::getOutputColor()
 		}
 	}
 
+	if (parentFixture != nullptr && parentFixture->useCustomLayoutFillColor->boolValue()) {
+		Colour max = parentFixture->layoutFillColor->getColor();
+		r *= max.getFloatRed();
+		g *= max.getFloatGreen();
+		b *= max.getFloatBlue();
+	}
+
 	if (!colorIsSet) {r = 0; g = 0; b = 0;}
+
+
 
 	return Colour(255*r, 255*g, 255*b);
 }
