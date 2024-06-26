@@ -230,9 +230,10 @@ void Cue::go() {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
-	for (int i = 0; i < tasks.items.size(); i++) {
-		if (tasks.items[i]->enabled->boolValue()) {
-			Brain::getInstance()->startTask(tasks.items[i], now, parentCuelist->id->intValue());
+	Array<Task*> allTasks = getTasks();
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (allTasks[i]->enabled->boolValue()) {
+			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue());
 		}
 	}
 }
@@ -337,6 +338,27 @@ void Cue::writeTimeStamp()
 	MessageManager::callAsync([this](){
 		lastTriggeredTS->setValue(Time::getCurrentTime().formatted("%Y-%m-%d %H:%M:%S"));
 	});
+}
+
+Array<Task*> Cue::getTasks()
+{
+	Array<Cue*> histo;
+	return getTasks(histo);
+}
+
+Array<Task*> Cue::getTasks(Array<Cue*> history)
+{
+	Array<Task*> ret;
+	if (history.contains(this)) {return ret;}
+	history.add(this);
+	Cue* original = dynamic_cast<Cue*>(reuseCue->targetContainer.get());
+	if (original != nullptr) {
+		ret = original->getTasks(history);
+	}
+	for (Task* t : tasks.items) {
+		ret.add(t);
+	}
+	return ret;
 }
 
 String Cue::getCommandsText(bool useName)

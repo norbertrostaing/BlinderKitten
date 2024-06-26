@@ -77,6 +77,9 @@ public:
 
     void writeTimeStamp();
 
+    Array<Task*> getTasks();
+    Array<Task*> getTasks(Array<Cue*> history);
+
     String getCommandsText(bool useName);
 
     String getTypeString() const override { return objectType; }
