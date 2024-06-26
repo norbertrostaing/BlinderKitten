@@ -35,7 +35,15 @@ void CueManager::askForMoveAfter(BaseItem* c) {
 };
 
 void CueManager::addItemInternal(Cue* c, var data) {
-    correctCueIds();
+    float maxId = 0;
+    for (Cue* cue : items) {
+        if (c != cue) maxId = jmax(maxId, cue->id->floatValue());
+    }
+    if (maxId != 0) {
+        c->id->setValue(floor(maxId+1));
+    }
+    reorderItems();
+    //correctCueIds();
     parentCuelist->sendChangeMessage();
 }
 
