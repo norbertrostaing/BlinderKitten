@@ -86,7 +86,7 @@ void Fixture::onContainerNiceNameChanged()
 {
 	BaseItem::onContainerNiceNameChanged();
 	// Logger::writeToLog("call from nameChanged");
-	checkChildrenSubFixtures();
+	//checkChildrenSubFixtures();
 }
 
 void Fixture::onContainerParameterChangedInternal(Parameter* p) 

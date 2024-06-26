@@ -29,6 +29,10 @@ SubFixture::~SubFixture()
 {
 	channelsMap.clear();
 	channelsContainer.clear();
+	if (parentFixture != nullptr) {
+		parentFixture->subFixtures.removeValue(this);
+	}
+	
 	if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
 		if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
 			UserInputManager::getInstance()->currentProgrammer->currentUserCommand->computeValues();
