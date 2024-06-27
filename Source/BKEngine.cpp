@@ -429,6 +429,45 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->startThread();
 	Brain::getInstance()->skipLoop = false;
 
+
+	encodersNumber->resetValue();
+	gridCols->resetValue();
+	gridScale->resetValue();
+	encodersScale->resetValue();
+	encoderBigNumber->resetValue();
+	faderSelectionMode->resetValue();
+	virtualButtonGridCols->resetValue();
+	virtualButtonGridRows->resetValue();
+	virtualFaderCols->resetValue();
+	virtualFaderRotary->resetValue();
+	virtualFaderAbove->resetValue();
+	virtualFaderSize->resetValue();
+	virtualFaderBelow->resetValue();
+	tapTempoHistory->resetValue();
+	conductorCuelistId->resetValue();
+	conductorTitleSize->resetValue();
+	conductorTextSize->resetValue();
+	conductorCurrentCueColor->resetValue();
+	conductorNextCueColor->resetValue();
+	CPRedChannel->resetValue();
+	CPGreenChannel->resetValue();
+	CPBlueChannel->resetValue();
+	CPCyanChannel->resetValue();
+	CPMagentaChannel->resetValue();
+	CPYellowChannel->resetValue();
+	CPHueChannel->resetValue();
+	CPSaturationChannel->resetValue();
+	IntensityChannel->resetValue();
+	TPanChannel->resetValue();
+	TTiltChannel->resetValue();
+	loadWindowWidth->resetValue();
+	loadWindowHeight->resetValue();
+	loadWindowButtonPerLine->resetValue();
+	loadWindowButtonHeight->resetValue();
+
+
+
+
 	autoFillDefaultChannels();
 }
 
