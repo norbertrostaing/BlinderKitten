@@ -184,6 +184,7 @@ void SubFixtureChannel::writeValue(float v) {
 
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
+	postCuelistValue = newValue;
 
 	cs.enter();
 	Array<int> layers;
