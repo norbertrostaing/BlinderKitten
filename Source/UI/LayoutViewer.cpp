@@ -1100,6 +1100,7 @@ void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y,
 
 void LayoutViewer::drawName(Graphics& g, String& name, float x, float y, float w, float h, Colour c, BKPath::LabelPosition pos)
 {
+	if (pos == BKPath::LabelPosition::HIDDEN) return;
 	juce::Justification j = juce::Justification::centred;
 	switch (pos) {
 	case BKPath::LabelPosition::LEFT:
@@ -1120,15 +1121,13 @@ void LayoutViewer::drawName(Graphics& g, String& name, float x, float y, float w
 		break;
 	}
 
-	if (pos != BKPath::LabelPosition::HIDDEN) {
-		g.setColour(Colour(0, 0, 0));
-		g.drawText(name, x - 1, y - 1, w, h, j);
-		g.drawText(name, x - 1, y + 1, w, h, j);
-		g.drawText(name, x + 1, y - 1, w, h, j);
-		g.drawText(name, x + 1, y + 1, w, h, j);
-		g.setColour(c);
-		g.drawText(name, x, y, w, h, j);
-	}
+	g.setColour(Colour(0, 0, 0));
+	g.drawText(name, x - 1, y - 1, w, h, j);
+	g.drawText(name, x - 1, y + 1, w, h, j);
+	g.drawText(name, x + 1, y - 1, w, h, j);
+	g.drawText(name, x + 1, y + 1, w, h, j);
+	g.setColour(c);
+	g.drawText(name, x, y, w, h, j);
 }
 
 void LayoutViewer::exportToPNG()
