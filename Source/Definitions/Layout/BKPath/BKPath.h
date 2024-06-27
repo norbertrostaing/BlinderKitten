@@ -61,7 +61,7 @@ class BKPath:
     ColorParameter* fillColor;
     StringParameter* customText;
     EnumParameter* labelPosition;
-    enum LabelPosition {CENTER, TOP, RIGHT, BOTTOM, LEFT};
+    enum LabelPosition {CENTER, TOP, RIGHT, BOTTOM, LEFT, HIDDEN};
     CommandSelectionManager selection;
     ActionManager actionManager;
 

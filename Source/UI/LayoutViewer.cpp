@@ -1120,13 +1120,15 @@ void LayoutViewer::drawName(Graphics& g, String& name, float x, float y, float w
 		break;
 	}
 
-	g.setColour(Colour(0, 0, 0));
-	g.drawText(name, x - 1, y - 1, w, h, j);
-	g.drawText(name, x - 1, y + 1, w, h, j);
-	g.drawText(name, x + 1, y - 1, w, h, j);
-	g.drawText(name, x + 1, y + 1, w, h, j);
-	g.setColour(c);
-	g.drawText(name, x, y, w, h, j);
+	if (pos != BKPath::LabelPosition::HIDDEN) {
+		g.setColour(Colour(0, 0, 0));
+		g.drawText(name, x - 1, y - 1, w, h, j);
+		g.drawText(name, x - 1, y + 1, w, h, j);
+		g.drawText(name, x + 1, y - 1, w, h, j);
+		g.drawText(name, x + 1, y + 1, w, h, j);
+		g.setColour(c);
+		g.drawText(name, x, y, w, h, j);
+	}
 }
 
 void LayoutViewer::exportToPNG()

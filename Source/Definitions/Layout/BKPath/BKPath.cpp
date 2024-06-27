@@ -64,7 +64,7 @@ BKPath::BKPath(var params) :
     fixturesAngleFrom = addFloatParameter("Fixture rotation from", "Angle of first element", 0, -360, 360);
     fixturesAngleTo = addFloatParameter("Fixture rotation to", "Angle of the last element", 0, -360, 360);
     labelPosition = addEnumParameter("Label position", "Position of your labels for this path");
-    labelPosition->addOption("Centered", CENTER)->addOption("Top", TOP)->addOption("Bottom", BOTTOM)->addOption("Left", LEFT)->addOption("Right", RIGHT);
+    labelPosition->addOption("Centered", CENTER)->addOption("Top", TOP)->addOption("Bottom", BOTTOM)->addOption("Left", LEFT)->addOption("Right", RIGHT)->addOption("Hidden", HIDDEN);
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&actionManager);
