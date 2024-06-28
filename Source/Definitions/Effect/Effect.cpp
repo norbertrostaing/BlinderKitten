@@ -159,6 +159,8 @@ void Effect::userStart(bool useFadeIn) {
 
 void Effect::start(bool useFadeIn) {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
+	TSEndFadeOut = 0;
+	TSStartFadeOut = 0;
 	if (useFadeIn && fadeInTime->floatValue()>0) {
 		TSStartFadeIn = TSLastUpdate;
 		TSEndFadeIn = TSLastUpdate+(fadeInTime->floatValue()*1000);
