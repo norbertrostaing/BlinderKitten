@@ -134,6 +134,7 @@ void MIDIFeedback::onContainerParameterChangedInternal(Parameter* p)
 
 void MIDIFeedback::processFeedback(String address, var varValue, String origin, bool logOutput)
 {
+    if (!enabled->boolValue()) return;
     String localAddress = "";
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
     if (inter == nullptr) {
