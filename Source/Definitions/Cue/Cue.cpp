@@ -221,19 +221,25 @@ void Cue::computeValues(Array<Cue*> history, Cue* callingCue) {
 	isComputing = false;
 }
 
-void Cue::go() {
+void Cue::go() 
+{
+	go (-1, -1);
+}
+
+void Cue::go(float forcedDelay, float forcedFade)
+{
 	double now = Brain::getInstance()->now;
 	if (autoFollow->getValue() == "immediate") {
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
-		TSAutoFollowEnd = now + (delay*1000);
+		TSAutoFollowEnd = now + (delay * 1000);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	Array<Task*> allTasks = getTasks();
 	for (int i = 0; i < allTasks.size(); i++) {
 		if (allTasks[i]->enabled->boolValue()) {
-			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue());
+			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue(), forcedDelay, forcedFade);
 		}
 	}
 }

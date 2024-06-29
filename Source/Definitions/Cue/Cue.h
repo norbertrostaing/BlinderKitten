@@ -67,6 +67,7 @@ public:
     void computeValues(Array<Cue*> history, Cue* callingCue);
     void update(double now);
     void go();
+    void go(float forcedDelay, float forcedFade);
     void endTransition();
 
     void cleanUnused();

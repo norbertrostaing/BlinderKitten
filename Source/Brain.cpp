@@ -855,7 +855,7 @@ int Brain::newTaskId()
     return currentTaskId;
 }
 
-void Brain::startTask(Task* t, double startTime, int cuelistId)
+void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDelay, float forcedFade)
 {
     ScopedLock lock(usingTasksCollection);
 
@@ -955,8 +955,8 @@ void Brain::startTask(Task* t, double startTime, int cuelistId)
             rt->targetType = targetType;
             rt->targetId = targetId;
 
-            rt->delay = (double)t->delay->getValue() * 1000;
-            rt->fade = (double)t->fade->getValue() * 1000;
+            rt->delay = forcedDelay < 0 ? (double)t->delay->getValue() * 1000 : forcedDelay;
+            rt->fade = forcedFade < 0 ? (double)t->fade->getValue() * 1000 : forcedFade;
 
             rt->TSInit = startTime;
             rt->TSStart = startTime + rt->delay;

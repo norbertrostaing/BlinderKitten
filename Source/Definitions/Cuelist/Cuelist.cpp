@@ -700,7 +700,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			it.getKey()->cuelistOnTopOfStack(this);
 		}
 		c->csComputing.exit();
-		c->go();
+		c->go(forcedDelay, forcedFade);
 
 		for (int i = 0; i < c->commandHistory.size(); i++) {
 			commandHistory.removeAllInstancesOf(c->commandHistory[i]);
