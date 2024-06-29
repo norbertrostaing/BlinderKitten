@@ -19,7 +19,7 @@ juce_ImplementSingleton(CuelistSheet);
 CuelistSheet::CuelistSheet()
 {
     addAndMakeVisible(labelAndTimeBtn);
-    addAndMakeVisible(inspectCuelistBtn);
+    addAndMakeVisible(inspectBtn);
 
     addAndMakeVisible(cueIdLabel); cueIdLabel.setText("ID", juce::dontSendNotification);
     addAndMakeVisible(cueNameLabel); cueNameLabel.setText("Name", juce::dontSendNotification);
@@ -50,10 +50,20 @@ CuelistSheet::CuelistSheet()
     isSelected.setWantsKeyboardFocus(false);
 
     labelAndTimeBtn.onClick = [this]() {LabelAndTimeWindow::getInstance()->showWindow(); };
-    inspectCuelistBtn.onClick = [this]() {inspectCuelist(); };
+    inspectBtn.onClick = [this]() {
+        PopupMenu p;
+        p.addItem("Current cue", [this]() { inspect(0); });
+        p.addSeparator();
+        p.addItem("Previous cue", [this]() { inspect(-1); });
+        p.addItem("Next cue", [this]() { inspect(1); });
+        p.addSeparator();
+        p.addItem("Cuelist", [this]() { inspectCuelist(); });
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+        };
+
 
     labelAndTimeBtn.setButtonText("Edit Label and time");
-    inspectCuelistBtn.setButtonText("Inspect Cuelist");
+    inspectBtn.setButtonText("Inspect");
 
     addAndMakeVisible(viewport);
     viewport.setViewedComponent(&linesContainer);
@@ -91,7 +101,7 @@ void CuelistSheet::resized()
     int height = getLocalBounds().getHeight();
 
     labelAndTimeBtn.setBounds(width * 3 / 5, 0, width / 5, 20);
-    inspectCuelistBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
+    inspectBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
 
     int w = width / 10;
     w = jmin(45, w);

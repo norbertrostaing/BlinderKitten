@@ -35,7 +35,7 @@ public:
     Cuelist* targetCuelist = nullptr;
 
     TextButton labelAndTimeBtn;
-    TextButton inspectCuelistBtn;
+    TextButton inspectBtn;
 
     Label cueIdLabel;
     Label cueNameLabel;
