@@ -20,8 +20,6 @@ Task::Task(var params) :
 {
 	saveAndLoadRecursiveData = true;
 	
-	editorIsCollapsed = true;
-
 	itemDataType = "Task";
 	
 	var objectsData = params.getProperty("objects", var());
