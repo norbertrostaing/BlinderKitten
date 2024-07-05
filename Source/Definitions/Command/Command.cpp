@@ -33,6 +33,7 @@ Command::Command(var params) :
 	nameCanBeChangedByUser = false;
 
 	//viewCommandBtn = addTrigger("Log command text", "display the textual content of this command in the log windows");
+	doNotTrack = addBoolParameter("Do not track", "if checked, this command will not be tracked", false);
 	explodeSelectionBtn = addTrigger("Explode Selection", "Transform this command in one command per subfixture");
 
 	// to add a manager with defined data
@@ -285,6 +286,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						channelToCommandValue.set(fchan, cv);
 						std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);
 						finalValue->parentCommand = this;
+						finalValue->canBeTracked = !doNotTrack->boolValue();
+
 						float val = valueFrom;
 						if (cv->thru->getValue() && subFixtures.size() > 1) {
 							float position = normalizedPosition;

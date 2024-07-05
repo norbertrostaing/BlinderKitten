@@ -37,6 +37,8 @@ public:
 
     TargetParameter* devTypeParam;
 
+    BoolParameter* doNotTrack;
+
     CommandSelectionManager selection;
     BaseManager<CommandValue> values;
     CommandTiming timing;
