@@ -48,11 +48,12 @@ Group::~Group()
 }
 
 void Group::updateName() {
-	String n = userName->getValue();
+	String n = userName->stringValue();
 	if (parentContainer != nullptr) {
 		dynamic_cast<GroupManager*>(parentContainer.get())->reorderItems();
 	}
-	setNiceName(String((int)id->getValue()) + " - "+n);
+	n = String(id->stringValue()) + " - " + n;
+	setNiceName(n);
 }
 
 void Group::onContainerParameterChangedInternal(Parameter* p) {

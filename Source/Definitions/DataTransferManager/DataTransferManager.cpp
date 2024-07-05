@@ -147,7 +147,7 @@ void DataTransferManager::execute() {
             if (target == nullptr) {
                 target = GroupManager::getInstance()->addItem(new Group());
                 target->id->setValue(tId);
-                target->setNiceName("Group " + String(int(target->id->getValue())));
+                //target->setNiceName("Group " + String(int(target->id->getValue())));
                 target->selection.clear(); // erase data
             }
 
