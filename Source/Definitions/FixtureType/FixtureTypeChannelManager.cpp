@@ -19,16 +19,18 @@ void FixtureTypeChannelManager::calcDmxChannels() {
 	}
 	for (int i = 0; i < items.size(); i++) {
 		items[i]->dmxDelta->setValue(current);
-		items[i]->setNiceName("Channel "+String(current));
+		String name = "Channel " + String(current);
 		if (items[i]->resolution->getValue() == "8bits") {
 			current += 1;
 		}
 		else if (items[i]->resolution->getValue() == "16bits") {
+			name += " + "+String(current+1);
 			current += 2;
 		}
 		else {
 			LOG("no resolution !");
 		}
+		items[i]->setNiceName(name);
 	}
 }
 
