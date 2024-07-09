@@ -49,6 +49,7 @@ public:
     BoolParameter* viewGrid;
     Point2DParameter* gridSize;
     ColorParameter* gridColor;
+    FloatParameter* gridSnapSize;
 
     BaseManager<BKPath> paths;
 

@@ -65,6 +65,7 @@ Layout::Layout(var params) :
 	var gs = 1; gs.append(1);
 	gridSize->setDefaultValue(gs);
 	gridColor = addColorParameter("Grid color", "", Colour(127,127,127));
+	gridSnapSize = addFloatParameter("Grid snap size", "", 0, 0);
 	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 

@@ -255,6 +255,18 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 		float layoutX = jmap(float(e.getDistanceFromDragStartX() + e.getMouseDownX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
 		float layoutY = jmap(float(e.getDistanceFromDragStartY() + e.getMouseDownY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
 
+		if (selectedLayout->gridSnapSize->floatValue() > 0) {
+			deltaMouseX = 0;
+			deltaMouseY = 0;
+			float m = selectedLayout->gridSnapSize->floatValue();
+			float layoutXDown = layoutX - fmod(layoutX, m);
+			float layoutXUp = layoutX < 0 ? layoutXDown - m : layoutXDown + m;
+			layoutX = abs(layoutXDown - layoutX) < abs(layoutXUp - layoutX) ? layoutXDown : layoutXUp;
+			float layoutYDown = layoutY - fmod(layoutY, m);
+			float layoutYUp = layoutY < 0 ? layoutYDown - m : layoutYDown + m;
+			layoutY = abs(layoutYDown - layoutY) < abs(layoutYUp - layoutY) ? layoutYDown : layoutYUp;
+		}
+
 		BKPath::PathType type = currentMousePath->pathType->getValueDataAsEnum<BKPath::PathType>();
 		if (type == BKPath::PATH_POINT) {
 			if (currentMouseAction == CLIC_DRAG) {
