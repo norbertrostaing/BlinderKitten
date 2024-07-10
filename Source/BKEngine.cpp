@@ -428,7 +428,7 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->clear();
 	Brain::getInstance()->startThread();
 	Brain::getInstance()->skipLoop = false;
-
+	Encoders::getInstance()->clear();
 
 	encodersNumber->resetValue();
 	gridCols->resetValue();

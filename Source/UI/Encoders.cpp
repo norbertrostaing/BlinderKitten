@@ -599,3 +599,9 @@ void Encoders::offsetEncoders(int n)
     encodersOffset = jmax(0, encodersOffset + n);
     updateEncoders();
 }
+
+void Encoders::clear()
+{
+    channels.clear();
+    clearFilters();
+}

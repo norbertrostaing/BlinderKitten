@@ -95,6 +95,8 @@ public:
     void toggleFilter(ChannelFamily* cf, bool forceSolo = false);
 
     void offsetEncoders(int n);
+    void clear();
+
 
     int encoderRange = 0;
 
