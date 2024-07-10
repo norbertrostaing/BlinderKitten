@@ -97,7 +97,7 @@ void DMXInterface::setCurrentDMXDevice(DMXDevice* d)
 		dmxDevice->enabled = enabled->boolValue();
 		dmxDevice->addDMXDeviceListener(this);
 		addChildControllableContainer(dmxDevice.get());
-		dmxConnected->setValue(true);
+		//dmxConnected->setValue(true);
 	}
 }
 
