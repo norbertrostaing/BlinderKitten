@@ -275,15 +275,15 @@ void Programmer::release(double now) {
 	computing.enter();
 	Array<SubFixtureChannel*> toUpdate;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		std::shared_ptr<ChannelValue> temp = it.getValue();
-		float fadeTime = releaseTime->getValue();
+		std::shared_ptr<ChannelValue> temp = std::make_shared<ChannelValue>();
+		float fadeTime = releaseTime->floatValue() * 1000.0f;
 
 		temp->TSInit = now;
 		temp->TSStart = now;
 		temp->TSEnd = now + fadeTime;
 
 		temp->endValue = -1;
-		temp->startValue = temp->value;
+		temp->startValue = it.getValue()->value;
 		temp->isEnded = false;
 
 		temp->fadeCurve = nullptr;
