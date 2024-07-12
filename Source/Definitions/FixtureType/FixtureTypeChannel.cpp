@@ -68,7 +68,7 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     else if (p == physicalRange) {
         TrackerManager::getInstance()->recomputeAllTrackers();
     }
-    else if (p == defaultValue) {
+    else if (p == defaultValue || p == invertOutput) {
         FixtureManager::getInstance()->defaultValueChanged(this);
     }
 }

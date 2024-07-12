@@ -76,6 +76,7 @@ void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)
                 SubFixtureChannel *sfc = itSfc.getValue();
                 if (sfc->parentFixtureTypeChannel == ftc) {
                     sfc->defaultValue = ftc->defaultValue->floatValue();
+                    sfc->invertOutput = ftc->invertOutput->boolValue();
                     Brain::getInstance()->pleaseUpdate(sfc);
                 }
             }
