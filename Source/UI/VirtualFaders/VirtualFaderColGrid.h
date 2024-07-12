@@ -105,7 +105,7 @@ public:
     VirtualFaderCol* getVirtualFaderCol(int index, bool create = false);
     VirtualFaderButton* getVirtualFaderButton(int index, bool create = false);
     VirtualFaderSlider* getVirtualFaderSlider(int index, bool create = false);
-    void updateSlidersValues();
+    void updateSlidersValues(bool forceAll = false);
 
     void goToPage(int n);
 

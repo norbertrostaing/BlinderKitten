@@ -443,7 +443,7 @@ void VirtualFaderColGrid::fillCells() {
         }
     }
     resized();
-    updateSlidersValues();
+    updateSlidersValues(true);
     updateButtons(true);
 }
 
@@ -794,7 +794,7 @@ VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool c
     return vfs;
 }
 
-void VirtualFaderColGrid::updateSlidersValues()
+void VirtualFaderColGrid::updateSlidersValues(bool forceAll)
 {
     const MessageManagerLock mmLock;
     bool fb = false;
@@ -813,7 +813,7 @@ void VirtualFaderColGrid::updateSlidersValues()
         float v = 0;
         if (s != nullptr) {
             v = s->getTargetValue();
-            if (faders[i]->getValue() != v) {
+            if (faders[i]->getValue() != v || forceAll) {
                 s->feedback(v, "");
             }
         }
@@ -824,7 +824,7 @@ void VirtualFaderColGrid::updateSlidersValues()
             v = 0;
             if (s != nullptr) {
                 v = s->getTargetValue();
-                if (rotaries[i]->getRawDataPointer()[r]->getValue() != v) {
+                if (rotaries[i]->getRawDataPointer()[r]->getValue() != v || forceAll) {
                     s->feedback(v, "");
                 }
             }

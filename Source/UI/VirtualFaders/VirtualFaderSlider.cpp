@@ -350,21 +350,23 @@ void VirtualFaderSlider::feedback(var value, String origin="")
 	String address = "";
 	String address0 = "";
 
+	int currentPage = VirtualFaderColGrid::getInstance()->page;
 	int page = parentColumn->pageNumber->intValue();
+	page = page == 0 ? currentPage : page;
 	int col = parentColumn->colNumber->intValue();
 
 	if (isFader) {
-		address += "/vfader/" + String(page) + "/" + String(col);
-		address0 += "/vfader/0/" + String(col);
+		address = "/vfader/" + String(page) + "/" + String(col);
+		address0 = "/vfader/0/" + String(col);
 	}
 	else {
 		int id = parentColumn->rotaries.items.indexOf(this);
-		address += "/vrotary/" + String(page) + "/" + String(col) + "/" + String(id + 1);
-		address0 += "/vrotary/0/" + String(col) + "/" + String(id + 1);
+		address = "/vrotary/" + String(page) + "/" + String(col) + "/" + String(id + 1);
+		address0 = "/vrotary/0/" + String(col) + "/" + String(id + 1);
 	}
 
 	UserInputManager::getInstance()->feedback(address, value, origin);
-	if (page == VirtualFaderColGrid::getInstance()->page) {
+	if (page == currentPage || page == 0) {
 		UserInputManager::getInstance()->feedback(address0, value, origin);
 	}
 
