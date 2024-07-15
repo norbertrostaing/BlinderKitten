@@ -83,6 +83,10 @@ public:
 
 	void close();
 
+	uint8 sentCC[16][128];
+	uint8 sentNote[16][128];
+	uint16 sentPW[16];
+
 	void sendNoteOn(int channel, int pitch, int velocity);
 	void sendNoteOff(int channel, int pitch);
 	void sendControlChange(int channel, int number, int value);

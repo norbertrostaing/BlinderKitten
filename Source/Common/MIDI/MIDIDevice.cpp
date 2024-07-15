@@ -139,18 +139,21 @@ void MIDIOutputDevice::close()
 void MIDIOutputDevice::sendNoteOn(int channel, int pitch, int velocity)
 {
 	if (device == nullptr) return;
+	sentNote[channel][pitch] = velocity;
 	device->sendMessageNow(MidiMessage::noteOn(channel, pitch, (uint8)velocity));
 }
 
 void MIDIOutputDevice::sendNoteOff(int channel, int pitch)
 {
 	if (device == nullptr) return;
+	sentNote[channel][pitch] = 0;
 	device->sendMessageNow(MidiMessage::noteOff(channel, pitch));
 }
 
 void MIDIOutputDevice::sendControlChange(int channel, int number, int value)
 {
 	if (device == nullptr) return;
+	sentCC[channel][number] = value;
 	device->sendMessageNow(MidiMessage::controllerEvent(channel, number, value));
 }
 
@@ -193,6 +196,7 @@ void MIDIOutputDevice::sendMidiMachineControlGoto(int hours, int minutes, int se
 void MIDIOutputDevice::sendPitchWheel(int channel, int value)
 {
 	if (device == nullptr) return;
+	sentPW[channel] = value;
 	device->sendMessageNow(MidiMessage::pitchWheel(channel, value));
 }
 

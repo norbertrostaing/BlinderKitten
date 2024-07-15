@@ -256,24 +256,27 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
     }
 
-    if (valid && (sendValue != lastSentValue || sendChannel != lastSentChannel )) {
+    if (valid) {
         auto dev = inter->deviceParam->outputDevice;
         if (dev == nullptr) {
             return;
         }
         lastSentValue = sendValue;
         lastSentChannel = sendChannel;
-        if (midiType->getValueDataAsEnum<MidiType>() == NOTE) {
-            if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(pitchOrNumber->intValue()) + ", vel " + String(round(sendValue))); }
-            dev->sendNoteOn(sendChannel, pitchOrNumber->intValue(), round(sendValue));
+        int sendPitch = pitchOrNumber->intValue();
+        sendValue = round(sendValue);
+
+        if (midiType->getValueDataAsEnum<MidiType>() == NOTE && dev->sentNote[sendChannel][sendPitch] != sendValue) {
+            if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
+            dev->sendNoteOn(sendChannel, sendPitch, sendValue);
         }
-        if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE) {
-            if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(pitchOrNumber->intValue()) + ", val " + String(round(sendValue))); }
-            dev->sendControlChange(sendChannel, pitchOrNumber->intValue(), round(sendValue));
+        if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE && dev->sentCC[sendChannel][sendPitch] != sendValue) {
+            if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
+            dev->sendControlChange(sendChannel, sendPitch, sendValue);
         }
-        if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL) {
-            if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(round(sendValue))); }
-            dev->sendPitchWheel(sendChannel, round(sendValue));
+        if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL && dev->sentPW[sendChannel] != sendValue) {
+            if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
+            dev->sendPitchWheel(sendChannel, sendValue);
         }
     }
 
