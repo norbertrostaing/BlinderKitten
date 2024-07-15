@@ -27,6 +27,7 @@ public:
     IntParameter* sourceCol;
     IntParameter* sourceRow;
     IntParameter* sourceNumber;
+    BoolParameter* onlyIfCurrentPage;
 
     enum MidiType { NOTE, CONTROLCHANGE, PITCHWHEEL, TEXT };
     EnumParameter* midiType;

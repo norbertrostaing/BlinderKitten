@@ -11,6 +11,8 @@
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/VirtualButtons/VirtualButton.h"
 #include "UI/VirtualFaders/VirtualFaderButton.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 MIDIFeedback::MIDIFeedback() :
     BaseItem("MIDI Feedback"),
@@ -30,6 +32,7 @@ MIDIFeedback::MIDIFeedback() :
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
     sourcePage = addIntParameter("Source Page", "Source page, 0 means current page", 0);
+    onlyIfCurrentPage = addBoolParameter("Only if current page", "if checked, the feedback will trigger only if the selected page if the current page", false);
     sourceCol = addIntParameter("Source Column", "Source Column", 1);
     sourceRow = addIntParameter("Source Row", "Source Row", 1);
     sourceNumber = addIntParameter("Source Number", "Source number", 1);
@@ -86,6 +89,7 @@ void MIDIFeedback::updateDisplay() {
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
     sourceId->hideInEditor = true ;
     sourcePage->hideInEditor = source == ENCODER || source == GRANDMASTER;
+    onlyIfCurrentPage->hideInEditor = source == ENCODER || source == GRANDMASTER || sourcePage->intValue()==0;
     sourceCol->hideInEditor = source == ENCODER || source == GRANDMASTER;
     sourceRow->hideInEditor = source != VBUTTON || source == GRANDMASTER;
     sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON && source != ENCODER;
@@ -127,7 +131,7 @@ void MIDIFeedback::updateDisplay() {
 
 void MIDIFeedback::onContainerParameterChangedInternal(Parameter* p)
 {
-    if (p == feedbackSource || p == midiType || p == differentChannels) {
+    if (p == feedbackSource || p == midiType || p == differentChannels || p == sourcePage) {
         updateDisplay();
     }
 }
@@ -152,8 +156,19 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
     if (isText && midiType->getValueDataAsEnum<MidiType>() != TEXT) { return; }
     if (!isText && midiType->getValueDataAsEnum<MidiType>() == TEXT) { return; }
 
+    int faderPage = VirtualFaderColGrid::getInstance()->page;
+    int buttonPage = VirtualButtonGrid::getInstance()->page;
+
+    bool validPageButton = true;
+    bool validPageFader = true;
+
+    if (onlyIfCurrentPage->boolValue()) {
+        validPageButton = buttonPage == sourcePage->intValue() || sourcePage->intValue() == 0;
+        validPageFader = faderPage == sourcePage->intValue() || sourcePage->intValue() == 0;
+    }
+
     double floatValue = varValue;
-    if (source == VFADER && !sameDevice) {
+    if (source == VFADER && !sameDevice && validPageFader) {
         localAddress = "/vfader/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue());
         if (address == localAddress) {
             if (isText) {
@@ -165,14 +180,14 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             }
         }
     }
-    else if (source == VROTARY && !sameDevice) {
+    else if (source == VROTARY && !sameDevice && validPageFader) {
         localAddress = "/vrotary/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
-    else if (source == VBUTTON) {
+    else if (source == VBUTTON && validPageButton) {
         localAddress = "/vbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
         if (address == localAddress) {
             valid = true;
@@ -195,7 +210,7 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             }
         }
     }
-    else if (source == VABOVEBUTTON) {
+    else if (source == VABOVEBUTTON && validPageFader) {
         localAddress = "/vabovebutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
@@ -218,7 +233,7 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             }
         }
     }
-    else if (source == VBELOWBUTTON) {
+    else if (source == VBELOWBUTTON && validPageFader) {
         localAddress = "/vbelowbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
