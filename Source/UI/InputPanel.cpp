@@ -96,6 +96,7 @@ void InputPanel::buttonClicked(juce::Button* button) {
     }
     else if (button == &blackoutBtn) {
         Brain::getInstance()->grandMasterChanged();
+        UserInputManager::getInstance()->feedback("/blackout", blackoutBtn.getToggleState() ? 1 : 0, "");
     }
     else if (button == &btnCopy) {
         UserInputManager::getInstance()->processInput("copy");

@@ -28,6 +28,7 @@ MIDIFeedback::MIDIFeedback() :
                     ->addOption("Virtual button", VBUTTON)
                     ->addOption("Encoder", ENCODER)
                     ->addOption("Grand Master", GRANDMASTER)
+                    ->addOption("Black out", BLACKOUT)
         ;
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
@@ -88,10 +89,10 @@ void MIDIFeedback::updateDisplay() {
     
     FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
     sourceId->hideInEditor = true ;
-    sourcePage->hideInEditor = source == ENCODER || source == GRANDMASTER;
-    onlyIfCurrentPage->hideInEditor = source == ENCODER || source == GRANDMASTER || sourcePage->intValue()==0;
-    sourceCol->hideInEditor = source == ENCODER || source == GRANDMASTER;
-    sourceRow->hideInEditor = source != VBUTTON || source == GRANDMASTER;
+    sourcePage->hideInEditor = source == ENCODER || source == GRANDMASTER || source == BLACKOUT;
+    onlyIfCurrentPage->hideInEditor = source == ENCODER || source == GRANDMASTER || source == BLACKOUT || sourcePage->intValue()==0;
+    sourceCol->hideInEditor = source == ENCODER || source == GRANDMASTER || source == BLACKOUT;
+    sourceRow->hideInEditor = source != VBUTTON || source == GRANDMASTER || source == BLACKOUT;
     sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON && source != ENCODER;
 
     MidiType type = midiType->getValueDataAsEnum<MidiType>();
@@ -100,6 +101,7 @@ void MIDIFeedback::updateDisplay() {
     bool isButton = source == VBUTTON || source == VABOVEBUTTON || source == VBELOWBUTTON;
     bool isComplex = isButton && differentChannels->boolValue();
     bool isText = type == TEXT;
+    bool isBlackout = source == BLACKOUT;
 
     channel->hideInEditor = isText;
     pitchOrNumber->hideInEditor = isText;
@@ -107,8 +109,8 @@ void MIDIFeedback::updateDisplay() {
     channel->hideInEditor = isButton && differentChannels->boolValue();
 
     outputRange -> hideInEditor = isButton || isText;
-    onValue -> hideInEditor = !isButton;
-    offValue -> hideInEditor = !isButton;
+    onValue -> hideInEditor = !isButton && !isBlackout;
+    offValue -> hideInEditor = !isButton && !isBlackout;
     onLoadedValue -> hideInEditor = !isButton;
     offLoadedValue->hideInEditor = !isButton;
     currentCueValue->hideInEditor = !isButton;
@@ -280,6 +282,13 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         if (address == localAddress) {
             valid = true;
             sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
+        }
+    }
+    else if (source == BLACKOUT && !sameDevice) {
+        localAddress = "/blackout";
+        if (address == localAddress) {
+            valid = true;
+            sendValue = floatValue == 0 ? offValue->intValue() : onValue->intValue();
         }
     }
 
