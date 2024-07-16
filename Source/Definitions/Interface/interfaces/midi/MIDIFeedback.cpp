@@ -158,9 +158,16 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
 
     int faderPage = VirtualFaderColGrid::getInstance()->page;
     int buttonPage = VirtualButtonGrid::getInstance()->page;
+    int localPage = sourcePage->intValue();
 
     bool validPageButton = true;
     bool validPageFader = true;
+
+    address = address.replace("/vfader/0/", "/vfader/" + String(faderPage) + "/");
+    address = address.replace("/vrotary/0/", "/vrotary/" + String(faderPage) + "/");
+    address = address.replace("/vbelowbutton/0/", "/vbelowbutton/" + String(faderPage) + "/");
+    address = address.replace("/vabovebutton/0/", "/vabovebutton/" + String(faderPage) + "/");
+    address = address.replace("/vbutton/0/", "/vbutton/" + String(buttonPage) + "/");
 
     if (onlyIfCurrentPage->boolValue()) {
         validPageButton = buttonPage == sourcePage->intValue() || sourcePage->intValue() == 0;
@@ -169,7 +176,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
 
     double floatValue = varValue;
     if (source == VFADER && !sameDevice && validPageFader) {
-        localAddress = "/vfader/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue());
+        localPage = localPage == 0 ? faderPage : localPage;
+        localAddress = "/vfader/" + String(localPage) + "/" + String(sourceCol->intValue());
         if (address == localAddress) {
             if (isText) {
                 sendText(varValue);
@@ -181,14 +189,16 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
     }
     else if (source == VROTARY && !sameDevice && validPageFader) {
-        localAddress = "/vrotary/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
+        localPage = localPage == 0 ? faderPage : localPage;
+        localAddress = "/vrotary/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
     else if (source == VBUTTON && validPageButton) {
-        localAddress = "/vbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
+        localPage = localPage == 0 ? buttonPage : localPage;
+        localAddress = "/vbutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = 0;
@@ -211,7 +221,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
     }
     else if (source == VABOVEBUTTON && validPageFader) {
-        localAddress = "/vabovebutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
+        localPage = localPage == 0 ? faderPage : localPage;
+        localAddress = "/vabovebutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = 0;
@@ -234,7 +245,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
     }
     else if (source == VBELOWBUTTON && validPageFader) {
-        localAddress = "/vbelowbutton/" + String(sourcePage->intValue()) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
+        localPage = localPage == 0 ? faderPage : localPage;
+        localAddress = "/vbelowbutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
             sendValue = 0;
