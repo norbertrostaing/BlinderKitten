@@ -596,7 +596,17 @@ void LayoutViewer::paint(Graphics& g)
 				clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
 			}
 			else {
-				clicg.setColour(getClickColour(p, CLIC_SELECT));
+				if (p->selection.computedSelectedSubFixtures.size() > 0) {
+					if (p->spreadSubFixtures->boolValue()) {
+						clicg.setColour(getClickColour(p->selection.computedSelectedSubFixtures[0]));
+					}
+					else {
+						clicg.setColour(getClickColour(p->selection.computedSelectedSubFixtures[0]->parentFixture));
+					}
+				}
+				else {
+					clicg.setColour(getClickColour(p, CLIC_SELECT));
+				}
 				clicg.fillRect(fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight);
 			}
 			Colour drawColor = juce::Colours::white;
