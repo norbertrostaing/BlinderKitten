@@ -711,7 +711,9 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 		if (p->currentUserCommand->userCanPressValueType) {
 			p->processUserInput("preset");
 			p->processUserInput(String(id));
+			p->computing.enter();
 			p->currentUserCommand->cleanUnused();
+			p->computing.exit();
 		}
 	}
 	else if (type == "cuelist") {
