@@ -608,6 +608,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		}
 	}
 
+	if (cueA != nullptr) {
+		cueA->off(forcedDelay, forcedFade);
+	}
+
 	cueA = c;
 	cueB = c;
 
@@ -883,6 +887,7 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 				off();
 			}
 			else {
+				off(0,0);
 				kill();
 			}
 		}
@@ -969,12 +974,15 @@ void Cuelist::toggle()
 	}
 }
 
-void Cuelist::off() {
+void Cuelist::off(float forcedDelay, float forcedFade)
+{
 	wannaOff = true;
-	go(nullptr);
+	go(nullptr, forcedDelay, forcedFade);
 }
 
-
+void Cuelist::off() {
+	off(-1, -1);
+}
 
 
 

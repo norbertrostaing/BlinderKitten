@@ -26,6 +26,7 @@ public:
 
     BaseManager<Command> commands;
     BaseManager<Task> tasks;
+    BaseManager<Task> tasksOffCue;
     FloatParameter* id;
 
     StringParameter* cueText;
@@ -68,6 +69,8 @@ public:
     void update(double now);
     void go();
     void go(float forcedDelay, float forcedFade);
+    void off();
+    void off(float forcedDelay, float forcedFade);
     void endTransition();
 
     void cleanUnused();
@@ -80,6 +83,9 @@ public:
 
     Array<Task*> getTasks();
     Array<Task*> getTasks(Array<Cue*> history);
+
+    Array<Task*> getOffTasks();
+    Array<Task*> getOffTasks(Array<Cue*> history);
 
     String getCommandsText(bool useName);
 

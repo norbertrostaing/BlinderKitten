@@ -24,6 +24,7 @@ Cue::Cue(var params) :
 	actionsContainer("Actions"),
 	commands("Commands"),
 	tasks("Tasks"),
+	tasksOffCue("Tasks off"),
 	timingContainer("Timing")
 {
 	canBeDisabled = false;
@@ -66,6 +67,7 @@ Cue::Cue(var params) :
 
 	commands.selectItemWhenCreated = false;
 	tasks.selectItemWhenCreated = false;
+	tasksOffCue.selectItemWhenCreated = false;
 
 	htpInDelay = timingContainer.addFloatParameter("HTP in delay", "Default delay for HTP rising values", -1, -1);
 	htpOutDelay = timingContainer.addFloatParameter("HTP out delay", "Default delay for HTP falling values (-1 means use HTP in delay)", -1, -1);
@@ -79,6 +81,7 @@ Cue::Cue(var params) :
 
 	addChildControllableContainer(&commands);
 	addChildControllableContainer(&tasks);
+	addChildControllableContainer(&tasksOffCue);
 
 	if (params.isVoid()) {
 		commands.addItem();
@@ -242,6 +245,24 @@ void Cue::go(float forcedDelay, float forcedFade)
 	}
 }
 
+void Cue::off()
+{
+	off(-1, -1);
+}
+
+void Cue::off(float forcedDelay, float forcedFade)
+{
+	double now = Brain::getInstance()->now;
+	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	Array<Task*> allTasks = getOffTasks();
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (allTasks[i]->enabled->boolValue()) {
+			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue(), forcedDelay, forcedFade);
+		}
+	}
+}
+
+
 void Cue::update(double now) {
 	if (TSAutoFollowEnd != 0 && now < TSAutoFollowEnd) {
 		if (TSAutoFollowEnd - TSAutoFollowStart > 10) {
@@ -353,13 +374,34 @@ Array<Task*> Cue::getTasks()
 Array<Task*> Cue::getTasks(Array<Cue*> history)
 {
 	Array<Task*> ret;
-	if (history.contains(this)) {return ret;}
+	if (history.contains(this)) { return ret; }
 	history.add(this);
 	Cue* original = dynamic_cast<Cue*>(reuseCue->targetContainer.get());
 	if (original != nullptr) {
 		ret = original->getTasks(history);
 	}
 	for (Task* t : tasks.items) {
+		ret.add(t);
+	}
+	return ret;
+}
+
+Array<Task*> Cue::getOffTasks()
+{
+	Array<Cue*> histo;
+	return getOffTasks(histo);
+}
+
+Array<Task*> Cue::getOffTasks(Array<Cue*> history)
+{
+	Array<Task*> ret;
+	if (history.contains(this)) { return ret; }
+	history.add(this);
+	Cue* original = dynamic_cast<Cue*>(reuseCue->targetContainer.get());
+	if (original != nullptr) {
+		ret = original->getOffTasks(history);
+	}
+	for (Task* t : tasksOffCue.items) {
 		ret.add(t);
 	}
 	return ret;

@@ -189,6 +189,7 @@ public:
 
     void toggle();
 
+    void off(float forcedDelay, float forcedFade);
     void off();
     void kill(bool forceRefreshChannels = true);
     void update();
