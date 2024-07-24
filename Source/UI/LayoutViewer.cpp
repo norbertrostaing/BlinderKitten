@@ -540,10 +540,10 @@ void LayoutViewer::paint(Graphics& g)
 		}
 		if (gridY > 0) {
 			while (currentY < jmax(abs(toY), abs(fromY))) {
-				float y = jmap(currentY, fromY, toY, 0.0f, height);
+				float y = jmap(currentY, toY, fromY, 0.0f, height);
 				g.drawLine(0, y, width, y, 1);
 				if (currentY != 0) {
-					y = jmap(-currentY, fromY, toY, 0.0f, height);
+					y = jmap(-currentY, toY, fromY, 0.0f, height);
 					g.drawLine(0, y, width, y, 1);
 				}
 				currentY += gridY;
