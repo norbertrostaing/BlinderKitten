@@ -127,6 +127,7 @@ void Encoders::initEncoders()
         l->attachToComponent(s, false);
         labels.add(l);
         l->setWantsKeyboardFocus(false);
+        l->addMouseListener(this,true);
     }
     resized();
     updateEncoders();
@@ -570,6 +571,21 @@ void Encoders::mouseDoubleClick(const MouseEvent& e)
     updateEncoders();
     updateEncodersValues();
 
+}
+
+void Encoders::mouseUp(const MouseEvent& e)
+{  
+    Component* c = e.eventComponent;
+    Label* l = dynamic_cast<Label*>(c);
+    if (l != nullptr && labels.indexOf(l) >= 0) {
+        Slider* s = encoders[labels.indexOf(l)];
+        if (s->isEnabled()) {
+            float val = s->getValue();
+            s->setValue(0, juce::dontSendNotification);
+            s->setValue(1, juce::dontSendNotification);
+            s->setValue(val, juce::sendNotification);
+        }
+    }
 }
 
 void Encoders::clearFilters()
