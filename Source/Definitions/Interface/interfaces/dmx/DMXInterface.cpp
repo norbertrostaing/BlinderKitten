@@ -11,6 +11,7 @@
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/DMXChannelView.h"
 #include "Fixture/FixturePatch.h"
+#include "DMXInterface.h"
 
 DMXInterface::DMXInterface() :
 	Interface(getTypeString())
@@ -74,6 +75,18 @@ void DMXInterface::onContainerParameterChanged(Parameter* p)
 void DMXInterface::onContainerNiceNameChanged()
 {
 	InterfaceManager::getInstance()->managerNotifier.addMessage(new InterfaceManager::ManagerEvent(InterfaceManager::ManagerEvent::NEEDS_UI_UPDATE));
+}
+
+void DMXInterface::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	if (cc == thruManager.get()) {
+		if (dmxDevice != nullptr) {
+
+		}
+		for (int i = 0; i < 512; i++) {
+			sendDMXValue(i+1, dmxDevice->dmxDataOut[i]);
+		}
+	}
 }
 
 void DMXInterface::setCurrentDMXDevice(DMXDevice* d)

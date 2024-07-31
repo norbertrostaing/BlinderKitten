@@ -45,6 +45,7 @@ public:
 
     void onContainerParameterChanged(Parameter* p) override;
     void onContainerNiceNameChanged() override;
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     
     void setCurrentDMXDevice(DMXDevice* d);
 
