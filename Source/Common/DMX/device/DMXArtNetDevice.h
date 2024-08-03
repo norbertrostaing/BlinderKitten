@@ -60,7 +60,7 @@ public:
 	IntParameter * remotePort;
 	IntParameter* outputNet;
 	IntParameter* outputSubnet;
-	IntParameter* outputUniverse;
+	IntParameter* outputUniverse = nullptr;
 	BoolParameter* forceSrcPort;
 
 	StringParameter* discoverNodesIP;

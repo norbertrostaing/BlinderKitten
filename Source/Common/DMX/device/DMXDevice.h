@@ -12,7 +12,7 @@
 class DMXDevice :
 	public ControllableContainer,
 	public DMXManager::DMXManagerListener,
-	public HighResolutionTimer
+	public Thread
 {
 public:
 	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
@@ -49,7 +49,7 @@ public:
 
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 
-	virtual void hiResTimerCallback() override;
+	virtual void run() override;
 
 	class DMXDeviceListener
 	{
