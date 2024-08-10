@@ -34,7 +34,7 @@ BKPath::BKPath(var params) :
     d[0] = 4;    d[1] = 4;
     gridSize = addPoint2DParameter("Size", "Size of your grid");
     gridSize->setDefaultValue(d);
-    gridSize->setBounds(0,0, (float)INT32_MAX, (float)INT32_MAX);
+    //gridSize->setBounds(0,0, (float)INT16_MAX, (float)INT16_MAX);
     gridAngle = addFloatParameter("Grid Angle", "Angle of your grid", 0,-360,360);
     gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",8,2);
     gridOrientation = addEnumParameter("Orientation", "Grid orientation");
@@ -189,8 +189,8 @@ void BKPath::computeData()
         int nPerRow = gridNumberOfElements->intValue();
         int nRows = ceil(nElements/(float)nPerRow);
 
-        float gridWidth = gridSize->getValue()[0];
-        float gridHeight = gridSize->getValue()[1];
+        float gridWidth = jmax(0.0f,(float)gridSize->getValue()[0]);
+        float gridHeight = jmax(0.0f, (float)gridSize->getValue()[1]);
 
         deltaOrigin.x -= gridWidth / 2;
         deltaOrigin.y += gridHeight / 2;
