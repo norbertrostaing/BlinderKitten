@@ -11,6 +11,7 @@
 #include "EffectParam.h"
 #include "../ChannelFamily/ChannelFamilyManager.h"
 #include "Effect.h"
+#include "EffectRow.h" 
 
 EffectParam::EffectParam(var params) :
     BaseItem(params.getProperty("name", "Param")),
@@ -69,6 +70,7 @@ void EffectParam::checkParentEffect()
         && parentContainer->parentContainer->parentContainer->parentContainer != nullptr
         ) {
         parentEffect = dynamic_cast<Effect*>(parentContainer->parentContainer->parentContainer->parentContainer.get());
+        parentEffectRow = dynamic_cast<EffectRow*>(parentContainer->parentContainer.get());
     }
 
 }

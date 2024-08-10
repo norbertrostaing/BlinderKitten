@@ -77,6 +77,8 @@ public:
     Array<Carousel*> swoppedCarousels;
 
     Array<Command*> allCommands;
+    Array<SubFixture*> allSubfixtures;
+    Array<SubFixtureChannel*> allSubfixtureChannels;
 
     double now;
     bool loadingIsRunning = false;

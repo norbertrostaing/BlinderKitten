@@ -30,6 +30,8 @@ public:
     virtual ~SubFixtureChannel();
     bool isDeleted = false;
 
+    bool isDirty = false;
+
     ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
     String resolution;
@@ -53,7 +55,7 @@ public:
 
     void writeValue(float v);
 
-    CriticalSection cs;
+    SpinLock cs;
     Array<SubFixtureChannel*> virtualChildren;
     SubFixtureChannel* virtualMaster = nullptr;
 

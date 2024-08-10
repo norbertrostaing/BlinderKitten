@@ -69,7 +69,7 @@ public:
     IntParameter* soloPool;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<Array<EffectParam*>>> chanToFxParam;
-    CriticalSection isComputing;
+    SpinLock isComputing;
 
     double lastTapTempo;
     Array<double> tapTempoHistory;

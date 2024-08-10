@@ -25,7 +25,7 @@ juce_ImplementSingleton(Brain);
 Brain::Brain() :
     Thread("BKBrain") 
 {
-    startThread();
+    startThread(juce::Thread::Priority::highest);
 }
 
 Brain :: ~Brain() {
@@ -89,7 +89,11 @@ void Brain::clearUpdates()
 
 void Brain::run() {
     while(!threadShouldExit()) {
+        //double begin = Time::getMillisecondCounterHiRes();
         brainLoop();
+        //double end = Time::getMillisecondCounterHiRes();
+        //double delta = end-begin;
+
         wait(10);
     }
 }
@@ -196,33 +200,31 @@ void Brain::brainLoop() {
     programmerPoolUpdating.clear();
 
     Command* currentCommand = nullptr;
-    Array<SubFixture* > encodersSF;
+    Array<SubFixtureChannel* > modifiedSF;
 
-    {
-        ScopedLock lock(usingCollections);
-        for (int i = 0; i < subFixtureChannelPoolWaiting.size(); i++) {
-            subFixtureChannelPoolUpdating.add(subFixtureChannelPoolWaiting[i]);
-        }
-        subFixtureChannelPoolWaiting.clear();
-    }
-    usingCollections.enter();
-    for (int i = 0; i < subFixtureChannelPoolUpdating.size(); i++) { 
-        auto sfc = subFixtureChannelPoolUpdating[i];
-        if (sfc != nullptr && !sfc->isDeleted) {
+    for (SubFixtureChannel* sfc : allSubfixtureChannels) {
+        if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty) {
+            modifiedSF.add(sfc);
+            sfc->isDirty = false;
             sfc->updateVal(now);
-
-            if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr) {
-                UserInputManager::getInstance() -> currentProgrammer->computing.enter();
-                if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(sfc->parentSubFixture)) {
-                    encoderValuesNeedRefresh = true;
-                }
-                UserInputManager::getInstance()->currentProgrammer->computing.exit();
-            }
         }
     }
-    subFixtureChannelPoolUpdating.clear();
-    usingCollections.exit();
 
+    if (modifiedSF.size() > 0) {
+        if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->computing.enter();
+            if (UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+                for (int i = 0; i < modifiedSF.size() && !encoderValuesNeedRefresh; i++) {
+                    SubFixtureChannel* sfc = modifiedSF[i];
+                    encoderValuesNeedRefresh = encoderValuesNeedRefresh || UserInputManager::getInstance()->currentProgrammer->currentUserCommand->selection.computedSelectedSubFixtures.contains(sfc->parentSubFixture);
+                }
+            }
+            UserInputManager::getInstance()->currentProgrammer->computing.exit();
+        }
+
+    }
+
+    if (runningTasks.size()>0) 
     {
         for (int i = 0; i < runningTasks.size(); i++) {
             runningTasks[i]->update(now);
@@ -773,10 +775,8 @@ void Brain::pleaseUpdate(Cuelist* c) {
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if (f == nullptr || f->isDeleted || f->objectType != "SubFixtureChannel") { return; }
     if (f == nullptr) { return; };
-    ScopedLock lock(usingCollections);
-    if (!subFixtureChannelPoolWaiting.contains(f)) {
-        subFixtureChannelPoolWaiting.add(f);
-    }
+    f->isDirty = true;
+    return;
 }
 
 void Brain::pleaseUpdate(Cue* c) {

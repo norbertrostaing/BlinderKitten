@@ -35,11 +35,13 @@ SubFixtureChannel::SubFixtureChannel():
 	cuelistFlashStack.clear();
 	virtualChildren.clear();
 	cs.exit();
+	Brain::getInstance()->allSubfixtureChannels.add(this);
 }
 
 SubFixtureChannel::~SubFixtureChannel()
 {
 	//isDeleted = true;
+	Brain::getInstance()->allSubfixtureChannels.removeAllInstancesOf(this);
 	cs.enter();
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->grandMasterChannels.removeAllInstancesOf(this);
@@ -114,7 +116,8 @@ void SubFixtureChannel::writeValue(float v) {
 	if (virtualChildren.size() > 0) {
 		value = v;
 		for (int i = 0; i < virtualChildren.size(); i++) {
-			Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
+			virtualChildren[i]->isDirty = true;
+			//Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
 		}
 		return;
 	}
@@ -129,22 +132,22 @@ void SubFixtureChannel::writeValue(float v) {
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 
-		int deltaAdress = parentFixtureTypeChannel->dmxDelta->getValue();
+		int deltaAdress = parentFixtureTypeChannel->dmxDelta->intValue();
 		deltaAdress--;
-		String chanRes = parentFixtureTypeChannel->resolution->getValue();
-		Array<FixturePatch*> patchs = parentFixture->patchs.getItemsWithType<FixturePatch>();
-		for (int i = 0; i < patchs.size(); i++) {
-			if (patchs[i]->enabled->boolValue()) {
+		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
+		for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
+			FixturePatch* p = parentFixture->patchs.items[i];
+			if (p->enabled->boolValue()) {
 				value = v;
 
-				DMXInterface* out = dynamic_cast<DMXInterface*>(patchs.getReference(i)->targetInterface->targetContainer.get());
+				DMXInterface* out = static_cast<DMXInterface*>(p->targetInterface->targetContainer.get());
 				if (out != nullptr) {
-					FixturePatch* patch = patchs.getReference(i);
+					FixturePatch* patch = p;
 					int address = patch->address->getValue();
 
 					for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
 						FixturePatchCorrection* c = patch->corrections.items[iCorr];
-						if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == subFixtureId && dynamic_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
+						if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
 							if (c->invertChannel->getValue()) {
 								value = 1 - value;
 							}
@@ -190,22 +193,22 @@ void SubFixtureChannel::updateVal(double now) {
 	Array<int> layers;
 
 	for (int i = 0; i < cuelistStack.size(); i++) {
-		layers.addIfNotAlreadyThere(cuelistStack.getReference(i)->layerId->getValue());
+		layers.addIfNotAlreadyThere(cuelistStack.getReference(i)->layerId->intValue());
 	}
 	for (int i = 0; i < programmerStack.size(); i++) {
-		layers.addIfNotAlreadyThere(programmerStack.getReference(i)->layerId->getValue());
+		layers.addIfNotAlreadyThere(programmerStack.getReference(i)->layerId->intValue());
 	}
 	for (int i = 0; i < mapperStack.size(); i++) {
-		layers.addIfNotAlreadyThere(mapperStack.getReference(i)->layerId->getValue());
+		layers.addIfNotAlreadyThere(mapperStack.getReference(i)->layerId->intValue());
 	}
 	for (int i = 0; i < carouselStack.size(); i++) {
-		layers.addIfNotAlreadyThere(carouselStack.getReference(i)->layerId->getValue());
+		layers.addIfNotAlreadyThere(carouselStack.getReference(i)->layerId->intValue());
 	}
 	for (int i = 0; i < trackerStack.size(); i++) {
-		layers.addIfNotAlreadyThere(trackerStack.getReference(i)->layerId->getValue());
+		layers.addIfNotAlreadyThere(trackerStack.getReference(i)->layerId->intValue());
 	}
 	for (int i = 0; i < effectStack.size(); i++) {
-		layers.addIfNotAlreadyThere(effectStack.getReference(i)->layerId->getValue());
+		layers.addIfNotAlreadyThere(effectStack.getReference(i)->layerId->intValue());
 	}
 
 	layers.sort();
@@ -221,7 +224,7 @@ void SubFixtureChannel::updateVal(double now) {
 		for (int i = 0; i < cuelistStack.size(); i++)
 		{
 			Cuelist* c = cuelistStack.getReference(i);
-			if ((int)c->layerId->getValue() == currentLayer) {
+			if (c->layerId->intValue() == currentLayer) {
 				if (!checkSwop || c->isSwopping) {
 					bool isApplied;
 					newValue = c->applyToChannel(this, newValue, now, isApplied);
@@ -239,7 +242,7 @@ void SubFixtureChannel::updateVal(double now) {
 		postCuelistValue = newValue;
 
 		for (int i = 0; i <= overWritten; i++) {
-			if ((int)cuelistStack.getReference(i)->layerId->getValue() == currentLayer) {
+			if (cuelistStack.getReference(i)->layerId->intValue() == currentLayer) {
 				std::shared_ptr<ChannelValue> cv = cuelistStack.getReference(i)->activeValues.contains(this) ? cuelistStack.getReference(i)->activeValues.getReference(this) : nullptr;
 				if (cv != nullptr && !cv->isOverWritten) {
 					cv->isOverWritten = true;
@@ -250,61 +253,44 @@ void SubFixtureChannel::updateVal(double now) {
 		if (!checkSwop) {
 
 			for (int i = 0; i < programmerStack.size(); i++) {
-				if ((int)programmerStack.getReference(i)->layerId->getValue() == currentLayer) {
+				if (programmerStack.getReference(i)->layerId->intValue() == currentLayer) {
 					newValue = programmerStack.getReference(i)->applyToChannel(this, newValue, now);
 				}
 			}
 
 			for (int i = 0; i < mapperStack.size(); i++) {
-				if ((int)mapperStack.getReference(i)->layerId->getValue() == currentLayer) {
+				if (mapperStack.getReference(i)->layerId->intValue() == currentLayer) {
 					newValue = mapperStack.getReference(i)->applyToChannel(this, newValue, now);
 				}
 			}
 
 			for (int i = 0; i < trackerStack.size(); i++) {
-				if ((int)trackerStack.getReference(i)->layerId->getValue() == currentLayer) {
+				if (trackerStack.getReference(i)->layerId->intValue() == currentLayer) {
 					newValue = trackerStack.getReference(i)->applyToChannel(this, newValue, now);
 				}
 			}
 
 		}
 		for (int i = 0; i < carouselStack.size(); i++) {
-				if ((int)carouselStack.getReference(i)->layerId->getValue() == currentLayer) {
+				if (carouselStack.getReference(i)->layerId->intValue() == currentLayer) {
 					if (!checkSwop || carouselStack[i]->isSwopping) {
 						newValue = carouselStack.getReference(i)->applyToChannel(this, newValue, now);
+						isDirty = isDirty || carouselStack[i]->isOn;
 					}
 				}
 			}
 
 			for (int i = 0; i < effectStack.size(); i++) {
-				if ((int)effectStack.getReference(i)->layerId->getValue() == currentLayer) {
+				if (effectStack.getReference(i)->layerId->intValue() == currentLayer) {
 					if (!checkSwop || effectStack[i]->isSwopping) {
 						newValue = effectStack.getReference(i)->applyToChannel(this, newValue, now);
+						isDirty = isDirty || effectStack[i]->isOn;
 					}
 				}
 			}
 
 	}
 
-	for (int i = 0; i < cuelistFlashStack.size(); i++)
-	{
-		// newValue = cuelistFlashStack.getReference(i)->applyToChannel(this, newValue, now, true);
-	}
-
-	/*
-
-	if (swopKillable) {
-		if (Brain::getInstance()->isSwopping) {
-			newValue = defaultValue;
-			for (int i = 0; i < cuelistFlashStack.size(); i++)
-			{
-				if (cuelistFlashStack.getReference(i)->isSwopping) {
-					newValue = cuelistFlashStack.getReference(i)->applyToChannel(this, newValue, now, true);
-				}
-			}
-		}
-	}
-	*/
 	if (reactToGrandMaster) {
 		double gm = InputPanel::getInstance()->grandMaster.getValue();
 		newValue *= gm;

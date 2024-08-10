@@ -22,11 +22,13 @@ SubFixture::SubFixture() :
 	// Logger::writeToLog("I'm a new SubFixture !");
 	
 	channelsMap.clear();
+	Brain::getInstance()->allSubfixtures.add(this);
 	//Brain::getInstance()->registerSubFixture(this, id->getValue());
 }
 
 SubFixture::~SubFixture()
 {
+	Brain::getInstance()->allSubfixtures.removeAllInstancesOf(this);
 	channelsMap.clear();
 	channelsContainer.clear();
 	if (parentFixture != nullptr) {

@@ -13,6 +13,7 @@
 #include "../Command/CommandSelectionManager.h"
 
 class SubFixtureChannel;
+class EffectRow;
 
 class EffectParam:
     public BaseItem
@@ -45,6 +46,7 @@ class EffectParam:
     HashMap<SubFixtureChannel*, bool> subFixtureChannelAreCentered;
 
     Effect* parentEffect = nullptr;
+    EffectRow* parentEffectRow = nullptr;
     void checkParentEffect();
 
     void onContainerParameterChangedInternal(Parameter*);

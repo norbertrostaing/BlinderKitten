@@ -426,7 +426,7 @@ void BKEngine::clearInternal()
 	MapperGridView::getInstance()->updateCells();
 	Brain::getInstance()->isClearing = false;
 	Brain::getInstance()->clear();
-	Brain::getInstance()->startThread();
+	Brain::getInstance()->startThread(Thread::Priority::highest);
 	Brain::getInstance()->skipLoop = false;
 	Encoders::getInstance()->clear();
 
@@ -707,7 +707,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 
 	Brain::getInstance()->clearUpdates();
 	Brain::getInstance()->loadingIsRunning = false;
-	Brain::getInstance()->startThread();
+	Brain::getInstance()->startThread(Thread::Priority::highest);
 
 	VirtualButtonGrid::getInstance()->resetFeedbacks();
 	VirtualFaderColGrid::getInstance()->resetFeedbacks();
