@@ -33,6 +33,7 @@ CarouselRow::CarouselRow(var params) :
     buddying = addIntParameter("Buddying", "make groups of X following subfixtures with the same value", 1, 1);
     blocks = addIntParameter("Blocks", "A Block repeat the effect, applies before wings", 1, 1);
     wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
+    wingsInvertSelections = addBoolParameter("Invert wings selection", "Selection are reversed in wings", false);
 
 
     addChildControllableContainer(&selection);
@@ -179,6 +180,9 @@ void CarouselRow::computeData() {
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
                 // LOG(offset);
+                if (wingsInvertSelections->boolValue()) {
+                    offset = 1 - offset;
+                }
                 subFixtureChannelOffsets.set(chan, -offset);
             }
             currentStep->computedValues.getReference(chan)->startValue = cValue->endValue;
