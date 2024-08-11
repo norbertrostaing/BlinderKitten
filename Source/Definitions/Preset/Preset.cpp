@@ -18,6 +18,7 @@
 #include "UI/GridView/PresetGridView.h"
 #include "UserInputManager.h"
 #include "Definitions/DataTransferManager/DataTransferManager.h"
+#include "BKEngine.h"
 
 int comparePresetContent(PresetSubFixtureValues* A, PresetSubFixtureValues* B) {
 	if (A->targetFixtureId->getValue() == B->targetFixtureId->getValue()) {
@@ -91,6 +92,10 @@ Preset::~Preset()
 		}
 		//it.getValue()->~HashMap();
 	}
+	int defaultPresetId = dynamic_cast<BKEngine*>(Engine::mainEngine)->defaultPresetId->intValue();
+	if (defaultPresetId == id->intValue()) {
+		Brain::getInstance()->defaultValuesNeedRefresh = true;
+	}
 	PresetGridView::getInstance()->updateCells();
 }
 
@@ -110,6 +115,10 @@ void Preset::onContainerParameterChangedInternal(Parameter* p) {
 
 void Preset::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
 	checkIfProgrammerNeedUpdate();
+	int defaultPresetId = dynamic_cast<BKEngine*>(Engine::mainEngine)->defaultPresetId->intValue();
+	if (defaultPresetId == id->intValue()) {
+		Brain::getInstance()->defaultValuesNeedRefresh = true;
+	}
 }
 
 void Preset::checkIfProgrammerNeedUpdate()

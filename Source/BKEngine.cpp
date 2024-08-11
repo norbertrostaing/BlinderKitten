@@ -92,6 +92,7 @@ ControllableContainer* getAppSettings();
 
 BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
+	genericSettingsContainer("Generic Project Settings"),
 	conductorInfosContainer("Conductor infos Settings"),
 	colorPickerContainer("Color Picker Settings"),
 	trackerContainer("Tracker Settings"),
@@ -113,12 +114,18 @@ BKEngine::BKEngine() :
 
 	GlobalSettings::getInstance()->altScaleFactor->setDefaultValue(0.002);
 
+	ProjectSettings::getInstance()->addChildControllableContainer(&genericSettingsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&trackerContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&loadWindowContainer);
+
+	tapTempoHistory = genericSettingsContainer.addIntParameter("Tap tempo history", "number of hits in history to calculate tempo", 8, 1);
+	tapTempoHistory->addParameterListener(this);
+	defaultPresetId = genericSettingsContainer.addIntParameter("Default preset ID", "ID of the preset to use as default value", 0, 0);
+	defaultPresetId->addParameterListener(this);
 
 	faderSelectionMode = virtualParamsContainer.addEnumParameter("Faders selection mode", "Single copies elements on only one leement, column assign target to all elements in selected column");
 	faderSelectionMode->addOption("Single", "single")->addOption("Column", "column");
@@ -138,8 +145,7 @@ BKEngine::BKEngine() :
 	virtualFaderSize->addParameterListener(this);
 	virtualFaderBelow = virtualParamsContainer.addIntParameter("Below button numbers", "Number of buttons below the fader in each fader column", 1, 0);
 	virtualFaderBelow->addParameterListener(this);
-	tapTempoHistory = virtualParamsContainer.addIntParameter("Tap tempo history", "number of hits in history to calculate tempo", 8, 1);
-	tapTempoHistory->addParameterListener(this);
+
 
 	encodersNumber = uiParamsContainer.addIntParameter("Encoders number", "How many encoders do you want ?", 10, 1);
 	encodersNumber->addParameterListener(this);
@@ -430,6 +436,8 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->skipLoop = false;
 	Encoders::getInstance()->clear();
 
+	tapTempoHistory->resetValue();
+	defaultPresetId->resetValue();
 	encodersNumber->resetValue();
 	gridCols->resetValue();
 	gridScale->resetValue();
@@ -443,7 +451,6 @@ void BKEngine::clearInternal()
 	virtualFaderAbove->resetValue();
 	virtualFaderSize->resetValue();
 	virtualFaderBelow->resetValue();
-	tapTempoHistory->resetValue();
 	conductorCuelistId->resetValue();
 	conductorTitleSize->resetValue();
 	conductorTextSize->resetValue();
@@ -1373,6 +1380,9 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 		CuelistSheet::getInstance()->repaint();
 	} else if (p == encodersNumber) {
 		Encoders::getInstance()->initEncoders();
+	}
+	else if (p == defaultPresetId) {
+		Brain::getInstance()->defaultValuesNeedRefresh = true;
 	}
 
 }

@@ -187,6 +187,10 @@ void SubFixtureChannel::writeValue(float v) {
 
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
+	if (defaultPresetValue >= 0) {
+		newValue = defaultPresetValue;
+	}
+
 	postCuelistValue = newValue;
 
 	cs.enter();

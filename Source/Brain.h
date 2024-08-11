@@ -93,6 +93,7 @@ public:
     bool carouselGridNeedRefresh = false;
     bool effectGridNeedRefresh = false;
     bool layoutViewerNeedRefresh = false;
+    bool defaultValuesNeedRefresh = false;
 
     void run() override;
     void brainLoop();

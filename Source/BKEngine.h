@@ -55,7 +55,10 @@ public:
 	IntParameter* virtualFaderSize;
 	IntParameter* virtualFaderBelow;
 
+	ControllableContainer genericSettingsContainer;
 	IntParameter* tapTempoHistory;
+	IntParameter* defaultPresetId;
+
 
 	ControllableContainer conductorInfosContainer;
 	IntParameter* conductorCuelistId;

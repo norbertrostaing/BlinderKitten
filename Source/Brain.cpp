@@ -280,6 +280,24 @@ void Brain::brainLoop() {
         MessageManager::callAsync([this]() {EffectGridView::getInstance()->updateButtons(); });
     }
 
+    if (defaultValuesNeedRefresh) {
+        defaultValuesNeedRefresh = false;
+        int presetId = dynamic_cast<BKEngine*>(Engine::mainEngine)->defaultPresetId->intValue();
+        Preset* def = getPresetById(presetId);
+        if (def != nullptr) def->computeValues();
+
+        for (SubFixture* sf : allSubfixtures) {
+            float presetVal = -1;
+            std::shared_ptr < HashMap<ChannelType*, float>> presetValues = def != nullptr ? def->getSubFixtureValues(sf) : nullptr;
+            for (SubFixtureChannel* sfc : sf->channelsContainer) {
+                float presetValue = presetValues != nullptr && presetValues->contains(sfc->channelType) ? presetValues->getReference(sfc->channelType) : -1;
+                if (presetValue != sfc->defaultPresetValue) {
+                    sfc->defaultPresetValue = presetValue;
+                    sfc->isDirty = true;
+                }
+            }
+        }
+    }
     //double delta = Time::getMillisecondCounterHiRes() - now;
     //LOG(delta);
 
