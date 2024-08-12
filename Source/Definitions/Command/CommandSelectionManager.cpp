@@ -260,7 +260,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 						if (sf->channelsMap.contains(chan)) {
 							SubFixtureChannel* sfc = sf->channelsMap.getReference(chan);
 							if (sfc != nullptr) {
-								float sfcVal = sfc->value;
+								float sfcVal = sfc->currentValue;
 								switch (test) {
 									case CommandSelection::EQUAL: valid = sfcVal == val; break;
 									case CommandSelection::DIFFERENT: valid = sfcVal != val; break;

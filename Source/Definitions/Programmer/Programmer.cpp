@@ -243,7 +243,7 @@ void Programmer::render(double now) {
 		for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 			std::shared_ptr<ChannelValue> temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
-				temp->startValue = it.getKey()->value;
+				temp->startValue = it.getKey()->currentValue;
 			}
 			else {
 				temp->startValue = -1;

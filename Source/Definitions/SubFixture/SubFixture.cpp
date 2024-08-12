@@ -72,22 +72,22 @@ Colour SubFixture::getOutputColor()
 	bool colorIsSet = false;
 
 	if (red != nullptr && green != nullptr && blue != nullptr) {
-		if (channelsMap.contains(red)) { colorIsSet = true; r = channelsMap.getReference(red)->value; }
-		if (channelsMap.contains(green)) { colorIsSet = true; g = channelsMap.getReference(green)->value; }
-		if (channelsMap.contains(blue)) { colorIsSet = true; b = channelsMap.getReference(blue)->value; }
+		if (channelsMap.contains(red)) { colorIsSet = true; r = channelsMap.getReference(red)->currentValue; }
+		if (channelsMap.contains(green)) { colorIsSet = true; g = channelsMap.getReference(green)->currentValue; }
+		if (channelsMap.contains(blue)) { colorIsSet = true; b = channelsMap.getReference(blue)->currentValue; }
 	}
 	
 	if (!colorIsSet && cyan != nullptr && magenta != nullptr && yellow != nullptr) {
 		r = 1; g = 1; b= 1;
-		if (channelsMap.contains(cyan)) { colorIsSet = true; r = 1-channelsMap.getReference(cyan)->value; }
-		if (channelsMap.contains(magenta)) { colorIsSet = true; g = 1-channelsMap.getReference(magenta)->value; }
-		if (channelsMap.contains(yellow)) { colorIsSet = true; b = 1-channelsMap.getReference(yellow)->value; }
+		if (channelsMap.contains(cyan)) { colorIsSet = true; r = 1-channelsMap.getReference(cyan)->currentValue; }
+		if (channelsMap.contains(magenta)) { colorIsSet = true; g = 1-channelsMap.getReference(magenta)->currentValue; }
+		if (channelsMap.contains(yellow)) { colorIsSet = true; b = 1-channelsMap.getReference(yellow)->currentValue; }
 	}
 
 	if (intensity != nullptr) {
 		if (!colorIsSet) {r = 1; g = 1; b = 1;}
 		if (channelsMap.contains(intensity)) {
-			float v = channelsMap.getReference(intensity)->value;
+			float v = channelsMap.getReference(intensity)->currentValue;
 			colorIsSet = true;
 			r *= v;
 			g *= v;

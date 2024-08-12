@@ -188,7 +188,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		if (chanType != nullptr && fc->parentSubFixture->channelsMap.contains(chanType)) {
 			SubFixtureChannel* followedChan = fc->parentSubFixture->channelsMap.getReference(chanType);
 			if (followedChan != nullptr) {
-				double offset = followedChan->value;
+				double offset = followedChan->currentValue;
 				MapperStep* toApply = nullptr;
 				for (int stepId = 0; stepId < r->paramContainer.items.size(); stepId++) {
 					MapperStep* step = r->paramContainer.items[stepId];

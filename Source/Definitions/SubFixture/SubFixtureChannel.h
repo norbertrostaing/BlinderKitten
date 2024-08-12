@@ -38,7 +38,7 @@ public:
     float defaultValue = 0;
     float defaultPresetValue = -1;
     float highlightValue = 0;
-    float value = 0;
+    float currentValue = 0;
     float postCuelistValue = 0;
     bool isHTP = false;
     bool swopKillable = false;
