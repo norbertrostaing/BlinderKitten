@@ -80,9 +80,15 @@ void GenericAction::setValueInternal(var _value)
 	{
 	case SET_VALUE:
 	{
-		Parameter* p = static_cast<Parameter*>(target->target.get());
-		if (p != nullptr) {
-			p->setValue(value->getValue());
+		EnumParameter* ep = dynamic_cast<EnumParameter*>(target->target.get());
+		if (ep != nullptr) {
+			ep->setValueWithData(value->getValue());
+		}
+		else {
+			Parameter* p = static_cast<Parameter*>(target->target.get());
+			if (p != nullptr) {
+				p->setValue(value->getValue());
+			}
 		}
 	}
 	break;
