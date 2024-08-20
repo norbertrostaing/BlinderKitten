@@ -251,9 +251,6 @@ Cuelist::~Cuelist()
 	}
 	CuelistGridView::getInstance()->updateCells();
 	if (CuelistSheet::getInstance()->targetCuelist == this) {
-		CuelistSheet::getInstance()->targetCuelist == nullptr;
-	}
-	if (CuelistSheet::getInstance()->targetCuelist == this) {
 		CuelistSheet::getInstance()->targetCuelist = nullptr;
 	}
 
