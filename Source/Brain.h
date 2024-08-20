@@ -27,6 +27,7 @@
 #include "Definitions/Cue/Task.h"
 #include "Definitions/Layout/Layout.h"
 #include "Definitions/Tracker/Tracker.h"
+#include "Definitions/Bundle/Bundle.h"
 
 
 class Brain :
@@ -52,6 +53,7 @@ public:
     HashMap<int, Mapper*>mappers;
     HashMap<int, Tracker*>trackers;
     HashMap<int, Layout*>layouts;
+    HashMap<int, Bundle*>bundles;
 
     Array<Cuelist*> cuelistPoolUpdating;
     Array<Cuelist*> cuelistPoolWaiting;
@@ -99,6 +101,7 @@ public:
     void brainLoop();
     bool skipLoop = false;
 
+    double TSBundles = 0;
     CriticalSection usingCollections;
     CriticalSection usingTasksCollection;
     void registerSubFixture(SubFixture* f, int id);
@@ -127,6 +130,8 @@ public:
     void unregisterLayout(Layout* p);
     void registerTracker(Tracker* p, int id, bool swap = false);
     void unregisterTracker(Tracker* p);
+    void registerBundle(Bundle* p, int id, bool swap = false);
+    void unregisterBundle(Bundle* p);
 
     void pleaseUpdate(Cuelist* c);
     void pleaseUpdate(SubFixtureChannel* f);
@@ -156,6 +161,7 @@ public:
     Mapper* getMapperById(int id);
     Layout* getLayoutById(int id);
     Tracker* getTrackerById(int id);
+    Bundle* getBundleById(int id);
 
     void swoppedCuelist(Cuelist* c);
     void swoppedEffect(Effect* c);

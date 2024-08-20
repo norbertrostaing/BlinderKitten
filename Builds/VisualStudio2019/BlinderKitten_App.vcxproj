@@ -263,6 +263,7 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\BundleAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\CarouselAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\CuelistAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\EffectAction.cpp"/>
@@ -276,6 +277,11 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualFaderAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Assistant\Assistant.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\Bundle.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleSelection.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleSelectionManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Carousel\Carousel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Carousel\CarouselManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Carousel\CarouselManagerUI.cpp"/>
@@ -3457,6 +3463,7 @@
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h"/>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\CommonIncludes.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\BundleAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\CarouselAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\CuelistAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\EffectAction.h"/>
@@ -3470,6 +3477,11 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualFaderAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Assistant\Assistant.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\Bundle.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleSelection.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleSelectionManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Carousel\Carousel.h"/>
     <ClInclude Include="..\..\Source\Definitions\Carousel\CarouselManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Carousel\CarouselManagerUI.h"/>

@@ -276,6 +276,9 @@
       </GROUP>
       <GROUP id="{1921E650-31B1-B50A-54E1-832432567FAA}" name="Definitions">
         <GROUP id="{D30416E5-4695-CFE4-0437-DD6025195F6F}" name="Actions">
+          <FILE id="UrP0FL" name="BundleAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/BundleAction.cpp"/>
+          <FILE id="MJJ49T" name="BundleAction.h" compile="0" resource="0" file="Source/Definitions/Actions/BundleAction.h"/>
           <FILE id="Ye4gjd" name="CarouselAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/CarouselAction.cpp"/>
           <FILE id="wKhc7C" name="CarouselAction.h" compile="0" resource="0"
@@ -322,6 +325,25 @@
         <GROUP id="{233644E1-12BD-A331-F6AE-C2A52723F793}" name="Assistant">
           <FILE id="qQxHMP" name="Assistant.cpp" compile="1" resource="0" file="Source/Definitions/Assistant/Assistant.cpp"/>
           <FILE id="uexuKL" name="Assistant.h" compile="0" resource="0" file="Source/Definitions/Assistant/Assistant.h"/>
+        </GROUP>
+        <GROUP id="{73D46886-2B84-96F3-C061-A851C74457B5}" name="Bundle">
+          <FILE id="ckXZhN" name="Bundle.cpp" compile="1" resource="0" file="Source/Definitions/Bundle/Bundle.cpp"/>
+          <FILE id="NMo8Ir" name="Bundle.h" compile="0" resource="0" file="Source/Definitions/Bundle/Bundle.h"/>
+          <FILE id="Ju7Hrr" name="BundleManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Bundle/BundleManager.cpp"/>
+          <FILE id="w9kOvE" name="BundleManager.h" compile="0" resource="0" file="Source/Definitions/Bundle/BundleManager.h"/>
+          <FILE id="sRa32m" name="BundleManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Bundle/BundleManagerUI.cpp"/>
+          <FILE id="YNNaqK" name="BundleManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Bundle/BundleManagerUI.h"/>
+          <FILE id="gW12DQ" name="BundleSelection.cpp" compile="1" resource="0"
+                file="Source/Definitions/Bundle/BundleSelection.cpp"/>
+          <FILE id="vni2bR" name="BundleSelection.h" compile="0" resource="0"
+                file="Source/Definitions/Bundle/BundleSelection.h"/>
+          <FILE id="TQPdXt" name="BundleSelectionManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Bundle/BundleSelectionManager.cpp"/>
+          <FILE id="wCwzAH" name="BundleSelectionManager.h" compile="0" resource="0"
+                file="Source/Definitions/Bundle/BundleSelectionManager.h"/>
         </GROUP>
         <GROUP id="{13C9BB5E-B353-480A-515C-A789D416195D}" name="Carousel">
           <FILE id="eMVqEx" name="Carousel.cpp" compile="1" resource="0" file="Source/Definitions/Carousel/Carousel.cpp"/>

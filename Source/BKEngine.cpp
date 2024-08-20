@@ -41,6 +41,7 @@
 #include "./Definitions/Tracker/TrackerManager.h"
 #include "./Definitions/Multiplicator/MultiplicatorManager.h"
 #include "./Definitions/Layout/LayoutManager.h"
+#include "./Definitions/Bundle/BundleManager.h"
 
 #include "./Definitions/DataTransferManager/DataTransferManager.h"
 #include "./Definitions/Fixture/FixtureMultiEditor.h"
@@ -243,6 +244,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(TrackerManager::getInstance());
 	addChildControllableContainer(MultiplicatorManager::getInstance());
 	addChildControllableContainer(LayoutManager::getInstance());
+	addChildControllableContainer(BundleManager::getInstance());
 
 	addChildControllableContainer(VirtualButtonManager::getInstance());
 	addChildControllableContainer(VirtualFaderColManager::getInstance());
@@ -324,6 +326,7 @@ BKEngine::~BKEngine()
 	VirtualFaderColGrid::deleteInstance();
 
 	EncodersMult::deleteInstance();
+	BundleManager::deleteInstance();
 	LayoutManager::deleteInstance();
 	MultiplicatorManager::deleteInstance();
 	EffectManager::deleteInstance();
@@ -420,6 +423,7 @@ void BKEngine::clearInternal()
 	TimingPresetManager::getInstance()->clear();
 	CurvePresetManager::getInstance()->clear();
 	LayoutManager::getInstance()->clear();
+	BundleManager::getInstance()->clear();
 
 	VirtualButtonGrid::getInstance()->initCells();
 	VirtualFaderColGrid::getInstance()->initCells();
@@ -542,6 +546,9 @@ var BKEngine::getJSONData()
 	var layData = LayoutManager::getInstance()->getJSONData();
 	if (!layData.isVoid() && layData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, layData);
 
+	var bunData = BundleManager::getInstance()->getJSONData();
+	if (!bunData.isVoid() && bunData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(BundleManager::getInstance()->shortName, bunData);
+
 	//var sData = StateManager::getInstance()->getJSONData();
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
@@ -577,6 +584,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* trackTask = loadingTask->addTask("Trackers");
 	ProgressTask* multTask = loadingTask->addTask("Multiplicators");
 	ProgressTask* layTask = loadingTask->addTask("Layouts");
+	ProgressTask* bunTask = loadingTask->addTask("Bundles");
 	ProgressTask* vbTask = loadingTask->addTask("Virtual buttons");
 	ProgressTask* vfTask = loadingTask->addTask("Virtual faders");
 	//ProgressTask* stateTask = loadingTask->addTask("States");
@@ -672,6 +680,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	LayoutManager::getInstance()->loadJSONData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
 	layTask->setProgress(1);
 	layTask->end();
+
+	bunTask->start();
+	BundleManager::getInstance()->loadJSONData(data.getProperty(BundleManager::getInstance()->shortName, var()));
+	bunTask->setProgress(1);
+	bunTask->end();
 
 	vbTask->start();
 	VirtualButtonManager::getInstance()->loadJSONData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));

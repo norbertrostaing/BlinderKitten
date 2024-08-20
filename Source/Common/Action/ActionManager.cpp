@@ -24,6 +24,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/MultiplicatorAction.h"
 #include "Definitions/Actions/TapTempoMultiple.h"
 #include "Definitions/Actions/GenericAction.h"
+#include "Definitions/Actions/BundleAction.h"
 #include "ActionManager.h"
 
 ActionFactory::ActionFactory()
@@ -95,6 +96,14 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Stop", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_STOP));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Toggle", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Size", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_SIZE));
+
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Start", &BundleAction::create)->addParam("actionType", BundleAction::BUN_START));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Stop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Size", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Tap Tempo", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TAPTEMPO));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Double Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_DOUBLESPEED));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Half Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_HALFSPEED));
 
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));

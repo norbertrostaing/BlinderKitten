@@ -83,6 +83,9 @@
     <Filter Include="BlinderKitten\Source\Definitions\Assistant">
       <UniqueIdentifier>{D2A9376D-F965-E48A-0B09-7102F83E1DF7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Bundle">
+      <UniqueIdentifier>{949BBD7E-A188-0513-A892-0DBC4CECC92B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Carousel">
       <UniqueIdentifier>{326F150A-75FD-906A-4845-5346755013B7}</UniqueIdentifier>
     </Filter>
@@ -1204,6 +1207,9 @@
     <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp">
       <Filter>BlinderKitten\Source\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\BundleAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\CarouselAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
@@ -1242,6 +1248,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Assistant\Assistant.cpp">
       <Filter>BlinderKitten\Source\Definitions\Assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\Bundle.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleSelection.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Bundle\BundleSelectionManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Carousel\Carousel.cpp">
       <Filter>BlinderKitten\Source\Definitions\Carousel</Filter>
@@ -4947,6 +4968,9 @@
     <ClInclude Include="..\..\Source\Common\CommonIncludes.h">
       <Filter>BlinderKitten\Source\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\BundleAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\CarouselAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
@@ -4985,6 +5009,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Assistant\Assistant.h">
       <Filter>BlinderKitten\Source\Definitions\Assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\Bundle.h">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleSelection.h">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Bundle\BundleSelectionManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Carousel\Carousel.h">
       <Filter>BlinderKitten\Source\Definitions\Carousel</Filter>

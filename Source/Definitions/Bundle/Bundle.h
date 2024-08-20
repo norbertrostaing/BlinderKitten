@@ -1,0 +1,69 @@
+/*
+  ==============================================================================
+ 
+    Object.h
+    Created: 26 Sep 2020 10:02:32am
+    Author:  bkupe
+
+  ==============================================================================
+*/
+
+#pragma once
+
+#include "JuceHeader.h"
+#include "BundleSelectionManager.h"
+
+class BundleSelectionManager;
+class BundleSelection;
+class Cuelist;
+class Effect;
+class Carousel;
+
+class Bundle:
+    public BaseItem
+{
+public:
+    Bundle(var params = var());
+    virtual ~Bundle();
+
+    String objectType;
+    var objectData;
+
+    IntParameter* id;
+    int registeredId = 0;
+    StringParameter* userName;
+    void updateName();
+    BundleSelectionManager selection;
+
+    Array<Cuelist*> computedCuelists;
+    Array<Effect*> computedEffects;
+    Array<Carousel*> computedCarousels;
+    Array<Mapper*> computedMappers;
+    Array<Tracker*> computedTrackers;
+
+    CriticalSection isComputing;
+    bool toDelete = false;
+
+    String getTypeString() const override { return objectType; }
+    void onContainerParameterChangedInternal(Parameter* p);
+    void afterLoadJSONDataInternal() override;
+    void updateDisplay();
+
+    double TSLastUpdate = 0;
+    void computeValues();
+
+    void start();
+    void stop();
+    void tapTempo();
+    void setSize(float val, bool size, bool HTP, bool LTP, bool flash);
+    void setSpeed(float val);
+    void setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash);
+    void setSpeedRel(float val);
+    void speedMult(float mult);
+
+    void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
+    void triggerTriggered(Trigger* t);
+    static Bundle* create(var params) { return new Bundle(params); }
+
+};
+

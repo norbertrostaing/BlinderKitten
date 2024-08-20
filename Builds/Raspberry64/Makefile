@@ -113,6 +113,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/win_4c1bdbbb.o \
   $(JUCE_OBJDIR)/serial_82f97e54.o \
   $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o \
+  $(JUCE_OBJDIR)/BundleAction_100e7ca2.o \
   $(JUCE_OBJDIR)/CarouselAction_b771dec0.o \
   $(JUCE_OBJDIR)/CuelistAction_667db027.o \
   $(JUCE_OBJDIR)/EffectAction_c4a53ef1.o \
@@ -126,6 +127,11 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/VirtualButtonAction_1210c9b3.o \
   $(JUCE_OBJDIR)/VirtualFaderAction_b95e624b.o \
   $(JUCE_OBJDIR)/Assistant_feae32ff.o \
+  $(JUCE_OBJDIR)/Bundle_9d272dc1.o \
+  $(JUCE_OBJDIR)/BundleManager_5a5b7b36.o \
+  $(JUCE_OBJDIR)/BundleManagerUI_7269ff8a.o \
+  $(JUCE_OBJDIR)/BundleSelection_e70e5095.o \
+  $(JUCE_OBJDIR)/BundleSelectionManager_5d0341e2.o \
   $(JUCE_OBJDIR)/Carousel_4fe581c1.o \
   $(JUCE_OBJDIR)/CarouselManager_9896a736.o \
   $(JUCE_OBJDIR)/CarouselManagerUI_e8a2b8a.o \
@@ -455,6 +461,11 @@ $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o: ../../Source/Common/CommonIncludes.cpp
 	@echo "Compiling CommonIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/BundleAction_100e7ca2.o: ../../Source/Definitions/Actions/BundleAction.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BundleAction.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/CarouselAction_b771dec0.o: ../../Source/Definitions/Actions/CarouselAction.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling CarouselAction.cpp"
@@ -518,6 +529,31 @@ $(JUCE_OBJDIR)/VirtualFaderAction_b95e624b.o: ../../Source/Definitions/Actions/V
 $(JUCE_OBJDIR)/Assistant_feae32ff.o: ../../Source/Definitions/Assistant/Assistant.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling Assistant.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Bundle_9d272dc1.o: ../../Source/Definitions/Bundle/Bundle.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling Bundle.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BundleManager_5a5b7b36.o: ../../Source/Definitions/Bundle/BundleManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BundleManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BundleManagerUI_7269ff8a.o: ../../Source/Definitions/Bundle/BundleManagerUI.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BundleManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BundleSelection_e70e5095.o: ../../Source/Definitions/Bundle/BundleSelection.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BundleSelection.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BundleSelectionManager_5d0341e2.o: ../../Source/Definitions/Bundle/BundleSelectionManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BundleSelectionManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Carousel_4fe581c1.o: ../../Source/Definitions/Carousel/Carousel.cpp

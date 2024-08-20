@@ -19,6 +19,7 @@
 #include "Definitions/Tracker/TrackerManagerUI.h"
 #include "Definitions/Multiplicator/MultiplicatorManagerUI.h"
 #include "Definitions/Layout/LayoutManagerUI.h"
+#include "Definitions/Bundle/BundleManagerUI.h"
 #include "UI/Encoders.h"
 #include "UI/EncodersMult/EncodersMultUI.h"
 #include "UI/InputPanel.h"
@@ -127,6 +128,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Trackers", &TrackerManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Multiplicators", &MultiplicatorManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Layouts", &LayoutManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Bundles", &BundleManagerUI::create));
 
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders", &EncodersUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Encoders Overview", &EncodersMultUI::create));
@@ -168,6 +170,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Trackers", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Multiplicators", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Layouts", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Bundles", "Lists");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Encoders", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Encoders Overview", "Panels");

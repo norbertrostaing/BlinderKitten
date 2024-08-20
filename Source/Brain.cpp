@@ -479,6 +479,7 @@ void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
     if (conductorId == id || relinkConductor) {
         ConductorInfos::getInstance()->linkFadeSlider();
     }
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 void Brain::unregisterCuelist(Cuelist* c) {
@@ -486,6 +487,7 @@ void Brain::unregisterCuelist(Cuelist* c) {
         cuelists.removeValue(c);
     }
     reconstructVirtuals = true;
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 void Brain::registerProgrammer(Programmer* p, int id, bool swap) {
@@ -623,6 +625,7 @@ void Brain::registerEffect(Effect* p, int id, bool swap) {
     p->registeredId = id;
     if (id != askedId) {
     }
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 
@@ -631,6 +634,7 @@ void Brain::unregisterEffect(Effect* c) {
         effects.removeValue(c);
     }
     reconstructVirtuals = true;
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 void Brain::registerCarousel(Carousel* p, int id, bool swap) {
@@ -660,6 +664,7 @@ void Brain::registerCarousel(Carousel* p, int id, bool swap) {
     p->registeredId = id;
     if (id != askedId) {
     }
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 
@@ -668,6 +673,7 @@ void Brain::unregisterCarousel(Carousel* c) {
         carousels.removeValue(c);
     }
     reconstructVirtuals = true;
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 void Brain::registerMapper(Mapper* p, int id, bool swap) {
@@ -697,6 +703,7 @@ void Brain::registerMapper(Mapper* p, int id, bool swap) {
     p->registeredId = id;
     if (id != askedId) {
     }
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 
@@ -705,6 +712,7 @@ void Brain::unregisterMapper(Mapper* c) {
         mappers.removeValue(c);
     }
     reconstructVirtuals = true;
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 void Brain::registerLayout(Layout* p, int id, bool swap) {
@@ -770,6 +778,7 @@ void Brain::registerTracker(Tracker* p, int id, bool swap) {
     p->registeredId = id;
     if (id != askedId) {
     }
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
 
@@ -777,8 +786,45 @@ void Brain::unregisterTracker(Tracker* c) {
     if (trackers.containsValue(c)) {
         trackers.removeValue(c);
     }
+    TSBundles = Time::getMillisecondCounterHiRes();
 }
 
+
+void Brain::registerBundle(Bundle* p, int id, bool swap) {
+    int askedId = id;
+    if (bundles.getReference(id) == p) { return; }
+    if (bundles.containsValue(p)) {
+        bundles.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (bundles.contains(id) && bundles.getReference(id) != nullptr) {
+            Bundle* presentItem = bundles.getReference(id);
+            unregisterBundle(p);
+            registerBundle(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (bundles.contains(id) && bundles.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    bundles.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterBundle(Bundle* c) {
+    if (bundles.containsValue(c)) {
+        bundles.removeValue(c);
+    }
+}
 
 
 
@@ -1111,6 +1157,15 @@ Layout* Brain::getLayoutById(int id) {
 Tracker* Brain::getTrackerById(int id) {
     if (trackers.contains(id)) {
         return trackers.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+Bundle* Brain::getBundleById(int id) {
+    if (bundles.contains(id)) {
+        return bundles.getReference(id);
     }
     else {
         return nullptr;
