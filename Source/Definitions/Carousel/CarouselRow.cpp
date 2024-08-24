@@ -180,12 +180,23 @@ void CarouselRow::computeData() {
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
                 // LOG(offset);
-                if (wingsInvertSelections->boolValue()) {
-                    offset = 1 - offset;
-                }
                 subFixtureChannelOffsets.set(chan, -offset);
             }
             currentStep->computedValues.getReference(chan)->startValue = cValue->endValue;
+        }
+
+    }
+
+    if (wingsInvertSelections->boolValue()) {
+        double offsetMin = 1;
+        double offsetMax = 0;
+
+        for (auto it = subFixtureChannelOffsets.begin(); it != subFixtureChannelOffsets.end(); it.next()) {
+            offsetMin = jmin(offsetMin, it.getValue());
+            offsetMax = jmax(offsetMax, it.getValue());
+        }
+        for (auto it = subFixtureChannelOffsets.begin(); it != subFixtureChannelOffsets.end(); it.next()) {
+            subFixtureChannelOffsets.set(it.getKey(), jmap(it.getValue(), offsetMin, offsetMax, offsetMax, offsetMin));
         }
 
     }
