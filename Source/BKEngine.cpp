@@ -765,6 +765,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 		VirtualFaderColManager::getInstance()->items[i]->updateDisplay();
 	}
 
+	Brain::getInstance()->defaultValuesNeedRefresh = true;
 }
 
 void BKEngine::childStructureChanged(ControllableContainer* cc)
