@@ -240,7 +240,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 							filteredSelection.add(a->getRawDataPointer()[i2]);
 						}
 						indexToSubFixtures.remove(index);
-						indexes.remove(index);
+						indexes.remove(randI);
 					}
 				}
 
