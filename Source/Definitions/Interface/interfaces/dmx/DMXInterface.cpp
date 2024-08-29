@@ -414,6 +414,10 @@ void DMXInterface::inputToProgrammer()
 						Fixture* f = sfc->parentFixture;
 						c->selection.items[0]->targetType->setValueWithData("Fixture");
 						c->selection.items[0]->valueFrom->setValue(f->id->intValue());
+						if (f->subFixturesContainer.size() > 1) {
+							c->selection.items[0]->subSel->setValue(true);
+							c->selection.items[0]->subFrom->setValue(sf->subId);
+						}
 						sfToCmd.set(sf, c);
 						c->values.items.clear();
 					}
