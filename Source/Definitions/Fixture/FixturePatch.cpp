@@ -83,6 +83,7 @@ void FixturePatch::disableCurrentPatch()
 			if (inter->channelToFixturePatch[currentAdresses[i]] == this) {
 				inter->channelToFixturePatch.set(currentAdresses[i], nullptr);
 				inter->channelToChannelType.set(currentAdresses[i], nullptr);
+				inter->channelToSubFixtureChannel.set(currentAdresses[i], nullptr);
 				inter->sendDMXValue(currentAdresses[i], 0);
 			}
 			else {
@@ -189,6 +190,17 @@ void FixturePatch::tryToEnablePatch()
 			inter->channelToChannelType.set(a+i, channelTypes[i]);
 		}
 		currentAdresses.add(a+i);
+	}
+
+
+	for (SubFixture* sf : parentFixture->subFixturesContainer) {
+		for (SubFixtureChannel* sfc : sf->channelsContainer) {
+			int sfcAddress = a+sfc->parentFixtureTypeChannel->dmxDelta->intValue()-1;
+			inter->channelToSubFixtureChannel.set(sfcAddress, sfc);
+			if (sfc->resolution == "16bits") {
+				inter->channelToSubFixtureChannel.set(sfcAddress+1, sfc);
+			}
+		}
 	}
 
 	patchingInProgess = true;

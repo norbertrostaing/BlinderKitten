@@ -12,6 +12,10 @@
 #include "UI/DMXChannelView.h"
 #include "Fixture/FixturePatch.h"
 #include "DMXInterface.h"
+#include "UserInputManager.h"
+#include "Programmer/Programmer.h"
+#include "Fixture/Fixture.h"
+#include "FixtureType/FixtureTypeChannel.h"
 
 DMXInterface::DMXInterface() :
 	Interface(getTypeString())
@@ -32,6 +36,8 @@ DMXInterface::DMXInterface() :
 	channelTestingFlashValue = addFloatParameter("Testing Value", "Flash value of channel testing", 1, 0, 1);
 	channelTestingFlashValue->hideInEditor = true;
 
+	inputToProgrammerBtn = addTrigger("Input to programmer", "Create commands in programmer to copy input");
+	
 	thruManager.reset(new ControllableContainer("Pass-through"));
 	thruManager->userCanAddControllables = true;
 	thruManager->customUserCreateControllableFunc = &DMXInterface::createThruControllable;
@@ -43,6 +49,7 @@ DMXInterface::DMXInterface() :
 	for (int i = 0; i <= 512; i++) {
 		channelToFixturePatch.add(nullptr);
 		channelToChannelType.add(nullptr);
+		channelToSubFixtureChannel.add(nullptr);
 	}
 
 }
@@ -258,7 +265,7 @@ void DMXInterface::dmxDeviceDisconnected()
 void DMXInterface::dmxDataInChanged(int numChannels, uint8* values)
 {
 	if (isClearing || !enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(numChannels) + " channels received.");
+	//if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(numChannels) + " channels received.");
 }
 
 
@@ -385,4 +392,58 @@ void DMXInterface::dmxChannelInChanged(int channel, uint8 val)
 	if (logIncomingData->boolValue()) NLOG(niceName, "DMX Channel received: " << channel << ", value : " << val );
 	mappingManager.handleChannel(channel, val, niceName);
 
+}
+
+void DMXInterface::inputToProgrammer()
+{
+	if (dmxDevice != nullptr) {
+		Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
+		HashMap<SubFixture*, Command*> sfToCmd;
+		Array<SubFixtureChannel*> alreadyDone;
+		for (int i = 0; i < 512; i++) {
+			if (dmxDevice->dmxDataIn[i] != dmxDevice->dmxDataOut[i]) {
+				SubFixtureChannel* sfc = channelToSubFixtureChannel[i+1];
+				if (sfc != nullptr && !alreadyDone.contains(sfc)) {
+					SubFixture* sf = sfc->parentSubFixture;
+					Command* c;
+					if (sfToCmd.contains(sf)) {
+						c = sfToCmd.getReference(sf);
+					}
+					else {
+						c = p->commands.addItem();
+						Fixture* f = sfc->parentFixture;
+						c->selection.items[0]->targetType->setValueWithData("Fixture");
+						c->selection.items[0]->valueFrom->setValue(f->id->intValue());
+						sfToCmd.set(sf, c);
+						c->values.items.clear();
+					}
+					CommandValue* cv = c->values.addItem();
+					cv->channelType->setValueFromTarget(sfc->channelType);
+					if (sfc->resolution == "16bits") {
+						int address = channelToFixturePatch[i+1]->address->intValue();
+						address += sfc->parentFixtureTypeChannel->dmxDelta->intValue() -1;
+						float finalValue = dmxDevice->dmxDataIn[address-1]*256;
+						finalValue += dmxDevice->dmxDataIn[address];
+						finalValue /= 65535.0;
+						cv->valueFrom->setValue(finalValue);
+					}
+					else {
+						float finalValue = dmxDevice->dmxDataIn[i] / 255.0;
+						cv->valueFrom->setValue(finalValue);
+					}
+					alreadyDone.add(sfc);
+				}
+			}
+		}
+		p->selectNextCommand();
+		p->selectPrevCommand();
+		UserInputManager::getInstance()->programmerCommandStructureChanged();
+	}
+}
+
+void DMXInterface::triggerTriggered(Trigger* t)
+{
+	if (t == inputToProgrammerBtn) {
+		inputToProgrammer();
+	}
 }

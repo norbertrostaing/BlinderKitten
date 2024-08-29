@@ -17,6 +17,7 @@
 #include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
 
 class FixturePatch;
+class SubFixtureChannel;
 
 class DMXInterface :
     public Interface,
@@ -37,9 +38,12 @@ public:
     FloatParameter* channelTestingFlashValue;
     DMXChannelView* tester = nullptr;
 
+    Trigger* inputToProgrammerBtn;
+
     DMXMappingManager mappingManager;
     Array<FixturePatch* > channelToFixturePatch;
     Array<ChannelType* >channelToChannelType;
+    Array<SubFixtureChannel* >channelToSubFixtureChannel;
 
     void clearItem() override;
 
@@ -70,6 +74,9 @@ public:
     void repaintChannels(int chan, int n);
 
     void dmxChannelInChanged(int num, uint8 val) override;
+
+    void inputToProgrammer();
+    void triggerTriggered(Trigger* t);
 
     class DMXParams : public ControllableContainer
     {
