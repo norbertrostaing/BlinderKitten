@@ -62,22 +62,23 @@ InputPanel::InputPanel()
     addAndMakeVisible(btnAssistant); btnAssistant.setButtonText("Assistant"); btnAssistant.addListener(this);
 
     addAndMakeVisible(grandMaster); 
-    grandMaster.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+    grandMaster.setSliderStyle(Slider::LinearBarVertical);
+    grandMaster.setSliderSnapsToMousePosition(false);
     grandMaster.setRange(0, 1);
     grandMaster.setValue(1, juce::dontSendNotification);
-    grandMaster.setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
+
     grandMaster.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
     grandMaster.addListener(this);
     grandMaster.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(blackoutBtn);
-    blackoutBtn.setButtonText("BO");
+    blackoutBtn.setButtonText("Black Out");
     blackoutBtn.addListener(this);
     blackoutBtn.setToggleable(true);
     blackoutBtn.setClickingTogglesState(true);
 
     addAndMakeVisible(remoteInLockBtn);
-    remoteInLockBtn.setButtonText("rLock");
+    remoteInLockBtn.setButtonText("MIDI Lock");
     remoteInLockBtn.addListener(this);
     remoteInLockBtn.setToggleable(true);
     remoteInLockBtn.setClickingTogglesState(true);
@@ -137,7 +138,7 @@ void InputPanel::resized()
     float scaleX = 1;
     float scaleY = 1;
 
-    scaleX = getWidth() / 560.;
+    scaleX = getWidth() / 600.;
     scaleY = getHeight() / 200.;
     int nChildren =getNumChildComponents ();
     for (int i = 0; i < nChildren; i++) {
@@ -191,9 +192,9 @@ void InputPanel::resized()
     btnBackspace.setBounds  (1 * sm + p2, 4 * r, sm, h);
     btnEnter.setBounds      (2 * sm + p2, 4 * r, sm*2, h);
 
-    remoteInLockBtn.setBounds(0 * lg + p3 + 0*(lg / 3), 4 * r, lg / 3, h);
-    blackoutBtn.setBounds(0 * lg + p3 + 1*(lg / 3), 4 * r, lg / 3, h);
-    grandMaster.setBounds(0 * lg + p3 + 2*(lg / 3), 4 * r, lg / 3, h);
+    remoteInLockBtn.setBounds(0 * lg + p3 + 0*(lg / 2), 4 * r, lg / 2, h);
+    blackoutBtn.setBounds(0 * lg + p3 + 1*(lg / 2), 4 * r, lg / 2, h);
+    grandMaster.setBounds(p3 + 2*(lg / 2), 0, sm, 5*h);
 
 
     // This method is where you should set the bounds of any child
