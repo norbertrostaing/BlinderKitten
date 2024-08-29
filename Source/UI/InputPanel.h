@@ -72,6 +72,7 @@ public:
 
     Slider grandMaster;
     TextButton blackoutBtn;
+    TextButton remoteInLockBtn;
 
     void paint (juce::Graphics&) override;
     void resized() override;

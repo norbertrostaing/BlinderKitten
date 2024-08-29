@@ -76,6 +76,12 @@ InputPanel::InputPanel()
     blackoutBtn.setToggleable(true);
     blackoutBtn.setClickingTogglesState(true);
 
+    addAndMakeVisible(remoteInLockBtn);
+    remoteInLockBtn.setButtonText("rLock");
+    remoteInLockBtn.addListener(this);
+    remoteInLockBtn.setToggleable(true);
+    remoteInLockBtn.setClickingTogglesState(true);
+
 }
 
 InputPanel::~InputPanel()
@@ -185,8 +191,9 @@ void InputPanel::resized()
     btnBackspace.setBounds  (1 * sm + p2, 4 * r, sm, h);
     btnEnter.setBounds      (2 * sm + p2, 4 * r, sm*2, h);
 
-    grandMaster.setBounds(0 * lg + p3, 4 * r, lg/2, h);
-    blackoutBtn.setBounds(0 * lg + p3 + lg/2, 4 * r, lg/2, h);
+    remoteInLockBtn.setBounds(0 * lg + p3 + 0*(lg / 3), 4 * r, lg / 3, h);
+    blackoutBtn.setBounds(0 * lg + p3 + 1*(lg / 3), 4 * r, lg / 3, h);
+    grandMaster.setBounds(0 * lg + p3 + 2*(lg / 3), 4 * r, lg / 3, h);
 
 
     // This method is where you should set the bounds of any child

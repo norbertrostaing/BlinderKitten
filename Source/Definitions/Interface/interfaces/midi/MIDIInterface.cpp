@@ -9,6 +9,7 @@
 */
 
 #include "Definitions/Interface/InterfaceIncludes.h"
+#include "UI/InputPanel.h"
 
 MIDIInterface::MIDIInterface() :
     Interface(getTypeString()),
@@ -97,6 +98,7 @@ void MIDIInterface::sendStartupBytes()
 
 void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const int &velocity)
 {
+    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) {return;}
     if (logIncomingData->boolValue()) NLOG(niceName, "Note On received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
     bool processed = mappingManager.handleNote(channel, pitch, velocity, niceName);
@@ -112,6 +114,7 @@ void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const i
 
 void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const int &velocity)
 {
+    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Note Off received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
     bool processed = mappingManager.handleNote(channel, pitch, 0, niceName);
@@ -127,6 +130,7 @@ void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const 
 
 void MIDIInterface::controlChangeReceived(const int &channel, const int &number, const int &value)
 {
+    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Control Change received, channel : " << channel << ", number : " << number << ", value : " << value);
     bool processed = mappingManager.handleCC(channel, number, value, niceName);
@@ -142,6 +146,7 @@ void MIDIInterface::controlChangeReceived(const int &channel, const int &number,
 
 void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
 {
+    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
     bool processed = mappingManager.handlePitchWheel(channel, value, niceName);
