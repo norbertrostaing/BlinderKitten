@@ -13,6 +13,8 @@
 #include "UserInputManager.h"
 #include "BKEngine.h"
 #include "Definitions/Assistant/Assistant.h"
+#include "UI/VirtualButtons/VirtualButtonGrid.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 //==============================================================================
 InputPanelUI::InputPanelUI(const String& contentName):
@@ -82,6 +84,12 @@ InputPanel::InputPanel()
     remoteInLockBtn.addListener(this);
     remoteInLockBtn.setToggleable(true);
     remoteInLockBtn.setClickingTogglesState(true);
+    remoteInLockBtn.onClick = [this]() {
+        if (!remoteInLockBtn.getToggleState()) {
+            VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page);
+            VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page);
+        }
+    };
 
 }
 
