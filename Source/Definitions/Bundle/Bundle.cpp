@@ -253,6 +253,7 @@ void Bundle::speedMult(float mult)
 }
 
 void Bundle::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) {
+	computeValues();
 }
 
 void Bundle::triggerTriggered(Trigger* t){
