@@ -153,6 +153,7 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
 
     bool sameDevice = inter->niceName == origin;
     sameDevice = sameDevice && origin != "";
+    sameDevice = false;
 
     bool isText = varValue.isString();
     if (isText && midiType->getValueDataAsEnum<MidiType>() != TEXT) { return; }
