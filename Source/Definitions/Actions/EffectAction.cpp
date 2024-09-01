@@ -51,19 +51,19 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
     switch (actionType)
     {
     case FX_START:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->userStart();
         }
         break;
 
     case FX_STOP:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->stop();
         }
         break;
 
     case FX_TOGGLE:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             if (target->isOn) {
                 target->stop();
             }
@@ -74,15 +74,15 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
         break;
 
     case FX_FLASH:
-        target->flash(val > 0);
+        target->flash(val == 1);
         break;
 
     case FX_SWOP:
-        target->flash(val > 0, true);
+        target->flash(val == 1, true);
         break;
 
     case FX_TAPTEMPO:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->tapTempo();
         }
         break;
@@ -111,19 +111,19 @@ void EffectAction::setValueInternal(var value, String origin, bool isRelative) {
         break;
 
     case FX_DOUBLESPEED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->speed->setValue((double)target->speed->getValue()*2);
         }
         break;
 
     case FX_HALFSPEED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->speed->setValue((double)target->speed->getValue()/2);
         }
         break;
 
     case FX_BBW:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             bool add = setOrAdd->stringValue() == "Add";
             String type = buddyBlockOrWing->stringValue();
             int rowId = fxRow->intValue();

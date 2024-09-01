@@ -42,13 +42,13 @@ void VirtualButtonAction::triggerInternal()
 void VirtualButtonAction::setValueInternal(var value, String origin, bool isRelative)
 {
     float val = value;
-    if (actionType == VB_PAGEUP && val >0) {
+    if (actionType == VB_PAGEUP && val == 1) {
         VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page + 1);
     }
-    else if (actionType == VB_PAGEDOWN && val > 0) {
+    else if (actionType == VB_PAGEDOWN && val == 1) {
         VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page - 1);
     }
-    else if (actionType == VB_GOTOPAGE && val > 0) {
+    else if (actionType == VB_GOTOPAGE && val == 1) {
         VirtualButtonGrid::getInstance()->goToPage(goToPageId->getValue());
     }
     else if (actionType == VB_PRESS) {
@@ -60,7 +60,7 @@ void VirtualButtonAction::setValueInternal(var value, String origin, bool isRela
             page = VirtualButtonGrid::getInstance()->page;
         }
 
-        if (val > 0) {
+        if (val == 1) {
             VirtualButtonManager::getInstance()->setButtonValue(page, col, row, 1, origin);
         }
         else {

@@ -83,7 +83,7 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
     switch (actionType)
     {
     case IP_PRESS:
-        if (val > 0) {
+        if (val == 1) {
             UserInputManager::getInstance()->processInput(targetButton->getValue());
         }
         break;
@@ -109,61 +109,61 @@ void InputPanelAction::setValueInternal(var value, String origin, bool isRelativ
     {
         const MessageManagerLock mmLock;
 
-        InputPanel::getInstance()->blackoutBtn.setToggleState(val > 0, juce::sendNotification);
+        InputPanel::getInstance()->blackoutBtn.setToggleState(val == 1, juce::sendNotification);
         break;
     }
     case IP_BLACKOUTTOGGLE:
     {
         const MessageManagerLock mmLock;
 
-        if (val > 0) InputPanel::getInstance()->blackoutBtn.setToggleState(!InputPanel::getInstance()->blackoutBtn.getToggleState(), juce::sendNotification);
+        if (val == 1) InputPanel::getInstance()->blackoutBtn.setToggleState(!InputPanel::getInstance()->blackoutBtn.getToggleState(), juce::sendNotification);
         break;
     }
 
     case IP_OFFCL:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->offAllCuelists();
         }
         break;
 
     case IP_KILLCL:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->killAllCuelists();
         }
         break;
 
     case IP_STOPFX:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->stopAllEffects();
         }
         break;
 
     case IP_STOPCAR:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->stopAllCarousels();
         }
         break;
 
     case IP_RANDOMSEED:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->resetRandomSeed(randomSeed->getValue());
         }
         break;
 
     case IP_LOADALLCUELISTS:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->loadRunningCuelistsInProgrammer();
         }
         break;
 
     case IP_SELECTWINDOW:
-        if (val > 0) {
+        if (val == 1) {
             Brain::getInstance()->showWindow(targetWindow->stringValue());
         }
         break;
 
     case IP_SAVE:
-        if (val > 0) {
+        if (val == 1) {
             MessageManager::callAsync([](){
             if (Engine::mainEngine->getFile().exists())
             {

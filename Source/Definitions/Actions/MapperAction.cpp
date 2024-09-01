@@ -38,19 +38,19 @@ void MapperAction::setValueInternal(var value, String origin, bool isRelative) {
     switch (actionType)
     {
     case TRK_START:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->start();
         }
         break;
 
     case TRK_STOP:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->stop();
         }
         break;
 
     case TRK_TOGGLE:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             if (target->isOn) {
                 target->stop();
             }

@@ -49,19 +49,19 @@ void BundleAction::setValueInternal(var value, String origin, bool isRelative) {
     switch (actionType)
     {
     case BUN_START:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->start();
         }
         break;
 
     case BUN_STOP:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->stop();
         }
         break;
 
     case BUN_TAPTEMPO:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->tapTempo();
         }
         break;
@@ -89,13 +89,13 @@ void BundleAction::setValueInternal(var value, String origin, bool isRelative) {
         break;
 
     case BUN_DOUBLESPEED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->speedMult(2);
         }
         break;
 
     case BUN_HALFSPEED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->speedMult(0.5);
         }
 

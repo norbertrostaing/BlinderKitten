@@ -51,43 +51,43 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
     switch (actionType)
     {
     case CL_GO:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->go();
         }
         break;
 
     case CL_GOBACK:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->goBack();
         }
         break;
 
     case CL_GOINSTANT:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->go(0,0);
         }
         break;
 
     case CL_GOBACKINSTANT:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->goBack(0,0);
         }
         break;
 
     case CL_GORANDOM:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->go();
         }
         break;
 
     case CL_OFF:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->off();
         }
         break;
 
     case CL_TOGGLE:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             if (target->isCuelistOn->getValue()) {
                 target->off();
             }
@@ -98,7 +98,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_LOAD:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             float targetCue = cueId->floatValue();
             if (targetCue == -1) {
                 target->showLoad();
@@ -110,7 +110,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_LOADANDGO:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             float targetCue = cueId->floatValue();
             if (targetCue == -1) {
                 target->showLoadAndGo();
@@ -158,7 +158,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_FLASH:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->flash(true, false);
         }
         else {
@@ -167,7 +167,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_SWOP:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->flash(true, false, true);
         }
         else {
@@ -176,7 +176,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_FLASHTIMED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->flash(true, true);
         }
         else {
@@ -185,7 +185,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_SWOPTIMED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->flash(true, true, true);
         }
         else {
@@ -207,7 +207,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case CL_CHASERTAPTEMPO:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->tapTempo();
         }
         break;

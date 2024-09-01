@@ -48,7 +48,7 @@ void MultiplicatorAction::setValueInternal(var value, String origin, bool isRela
     switch (actionType)
     {
     case MULT_SETAT:
-        if (val > 0) {
+        if (val == 1) {
             target->multValue->setValue((float)atValue->getValue());
         }
         break;

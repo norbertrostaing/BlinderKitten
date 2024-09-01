@@ -53,19 +53,19 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
     switch (actionType)
     {
     case CAR_START:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->userStart();
         }
         break;
 
     case CAR_STOP:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->stop();
         }
         break;
 
     case CAR_TOGGLE:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             if (target->isOn) {
                 target->stop();
             }
@@ -76,17 +76,17 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
         break;
 
     case CAR_TAPTEMPO:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->tapTempo();
         }
         break;
 
     case CAR_FLASH:
-        target->flash(val > 0);
+        target->flash(val == 1);
         break;
 
     case CAR_SWOP:
-        target->flash(val > 0, true);
+        target->flash(val == 1, true);
         break;
 
     case CAR_SIZE:
@@ -113,19 +113,19 @@ void CarouselAction::setValueInternal(var value, String origin, bool isRelative)
         break;
 
     case CAR_DOUBLESPEED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->speed->setValue((double)target->speed->getValue() * 2);
         }
         break;
 
     case CAR_HALFSPEED:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             target->speed->setValue((double)target->speed->getValue() / 2);
         }
         break;
 
     case CAR_BBW:
-        if (val > 0 && (float)previousValue == 0) {
+        if (val == 1) {
             bool add = setOrAdd->stringValue() == "Add";
             String type = buddyBlockOrWing->stringValue();
             int rowId = carRow->intValue();

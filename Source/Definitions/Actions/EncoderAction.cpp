@@ -70,7 +70,7 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case ENC_SELECT:
-        if (val > 0) {
+        if (val == 1) {
             int delta;
             delta = selectionDelta->intValue();
             Encoders::getInstance()->offsetEncoders(delta);
@@ -78,19 +78,19 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case ENC_NEXTCOMMAND:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->commandDownBtn.triggerClick();
         }
         break;
 
     case ENC_PREVCOMMAND:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->commandUpBtn.triggerClick();
         }
         break;
 
     case ENC_TOGGLEFILTERNUM:
-        if (val > 0) {
+        if (val == 1) {
             int i = filterNumber->intValue() - 1;
             if (i < Encoders::getInstance()->availableFilters.size()) {
                 Encoders::getInstance()->toggleFilter(Encoders::getInstance()->availableFilters[i], soloMode->boolValue());
@@ -103,7 +103,7 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
     break;
 
     case ENC_TOGGLEFILTERFAMILY:
-        if (val > 0) {
+        if (val == 1) {
             ChannelFamily* cf = dynamic_cast<ChannelFamily*>(filterFamily->targetContainer.get());
             Encoders::getInstance()->toggleFilter(cf, soloMode->boolValue());
         }
@@ -115,27 +115,27 @@ void EncoderAction::setValueInternal(var value, String origin, bool isRelative) 
         break;
 
     case ENC_HL:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->HLBtn.triggerClick();
         }
         break;
     case ENC_BLIND:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->blindBtn.triggerClick();
         }
         break;
     case ENC_RANGE:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->encoderRangeBtn.triggerClick();
         }
         break;
     case ENC_THRU:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->btnMode.triggerClick();
         }
         break;
     case ENC_EXPLODE:
-        if (val > 0) {
+        if (val == 1) {
             Encoders::getInstance()->explodeCommandBtn.triggerClick();
         }
         break;
