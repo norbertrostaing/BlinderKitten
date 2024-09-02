@@ -32,7 +32,7 @@ public:
 
 
     void triggerInternal() override;
-    void setValueInternal(var value, String origin, bool isRelative);
+    void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
     var getValue();
 

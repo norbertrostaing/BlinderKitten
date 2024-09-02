@@ -43,7 +43,7 @@ void VirtualFaderAction::triggerInternal()
     //if (target == nullptr) return;
 }
 
-void VirtualFaderAction::setValueInternal(var value, String origin, bool isRelative)
+void VirtualFaderAction::setValueInternal(var value, String origin, int incrementIndex, bool isRelative)
 {
     float val = value;
     int number = 0;
@@ -79,22 +79,23 @@ void VirtualFaderAction::setValueInternal(var value, String origin, bool isRelat
     //bool currentPage = page == VirtualFaderColGrid::getInstance()->page;
 
 
-    switch (actionType) {
-    case VF_ROTARY:
-        VirtualFaderColManager::getInstance()->setRotaryValue(page, col, number, val, origin, isRelative);
-        break;
+    switch (actionType) 
+    {
+        case VF_ROTARY:
+            VirtualFaderColManager::getInstance()->setRotaryValue(page, col, number, val, origin, incrementIndex, isRelative);
+            break;
 
-    case VF_ABOVEBUTTON:
-        VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, number, val, origin);
-       break;
+        case VF_ABOVEBUTTON:
+            VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, number, val, origin);
+            break;
 
-    case VF_FADER: {
-        VirtualFaderColManager::getInstance()->setFaderValue(page, col, val, origin, isRelative);
-        break;
-    }
-    case VF_BELOWBUTTON:
-        VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, number, val, origin);
-        break;
+        case VF_FADER: 
+            VirtualFaderColManager::getInstance()->setFaderValue(page, col, val, origin, incrementIndex, isRelative);
+            break;
+        
+        case VF_BELOWBUTTON:
+            VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, number, val, origin);
+            break;
     }
 
 

@@ -483,7 +483,7 @@ void VirtualFaderColGrid::sliderValueChanged(Slider* slider) {
     if (vfc != nullptr) {
         VirtualFaderSlider* vf = sliderToVFS.getReference(slider);
         if (vf != nullptr) {
-            vf->moved(slider->getValue(), "", false);
+            vf->moved(slider->getValue(), "", 0, false);
         }
     }
 }

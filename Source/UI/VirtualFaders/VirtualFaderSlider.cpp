@@ -225,20 +225,20 @@ float VirtualFaderSlider::getTargetValue()
 
 }
 
-void VirtualFaderSlider::moved(float value, String origin, bool isRelative) {
+void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, bool isRelative) {
 	checkParentColumn();
 	if (parentColumn == nullptr) { LOG("this is strange"); return; }
 	String colTargetType = parentColumn->targetType->getValue();
 	int colTargetId = parentColumn->targetId->intValue();
 	String targType = targetType->getValue();
-	if (!isAllowedToMove(origin, value) && !isRelative) {
+	if (!isAllowedToMove(origin, incrementIndex, value) && !isRelative) {
 		return;
 	}
-
+	validIncrementIndex = incrementIndex+1;
 	feedback(value, origin);
 
 	if (targType == "actions") {
-		actionManager.setValueAll(value, "VirtualFaders", isRelative);
+		actionManager.setValueAll(value, "VirtualFaders", 0, isRelative);
 		return;
 	}
 	int targId = targetId->getValue();
@@ -508,8 +508,10 @@ bool VirtualFaderSlider::checkParentColumn()
 	return parentColumn != nullptr;
 }
 
-bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
+bool VirtualFaderSlider::isAllowedToMove(String origin, int incrementIndex, float newValue)
 {
+	bool incrementOk = incrementIndex == 0 || incrementIndex == validIncrementIndex;
+	
 	String targType = targetType->getValue();
 	if (targType == "actions") {
 		return true;
@@ -535,41 +537,41 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 			String action = cuelistAction->getValue();
 			if (action == "htplevel") {
 				// LOG(targ->currentHTPLevelController << " " << origin);
-				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentHTPLevelController == origin) && incrementOk) || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
 			if (action == "htpltplevel") {
 				// LOG(targ->currentHTPLevelController << " " << origin);
-				if (origin == "" || targ->currentHTPLevelController == origin || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentHTPLevelController == origin) && incrementOk) || abs(targ->HTPLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
-				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentLTPLevelController == origin) && incrementOk) || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
 			if (action == "flashlevel") {
-				if (origin == "" || targ->currentFlashLevelController == origin || abs(targ->FlashLevel->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentFlashLevelController == origin) && incrementOk) || abs(targ->FlashLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
 			if (action == "ltplevel") {
-				if (origin == "" || targ->currentLTPLevelController == origin || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentLTPLevelController == origin) && incrementOk) || abs(targ->LTPLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
 			if (action == "crossfade") {
-				if (origin == "" || targ->currentCrossFadeController == origin || abs(targ->crossFadeController->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentCrossFadeController == origin) && incrementOk) || abs(targ->crossFadeController->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
 			if (action == "upfade") {
-				if (origin == "" || targ->currentUpFadeController == origin || abs(targ->upFadeController->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentUpFadeController == origin) && incrementOk) || abs(targ->upFadeController->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
 			if (action == "downfade") {
-				if (origin == "" || targ->currentDownFadeController == origin || abs(targ->downFadeController->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentDownFadeController == origin) && incrementOk) || abs(targ->downFadeController->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
@@ -584,7 +586,7 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 		if (targ != nullptr) {
 			String action = effectAction->getValue();
 			if (action == "size") {
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentSizeController == origin) && incrementOk) || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
@@ -599,7 +601,7 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 		if (targ != nullptr) {
 			String action = carouselAction->getValue();
 			if (action == "size") {
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentSizeController == origin) && incrementOk) || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
@@ -614,7 +616,7 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 		if (targ != nullptr) {
 			String action = mapperAction->getValue();
 			if (action == "size") {
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentSizeController == origin) && incrementOk) || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}
@@ -626,7 +628,7 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, float newValue)
 		if (targ != nullptr) {
 			String action = trackerAction->getValue();
 			if (action == "size") {
-				if (origin == "" || targ->currentSizeController == origin || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentSizeController == origin) && incrementOk) || abs(targ->sizeValue->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}

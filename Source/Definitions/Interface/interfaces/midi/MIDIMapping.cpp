@@ -89,7 +89,7 @@ void MIDIMapping::updateDisplay()
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
-bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String origin)
+bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String origin, int incrementIndex)
 {
     if (learnMode->boolValue())
     {
@@ -120,12 +120,12 @@ bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
     }
     else {
         float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, velocity), inputRange7b->x, inputRange7b->y, 0, 1);
-        processValue(relValue, origin);
+        processValue(relValue, origin + " " + String(rcvChannel) + " note" + String(pitch), incrementIndex);
     }
     return true;
 }
 
-bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
+bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin, int incrementIndex)
 {
     if (learnMode->boolValue())
     {
@@ -133,6 +133,7 @@ bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
         channel->setValue(rcvChannel);
         pitchOrNumber->setValue(number);
         learnMode->setValue(false);
+        return true;
     }
 
     if (!enabled->boolValue()) return false;
@@ -155,12 +156,12 @@ bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin)
     }
     else {
         float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, value), inputRange7b->x, inputRange7b->y, 0, 1);
-        processValue(relValue, origin);
+        processValue(relValue, origin+" "+String(rcvChannel)+" cc"+String(number), incrementIndex );
     }
     return true;
 }
 
-bool MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
+bool MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin, int incrementIndex)
 {
     if (learnMode->boolValue())
     {
@@ -188,12 +189,12 @@ bool MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin)
     }
     else {
         float relValue = jmap<float>(jlimit<float>(inputRange14b->x, inputRange14b->y, value), inputRange14b->x, inputRange14b->y, 0, 1);
-        processValue(relValue, origin);
+        processValue(relValue, origin + " " + String(rcvChannel) + " pw", incrementIndex);
     }
     return true;
 }
 
-void MIDIMapping::processValue(float value, String origin) {
+void MIDIMapping::processValue(float value, String origin, int incrementIndex) {
     bool isRelative = false;
 
     MappingMode m = mode->getValueDataAsEnum<MappingMode>();
@@ -211,33 +212,33 @@ void MIDIMapping::processValue(float value, String origin) {
         if (value >= upX && value <= upY) {
             isRelative = true;
             newValue = jmap<float>(value, upX, upY, encoderValueRange->x, encoderValueRange->y);
-            handleValue(newValue, origin, true);
+            handleValue(newValue, origin, incrementIndex, true);
         }
         if (value >= downX && value <= downY) {
             isRelative = true;
             newValue = -jmap<float>(value, downX, downY, encoderValueRange->x, encoderValueRange->y);
-            handleValue(newValue, origin, true);
+            handleValue(newValue, origin, incrementIndex, true);
         }
         if (value >= upY && value <= upX) {
             isRelative = true;
             newValue = jmap<float>(value, upY, upX, encoderValueRange->y, encoderValueRange->x);
-            handleValue(newValue, origin, true);
+            handleValue(newValue, origin, incrementIndex, true);
         }
         if (value >= downY && value <= downX) {
             isRelative = true;
             newValue = -jmap<float>(value, downY, downX, encoderValueRange->y, encoderValueRange->x);
-            handleValue(newValue, origin, true);
+            handleValue(newValue, origin, incrementIndex, true);
         }
     }
     else {
-        handleValue(value, origin, false);
+        handleValue(value, origin, incrementIndex, false);
     }
 
 }
 
-void MIDIMapping::handleValue(float value, String origin, bool isRelative)
+void MIDIMapping::handleValue(float value, String origin, int incrementIndex, bool isRelative)
 {
-    actionManager.setValueAll(value, origin, isRelative);
+    actionManager.setValueAll(value, origin, incrementIndex, isRelative);
     return;
 }
 

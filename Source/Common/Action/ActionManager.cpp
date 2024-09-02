@@ -177,9 +177,9 @@ void ActionManager::setValueAll(var value)
     for (auto& i : items) i->setValue(value);
 }
 
-void ActionManager::setValueAll(var value, String origin, bool isRelative)
+void ActionManager::setValueAll(var value, String origin, int incrementIndex, bool isRelative)
 {
-    for (auto& i : items) i->setValue(value, origin, isRelative);
+    for (auto& i : items) i->setValue(value, origin, incrementIndex, isRelative);
 }
 
 var ActionManager::getValue()

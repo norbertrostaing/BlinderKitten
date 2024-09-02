@@ -25,6 +25,7 @@ public:
     var objectData;
 
     bool isFader = false;
+    int validIncrementIndex = 0;
 
     EnumParameter * targetType;
     IntParameter * targetId;
@@ -43,14 +44,14 @@ public:
     void updateDisplay();
     float getTargetValue();
 
-    void moved(float value, String origin, bool isRelative);
+    void moved(float value, String origin, int incrementIndex, bool isRelative);
     void feedback(var value, String origin);
 
     void released();
     String getBtnText(String columnType);
 
     String getTypeString() const override { return objectType; }
-    bool isAllowedToMove(String origin, float newValue);
+    bool isAllowedToMove(String origin, int incrementIndex, float newValue);
 
     VirtualFaderCol* parentColumn = nullptr;
     bool checkParentColumn();

@@ -47,7 +47,7 @@ void EncoderAction::triggerInternal()
 {
 }
 
-void EncoderAction::setValueInternal(var value, String origin, bool isRelative) {
+void EncoderAction::setValueInternal(var value, String origin, int incrementIndex, bool isRelative) {
     float val = value;
 
     switch (actionType)

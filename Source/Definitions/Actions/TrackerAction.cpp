@@ -29,11 +29,12 @@ void TrackerAction::triggerInternal()
 {
 }
 
-void TrackerAction::setValueInternal(var value, String origin, bool isRelative) {
+void TrackerAction::setValueInternal(var value, String origin, int incrementIndex, bool isRelative) {
     Tracker* target = Brain::getInstance()->getTrackerById(targetId->getValue());
     if (target == nullptr) return;
 
     float val = value;
+    bool incrementOk = incrementIndex == 0 || incrementIndex == validIncrementIndex;
 
     switch (actionType)
     {
@@ -66,9 +67,10 @@ void TrackerAction::setValueInternal(var value, String origin, bool isRelative) 
             target->sizeValue->setValue(target->sizeValue->floatValue() + val);
         }
         else {
-            if (target->currentSizeController == origin || abs(target->sizeValue->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentSizeController == origin) || abs(target->sizeValue->floatValue() - val) < 0.05) {
                 target->nextSizeController = origin;
                 target->sizeValue->setValue(val);
+                validIncrementIndex = incrementIndex+1;
             }
         }
         break;

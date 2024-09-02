@@ -19,14 +19,15 @@ public:
 
     String typeString;
     var previousValue = 0;
+    int validIncrementIndex = 0;
 
     void trigger();
     virtual void triggerInternal() {}
 
     void setValue(var value);
-    void setValue(var value, String origin, bool isRelative);
-    virtual void setValueInternal(var value) {setValueInternal(value, "unknown", false); }
-    virtual void setValueInternal(var value, String origin, bool isRelative) {}
+    void setValue(var value, String origin, int incrementIndex, bool isRelative);
+    virtual void setValueInternal(var value) {setValueInternal(value, "unknown", 0, false); }
+    virtual void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) {}
     virtual var getValue() {return var(); };
 
     String getTypeString() const override { return typeString; }

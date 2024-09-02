@@ -40,7 +40,7 @@ void BundleAction::triggerInternal()
 {
 }
 
-void BundleAction::setValueInternal(var value, String origin, bool isRelative) {
+void BundleAction::setValueInternal(var value, String origin, int indexIncrement, bool isRelative) {
     Bundle* target = Brain::getInstance()->getBundleById(targetId->getValue());
     if (target == nullptr) return;
 

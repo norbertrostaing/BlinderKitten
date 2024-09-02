@@ -17,6 +17,8 @@ public:
     MIDIMappingManager();
     ~MIDIMappingManager();
 
+    HashMap<String, int> paramToIncrement;
+
     bool handleNote(int channel, int pitch, int velocity, String origin);
     bool handleCC(int channel, int number, int value, String origin);
     bool handlePitchWheel(int channel, int value, String origin);

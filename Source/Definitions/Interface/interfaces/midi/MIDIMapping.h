@@ -43,11 +43,11 @@ public:
 
     ActionManager actionManager;
 
-    bool handleNote(int channel, int pitch, int velocity, String origin);
-    bool handleCC(int channel, int number, int value, String origin);
-    bool handlePitchWheel(int channel, int value, String origin);
-    void processValue(float value, String origin);
-    void handleValue(float value, String origin, bool isRelative);
+    bool handleNote(int channel, int pitch, int velocity, String origin, int incrementIndex);
+    bool handleCC(int channel, int number, int value, String origin, int incrementIndex);
+    bool handlePitchWheel(int channel, int value, String origin, int incrementIndex);
+    void processValue(float value, String origin, int incrementIndex);
+    void handleValue(float value, String origin, int incrementIndex, bool isRelative);
 
     void onContainerParameterChangedInternal(Parameter* p);
 

@@ -77,7 +77,7 @@ void InputPanelAction::triggerInternal()
 {
 }
 
-void InputPanelAction::setValueInternal(var value, String origin, bool isRelative) {
+void InputPanelAction::setValueInternal(var value, String origin, int incrementIndex, bool isRelative) {
     float val = value;
 
     switch (actionType)

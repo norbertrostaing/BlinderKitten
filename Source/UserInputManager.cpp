@@ -332,7 +332,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			col = (int)((var)aList[3]);
 			row = (int)((var)aList[4]);
 		}
-		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "", false);
+		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "", 0, false);
 	}
 
 	else if (firstWord == "virtfader" && aList.size() >= 3 && m.size()>0) {
@@ -343,7 +343,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			page = (int)((var)aList[2]);
 			col = (int)((var)aList[3]);
 		}
-		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "", false);
+		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "", 0, false);
 	}
 
 

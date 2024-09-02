@@ -38,7 +38,7 @@ void CuelistAction::triggerInternal()
     if (target == nullptr) return;
 }
 
-void CuelistAction::setValueInternal(var value, String origin, bool isRelative) {
+void CuelistAction::setValueInternal(var value, String origin, int incrementIndex, bool isRelative) {
     if (actionType == CL_GOALLLOADED) {
         Brain::getInstance()->goAllLoadedCuelists();
         return;
@@ -47,6 +47,7 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
     if (target == nullptr) return;
 
     float val = value;
+    bool incrementOk = incrementIndex == 0 || incrementIndex == validIncrementIndex;
 
     switch (actionType)
     {
@@ -128,9 +129,10 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
             target->HTPLevel->setValue(target->HTPLevel->floatValue() + val);
         }
         else {
-            if (target->currentHTPLevelController == origin || abs(target->HTPLevel->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentHTPLevelController == origin) || abs(target->HTPLevel->floatValue() - val) < 0.05) {
                 target->nextHTPLevelController = origin;
                 target->HTPLevel->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
             }
         }
         break;
@@ -141,9 +143,10 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
             target->LTPLevel->setValue(target->LTPLevel->floatValue() + val);
         }
         else {
-            if (target->currentLTPLevelController == origin || abs(target->LTPLevel->floatValue() - val) < 0.05) {
-            target->nextLTPLevelController = origin;
-            target->LTPLevel->setValue(val);
+            if ((incrementOk && target->currentLTPLevelController == origin) || abs(target->LTPLevel->floatValue() - val) < 0.05) {
+                target->nextLTPLevelController = origin;
+                target->LTPLevel->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
             }
         }
         break;
@@ -199,9 +202,10 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
             target->FlashLevel->setValue(target->FlashLevel->floatValue() + val);
         }
         else {
-            if (target->currentFlashLevelController == origin || abs(target->FlashLevel->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentFlashLevelController == origin) || abs(target->FlashLevel->floatValue() - val) < 0.05) {
                 target->nextFlashLevelController = origin;
                 target->FlashLevel->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
             }
         }
         break;
@@ -218,9 +222,10 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
             target->crossFadeController->setValue(target->crossFadeController->floatValue() + val);
         }
         else {
-            if (target->currentCrossFadeController == origin || abs(target->crossFadeController->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentCrossFadeController == origin) || abs(target->crossFadeController->floatValue() - val) < 0.05) {
                 target->nextCrossFadeController = origin;
                 target->crossFadeController->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
             }
         }
         break;
@@ -231,9 +236,10 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
             target->upFadeController->setValue(target->upFadeController->floatValue() + val);
         }
         else {
-            if (target->currentUpFadeController == origin || abs(target->upFadeController->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentUpFadeController == origin) || abs(target->upFadeController->floatValue() - val) < 0.05) {
                 target->nextUpFadeController = origin;
                 target->upFadeController->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
             }
         }
         break;
@@ -244,9 +250,10 @@ void CuelistAction::setValueInternal(var value, String origin, bool isRelative) 
             target->downFadeController->setValue(target->downFadeController->floatValue() + val);
         }
         else {
-            if (target->currentDownFadeController == origin || abs(target->downFadeController->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentDownFadeController == origin) || abs(target->downFadeController->floatValue() - val) < 0.05) {
                 target->nextCrossFadeController = origin;
                 target->downFadeController->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
             }
         }
         break;
