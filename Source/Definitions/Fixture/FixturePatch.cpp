@@ -195,10 +195,12 @@ void FixturePatch::tryToEnablePatch()
 
 	for (SubFixture* sf : parentFixture->subFixturesContainer) {
 		for (SubFixtureChannel* sfc : sf->channelsContainer) {
-			int sfcAddress = a+sfc->parentFixtureTypeChannel->dmxDelta->intValue()-1;
-			inter->channelToSubFixtureChannel.set(sfcAddress, sfc);
-			if (sfc->resolution == "16bits") {
-				inter->channelToSubFixtureChannel.set(sfcAddress+1, sfc);
+			if (sfc->parentFixtureTypeChannel != nullptr) {
+				int sfcAddress = a + sfc->parentFixtureTypeChannel->dmxDelta->intValue() - 1;
+				inter->channelToSubFixtureChannel.set(sfcAddress, sfc);
+				if (sfc->resolution == "16bits") {
+					inter->channelToSubFixtureChannel.set(sfcAddress + 1, sfc);
+				}
 			}
 		}
 	}
