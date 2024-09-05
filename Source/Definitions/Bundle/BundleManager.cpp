@@ -3,13 +3,18 @@
 
 juce_ImplementSingleton(BundleManager);
 
+int compare(Bundle* A, Bundle* B) {
+    return (int)A->id->getValue() - (int)B->id->getValue();
+}
 
 BundleManager::BundleManager() :
     BaseManager("Bundle")
     {
     itemDataType = "Bundle";
     selectItemWhenCreated = true;
-       
+    comparator.compareFunc = compare;
+    autoReorderOnAdd = true;
+
 }
 
 BundleManager::~BundleManager()

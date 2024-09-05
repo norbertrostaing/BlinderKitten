@@ -50,6 +50,9 @@ void Brain::clear()
     effects.clear();
     carousels.clear();
     mappers.clear();
+    trackers.clear();
+    bundles.clear();
+    layouts.clear();
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
     subFixtureChannelPoolUpdating.clear();
