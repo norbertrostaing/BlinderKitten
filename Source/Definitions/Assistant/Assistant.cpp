@@ -195,7 +195,6 @@ void Assistant::run()
     }
     if (pleaseImportAscii) {
         pleaseImportAscii= false;
-        importAscii();
     }
 }
 
@@ -230,8 +229,7 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
         updateDisplay();
     }
     else if (c == importAsciiBtn) {
-        pleaseImportAscii = true;
-        startThread();
+        MessageManager::callAsync([this]() {importAscii(); });
     }
     else if (c == exportAsciiBtn) {
         exportAscii();
@@ -732,8 +730,7 @@ void Assistant::importAscii()
     int totLines = lines.size();
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
-        LOG((i+1)<<"/"<<totLines<<" : "<<line);
-        if (i%100 == 0) wait(50);
+        //LOG((i+1)<<"/"<<totLines<<" : "<<line);
         const MessageManagerLock mmlock;
         String originalLine = line;
         line = line.replaceCharacters(" ,/;<=>@", "        ").trim();
@@ -976,8 +973,8 @@ void Assistant::importAscii()
             }
             else
             {
-                LOG("" + line + " ");
-                LOG(words.size());
+                //LOG("" + line + " ");
+                //LOG(words.size());
             }
 
         }
