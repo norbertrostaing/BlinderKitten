@@ -983,22 +983,25 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					if (modeChannels != nullptr) {
 						for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
 							auto dmxChannelNode = modeChannels->getChildElement(iChan);
-							auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
 							String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
-							String attribute = logicalChannelNode->getStringAttribute("Attribute");
 							String geometry = dmxChannelNode->getStringAttribute("Geometry");
 							String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
 							int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
 							int dmxAdress = 0;
 							int resolution = 0;
 
+							auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
 							float physicalFrom = 0;
 							float physicalTo = 0;
-							if (logicalChannelNode->getNumChildElements() == 1) {
-								auto chanFunctionTag = logicalChannelNode->getFirstChildElement();
-								if (chanFunctionTag->hasTagName("ChannelFunction")) {
-									physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
-									physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
+							String attribute = "###dummy###";
+							if (logicalChannelNode != nullptr) {
+								attribute = logicalChannelNode->getStringAttribute("Attribute");
+								if (logicalChannelNode->getNumChildElements() == 1) {
+									auto chanFunctionTag = logicalChannelNode->getFirstChildElement();
+									if (chanFunctionTag->hasTagName("ChannelFunction")) {
+										physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
+										physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
+									}
 								}
 							}
 
@@ -1054,29 +1057,32 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					// got all channels
 					for (int i = 0; i < tempChannels.size(); i++) {
 						if (tempChannels[i].attribute != "") {
-							String attrName = tempChannels[i].attribute;
 							FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
-							if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
+							ftc->subFixtureId->setValue(1);
+							if (tempChannels[i].attribute != "###dummy###") {
+								String attrName = tempChannels[i].attribute;
+								if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
 
-							ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
-							ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
-							var phys;
-							phys.append(tempChannels[i].physicalFrom);
-							phys.append(tempChannels[i].physicalTo);
-							ftc->physicalRange->setValue(phys);
-							if (tempChannels[i].resolution == 2)
-							{
-								ftc->resolution->setValue("16bits");
-							}
-							if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
-								if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
-									FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(),false, false);
-									subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
-									virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
-									virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
-									virtDim->setNiceName("Dimmer " + String(tempChannels[i].subFixtId));
+								ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
+								ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+								var phys;
+								phys.append(tempChannels[i].physicalFrom);
+								phys.append(tempChannels[i].physicalTo);
+								ftc->physicalRange->setValue(phys);
+								if (tempChannels[i].resolution == 2)
+								{
+									ftc->resolution->setValue("16bits");
 								}
-								ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
+								if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
+									if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
+										FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(),false, false);
+										subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
+										virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
+										virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
+										virtDim->setNiceName("Dimmer " + String(tempChannels[i].subFixtId));
+									}
+									ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
+								}
 							}
 						}
 					}
