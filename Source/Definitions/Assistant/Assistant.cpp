@@ -144,7 +144,7 @@ Assistant::Assistant() :
 
 void Assistant::updateDisplay() {
     if (midiMapperTargetType != nullptr) {
-        String midiType = midiMapperTargetType->getValue();
+        String midiType = midiMapperTargetType->stringValue();
         if (midiType == "virtualButtons" || midiType == "virtualFaders") {
             midiMapperTargetId->hideInEditor = true;
             midiMapperPageNumber->hideInEditor = false;
@@ -249,7 +249,7 @@ void Assistant::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
         Brain::getInstance()->stopAllCarousels();
     }
     else if (c == resetRandomBtn) {
-        Brain::getInstance()->resetRandomSeed(randomSeed->getValue());
+        Brain::getInstance()->resetRandomSeed(randomSeed->intValue());
     }
     else if (c == loadRunningCuelistsBtn) {
         Brain::getInstance()->loadRunningCuelistsInProgrammer();
@@ -733,7 +733,7 @@ void Assistant::importAscii()
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
         LOG((i+1)<<"/"<<totLines<<" : "<<line);
-        wait(50);
+        if (i%100 == 0) wait(50);
         const MessageManagerLock mmlock;
         String originalLine = line;
         line = line.replaceCharacters(" ,/;<=>@", "        ").trim();
@@ -780,7 +780,7 @@ void Assistant::importAscii()
                 currentSecondary = "";
             }
             
-            if (currentPrimary == "PATCH" && currentSecondary == "PATCH" && asciiPatch->getValue()) {
+            if (currentPrimary == "PATCH" && currentSecondary == "PATCH" && asciiPatch->boolValue()) {
                 for (int iWord = 2; iWord < words.size()-2; iWord+=3) {
                     int channel = words[iWord].getIntValue();
                     int address = words[iWord + 1].getIntValue();
@@ -808,7 +808,7 @@ void Assistant::importAscii()
                     }
                 }
             }
-            else if (currentPrimary == "CUE" && asciiCues->getValue()) {
+            else if (currentPrimary == "CUE" && asciiCues->boolValue()) {
                 if (currentSecondary == "CUE") {
                     if (words.size() == 1) {
                         LOGERROR("invalid file, CUE word must have an id in parameter");
@@ -817,7 +817,7 @@ void Assistant::importAscii()
                     String cueName = "Cue " + words[1];
                     currentCue->setNiceName(cueName);
                     currentCue->commands.clear();
-                    if (asciiRespectCueNumbers->getValue()) {
+                    if (asciiRespectCueNumbers->boolValue()) {
                         currentCue->id->setValue(words[1].getFloatValue());
                     }
                 }
@@ -862,12 +862,12 @@ void Assistant::importAscii()
                         float level = asciiLevelToFloat(words[iChan + 1]);
                         Command* com = currentCue->commands.addItem();
                         com->selection.items[0]->valueFrom->setValue(fixt);
-                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
+                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->boolValue());
                         com->values.items[0]->valueFrom->setValue(level);
                     }
                 }
             }
-            else if (currentPrimary == "SUB" && asciiSubs->getValue()) {
+            else if (currentPrimary == "SUB" && asciiSubs->boolValue()) {
                 if (currentSecondary == "SUB") {
                     if (words.size() == 1) {
                         LOGERROR("invalid file, SUB word must have an id in parameter");
@@ -913,19 +913,19 @@ void Assistant::importAscii()
                         float level = asciiLevelToFloat(words[iChan + 1]);
                         Command* com = currentSubCue->commands.addItem();
                         com->selection.items[0]->valueFrom->setValue(fixt);
-                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
+                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->boolValue());
                         com->values.items[0]->valueFrom->setValue(level);
                     }
                 }
             }
-            else if (currentPrimary == "GROUP" && (asciiGroups->getValue() || asciiGroupValuesAsPreset->getValue())) {
+            else if (currentPrimary == "GROUP" && (asciiGroups->boolValue() || asciiGroupValuesAsPreset->boolValue())) {
                 if (currentSecondary == "GROUP") {
                     if (words.size() == 1) {
                         LOGERROR("invalid file, GROUP word must have an id in parameter");
                     }
                     int groupId = words[1].getIntValue();
-                    if (asciiGroups->getValue()) {
-                        if (asciiGroupValuesAsPreset->getValue()) {
+                    if (asciiGroups->boolValue()) {
+                        if (asciiGroupValuesAsPreset->boolValue()) {
                             currentPreset = Brain::getInstance()->getPresetById(groupId);
                             if (currentPreset == nullptr) {
                                 currentPreset = PresetManager::getInstance()->addItem();
@@ -968,7 +968,7 @@ void Assistant::importAscii()
                         if (currentPreset != nullptr){
                             PresetSubFixtureValues * v = currentPreset->subFixtureValues.addItem();
                             v->targetFixtureId->setValue(fixt);
-                            v->values.items[0]->param->setValue(asciiDimmerChannel->getValue());
+                            v->values.items[0]->param->setValue(asciiDimmerChannel->boolValue());
                             v->values.items[0]->paramValue->setValue(level);
                         }
                     }
