@@ -100,6 +100,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Start", &BundleAction::create)->addParam("actionType", BundleAction::BUN_START));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Stop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_STOP));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Size", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Size", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SET_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Tap Tempo", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TAPTEMPO));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SPEED));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Double Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_DOUBLESPEED));

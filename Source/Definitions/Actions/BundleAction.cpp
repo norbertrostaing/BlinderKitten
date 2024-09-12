@@ -23,11 +23,15 @@ BundleAction::BundleAction(var params) :
         maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
     }
 
-    if (actionType == BUN_SIZE) {
+
+    if (actionType == BUN_SIZE || actionType == BUN_SET_SIZE) {
         useHTP = addBoolParameter("Move HTP", "Change size of HTP Level of cuelists", true);
         useLTP = addBoolParameter("Move LTP", "Change size of LTP Level of cuelists", false);
         useSize = addBoolParameter("Move Size", "Change size of effects, carousels, mappers and trackers", true);
         useFlash = addBoolParameter("Move Flash", "change flash levels", false);
+        if (actionType == BUN_SET_SIZE) {
+            finalSize = addFloatParameter("Size", "final size", 0, 0, 1);
+        }
     }
 
 }
@@ -72,6 +76,13 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
         }
         else {
             target->setSize(val, useSize->boolValue(), useHTP->boolValue(), useLTP->boolValue(), useFlash->boolValue());
+            lastValue = val;
+        }
+        break;
+
+    case BUN_SET_SIZE:
+        if (val == 1) {
+            target->setSize(finalSize->floatValue(), useSize->boolValue(), useHTP->boolValue(), useLTP->boolValue(), useFlash->boolValue());
             lastValue = val;
         }
         break;

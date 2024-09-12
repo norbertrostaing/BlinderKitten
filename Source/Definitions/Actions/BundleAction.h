@@ -19,10 +19,11 @@ public:
     BundleAction(var params = var());
     ~BundleAction();
 
-    enum ActionType { BUN_START, BUN_STOP, BUN_SIZE, BUN_SPEED, BUN_DOUBLESPEED, BUN_HALFSPEED, BUN_TAPTEMPO};
+    enum ActionType { BUN_START, BUN_STOP, BUN_SIZE, BUN_SET_SIZE, BUN_SPEED, BUN_DOUBLESPEED, BUN_HALFSPEED, BUN_TAPTEMPO};
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;
+    FloatParameter* finalSize;
 
     BoolParameter* useHTP;
     BoolParameter* useLTP;
