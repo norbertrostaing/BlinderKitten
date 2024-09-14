@@ -23,7 +23,7 @@ MultiplicatorAction::MultiplicatorAction(var params) :
 
     if (actionType == MULT_SET) {
         fromValue = addFloatParameter("Value from", "Value when midi is at 0", 0, 0);
-        toValue = addFloatParameter("Value from", "Value when midi is at 127", 1, 0);
+        toValue = addFloatParameter("Value to", "Value when midi is at 127", 1, 0);
     }
 
     if (actionType == MULT_SETAT) {
