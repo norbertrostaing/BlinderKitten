@@ -120,7 +120,7 @@ BKEngine::BKEngine() :
 	GlobalSettings::getInstance()->addChildControllableContainer(&colorPickerContainer);
 	GlobalSettings::getInstance()->addChildControllableContainer(&trackerContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
-	GlobalSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
+	ProjectSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&loadWindowContainer);
 
 	tapTempoHistory = genericSettingsContainer.addIntParameter("Tap tempo history", "number of hits in history to calculate tempo", 8, 1);
@@ -476,6 +476,10 @@ void BKEngine::clearInternal()
 	loadWindowButtonPerLine->resetValue();
 	loadWindowButtonHeight->resetValue();
 
+	encodersNumber->resetValue();
+	encodersScale->resetValue();
+	gridCols->resetValue();
+	gridScale->resetValue();
 
 
 
