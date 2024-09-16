@@ -94,8 +94,10 @@ void GenericAction::setValueInternal(var _value)
 	break;
 
 	case TRIGGER:
-		triggerInternal();
-		break;
+		if ((float)_value == 1) {
+			triggerInternal();
+			break;
+		}
 	}
 	
 }
