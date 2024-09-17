@@ -229,14 +229,18 @@ void Cue::go()
 
 void Cue::go(float forcedDelay, float forcedFade)
 {
+	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	double now = Brain::getInstance()->now;
 	if (autoFollow->getValue() == "immediate") {
 		TSAutoFollowStart = now;
 		float delay = autoFollowTiming->getValue();
+		if (delay > 0) {
+			float mult = parentCuelist->speedMult.getValue();
+			delay *= mult;
+		}
 		TSAutoFollowEnd = now + (delay * 1000);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	Array<Task*> allTasks = getTasks();
 	for (int i = 0; i < allTasks.size(); i++) {
 		if (allTasks[i]->enabled->boolValue()) {
@@ -289,6 +293,9 @@ void Cue::endTransition() {
 			double now = Brain::getInstance()->now;
 			TSAutoFollowStart = now;
 			float delay = autoFollowTiming->getValue();
+			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+			float mult = parentCuelist->speedMult.getValue();
+			delay *= mult;
 			TSAutoFollowEnd = now + (delay*1000);
 			Brain::getInstance()->pleaseUpdate(this);
 		}
