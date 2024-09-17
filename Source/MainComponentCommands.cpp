@@ -53,6 +53,7 @@ namespace BlinderKittenCommandId
 	static const int keyCarousel = 0x60307;
 	static const int keyMapper = 0x60308;
 	static const int keyAssistant = 0x60309;
+	static const int keySubFixture = 0x60310;
 
 	static const int keyHighlight = 0x60320;
 	static const int keyBlind = 0x60321;
@@ -252,6 +253,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::createFromDescription("a").getKeyCode(), ModifierKeys::noModifiers);
 		break;
 
+	case BlinderKittenCommandId::keySubFixture:
+		result.setInfo("Subfixture", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription("s").getKeyCode(), ModifierKeys::noModifiers);
+		break;
+
 
 	case BlinderKittenCommandId::keyHighlight:
 		result.setInfo("Hightlight", "", "Direct Commands", 0);
@@ -376,6 +382,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 
 		BlinderKittenCommandId::keyAssistant,
 		BlinderKittenCommandId::keyFixture,
+		BlinderKittenCommandId::keySubFixture,
 		BlinderKittenCommandId::keyGroup,
 		BlinderKittenCommandId::keyPreset,
 		BlinderKittenCommandId::keyCuelist,
@@ -529,7 +536,8 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case BlinderKittenCommandId::keyAssistant: {Assistant::getInstance()->selectThis(); }break;
 
-	case BlinderKittenCommandId::keyFixture: {	UserInputManager::getInstance()->processInput("Fixture"); }break;
+	case BlinderKittenCommandId::keyFixture: { UserInputManager::getInstance()->processInput("Fixture"); }break;
+	case BlinderKittenCommandId::keySubFixture: { UserInputManager::getInstance()->processInput("Subfixture"); }break;
 	case BlinderKittenCommandId::keyGroup: {	UserInputManager::getInstance()->processInput("Group"); }break;
 	case BlinderKittenCommandId::keyPreset: {	UserInputManager::getInstance()->processInput("Preset"); }break;
 	case BlinderKittenCommandId::keyCuelist: {	UserInputManager::getInstance()->processInput("Cuelist"); }break;
