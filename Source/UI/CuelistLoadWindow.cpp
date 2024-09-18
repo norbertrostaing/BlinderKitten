@@ -126,7 +126,7 @@ void CuelistLoadWindow::buttonClicked(Button* b)
 {
     int index = buttons.indexOf((TextButton*)b);
     if (currentTarget != nullptr && currentTarget->cues.items.size()>index) {
-        currentTarget->nextCue->setValueFromTarget(currentTarget->cues.items[index]);
+        currentTarget->nextCueId->setValue(currentTarget->cues.items[index]->id->floatValue());
         currentTarget->fillTexts();
         if (triggerGo) {
             currentTarget->userGo();
