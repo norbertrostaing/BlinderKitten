@@ -60,6 +60,7 @@ void CuelistLoadWindow::resized()
             x = 0;
         }
         TextButton* b = buttons[i];
+        b->setWantsKeyboardFocus(false);
         b->setBounds(x*w, y*h, w, h);
         b->addListener(this);
         prevId = id;

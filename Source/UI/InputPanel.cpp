@@ -31,44 +31,43 @@ juce_ImplementSingleton(InputPanel);
 
 InputPanel::InputPanel()
 {
-    addAndMakeVisible(btnClear); btnClear.setButtonText("Clear"); btnClear.addListener(this);
-    addAndMakeVisible(btnEdit); btnEdit.setButtonText("Edit"); btnEdit.addListener(this);
-    addAndMakeVisible(btnRecord); btnRecord.setButtonText("Record"); btnRecord.addListener(this);
-    addAndMakeVisible(btnDelete); btnDelete.setButtonText("Delete"); btnDelete.addListener(this);
-    addAndMakeVisible(btnCopy); btnCopy.setButtonText("Copy"); btnCopy.addListener(this);
-    addAndMakeVisible(btnFixture); btnFixture.setButtonText("Fixture"); btnFixture.addListener(this);
-    addAndMakeVisible(btnGroup); btnGroup.setButtonText("Group"); btnGroup.addListener(this);
-    addAndMakeVisible(btnSub); btnSub.setButtonText("SubFixture"); btnSub.addListener(this);
-    addAndMakeVisible(btnPreset); btnPreset.setButtonText("Preset"); btnPreset.addListener(this);
-    addAndMakeVisible(btnCuelist); btnCuelist.setButtonText("Cuelist"); btnCuelist.addListener(this);
-    addAndMakeVisible(btnCue); btnCue.setButtonText("Cue"); btnCue.addListener(this);
-    addAndMakeVisible(btnEffect); btnEffect.setButtonText("Cuelist"); btnEffect.addListener(this);
-    addAndMakeVisible(btnEffect); btnEffect.setButtonText("Effect"); btnEffect.addListener(this);
-    addAndMakeVisible(btnCarousel); btnCarousel.setButtonText("Carousel"); btnCarousel.addListener(this);
-    addAndMakeVisible(btn1); btn1.setButtonText("1"); btn1.addListener(this);
-    addAndMakeVisible(btn2); btn2.setButtonText("2"); btn2.addListener(this);
-    addAndMakeVisible(btn3); btn3.setButtonText("3"); btn3.addListener(this);
-    addAndMakeVisible(btn4); btn4.setButtonText("4"); btn4.addListener(this);
-    addAndMakeVisible(btn5); btn5.setButtonText("5"); btn5.addListener(this);
-    addAndMakeVisible(btn6); btn6.setButtonText("6"); btn6.addListener(this);
-    addAndMakeVisible(btn7); btn7.setButtonText("7"); btn7.addListener(this);
-    addAndMakeVisible(btn8); btn8.setButtonText("8"); btn8.addListener(this);
-    addAndMakeVisible(btn9); btn9.setButtonText("9"); btn9.addListener(this);
-    addAndMakeVisible(btn0); btn0.setButtonText("0"); btn0.addListener(this);
-    addAndMakeVisible(btnPlus); btnPlus.setButtonText("+"); btnPlus.addListener(this);
-    addAndMakeVisible(btnMinus); btnMinus.setButtonText("-"); btnMinus.addListener(this);
-    addAndMakeVisible(btnDot); btnDot.setButtonText("."); btnDot.addListener(this);
-    addAndMakeVisible(btnThru); btnThru.setButtonText("Thru"); btnThru.addListener(this);
-    addAndMakeVisible(btnBackspace); btnBackspace.setButtonText("<-"); btnBackspace.addListener(this);
-    addAndMakeVisible(btnEnter); btnEnter.setButtonText("Enter"); btnEnter.addListener(this);
-    addAndMakeVisible(btnAssistant); btnAssistant.setButtonText("Assistant"); btnAssistant.addListener(this);
+    addAndMakeVisible(btnClear); btnClear.setButtonText("Clear"); btnClear.addListener(this); btnClear.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnEdit); btnEdit.setButtonText("Edit"); btnEdit.addListener(this); btnEdit.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnRecord); btnRecord.setButtonText("Record"); btnRecord.addListener(this); btnRecord.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnDelete); btnDelete.setButtonText("Delete"); btnDelete.addListener(this); btnDelete.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnCopy); btnCopy.setButtonText("Copy"); btnCopy.addListener(this); btnCopy.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnFixture); btnFixture.setButtonText("Fixture"); btnFixture.addListener(this); btnFixture.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnGroup); btnGroup.setButtonText("Group"); btnGroup.addListener(this); btnGroup.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnSub); btnSub.setButtonText("SubFixture"); btnSub.addListener(this); btnSub.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnPreset); btnPreset.setButtonText("Preset"); btnPreset.addListener(this); btnPreset.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnCuelist); btnCuelist.setButtonText("Cuelist"); btnCuelist.addListener(this); btnCuelist.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnCue); btnCue.setButtonText("Cue"); btnCue.addListener(this); btnCue.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnEffect); btnEffect.setButtonText("Cuelist"); btnEffect.addListener(this); btnEffect.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnEffect); btnEffect.setButtonText("Effect"); btnEffect.addListener(this); btnEffect.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnCarousel); btnCarousel.setButtonText("Carousel"); btnCarousel.addListener(this); btnCarousel.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn1); btn1.setButtonText("1"); btn1.addListener(this); btn1.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn2); btn2.setButtonText("2"); btn2.addListener(this); btn2.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn3); btn3.setButtonText("3"); btn3.addListener(this); btn3.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn4); btn4.setButtonText("4"); btn4.addListener(this); btn4.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn5); btn5.setButtonText("5"); btn5.addListener(this); btn5.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn6); btn6.setButtonText("6"); btn6.addListener(this); btn6.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn7); btn7.setButtonText("7"); btn7.addListener(this); btn7.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn8); btn8.setButtonText("8"); btn8.addListener(this); btn8.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn9); btn9.setButtonText("9"); btn9.addListener(this); btn9.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btn0); btn0.setButtonText("0"); btn0.addListener(this); btn0.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnPlus); btnPlus.setButtonText("+"); btnPlus.addListener(this); btnPlus.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnMinus); btnMinus.setButtonText("-"); btnMinus.addListener(this); btnMinus.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnDot); btnDot.setButtonText("."); btnDot.addListener(this); btnDot.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnThru); btnThru.setButtonText("Thru"); btnThru.addListener(this); btnThru.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnBackspace); btnBackspace.setButtonText("<-"); btnBackspace.addListener(this); btnBackspace.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnEnter); btnEnter.setButtonText("Enter"); btnEnter.addListener(this); btnEnter.setWantsKeyboardFocus(false);
+    addAndMakeVisible(btnAssistant); btnAssistant.setButtonText("Assistant"); btnAssistant.addListener(this); btnAssistant.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(grandMaster); 
     grandMaster.setSliderStyle(Slider::LinearBarVertical);
     grandMaster.setSliderSnapsToMousePosition(false);
     grandMaster.setRange(0, 1);
     grandMaster.setValue(1, juce::dontSendNotification);
-
     grandMaster.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
     grandMaster.addListener(this);
     grandMaster.setWantsKeyboardFocus(false);
@@ -78,12 +77,14 @@ InputPanel::InputPanel()
     blackoutBtn.addListener(this);
     blackoutBtn.setToggleable(true);
     blackoutBtn.setClickingTogglesState(true);
+    blackoutBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(remoteInLockBtn);
     remoteInLockBtn.setButtonText("MIDI Lock");
     remoteInLockBtn.addListener(this);
     remoteInLockBtn.setToggleable(true);
     remoteInLockBtn.setClickingTogglesState(true);
+    remoteInLockBtn.setWantsKeyboardFocus(false);
     remoteInLockBtn.onClick = [this]() {
         if (!remoteInLockBtn.getToggleState()) {
             VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page);

@@ -89,9 +89,11 @@ LabelAndTimeWindow::LabelAndTimeWindow():
     addAndMakeVisible(validBtn);
     validBtn.setButtonText("Apply");
     validBtn.addListener(this);
+    validBtn.setWantsKeyboardFocus(false);
     addAndMakeVisible(exitBtn);
     exitBtn.setButtonText("Cancel");
     exitBtn.addListener(this);
+    exitBtn.setWantsKeyboardFocus(false);
 
 }
 

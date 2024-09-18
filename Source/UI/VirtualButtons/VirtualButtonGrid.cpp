@@ -38,15 +38,18 @@ VirtualButtonGrid::VirtualButtonGrid():
     addAndMakeVisible(pagePlusBtn);
     pagePlusBtn.addListener(this);
     pagePlusBtn.setButtonText("Page +");
+    pagePlusBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(pageMinusBtn);
     pageMinusBtn.addListener(this);
     pageMinusBtn.setButtonText("Page -");
+    pageMinusBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(pageDisplayBtn);
     pageDisplayBtn.addListener(this);
     pageDisplayBtn.setEnabled(false);
     pageDisplayBtn.setButtonText("Page 1");
+    pageDisplayBtn.setWantsKeyboardFocus(false);
 
     initCells();
 
@@ -107,6 +110,7 @@ void VirtualButtonGrid::initCells() {
             TextButton* t = new TextButton();
             t->setButtonText(String(x+1)+"x"+ String(y + 1));
             t->addListener(this);
+            t->setWantsKeyboardFocus(false);
             addAndMakeVisible(t);
             gridButtons.add(t);
         }

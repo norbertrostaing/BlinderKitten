@@ -47,6 +47,7 @@ PatchSheetLine::PatchSheetLine(Fixture* f, FixturePatch* fp, PatchSheet* parent)
 
 	addAndMakeVisible(actionsBtn);
 	actionsBtn.setButtonText("...");
+	actionsBtn.setWantsKeyboardFocus(false);
 
 	actionsBtn.onClick = [this](){
 		showLinePopup();

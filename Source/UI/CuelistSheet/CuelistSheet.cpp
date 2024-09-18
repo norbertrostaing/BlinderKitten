@@ -63,7 +63,9 @@ CuelistSheet::CuelistSheet()
 
 
     labelAndTimeBtn.setButtonText("Edit Label and time");
+    labelAndTimeBtn.setWantsKeyboardFocus(false);
     inspectBtn.setButtonText("Inspect");
+    inspectBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(viewport);
     viewport.setViewedComponent(&linesContainer);

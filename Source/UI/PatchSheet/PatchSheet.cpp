@@ -22,8 +22,11 @@ juce_ImplementSingleton(PatchSheet);
 PatchSheet::PatchSheet()
 {
     csvExportBtn.setButtonText("Export to CSV");
+    csvExportBtn.setWantsKeyboardFocus(false);
     addOneBtn.setButtonText("Add one");
+    addOneBtn.setWantsKeyboardFocus(false);
     addMultBtn.setButtonText("Add multiple");
+    addMultBtn.setWantsKeyboardFocus(false);
     addAndMakeVisible(csvExportBtn);
     addAndMakeVisible(addOneBtn);
     addAndMakeVisible(addMultBtn);

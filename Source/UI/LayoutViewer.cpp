@@ -22,14 +22,17 @@ LayoutViewer::LayoutViewer() :
 	addAndMakeVisible(&layoutsList);
 
 	editMode.setButtonText("Edit mode");
+	editMode.setWantsKeyboardFocus(false);
 	editMode.addListener(this);
 	addAndMakeVisible(&editMode);
 
 	viewPaths.setButtonText("Paths lines");
+	viewPaths.setWantsKeyboardFocus(false);
 	viewPaths.addListener(this);
 	addAndMakeVisible(&viewPaths);
 
 	exportBtn.setButtonText("Export");
+	exportBtn.setWantsKeyboardFocus(false);
 	addAndMakeVisible(exportBtn);
 	exportBtn.onClick = [this](){ exportToPNG();};
 

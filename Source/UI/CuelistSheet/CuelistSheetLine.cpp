@@ -35,6 +35,7 @@ CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 
 	addAndMakeVisible(actionsBtn);
 	actionsBtn.setButtonText("...");
+	actionsBtn.setWantsKeyboardFocus(false);
 
 	actionsBtn.onClick = [this](){
 		showCuePopup();

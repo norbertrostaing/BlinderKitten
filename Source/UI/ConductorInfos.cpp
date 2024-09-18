@@ -18,7 +18,7 @@ juce_ImplementSingleton(ConductorInfos);
 
 ConductorInfos::ConductorInfos()
 {
-    addAndMakeVisible(displayBtn);
+    addAndMakeVisible(displayBtn); displayBtn.setWantsKeyboardFocus(false);
     addAndMakeVisible(currentCueName);
     addAndMakeVisible(currentCueId);
     addAndMakeVisible(currentCueText);
@@ -27,9 +27,9 @@ ConductorInfos::ConductorInfos()
     addAndMakeVisible(currCommands);
     addAndMakeVisible(nextCommands);
 
-    addAndMakeVisible(inspectBtn);
-    addAndMakeVisible(updateBtn);
-    addAndMakeVisible(loadCurrentCueBtn);
+    addAndMakeVisible(inspectBtn); inspectBtn.setWantsKeyboardFocus(false);
+    addAndMakeVisible(updateBtn); updateBtn.setWantsKeyboardFocus(false);
+    addAndMakeVisible(loadCurrentCueBtn); loadCurrentCueBtn.setWantsKeyboardFocus(false);
 
     currentCueName.addListener(this);
     currentCueId.addListener(this);

@@ -40,15 +40,18 @@ VirtualFaderColGrid::VirtualFaderColGrid():
     addAndMakeVisible(pagePlusBtn);
     pagePlusBtn.addListener(this);
     pagePlusBtn.setButtonText("Page +");
+    pagePlusBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(pageMinusBtn);
     pageMinusBtn.addListener(this);
     pageMinusBtn.setButtonText("Page -");
+    pageMinusBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(pageDisplayBtn);
     pageDisplayBtn.addListener(this);
     pageDisplayBtn.setEnabled(false);
     pageDisplayBtn.setButtonText("Page 1");
+    pageDisplayBtn.setWantsKeyboardFocus(false);
 
     initCells();
 
@@ -301,6 +304,7 @@ void VirtualFaderColGrid::initCells() {
             TextButton* b = new TextButton();
             addAndMakeVisible(b);
             b->addListener(this);
+            b->setWantsKeyboardFocus(false);
             aboveButtons[x]->add(b);
             buttonColumnIndex.set(b, x+1);
             buttonToIndex.set(b, currentIndex);
@@ -335,6 +339,7 @@ void VirtualFaderColGrid::initCells() {
             TextButton* b = new TextButton();
             addAndMakeVisible(b);
             b->addListener(this);
+            b->setWantsKeyboardFocus(false);
             belowButtons[x]->add(b);
             buttonColumnIndex.set(b, x+1);
             buttonToIndex.set(b, currentIndex);

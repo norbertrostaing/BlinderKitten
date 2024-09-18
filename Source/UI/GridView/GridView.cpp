@@ -27,6 +27,7 @@ GridViewUI::~GridViewUI()
 
 GridViewButton::GridViewButton()
 {
+    setWantsKeyboardFocus(false);
 }
 
 GridViewButton::~GridViewButton()
