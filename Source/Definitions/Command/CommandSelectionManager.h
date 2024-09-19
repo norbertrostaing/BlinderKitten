@@ -22,6 +22,7 @@ public:
     ~CommandSelectionManager();
     CriticalSection computing;
     Array<SubFixture*> computedSelectedSubFixtures;
+    Array<Fixture*> computedSelectedFixtures;
     HashMap<SubFixture*, float> subFixtureToPosition;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);

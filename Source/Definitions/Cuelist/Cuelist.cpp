@@ -109,6 +109,7 @@ Cuelist::Cuelist(var params) :
 	chaserOptions.saveAndLoadRecursiveData = true;
 
 	chaseGenGroup = chaserGenContainer.addIntParameter("Group ID", "Group used to generate chaser",0,0);
+	chaseGenFixturesOnly = chaserGenContainer.addBoolParameter("Fixtures only", "use only fixtures (so don't use subfixtures) for the chaser", false);
 	chaseGenBuddying = chaserGenContainer.addIntParameter("Buddying", "fixtures are so friends they can't leave each other", 1, 1);
 	chaseGenBlocks = chaserGenContainer.addIntParameter("Blocks", "Repetitions of the chaser",1,1);
 	chaseGenWings = chaserGenContainer.addIntParameter("Wings", "repetitions, but symmetrical",1,1);
@@ -1509,6 +1510,18 @@ void Cuelist::autoCreateChaser()
 	g->selection.computeSelection();
 	Array<SubFixture*> subfixtures = g->selection.computedSelectedSubFixtures;
 	Array<std::shared_ptr<Array<SubFixture*>>> blocks;
+
+	bool fixturesOnly = chaseGenFixturesOnly->boolValue();
+	if (fixturesOnly) {
+		subfixtures.clear();
+		for (int i = 0; i < g->selection.computedSelectedFixtures.size(); i++) {
+			Fixture* f = g->selection.computedSelectedFixtures[i];
+			if (f->subFixturesContainer.size() > 0) {
+				subfixtures.add(f->subFixturesContainer[0]);
+			}
+		}
+	}
+
 	int nsubFixtures = subfixtures.size();
 
 	if (nsubFixtures == 0) {
@@ -1555,7 +1568,7 @@ void Cuelist::autoCreateChaser()
 				String name = "";
 				cs-> valueFrom ->setValue( sf->parentFixture->id->intValue() );
 				name = sf->parentFixture->id->stringValue();
-				if (sf->parentFixture->subFixtures.size() > 1) {
+				if (!fixturesOnly && sf->parentFixture->subFixtures.size() > 1) {
 					cs->subSel->setValue(true);
 					cs->subFrom->setValue(sf->subId);
 					name += "."+String(sf->subId);

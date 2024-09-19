@@ -28,6 +28,7 @@ void CommandSelectionManager::computeSelection() {
 void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	ScopedLock lock(computing);
 	computedSelectedSubFixtures.clear();
+	computedSelectedFixtures.clear();
 	subFixtureToPosition.clear();
 	Brain* b = Brain::getInstance();
 	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();
@@ -373,6 +374,10 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 			else {}
 		}
+	}
+
+	for (SubFixture* sf : computedSelectedSubFixtures) {
+		if (sf->parentFixture != nullptr) computedSelectedFixtures.addIfNotAlreadyThere(sf->parentFixture);
 	}
 	//int n = subFixtureToPosition.size();
 	//auto t = this;

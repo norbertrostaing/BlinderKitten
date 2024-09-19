@@ -58,6 +58,7 @@ public:
     IntParameter* chaseGenBuddying;
     IntParameter* chaseGenBlocks;
     IntParameter* chaseGenWings;
+    BoolParameter* chaseGenFixturesOnly;
     Trigger* chaserGenButton;
 
     double chaserStepDuration = 1000;
