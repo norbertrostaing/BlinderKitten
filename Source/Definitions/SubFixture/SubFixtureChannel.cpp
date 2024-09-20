@@ -188,6 +188,7 @@ void SubFixtureChannel::writeValue(float v) {
 
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
+	float noGMValue = 0;
 	if (defaultPresetValue >= 0) {
 		newValue = defaultPresetValue;
 	}
@@ -233,6 +234,10 @@ void SubFixtureChannel::updateVal(double now) {
 				if (!checkSwop || c->isSwopping) {
 					bool isApplied;
 					newValue = c->applyToChannel(this, newValue, now, isApplied);
+					if (c->excludeFromGrandMaster->boolValue()) {
+						bool temp;
+						noGMValue = c->applyToChannel(this, noGMValue, now, temp);
+					}
 					std::shared_ptr<ChannelValue> cv = c->activeValues.contains(this) ? c->activeValues.getReference(this) : nullptr;
 					if (cv != nullptr && isApplied) {
 						activeCommand = cv->parentCommand;
@@ -298,9 +303,14 @@ void SubFixtureChannel::updateVal(double now) {
 
 	if (reactToGrandMaster) {
 		double gm = InputPanel::getInstance()->grandMaster.getValue();
-		newValue *= gm;
 		if (InputPanel::getInstance()->blackoutBtn.getToggleState()) {
 			newValue = 0;
+		}
+		if (isHTP) {
+			newValue = jmax(newValue * (float)gm, noGMValue);
+		}
+		else {
+			newValue = jmap((float)gm, 0.0f,1.0f,noGMValue, newValue);
 		}
 	}
 

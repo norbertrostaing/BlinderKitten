@@ -121,6 +121,7 @@ public:
     BoolParameter* isRandom;
     BoolParameter* autoStart;
     BoolParameter* autoStop;
+    BoolParameter* excludeFromGrandMaster;
 
     FloatParameter* nextCueId;
 

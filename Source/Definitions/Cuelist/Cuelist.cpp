@@ -140,6 +140,7 @@ Cuelist::Cuelist(var params) :
 
 	autoStart = addBoolParameter("Auto start", "Starts the cuelist if HTP level is set to a different value than 0", true);
 	autoStop = addBoolParameter("Auto stop", "Stops the cuelist if HTP level is set to 0", true);
+	excludeFromGrandMaster = addBoolParameter("Exclude from grand master", "If checked, the grand master will not have any effect on channels in this cuelist", false);
 
 	goBtn = addTrigger("GO", "Trigger next cue");
 	goBackBtn = addTrigger("GO back", "Trigger previous cue");
