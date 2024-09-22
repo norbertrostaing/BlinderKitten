@@ -190,6 +190,8 @@ void DMXChannelView::clearSelection()
 
 void DMXChannelView::rangeOn(int from, int to)
 {
+	from = jmax(from, 0);
+	to = jmax(to, 0);
 	for (int i = jmin(from, to); i <= jmax(from, to); i++) {
 		selectedItems.add(channelItems[i]);
 		channelItems[i]->tmpFlash = true;
@@ -199,6 +201,8 @@ void DMXChannelView::rangeOn(int from, int to)
 
 void DMXChannelView::rangeOff(int from, int to)
 {
+	from = jmax(from, 0);
+	to = jmax(to, 0);
 	for (int i = jmin(from, to); i <= jmax(from, to); i++) {
 		selectedItems.removeAllInstancesOf(channelItems[i]);
 		channelItems[i]->tmpFlash = false;
