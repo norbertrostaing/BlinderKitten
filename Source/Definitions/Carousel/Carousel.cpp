@@ -161,6 +161,8 @@ void Carousel::userStart(bool useFadeIn) {
 
 void Carousel::start(bool useFadeIn) {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
+	TSStartFadeOut = 0;
+	TSEndFadeOut = 0;
 	if (useFadeIn && fadeInTime->floatValue() > 0) {
 		TSStartFadeIn = TSLastUpdate;
 		TSEndFadeIn = TSLastUpdate + (fadeInTime->floatValue() * 1000);
