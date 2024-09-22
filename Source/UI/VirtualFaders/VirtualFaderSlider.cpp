@@ -235,8 +235,7 @@ void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, b
 		return;
 	}
 	validIncrementIndex = incrementIndex+1;
-	feedback(value, origin);
-
+	
 	if (targType == "actions") {
 		actionManager.setValueAll(value, "VirtualFaders", 0, isRelative);
 		return;
@@ -340,6 +339,7 @@ void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, b
 			}
 		}
 	}
+	feedback(value, origin);
 
 }
 
