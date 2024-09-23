@@ -669,8 +669,6 @@ void VirtualFaderColGrid::deleteElmt(int id)
 
 void VirtualFaderColGrid::moveElmt(int idFrom, int idTo)
 {
-    idFrom--;
-    idTo--;
     VirtualFaderButton* vfbFrom = getVirtualFaderButton(idFrom, false);
     VirtualFaderSlider* vfsFrom = getVirtualFaderSlider(idFrom, false);
 
