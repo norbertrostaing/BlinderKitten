@@ -311,6 +311,7 @@ void DataTransferManager::execute() {
             Cuelist* targetCuelist = nullptr;
             VirtualFaderButton* trgButton = VirtualFaderColGrid::getInstance()->getVirtualFaderButton(tId, true);
             VirtualFaderSlider* trgSlider = VirtualFaderColGrid::getInstance()->getVirtualFaderSlider(tId, true);
+            if (trgButton == nullptr && trgSlider == nullptr) {return;}
 
             String targType = trgButton != nullptr ? trgButton->targetType->stringValue() : trgSlider->targetType->stringValue();
             int targId = trgButton != nullptr ? trgButton->targetId->intValue() : trgSlider->targetId->intValue();
