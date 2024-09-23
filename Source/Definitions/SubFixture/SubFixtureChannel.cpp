@@ -249,8 +249,6 @@ void SubFixtureChannel::updateVal(double now) {
 			}
 		}
 
-		postCuelistValue = newValue;
-
 		for (int i = 0; i <= overWritten; i++) {
 			if (cuelistStack[i]->layerId->intValue() == currentLayer) {
 				std::shared_ptr<ChannelValue> cv = cuelistStack[i]->activeValues.contains(this) ? cuelistStack[i]->activeValues.getReference(this) : nullptr;
@@ -261,7 +259,6 @@ void SubFixtureChannel::updateVal(double now) {
 			}
 		}
 		if (!checkSwop) {
-
 			for (int i = 0; i < programmerStack.size(); i++) {
 				if (programmerStack[i]->layerId->intValue() == currentLayer) {
 					newValue = programmerStack[i]->applyToChannel(this, newValue, now);
@@ -281,6 +278,7 @@ void SubFixtureChannel::updateVal(double now) {
 			}
 
 		}
+		postCuelistValue = newValue;
 		for (int i = 0; i < carouselStack.size(); i++) {
 			if (carouselStack[i]->layerId->intValue() == currentLayer) {
 				if (!checkSwop || carouselStack[i]->isSwopping) {
