@@ -714,7 +714,13 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			p->computing.enter();
 			p->currentUserCommand->cleanUnused();
 			p->computing.exit();
+		} else if (p->currentUserCommand->userCanPressNumber) {
+			p->processUserInput(String(id));
+			p->computing.enter();
+			p->currentUserCommand->cleanUnused();
+			p->computing.exit();
 		}
+
 	}
 	else if (type == "cuelist") {
 		Cuelist* trg = Brain::getInstance()->getCuelistById(id);
