@@ -352,6 +352,20 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "", 0, false);
 	}
 
+	else if (firstWord == "encoders" && aList.size() > 1) {
+		if (aList[1] == "hl") { Encoders::getInstance()->HLBtn.triggerClick();}
+		else if (aList[1] == "blind") { Encoders::getInstance()->blindBtn.triggerClick(); }
+		else if (aList[1] == "mode") { Encoders::getInstance()->btnMode.triggerClick(); }
+		else if (aList[1] == "encoderrange") { Encoders::getInstance()->encoderRangeBtn.triggerClick(); }
+		else if (aList[1] == "numbersornames") { Encoders::getInstance()->numbersOrNamesBtn.triggerClick(); }
+		else if (aList[1] == "littlemoveleft") { Encoders::getInstance()->littleMoveLeftBtn.triggerClick(); }
+		else if (aList[1] == "littlemoveright") { Encoders::getInstance()->littleMoveRightBtn.triggerClick(); }
+		else if (aList[1] == "bigmoveleft") { Encoders::getInstance()->bigMoveLeftBtn.triggerClick(); }
+		else if (aList[1] == "bigmoveright") { Encoders::getInstance()->bigMoveRightBtn.triggerClick(); }
+		else if (aList[1] == "commandup") { Encoders::getInstance()->commandUpBtn.triggerClick(); }
+		else if (aList[1] == "commanddown") { Encoders::getInstance()->commandDownBtn.triggerClick(); }
+		else if (aList[1] == "explodecommand") { Encoders::getInstance()->explodeCommandBtn.triggerClick(); }
+	}
 
 
 	/*
