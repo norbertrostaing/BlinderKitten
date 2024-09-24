@@ -37,6 +37,11 @@ ConductorInfos::ConductorInfos()
     nextCueGo.addListener(this);
     nextCueName.addListener(this);
 
+    BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+    mainIdSlider = e->conductorCuelistId->createDefaultUI();
+    mainIdSlider->showLabel = false;
+    addAndMakeVisible(mainIdSlider);
+
     displayBtn.onClick = [this](){
         displayMode = (displayMode +1) % 3;
         updateDisplayBtn();
@@ -142,7 +147,7 @@ ConductorInfos::~ConductorInfos()
     nextHTPOutFade = nullptr;
     if (nextLTPFade != nullptr) { removeChildComponent(nextLTPFade); delete nextLTPFade; }
     nextLTPFade = nullptr;
-
+    delete mainIdSlider;
 }
 
 void ConductorInfos::paint (juce::Graphics& g)
@@ -193,6 +198,7 @@ void ConductorInfos::resized()
 
     displayBtn.setBounds(w * 0 / 5, 0, w / 5, 20);
     inspectBtn.setBounds(w * 1 / 5, 0, w / 5, 20);
+    mainIdSlider->setBounds(w * 2 / 5, 0, w / 5, 20);
     loadCurrentCueBtn.setBounds(w * 3 / 5, 0, w / 5, 20);
     updateBtn.setBounds(w * 4 / 5, 0, w / 5, 20);
 

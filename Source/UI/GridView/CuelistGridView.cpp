@@ -97,6 +97,8 @@ void CuelistGridView::showContextMenu(int id)
             p.addItem("Temp merge track", [target]() {target->tempMergeProgrammer(UserInputManager::getInstance()->getProgrammer(true), true); });
             p.addItem("Temp merge no track", [target]() {target->tempMergeProgrammer(UserInputManager::getInstance()->getProgrammer(true), false); });
         }
+        p.addSeparator();
+        p.addItem("Select as main conductor", [target]() {target->selectAsMainConductor(); });
 
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }

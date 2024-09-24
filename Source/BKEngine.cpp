@@ -1394,6 +1394,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor) {
 		if (p == conductorCuelistId) {
 			ConductorInfos::getInstance()->linkFadeSlider();
+			ConductorInfos::getInstance()->updateContent();
 			CuelistSheet::getInstance()->updateContent();
 		}
 		ConductorInfos::getInstance()->updateStyle();

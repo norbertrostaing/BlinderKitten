@@ -47,6 +47,8 @@ public:
     TextButton updateBtn;
     TextButton loadCurrentCueBtn;
 
+    ControllableUI* mainIdSlider;
+
     Label upLabel;
     Label downLabel;
     Label ltpLabel;

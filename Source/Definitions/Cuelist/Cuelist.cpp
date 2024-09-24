@@ -158,6 +158,7 @@ Cuelist::Cuelist(var params) :
 	tempMergeTrack = addTrigger("Temp merge track", "Merge the content of the programmer in this cue, values will be tracked");
 	tempMergeNoTrack = addTrigger("Temp merge no track", "Merge the content of the programmer in this cue, values will not be tracked (off at the next go)");
 	cleanAllBtn = addTrigger("Clean all cues", "Delete all unused commands in all cues");
+	selectAsMainConductorBtn = addTrigger("Set main conductor", "Sets this cuelist as main conductor in project settings");
 
 	nextCue = addTargetParameter("Next Cue", "Cue triggered when button go pressed", &cues);
 	nextCue->maxDefaultSearchLevel = 0;
@@ -429,6 +430,9 @@ void Cuelist::triggerTriggered(Trigger* t) {
 		for (Cue* c : cues.items) {
 			c->cleanUnused();
 		}
+	}
+	else if (t == selectAsMainConductorBtn) {
+		selectAsMainConductor();
 	}
 	else {}
 }
@@ -1624,6 +1628,12 @@ void Cuelist::forceCueId(Cue* c, float id)
 		}
 	}
 	c->id->setValue(id);
+}
+
+void Cuelist::selectAsMainConductor()
+{
+	BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+	e->conductorCuelistId->setValue(id->intValue());
 }
 
 void Cuelist::tapTempo() {

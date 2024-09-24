@@ -36,6 +36,7 @@ public:
 
     TextButton labelAndTimeBtn;
     TextButton inspectBtn;
+    ControllableUI* mainIdSlider;
 
     Label cueIdLabel;
     Label cueNameLabel;

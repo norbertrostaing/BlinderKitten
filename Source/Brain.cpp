@@ -19,6 +19,7 @@
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
 #include "UI/ConductorInfos.h"
+#include "UI/CuelistSheet/CuelistSheet.h"
 
 juce_ImplementSingleton(Brain);
 
@@ -481,6 +482,8 @@ void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
 
     if (conductorId == id || relinkConductor) {
         ConductorInfos::getInstance()->linkFadeSlider();
+        ConductorInfos::getInstance()->updateContent();
+        CuelistSheet::getInstance()->updateContent();
     }
     TSBundles = Time::getMillisecondCounterHiRes();
 }

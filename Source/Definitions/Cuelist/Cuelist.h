@@ -89,6 +89,8 @@ public:
     Trigger* loadRandomBtn;
     Trigger* cleanAllBtn;
 
+    Trigger* selectAsMainConductorBtn;
+
     BoolParameter * isCuelistOn;
 
     FloatParameter* HTPLevel;
@@ -240,6 +242,7 @@ public:
     void tempMergeProgrammer(Programmer* p, bool trackValues = true);
 
     void forceCueId(Cue*c, float id);
+    void selectAsMainConductor();
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

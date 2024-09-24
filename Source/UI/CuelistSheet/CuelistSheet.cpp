@@ -67,6 +67,11 @@ CuelistSheet::CuelistSheet()
     inspectBtn.setButtonText("Inspect");
     inspectBtn.setWantsKeyboardFocus(false);
 
+    BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
+    mainIdSlider = e->conductorCuelistId->createDefaultUI();
+    mainIdSlider->showLabel = false;
+    addAndMakeVisible(mainIdSlider);
+
     addAndMakeVisible(viewport);
     viewport.setViewedComponent(&linesContainer);
 }
@@ -74,6 +79,7 @@ CuelistSheet::CuelistSheet()
 CuelistSheet::~CuelistSheet()
 {
     if (targetCuelist != nullptr) targetCuelist->removeChangeListener(this);
+    delete mainIdSlider;
 }
 
 void CuelistSheet::paint (juce::Graphics& g)
@@ -102,6 +108,7 @@ void CuelistSheet::resized()
     int width = getLocalBounds().getWidth();
     int height = getLocalBounds().getHeight();
 
+    mainIdSlider->setBounds(width * 2 / 5, 0, width / 5, 20);
     labelAndTimeBtn.setBounds(width * 3 / 5, 0, width / 5, 20);
     inspectBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
 
