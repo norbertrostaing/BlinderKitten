@@ -67,6 +67,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 	//LOG(address);
 	aList.addTokens(m.getAddressPattern().toString().toLowerCase(), "/", "\"");
 	if (aList.size() < 2) return;
+	aList.removeString("");
 
 	/*
 	cuelist
@@ -112,22 +113,22 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		/vbutton/4/5
 	*/
 
-	String firstWord = aList[1];
+	String firstWord = aList[0];
 	if (firstWord == "key") {
-		processInput(aList[2]);
+		processInput(aList[1]);
 	}
 	else if (firstWord == "grandmaster" && m.size() > 0) {
 		float val = OSCHelpers::getFloatArg(m[0]);
 		InputPanel::getInstance()->grandMaster.setValue(val);
 	}
-	else if (firstWord == "cuelist" && aList.size() > 3) {
-		int targetNumber = (int)((var)aList[2]);
+	else if (firstWord == "cuelist" && aList.size() > 2) {
+		int targetNumber = (int)((var)aList[1]);
 		Cuelist* target = Brain::getInstance()->getCuelistById(targetNumber);
 		if (target != nullptr) {
-			String action = aList[3].toLowerCase();
+			String action = aList[2].toLowerCase();
 			if (action == "go") { 
-				if (aList.size() > 4) {
-					float targetCue = (float)((var)aList[4]);
+				if (aList.size() > 3) {
+					float targetCue = (float)((var)aList[3]);
 					target->nextCueId->setValue(targetCue);
 					target->userGo();
 				}
@@ -141,8 +142,8 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			else if (action == "kill") { target->kill(); }
 			else if (action == "toggle") { target->toggle(); }
 			else if (action == "load") {
-				if (aList.size() > 4) {
-					float targetCue = (float)((var)aList[4]);
+				if (aList.size() > 3) {
+					float targetCue = (float)((var)aList[3]);
 					target->nextCueId->setValue(targetCue);
 				}
 				else {
@@ -150,8 +151,8 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 				}
 			}
 			else if (action == "loadandgo") { 
-				if (aList.size() > 4) {
-					float targetCue = (float)((var)aList[4]);
+				if (aList.size() > 3) {
+					float targetCue = (float)((var)aList[3]);
 					target->nextCueId->setValue(targetCue);
 					target->userGo();
 				}
@@ -201,11 +202,11 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			LOGWARNING("Cuelist " + String(targetNumber) + " doesn't exist");
 		}
 	}
-	else if (firstWord == "effect" && aList.size() > 3) {
-		int targetNumber = (int)((var)aList[2]);
+	else if (firstWord == "effect" && aList.size() > 2) {
+		int targetNumber = (int)((var)aList[1]);
 		Effect* target = Brain::getInstance()->getEffectById(targetNumber);
 		if (target != nullptr) {
-			String action = aList[3].toLowerCase();
+			String action = aList[2].toLowerCase();
 				if (action == "start") { target->userStart(); }
 			else if (action == "stop") { target->stop(); }
 			else if (action == "taptempo") { target->tapTempo(); }
@@ -222,11 +223,11 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			LOGWARNING("Effect " + String(targetNumber) + " doesn't exist");
 		}
 	}
-	else if (firstWord == "carousel" && aList.size() > 3) {
-		int targetNumber = (int)((var)aList[2]);
+	else if (firstWord == "carousel" && aList.size() > 2) {
+		int targetNumber = (int)((var)aList[1]);
 		Carousel* target = Brain::getInstance()->getCarouselById(targetNumber);
 		if (target != nullptr) {
-			String action = aList[3].toLowerCase();
+			String action = aList[2].toLowerCase();
 			if (action == "start") { target->userStart(); }
 			else if (action == "stop") { target->stop(); }
 			else if (action == "taptempo") { target->tapTempo(); }
@@ -243,11 +244,11 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			LOGWARNING("Carousel " + String(targetNumber) + " doesn't exist");
 		}
 	}
-	else if (firstWord == "mapper" && aList.size() > 3) {
-		int targetNumber = (int)((var)aList[2]);
+	else if (firstWord == "mapper" && aList.size() > 2) {
+		int targetNumber = (int)((var)aList[1]);
 		Mapper* target = Brain::getInstance()->getMapperById(targetNumber);
 		if (target != nullptr) {
-			String action = aList[3].toLowerCase();
+			String action = aList[2].toLowerCase();
 			if (action == "start") { target->start(); }
 			else if (action == "stop") { target->stop(); }
 			else if (action == "size" && m.size() > 0) {
@@ -260,11 +261,11 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		}
 	}
 
-	else if (firstWord == "tracker" && aList.size() > 3) {
-		int targetNumber = (int)((var)aList[2]);
+	else if (firstWord == "tracker" && aList.size() > 2) {
+		int targetNumber = (int)((var)aList[1]);
 		Tracker* target = Brain::getInstance()->getTrackerById(targetNumber);
 		if (target != nullptr) {
-			String action = aList[3].toLowerCase();
+			String action = aList[2].toLowerCase();
 			if (action == "start") { target->start(); }
 			else if (action == "stop") { target->stop(); }
 			else if (action == "size" && m.size() > 0) {
@@ -283,65 +284,70 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		}
 	}
 
-	else if (firstWord == "virtbutton" && aList.size() > 3 && m.size() > 0) {
+	else if (firstWord == "virtbutton" && aList.size() > 2 && m.size() > 0) {
 		int page = VirtualButtonGrid::getInstance()->page;
-		int col = (int)((var)aList[2]);
-		int row = (int)((var)aList[3]);
+		int col = (int)((var)aList[1]);
+		int row = (int)((var)aList[2]);
 		float value = OSCHelpers::getFloatArg(m[0]);
-		if (aList.size() == 5) {
-			page = (int)((var)aList[2]);
-			col = (int)((var)aList[3]);
-			row = (int)((var)aList[4]);
+		if (aList.size() == 4) {
+			page = (int)((var)aList[1]);
+			page = page == 0 ? VirtualButtonGrid::getInstance()->page : page;
+			col = (int)((var)aList[2]);
+			row = (int)((var)aList[3]);
 		}
 		VirtualButtonManager::getInstance()->setButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtabove" && aList.size() > 3 && m.size() > 0) {
+	else if (firstWord == "virtabove" && aList.size() > 2 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
-		int col = (int)((var)aList[2]);
-		int row = (int)((var)aList[3]);
+		int col = (int)((var)aList[1]);
+		int row = (int)((var)aList[2]);
 		float value = OSCHelpers::getFloatArg(m[0]);
-		if (aList.size() == 5) {
-			page = (int)((var)aList[2]);
-			col = (int)((var)aList[3]);
-			row = (int)((var)aList[4]);
+		if (aList.size() == 4) {
+			page = (int)((var)aList[1]);
+			page = page == 0 ? VirtualFaderColGrid::getInstance()->page : page;
+			col = (int)((var)aList[2]);
+			row = (int)((var)aList[3]);
 		}
 		VirtualFaderColManager::getInstance()->setAboveButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtbelow" && aList.size() > 3 && m.size() > 0) {
+	else if (firstWord == "virtbelow" && aList.size() > 2 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
-		int col = (int)((var)aList[2]);
-		int row = (int)((var)aList[3]);
+		int col = (int)((var)aList[1]);
+		int row = (int)((var)aList[2]);
 		float value = OSCHelpers::getFloatArg(m[0]);
-		if (aList.size() == 5) {
-			page = (int)((var)aList[2]);
-			col = (int)((var)aList[3]);
-			row = (int)((var)aList[4]);
+		if (aList.size() == 4) {
+			page = (int)((var)aList[1]);
+			page = page == 0 ? VirtualFaderColGrid::getInstance()->page : page;
+			col = (int)((var)aList[2]);
+			row = (int)((var)aList[3]);
 		}
 		VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, row, value, "");
 	}
 
-	else if (firstWord == "virtrotary" && aList.size() > 3 && m.size() > 0) {
+	else if (firstWord == "virtrotary" && aList.size() > 2 && m.size() > 0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
-		int col = (int)((var)aList[2]);
-		int row = (int)((var)aList[3]);
+		int col = (int)((var)aList[1]);
+		int row = (int)((var)aList[2]);
 		float value = OSCHelpers::getFloatArg(m[0]);
-		if (aList.size() == 5) {
-			page = (int)((var)aList[2]);
-			col = (int)((var)aList[3]);
-			row = (int)((var)aList[4]);
+		if (aList.size() == 4) {
+			page = (int)((var)aList[1]);
+			page = page == 0 ? VirtualFaderColGrid::getInstance()->page : page;
+			col = (int)((var)aList[2]);
+			row = (int)((var)aList[3]);
 		}
 		VirtualFaderColManager::getInstance()->setRotaryValue(page, col, row, value, "", 0, false);
 	}
 
-	else if (firstWord == "virtfader" && aList.size() >= 3 && m.size()>0) {
+	else if (firstWord == "virtfader" && aList.size() > 1 && m.size()>0) {
 		int page = VirtualFaderColGrid::getInstance()->page;
-		int col = (int)((var)aList[2]);
+		int col = (int)((var)aList[1]);
 		float value = OSCHelpers::getFloatArg(m[0]);
-		if (aList.size() == 5) {
-			page = (int)((var)aList[2]);
-			col = (int)((var)aList[3]);
+		if (aList.size() == 4) {
+			page = (int)((var)aList[1]);
+			page = page == 0 ? VirtualFaderColGrid::getInstance()->page : page;
+			col = (int)((var)aList[2]);
 		}
 		VirtualFaderColManager::getInstance()->setFaderValue(page, col, value, "", 0, false);
 	}
@@ -356,7 +362,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 
 		if (lm != nullptr)
 		{
-			if (aList[2] == "assign")
+			if (aList[1] == "assign")
 			{
 				if (m.size() >= 2)
 				{
@@ -389,7 +395,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 	}
 	else if (aList[1] == "prop")
 	{
-		int id = aList[2] == "all" ? -1 : aList[2].getIntValue();
+		int id = aList[1] == "all" ? -1 : aList[1].getIntValue();
 
 		String localAddress = "/" + aList.joinIntoString("/", 3);
 		OSCMessage lm(localAddress);
