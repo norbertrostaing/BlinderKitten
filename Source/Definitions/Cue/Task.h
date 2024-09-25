@@ -35,6 +35,12 @@ public:
     EnumParameter* carouselAction;
     EnumParameter* mapperAction;
     EnumParameter* trackerAction;
+    EnumParameter* bundleAction;
+
+    BoolParameter* useHTP;
+    BoolParameter* useLTP;
+    BoolParameter* useSize;
+    BoolParameter* useFlash;
 
     FloatParameter* targetValue;
 

@@ -929,29 +929,122 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
 {
     ScopedLock lock(usingTasksCollection);
 
-    String actionType = "";
     String targetType = t->targetType->getValue();
     Array<int> targetIds;
+    Array<String> targetTypes;
+    Array<String> actionsTypes;
 
-    if (t->targetThru->getValue()) {
+    String actionTypeDef = "";
+    actionTypeDef = targetType == "cuelist" ? t->cuelistAction->getValue() : actionTypeDef;
+    actionTypeDef = targetType == "effect" ? t->effectAction->getValue() : actionTypeDef;
+    actionTypeDef = targetType == "carousel" ? t->carouselAction->getValue() : actionTypeDef;
+    actionTypeDef = targetType == "mapper" ? t->mapperAction->getValue() : actionTypeDef;
+    actionTypeDef = targetType == "tracker" ? t->trackerAction->getValue() : actionTypeDef;
+
+    if (targetType == "bundle") {
+        Bundle* b = getBundleById(t->targetId->intValue());
+        if (b == nullptr) return;
+        b->computeValues();
+        Array<String> cuelistActions;
+        Array<String> effectActions;
+        Array<String> carouselActions;
+        Array<String> mapperActions;
+        Array<String> trackerActions;
+
+        if (t->bundleAction->getValue() == "start") {
+            cuelistActions.add("start");
+            effectActions.add("start");
+            carouselActions.add("start");
+            mapperActions.add("start");
+            trackerActions.add("start");
+        }
+        else if (t->bundleAction->getValue() == "stop") {
+            cuelistActions.add("stop");
+            effectActions.add("stop");
+            carouselActions.add("stop");
+            mapperActions.add("stop");
+            trackerActions.add("stop");
+        }
+        else if (t->bundleAction->getValue() == "speed") {
+            cuelistActions.add("speed");
+            effectActions.add("speed");
+            carouselActions.add("speed");
+        }
+        else if (t->bundleAction->getValue() == "size") {
+            if (t->useHTP) { cuelistActions.add("htplevel"); }
+            if (t->useLTP) { cuelistActions.add("ltplevel"); }
+            if (t->useSize) { 
+                effectActions.add("size");
+                carouselActions.add("size");
+                mapperActions.add("size");
+                trackerActions.add("size");
+            }
+            if (t->useFlash) { cuelistActions.add("flashlevel"); }
+        }
+
+        for (Cuelist* c : b->computedCuelists) {
+            for (String s : cuelistActions) {
+                targetIds.add(c->id->intValue());
+                targetTypes.add("cuelist");
+                actionsTypes.add(s);
+            }
+        }
+        for (Effect* c : b->computedEffects) {
+            for (String s : effectActions) {
+                targetIds.add(c->id->intValue());
+                targetTypes.add("effect");
+                actionsTypes.add(s);
+            }
+        }
+        for (Carousel* c : b->computedCarousels) {
+            for (String s : carouselActions) {
+                targetIds.add(c->id->intValue());
+                targetTypes.add("carousel");
+                actionsTypes.add(s);
+            }
+        }
+        for (Mapper* c : b->computedMappers) {
+            for (String s : mapperActions) {
+                targetIds.add(c->id->intValue());
+                targetTypes.add("mapper");
+                actionsTypes.add(s);
+            }
+        }
+        for (Tracker* c : b->computedTrackers) {
+            for (String s : cuelistActions) {
+                targetIds.add(c->id->intValue());
+                targetTypes.add("tracker");
+                actionsTypes.add(s);
+            }
+        }
+
+    }
+    else if (t->targetThru->getValue()) {
         int tId = t -> targetId -> getValue();
         int tIdTo = t -> targetIdTo -> getValue();
         int from = jmin(tId, tIdTo);
         int to = jmax(tId, tIdTo);
+
         for (int i = from; i <= to; i++) {
             targetIds.add(i);
+            targetTypes.add(targetType);
+            actionsTypes.add(actionTypeDef);
         }
     }
     else {
         targetIds.add(t->targetId->getValue());
+        targetTypes.add(targetType);
+        actionsTypes.add(actionTypeDef);
     }
     for (int i = 0; i < targetIds.size(); i++) {
         bool valid = false;
         double startValue = 0;
         double endValue = 1;
         int targetId = targetIds[i];
+        String targetType = targetTypes[i];
+        String actionType = actionsTypes[i];
+
         if (targetType == "cuelist") {
-            actionType = t->cuelistAction->getValue();
             Cuelist* target = getCuelistById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -971,7 +1064,6 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             }
         }
         else if (targetType == "effect") {
-            actionType = t->effectAction->getValue();
             Effect* target = getEffectById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -986,7 +1078,6 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             }
         }
         else if (targetType == "carousel") {
-            actionType = t->carouselAction->getValue();
             Carousel* target = getCarouselById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -1001,7 +1092,6 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             }
         }
         else if (targetType == "mapper") {
-            actionType = t->mapperAction->getValue();
             Mapper* target = getMapperById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -1012,7 +1102,6 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             }
         }
         else if (targetType == "action") {
-            actionType = t->mapperAction->getValue();
             valid = true;
         }
 

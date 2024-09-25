@@ -30,6 +30,7 @@ Task::Task(var params) :
 	targetType->addOption("Carousel", "carousel");
 	targetType->addOption("Mapper", "mapper");
 	targetType->addOption("Tracker", "tracker");
+	targetType->addOption("Bundle", "bundle");
 	targetType->addOption("Generic actions", "action");
 
 	targetId = addIntParameter("Target ID", "", 0, 0);
@@ -76,10 +77,21 @@ Task::Task(var params) :
 	trackerAction->addOption("Toggle", "toggle");
 	trackerAction->addOption("Set Size", "size");
 
-	targetValue = addFloatParameter("Target Value", "fade of th first element (in seconds)", 0, 0);
+	bundleAction = addEnumParameter("Bundle Action", "");
+	bundleAction->addOption("Start", "start");
+	bundleAction->addOption("Stop", "stop");
+	bundleAction->addOption("Set Size", "size");
+	bundleAction->addOption("Set Speed", "speed");
 
-	delay = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
-	fade = addFloatParameter("Fade", "fade of th first element (in seconds)", 0, 0);
+	useHTP = addBoolParameter("Move HTP", "Change size of HTP Level of cuelists", true);
+	useLTP = addBoolParameter("Move LTP", "Change size of LTP Level of cuelists", false);
+	useSize = addBoolParameter("Move Size", "Change size of effects, carousels, mappers and trackers", true);
+	useFlash = addBoolParameter("Move Flash", "change flash levels", false);
+
+	targetValue = addFloatParameter("Target Value", "target value", 0, 0);
+
+	delay = addFloatParameter("Delay", "delay of the first element (in seconds)", 0, 0);
+	fade = addFloatParameter("Fade", "fade of the first element (in seconds)", 0, 0);
 
 	addChildControllableContainer(&actionManager);
 	updateDisplay();
@@ -90,7 +102,7 @@ Task::~Task()
 }
 
 void Task::onContainerParameterChangedInternal(Parameter* c) {
-	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction || c == trackerAction || c == targetThru) {
+	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction || c == trackerAction || c == bundleAction || c == targetThru) {
 		updateDisplay();
 	}
 }
@@ -100,15 +112,22 @@ void Task::updateDisplay() {
 
 
 	targetId->hideInEditor = targType == "action";
-	targetThru->hideInEditor = targType == "action";
-	targetIdTo->hideInEditor = targType == "action" || !targetThru->getValue();
+	targetThru->hideInEditor = targType == "action" || targType == "bundle";
+	targetIdTo->hideInEditor = targType == "action" || targType == "bundle" || !targetThru->getValue();
 
 	cuelistAction->hideInEditor = targType != "cuelist";
 	effectAction->hideInEditor = targType != "effect";
 	carouselAction->hideInEditor = targType != "carousel";
 	mapperAction->hideInEditor = targType != "mapper";
 	trackerAction->hideInEditor = targType != "tracker";
+	bundleAction->hideInEditor = targType != "bundle";
 	actionManager.hideInEditor = targType != "action";
+
+	useHTP->hideInEditor = !(targType == "bundle" && bundleAction->getValue() == "size");
+	useLTP->hideInEditor = !(targType == "bundle" && bundleAction->getValue() == "size");
+	useSize->hideInEditor = !(targType == "bundle" && bundleAction->getValue() == "size");
+	useFlash->hideInEditor = !(targType == "bundle" && bundleAction->getValue() == "size");
+
 
 	if (targType == "cuelist") {
 		if (cuelistAction->getValue() == "htplevel") {
@@ -188,6 +207,23 @@ void Task::updateDisplay() {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
+		}
+		else {
+			fade->hideInEditor = true;
+			fade->setValue(0);
+			targetValue->hideInEditor = true;
+		}
+	}
+	else if (targType == "bundle") {
+		if (bundleAction->getValue() == "size") {
+			fade->hideInEditor = false;
+			targetValue->hideInEditor = false;
+			targetValue->setRange(0, 1);
+		}
+		else if (bundleAction->getValue() == "speed") {
+			fade->hideInEditor = false;
+			targetValue->hideInEditor = false;
+			targetValue->setRange(0, 2000);
 		}
 		else {
 			fade->hideInEditor = true;
