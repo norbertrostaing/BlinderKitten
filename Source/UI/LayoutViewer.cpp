@@ -528,9 +528,9 @@ void LayoutViewer::paint(Graphics& g)
 		float toX = (float)selectedLayout->dimensionsX->getValue()[1];
 		float fromY = (float)selectedLayout->dimensionsY->getValue()[0];
 		float toY = (float)selectedLayout->dimensionsY->getValue()[1];
-		float gridX = selectedLayout->gridSize->getValue()[0];
-		float gridY = selectedLayout->gridSize->getValue()[1];
-		if (gridX > 0) {
+		float gridX = (float)selectedLayout->gridSize->getValue()[0];
+		float gridY = (float)selectedLayout->gridSize->getValue()[1];
+		if (gridX > 0.1) {
 			while (currentX < jmax(abs(toX), abs(fromX))) {
 				float x = jmap(currentX, fromX, toX, 0.0f, width);
 				g.drawLine(x, 0, x, height, 1);
@@ -541,7 +541,7 @@ void LayoutViewer::paint(Graphics& g)
 				currentX += gridX;
 			}
 		}
-		if (gridY > 0) {
+		if (gridY > 0.1) {
 			while (currentY < jmax(abs(toY), abs(fromY))) {
 				float y = jmap(currentY, toY, fromY, 0.0f, height);
 				g.drawLine(0, y, width, y, 1);
