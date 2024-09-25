@@ -325,6 +325,14 @@ void ConductorInfos::updateContent()
     if (nextLTPFade != nullptr) { removeChildComponent(nextLTPFade); delete nextLTPFade; }
     nextLTPFade = nullptr;
 
+    currentCueId.setText("", juce::NotificationType::dontSendNotification);
+    currentCueName.setText("", juce::NotificationType::dontSendNotification);
+    currentCueText.setText("", juce::NotificationType::dontSendNotification);
+    nextCueGo.setText("", juce::NotificationType::dontSendNotification);
+    nextCueName.setText("", juce::NotificationType::dontSendNotification);
+    currCommands.setText("", juce::NotificationType::dontSendNotification);
+    nextCommands.setText("", juce::NotificationType::dontSendNotification);
+
     int targetCueId = engine->conductorCuelistId->intValue();
     Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
     if (target == nullptr) {return;}
@@ -335,9 +343,11 @@ void ConductorInfos::updateContent()
         currentCueId.setText(currentCue->id->stringValue(), juce::NotificationType::dontSendNotification);
         currentCueName.setText(currentCue->niceName, juce::NotificationType::dontSendNotification);
         currentCueText.setText(currentCue->cueText->stringValue(), juce::NotificationType::dontSendNotification);
-    }
+    } 
 
-    if (nextCue == nullptr) { return; }
+    if (nextCue == nullptr) { 
+        return;
+    }
 
     nextCueGo.setText(nextCue->goText->stringValue(), juce::NotificationType::dontSendNotification);
     nextCueName.setText(nextCue->niceName, juce::NotificationType::dontSendNotification);

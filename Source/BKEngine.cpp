@@ -439,6 +439,8 @@ void BKEngine::clearInternal()
 	Brain::getInstance()->startThread(Thread::Priority::highest);
 	Brain::getInstance()->skipLoop = false;
 	Encoders::getInstance()->clear();
+	CuelistSheet::getInstance()->updateContent();
+	ConductorInfos::getInstance()->updateContent();
 
 	tapTempoHistory->resetValue();
 	defaultPresetId->resetValue();
