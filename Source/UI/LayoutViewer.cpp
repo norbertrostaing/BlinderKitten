@@ -973,7 +973,8 @@ void LayoutViewer::paint(Graphics& g)
 					else {
 						drawColor = it.getKey()->getLayoutStrokeColor();
 					}
-					float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
+					int num = p->selection.computedSelectedFixtures.indexOf(it.getKey());
+					float angle = jmap((float)num, (float)0, (float)p->selection.computedSelectedFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
 					drawFixture(g, it.getKey(),p , XFixt - halfTileWidth, YFixt - halfTileWidth, tileWidth, tileHeight, angle, drawColor, labelPos);
 					if (!edit) {
 						clicg.setColour(getClickColour(it.getKey()));
