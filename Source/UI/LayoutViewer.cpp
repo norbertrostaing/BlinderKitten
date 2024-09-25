@@ -599,13 +599,11 @@ void LayoutViewer::paint(Graphics& g)
 				clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
 			}
 			else {
-				if (p->selection.computedSelectedSubFixtures.size() > 0) {
-					if (p->spreadSubFixtures->boolValue()) {
-						clicg.setColour(getClickColour(p->selection.computedSelectedSubFixtures[0]));
-					}
-					else {
-						clicg.setColour(getClickColour(p->selection.computedSelectedSubFixtures[0]->parentFixture));
-					}
+				if (p->selection.computedSelectedSubFixtures.size() == 1 && p->spreadSubFixtures->boolValue()) {
+					clicg.setColour(getClickColour(p->selection.computedSelectedSubFixtures[0]));
+				}
+				else if (p->selection.computedSelectedFixtures.size() == 1 && !p->spreadSubFixtures->boolValue()) {
+					clicg.setColour(getClickColour(p->selection.computedSelectedSubFixtures[0]->parentFixture));
 				}
 				else {
 					clicg.setColour(getClickColour(p, CLIC_SELECT));
@@ -620,11 +618,11 @@ void LayoutViewer::paint(Graphics& g)
 
 			bool drawed = false;
 
-			if (p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0 ) {
+			if (p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() == 1 ) {
 				drawed = true;
 				drawSubFixture(g, p->selection.computedSelectedSubFixtures[0], fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 			}
-			if (!drawed && !p->spreadSubFixtures->boolValue() && p->selection.computedSelectedSubFixtures.size() > 0) {
+			if (!drawed && !p->spreadSubFixtures->boolValue() && p->selection.computedSelectedFixtures.size() == 1) {
 				drawed = true;
 				float angle = p->fixturesAngleFrom->floatValue();
 				drawFixture(g, p->selection.computedSelectedSubFixtures[0]->parentFixture,p , fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);

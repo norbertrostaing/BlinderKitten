@@ -11,6 +11,9 @@
 #include "BKPath.h"
 #include "Definitions/Fixture/Fixture.h"
 #include "Definitions/SubFixture/SubFixture.h"
+#include "UserInputManager.h"
+#include "Programmer/Programmer.h"
+#include "Command/Command.h"
 
 BKPath::BKPath(var params) :
     BaseItem(params.getProperty("name", "Path")),
@@ -373,6 +376,27 @@ void BKPath::clicked()
 {
     actionManager.setValueAll(1.f);
     actionManager.setValueAll(0.f);
+
+    selection.computeSelection();
+    if (selection.computedSelectedFixtures.size() <= 1) return; 
+
+    Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
+    Command* c = p->currentUserCommand;
+    if (c == nullptr || !c->userCanPressSelectionType) {
+        Command* newCommand = p->commands.addItem();
+        newCommand->selection.clear();
+        newCommand->selection.loadJSONData(selection.getJSONData());
+        p->selectCommand(newCommand);
+        UserInputManager::getInstance()->commandSelectionChanged(newCommand);
+    }
+    else {
+        for (CommandSelection* cs : selection.items) {
+            CommandSelection* newCS = c->selection.addItem();
+            newCS->loadJSONData(cs->getJSONData());
+        }
+    }
+
+    
 }
 
 void BKPath::clearFixtImages()
