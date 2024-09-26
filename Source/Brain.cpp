@@ -935,11 +935,11 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
     Array<String> actionsTypes;
 
     String actionTypeDef = "";
-    actionTypeDef = targetType == "cuelist" ? t->cuelistAction->getValue() : actionTypeDef;
-    actionTypeDef = targetType == "effect" ? t->effectAction->getValue() : actionTypeDef;
-    actionTypeDef = targetType == "carousel" ? t->carouselAction->getValue() : actionTypeDef;
-    actionTypeDef = targetType == "mapper" ? t->mapperAction->getValue() : actionTypeDef;
-    actionTypeDef = targetType == "tracker" ? t->trackerAction->getValue() : actionTypeDef;
+    actionTypeDef = targetType == "cuelist" ? t->cuelistAction->getValue().toString() : actionTypeDef;
+    actionTypeDef = targetType == "effect" ? t->effectAction->getValue().toString() : actionTypeDef;
+    actionTypeDef = targetType == "carousel" ? t->carouselAction->getValue().toString() : actionTypeDef;
+    actionTypeDef = targetType == "mapper" ? t->mapperAction->getValue().toString() : actionTypeDef;
+    actionTypeDef = targetType == "tracker" ? t->trackerAction->getValue().toString() : actionTypeDef;
 
     if (targetType == "bundle") {
         Bundle* b = getBundleById(t->targetId->intValue());
