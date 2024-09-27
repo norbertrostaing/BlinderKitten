@@ -59,7 +59,7 @@ FixtureTypeChannel::~FixtureTypeChannel()
 };
 
 void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
-    if (p == resolution) {
+    if (p == resolution || p == channelType) {
         FixtureTypeChannelManager* p = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
         if (p != nullptr) {
             p->calcDmxChannels();

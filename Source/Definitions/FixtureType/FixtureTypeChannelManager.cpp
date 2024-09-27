@@ -30,6 +30,12 @@ void FixtureTypeChannelManager::calcDmxChannels() {
 		else {
 			LOG("no resolution !");
 		}
+
+		ChannelType* ct = dynamic_cast<ChannelType*>(items[i]->channelType->targetContainer.get());
+		if (ct != nullptr) {
+			name += " - "+ct->niceName;
+		}
+
 		items[i]->setNiceName(name);
 	}
 }
