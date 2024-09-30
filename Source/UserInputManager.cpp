@@ -344,7 +344,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		int page = VirtualFaderColGrid::getInstance()->page;
 		int col = (int)((var)aList[1]);
 		float value = OSCHelpers::getFloatArg(m[0]);
-		if (aList.size() == 4) {
+		if (aList.size() == 3) {
 			page = (int)((var)aList[1]);
 			page = page == 0 ? VirtualFaderColGrid::getInstance()->page : page;
 			col = (int)((var)aList[2]);
@@ -365,6 +365,15 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		else if (aList[1] == "commanddown") { Encoders::getInstance()->commandDownBtn.triggerClick(); }
 		else if (aList[1] == "commandup") { Encoders::getInstance()->commandUpBtn.triggerClick(); }
 		else if (aList[1] == "explodecommand") { Encoders::getInstance()->explodeCommandBtn.triggerClick(); }
+		else if (aList[1] == "value" && aList.size() > 2 && m.size()>0) {
+			int encoderNum = aList[2].getIntValue()-1;
+			float val = OSCHelpers::getFloatArg(m[0]);
+			if (encoderNum >= 0 && encoderNum < Encoders::getInstance()->encoders.size()) {
+				MessageManager::callAsync([encoderNum, val](){
+					Encoders::getInstance()->encoders[encoderNum]->setValue(val);
+				});
+			}
+		}
 	}
 
 
