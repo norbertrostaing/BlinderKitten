@@ -79,15 +79,15 @@ Encoders::Encoders():
     encoderRangeBtn.setButtonText("0-1");
     encoderRangeBtn.setWantsKeyboardFocus(false);
 
-    addAndMakeVisible(&commandUpBtn);
-    commandUpBtn.addListener(this);
-    commandUpBtn.setButtonText("Cmd -");
-    commandUpBtn.setWantsKeyboardFocus(false);
-
     addAndMakeVisible(&commandDownBtn);
     commandDownBtn.addListener(this);
-    commandDownBtn.setButtonText("Cmd +");
+    commandDownBtn.setButtonText("Cmd -");
     commandDownBtn.setWantsKeyboardFocus(false);
+
+    addAndMakeVisible(&commandUpBtn);
+    commandUpBtn.addListener(this);
+    commandUpBtn.setButtonText("Cmd +");
+    commandUpBtn.setWantsKeyboardFocus(false);
 
     addAndMakeVisible(&explodeCommandBtn);
     explodeCommandBtn.addListener(this);
@@ -164,8 +164,8 @@ void Encoders::resized()
     littleMoveRightBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (2 * btnWidth), 0, btnWidth, btnHeight);
     littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (3 * btnWidth), 0, btnWidth, btnHeight);
     bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (4 * btnWidth), 0, btnWidth, btnHeight);
-    commandDownBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
-    commandUpBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
+    commandUpBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
+    commandDownBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
     explodeCommandBtn.setBounds(windowW - (3 * margin) - (5 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
 
     commandLine.setBounds(0, 2 * btnHeight, windowW, btnHeight);
@@ -228,13 +228,13 @@ void Encoders::buttonClicked(Button* b) {
     else if (b == &littleMoveRightBtn) {
         offsetEncoders(1);
     }
-    else if (b == &commandDownBtn) {
+    else if (b == &commandUpBtn) {
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
         updateChannels();
     }
-    else if (b == &commandUpBtn) {
+    else if (b == &commandDownBtn) {
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->selectPrevCommand();
         }

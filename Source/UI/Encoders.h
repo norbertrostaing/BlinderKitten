@@ -64,8 +64,8 @@ public:
     TextButton bigMoveLeftBtn;
     TextButton bigMoveRightBtn;
 
-    TextButton commandUpBtn;
     TextButton commandDownBtn;
+    TextButton commandUpBtn;
     TextButton explodeCommandBtn;
 
     Label commandNumber;

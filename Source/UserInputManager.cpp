@@ -362,8 +362,8 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		else if (aList[1] == "littlemoveright") { Encoders::getInstance()->littleMoveRightBtn.triggerClick(); }
 		else if (aList[1] == "bigmoveleft") { Encoders::getInstance()->bigMoveLeftBtn.triggerClick(); }
 		else if (aList[1] == "bigmoveright") { Encoders::getInstance()->bigMoveRightBtn.triggerClick(); }
-		else if (aList[1] == "commandup") { Encoders::getInstance()->commandUpBtn.triggerClick(); }
 		else if (aList[1] == "commanddown") { Encoders::getInstance()->commandDownBtn.triggerClick(); }
+		else if (aList[1] == "commandup") { Encoders::getInstance()->commandUpBtn.triggerClick(); }
 		else if (aList[1] == "explodecommand") { Encoders::getInstance()->explodeCommandBtn.triggerClick(); }
 	}
 

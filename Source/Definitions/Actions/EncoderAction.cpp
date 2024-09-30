@@ -79,13 +79,13 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
 
     case ENC_NEXTCOMMAND:
         if (val == 1) {
-            Encoders::getInstance()->commandDownBtn.triggerClick();
+            Encoders::getInstance()->commandUpBtn.triggerClick();
         }
         break;
 
     case ENC_PREVCOMMAND:
         if (val == 1) {
-            Encoders::getInstance()->commandUpBtn.triggerClick();
+            Encoders::getInstance()->commandDownBtn.triggerClick();
         }
         break;
 
