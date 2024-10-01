@@ -159,7 +159,7 @@ float VirtualFaderSlider::getTargetValue()
 				FloatParameter* t = targ->HTPLevel;
 				return t->getValue(); 
 			}
-			if (action == "flashlevel") { return targ->FlashLevel->getValue(); }
+			if (action == "flashlevel") { return targ->flashLevel->getValue(); }
 			if (action == "ltplevel") { return targ->LTPLevel->getValue(); }
 			if (action == "speed") {
 				float maxSpeedVal = maxSpeed->floatValue();
@@ -261,8 +261,8 @@ void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, b
 			}
 			if (action == "flashlevel") { 
 				targ->nextFlashLevelController = origin;
-				value = isRelative ? targ->FlashLevel->floatValue() + value : value;
-				targ->FlashLevel->setValue(value);
+				value = isRelative ? targ->flashLevel->floatValue() + value : value;
+				targ->flashLevel->setValue(value);
 			}
 			if (action == "ltplevel" || action == "htpltplevel") {
 				targ->nextLTPLevelController = origin;
@@ -551,7 +551,7 @@ bool VirtualFaderSlider::isAllowedToMove(String origin, int incrementIndex, floa
 				}
 			}
 			if (action == "flashlevel") {
-				if (((origin == "" || targ->currentFlashLevelController == origin) && incrementOk) || abs(targ->FlashLevel->floatValue() - newValue) < 0.05) {
+				if (((origin == "" || targ->currentFlashLevelController == origin) && incrementOk) || abs(targ->flashLevel->floatValue() - newValue) < 0.05) {
 					return true;
 				}
 			}

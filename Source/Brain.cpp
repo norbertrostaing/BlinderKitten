@@ -1055,7 +1055,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
                     startValue = target->LTPLevel->getValue();
                     endValue = t->targetValue->getValue();
                 } else if (actionType == "flashLevel") {
-                    startValue = target->FlashLevel->getValue();
+                    startValue = target->flashLevel->getValue();
                     endValue = t->targetValue->getValue();
                 } else if (actionType == "speed") {
                     startValue = target->chaserSpeed->getValue();

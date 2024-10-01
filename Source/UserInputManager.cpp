@@ -190,7 +190,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			}
 			else if (action == "flashlevel" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);
-				target->FlashLevel->setValue(val);
+				target->flashLevel->setValue(val);
 			}
 			else if (action == "chaserspeed" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);

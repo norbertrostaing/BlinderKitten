@@ -97,7 +97,8 @@ public:
     FloatParameter* LTPLevel;
     float lastHTPLevel = -1;
     float lastLTPLevel = -1;
-    FloatParameter* FlashLevel;
+    FloatParameter* flashLevel;
+    BoolParameter* flashWithLtpLevel;
 
     String currentHTPLevelController = "";
     String currentLTPLevelController = "";

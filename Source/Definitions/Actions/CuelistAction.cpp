@@ -199,12 +199,12 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
     case CL_FLASHLEVEL:
         if (isRelative) {
             target->nextFlashLevelController = origin;
-            target->FlashLevel->setValue(target->FlashLevel->floatValue() + val);
+            target->flashLevel->setValue(target->flashLevel->floatValue() + val);
         }
         else {
-            if ((incrementOk && target->currentFlashLevelController == origin) || abs(target->FlashLevel->floatValue() - val) < 0.05) {
+            if ((incrementOk && target->currentFlashLevelController == origin) || abs(target->flashLevel->floatValue() - val) < 0.05) {
                 target->nextFlashLevelController = origin;
-                target->FlashLevel->setValue(val);
+                target->flashLevel->setValue(val);
                 validIncrementIndex = incrementIndex + 1;
             }
         }
@@ -319,7 +319,7 @@ var CuelistAction::getValue()
         break;
 
     case CL_FLASHLEVEL:
-        target->FlashLevel->floatValue();
+        target->flashLevel->floatValue();
         break;
 
     case CL_CHASERTAPTEMPO:

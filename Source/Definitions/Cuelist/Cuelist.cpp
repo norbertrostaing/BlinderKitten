@@ -167,8 +167,9 @@ Cuelist::Cuelist(var params) :
 	nextCueId = addFloatParameter("Next cue ID", "ID of the cue triggered when go pressed, 0 means next cue",0,0);
 
 	HTPLevel = addFloatParameter("HTP Level", "Level master for HTP channels of this sequence", 1, 0, 1);
-	FlashLevel = addFloatParameter("Flash Level", "Flash/swop level master for HTP channels of this sequence", 1, 0, 1);
+	flashLevel = addFloatParameter("Flash Level", "Flash/swop level master for HTP channels of this sequence", 1, 0, 1);
 	LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
+	flashWithLtpLevel = addBoolParameter("Flash with LTP level", "If checked, the LTP level will apply when flashing", false);
 
 	isCuelistOn = addBoolParameter("is On", "Is this cuelist on ?", false);
 	isCuelistOn->isSavable = false;
@@ -290,7 +291,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		lastHTPLevel = p->getValue();
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	if (p == FlashLevel) {
+	if (p == flashLevel) {
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
 		pleaseUpdateHTPs = true;
 		Brain::getInstance()->pleaseUpdate(this);
@@ -318,7 +319,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		currentLTPLevelController = nextLTPLevelController;
 		nextLTPLevelController = "";
 	}
-	if (p == FlashLevel) {
+	if (p == flashLevel) {
 		currentFlashLevelController = nextFlashLevelController;
 		nextFlashLevelController = "";
 	}
@@ -1105,7 +1106,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	faderLevel = (float)HTPLevel->getValue();
 
 	if (isFlashing) {
-		faderLevel = jmax(faderLevel,(float)FlashLevel->getValue());
+		faderLevel = jmax(faderLevel,(float)flashLevel->getValue());
 	}
 	else {
 	}
@@ -1124,8 +1125,10 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 			valueTo *= faderLevel;
 		}
 		else {
-			valueTo = jmap(LTPLevel->floatValue(), currentVal, valueTo);
-			// valueTo *= (double)LTPLevel->getValue();
+			if (!isFlashing || flashWithLtpLevel->boolValue()) {
+				valueTo *= (double)LTPLevel->getValue();
+			}
+			//valueTo = jmap(LTPLevel->floatValue(), currentVal, valueTo);
 		}
 	}
 	else {
@@ -1274,7 +1277,7 @@ void Cuelist::setHTPLevel(float level) {
 }
 
 void Cuelist::setFlashLevel(float level) {
-	FlashLevel->setValue(level);
+	flashLevel->setValue(level);
 }
 
 void Cuelist::setLTPLevel(float level) {

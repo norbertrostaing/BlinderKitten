@@ -177,7 +177,7 @@ void Bundle::setSize(float val, bool size, bool HTP, bool LTP, bool flash)
 	for (Cuelist* c : computedCuelists) {
 		if (HTP) c->HTPLevel->setValue(val);
 		if (LTP) c->LTPLevel->setValue(val);
-		if (flash) c->FlashLevel->setValue(val);
+		if (flash) c->flashLevel->setValue(val);
 	}
 	for (Effect* c : computedEffects) {
 		if (size) c->sizeValue->setValue(val);
@@ -213,7 +213,7 @@ void Bundle::setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash)
 	for (Cuelist* c : computedCuelists) {
 		if (HTP) c->HTPLevel->setValue(c->HTPLevel->floatValue()+val);
 		if (LTP) c->LTPLevel->setValue(c->LTPLevel->floatValue()+val);
-		if (flash) c->FlashLevel->setValue(c->FlashLevel->floatValue()+val);
+		if (flash) c->flashLevel->setValue(c->flashLevel->floatValue()+val);
 	}
 	for (Effect* c : computedEffects) {
 		if (size) c->sizeValue->setValue(c->sizeValue->floatValue()+val);
