@@ -96,7 +96,6 @@ void MIDIFeedback::updateDisplay() {
     sourceNumber->hideInEditor = source != VROTARY && source != VABOVEBUTTON && source != VBELOWBUTTON && source != ENCODER;
 
     MidiType type = midiType->getValueDataAsEnum<MidiType>();
-    pitchOrNumber->hideInEditor = type == PITCHWHEEL;
 
     bool isButton = source == VBUTTON || source == VABOVEBUTTON || source == VBELOWBUTTON;
     bool isComplex = isButton && differentChannels->boolValue();
@@ -104,7 +103,7 @@ void MIDIFeedback::updateDisplay() {
     bool isBlackout = source == BLACKOUT;
 
     channel->hideInEditor = isText;
-    pitchOrNumber->hideInEditor = isText;
+    pitchOrNumber->hideInEditor = isText || type == PITCHWHEEL;
     differentChannels->hideInEditor = !isButton;
     channel->hideInEditor = isButton && differentChannels->boolValue();
 
