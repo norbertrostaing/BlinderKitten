@@ -821,6 +821,8 @@ void Assistant::importAscii()
                 else if (currentSecondary == "TEXT") {
                     String text = originalLine.trim().substring(5);
                     currentCue->cueText->setValue(text);
+                    currentCue->goText->setValue(text);
+                    currentCue->setNiceName(text);
                 }
                 else if (currentSecondary == "FOLLOWON") {
                     if (words.size() == 1) {
