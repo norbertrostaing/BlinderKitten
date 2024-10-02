@@ -661,6 +661,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			}
 			tempCue->csComputing.exit();
 			tempCue->go();
+			tempCue->off();
 		}
 	}
 
