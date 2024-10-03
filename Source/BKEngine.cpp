@@ -249,6 +249,8 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(VirtualButtonManager::getInstance());
 	addChildControllableContainer(VirtualFaderColManager::getInstance());
 
+	addChildControllableContainer(Assistant::getInstance());
+
 
 	Encoders::getInstance()->engine = this;
 	//EncodersMult::getInstance()->engine = this;
