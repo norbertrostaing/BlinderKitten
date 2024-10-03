@@ -89,18 +89,20 @@ Carousel::~Carousel()
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->carouselPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->carouselPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
-	for (auto it = chanToCarouselRow.begin(); it != chanToCarouselRow.end(); it.next()) {
-		SubFixtureChannel* sfc = it.getKey();
-		sfc->carouselOutOfStack(this);
-		Brain::getInstance()->pleaseUpdate(sfc);
+	for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
+		if (sfc->carouselStack.contains(this)) {
+			sfc->carouselOutOfStack(this);
+			Brain::getInstance()->pleaseUpdate(sfc);
+		}
 	}
+	Brain::getInstance()->usingCollections.exit();
 	for (int i = 0; i < rows.items.size(); i++) {
 		rows.items[i]->parentCarousel = nullptr;
 		for (int j = 0; j < rows.items[i]->paramContainer.items.size(); j++) {
 			rows.items[i]->paramContainer.items[j]->parentCarousel = nullptr;
 		}
 	}
+	
 	CarouselGridView::getInstance()->updateCells();
 }
 
