@@ -109,9 +109,26 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
         if (val == 1) {
             target->speedMult(0.5);
         }
-
         break;
+
+    case BUN_FLASH:
+        target->flash(val == 1, false, false);
+        break;
+
+    case BUN_TIMED_FLASH:
+        target->flash(val == 1, true, false);
+        break;
+
+    case BUN_SWOP:
+        target->flash(val == 1, false, true);
+        break;
+
+    case BUN_TIMED_SWOP:
+        target->flash(val == 1, true, true);
+        break;
+
     }
+
 }
 
 var BundleAction::getValue()

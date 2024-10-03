@@ -65,5 +65,7 @@ public:
     void triggerTriggered(Trigger* t);
     static Bundle* create(var params) { return new Bundle(params); }
 
+    void flash(bool on, bool timing, bool swop = false);
+
 };
 

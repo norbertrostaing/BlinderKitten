@@ -260,6 +260,16 @@ void Bundle::onControllableFeedbackUpdate(ControllableContainer* cc, Controllabl
 void Bundle::triggerTriggered(Trigger* t){
 }
 
+void Bundle::flash(bool on, bool timing, bool swop)
+{
+	computeValues();
+	isComputing.enter();
+	for (Cuelist* c : computedCuelists) c->flash(on, timing, swop);
+	for (Effect* c : computedEffects) c->flash(on, swop);
+	for (Carousel* c : computedCarousels) c->flash(on, swop);
+	isComputing.exit();
+}
+
 void Bundle::afterLoadJSONDataInternal() {
 }
 

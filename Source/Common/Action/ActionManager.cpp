@@ -105,6 +105,11 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SPEED));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Double Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_DOUBLESPEED));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Half Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_HALFSPEED));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Flash", &BundleAction::create)->addParam("actionType", BundleAction::BUN_FLASH));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Swop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SWOP));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Timed Flash", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TIMED_FLASH));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Timed Swop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TIMED_SWOP));
+
 
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));
