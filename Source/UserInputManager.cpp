@@ -56,6 +56,12 @@ void UserInputManager::processInput(String s) {
 	if (s.toLowerCase() == "label") {
 		dynamic_cast<BKEngine*>(Engine::mainEngine)->showLabelAndTime();
 	}
+	if (s.toLowerCase() == "midilock") {
+		InputPanel::getInstance()->remoteInLockBtn.triggerClick();
+	}
+	if (s.toLowerCase() == "blackout") {
+		InputPanel::getInstance()->blackoutBtn.triggerClick();
+	}
 
 	getProgrammer(true)->processUserInput(s);
 }

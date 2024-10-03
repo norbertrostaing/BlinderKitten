@@ -56,6 +56,8 @@ InputPanelAction::InputPanelAction(var params) :
         targetButton->addOption("Load content", "Loadcontent");
         targetButton->addOption("Copy", "Copy");
         targetButton->addOption("Delete", "Delete");
+        targetButton->addOption("Black Out", "Blackout");
+        targetButton->addOption("Midi Lock", "MidiLock");
     }
     if (actionType == IP_RANDOMSEED) {
         randomSeed = addIntParameter("Random Seed", "Initialise all random events with this value",0,0);
