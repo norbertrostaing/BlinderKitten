@@ -186,6 +186,18 @@ BKEngine::BKEngine() :
 	CPBlueChannel->targetType = TargetParameter::CONTAINER;
 	CPBlueChannel->maxDefaultSearchLevel = 2;
 
+	CPWhiteChannel = colorPickerContainer.addTargetParameter("White channel", "", ChannelFamilyManager::getInstance());
+	CPWhiteChannel->targetType = TargetParameter::CONTAINER;
+	CPWhiteChannel->maxDefaultSearchLevel = 2;
+
+	CPAmberChannel = colorPickerContainer.addTargetParameter("Amber channel", "", ChannelFamilyManager::getInstance());
+	CPAmberChannel->targetType = TargetParameter::CONTAINER;
+	CPAmberChannel->maxDefaultSearchLevel = 2;
+
+	CPUVChannel = colorPickerContainer.addTargetParameter("UV channel", "", ChannelFamilyManager::getInstance());
+	CPUVChannel->targetType = TargetParameter::CONTAINER;
+	CPUVChannel->maxDefaultSearchLevel = 2;
+
 	CPCyanChannel = colorPickerContainer.addTargetParameter("Cyan channel", "", ChannelFamilyManager::getInstance());
 	CPCyanChannel->targetType = TargetParameter::CONTAINER;
 	CPCyanChannel->maxDefaultSearchLevel = 2;
@@ -467,6 +479,9 @@ void BKEngine::clearInternal()
 	CPRedChannel->resetValue();
 	CPGreenChannel->resetValue();
 	CPBlueChannel->resetValue();
+	CPWhiteChannel->resetValue();
+	CPAmberChannel->resetValue();
+	CPUVChannel->resetValue();
 	CPCyanChannel->resetValue();
 	CPMagentaChannel->resetValue();
 	CPYellowChannel->resetValue();
@@ -1429,8 +1444,20 @@ void BKEngine::autoFillDefaultChannels()
 			CPGreenChannel->setValueFromTarget(Green);
 		}
 		auto Blue = col->definitions.getItemWithName("Blue");
-		if (Blue!= nullptr) {
+		if (Blue != nullptr) {
 			CPBlueChannel->setValueFromTarget(Blue);
+		}
+		auto White = col->definitions.getItemWithName("White");
+		if (White != nullptr) {
+			CPWhiteChannel->setValueFromTarget(White);
+		}
+		auto Amber = col->definitions.getItemWithName("Amber");
+		if (Amber != nullptr) {
+			CPAmberChannel->setValueFromTarget(Amber);
+		}
+		auto UV = col->definitions.getItemWithName("UV");
+		if (UV != nullptr) {
+			CPUVChannel->setValueFromTarget(UV);
 		}
 		auto Cyan = col->definitions.getItemWithName("Cyan");
 		if (Cyan!= nullptr) {

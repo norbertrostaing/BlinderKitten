@@ -71,6 +71,9 @@ public:
 	TargetParameter* CPRedChannel;
 	TargetParameter* CPGreenChannel;
 	TargetParameter* CPBlueChannel;
+	TargetParameter* CPWhiteChannel;
+	TargetParameter* CPAmberChannel;
+	TargetParameter* CPUVChannel;
 	TargetParameter* CPCyanChannel;
 	TargetParameter* CPMagentaChannel;
 	TargetParameter* CPYellowChannel;

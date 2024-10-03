@@ -57,14 +57,17 @@ SubFixture::~SubFixture()
 Colour SubFixture::getOutputColor()
 {
 	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
-	float r = 0;
-	float g = 0;
-	float b = 0;
+	double r = 0;
+	double g = 0;
+	double b = 0;
 
 	ChannelType* intensity = dynamic_cast<ChannelType*>(e->IntensityChannel->targetContainer.get());
 	ChannelType* red = dynamic_cast<ChannelType*>(e->CPRedChannel->targetContainer.get());
 	ChannelType* green = dynamic_cast<ChannelType*>(e->CPGreenChannel->targetContainer.get());
 	ChannelType* blue = dynamic_cast<ChannelType*>(e->CPBlueChannel->targetContainer.get());
+	ChannelType* white = dynamic_cast<ChannelType*>(e->CPWhiteChannel->targetContainer.get());
+	ChannelType* amber = dynamic_cast<ChannelType*>(e->CPAmberChannel->targetContainer.get());
+	ChannelType* uv = dynamic_cast<ChannelType*>(e->CPUVChannel->targetContainer.get());
 	ChannelType* cyan = dynamic_cast<ChannelType*>(e->CPCyanChannel->targetContainer.get());
 	ChannelType* magenta = dynamic_cast<ChannelType*>(e->CPMagentaChannel->targetContainer.get());
 	ChannelType* yellow = dynamic_cast<ChannelType*>(e->CPYellowChannel->targetContainer.get());
@@ -72,11 +75,40 @@ Colour SubFixture::getOutputColor()
 	bool colorIsSet = false;
 
 	if (red != nullptr && green != nullptr && blue != nullptr) {
-		if (channelsMap.contains(red)) { colorIsSet = true; r = channelsMap.getReference(red)->currentValue; }
-		if (channelsMap.contains(green)) { colorIsSet = true; g = channelsMap.getReference(green)->currentValue; }
-		if (channelsMap.contains(blue)) { colorIsSet = true; b = channelsMap.getReference(blue)->currentValue; }
+		if (channelsMap.contains(red)) { colorIsSet = true; r += channelsMap.getReference(red)->currentValue; }
+		if (channelsMap.contains(green)) { colorIsSet = true; g += channelsMap.getReference(green)->currentValue; }
+		if (channelsMap.contains(blue)) { colorIsSet = true; b += channelsMap.getReference(blue)->currentValue; }
 	}
-	
+
+	if (white != nullptr && channelsMap.contains(white)) {
+		colorIsSet = true;
+		double v = channelsMap.getReference(white)->currentValue;
+		r += v * 1.0;
+		g += v * 1.0;
+		b += v * 1.0;
+	}
+	if (amber != nullptr && channelsMap.contains(amber)) {
+		colorIsSet = true;
+		double v = channelsMap.getReference(amber)->currentValue;
+		r += v * 1.0;
+		g += v * 0.5;
+		b += v * 0.0;
+	}
+	if (uv != nullptr && channelsMap.contains(uv)) {
+		colorIsSet = true;
+		double v = channelsMap.getReference(uv)->currentValue;
+		r += v * 0.5;
+		g += v * 0;
+		b += v * 1.0;
+	}
+
+	if (r > 1 || g > 1 || b > 1) {
+		double max = jmax(r, g,b);
+		r = jmap(r, 0.0, max, 0.0, 1.0);
+		g = jmap(g, 0.0, max, 0.0, 1.0);
+		b = jmap(b, 0.0, max, 0.0, 1.0);
+	}
+
 	if (!colorIsSet && cyan != nullptr && magenta != nullptr && yellow != nullptr) {
 		r = 1; g = 1; b= 1;
 		if (channelsMap.contains(cyan)) { colorIsSet = true; r = 1-channelsMap.getReference(cyan)->currentValue; }
@@ -87,7 +119,7 @@ Colour SubFixture::getOutputColor()
 	if (intensity != nullptr) {
 		if (!colorIsSet) {r = 1; g = 1; b = 1;}
 		if (channelsMap.contains(intensity)) {
-			float v = channelsMap.getReference(intensity)->currentValue;
+			double v = channelsMap.getReference(intensity)->currentValue;
 			colorIsSet = true;
 			r *= v;
 			g *= v;
