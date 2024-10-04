@@ -94,6 +94,7 @@ public:
     bool cuelistGridNeedRefresh = false;
     bool carouselGridNeedRefresh = false;
     bool effectGridNeedRefresh = false;
+    bool mapperGridNeedRefresh = false;
     bool layoutViewerNeedRefresh = false;
     bool defaultValuesNeedRefresh = false;
 

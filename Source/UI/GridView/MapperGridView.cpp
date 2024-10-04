@@ -58,6 +58,23 @@ void MapperGridView::updateCells() {
     }
 }
 
+void MapperGridView::updateButtons()
+{
+    const MessageManagerLock mmLock;
+    for (int i = 0; i < numberOfCells; i++) {
+        Mapper* c = Brain::getInstance()->getMapperById(i + 1);
+        if (c != nullptr) {
+            if (c->isMapperOn->boolValue()) {
+                gridButtons[i]->setColour(TextButton::buttonColourId, juce::Colour(64, 80, 64));
+            }
+            else {
+                gridButtons[i]->removeColour(TextButton::buttonColourId);
+            }
+        }
+    }
+}
+
+
 void MapperGridView::showContextMenu(int id)
 {
     Mapper* target = Brain::getInstance()->getMapperById(id);

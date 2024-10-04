@@ -18,6 +18,7 @@
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
+#include "UI/GridView/MapperGridView.h"
 #include "UI/ConductorInfos.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
 
@@ -282,6 +283,11 @@ void Brain::brainLoop() {
     if (effectGridNeedRefresh) {
         effectGridNeedRefresh = false;
         MessageManager::callAsync([this]() {EffectGridView::getInstance()->updateButtons(); });
+    }
+
+    if (mapperGridNeedRefresh) {
+        mapperGridNeedRefresh = false;
+        MessageManager::callAsync([this]() {MapperGridView::getInstance()->updateButtons(); });
     }
 
     if (defaultValuesNeedRefresh) {
