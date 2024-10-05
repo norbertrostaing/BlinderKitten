@@ -20,13 +20,14 @@ public:
     ~EncoderAction();
 
     enum ActionType { ENC_VALUE, ENC_SELECT, ENC_NEXTCOMMAND, ENC_PREVCOMMAND, ENC_TOGGLEFILTERNUM, ENC_TOGGLEFILTERFAMILY, ENC_CLEARFILTERS, 
-        ENC_HL, ENC_BLIND, ENC_RANGE, ENC_THRU, ENC_EXPLODE
+        ENC_HL, ENC_BLIND, ENC_RANGE, ENC_THRU, ENC_EXPLODE, ENC_TYPE
         };
     ActionType actionType;
     IntParameter* targetEncoder;
     IntParameter* selectionDelta;
     IntParameter* filterNumber;
     TargetParameter* filterFamily;
+    TargetParameter* encoderType;
     BoolParameter* soloMode;
 
 

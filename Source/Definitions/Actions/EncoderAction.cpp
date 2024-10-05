@@ -24,7 +24,12 @@ EncoderAction::EncoderAction(var params) :
     if (actionType == ENC_VALUE) {
         targetEncoder = addIntParameter("Encoder", "Wich encoder do you want to modify ?", 1, 1);
     }
-    else if(actionType == ENC_SELECT) {
+    else if (actionType == ENC_TYPE) {
+        encoderType = addTargetParameter("Parameter", "Wich encoder parameter do you want to move ?", ChannelFamilyManager::getInstance());
+        encoderType->targetType = TargetParameter::CONTAINER;
+        encoderType->maxDefaultSearchLevel = 2;
+    }
+    else if (actionType == ENC_SELECT) {
         selectionDelta = addIntParameter("Selection delta", "If positive, it will select nth next encoder, if negative, nth previous encoder", 1);
     }
     else if (actionType == ENC_TOGGLEFILTERNUM) {
@@ -65,6 +70,25 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
             }
             else {
                 UserInputManager::getInstance()->encoderValueChanged(index, value, origin);
+            }
+        }
+        break;
+
+    case ENC_TYPE: {
+            ChannelType* ct = dynamic_cast<ChannelType*>(encoderType->targetContainer.get());
+
+            if (ct != nullptr) {
+                if (isRelative) {
+                    float baseValue = Encoders::getInstance()->encoders[index]->getValue();
+                    if (Encoders::getInstance()->encoderRange == 1) baseValue /= 100.;
+                    if (Encoders::getInstance()->encoderRange == 2) baseValue /= 255.;
+
+                    UserInputManager::getInstance()->changeChannelValue(ct, baseValue + (float)value);
+                }
+                else {
+                    UserInputManager::getInstance()->changeChannelValue(ct, value);
+                }
+
             }
         }
         break;
