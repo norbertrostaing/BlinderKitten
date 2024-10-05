@@ -74,7 +74,8 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
-    case ENC_TYPE: {
+    case ENC_TYPE: 
+        {
             ChannelType* ct = dynamic_cast<ChannelType*>(encoderType->targetContainer.get());
 
             if (ct != nullptr) {
