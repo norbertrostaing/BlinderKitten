@@ -44,6 +44,7 @@ void MultiplicatorAction::setValueInternal(var value, String origin, int increme
     if (target == nullptr) return;
 
     float val = value;
+    bool incrementOk = incrementIndex == 0 || incrementIndex == validIncrementIndex;
 
     switch (actionType)
     {
@@ -54,8 +55,18 @@ void MultiplicatorAction::setValueInternal(var value, String origin, int increme
         break;
 
     case MULT_SET:
-        val = jmap(val, (float)fromValue->getValue(), (float)toValue->getValue());
-        target->multValue->setValue(val);
+
+        if (isRelative) {
+            target->multValue->setValue(target->multValue->floatValue() + val);
+        }
+        else {
+            if ((incrementOk ) || abs(target->multValue->floatValue() - val) < 0.05) {
+                val = jmap(val, (float)fromValue->getValue(), (float)toValue->getValue());
+                target->multValue->setValue(val);
+                validIncrementIndex = incrementIndex + 1;
+            }
+        }
+
         break;
     }
 }
