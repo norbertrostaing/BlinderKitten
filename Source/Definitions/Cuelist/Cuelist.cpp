@@ -1611,12 +1611,14 @@ void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
 	isComputing.enter();
 	p->computing.enter();
 	for (auto it = p->activeValues.begin(); it != p->activeValues.end(); it.next()) {
-		SubFixtureChannel* sfc = it.getKey();
-		std::shared_ptr<ChannelValue> cv = std::make_shared<ChannelValue>();
-		cv->endValue = it.getValue()->endValue;
-		cv->canBeTracked = trackValues;
-		activeValues.set(sfc, cv);
-		sfc->cuelistOnTopOfStack(this);
+		if (it.getValue()->endValue >=0) {
+			SubFixtureChannel* sfc = it.getKey();
+			std::shared_ptr<ChannelValue> cv = std::make_shared<ChannelValue>();
+			cv->endValue = it.getValue()->endValue;
+			cv->canBeTracked = trackValues;
+			activeValues.set(sfc, cv);
+			sfc->cuelistOnTopOfStack(this);
+		}
 	}
 	p->computing.exit();
 	isComputing.exit();
