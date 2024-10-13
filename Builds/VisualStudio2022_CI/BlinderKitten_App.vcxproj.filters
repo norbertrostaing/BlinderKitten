@@ -1315,6 +1315,9 @@
     <ClCompile Include="..\..\Source\Definitions\Command\CommandValueManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\Command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Command\MoveInBlackManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Cue\Cue.cpp">
       <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
     </ClCompile>
@@ -5074,6 +5077,9 @@
       <Filter>BlinderKitten\Source\Definitions\Command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Command\CommandValueManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Command\MoveInBlackManager.h">
       <Filter>BlinderKitten\Source\Definitions\Command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Cue\Cue.h">

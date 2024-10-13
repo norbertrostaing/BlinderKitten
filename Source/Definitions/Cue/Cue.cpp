@@ -78,6 +78,7 @@ Cue::Cue(var params) :
 
 	addChildControllableContainer(&actionsContainer);
 	addChildControllableContainer(&timingContainer);
+	addChildControllableContainer(&moveInBlack);
 
 	addChildControllableContainer(&commands);
 	addChildControllableContainer(&tasks);

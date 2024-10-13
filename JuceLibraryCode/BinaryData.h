@@ -21,7 +21,7 @@ namespace BinaryData
     const int            icon_pngSize = 85868;
 
     extern const char*   newFileContent_olga;
-    const int            newFileContent_olgaSize = 42114;
+    const int            newFileContent_olgaSize = 42162;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 5;

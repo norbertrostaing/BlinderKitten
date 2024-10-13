@@ -123,6 +123,7 @@ Cuelist::Cuelist(var params) :
 	timing.presetOrValue->removeOption("Cue timing");
 	timing.presetOrValue->setValue("Raw Timing");
 	addChildControllableContainer(&timing);
+	addChildControllableContainer(&moveInBlack);
 	addChildControllableContainer(&chaserOptions);
 
 	endAction = addEnumParameter("Loop", "Behaviour of this cuelist at the end of its cues");
@@ -774,6 +775,35 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		}
 	}
 	
+	// move in black
+	if (!isChaser->boolValue()) {
+		Cue* MIBNextCue = getNextCue();
+		if (MIBNextCue != nullptr) {
+			MIBNextCue->computeValues();
+			for (auto it = MIBNextCue->computedValues.begin(); it != MIBNextCue->computedValues.end(); it.next()) {
+				std::shared_ptr<ChannelValue> cv = it.getValue();
+				if (cv->moveInBlack) {
+					SubFixtureChannel* sfc = it.getKey();
+					BKEngine* engine = (BKEngine*)BKEngine::mainEngine;
+					ChannelType* dimmerCT = dynamic_cast<ChannelType*>(engine->IntensityChannel->targetContainer.get());
+					if (sfc->parentSubFixture->channelsMap.contains(dimmerCT)) {
+						SubFixtureChannel* sfcDimmer = sfc->parentSubFixture->channelsMap.getReference(dimmerCT);
+						bool canMove = true;
+						if (activeValues.contains(sfcDimmer) && activeValues.getReference(sfcDimmer)!= nullptr && activeValues.getReference(sfcDimmer)->endValue >= 0) canMove = false;
+						if (newActiveValues.contains(sfcDimmer) && newActiveValues.getReference(sfcDimmer)!= nullptr && newActiveValues.getReference(sfcDimmer)->endValue >= 0) canMove = false;
+						if (canMove) {
+							cv->TSInit = now;
+							cv->TSStart = now;
+							cv->TSEnd = now;
+							newActiveValues.set(sfc, cv);
+							sfc->cuelistOnTopOfStack(this);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	TSTransitionDuration = TSTransitionEnd - TSTransitionStart;
 	Array<SubFixtureChannel*> toUpdate;
 	

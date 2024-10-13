@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "../Command/Command.h"
 #include "Task.h"
+#include "Command/MoveInBlackManager.h"
 
 class Cue:
     public BaseItem,
@@ -51,6 +52,8 @@ public:
     Trigger* createAfterBtn;
     Trigger* createBeforeBtn;
     Trigger* cleanUnusedCommandsBtn;
+
+    MoveInBlackManager moveInBlack;
 
     bool isComputing = false;
 

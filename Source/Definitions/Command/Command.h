@@ -14,6 +14,7 @@
 #include "CommandValue.h"
 #include "CommandTiming.h"
 #include "CommandSelectionManager.h"
+#include "MoveInBlackManager.h"
 
 class CommandSelectionManager;
 
@@ -38,6 +39,7 @@ public:
     TargetParameter* devTypeParam;
 
     BoolParameter* doNotTrack;
+    MoveInBlackManager moveInBlack;
 
     CommandSelectionManager selection;
     BaseManager<CommandValue> values;

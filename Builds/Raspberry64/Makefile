@@ -149,6 +149,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommandTiming_d4942483.o \
   $(JUCE_OBJDIR)/CommandValue_d798fca2.o \
   $(JUCE_OBJDIR)/CommandValueManager_2dce5d35.o \
+  $(JUCE_OBJDIR)/MoveInBlackManager_55053620.o \
   $(JUCE_OBJDIR)/Cue_a2480ce9.o \
   $(JUCE_OBJDIR)/CueManager_b280bf0e.o \
   $(JUCE_OBJDIR)/Task_85d81459.o \
@@ -639,6 +640,11 @@ $(JUCE_OBJDIR)/CommandValue_d798fca2.o: ../../Source/Definitions/Command/Command
 $(JUCE_OBJDIR)/CommandValueManager_2dce5d35.o: ../../Source/Definitions/Command/CommandValueManager.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling CommandValueManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MoveInBlackManager_55053620.o: ../../Source/Definitions/Command/MoveInBlackManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling MoveInBlackManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Cue_a2480ce9.o: ../../Source/Definitions/Cue/Cue.cpp

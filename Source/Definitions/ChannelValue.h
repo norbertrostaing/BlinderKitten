@@ -39,6 +39,7 @@ public:
     bool htpOverride = false;
 
     bool canBeTracked = true;
+    bool moveInBlack = true;
 
     Command* parentCommand = nullptr;
 };

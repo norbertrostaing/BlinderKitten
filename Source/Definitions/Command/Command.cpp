@@ -25,7 +25,8 @@ Command::Command(var params) :
 	objectType(params.getProperty("type", "Command").toString()),
 	objectData(params),
 	values("Values"),
-	timing("Timing")
+	timing("Timing"),
+	moveInBlack()
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;
@@ -38,6 +39,7 @@ Command::Command(var params) :
 
 	// to add a manager with defined data
 	//selection = new CommandSelectionManager();
+	addChildControllableContainer(&moveInBlack);
 	addChildControllableContainer(&selection);
 	addChildControllableContainer(&values);
 	addChildControllableContainer(&timing);
@@ -104,6 +106,16 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	selection.computeSelection();
 	Array<CommandValue*> commandValues = values.getItemsWithType<CommandValue>();
 	Array<SubFixture*> subFixtures = selection.computedSelectedSubFixtures;
+
+	Array<ChannelFamily*> moveInBlackFamilies;
+	for (auto f : moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
+	if (callingCue != nullptr) {
+		for (auto f : callingCue->moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
+	}
+	if (callingCuelist != nullptr) {
+		for (auto f : callingCuelist->moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
+	}
+
 
 	bool delayThru = false;
 	bool delaySym = false;
@@ -371,6 +383,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						maxTiming = std::max(maxTiming, tempTiming);
 
 						finalValue->htpOverride = cv -> HTPOverride->boolValue();
+						
+						ChannelType* ct = dynamic_cast<ChannelType*>(fchan->parentParamDefinition);
+						ChannelFamily* cf = dynamic_cast<ChannelFamily*>(ct->parentContainer->parentContainer.get());
+						finalValue->moveInBlack = moveInBlackFamilies.contains(cf);
 					}
 				}
 

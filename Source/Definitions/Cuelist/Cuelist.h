@@ -13,6 +13,7 @@
 #include "../Cue/Cue.h"
 #include "../Cue/CueManager.h"
 #include "Definitions/Command/CommandValueManager.h"
+#include "Command/MoveInBlackManager.h"
 
 class Cuelist:
     public BaseItem,
@@ -171,6 +172,7 @@ public:
     double TSLateCompensation = 0;
 
     CommandTiming timing;
+    MoveInBlackManager moveInBlack;
 
     String getTypeString() const override { return objectType; }
 

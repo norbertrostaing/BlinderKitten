@@ -297,6 +297,7 @@
     <ClCompile Include="..\..\Source\Definitions\Command\CommandTiming.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Command\CommandValue.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Command\CommandValueManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Command\MoveInBlackManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Cue\Cue.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Cue\CueManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Cue\Task.cpp"/>
@@ -3497,6 +3498,7 @@
     <ClInclude Include="..\..\Source\Definitions\Command\CommandTiming.h"/>
     <ClInclude Include="..\..\Source\Definitions\Command\CommandValue.h"/>
     <ClInclude Include="..\..\Source\Definitions\Command\CommandValueManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Command\MoveInBlackManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Cue\Cue.h"/>
     <ClInclude Include="..\..\Source\Definitions\Cue\CueManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Cue\Task.h"/>

@@ -408,6 +408,10 @@
                 file="Source/Definitions/Command/CommandValueManager.cpp"/>
           <FILE id="JlpGsx" name="CommandValueManager.h" compile="0" resource="0"
                 file="Source/Definitions/Command/CommandValueManager.h"/>
+          <FILE id="UYmv9z" name="MoveInBlackManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Command/MoveInBlackManager.cpp"/>
+          <FILE id="O1VHBS" name="MoveInBlackManager.h" compile="0" resource="0"
+                file="Source/Definitions/Command/MoveInBlackManager.h"/>
         </GROUP>
         <GROUP id="{D4C28E39-3022-6381-A99C-F772CA609492}" name="Cue">
           <FILE id="PXR8sB" name="Cue.cpp" compile="1" resource="0" file="Source/Definitions/Cue/Cue.cpp"/>
