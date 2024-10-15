@@ -13,6 +13,7 @@
 #include "UI/VirtualFaders/VirtualFaderButton.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
+#include "MIDIFeedback.h"
 
 MIDIFeedback::MIDIFeedback() :
     BaseItem("MIDI Feedback"),
@@ -68,6 +69,8 @@ MIDIFeedback::MIDIFeedback() :
 
     textMode = addEnumParameter("Text mode", "");
     textMode->addOption("MCU Encoder", MCU_ENC)->addOption("MCU Fader", MCU_FADER)->addOption("MCU Encoder then Fader", MCU_ENCANDFADER);
+    textMode->addOption("Xtouch Extender Encoder", XTE_ENC)->addOption("Xtouch Extender Fader", XTE_FADER)->addOption("Xtouch Extender Encoder then Fader", XTE_ENCANDFADER);
+
     mackieColumn = addIntParameter("MCU column", "", 1, 1, 8);
 
     saveAndLoadRecursiveData = true;
@@ -194,8 +197,14 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         localPage = localPage == 0 ? faderPage : localPage;
         localAddress = "/vrotary/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
         if (address == localAddress) {
-            valid = true;
-            sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
+            if (isText) {
+                sendText(varValue);
+            }
+            else 
+            {
+                valid = true;
+                sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
+            }
         }
     }
     else if (source == VBUTTON && validPageButton) {
@@ -339,6 +348,23 @@ void MIDIFeedback::sendText(String text)
         sendMCUEncoderText(col, enc);
         sendMCUFaderText(col, fad);
     }
+    else if (m == XTE_FADER) {
+        sendXTEFaderText(col, text);
+    }
+    else if (m == XTE_ENC) {
+        sendXTEEncoderText(col, text);
+    }
+    else if (m == XTE_ENCANDFADER) {
+        String enc = "";
+        String fad = "";
+        enc = text;
+        if (text.length() > 7) {
+            fad = text.substring(7);
+        }
+
+        sendXTEEncoderText(col, enc);
+        sendXTEFaderText(col, fad);
+    }
 }
 
 void MIDIFeedback::sendMCUFaderText(int col, String text)
@@ -374,6 +400,50 @@ void MIDIFeedback::sendMCUEncoderText(int col, String text)
     }
     uint8 index = ((col - 1) * 7);
     uint8 data[]{ 0x00,0x00,0x66,0x14,0x12, index, ' ' , ' ' , ' ' , ' ' , ' ' , ' ' , ' ' };
+    Array<uint8> sysexData;
+    for (int i = 0; i < 13; i++) {
+        sysexData.add(data[i]);
+    }
+    for (int i = 0; i < jmin(7, text.length()); i++) {
+        sysexData.set(6 + i, text[i]);
+    }
+    dev->sendSysEx(sysexData);
+}
+
+
+void MIDIFeedback::sendXTEFaderText(int col, String text)
+{
+    if (inter == nullptr) {
+        inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    }
+    auto dev = inter->deviceParam->outputDevice;
+    if (dev == nullptr) {
+        return;
+    }
+    uint8 index = ((col - 1) * 7) + 56;
+    uint8 data[]{ 0x00,0x00,0x66,0x15,0x12, index, ' ' , ' ' , ' ' , ' ' , ' ' , ' ' , ' ' };
+    Array<uint8> sysexData;
+    for (int i = 0; i < 13; i++) {
+        sysexData.add(data[i]);
+    }
+    for (int i = 0; i < jmin(7, text.length()); i++) {
+        sysexData.set(6 + i, text[i]);
+    }
+    dev->sendSysEx(sysexData);
+
+}
+
+void MIDIFeedback::sendXTEEncoderText(int col, String text)
+{
+    if (inter == nullptr) {
+        inter = dynamic_cast<MIDIInterface*>(parentContainer->parentContainer.get());
+    }
+    auto dev = inter->deviceParam->outputDevice;
+    if (dev == nullptr) {
+        return;
+    }
+    uint8 index = ((col - 1) * 7);
+    uint8 data[]{ 0x00,0x00,0x66,0x15,0x12, index, ' ' , ' ' , ' ' , ' ' , ' ' , ' ' , ' ' };
     Array<uint8> sysexData;
     for (int i = 0; i < 13; i++) {
         sysexData.add(data[i]);

@@ -51,7 +51,7 @@ public:
     IntParameter* currentCueChannel;
     IntParameter* loadedCueChannel;
 
-    enum TextMode {MCU_ENC, MCU_FADER, MCU_ENCANDFADER};
+    enum TextMode { MCU_ENC, MCU_FADER, MCU_ENCANDFADER, XTE_ENC, XTE_FADER, XTE_ENCANDFADER};
     EnumParameter* textMode;
     IntParameter* mackieColumn;
 
@@ -71,5 +71,7 @@ public:
     void sendText(String text);
     void sendMCUFaderText(int col, String text);
     void sendMCUEncoderText(int col, String text);
+    void sendXTEFaderText(int col, String text);
+    void sendXTEEncoderText(int col, String text);
 
 };
