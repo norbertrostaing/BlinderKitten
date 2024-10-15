@@ -789,12 +789,24 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					if (sfc->parentSubFixture->channelsMap.contains(dimmerCT)) {
 						SubFixtureChannel* sfcDimmer = sfc->parentSubFixture->channelsMap.getReference(dimmerCT);
 						bool canMove = true;
-						if (activeValues.contains(sfcDimmer) && activeValues.getReference(sfcDimmer)!= nullptr && activeValues.getReference(sfcDimmer)->endValue >= 0) canMove = false;
-						if (newActiveValues.contains(sfcDimmer) && newActiveValues.getReference(sfcDimmer)!= nullptr && newActiveValues.getReference(sfcDimmer)->endValue >= 0) canMove = false;
+						int64 moveAfter = now;
+						if (activeValues.contains(sfcDimmer) && activeValues.getReference(sfcDimmer)!= nullptr) {
+							if (activeValues.getReference(sfcDimmer)->endValue >= 0) canMove = false;
+						}
+						if (newActiveValues.contains(sfcDimmer) && newActiveValues.getReference(sfcDimmer) != nullptr) {
+							std::shared_ptr<ChannelValue> cvDim = newActiveValues.getReference(sfcDimmer);
+							if (cvDim->endValue > 0) {
+								canMove = false;
+							}
+							else {
+								canMove = true;
+								moveAfter = cv->TSEnd;
+							}
+						}
 						if (canMove) {
-							cv->TSInit = now;
-							cv->TSStart = now;
-							cv->TSEnd = now;
+							cv->TSInit = moveAfter;
+							cv->TSStart = moveAfter;
+							cv->TSEnd = moveAfter;
 							newActiveValues.set(sfc, cv);
 							sfc->cuelistOnTopOfStack(this);
 						}
