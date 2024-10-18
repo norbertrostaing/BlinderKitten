@@ -776,7 +776,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	}
 	
 	// move in black
-	if (!isChaser->boolValue()) {
+	if (!isChaser->boolValue() && c != nullptr) {
 		Cue* MIBNextCue = getNextCue();
 		if (MIBNextCue != nullptr) {
 			MIBNextCue->computeValues();
