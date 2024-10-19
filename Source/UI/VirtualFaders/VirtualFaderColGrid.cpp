@@ -781,7 +781,7 @@ VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool c
         int maxBtn = nRotaries + nAbove + nBelow + 1;
         int n = index % maxBtn;
         if (n < nRotaries) {
-            while (vfc->rotaries.items.size() < n) {
+            while (vfc->rotaries.items.size() < nRotaries) {
                 vfc->rotaries.addItem();
             }
             vfs = vfc->rotaries.items[n];
