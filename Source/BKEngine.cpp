@@ -860,6 +860,7 @@ void BKEngine::importMochi(var data)
 	TrackerManager::getInstance()->addItemsFromData(data.getProperty(TrackerManager::getInstance()->shortName, var()));
 	MultiplicatorManager::getInstance()->addItemsFromData(data.getProperty(MultiplicatorManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
+	LayoutManager::getInstance()->addItemsFromData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
 	VirtualFaderColManager::getInstance()->addItemsFromData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
 
@@ -873,6 +874,42 @@ void BKEngine::importMochi(var data)
 
 	autoFillDefaultChannels();
 }
+
+void BKEngine::exportSelection()
+{
+	var data(new DynamicObject());
+
+	data.getDynamicObject()->setProperty(InterfaceManager::getInstance()->shortName, InterfaceManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, ChannelFamilyManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(FixtureTypeManager::getInstance()->shortName, FixtureTypeManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(FixtureManager::getInstance()->shortName, FixtureManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(GroupManager::getInstance()->shortName, GroupManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(PresetManager::getInstance()->shortName, PresetManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CommandManager::getInstance()->shortName, CommandManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CuelistManager::getInstance()->shortName, CuelistManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(ProgrammerManager::getInstance()->shortName, ProgrammerManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CurvePresetManager::getInstance()->shortName, CurvePresetManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, TimingPresetManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, CarouselManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(MapperManager::getInstance()->shortName, MapperManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(TrackerManager::getInstance()->shortName, TrackerManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(MultiplicatorManager::getInstance()->shortName, MultiplicatorManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, LayoutManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, VirtualFaderColManager::getInstance()->getExportSelectionData());
+
+	String s = JSON::toString(data);
+
+	FileChooser fc("Save a mochi", File::getCurrentWorkingDirectory(), "*.mochi");
+	if (fc.browseForFileToSave(true))
+	{
+		File f = fc.getResult();
+		f.replaceWithText(s);
+	}
+}
+
+
 
 void BKEngine::importGDTF(File f)
 {
@@ -1350,38 +1387,6 @@ void BKEngine::importGroupObjectFromMVR(XmlElement* elmt, std::shared_ptr<ZipFil
 		else {
 			importGroupObjectFromMVR(child, archive, maxAddress, fixtureTypesMap, fixturesMap, fixtureAddressesMap, frontLayout, topLayout, sideLayout);
 		}
-	}
-}
-
-void BKEngine::exportSelection()
-{
-	var data(new DynamicObject());
-
-	data.getDynamicObject()->setProperty(InterfaceManager::getInstance()->shortName, InterfaceManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, ChannelFamilyManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(FixtureTypeManager::getInstance()->shortName, FixtureTypeManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(FixtureManager::getInstance()->shortName, FixtureManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(GroupManager::getInstance()->shortName, GroupManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(PresetManager::getInstance()->shortName, PresetManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(CommandManager::getInstance()->shortName, CommandManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(CuelistManager::getInstance()->shortName, CuelistManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(ProgrammerManager::getInstance()->shortName, ProgrammerManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(CurvePresetManager::getInstance()->shortName, CurvePresetManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, TimingPresetManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, CarouselManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(MapperManager::getInstance()->shortName, MapperManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(MultiplicatorManager::getInstance()->shortName, MultiplicatorManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
-	data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, VirtualFaderColManager::getInstance()->getExportSelectionData());
-
-	String s = JSON::toString(data);
-
-	FileChooser fc("Save a mochi", File::getCurrentWorkingDirectory(), "*.mochi");
-	if (fc.browseForFileToSave(true))
-	{
-		File f = fc.getResult();
-		f.replaceWithText(s);
 	}
 }
 
