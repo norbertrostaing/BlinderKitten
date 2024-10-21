@@ -31,11 +31,13 @@ PresetGridView::PresetGridView()
 {
     numberOfCells = 200;
     targetType = "preset";
+    PresetManager::getInstance()->addAsyncManagerListener(this);
 
 }
 
 PresetGridView::~PresetGridView()
 {
+    if (PresetManager::getInstanceWithoutCreating() != nullptr) PresetManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void PresetGridView::updateCells() {
@@ -56,4 +58,9 @@ void PresetGridView::updateCells() {
 
         }
     }
+}
+
+void PresetGridView::newMessage(const PresetManager::ManagerEvent& e)
+{
+    updateCells();
 }

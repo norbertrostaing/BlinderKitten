@@ -44,15 +44,11 @@ FixturePatch::FixturePatch(var params) :
 	if (interfaces.size() == 1) {
 		targetInterface->setValueFromTarget(interfaces[0]);
 	}
-
-	PatchSheet::getInstance()->rebuildLines();
-
 };
 
 FixturePatch::~FixturePatch()
 {
 	disableCurrentPatch();
-	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatch::onContainerParameterChangedInternal(Parameter* p)
@@ -227,31 +223,25 @@ FixturePatchManager::FixturePatchManager(const juce::String& name):
 
 FixturePatchManager::~FixturePatchManager()
 {
-	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatchManager::askForMoveBefore(BaseItem*)
 {
-	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatchManager::askForMoveAfter(BaseItem*)
 {
-	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatchManager::addItemInternal(FixturePatch* c, var data)
 {
-	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatchManager::askForDuplicateItem(BaseItem* item)
 {
 	BaseManager::askForDuplicateItem(item);
-	PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixturePatchManager::setItemIndex(FixturePatch* item, int newIndex, bool addToUndo)
 {
-	PatchSheet::getInstance()->rebuildLines();
 }

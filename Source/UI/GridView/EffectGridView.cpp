@@ -31,11 +31,13 @@ EffectGridView::EffectGridView()
 {
     numberOfCells = 200;
     targetType = "Effect";
+    EffectManager::getInstance()->addAsyncManagerListener(this);
 
 }
 
 EffectGridView::~EffectGridView()
 {
+    if (EffectManager::getInstanceWithoutCreating() != nullptr) EffectManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void EffectGridView::updateCells() {
@@ -85,4 +87,9 @@ void EffectGridView::showContextMenu(int id)
         p.addItem("Stop", [target]() {target->stop(); });
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
+}
+
+void EffectGridView::newMessage(const EffectManager::ManagerEvent& e)
+{
+    updateCells();
 }

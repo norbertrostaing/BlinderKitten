@@ -22,6 +22,7 @@
 #include "UI/GridView/FixtureGridView.h"
 #include "BKEngine.h"
 #include "Tracker/TrackerManager.h"
+#include "UI/PatchSheet/PatchSheet.h"
 
 
 Fixture::Fixture(var params) :
@@ -64,6 +65,8 @@ Fixture::Fixture(var params) :
 	checkChildrenSubFixtures();
 
 	updateDisplay();
+
+	patchs.addAsyncManagerListener(PatchSheet::getInstance());
 }
 
 void Fixture::afterLoadJSONDataInternal() {
@@ -75,9 +78,10 @@ Fixture::~Fixture()
 {
 	Brain::getInstance()->unregisterFixture(this);
 	subFixturesContainer.clear();
-	if (!BKEngine::mainEngine->isClearing) {
-		FixtureGridView::getInstance()->updateCells();
+	if (PatchSheet::getInstanceWithoutCreating()) {
+		patchs.removeAsyncManagerListener(PatchSheet::getInstance());
 	}
+
 	
 }
 
@@ -93,7 +97,7 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == userName || p == id) {
 		updateName();
-		FixtureGridView::getInstance()->updateCells();
+		//FixtureGridView::getInstance()->updateCells();
 	}
 	if (p == devTypeParam)
 	{

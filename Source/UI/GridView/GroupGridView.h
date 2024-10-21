@@ -12,6 +12,8 @@
 
 #include <JuceHeader.h>
 #include "GridView.h"
+#include "Group/GroupManager.h"
+
 //==============================================================================
 /*
 */
@@ -28,7 +30,8 @@ public:
 
 
 class GroupGridView  : 
-    public GridView
+    public GridView,
+    public GroupManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(GroupGridView, true);
@@ -36,6 +39,7 @@ public:
     ~GroupGridView() override;
     
     void updateCells() override;
+    void newMessage(const GroupManager::ManagerEvent& e) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GroupGridView)

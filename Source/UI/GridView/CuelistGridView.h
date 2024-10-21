@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "GridView.h"
+#include "Cuelist/CuelistManager.h"
 //==============================================================================
 /*
 */
@@ -28,7 +29,8 @@ public:
 
 
 class CuelistGridView  : 
-    public GridView
+    public GridView,
+    public CuelistManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(CuelistGridView, true);
@@ -38,6 +40,7 @@ public:
     void updateCells() override;
     void updateButtons();
     void showContextMenu(int id);
+    void newMessage(const CuelistManager::ManagerEvent& e) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CuelistGridView)

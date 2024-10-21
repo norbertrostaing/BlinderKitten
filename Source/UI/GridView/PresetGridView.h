@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "GridView.h"
+#include "Preset/PresetManager.h"
 //==============================================================================
 /*
 */
@@ -28,7 +29,8 @@ public:
 
 
 class PresetGridView  : 
-    public GridView
+    public GridView,
+    public PresetManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(PresetGridView, true);
@@ -36,6 +38,7 @@ public:
     ~PresetGridView() override;
     
     void updateCells() override;
+    void newMessage(const PresetManager::ManagerEvent& e) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PresetGridView)

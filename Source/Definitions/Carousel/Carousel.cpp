@@ -74,9 +74,6 @@ Carousel::Carousel(var params) :
 	if (params.isVoid()) {
 		rows.addItem();
 	}
-	if (!Brain::getInstance()->loadingIsRunning) {
-		CarouselGridView::getInstance()->updateCells();
-	}
 
 }
 
@@ -103,7 +100,6 @@ Carousel::~Carousel()
 		}
 	}
 	
-	CarouselGridView::getInstance()->updateCells();
 }
 
 void Carousel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
@@ -122,7 +118,6 @@ void Carousel::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
-		CarouselGridView::getInstance()->updateCells();
 	}
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {

@@ -263,7 +263,6 @@ BKEngine::BKEngine() :
 
 	addChildControllableContainer(Assistant::getInstance());
 
-
 	Encoders::getInstance()->engine = this;
 	//EncodersMult::getInstance()->engine = this;
 	InputPanel::getInstance()->engine = this;
@@ -340,6 +339,29 @@ BKEngine::~BKEngine()
 	VirtualFaderColGrid::deleteInstance();
 
 	EncodersMult::deleteInstance();
+
+	ConductorInfos::deleteInstance();
+	CuelistSheet::deleteInstance();
+	BKColorPicker::deleteInstance();
+
+	ActionFactory::deleteInstance();
+
+	FixtureGridView::deleteInstance();
+	GroupGridView::deleteInstance();
+	PresetGridView::deleteInstance();
+	CuelistGridView::deleteInstance();
+	EffectGridView::deleteInstance();
+	CarouselGridView::deleteInstance();
+	MapperGridView::deleteInstance();
+
+
+	InputPanel::deleteInstance();
+	Assistant::deleteInstance();
+	CuelistLoadWindow::deleteInstance();
+	LabelAndTimeWindow::deleteInstance();
+	Clock::deleteInstance();
+
+
 	BundleManager::deleteInstance();
 	LayoutManager::deleteInstance();
 	MultiplicatorManager::deleteInstance();
@@ -348,6 +370,7 @@ BKEngine::~BKEngine()
 	TrackerManager::deleteInstance();
 	MapperManager::deleteInstance();
 	ProgrammerManager::deleteInstance();
+	Encoders::deleteInstance();
 	CuelistManager::deleteInstance();
 	CommandManager::deleteInstance();
 	PresetManager::deleteInstance();
@@ -358,33 +381,13 @@ BKEngine::~BKEngine()
 	TimingPresetManager::deleteInstance();
 	CurvePresetManager::deleteInstance();
 
-	ConductorInfos::deleteInstance();
-	CuelistSheet::deleteInstance();
 	PatchSheet::deleteInstance();
-	BKColorPicker::deleteInstance();
+	UserInputManager::deleteInstance();
 
 	InterfaceManager::deleteInstance();
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
 	SerialManager::deleteInstance();
-
-	ActionFactory::deleteInstance();
-	UserInputManager::deleteInstance();
-
-	FixtureGridView::deleteInstance();
-	GroupGridView::deleteInstance();
-	PresetGridView::deleteInstance();
-	CuelistGridView::deleteInstance();
-	EffectGridView::deleteInstance();
-	CarouselGridView::deleteInstance();
-	MapperGridView::deleteInstance();
-
-	Encoders::deleteInstance();
-	InputPanel::deleteInstance();
-	Assistant::deleteInstance();
-	CuelistLoadWindow::deleteInstance();
-	LabelAndTimeWindow::deleteInstance();
-	Clock::deleteInstance();
 
 	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();

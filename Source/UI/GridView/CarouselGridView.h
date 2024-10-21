@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "GridView.h"
+#include "Carousel/CarouselManager.h"
 //==============================================================================
 /*
 */
@@ -28,7 +29,8 @@ public:
 
 
 class CarouselGridView  : 
-    public GridView
+    public GridView,
+    public CarouselManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(CarouselGridView, true);
@@ -38,6 +40,7 @@ public:
     void updateCells() override;
     void updateButtons();
     void showContextMenu(int id);
+    void newMessage(const CarouselManager::ManagerEvent& e) override;
 
 
 private:

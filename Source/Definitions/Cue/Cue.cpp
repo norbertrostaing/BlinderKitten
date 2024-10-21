@@ -98,7 +98,9 @@ Cue::~Cue()
 	Brain::getInstance()->cuePoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
 	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectedCues.removeAllInstancesOf(this);
-	CuelistSheet::getInstance()->cueDeleted(this);
+	if (CuelistSheet::getInstanceWithoutCreating()) {
+		CuelistSheet::getInstance()->cueDeleted(this);
+	}
 	if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
 		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 		if (parentCuelist->cueA == this) {

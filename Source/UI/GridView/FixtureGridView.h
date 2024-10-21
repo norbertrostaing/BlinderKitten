@@ -12,6 +12,8 @@
 
 #include <JuceHeader.h>
 #include "GridView.h"
+#include "Definitions/Fixture/FixtureManager.h"
+
 //==============================================================================
 /*
 */
@@ -28,7 +30,8 @@ public:
 
 
 class FixtureGridView :
-    public GridView
+    public GridView,
+    public FixtureManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(FixtureGridView, true);
@@ -43,6 +46,8 @@ public:
     void resized() override;
     void updateCells() override;
     void buttonClicked(juce::Button* button) override;
+
+    void newMessage(const FixtureManager::ManagerEvent &e ) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FixtureGridView)

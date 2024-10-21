@@ -31,11 +31,13 @@ MapperGridView::MapperGridView()
 {
     numberOfCells = 200;
     targetType = "Mapper";
+    MapperManager::getInstance()->addAsyncManagerListener(this);
 
 }
 
 MapperGridView::~MapperGridView()
 {
+    if (MapperManager::getInstanceWithoutCreating() != nullptr) MapperManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void MapperGridView::updateCells() {
@@ -85,4 +87,9 @@ void MapperGridView::showContextMenu(int id)
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
 
+}
+
+void MapperGridView::newMessage(const MapperManager::ManagerEvent& e)
+{
+    updateCells();
 }

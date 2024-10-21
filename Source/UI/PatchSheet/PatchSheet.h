@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "BKEngine.h"
 #include "PatchSheetLine.h"
+#include "Fixture/FixtureManager.h"
 
 class Cuelist;
 
@@ -23,7 +24,9 @@ public:
 
 class PatchSheet  : 
     public juce::Component,
-    public ChangeListener
+    public ChangeListener,
+    public FixtureManager::AsyncListener,
+    public FixturePatchManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(PatchSheet, true);
@@ -61,6 +64,9 @@ public:
     void changeListenerCallback(ChangeBroadcaster* source) override;
 
     void exportToCSV();
+
+    void newMessage(const FixtureManager::ManagerEvent& e) override;
+    void newMessage(const FixturePatchManager::ManagerEvent& e) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PatchSheet)

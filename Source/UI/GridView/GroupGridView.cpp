@@ -31,11 +31,13 @@ GroupGridView::GroupGridView()
 {
     numberOfCells = 200;
     targetType = "Group";
-    completeGridMode = true;
+    GroupManager::getInstance()->addAsyncManagerListener(this);
+
 }
 
 GroupGridView::~GroupGridView()
 {
+    if (GroupManager::getInstanceWithoutCreating() != nullptr) GroupManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void GroupGridView::updateCells() {
@@ -58,4 +60,9 @@ void GroupGridView::updateCells() {
 
         }
     }
+}
+
+void GroupGridView::newMessage(const GroupManager::ManagerEvent& e)
+{
+    updateCells();
 }

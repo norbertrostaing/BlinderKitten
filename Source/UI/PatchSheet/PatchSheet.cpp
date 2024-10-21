@@ -68,11 +68,16 @@ PatchSheet::PatchSheet()
 
     addAndMakeVisible(viewport);
     viewport.setViewedComponent(&linesContainer);
+
+    rebuildLines();
+    FixtureManager::getInstance()->addAsyncManagerListener(this);
+
 }
 
 PatchSheet::~PatchSheet()
 {
     //if (targetCuelist != nullptr) targetCuelist->removeChangeListener(this);
+    if (FixtureManager::getInstanceWithoutCreating() != nullptr) FixtureManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void PatchSheet::paint (juce::Graphics& g)
@@ -250,5 +255,15 @@ void PatchSheet::exportToCSV()
 
     os->writeString(output);
     os->flush();
+}
+
+void PatchSheet::newMessage(const FixtureManager::ManagerEvent& e)
+{
+    rebuildLines();
+}
+
+void PatchSheet::newMessage(const FixturePatchManager::ManagerEvent& e)
+{
+    rebuildLines();
 }
 

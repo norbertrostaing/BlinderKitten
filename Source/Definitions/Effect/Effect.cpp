@@ -73,9 +73,6 @@ Effect::Effect(var params) :
 	if (params.isVoid()) {
 		values.addItem();
 	}
-	if (!Brain::getInstance()->loadingIsRunning) {
-		EffectGridView::getInstance()->updateCells();
-	}
 
 }
 
@@ -98,7 +95,6 @@ Effect::~Effect()
 
 		}
 	}
-	EffectGridView::getInstance()->updateCells();
 }
 
 void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
@@ -117,7 +113,6 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
-		EffectGridView::getInstance()->updateCells();
 	}
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {

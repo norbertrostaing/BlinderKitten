@@ -1,6 +1,5 @@
 #include "Fixture.h"
 #include "FixtureManager.h"
-#include "UI/GridView/FixtureGridView.h"
 #include "Definitions/FixtureType/FixtureTypeChannel.h"
 #include "Definitions/FixtureType/FixtureTypeVirtualChannel.h"
 #include "UserInputManager.h"
@@ -19,6 +18,7 @@ FixtureManager::FixtureManager() :
     itemDataType = "Fixture";
     selectItemWhenCreated = true;
     comparator.compareFunc = compare;
+    autoReorderOnAdd = true;
 }
 
 FixtureManager::~FixtureManager()
@@ -28,9 +28,6 @@ FixtureManager::~FixtureManager()
 
 void FixtureManager::addItemInternal(Fixture* o, var data)
 {
-    reorderItems();
-    FixtureGridView::getInstance()->updateCells();
-    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::removeItemInternal(Fixture* o)
@@ -39,30 +36,24 @@ void FixtureManager::removeItemInternal(Fixture* o)
     if (!Brain::getInstance()->isClearing && !Brain::getInstance()->loadingIsRunning) {
         UserInputManager::getInstance()->processInput("ClearAll");
     }
-    FixtureGridView::getInstance()->updateCells();
-    PatchSheet::getInstance()->rebuildLines();
 
 }
 
 void FixtureManager::askForMoveBefore(BaseItem*)
 {
-    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::askForMoveAfter(BaseItem*)
 {
-    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::askForDuplicateItem(BaseItem* item)
 {
-    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::setItemIndex(Fixture* item, int newIndex, bool addToUndo)
 {
     BaseManager::setItemIndex(item, newIndex, addToUndo);
-    PatchSheet::getInstance()->rebuildLines();
 }
 
 void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)
@@ -104,9 +95,6 @@ void FixtureManager::defaultValueChanged(FixtureTypeVirtualChannel* ftc)
 void FixtureManager::reorderItems()
 {
     BaseManager::reorderItems();
-    MessageManager::callAsync([this](){
-        PatchSheet::getInstance()->rebuildLines();
-    });
 }
 
 

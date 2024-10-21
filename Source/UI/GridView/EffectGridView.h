@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "GridView.h"
+#include "Effect/EffectManager.h"
 //==============================================================================
 /*
 */
@@ -28,7 +29,8 @@ public:
 
 
 class EffectGridView  : 
-    public GridView
+    public GridView,
+    public EffectManager::AsyncListener
 {
 public:
     juce_DeclareSingleton(EffectGridView, true);
@@ -38,6 +40,7 @@ public:
     void updateCells() override;
     void updateButtons();
     void showContextMenu(int id);
+    void newMessage(const EffectManager::ManagerEvent& e) override;
 
 
 private:

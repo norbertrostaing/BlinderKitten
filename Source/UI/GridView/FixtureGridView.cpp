@@ -12,7 +12,6 @@
 #include "FixtureGridView.h"
 #include "Brain.h"
 #include "Definitions/Fixture/Fixture.h"
-#include "Definitions/Fixture/FixtureManager.h"
 #include "BKEngine.h"
 
 //==============================================================================
@@ -33,10 +32,12 @@ FixtureGridView::FixtureGridView()
     targetType = "Fixture";
     completeGridMode = false;
     initArrays();
+    FixtureManager::getInstance()->addAsyncManagerListener(this);
 }
 
 FixtureGridView::~FixtureGridView()
 {
+    if (FixtureManager::getInstanceWithoutCreating() != nullptr) FixtureManager::getInstance()->removeAsyncManagerListener(this);
     //hashMapButtons.~HashMap();
 }
 
@@ -153,4 +154,9 @@ void FixtureGridView::buttonClicked(juce::Button* button) {
         }
     }
     cs.exit();
+}
+
+void FixtureGridView::newMessage(const FixtureManager::ManagerEvent& e)
+{
+    updateCells();
 }

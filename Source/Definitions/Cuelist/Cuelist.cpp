@@ -231,9 +231,6 @@ Cuelist::Cuelist(var params) :
 	}
 
 	Brain::getInstance()->registerCuelist(this, id->getValue());
-	if (!Brain::getInstance()->loadingIsRunning) {
-		CuelistGridView::getInstance()->updateCells();
-	}
 }
 
 Cuelist::~Cuelist()
@@ -254,8 +251,7 @@ Cuelist::~Cuelist()
 		sfc->cuelistOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
-	CuelistGridView::getInstance()->updateCells();
-	if (CuelistSheet::getInstance()->targetCuelist == this) {
+	if (CuelistSheet::getInstanceWithoutCreating() && CuelistSheet::getInstance()->targetCuelist == this) {
 		CuelistSheet::getInstance()->targetCuelist = nullptr;
 	}
 
@@ -330,7 +326,6 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
-		CuelistGridView::getInstance()->updateCells();
 	}
 	if (p == nextCue || p == nextCueId) {
 		fillTexts();

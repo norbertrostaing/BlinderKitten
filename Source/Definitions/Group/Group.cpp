@@ -36,7 +36,6 @@ Group::Group(var params) :
 	if (params.isVoid()) {
 		selection.addItem();
 	}
-	MessageManager::callAsync([this]() {GroupGridView::getInstance()->updateCells(); });
 	
 
 }
@@ -44,7 +43,6 @@ Group::Group(var params) :
 Group::~Group()
 {
 	Brain::getInstance()->unregisterGroup(this);
-	GroupGridView::getInstance()->updateCells();
 }
 
 void Group::updateName() {
@@ -63,7 +61,6 @@ void Group::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
 		Brain::getInstance()->registerGroup(this, id->getValue(), true);
 	}
-	GroupGridView::getInstance()->updateCells();
 }
 
 

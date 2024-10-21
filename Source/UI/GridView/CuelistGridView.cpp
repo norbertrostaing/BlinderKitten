@@ -32,11 +32,13 @@ CuelistGridView::CuelistGridView()
 {
     numberOfCells = 200;
     targetType = "Cuelist";
+    CuelistManager::getInstance()->addAsyncManagerListener(this);
 
 }
 
 CuelistGridView::~CuelistGridView()
 {
+    if (CuelistManager::getInstanceWithoutCreating() != nullptr) CuelistManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void CuelistGridView::updateCells() {
@@ -102,4 +104,9 @@ void CuelistGridView::showContextMenu(int id)
 
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
+}
+
+void CuelistGridView::newMessage(const CuelistManager::ManagerEvent& e)
+{
+    updateCells();
 }

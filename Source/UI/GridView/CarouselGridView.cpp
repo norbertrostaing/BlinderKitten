@@ -31,11 +31,13 @@ CarouselGridView::CarouselGridView()
 {
     numberOfCells = 200;
     targetType = "Carousel";
+    CarouselManager::getInstance()->addAsyncManagerListener(this);
 
 }
 
 CarouselGridView::~CarouselGridView()
 {
+    if (CarouselManager::getInstanceWithoutCreating() != nullptr) CarouselManager::getInstance()->removeAsyncManagerListener(this);
 }
 
 void CarouselGridView::updateCells() {
@@ -86,4 +88,9 @@ void CarouselGridView::showContextMenu(int id)
         p.addItem("Stop", [target]() {target->stop(); });
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
+}
+
+void CarouselGridView::newMessage(const CarouselManager::ManagerEvent& e)
+{
+    updateCells();
 }

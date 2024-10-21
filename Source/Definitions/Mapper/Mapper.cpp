@@ -90,7 +90,6 @@ void Mapper::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == userName || p == id) {
 		updateName();
-		MapperGridView::getInstance()->updateCells();
 	}
 	if (p == sizeValue) {
 		if (autoStartAndStop->getValue()) {
