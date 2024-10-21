@@ -228,11 +228,11 @@ void DataTransferManager::execute() {
                         pv->paramValue->setValue(cValue->endValue);
                     }
                 }
-            target->reorderPresetContent();
-            target->updateDisplay();
+            }
+            //target->reorderPresetContent();
+            //target->updateDisplay();
             target->selectThis();
             LOG("Preset recorded");
-            }
         }
         else if (trgType == "cuelist") {
             valid = true;
