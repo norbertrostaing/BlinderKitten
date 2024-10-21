@@ -795,13 +795,18 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 							}
 							else {
 								canMove = true;
-								moveAfter = cv->TSEnd;
+								moveAfter = cvDim->TSEnd;
 							}
 						}
 						if (canMove) {
 							cv->TSInit = moveAfter;
 							cv->TSStart = moveAfter;
 							cv->TSEnd = moveAfter;
+
+							if (activeValues.contains(sfc)) {
+								std::shared_ptr<ChannelValue> currentCV = activeValues.getReference(sfc);
+								cv->startValue = currentCV->endValue;
+							}
 							newActiveValues.set(sfc, cv);
 							sfc->cuelistOnTopOfStack(this);
 						}
