@@ -297,10 +297,12 @@ void Assistant::patchFixtures()
     Brain::getInstance()->usingCollections.enter();
     int currentAdress = firstAddress;
 
+    Array<Fixture*> newFixts;
     for (int i = 0; i < amount; i++) {
         const MessageManagerLock mmLock;
-        Fixture* f = FixtureManager::getInstance()->addItem();
-        f-> id->setValue(firstId+i);
+        Fixture* f = new Fixture();
+        newFixts.add(f);
+        f->id->setValue(firstId+i);
         if (amount > 1) {
             f->userName->setValue(name + " " +String(i+1));
         }
@@ -321,6 +323,8 @@ void Assistant::patchFixtures()
             currentAdress += delta;
         }
     }
+
+    FixtureManager::getInstance()->addItems(newFixts);
 
     if (amount > 0 && patcherMakeGroup->boolValue()) {
         Group* g = GroupManager::getInstance()->addItem();
