@@ -14,6 +14,8 @@
 #include "Task.h"
 #include "Command/MoveInBlackManager.h"
 
+class Cuelist;
+
 class Cue:
     public BaseItem,
     public ChangeBroadcaster
@@ -24,6 +26,8 @@ public:
 
     String objectType;
     var objectData;
+
+    Cuelist* parentCuelist = nullptr;
 
     BaseManager<Command> commands;
     BaseManager<Task> tasks;
@@ -110,6 +114,7 @@ public:
     void onContainerNiceNameChanged() override;
 
     void checkId();
+    void checkParentCuelist();
 
 };
 

@@ -102,7 +102,7 @@ Cue::~Cue()
 		CuelistSheet::getInstance()->cueDeleted(this);
 	}
 	if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
-		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		checkParentCuelist();
 		if (parentCuelist->cueA == this) {
 			parentCuelist->kill();
 		}
@@ -122,9 +122,9 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	else if (p == id) {
 		if (this->parentContainer != nullptr && this->parentContainer->parentContainer != nullptr) {
-			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+			checkParentCuelist();
 			parentCuelist->forceCueId(this, id->floatValue());
-			MessageManager::callAsync([this, parentCuelist]() {
+			MessageManager::callAsync([this]() {
 				parentCuelist->reorderCues(); 
 			});
 			sendChangeMessage();
@@ -135,7 +135,7 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	if (c == goBtn) {
-		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		checkParentCuelist();
 		Cue* temp = this;
 		parentCuelist->go(temp);
 	}
@@ -162,11 +162,11 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 		}
 	}
 	else if (c == createBeforeBtn) {
-		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		checkParentCuelist();
 		parentCuelist->insertProgCueBefore(this);
 	}
 	else if (c == createAfterBtn) {
-		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		checkParentCuelist();
 		parentCuelist->insertProgCueAfter(this);
 	}
 	else if (c == htpInDelay || c == htpOutDelay || c == ltpDelay || c == htpInFade || c == htpOutFade || c == ltpFade) {
@@ -206,7 +206,7 @@ void Cue::computeValues(Array<Cue*> history, Cue* callingCue) {
 		}
 	}
 
-	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(callingCue->parentContainer->parentContainer.get());
+	checkParentCuelist();
 	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
 		commandHistory.removeAllInstancesOf(cs[i]);
@@ -232,7 +232,7 @@ void Cue::go()
 
 void Cue::go(float forcedDelay, float forcedFade)
 {
-	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	checkParentCuelist();
 	double now = Brain::getInstance()->now;
 	if (autoFollow->getValue() == "immediate") {
 		TSAutoFollowStart = now;
@@ -260,7 +260,7 @@ void Cue::off()
 void Cue::off(float forcedDelay, float forcedFade)
 {
 	double now = Brain::getInstance()->now;
-	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	checkParentCuelist();
 	Array<Task*> allTasks = getOffTasks();
 	for (int i = 0; i < allTasks.size(); i++) {
 		if (allTasks[i]->enabled->boolValue()) {
@@ -282,7 +282,7 @@ void Cue::update(double now) {
 		double delta = now - TSAutoFollowEnd;
 		TSAutoFollowEnd = 0;
 		autoFollowCountDown->setValue(0);
-		Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+		checkParentCuelist();
 		if (!parentCuelist->wannaOff && parentCuelist->cueA == this) {
 			parentCuelist->TSLateCompensation;
 			parentCuelist->go();
@@ -296,7 +296,7 @@ void Cue::endTransition() {
 			double now = Brain::getInstance()->now;
 			TSAutoFollowStart = now;
 			float delay = autoFollowTiming->getValue();
-			Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+			checkParentCuelist();
 			float mult = parentCuelist->speedMult.getValue();
 			delay *= mult;
 			TSAutoFollowEnd = now + (delay*1000);
@@ -362,7 +362,7 @@ void Cue::mergeContent(Programmer* p)
 		Command* com = commands.addItem();
 		com->loadJSONData(p->commands.items[i]->getJSONData());
 	}
-	Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	checkParentCuelist();
 	if (parentCuelist->cueA == this) {
 		parentCuelist->go(this, 0, 0);
 	}
@@ -439,5 +439,12 @@ void Cue::onContainerNiceNameChanged()
 void Cue::checkId()
 {
 	
+}
+
+void Cue::checkParentCuelist()
+{
+	if (parentCuelist == nullptr) {
+		parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
+	}
 }
 

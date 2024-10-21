@@ -1664,7 +1664,7 @@ void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
 void Cuelist::forceCueId(Cue* c, float id)
 {
 	for (int i = 0; i < cues.items.size(); i++) {
-		if (cues.items[i]->id->floatValue() == id) {
+		if (cues.items[i] != c && cues.items[i]->id->floatValue() == id) {
 			float nextId = i < cues.items.size()-2 ? cues.items[i+1]->id->floatValue() : cues.items[i]->id->floatValue()+2;
 			float newId = id + ((nextId - id) / 2);
 			cues.items[i]->id->setValue(newId);

@@ -389,15 +389,18 @@ void Assistant::createPalette()
         cl->timing.presetId->setValue(timePreset);
     }
 
-    // supprimer premier cue
+    Array<Cue*> cuesToAdd;
+
     bool nextIsNewLine = false;
     for (int i = presetFrom; i != presetTo + delta; i += delta) {
         const MessageManagerLock mmLock;
         Preset* p = Brain::getInstance()->getPresetById(i);
         if (p != nullptr) {
             String name = p->userName->getValue().toString();
-            Cue* c = cl->cues.addItem();
+            Cue* c = new Cue();
+            cuesToAdd.add(c);
             c->editorIsCollapsed = true;
+            c->parentCuelist = cl;
 
             c->setNiceName(name);
             c->loadWindowBreakLine->setValue(nextIsNewLine);
@@ -417,7 +420,8 @@ void Assistant::createPalette()
                 c->computeValues();
                 if (c->computedValues.size() == 0) {
                     log = false;
-                    cl->cues.removeItem(c);
+                    cuesToAdd.removeAllInstancesOf(c);
+                    delete c;
                 }
             }
             if (log) {
@@ -430,6 +434,8 @@ void Assistant::createPalette()
             nextIsNewLine = true;
         }
     }
+
+    cl->cues.addItems(cuesToAdd);
 
     if (timePreset > 0) {
         TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timePreset);
@@ -730,6 +736,12 @@ void Assistant::importAscii()
     Cuelist* currentSub = nullptr;
     Cue* currentSubCue = nullptr;
 
+    Array<Cue*> cuesToAdd;
+    Array<Cuelist*> cuelistsToAdd;
+    Array<Group*> groupsToAdd;
+    Array<Preset*> presetsToAdd;
+    Array<Fixture*> fixturesToAdd;
+
     FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
     int totLines = lines.size();
     for (int i = 0; i < lines.size(); i++) {
@@ -751,7 +763,7 @@ void Assistant::importAscii()
             StringArray words = StringArray::fromTokens(line.toUpperCase(), " ", "");
             //int currentWord = 1;
             if (words[0] == "ENDDATA") {
-                return;
+                //return;
             }
             else if (words[0] == "CLEAR" || words[0] == "CONSOLE" || words[0] == "IDENT" || words[0] == "MANUFACTURER" || words[0] == "PATCH" || words[0] == "SET")
             {
@@ -791,7 +803,8 @@ void Assistant::importAscii()
                     if (channel > 0) {
                         Fixture* fixt = Brain::getInstance()->getFixtureById(channel);
                         if (fixt == nullptr) {
-                            fixt = FixtureManager::getInstance()->addItem();
+                            fixt = new Fixture();
+                            fixturesToAdd.add(fixt);
                             if (ft != nullptr) {
                                 fixt->devTypeParam->setValueFromTarget(ft);
                             }
@@ -814,7 +827,8 @@ void Assistant::importAscii()
                     if (words.size() == 1) {
                         LOGERROR("invalid file, CUE word must have an id in parameter");
                     }
-                    currentCue = cuelist->cues.addItem();
+                    currentCue = new Cue();
+                    cuesToAdd.add(currentCue);
                     String cueName = "Cue " + words[1];
                     currentCue->setNiceName(cueName);
                     currentCue->commands.clear();
@@ -886,7 +900,8 @@ void Assistant::importAscii()
 
                     currentSub = Brain::getInstance()->getCuelistById(subId);
                     if (currentSub == nullptr) {
-                        currentSub = CuelistManager::getInstance()->addItem();
+                        currentSub = new Cuelist();
+                        cuelistsToAdd.add(currentSub);
                         currentSub->id->setValue(subId);
                     }
                     currentSub->cues.clear();
@@ -931,7 +946,8 @@ void Assistant::importAscii()
                         if (asciiGroupValuesAsPreset->boolValue()) {
                             currentPreset = Brain::getInstance()->getPresetById(groupId);
                             if (currentPreset == nullptr) {
-                                currentPreset = PresetManager::getInstance()->addItem();
+                                currentPreset = new Preset();
+                                presetsToAdd.add(currentPreset);
                                 currentPreset->id->setValue(groupId);
                             }
                             currentPreset->userName->setValue("ASCII Group " + words[1]);
@@ -940,7 +956,8 @@ void Assistant::importAscii()
                         else {
                             currentGroup = Brain::getInstance()->getGroupById(groupId);
                             if (currentGroup == nullptr) {
-                                currentGroup = GroupManager::getInstance()->addItem();
+                                currentGroup = new Group();
+                                groupsToAdd.add(currentGroup);
                                 currentGroup->id->setValue(groupId);
                             }
                             currentGroup->userName->setValue("ASCII Group " + words[1]);
@@ -986,6 +1003,11 @@ void Assistant::importAscii()
         }
     }
 
+    cuelist->cues.addItems(cuesToAdd);
+    CuelistManager::getInstance()->addItems(cuelistsToAdd);
+    GroupManager::getInstance()->addItems(groupsToAdd);
+    PresetManager::getInstance()->addItems(presetsToAdd);
+    FixtureManager::getInstance()->addItems(fixturesToAdd);
 }
 
 float Assistant::asciiLevelToFloat(String asciiLevel) {
