@@ -39,10 +39,10 @@ void SerialDeviceParameter::setValueInternal(var& v)
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 
-void SerialDeviceParameter::setVIDPIDFilters(Array<int> vidFilters, Array<int> pidFilters)
+void SerialDeviceParameter::setVIDPIDFilters(Array<int> _vidFilters, Array<int> _pidFilters)
 {
-	this->vidFilters = vidFilters;
-	this->pidFilters = pidFilters;
+	this->vidFilters = _vidFilters;
+	this->pidFilters = _pidFilters;
 	updatePortList();
 }
 

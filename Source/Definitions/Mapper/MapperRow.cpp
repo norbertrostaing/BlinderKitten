@@ -90,9 +90,6 @@ void MapperRow::computeData() {
         }
     }
 
-    float nLimit = selection.computedSelectedSubFixtures.size();
-    //int sizeWing = nLimit;
-
     Array<SubFixtureChannel*> targetChannels;
 
     for (int i = 1; i <= paramContainer.items.size(); i++) {

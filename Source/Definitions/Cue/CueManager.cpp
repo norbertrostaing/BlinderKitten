@@ -109,7 +109,6 @@ void CueManager::correctCueIds()
 void CueManager::setItemIndex(Cue* item, int newIndex, bool addToUndo)
 {
     BaseManager::setItemIndex(item, newIndex,  addToUndo);
-    double id = item->id->getValue();
     if (items.size() == 1) {return;}
     if (newIndex == 0 && items.size() > 1) {
         double next = items[1]->id->getValue();
@@ -143,7 +142,6 @@ double CueManager::calcId(double prev, double next)
 void CueManager::removeItemInternal(Cue* c)
 {
     if (this->parentContainer != nullptr) {
-        Cuelist* parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer.get());
         if (parentCuelist->cueA == c) {
             parentCuelist->cueA = nullptr;
         }

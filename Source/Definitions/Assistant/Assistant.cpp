@@ -743,10 +743,8 @@ void Assistant::importAscii()
     Array<Fixture*> fixturesToAdd;
 
     FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
-    int totLines = lines.size();
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
-        //LOG((i+1)<<"/"<<totLines<<" : "<<line);
         const MessageManagerLock mmlock;
         String originalLine = line;
         line = line.replaceCharacters(" ,/;<=>@", "        ").trim();

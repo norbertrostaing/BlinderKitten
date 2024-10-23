@@ -80,7 +80,6 @@ void CarouselRow::computeData() {
 
     selection.computeSelection();
 
-    Carousel* parentCarousel = dynamic_cast<Carousel*>(parentContainer->parentContainer.get());
     if (parentCarousel == nullptr) {return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         //double deltaPos = 0;

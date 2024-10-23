@@ -204,7 +204,6 @@ void Brain::brainLoop() {
     }
     programmerPoolUpdating.clear();
 
-    Command* currentCommand = nullptr;
     Array<SubFixtureChannel* > modifiedSF;
 
     for (SubFixtureChannel* sfc : allSubfixtureChannels) {
@@ -297,7 +296,6 @@ void Brain::brainLoop() {
         if (def != nullptr) def->computeValues();
 
         for (SubFixture* sf : allSubfixtures) {
-            float presetVal = -1;
             std::shared_ptr < HashMap<ChannelType*, float>> presetValues = def != nullptr ? def->getSubFixtureValues(sf) : nullptr;
             for (SubFixtureChannel* sfc : sf->channelsContainer) {
                 float presetValue = presetValues != nullptr && presetValues->contains(sfc->channelType) ? presetValues->getReference(sfc->channelType) : -1;
@@ -1047,29 +1045,32 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
         double startValue = 0;
         double endValue = 1;
         int targetId = targetIds[i];
-        String targetType = targetTypes[i];
+        String localTargetType = targetTypes[i];
         String actionType = actionsTypes[i];
 
-        if (targetType == "cuelist") {
+        if (localTargetType == "cuelist") {
             Cuelist* target = getCuelistById(targetId);
             if (target != nullptr) {
                 valid = true;
                 if (actionType == "htplevel") {
                     startValue = target->HTPLevel->getValue();
                     endValue = t->targetValue->getValue();
-                } else if (actionType == "ltplevel") {
+                }
+                else if (actionType == "ltplevel") {
                     startValue = target->LTPLevel->getValue();
                     endValue = t->targetValue->getValue();
-                } else if (actionType == "flashlevel") {
+                }
+                else if (actionType == "flashlevel") {
                     startValue = target->flashLevel->getValue();
                     endValue = t->targetValue->getValue();
-                } else if (actionType == "speed") {
+                }
+                else if (actionType == "speed") {
                     startValue = target->chaserSpeed->getValue();
                     endValue = t->targetValue->getValue();
                 }
             }
         }
-        else if (targetType == "effect") {
+        else if (localTargetType == "effect") {
             Effect* target = getEffectById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -1083,7 +1084,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
                 }
             }
         }
-        else if (targetType == "carousel") {
+        else if (localTargetType == "carousel") {
             Carousel* target = getCarouselById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -1097,7 +1098,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
                 }
             }
         }
-        else if (targetType == "mapper") {
+        else if (localTargetType == "mapper") {
             Mapper* target = getMapperById(targetId);
             if (target != nullptr) {
                 valid = true;
@@ -1107,7 +1108,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
                 }
             }
         }
-        else if (targetType == "action") {
+        else if (localTargetType == "action") {
             valid = true;
         }
 
@@ -1117,7 +1118,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             rt->id = newTaskId();
             rt->cuelistId = cuelistId;
             rt->actionType = actionType;
-            rt->targetType = targetType;
+            rt->targetType = localTargetType;
             rt->targetId = targetId;
 
             rt->delay = forcedDelay < 0 ? (double)t->delay->getValue() * 1000 : forcedDelay;

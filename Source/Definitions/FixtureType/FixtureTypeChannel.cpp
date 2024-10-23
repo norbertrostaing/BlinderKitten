@@ -46,7 +46,6 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     dmxDelta = addIntParameter("DMX Channel", "Number of the channel in the DMX chart", 1, 1);
     dmxDelta -> setEnabled(false);
 
-    FixtureType* ft = dynamic_cast<FixtureType*>(parentContainer.get());
     virtualMaster = addTargetParameter("Virtual Master", "Select a virtual master");
     virtualMaster->targetType = TargetParameter::CONTAINER;
     virtualMaster->maxDefaultSearchLevel = 2;
@@ -60,9 +59,9 @@ FixtureTypeChannel::~FixtureTypeChannel()
 
 void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     if (p == resolution || p == channelType) {
-        FixtureTypeChannelManager* p = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
-        if (p != nullptr) {
-            p->calcDmxChannels();
+        FixtureTypeChannelManager* manager = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
+        if (manager != nullptr) {
+            manager->calcDmxChannels();
         }
     }
     else if (p == physicalRange) {

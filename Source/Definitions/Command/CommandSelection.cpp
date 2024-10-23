@@ -102,8 +102,6 @@ void CommandSelection::updateDisplay()
     randSeed = randSeed && mult;
     randNum = randNum && mult;
     
-    bool isFixture = targetType->getValue() == "fixture";
-
     valueTo -> hideInEditor = !th;
     filter -> hideInEditor = false;
     pattern -> hideInEditor = !(pat);

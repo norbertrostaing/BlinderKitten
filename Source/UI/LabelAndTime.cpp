@@ -214,7 +214,6 @@ void LabelAndTimeWindow::showWindow(int element)
     if (UserInputManager::getInstance()->lastLabelAndTimeWindowTS + 500 < now) {
         UserInputManager::getInstance()->lastLabelAndTimeWindowTS = now;
 
-        BKEngine* e = dynamic_cast<BKEngine*>(Engine::mainEngine);
         int w = 400;
         int h = 200;
 

@@ -279,7 +279,6 @@ void Cue::update(double now) {
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	else {
-		double delta = now - TSAutoFollowEnd;
 		TSAutoFollowEnd = 0;
 		autoFollowCountDown->setValue(0);
 		checkParentCuelist();

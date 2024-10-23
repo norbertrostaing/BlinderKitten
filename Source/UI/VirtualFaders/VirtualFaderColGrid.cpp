@@ -509,7 +509,6 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
     Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
     if (p->cliActionType->getValue() != "") {
         if (p->userCanPressTargetType) {
-            BKEngine* engine = dynamic_cast<BKEngine*>(Engine::mainEngine);
             String mode = engine->faderSelectionMode->getValueData();
 
             if (mode == "column") {
@@ -520,7 +519,6 @@ void VirtualFaderColGrid::buttonPressedDown(TextButton* t) {
                 }
             }
             else {
-                bool isAbove = buttonIsAbove.getReference(t);
                 int index = buttonToIndex.getReference(t);
                 p->processUserInput("virtualfaderelement");
                 p->processUserInput(String(index+1));
@@ -564,7 +562,6 @@ void VirtualFaderColGrid::sliderClicked(Slider* s)
     if (p->cliActionType->getValue() != "") {
         const MessageManagerLock mmLock;
         if (p->userCanPressTargetType) {
-            BKEngine* engine = dynamic_cast<BKEngine*>(Engine::mainEngine);
             String mode = engine->faderSelectionMode->getValueData();
 
             if (mode == "column") {
@@ -803,7 +800,6 @@ VirtualFaderSlider* VirtualFaderColGrid::getVirtualFaderSlider(int index, bool c
 void VirtualFaderColGrid::updateSlidersValues(bool forceAll)
 {
     const MessageManagerLock mmLock;
-    bool fb = false;
 
     for (int i = 0; i < cols; i++) {
         VirtualFaderCol* vfc = columnToVFC.getReference(i+1);
