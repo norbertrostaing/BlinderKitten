@@ -48,8 +48,6 @@ void CarouselAction::setValueInternal(var value, String origin, int incrementInd
 
     float val = value;
     bool incrementOk = incrementIndex == 0 || incrementIndex == validIncrementIndex;
-    bool valid = false;
-    float delta = 1;
 
     switch (actionType)
     {

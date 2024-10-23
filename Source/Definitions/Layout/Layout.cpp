@@ -128,7 +128,6 @@ void Layout::computeData()
 		if (p->enabled->boolValue()) {
 			p->computeData();
 			p->isComputing.enter();
-			int test = p->subFixtToPos.size();
 			for (auto it = p->subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
 				subFixtToPos.set(it.getKey(), it.getValue());
 			}
@@ -279,9 +278,6 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioPerlin(f
 	p.reseed(seed);
 	float minVal = UINT16_MAX;
 	float maxVal = 0;
-
-	float w = (float)dimensionsX->getValue()[1] - (float)dimensionsX->getValue()[0];
-	float h = (float)dimensionsY->getValue()[1] - (float)dimensionsY->getValue()[0];
 
 	isComputing.enter();
 	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {

@@ -298,17 +298,17 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		if (mode == "chaser") {
 			float stepSize = 1. / row->selection.computedSelectedSubFixtures.size();
 			stepSize *= (float)row->chaserBuddying->getValue();
-			float fadeSize = (float)row->chaserFade->getValue();
-			fadeSize *= stepSize;
+			float chaseFadeSize = (float)row->chaserFade->getValue();
+			chaseFadeSize *= stepSize;
 			if (offset < stepSize) {
 				value = 1;
-				if (offset < fadeSize) {
-					float f = offset/fadeSize;
+				if (offset < chaseFadeSize) {
+					float f = offset/chaseFadeSize;
 					value = jmap(f, (float)0, (float)1);
 				}
 			}
-			else if (offset < stepSize+fadeSize) {
-				float f = (offset-stepSize) / fadeSize;
+			else if (offset < stepSize+chaseFadeSize) {
+				float f = (offset-stepSize) / chaseFadeSize;
 				value = jmap(f, (float)1, (float)0);
 			}
 		}

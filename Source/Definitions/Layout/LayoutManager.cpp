@@ -53,7 +53,6 @@ void LayoutManager::importData(var data)
     if (elements == nullptr) {return;}
     for (var d : *elements) {
         String name = d.getProperty("niceName", "nop").toString().trim();
-        bool valid = false;
         Layout* cf = nullptr;
         for (int i = 0; i < items.size(); i++) {
             if (items[i]->niceName.trim() == name) {

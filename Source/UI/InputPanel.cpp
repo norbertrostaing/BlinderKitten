@@ -141,9 +141,6 @@ void InputPanel::paint (juce::Graphics& g)
 
 void InputPanel::resized()
 {
-    
-    bool fixedSize = false;
-
     float scaleX = 1;
     float scaleY = 1;
 

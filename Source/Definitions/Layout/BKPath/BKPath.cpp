@@ -116,7 +116,6 @@ void BKPath::computeData()
 
         delta.x = float(lineEndPosition->getValue()[0]) - float(position->getValue()[0]);
         delta.y = float(lineEndPosition->getValue()[1]) - float(position->getValue()[1]);
-        int test = subFixts.size();
         for (int i = 0; i < subFixts.size(); i++) {
             Fixture* f = subFixts[i]->parentFixture;
             //std::shared_ptr<Point<float>> vect = std::make_shared<Point<float>>();
@@ -157,7 +156,6 @@ void BKPath::computeData()
 
         delta = end-start;
 
-        int test = subFixts.size();
         for (int i = 0; i < subFixts.size(); i++) {
             Fixture* f = subFixts[i]->parentFixture;
             //std::shared_ptr<Point<float>> vect = std::make_shared<Point<float>>();
@@ -261,7 +259,6 @@ void BKPath::computeData()
 
         for (int i = 0; i < nElements; i++) {
             if (spreadSubFixtures->boolValue()) {
-                Fixture* f = subFixts[i]->parentFixture;
                 subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(currentPos.x, currentPos.y));
             }
             else {
@@ -315,7 +312,6 @@ void BKPath::computeData()
             rotateVect(&temp, angleFrom + (i*deltaAngle));
             temp += origin;
             if (spreadSubFixtures->boolValue()) {
-                Fixture* f = subFixts[i]->parentFixture;
                 subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(temp.x, temp.y));
             }
             else {

@@ -90,9 +90,6 @@ void PatchSheet::resized()
     // components that your component contains..
     BKEngine* engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
 
-    float textSize = engine->conductorTextSize->floatValue();
-    float titleSize = engine->conductorTitleSize->floatValue();
-
     int width = getLocalBounds().getWidth();
     int height = getLocalBounds().getHeight();
 
@@ -133,11 +130,7 @@ void PatchSheet::updateStyle()
 
 void PatchSheet::updateContent()
 {
-    BKEngine* engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
     resized();
-    bool changed = false;
-    Cuelist* newTarget = Brain::getInstance()->getCuelistById(engine->conductorCuelistId->intValue());
-
 }
 
 void PatchSheet::rebuildLines()
@@ -188,10 +181,6 @@ void PatchSheet::inspectCuelist()
 
 void PatchSheet::updateSelection()
 {
-    BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
-    for (int i = 0; i < lines.size(); i++) {
-        //lines[i]->isSelected.setToggleState(e->selectedCues.contains(lines[i]->targetCue), juce::dontSendNotification);
-    }
 }
 
 void PatchSheet::changeListenerCallback(ChangeBroadcaster* source)

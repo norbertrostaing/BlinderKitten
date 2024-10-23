@@ -232,7 +232,6 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 	artnetPacket[15] = outputNet->intValue();
 	artnetPacket[16] = 2;
 	artnetPacket[17] = 0;
-	int test = (outputSubnet->intValue() << 4) | outputUniverse->intValue();
 
 	ArtnetSocket::getInstance()->isSending.enter();
 	ArtnetSocket::getInstance()->socket->write(remoteHost->stringValue(), remotePort->intValue(), artnetPacket, 530);

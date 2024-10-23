@@ -102,9 +102,6 @@ void CuelistSheet::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
-    float textSize = engine->conductorTextSize->floatValue();
-    float titleSize = engine->conductorTitleSize->floatValue();
-
     int width = getLocalBounds().getWidth();
     int height = getLocalBounds().getHeight();
 
@@ -145,9 +142,6 @@ void CuelistSheet::updateStyle()
 {
     Colour curr = engine->conductorCurrentCueColor->getColor();
     Colour next = engine->conductorNextCueColor->getColor();
-
-    float textSize = engine->conductorTextSize->floatValue();
-    float titleSize = engine->conductorTitleSize->floatValue();
 }
 
 

@@ -48,8 +48,8 @@ void BKColorPicker::paint (juce::Graphics& g)
     img.reduce(margin, margin);
     g.drawImage(ImageCache::getFromMemory(BinaryData::colorpicker_png, BinaryData::colorpicker_pngSize), img.toFloat());
     
-    Command* c = UserInputManager::getInstance()->targetCommand;
-    if (c == nullptr) return;
+    Command* cmd = UserInputManager::getInstance()->targetCommand;
+    if (cmd == nullptr) return;
     float red = -1;
     float green = -1;
     float blue = -1;
@@ -59,8 +59,8 @@ void BKColorPicker::paint (juce::Graphics& g)
     float hue = -1;
     float saturation = -1;
 
-    for (int i = 0; i < c->values.items.size(); i++) {
-        CommandValue* cv = c->values.items[i];
+    for (int i = 0; i < cmd->values.items.size(); i++) {
+        CommandValue* cv = cmd->values.items[i];
         if (cv->channelType->getValue() == engine->CPRedChannel->getValue()) {red = cv->valueFrom->getValue();}
         if (cv->channelType->getValue() == engine->CPGreenChannel->getValue()) {green = cv->valueFrom->getValue();}
         if (cv->channelType->getValue() == engine->CPBlueChannel->getValue()) {blue = cv->valueFrom->getValue();}

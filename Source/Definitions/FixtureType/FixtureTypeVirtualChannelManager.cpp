@@ -15,7 +15,6 @@ FixtureTypeVirtualChannelManager::~FixtureTypeVirtualChannelManager()
 void FixtureTypeVirtualChannelManager::addItemInternal(FixtureTypeVirtualChannel* c, var data)
 {
     if (parentContainer != nullptr) {
-        FixtureType* parent = dynamic_cast<FixtureType*>(parentContainer.get());
         //parent->updateVirtualLists();
     }
 }

@@ -39,11 +39,11 @@ DMXMapping::~DMXMapping()
 {
 }
 
-void DMXMapping::handleChannel(int channel, int value, String origin)
+void DMXMapping::handleChannel(int chan, int value, String origin)
 {
     if (!enabled->boolValue()) return;
 
-    if (pitchOrNumber->intValue() != channel) return;
+    if (pitchOrNumber->intValue() != chan) return;
     handleValue(value, origin);
 }
 
