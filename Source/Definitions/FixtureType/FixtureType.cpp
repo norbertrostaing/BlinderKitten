@@ -121,6 +121,12 @@ void FixtureType::copyTemplate()
 		LOG("Copy to must be higher than template ID");
 		return;
 	}
+
+	Array<FixtureTypeVirtualChannel*> ftvcToAdd;
+	Array<FixtureTypeChannel*> ftcToAdd;
+	HashMap<FixtureTypeChannel*, FixtureTypeVirtualChannel*> vDimmers;
+
+
 	for (int subId = from + 1; subId <= to; subId++) {
 		HashMap<FixtureTypeVirtualChannel*, FixtureTypeVirtualChannel*> virtualChans;
 		Array< FixtureTypeVirtualChannel*> virtToCopy;
@@ -130,7 +136,9 @@ void FixtureType::copyTemplate()
 			}
 		}
 		for (FixtureTypeVirtualChannel* c : virtToCopy) {
-			FixtureTypeVirtualChannel* newC = virtualChansManager.addItemFromData(c->getJSONData(), false);
+			FixtureTypeVirtualChannel* newC = new FixtureTypeVirtualChannel();
+			ftvcToAdd.add(newC);
+			newC->loadJSONData(c->getJSONData());
 			newC->subFixtureId->setValue(subId);
 			virtualChans.set(c, newC);
 		}
@@ -141,12 +149,20 @@ void FixtureType::copyTemplate()
 			}
 		}
 		for (FixtureTypeChannel* c : toCopy) {
-			FixtureTypeChannel* newC = chansManager.addItemFromData(c->getJSONData(), false);
+			FixtureTypeChannel* newC = new FixtureTypeChannel();
+			ftcToAdd.add(newC);
+			newC->loadJSONData(c->getJSONData());
 			newC->subFixtureId->setValue(subId);
 			FixtureTypeVirtualChannel* v = dynamic_cast<FixtureTypeVirtualChannel*>(c->virtualMaster->targetContainer.get());
 			if (v != nullptr && virtualChans.contains(v)) {
-				newC->virtualMaster->setValueFromTarget(virtualChans.getReference(v));
+				vDimmers.set(newC, virtualChans.getReference(v));
 			}
 		}
+	}
+	virtualChansManager.addItems(ftvcToAdd, false);
+	chansManager.addItems(ftcToAdd, false);
+	updateVirtualLists();
+	for (auto it = vDimmers.begin(); it != vDimmers.end(); it.next()) {
+		it.getKey()->virtualMaster->setValueFromTarget(it.getValue());
 	}
 }
