@@ -217,6 +217,9 @@ void Effect::update(double now) {
 		if (TSEndFadeOut > 0 && TSEndFadeOut < now) {
 			kill();
 		}
+		if (noLoop->boolValue() && totalElapsed > maxOffset) {
+			stop();
+		}
 	}
 	else {
 		currentPosition->setValue(0);
@@ -234,8 +237,15 @@ void Effect::computeData() {
 	//LOG("computing");
 	isComputing.enter();
 	chanToFxParam.clear();
+	maxOffset = 0;
 	for (int i = 0; i < values.items.size(); i++) {
 		values.items[i]->computeData();
+		double rowOffset = values.items[i]->maxOffset;
+		rowOffset+=1;
+		if (values.items[i]->speed->floatValue() > 0) {
+			rowOffset /= values.items[i]->speed->floatValue();
+		}
+		maxOffset = jmax(maxOffset, rowOffset);
 	}
 	isComputing.exit();
 	computed = true;

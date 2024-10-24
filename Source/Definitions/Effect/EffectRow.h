@@ -40,6 +40,8 @@ class EffectRow:
     HashMap<SubFixture*, double> computedPositions;
     CriticalSection isComputing;
 
+    double maxOffset = 0;
+
     Effect* parentEffect = nullptr;
     void checkParentEffect();
 

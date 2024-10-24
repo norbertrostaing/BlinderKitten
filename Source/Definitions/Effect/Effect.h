@@ -66,6 +66,8 @@ public:
     double TSLastUpdate;
     double totalElapsed;
 
+    double maxOffset = 0;
+
     IntParameter* soloPool;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<Array<EffectParam*>>> chanToFxParam;

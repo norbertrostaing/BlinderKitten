@@ -106,6 +106,9 @@ void EffectRow::computeData() {
     }
     checkParentEffect();
     if (parentEffect == nullptr) {return;}
+
+    maxOffset = 0;
+
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         //double deltaPos = 0;
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
@@ -178,6 +181,8 @@ void EffectRow::computeData() {
                     if (p->wingsInvertSelections->boolValue()) {
                         offset = 1 - offset;
                     }
+
+                    maxOffset = jmax(maxOffset, offset);
                     p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
                     p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
                     p->subFixtureChannelAreCentered.set(chans[chanIndex], isCentered);
