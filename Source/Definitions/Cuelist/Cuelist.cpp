@@ -171,6 +171,7 @@ Cuelist::Cuelist(var params) :
 	flashLevel = addFloatParameter("Flash Level", "Flash/swop level master for HTP channels of this sequence", 1, 0, 1);
 	LTPLevel = addFloatParameter("LTP Level", "Level master for LTP channels of this sequence", 1, 0, 1);
 	flashWithLtpLevel = addBoolParameter("Flash with LTP level", "If checked, the LTP level will apply when flashing", false);
+	absoluteLTPValue = addBoolParameter("Absolute LTP value", "If checked, LTP value act as a multiplier, if not, it acts like a crossfade.", false);
 
 	isCuelistOn = addBoolParameter("is On", "Is this cuelist on ?", false);
 	isCuelistOn->isSavable = false;
@@ -1169,9 +1170,13 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		}
 		else {
 			if (!isFlashing || flashWithLtpLevel->boolValue()) {
-				valueTo *= (double)LTPLevel->getValue();
+				if (absoluteLTPValue->boolValue()) {
+					valueTo *= (double)LTPLevel->getValue();
+				}
+				else {
+					valueTo = jmap(LTPLevel->floatValue(), currentVal, valueTo);
+				}
 			}
-			//valueTo = jmap(LTPLevel->floatValue(), currentVal, valueTo);
 		}
 	}
 	else {
