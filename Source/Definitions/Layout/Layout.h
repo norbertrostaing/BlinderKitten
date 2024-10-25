@@ -16,8 +16,8 @@ class SubFixture;
 class Fixture;
 
 class Layout :
-    public ChangeBroadcaster,
-    public BaseItem
+    public BaseItem,
+    public ChangeBroadcaster
     // public ChainVizTarget
 {
 public:

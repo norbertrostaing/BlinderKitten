@@ -37,8 +37,8 @@ public:
      
     // void downloadObjects();
     // void updateFactoryDefinitions();
-    void addItemInternal(Layout* o, var data) override;
-    void removeItemInternal(Layout* o) override;
+    // void addItemInternal(Layout* o, var data) override;
+    // void removeItemInternal(Layout* o) override;
 
     // int getFirstAvailableObjectID(Object* excludeObject = nullptr);
     // Object* getObjectWithID(int id, Object* excludeObject = nullptr);

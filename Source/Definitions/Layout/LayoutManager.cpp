@@ -17,7 +17,8 @@ int compare(Layout* A, Layout* B) {
 }
 
 LayoutManager::LayoutManager() :
-    BaseManager("2D Plans")    {
+    BaseManager("2D Plans")    
+{
     itemDataType = "Layout";
     selectItemWhenCreated = true;
     comparator.compareFunc = compare;
@@ -26,19 +27,6 @@ LayoutManager::LayoutManager() :
 
 LayoutManager::~LayoutManager()
 {
-}
-
-
-void LayoutManager::addItemInternal(Layout* o, var data)
-{
-    reorderItems();
-    // o->addLayoutListener(this);
-    // if (!isCurrentlyLoadingData) o->globalID->setValue(getFirstAvailableObjectID(o));
-}
-
-void LayoutManager::removeItemInternal(Layout* o)
-{
-    // o->removeObjectListener(this);
 }
 
 
