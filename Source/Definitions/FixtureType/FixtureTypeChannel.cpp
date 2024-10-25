@@ -15,6 +15,8 @@
 #include "FixtureType.h"
 #include "Tracker/TrackerManager.h"
 #include "Fixture/FixtureManager.h"
+#include "Brain.h"
+#include "SubFixture/SubFixture.h"
 
 FixtureTypeChannel::FixtureTypeChannel(var params) :
     BaseItem(params.getProperty("name", "Channel")),
@@ -55,6 +57,19 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
 
 FixtureTypeChannel::~FixtureTypeChannel()
 {
+    for (SubFixture* sf : Brain::getInstance()->allSubfixtures) {
+        Array<SubFixtureChannel*> toDelete;
+        for (auto it = sf->channelsMap.begin(); it != sf->channelsMap.end(); it.next()) {
+            SubFixtureChannel* sfc = it.getValue();
+            if (sfc->parentFixtureTypeChannel == this) {
+                toDelete.add(sfc);
+            }
+        }
+        for (SubFixtureChannel* sfc : toDelete) {
+            sf->channelsMap.removeValue(sfc);
+            sf->channelsContainer.removeObject(sfc);
+        }
+    }
 };
 
 void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
