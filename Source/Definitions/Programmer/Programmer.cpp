@@ -129,6 +129,11 @@ Programmer::~Programmer()
 		Brain::getInstance()->pleaseUpdate(sfc);
 	}
 
+	if (UserInputManager::getInstance()->getProgrammer(false) == this) {
+		UserInputManager::getInstance()->targetCommand = nullptr;
+		UserInputManager::getInstance()->currentProgrammer = nullptr;
+	}
+
 	isDeleted = true;
 	clearAll();
 }
