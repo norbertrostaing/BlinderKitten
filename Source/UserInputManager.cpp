@@ -775,6 +775,12 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			trg->selectThis();
 		}
 	}
+	else if (type == "mapper") {
+		Mapper* trg = Brain::getInstance()->getMapperById(id);
+		if (trg != nullptr) {
+			trg->selectThis();
+		}
+	}
 }
 
 void UserInputManager::testPreset(Preset* p)
