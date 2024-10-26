@@ -163,10 +163,7 @@ void MIDIInterface::feedback(String address, var value, String origin = "")
 {
     if (!enabled->boolValue()) return;  
     bool logOutput = logOutgoingData->boolValue();
-    for (int i = 0; i < feedbackManager.items.size(); i++) {
-        MIDIFeedback* f = feedbackManager.items[i];
-        f->processFeedback(address, value, origin, logOutput);
-    }
+    feedbackManager.feedback(address, value, origin, logOutput);
 }
 
 

@@ -74,4 +74,6 @@ public:
     void sendXTEFaderText(int col, String text);
     void sendXTEEncoderText(int col, String text);
 
+    String getLocalAdress();
+
 };

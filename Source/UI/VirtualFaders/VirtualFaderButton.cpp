@@ -531,7 +531,6 @@ void VirtualFaderButton::feedback(ButtonStatus value)
 	String address = "";
 	String address0 = "";
 
-
 	int page = parentColumn->pageNumber->intValue();
 	int col = parentColumn->colNumber->intValue();
 	bool isAbove = true;
