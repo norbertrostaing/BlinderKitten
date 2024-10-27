@@ -524,6 +524,7 @@ void UserInputManager::encoderValueChanged(int index, float newValue, String ori
 
 void UserInputManager::changeChannelValue(ChannelType* c, float newValue)
 {
+	MessageManagerLock mmlock;
 	targetCommand = getProgrammer(true)->currentUserCommand;
 	if (targetCommand == nullptr) {
 		return;

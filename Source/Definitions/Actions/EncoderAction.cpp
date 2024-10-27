@@ -80,11 +80,14 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
 
             if (ct != nullptr) {
                 if (isRelative) {
-                    float baseValue = Encoders::getInstance()->encoders[index]->getValue();
-                    if (Encoders::getInstance()->encoderRange == 1) baseValue /= 100.;
-                    if (Encoders::getInstance()->encoderRange == 2) baseValue /= 255.;
+                    int i = Encoders::getInstance()->channels.indexOf(ct);
+                    if (i>=0) {
+                        float baseValue = Encoders::getInstance()->encoders[i]->getValue();
+                        if (Encoders::getInstance()->encoderRange == 1) baseValue /= 100.;
+                        if (Encoders::getInstance()->encoderRange == 2) baseValue /= 255.;
 
-                    UserInputManager::getInstance()->changeChannelValue(ct, baseValue + (float)value);
+                        UserInputManager::getInstance()->changeChannelValue(ct, baseValue + (float)value);
+                    }
                 }
                 else {
                     UserInputManager::getInstance()->changeChannelValue(ct, value);
