@@ -81,7 +81,7 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
             if (ct != nullptr) {
                 if (isRelative) {
                     int i = Encoders::getInstance()->channels.indexOf(ct);
-                    if (i>=0) {
+                    if (i>=0 && i < Encoders::getInstance()->encoders.size()) {
                         float baseValue = Encoders::getInstance()->encoders[i]->getValue();
                         if (Encoders::getInstance()->encoderRange == 1) baseValue /= 100.;
                         if (Encoders::getInstance()->encoderRange == 2) baseValue /= 255.;
