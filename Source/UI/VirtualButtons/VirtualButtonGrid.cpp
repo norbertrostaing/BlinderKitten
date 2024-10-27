@@ -323,6 +323,7 @@ void VirtualButtonGrid::resetFeedbacks(bool onlySetToZero)
         {
             String address0 = "/vbutton/0/" + String(c + 1) + "/" + String(l + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
+            UserInputManager::getInstance()->feedback(address0, "", "");
         }
     }
 

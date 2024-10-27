@@ -475,7 +475,7 @@ void VirtualButton::updateStatus(bool forceRefresh)
 			newStatus = targ->isOn ? BTN_ON : BTN_OFF;
 		}
 	}
-
+	feedback(getBtnText());
 	if (currentStatus != newStatus || forceRefresh) {
 		feedback(newStatus);
 	}
@@ -506,5 +506,27 @@ void VirtualButton::feedback(ButtonStatus value)
 		UserInputManager::getInstance()->feedback(address0, sentValue , "");
 	}
 
+
+}
+
+void VirtualButton::feedback(String value)
+{
+	if (isCurrentlyLoadingData) { return; }
+	String address = "";
+	String address0 = "";
+
+	int page = pageNumber->intValue();
+	int col = colNumber->intValue();
+	int row = rowNumber->intValue();
+
+	address += "/vbutton/" + String(page) + "/" + String(col) + "/" + String(row);
+	address0 += "/vbutton/0/" + String(col) + "/" + String(row);
+
+	double sentValue = 0;
+
+	UserInputManager::getInstance()->feedback(address, value, "");
+	if (page == VirtualButtonGrid::getInstance()->page) {
+		UserInputManager::getInstance()->feedback(address0, value, "");
+	}
 
 }

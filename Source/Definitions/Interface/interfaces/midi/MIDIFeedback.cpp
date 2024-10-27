@@ -104,15 +104,15 @@ void MIDIFeedback::updateDisplay() {
 
     MidiType type = midiType->getValueDataAsEnum<MidiType>();
 
-    bool isButton = source == VBUTTON || source == VABOVEBUTTON || source == VBELOWBUTTON;
-    bool isComplex = isButton && differentChannels->boolValue();
     bool isText = type == TEXT;
+    bool isButton = !isText && (source == VBUTTON || source == VABOVEBUTTON || source == VBELOWBUTTON );
+    bool isComplex = isButton && differentChannels->boolValue();
     bool isBlackout = source == BLACKOUT;
 
     channel->hideInEditor = isText;
     pitchOrNumber->hideInEditor = isText || type == PITCHWHEEL;
     differentChannels->hideInEditor = !isButton;
-    channel->hideInEditor = isButton && differentChannels->boolValue();
+    channel->hideInEditor = isText || (isButton && differentChannels->boolValue());
 
     outputRange7b->hideInEditor = isButton || isText || midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
     outputRange14b->hideInEditor = isButton || isText || midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL;

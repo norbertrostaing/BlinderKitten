@@ -55,6 +55,7 @@ public:
 
     void updateStatus(bool forceRefresh = false);
     void feedback(ButtonStatus value);
+    void feedback(String value);
 
     String getTypeString() const override { return objectType; }
 
