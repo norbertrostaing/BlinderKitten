@@ -44,8 +44,12 @@ MIDIFeedback::MIDIFeedback() :
 
     channel = addIntParameter("Midi Channel", "The channel to use for this feedback.", 1, 1, 16);
     pitchOrNumber = addIntParameter("Midi Pitch Or Number", "The pitch (for notes) or number (for controlChange) to use for this feedback.", 0, 0, 127);
-    outputRange = addPoint2DParameter("Midi Output Range", "The range to remap the value to.");
-    outputRange->setPoint(0, 127);
+    outputRange7b = addPoint2DParameter("Midi Output Range", "The range to remap the value to.");
+    outputRange7b->setBounds(0, 0, 127, 127);
+    outputRange7b->setPoint(0, 127);
+    outputRange14b = addPoint2DParameter("Midi Output Range 14b", "The range to remap the value to.");
+    outputRange14b->setBounds(0, 0, 16383, 16383);
+    outputRange14b->setPoint(0, 16383);
 
     //inputRange = addPoint2DParameter("Input Range", "The range to get from input",false);
     //inputRange->setBounds(0, 0, 127, 127);
@@ -110,7 +114,8 @@ void MIDIFeedback::updateDisplay() {
     differentChannels->hideInEditor = !isButton;
     channel->hideInEditor = isButton && differentChannels->boolValue();
 
-    outputRange -> hideInEditor = isButton || isText;
+    outputRange7b->hideInEditor = isButton || isText || midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
+    outputRange14b->hideInEditor = isButton || isText || midiType->getValueDataAsEnum<MidiType>() != PITCHWHEEL;
     onValue -> hideInEditor = !isButton && !isBlackout;
     offValue -> hideInEditor = !isButton && !isBlackout;
     onLoadedValue -> hideInEditor = !isButton;
@@ -159,6 +164,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
     sameDevice = sameDevice && origin != "";
     sameDevice = false;
 
+    bool needRemap = true;
+
     bool isText = varValue.isString();
     if (isText && midiType->getValueDataAsEnum<MidiType>() != TEXT) { return; }
     if (!isText && midiType->getValueDataAsEnum<MidiType>() == TEXT) { return; }
@@ -182,7 +189,6 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
         else {
             valid = true;
-            sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
     else if (source == VROTARY && !sameDevice && validPageFader) {
@@ -192,7 +198,6 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         else 
         {
             valid = true;
-            sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
     else if (source == VBUTTON && validPageButton) {
@@ -203,6 +208,7 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         else
         {
             valid = true;
+            needRemap = false;
             sendValue = 0;
             sendValue = floatValue == VirtualButton::BTN_ON ? onValue->intValue() : sendValue;
             sendValue = floatValue == VirtualButton::BTN_OFF ? offValue->intValue() : sendValue;
@@ -229,6 +235,7 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         else
         {
             valid = true;
+            needRemap = false;
             sendValue = 0;
             sendValue = floatValue == VirtualFaderButton::BTN_ON ? onValue->intValue() : sendValue;
             sendValue = floatValue == VirtualFaderButton::BTN_OFF ? offValue->intValue() : sendValue;
@@ -255,6 +262,7 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         else
         {
             valid = true;
+            needRemap = false;
             sendValue = 0;
             sendValue = floatValue == VirtualFaderButton::BTN_ON ? onValue->intValue() : sendValue;
             sendValue = floatValue == VirtualFaderButton::BTN_OFF ? offValue->intValue() : sendValue;
@@ -278,14 +286,12 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         localAddress = "/encoder/" + String(sourceNumber->intValue());
         if (address == localAddress) {
             valid = true;
-            sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
     else if (source == GRANDMASTER && !sameDevice) {
         localAddress = "/grandmaster";
         if (address == localAddress) {
             valid = true;
-            sendValue = round(jmap(floatValue, 0., 1., (double)outputRange->getValue()[0], (double)outputRange->getValue()[1]));
         }
     }
     else if (source == BLACKOUT && !sameDevice) {
@@ -304,17 +310,32 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         int sendPitch = pitchOrNumber->intValue();
         sendValue = round(sendValue);
 
-        if (midiType->getValueDataAsEnum<MidiType>() == NOTE && (dev->sentNote[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue)) {
+        if (midiType->getValueDataAsEnum<MidiType>() == NOTE ) {
+            if (needRemap) {
+                sendValue = round(jmap(floatValue, 0., 1., (double)outputRange7b->getValue()[0], (double)outputRange7b->getValue()[1]));
+            }
             if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
-            dev->sendNoteOn(sendChannel, sendPitch, sendValue);
+            if (dev->sentNote[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
+                dev->sendNoteOn(sendChannel, sendPitch, sendValue);
+            }
         }
-        if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE && (dev->sentCC[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue)) {
+        if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE) {
+            if (needRemap) {
+                sendValue = round(jmap(floatValue, 0., 1., (double)outputRange7b->getValue()[0], (double)outputRange7b->getValue()[1]));
+            }
             if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
-            dev->sendControlChange(sendChannel, sendPitch, sendValue);
+            if (dev->sentCC[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
+                dev->sendControlChange(sendChannel, sendPitch, sendValue);
+            }
         }
-        if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL && (dev->sentPW[sendChannel] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue)) {
+        if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL) {
+            if (needRemap) {
+                sendValue = round(jmap(floatValue, 0., 1., (double)outputRange14b->getValue()[0], (double)outputRange14b->getValue()[1]));
+            }
             if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
-            dev->sendPitchWheel(sendChannel, sendValue);
+            if (dev->sentPW[sendChannel] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
+                dev->sendPitchWheel(sendChannel, sendValue);
+            }
         }
         lastSentValue = sendValue;
         lastSentChannel = sendChannel;

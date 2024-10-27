@@ -33,7 +33,8 @@ public:
     EnumParameter* midiType;
     IntParameter* channel;
     IntParameter* pitchOrNumber;
-    Point2DParameter* outputRange;
+    Point2DParameter* outputRange7b;
+    Point2DParameter* outputRange14b;
 
     BoolParameter* differentChannels;
     IntParameter* onValue;
