@@ -41,8 +41,6 @@ void MIDIFeedbackManager::rebuildLibrary()
     feedbackLibrary.clear();
     for (MIDIFeedback* f : items) {
         String ad = f->getLocalAdress();
-        LOG("coucou");
-        LOG(ad);
         if (!feedbackLibrary.contains(ad)) {
             feedbackLibrary.set(ad, Array<MIDIFeedback*>());
         }
