@@ -40,6 +40,7 @@ public:
 
     BoolParameter* doNotTrack;
     MoveInBlackManager moveInBlack;
+    FloatParameter* moveInBlackDelay;
 
     CommandSelectionManager selection;
     BaseManager<CommandValue> values;

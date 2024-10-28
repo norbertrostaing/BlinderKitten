@@ -174,6 +174,7 @@ public:
 
     CommandTiming timing;
     MoveInBlackManager moveInBlack;
+    FloatParameter* moveInBlackDelay;
 
     String getTypeString() const override { return objectType; }
 

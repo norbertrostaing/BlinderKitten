@@ -194,6 +194,7 @@ Cuelist::Cuelist(var params) :
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
+	moveInBlackDelay = addFloatParameter("MIB Delay", "Delay to wait after light goes off to trigger move in black", 0, 0);
 
 	// offFadeCurve = new Automation();
 	offFadeCurve.saveAndLoadRecursiveData = true;
@@ -800,6 +801,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 							}
 						}
 						if (canMove) {
+							moveAfter += cv->moveInBlackDelay*1000.0;
 							cv->TSInit = moveAfter;
 							cv->TSStart = moveAfter;
 							cv->TSEnd = moveAfter;

@@ -37,6 +37,8 @@ Command::Command(var params) :
 	doNotTrack = addBoolParameter("Do not track", "if checked, this command will not be tracked", false);
 	explodeSelectionBtn = addTrigger("Explode Selection", "Transform this command in one command per subfixture");
 
+	moveInBlackDelay = addFloatParameter("MIB Delay", "Delay to wait after light goes off to trigger move in black", -1, -1);
+
 	// to add a manager with defined data
 	//selection = new CommandSelectionManager();
 	addChildControllableContainer(&moveInBlack);
@@ -108,13 +110,17 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	Array<SubFixture*> subFixtures = selection.computedSelectedSubFixtures;
 
 	Array<ChannelFamily*> moveInBlackFamilies;
-	for (auto f : moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
-	if (callingCue != nullptr) {
-		for (auto f : callingCue->moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
-	}
+	float mibDelay = 0;
 	if (callingCuelist != nullptr) {
 		for (auto f : callingCuelist->moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
+		mibDelay = callingCuelist->moveInBlackDelay->floatValue();
 	}
+	if (callingCue != nullptr) {
+		for (auto f : callingCue->moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
+		if (callingCue->moveInBlackDelay->floatValue() >= 0) mibDelay = callingCue->moveInBlackDelay->floatValue();
+	}
+	for (auto f : moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
+	if (moveInBlackDelay->floatValue() >= 0) mibDelay = moveInBlackDelay->floatValue();
 
 
 	bool delayThru = false;
@@ -387,6 +393,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 						ChannelType* ct = dynamic_cast<ChannelType*>(fchan->parentParamDefinition);
 						ChannelFamily* cf = dynamic_cast<ChannelFamily*>(ct->parentContainer->parentContainer.get());
 						finalValue->moveInBlack = moveInBlackFamilies.contains(cf);
+						finalValue->moveInBlackDelay = mibDelay;
 					}
 				}
 

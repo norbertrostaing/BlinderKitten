@@ -58,6 +58,7 @@ public:
     Trigger* cleanUnusedCommandsBtn;
 
     MoveInBlackManager moveInBlack;
+    FloatParameter* moveInBlackDelay;
 
     bool isComputing = false;
 

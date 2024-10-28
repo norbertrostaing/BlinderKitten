@@ -76,6 +76,8 @@ Cue::Cue(var params) :
 	htpOutFade = timingContainer.addFloatParameter("HTP out fade", "Default delay for HTP falling values (-1 means use HTP in fade)", -1, -1);
 	ltpFade = timingContainer.addFloatParameter("LTP fade", "Default delay for LTP values (-1 means use HTP in fade)", -1, -1);
 
+	moveInBlackDelay = addFloatParameter("MIB Delay", "Delay to wait after light goes off to trigger move in black", -1, -1);
+
 	addChildControllableContainer(&actionsContainer);
 	addChildControllableContainer(&timingContainer);
 	addChildControllableContainer(&moveInBlack);

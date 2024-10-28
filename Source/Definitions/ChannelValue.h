@@ -40,6 +40,7 @@ public:
 
     bool canBeTracked = true;
     bool moveInBlack = true;
+    float moveInBlackDelay = 0;
 
     Command* parentCommand = nullptr;
 };
