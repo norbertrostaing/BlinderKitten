@@ -87,6 +87,12 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
+    case CL_OFF_INSTANT:
+        if (val == 1) {
+            target->off(0,0);
+        }
+        break;
+
     case CL_TOGGLE:
         if (val == 1) {
             if (target->isCuelistOn->getValue()) {

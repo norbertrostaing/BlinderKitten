@@ -63,6 +63,12 @@ void CarouselAction::setValueInternal(var value, String origin, int incrementInd
         }
         break;
 
+    case CAR_STOP_INSTANT:
+        if (val == 1) {
+            target->stop(0);
+        }
+        break;
+
     case CAR_TOGGLE:
         if (val == 1) {
             if (target->isOn) {

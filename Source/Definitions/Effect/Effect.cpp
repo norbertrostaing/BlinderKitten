@@ -171,10 +171,11 @@ void Effect::start(bool useFadeIn) {
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolEffectStarted(soloPool->intValue(), this);
 }
 
-void Effect::stop() {
-	if (fadeOutTime->floatValue() > 0) {
+void Effect::stop(float forcedFade) {
+	float fade = forcedFade != -1 ? forcedFade : fadeOutTime->floatValue();
+	if (fade > 0) {
 		TSStartFadeOut = Time::getMillisecondCounterHiRes();
-		TSEndFadeOut = TSStartFadeOut + (fadeOutTime->floatValue() * 1000);
+		TSEndFadeOut = TSStartFadeOut + (fade * 1000.0);
 	}
 	else {
 		kill();

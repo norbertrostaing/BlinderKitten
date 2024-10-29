@@ -47,12 +47,15 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go All Loaded", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOALLLOADED));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go back", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOBACK));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go instant", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOINSTANT));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go back instant", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GOBACKINSTANT));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go random", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GORANDOM));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Timed Flash", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASHTIMED));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Timed Swop", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOPTIMED));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFF));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off Instant", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFF_INSTANT));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Toggle", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Load", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LOAD));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Load and Go", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LOADANDGO));
@@ -67,6 +70,7 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop Instant", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP_INSTANT));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Toggle", &EffectAction::create)->addParam("actionType", EffectAction::FX_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Flash", &EffectAction::create)->addParam("actionType", EffectAction::FX_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Swop", &EffectAction::create)->addParam("actionType", EffectAction::FX_SWOP));
@@ -78,6 +82,7 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop Instant", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP_INSTANT));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Toggle", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Flash", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Swop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SWOP));
@@ -99,6 +104,7 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Start", &BundleAction::create)->addParam("actionType", BundleAction::BUN_START));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Stop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Stop Instant", &BundleAction::create)->addParam("actionType", BundleAction::BUN_STOP_INSTANT));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Size", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Size", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SET_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Tap Tempo", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TAPTEMPO));

@@ -63,6 +63,12 @@ void EffectAction::setValueInternal(var value, String origin, int incrementIndex
         }
         break;
 
+    case FX_STOP_INSTANT:
+        if (val == 1) {
+            target->stop(0);
+        }
+        break;
+
     case FX_TOGGLE:
         if (val == 1) {
             if (target->isOn) {

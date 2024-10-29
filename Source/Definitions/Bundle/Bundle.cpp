@@ -148,13 +148,13 @@ void Bundle::start()
 	isComputing.exit();
 }
 
-void Bundle::stop()
+void Bundle::stop(float forcedFade)
 {
 	computeValues();
 	isComputing.enter();
-	for (Cuelist* c : computedCuelists) c->off();
-	for (Effect* c : computedEffects) c->stop();
-	for (Carousel* c : computedCarousels) c->stop();
+	for (Cuelist* c : computedCuelists) c->off(forcedFade, forcedFade);
+	for (Effect* c : computedEffects) c->stop(forcedFade);
+	for (Carousel* c : computedCarousels) c->stop(forcedFade);
 	for (Mapper* c : computedMappers) c->stop();
 	for (Tracker* c : computedTrackers) c->stop();
 	isComputing.exit();

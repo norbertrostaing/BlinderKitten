@@ -53,7 +53,7 @@ public:
     void computeValues();
 
     void start();
-    void stop();
+    void stop(float forcedFade = -1);
     void tapTempo();
     void setSize(float val, bool size, bool HTP, bool LTP, bool flash);
     void setSpeed(float val);

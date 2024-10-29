@@ -175,10 +175,11 @@ void Carousel::start(bool useFadeIn) {
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCarouselStarted(soloPool->intValue(), this);
 }
 
-void Carousel::stop() {
-	if (fadeOutTime->floatValue() > 0) {
+void Carousel::stop(float forcedFade) {
+	float fade = forcedFade != -1 ? forcedFade : fadeOutTime->floatValue();
+	if (fade > 0) {
 		TSStartFadeOut = Time::getMillisecondCounterHiRes();
-		TSEndFadeOut = TSStartFadeOut + (fadeOutTime->floatValue() * 1000);
+		TSEndFadeOut = TSStartFadeOut + (fade * 1000.0);
 	}
 	else {
 		kill();

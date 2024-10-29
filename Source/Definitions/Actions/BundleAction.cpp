@@ -64,6 +64,12 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
         }
         break;
 
+    case BUN_STOP_INSTANT:
+        if (val == 1) {
+            target->stop(0);
+        }
+        break;
+
     case BUN_TAPTEMPO:
         if (val == 1) {
             target->tapTempo();

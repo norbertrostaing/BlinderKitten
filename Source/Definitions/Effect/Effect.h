@@ -92,7 +92,7 @@ public:
     void pleaseComputeIfRunning();
     void userStart(bool useFadeIn = true);
     void start(bool useFadeIn = true);
-    void stop();
+    void stop(float forcedFade = -1);
     void kill();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
