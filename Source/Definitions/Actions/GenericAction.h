@@ -27,6 +27,8 @@ public:
 	var dataToLoad;
 	var ghostValueData; // to keep when target is lost
 
+	bool isLoading = true;
+
 	void setValueParameter(Parameter* p);
 
 	virtual void triggerInternal() override;

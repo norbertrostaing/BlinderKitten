@@ -29,7 +29,7 @@ GenericAction::~GenericAction()
 
 void GenericAction::setValueParameter(Parameter* p)
 {
-	if (Engine::mainEngine->isLoadingFile) return;
+	if (isLoading) return;
 
 	if (!value.wasObjectDeleted() && value != nullptr)
 	{
@@ -108,7 +108,7 @@ void GenericAction::onContainerParameterChanged(Parameter* p)
 	{
 		if (actionType == SET_VALUE)
 		{
-			if (!Engine::mainEngine->isLoadingFile)
+			if (!isLoading)
 			{
 				if (target->target == nullptr) setValueParameter(nullptr);
 				else
@@ -138,7 +138,7 @@ void GenericAction::onContainerParameterChanged(Parameter* p)
 
 void GenericAction::loadJSONDataInternal(var data)
 {
-	if (Engine::mainEngine->isLoadingFile)
+	if (isLoading)
 	{
 		//DBG("Engine is loading, waiting after load");
 		Engine::mainEngine->addEngineListener(this);
@@ -150,6 +150,7 @@ void GenericAction::loadJSONDataInternal(var data)
 void GenericAction::endLoadFile()
 {
 	//reset data we want to reload
+	isLoading = false;
 	target->setValue("", true);
 	//DBG("Engine after load, load command data");
 
