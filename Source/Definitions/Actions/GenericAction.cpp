@@ -19,7 +19,7 @@ GenericAction::GenericAction(var params) :
 	actionType = (ActionType)(int)params.getProperty("actionType", SET_VALUE);
 	if (actionType == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
 	else target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
-	
+	isLoading = Engine::mainEngine->isCurrentlyLoadingData;
 }
 
 
