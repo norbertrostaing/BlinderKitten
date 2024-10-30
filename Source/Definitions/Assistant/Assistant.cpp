@@ -827,6 +827,7 @@ void Assistant::importAscii()
                     }
                     currentCue = new Cue();
                     cuesToAdd.add(currentCue);
+                    currentCue->editorIsCollapsed = true;
                     String cueName = "Cue " + words[1];
                     currentCue->setNiceName(cueName);
                     currentCue->commands.clear();
@@ -1001,11 +1002,11 @@ void Assistant::importAscii()
         }
     }
 
-    cuelist->cues.addItems(cuesToAdd);
-    CuelistManager::getInstance()->addItems(cuelistsToAdd);
-    GroupManager::getInstance()->addItems(groupsToAdd);
-    PresetManager::getInstance()->addItems(presetsToAdd);
-    FixtureManager::getInstance()->addItems(fixturesToAdd);
+    cuelist->cues.addItems(cuesToAdd, juce::var(), false);
+    CuelistManager::getInstance()->addItems(cuelistsToAdd, juce::var(), false);
+    GroupManager::getInstance()->addItems(groupsToAdd, juce::var(), false);
+    PresetManager::getInstance()->addItems(presetsToAdd, juce::var(), false);
+    FixtureManager::getInstance()->addItems(fixturesToAdd, juce::var(), false);
 }
 
 float Assistant::asciiLevelToFloat(String asciiLevel) {

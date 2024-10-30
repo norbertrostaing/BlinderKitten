@@ -42,7 +42,7 @@ void CueManager::addItemInternal(Cue* c, var data) {
     if (maxId != 0 && c->id->floatValue() == 1) {
         c->id->setValue(floor(maxId+1));
     }
-    reorderItems();
+    //reorderItems();
     //correctCueIds();
     parentCuelist->sendChangeMessage();
 }
