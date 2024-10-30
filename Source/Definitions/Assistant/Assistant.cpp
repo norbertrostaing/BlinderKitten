@@ -878,7 +878,7 @@ void Assistant::importAscii()
                         float level = asciiLevelToFloat(words[iChan + 1]);
                         Command* com = currentCue->commands.addItem();
                         com->selection.items[0]->valueFrom->setValue(fixt);
-                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->boolValue());
+                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                         com->values.items[0]->valueFrom->setValue(level);
                     }
                 }
@@ -930,7 +930,7 @@ void Assistant::importAscii()
                         float level = asciiLevelToFloat(words[iChan + 1]);
                         Command* com = currentSubCue->commands.addItem();
                         com->selection.items[0]->valueFrom->setValue(fixt);
-                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->boolValue());
+                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                         com->values.items[0]->valueFrom->setValue(level);
                     }
                 }
@@ -987,7 +987,7 @@ void Assistant::importAscii()
                         if (currentPreset != nullptr){
                             PresetSubFixtureValues * v = currentPreset->subFixtureValues.addItem();
                             v->targetFixtureId->setValue(fixt);
-                            v->values.items[0]->param->setValue(asciiDimmerChannel->boolValue());
+                            v->values.items[0]->param->setValue(asciiDimmerChannel->getValue());
                             v->values.items[0]->paramValue->setValue(level);
                         }
                     }
