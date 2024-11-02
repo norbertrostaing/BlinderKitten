@@ -10,6 +10,7 @@
 
 #include "../../CommonIncludes.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
+#include "Brain.h"
 
 juce_ImplementSingleton(ArtnetSocket);
 
@@ -145,6 +146,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
 	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
 	forceSrcPort = outputCC->addBoolParameter("Force src port", "the source port is forced to 6454, dissable this port for other applications, but some artnet devices work only if source port equals dest port.", false);
+	shouldSendArtSync = outputCC->addBoolParameter("Send ArtSync", "Send artSync to this device", false);
 
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
 
@@ -243,6 +245,11 @@ void DMXArtNetDevice::sendArtPoll()
 	ArtnetSocket::getInstance()->sendArtPoll(discoverNodesIP->stringValue());
 }
 
+void DMXArtNetDevice::sendArtSync()
+{
+	ArtnetSocket::getInstance()->socket->write(remoteHost->stringValue(), remotePort->intValue(), artnetSync, 14);
+}
+
 void DMXArtNetDevice::endLoadFile()
 {
 	Engine::mainEngine->removeEngineListener(this);
@@ -253,6 +260,16 @@ void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Co
 {
 	DMXDevice::onControllableFeedbackUpdate(cc, c);
 	if (c == inputCC->enabled || c == forceSrcPort) setupReceiver();
+	if (c == shouldSendArtSync) {
+		Brain::getInstance()->usingCollections.enter();
+		if (shouldSendArtSync->boolValue()) {
+			Brain::getInstance()->syncedArtnetDevices.addIfNotAlreadyThere(this);
+		}
+		else {
+			Brain::getInstance()->syncedArtnetDevices.removeAllInstancesOf(this);
+		}
+		Brain::getInstance()->usingCollections.exit();
+	}
 	sendDataAtStartup();
 }
 

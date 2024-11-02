@@ -306,6 +306,19 @@ void Brain::brainLoop() {
             }
         }
     }
+
+    Array<String> sentSync;
+    usingCollections.enter();
+    for (DMXArtNetDevice* d : syncedArtnetDevices) {
+        if (d->shouldSendArtSync->boolValue()) {
+            String s = d->remoteHost->stringValue()+":"+d->remotePort->stringValue();
+            if (!sentSync.contains(s)) {
+                sentSync.add(s);
+                d->sendArtSync();
+            }
+        }
+    }
+    usingCollections.exit();
     //double delta = Time::getMillisecondCounterHiRes() - now;
     //LOG(delta);
 

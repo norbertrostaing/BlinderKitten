@@ -82,6 +82,8 @@ public:
     Array<SubFixture*> allSubfixtures;
     Array<SubFixtureChannel*> allSubfixtureChannels;
 
+    Array<DMXArtNetDevice*> syncedArtnetDevices;
+
     double now;
     bool loadingIsRunning = false;
     bool isClearing = false;

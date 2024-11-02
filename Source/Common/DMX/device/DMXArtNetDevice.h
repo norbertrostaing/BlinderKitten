@@ -62,11 +62,13 @@ public:
 	IntParameter* outputSubnet;
 	IntParameter* outputUniverse = nullptr;
 	BoolParameter* forceSrcPort;
+	BoolParameter* shouldSendArtSync;
 
 	StringParameter* discoverNodesIP;
 	Trigger* findNodesBtn;
 
 	uint8 artnetPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
+	uint8 artnetSync[14]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x52,  0, PROTOCOL_VERSION, 0, 0 };
 	uint8 sequenceNumber;
 
 	void triggerTriggered(Trigger* t);
@@ -78,6 +80,7 @@ public:
 
 	void sendDMXValuesInternal() override;
 	void sendArtPoll();
+	void sendArtSync();
 
 	void endLoadFile() override;
 
