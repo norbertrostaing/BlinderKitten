@@ -1,7 +1,7 @@
 {
   "interfaces": [
     {
-      "niceName": "DMX Out 1",
+      "niceName": "DMX Universe 1",
       "containers": {
         "pass_through": {
         },
@@ -12,6 +12,13 @@
               "niceName": "Output"
             }
           }
+        },
+        "mappings": {
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
         }
       },
       "type": "DMX"
@@ -36,6 +43,26 @@
                 }
               ],
               "niceName": "Intensity",
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Highest Takes Precedence",
+                  "controlAddress": "/channelMode"
+                }
+              ],
+              "niceName": "Haze",
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
+                  "value": "Highest Takes Precedence",
+                  "controlAddress": "/channelMode"
+                }
+              ],
+              "niceName": "Fan",
               "type": "BaseItem"
             },
             {
@@ -79,22 +106,6 @@
         "channelTypes": {
           "items": [
             {
-              "niceName": "Cyan",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Magenta",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Yellow",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Color",
-              "type": "BaseItem"
-            },
-            {
               "niceName": "Red",
               "type": "BaseItem"
             },
@@ -107,7 +118,39 @@
               "type": "BaseItem"
             },
             {
+              "niceName": "White",
+              "type": "BaseItem"
+            },
+            {
               "niceName": "Amber",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "UV",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Cyan",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Magenta",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Yellow",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Hue",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Sat",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Color",
               "type": "BaseItem"
             },
             {
@@ -131,15 +174,11 @@
               "type": "BaseItem"
             },
             {
-              "niceName": "White",
+              "niceName": "CTO",
               "type": "BaseItem"
             },
             {
               "niceName": "Color Ctrl",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "CTO",
               "type": "BaseItem"
             }
           ],
@@ -209,6 +248,42 @@
       "type": "ChannelFamily"
     },
     {
+      "niceName": "Gobo",
+      "editorIsCollapsed": true,
+      "containers": {
+        "channelTypes": {
+          "items": [
+            {
+              "niceName": "Gobo 1",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo 1 Rot",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo 2",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo 2 Rot",
+              "type": "BaseItem"
+            },
+            {
+              "niceName": "Gobo Speed",
+              "type": "BaseItem"
+            }
+          ],
+          "viewOffset": [
+            0,
+            0
+          ],
+          "viewZoom": 1.0
+        }
+      },
+      "type": "ChannelFamily"
+    },
+    {
       "niceName": "Beam",
       "editorIsCollapsed": true,
       "containers": {
@@ -228,42 +303,6 @@
             },
             {
               "niceName": "Beam Speed",
-              "type": "BaseItem"
-            }
-          ],
-          "viewOffset": [
-            0,
-            0
-          ],
-          "viewZoom": 1.0
-        }
-      },
-      "type": "ChannelFamily"
-    },
-    {
-      "niceName": "Gobo",
-      "editorIsCollapsed": true,
-      "containers": {
-        "channelTypes": {
-          "items": [
-            {
-              "niceName": "Gobo 1",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Gobo 2",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Gobo 2 Rot",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Gobo 1 Rot",
-              "type": "BaseItem"
-            },
-            {
-              "niceName": "Gobo Speed",
               "type": "BaseItem"
             }
           ],
@@ -323,6 +362,10 @@
                   "controlAddress": "/channelType"
                 },
                 {
+                  "value": 1.0,
+                  "controlAddress": "/highlightValue"
+                },
+                {
                   "value": true,
                   "controlAddress": "/killedBySWOP"
                 },
@@ -336,7 +379,7 @@
                   "controlAddress": "/virtualMaster"
                 }
               ],
-              "niceName": "Channel 1",
+              "niceName": "Channel 1 - Intensity",
               "type": "BaseItem"
             }
           ],
@@ -352,6 +395,8 @@
             0
           ],
           "viewZoom": 1.0
+        },
+        "editorHelp": {
         }
       },
       "type": "FixtureType"
@@ -369,11 +414,19 @@
         "commands": {
           "items": [
             {
-              "niceName": "Command",
+              "niceName": "fixture",
               "containers": {
+                "moveInBlack": {
+                },
                 "selections": {
                   "items": [
                     {
+                      "parameters": [
+                        {
+                          "value": "",
+                          "controlAddress": "/channelType"
+                        }
+                      ],
                       "niceName": "Selection",
                       "type": "BaseItem"
                     }
@@ -782,6 +835,7 @@
           "viewZoom": 1.0
         },
         "commandLIne": {
+          "editorIsCollapsed": true
         }
       },
       "type": "Programmer"
@@ -791,8 +845,10 @@
   "timingPreset": null,
   "carousel": null,
   "mapper": null,
+  "tracker": null,
   "multiplicators": null,
   "effect": null,
+  "2dPlans": null,
   "virtualButton": null,
   "virtualFaderCol": null
 }

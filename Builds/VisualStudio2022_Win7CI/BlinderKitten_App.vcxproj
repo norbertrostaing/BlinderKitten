@@ -4801,6 +4801,7 @@
     <None Include="..\..\Ressources\icon.png"/>
     <None Include="..\..\Ressources\kittenLayout.layout"/>
     <None Include="..\..\Ressources\newFileContent.olga"/>
+    <None Include="..\..\Ressources\newFileDefaultContent.mochi"/>
     <None Include="..\..\JUCE\modules\juce_audio_devices\native\oboe\src\common\README.md"/>
     <None Include="..\..\JUCE\modules\juce_audio_devices\native\oboe\src\flowgraph\resampler\README.md"/>
     <None Include="..\..\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>

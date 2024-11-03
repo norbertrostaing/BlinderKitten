@@ -430,6 +430,7 @@
 		8443AB319FAE24D85D408BD8 /* MapperRow.cpp */ /* MapperRow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperRow.cpp; path = ../../Source/Definitions/Mapper/MapperRow.cpp; sourceTree = SOURCE_ROOT; };
 		846B020B77AE5E7691B502F5 /* FixtureManager.cpp */ /* FixtureManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureManager.cpp; path = ../../Source/Definitions/Fixture/FixtureManager.cpp; sourceTree = SOURCE_ROOT; };
 		84D0534D0C1245A14ECC5E28 /* LayoutManagerUI.cpp */ /* LayoutManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutManagerUI.cpp; path = ../../Source/Definitions/Layout/LayoutManagerUI.cpp; sourceTree = SOURCE_ROOT; };
+		8558156727485A17885D8A26 /* newFileDefaultContent.mochi */ /* newFileDefaultContent.mochi */ = {isa = PBXFileReference; lastKnownFileType = file.mochi; name = newFileDefaultContent.mochi; path = ../../Ressources/newFileDefaultContent.mochi; sourceTree = SOURCE_ROOT; };
 		85E5F0FBB9BA9D7395D0E92A /* MIDIDeviceParameterUI.cpp */ /* MIDIDeviceParameterUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIDeviceParameterUI.cpp; path = ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.cpp; sourceTree = SOURCE_ROOT; };
 		878DF4D4211F6C84CC86D0F0 /* CuelistManager.h */ /* CuelistManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistManager.h; path = ../../Source/Definitions/Cuelist/CuelistManager.h; sourceTree = SOURCE_ROOT; };
 		87917CC188F90500AF00A49E /* Action.h */ /* Action.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Action.h; path = ../../Source/Common/Action/Action.h; sourceTree = SOURCE_ROOT; };
@@ -1083,6 +1084,7 @@
 				7A77445F4CFCE2026BA5C4E5,
 				3B7CA73F066A8AF9A8DFC410,
 				D925F504DF7796D00100AB78,
+				8558156727485A17885D8A26,
 			);
 			name = Ressources;
 			sourceTree = "<group>";

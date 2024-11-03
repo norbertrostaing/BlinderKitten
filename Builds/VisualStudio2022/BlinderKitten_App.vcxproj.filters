@@ -8969,6 +8969,9 @@
     <None Include="..\..\Ressources\newFileContent.olga">
       <Filter>BlinderKitten\Ressources</Filter>
     </None>
+    <None Include="..\..\Ressources\newFileDefaultContent.mochi">
+      <Filter>BlinderKitten\Ressources</Filter>
+    </None>
     <None Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\common\README.md">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe\src\common</Filter>
     </None>

@@ -24,6 +24,9 @@
                 "currentContent": "Input Panel",
                 "tabs": [
                   {
+                    "name": "Input Panel"
+                  },
+                  {
                     "name": "Interfaces"
                   },
                   {
@@ -34,9 +37,6 @@
                   },
                   {
                     "name": "Programmers"
-                  },
-                  {
-                    "name": "Input Panel"
                   }
                 ]
               },
@@ -58,19 +58,19 @@
                 "type": 0,
                 "width": 574,
                 "height": 267,
-                "currentContent": "Group Grid",
+                "currentContent": "Fixture Grid",
                 "tabs": [
-                  {
-                    "name": "Fixtures"
-                  },
-                  {
-                    "name": "Groups"
-                  },
                   {
                     "name": "Fixture Grid"
                   },
                   {
                     "name": "Group Grid"
+                  },
+                  {
+                    "name": "Fixtures"
+                  },
+                  {
+                    "name": "Groups"
                   }
                 ]
               },
@@ -81,16 +81,16 @@
                 "currentContent": "Preset Grid",
                 "tabs": [
                   {
-                    "name": "Presets"
-                  },
-                  {
-                    "name": "Curve Presets"
+                    "name": "Preset Grid"
                   },
                   {
                     "name": "Timing Presets"
                   },
                   {
-                    "name": "Preset Grid"
+                    "name": "Curve Presets"
+                  },
+                  {
+                    "name": "Presets"
                   }
                 ]
               }
@@ -104,25 +104,16 @@
             "shifters": [
               {
                 "type": 1,
-                "width": 600,
+                "width": 665,
                 "height": 989,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 600,
-                    "height": 337,
-                    "currentContent": "Carousel Grid",
+                    "width": 665,
+                    "height": 313,
+                    "currentContent": "Cuelist Grid",
                     "tabs": [
-                      {
-                        "name": "Cuelists"
-                      },
-                      {
-                        "name": "Carousels"
-                      },
-                      {
-                        "name": "Effects"
-                      },
                       {
                         "name": "Cuelist Grid"
                       },
@@ -131,37 +122,43 @@
                       },
                       {
                         "name": "Carousel Grid"
+                      },
+                      {
+                        "name": "Mapper Grid"
+                      },
+                      {
+                        "name": "Conductor Infos"
                       }
                     ]
                   },
                   {
                     "type": 0,
-                    "width": 600,
-                    "height": 234,
-                    "currentContent": "Mappers",
+                    "width": 665,
+                    "height": 267,
+                    "currentContent": "Virtual buttons grid",
                     "tabs": [
                       {
                         "name": "Virtual buttons grid"
                       },
                       {
-                        "name": "Virtual buttons"
+                        "name": "Color Picker"
                       },
                       {
-                        "name": "Mappers"
+                        "name": "Layouts"
                       }
                     ]
                   },
                   {
                     "type": 0,
-                    "width": 600,
-                    "height": 405,
+                    "width": 665,
+                    "height": 396,
                     "currentContent": "Virtual faders grid",
                     "tabs": [
                       {
                         "name": "Virtual faders grid"
                       },
                       {
-                        "name": "Virtual faders"
+                        "name": "Layout Viewer"
                       }
                     ]
                   }
@@ -169,21 +166,18 @@
               },
               {
                 "type": 1,
-                "width": 734,
+                "width": 669,
                 "height": 989,
                 "direction": 2,
                 "shifters": [
                   {
                     "type": 0,
-                    "width": 734,
-                    "height": 821,
+                    "width": 669,
+                    "height": 665,
                     "currentContent": "Inspector",
                     "tabs": [
                       {
                         "name": "Inspector"
-                      },
-                      {
-                        "name": "Encoders Overview"
                       },
                       {
                         "name": "DMX Tester"
@@ -192,12 +186,15 @@
                   },
                   {
                     "type": 0,
-                    "width": 734,
-                    "height": 161,
+                    "width": 669,
+                    "height": 317,
                     "currentContent": "Logger",
                     "tabs": [
                       {
                         "name": "Logger"
+                      },
+                      {
+                        "name": "Encoders Overview"
                       }
                     ]
                   }

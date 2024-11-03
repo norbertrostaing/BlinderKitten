@@ -396,10 +396,10 @@ BKEngine::~BKEngine()
 
 void BKEngine::createNewGraphInternal()
 {
-	ProgressTask* loadTask = addTask("loading");
-	loadTask->start();
-	loadJSONData(JSON::parse(BinaryData::newFileContent_olga), loadTask);
-	loadTask->end();
+	MessageManager::callAsync([this](){
+		importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi)); 
+		Brain::getInstance()->showWindow("Input Panel");
+	});
 }
 
 void BKEngine::clearInternal()

@@ -18,6 +18,8 @@
             file="Ressources/kittenLayout.layout"/>
       <FILE id="DesJG4" name="newFileContent.olga" compile="0" resource="1"
             file="Ressources/newFileContent.olga"/>
+      <FILE id="Cyr2hD" name="newFileDefaultContent.mochi" compile="0" resource="1"
+            file="Ressources/newFileDefaultContent.mochi"/>
     </GROUP>
     <GROUP id="{1806B217-0006-96C9-E16E-C46F99D450DC}" name="Source">
       <GROUP id="{C2CABB5D-DC86-5E72-CD97-9285EFEFA23C}" name="UI">
