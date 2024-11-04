@@ -126,6 +126,7 @@ void FixtureType::copyTemplate()
 	Array<FixtureTypeChannel*> ftcToAdd;
 	HashMap<FixtureTypeChannel*, FixtureTypeVirtualChannel*> vDimmers;
 
+	int temp = 1;
 
 	for (int subId = from + 1; subId <= to; subId++) {
 		HashMap<FixtureTypeVirtualChannel*, FixtureTypeVirtualChannel*> virtualChans;
@@ -140,6 +141,7 @@ void FixtureType::copyTemplate()
 			ftvcToAdd.add(newC);
 			newC->loadJSONData(c->getJSONData());
 			newC->subFixtureId->setValue(subId);
+			newC->editorIsCollapsed = true;
 			virtualChans.set(c, newC);
 		}
 		Array< FixtureTypeChannel*> toCopy;
@@ -153,16 +155,27 @@ void FixtureType::copyTemplate()
 			ftcToAdd.add(newC);
 			newC->loadJSONData(c->getJSONData());
 			newC->subFixtureId->setValue(subId);
+			newC->editorIsCollapsed = true;
+			newC->setNiceName("import "+String(temp));
+			temp++;
 			FixtureTypeVirtualChannel* v = dynamic_cast<FixtureTypeVirtualChannel*>(c->virtualMaster->targetContainer.get());
 			if (v != nullptr && virtualChans.contains(v)) {
 				vDimmers.set(newC, virtualChans.getReference(v));
 			}
 		}
 	}
-	virtualChansManager.addItems(ftvcToAdd, false);
-	chansManager.addItems(ftcToAdd, false);
+	virtualChansManager.editorIsCollapsed = true;
+	virtualChansManager.addItems(ftvcToAdd, var(), false);
+	chansManager.massiveImport = true;
+	chansManager.editorIsCollapsed = true;
+	chansManager.addItems(ftcToAdd, var(), false);
+	chansManager.massiveImport = false;
+	chansManager.calcDmxChannels();
 	updateVirtualLists();
 	for (auto it = vDimmers.begin(); it != vDimmers.end(); it.next()) {
 		it.getKey()->virtualMaster->setValueFromTarget(it.getValue());
 	}
+	virtualChansManager.editorIsCollapsed = false;
+	chansManager.editorIsCollapsed = false;
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

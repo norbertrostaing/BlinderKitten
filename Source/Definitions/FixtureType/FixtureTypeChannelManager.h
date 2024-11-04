@@ -20,6 +20,8 @@ public:
     FixtureTypeChannelManager();
     ~FixtureTypeChannelManager();
 
+    bool massiveImport = false;
+
     void calcDmxChannels();
     void addItemInternal(FixtureTypeChannel* c, var data);
     void askForRemoveBaseItem(BaseItem* item);

@@ -13,6 +13,7 @@ FixtureTypeChannelManager::~FixtureTypeChannelManager()
 }
 
 void FixtureTypeChannelManager::calcDmxChannels() {
+	if (massiveImport) return;
 	int current = 1;
 	for (int i = 0; i < items.size(); i++) {
 		items[i]->setNiceName("temp "+String(i));
