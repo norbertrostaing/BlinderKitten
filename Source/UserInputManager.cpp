@@ -289,6 +289,31 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			LOGWARNING("Tracker " + String(targetNumber) + " doesn't exist");
 		}
 	}
+	else if (firstWord == "bundle" && aList.size() > 2) {
+		int targetNumber = (int)((var)aList[1]);
+		Bundle* target = Brain::getInstance()->getBundleById(targetNumber);
+		if (target != nullptr) {
+			String action = aList[2].toLowerCase();
+			if (action == "start") { target->start(); }
+			else if (action == "stop") { target->stop(); }
+			else if (action == "taptempo") { target->tapTempo(); }
+			else if (action == "size" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				bool size = m.size() > 1 ? OSCHelpers::getBoolArg(m[1]) : true;
+				bool HTP = m.size() > 2 ? OSCHelpers::getBoolArg(m[2]) : true;
+				bool LTP = m.size() > 3 ? OSCHelpers::getBoolArg(m[3]) : false;
+				bool flash = m.size() > 4 ? OSCHelpers::getBoolArg(m[4]) : false;
+				target->setSize(val, size, HTP, LTP, flash);
+			}
+			else if (action == "speed" && m.size() > 0) {
+				float val = OSCHelpers::getFloatArg(m[0]);
+				target->setSpeed(val);
+			}
+		}
+		else {
+			LOGWARNING("Bundle " + String(targetNumber) + " doesn't exist");
+		}
+	}
 
 	else if (firstWord == "virtbutton" && aList.size() > 2 && m.size() > 0) {
 		int page = VirtualButtonGrid::getInstance()->page;
