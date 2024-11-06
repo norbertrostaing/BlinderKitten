@@ -271,6 +271,7 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\EncoderAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\GenericAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\InputPanelAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\InterfaceAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp"/>
@@ -3490,6 +3491,7 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\EncoderAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\GenericAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\InputPanelAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\InterfaceAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h"/>

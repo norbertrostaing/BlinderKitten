@@ -82,6 +82,7 @@
 		55FBE1D3E050E1F0F9245621 /* Icon.icns */ = {isa = PBXBuildFile; fileRef = 70EEC5AF7380F82A5D461BE8; };
 		59C558FC9BC8AD427ED3F2EB /* Multiplicator.cpp */ = {isa = PBXBuildFile; fileRef = 7C663D18D81B15BA87D0FA15; };
 		5DF8C9534D05F737617C5F26 /* include_juce_gui_basics.mm */ = {isa = PBXBuildFile; fileRef = FCB437877944C63C32C2154C; };
+		60F711127BABE4B8A9FD157E /* InterfaceAction.cpp */ = {isa = PBXBuildFile; fileRef = 17CD59F07AAF0B1D28008686; };
 		641F5F33C99790746DE9DD0E /* DataTransferManager.cpp */ = {isa = PBXBuildFile; fileRef = 0F27EF75B60D8C63BBCA2A70; };
 		649506E188A23DF20256424C /* ChannelFamilyManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = E0A18BBC03E9615B6466272E; };
 		670EDE2008901A3C5FEB6928 /* EffectManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = A2AA8EC425937FEC2CDC279D; };
@@ -249,6 +250,7 @@
 		15601BDB278127823F2FFB54 /* InterfaceUI.h */ /* InterfaceUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceUI.h; path = ../../Source/Definitions/Interface/ui/InterfaceUI.h; sourceTree = SOURCE_ROOT; };
 		16C9CE77D6B3D05ECD0585B4 /* Effect.cpp */ /* Effect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Effect.cpp; path = ../../Source/Definitions/Effect/Effect.cpp; sourceTree = SOURCE_ROOT; };
 		17A28BCED9670E9D92D58781 /* DMXArtNetDevice.cpp */ /* DMXArtNetDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXArtNetDevice.cpp; path = ../../Source/Common/DMX/device/DMXArtNetDevice.cpp; sourceTree = SOURCE_ROOT; };
+		17CD59F07AAF0B1D28008686 /* InterfaceAction.cpp */ /* InterfaceAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InterfaceAction.cpp; path = ../../Source/Definitions/Actions/InterfaceAction.cpp; sourceTree = SOURCE_ROOT; };
 		181A07662AAC881A0B6981AA /* FixtureGridView.cpp */ /* FixtureGridView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureGridView.cpp; path = ../../Source/UI/GridView/FixtureGridView.cpp; sourceTree = SOURCE_ROOT; };
 		1865B24A35045C21873DF897 /* ChannelFamilyManager.h */ /* ChannelFamilyManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelFamilyManager.h; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManager.h; sourceTree = SOURCE_ROOT; };
 		197ECD317D224A16CC530D7B /* InputPanelAction.cpp */ /* InputPanelAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputPanelAction.cpp; path = ../../Source/Definitions/Actions/InputPanelAction.cpp; sourceTree = SOURCE_ROOT; };
@@ -424,6 +426,7 @@
 		7D68C3CCC195AB0B42D3B29D /* CueManager.cpp */ /* CueManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CueManager.cpp; path = ../../Source/Definitions/Cue/CueManager.cpp; sourceTree = SOURCE_ROOT; };
 		7F7564CB0DFC546FC52CA876 /* BKColorPicker.h */ /* BKColorPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BKColorPicker.h; path = ../../Source/UI/BKColorPicker.h; sourceTree = SOURCE_ROOT; };
 		7FAF9CF2C4BEB06E2C7158E9 /* EffectParam.h */ /* EffectParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EffectParam.h; path = ../../Source/Definitions/Effect/EffectParam.h; sourceTree = SOURCE_ROOT; };
+		800489EF58F6D407A9F61B12 /* InterfaceAction.h */ /* InterfaceAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceAction.h; path = ../../Source/Definitions/Actions/InterfaceAction.h; sourceTree = SOURCE_ROOT; };
 		8085FCC7884FFB62D8A17AC0 /* Task.cpp */ /* Task.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Task.cpp; path = ../../Source/Definitions/Cue/Task.cpp; sourceTree = SOURCE_ROOT; };
 		80C8244A22CB84DBD05E1DEA /* LayoutManager.cpp */ /* LayoutManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutManager.cpp; path = ../../Source/Definitions/Layout/LayoutManager.cpp; sourceTree = SOURCE_ROOT; };
 		80FAD0782C385AF0B5AC86A1 /* EffectGridView.cpp */ /* EffectGridView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectGridView.cpp; path = ../../Source/UI/GridView/EffectGridView.cpp; sourceTree = SOURCE_ROOT; };
@@ -899,6 +902,8 @@
 				ADB3F0D5C6D1C22D19EDA773,
 				197ECD317D224A16CC530D7B,
 				5172B471EF9D3519A0FA1C21,
+				17CD59F07AAF0B1D28008686,
+				800489EF58F6D407A9F61B12,
 				476097FAB285D9C99B750F5F,
 				5ABAC0BB0FF1C7D8D4D668A6,
 				9FBA8625820E163A1C6B3E3A,
@@ -1827,6 +1832,7 @@
 				A7D30DB9CC789056A9C08985,
 				96EA0B585B87450607000A5B,
 				943FBE29F3337859CB9F764C,
+				60F711127BABE4B8A9FD157E,
 				172939FB619E288DEABA5AFA,
 				D2670406E7A2779AADAE9E39,
 				4D596A9BF29491C0F092F228,

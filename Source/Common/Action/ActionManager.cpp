@@ -25,6 +25,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/TapTempoMultiple.h"
 #include "Definitions/Actions/GenericAction.h"
 #include "Definitions/Actions/BundleAction.h"
+#include "Definitions/Actions/InterfaceAction.h"
 #include "ActionManager.h"
 
 ActionFactory::ActionFactory()
@@ -164,8 +165,13 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Carousel", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CAR));
 
+    defs.add(Factory<Action>::Definition::createDef("Interface", "Send MIDI", &InterfaceAction::create)->addParam("actionType", InterfaceAction::MIDI_SEND));
+    defs.add(Factory<Action>::Definition::createDef("Interface", "Send OSC", &InterfaceAction::create)->addParam("actionType", InterfaceAction::OSC_SEND));
+
     defs.add(Factory<Action>::Definition::createDef("Generic", "Set Parameter Value", &GenericAction::create)->addParam("actionType", GenericAction::SET_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Generic", "Trigger a control", &GenericAction::create)->addParam("actionType", GenericAction::TRIGGER));
+
+
 
 
 }

@@ -120,6 +120,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/EncoderAction_90a75232.o \
   $(JUCE_OBJDIR)/GenericAction_be28692d.o \
   $(JUCE_OBJDIR)/InputPanelAction_a2d41bfa.o \
+  $(JUCE_OBJDIR)/InterfaceAction_34f8234f.o \
   $(JUCE_OBJDIR)/MapperAction_7d027a1.o \
   $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o \
   $(JUCE_OBJDIR)/TapTempoMultiple_3a521832.o \
@@ -495,6 +496,11 @@ $(JUCE_OBJDIR)/GenericAction_be28692d.o: ../../Source/Definitions/Actions/Generi
 $(JUCE_OBJDIR)/InputPanelAction_a2d41bfa.o: ../../Source/Definitions/Actions/InputPanelAction.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling InputPanelAction.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/InterfaceAction_34f8234f.o: ../../Source/Definitions/Actions/InterfaceAction.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling InterfaceAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MapperAction_7d027a1.o: ../../Source/Definitions/Actions/MapperAction.cpp

@@ -301,6 +301,10 @@
                 file="Source/Definitions/Actions/InputPanelAction.cpp"/>
           <FILE id="vw8Ohs" name="InputPanelAction.h" compile="0" resource="0"
                 file="Source/Definitions/Actions/InputPanelAction.h"/>
+          <FILE id="jyK7ok" name="InterfaceAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/InterfaceAction.cpp"/>
+          <FILE id="qy0TKS" name="InterfaceAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/InterfaceAction.h"/>
           <FILE id="V2ilC6" name="MapperAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/MapperAction.cpp"/>
           <FILE id="j4489w" name="MapperAction.h" compile="0" resource="0" file="Source/Definitions/Actions/MapperAction.h"/>
