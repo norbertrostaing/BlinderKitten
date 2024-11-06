@@ -62,7 +62,7 @@ void VirtualButtonManager::setButtonValue(int page, int col, int row, float valu
 {
     VirtualButton* vb = nullptr;
     String address = String(page) + "/" + String(col) + "/" + String(row);
-    String addressGen =  + "0/" + String(col) + "/" + String(row);
+    String addressGen = "0/" + String(col) + "/" + String(row);
     usingLibrary.enter();
     for (auto it = library.begin(); it != library.end() && vb == nullptr; it.next()) {
         if (it.getKey() == address || it.getKey() == addressGen) {

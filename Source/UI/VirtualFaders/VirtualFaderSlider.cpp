@@ -356,13 +356,13 @@ void VirtualFaderSlider::feedback(var value, String origin="")
 	int col = parentColumn->colNumber->intValue();
 
 	if (isFader) {
-		address = "/vfader/" + String(page) + "/" + String(col);
-		address0 = "/vfader/0/" + String(col);
+		address = "/virtfader/" + String(page) + "/" + String(col);
+		address0 = "/virtfader/0/" + String(col);
 	}
 	else {
 		int id = parentColumn->rotaries.items.indexOf(this);
-		address = "/vrotary/" + String(page) + "/" + String(col) + "/" + String(id + 1);
-		address0 = "/vrotary/0/" + String(col) + "/" + String(id + 1);
+		address = "/virtrotary/" + String(page) + "/" + String(col) + "/" + String(id + 1);
+		address0 = "/virtrotary/0/" + String(col) + "/" + String(id + 1);
 	}
 
 	UserInputManager::getInstance()->feedback(address, value, origin);

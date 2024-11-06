@@ -24,7 +24,7 @@ InterfaceManager::InterfaceManager() :
     managerFactory = &factory;
 
     factory.defs.add(Factory<Interface>::Definition::createDef("", "DMX", &DMXInterface::create));
-    // factory.defs.add(Factory<Interface>::Definition::createDef("", "OSC", &OSCInterface::create));
+    factory.defs.add(Factory<Interface>::Definition::createDef("", "OSC", &OSCInterface::create));
     // factory.defs.add(Factory<Interface>::Definition::createDef("", "Serial", &SerialInterface::create));
     // factory.defs.add(Factory<Interface>::Definition::createDef("", "Bento", &BentoInterface::create));
     factory.defs.add(Factory<Interface>::Definition::createDef("", "MIDI", &MIDIInterface::create));
@@ -36,8 +36,12 @@ InterfaceManager::~InterfaceManager()
 
 void InterfaceManager::feedback(String address, var value, String origin = "")
 {
-    Array<MIDIInterface*> interfaces = getInterfacesOfType<MIDIInterface>();
-    for (int i = 0; i < interfaces.size(); i++) {
-        interfaces[i]->feedback(address, value, origin);
+    Array<MIDIInterface*> midiInterfaces = getInterfacesOfType<MIDIInterface>();
+    for (int i = 0; i < midiInterfaces.size(); i++) {
+        midiInterfaces[i]->feedback(address, value, origin);
+    }
+    Array<OSCInterface*> oscInterfaces = getInterfacesOfType<OSCInterface>();
+    for (int i = 0; i < oscInterfaces.size(); i++) {
+        oscInterfaces[i]->feedback(address, value, origin);
     }
 }

@@ -56,6 +56,8 @@ public:
 	OSCInterface();
 	~OSCInterface();
 
+	BoolParameter* internalFeedbacks;
+
 	//RECEIVE
 	IntParameter* localPort;
 	BoolParameter* isConnected;
@@ -67,6 +69,9 @@ public:
 
 	std::unique_ptr<EnablingControllableContainer> receiveCC;
 	std::unique_ptr<BaseManager<OSCOutput>> outputManager;
+
+	OSCMappingManager mappingManager;
+	OSCFeedbackManager feedbackManager;
 
 	//Script
 	const Identifier oscEventId = "oscEvent";
@@ -82,6 +87,8 @@ public:
 	//SEND
 	virtual void setupSenders();
 	virtual void sendOSC(const OSCMessage& msg, String ip = "", int port = 0);
+
+	void feedback(String address, var value, String origin);
 
 
 	//Interface

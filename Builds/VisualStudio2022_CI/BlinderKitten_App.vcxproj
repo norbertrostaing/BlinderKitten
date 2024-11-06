@@ -365,10 +365,25 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCInputEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCMappingEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCOutputEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedback.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedbackManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCInterface.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMapping.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMappingManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\serial\SerialInterface.cpp">
@@ -3545,8 +3560,13 @@
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIMapping.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\midi\MIDIMappingManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCInputEditor.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCMappingEditor.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCOutputEditor.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedback.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedbackManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCInterface.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMapping.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMappingManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\serial\SerialInterface.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\ui\InterfaceManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Interface\ui\InterfaceUI.h"/>

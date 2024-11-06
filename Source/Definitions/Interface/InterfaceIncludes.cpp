@@ -29,9 +29,16 @@
 #include "interfaces/midi/MIDIInterface.cpp"
 #include "interfaces/midi/ui/MIDIMappingEditor.cpp"
 
+#include "interfaces/osc/OSCMapping.cpp"
+#include "interfaces/osc/OSCMappingManager.cpp"
+#include "interfaces/osc/OSCFeedback.cpp"
+#include "interfaces/osc/OSCFeedbackManager.cpp"
 #include "interfaces/osc/OSCInterface.cpp"
+#include "interfaces/osc/ui/OSCMappingEditor.cpp"
 #include "interfaces/osc/ui/OSCInputEditor.cpp"
 #include "interfaces/osc/ui/OSCOutputEditor.cpp"
+
 #include "interfaces/serial/SerialInterface.cpp"
+
 #include "ui/InterfaceManagerUI.cpp"
 #include "ui/InterfaceUI.cpp"

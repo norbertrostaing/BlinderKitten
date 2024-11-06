@@ -321,7 +321,7 @@ void VirtualButtonGrid::resetFeedbacks(bool onlySetToZero)
     {
         for (int c = 0; c < cols; c++) 
         {
-            String address0 = "/vbutton/0/" + String(c + 1) + "/" + String(l + 1);
+            String address0 = "/virtbutton/0/" + String(c + 1) + "/" + String(l + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
             UserInputManager::getInstance()->feedback(address0, "", "");
         }

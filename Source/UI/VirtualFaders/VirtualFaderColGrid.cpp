@@ -128,21 +128,21 @@ void VirtualFaderColGrid::goToPage(int n) {
 void VirtualFaderColGrid::resetFeedbacks()
 {
     for (int c = 0; c < cols; c++) {
-        String address0 = "/vfader/0/" + String(c+1);
+        String address0 = "/virtfader/0/" + String(c+1);
         UserInputManager::getInstance()->feedback(address0, 0, "");
         UserInputManager::getInstance()->feedback(address0, "", "");
         for (int n = 0; n < nRotaries; n++) {
-            address0 = "/vrotary/0/" + String(c+1) + "/" + String(n + 1);
+            address0 = "/virtrotary/0/" + String(c+1) + "/" + String(n + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
             UserInputManager::getInstance()->feedback(address0, "", "");
         }
         for (int n = 0; n < nAbove; n++) {
-            address0 = "/vabovebutton/0/" + String(c + 1) + "/" + String(n + 1);
+            address0 = "/virtabove/0/" + String(c + 1) + "/" + String(n + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
             UserInputManager::getInstance()->feedback(address0, "", "");
         }
         for (int n = 0; n < nBelow; n++) {
-            address0 = "/vbelowbutton/0/" + String(c + 1) + "/" + String(n + 1);
+            address0 = "/virtbelow/0/" + String(c + 1) + "/" + String(n + 1);
             UserInputManager::getInstance()->feedback(address0, 0, "");
             UserInputManager::getInstance()->feedback(address0, "", "");
         }

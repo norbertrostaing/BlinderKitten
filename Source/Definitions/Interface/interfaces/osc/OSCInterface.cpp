@@ -1,3 +1,4 @@
+#include "OSCInterface.h"
 /*
   ==============================================================================
 
@@ -15,6 +16,8 @@ OSCInterface::OSCInterface() :
 	servus("_osc._udp"),
 	receiveCC(nullptr)
 {
+	internalFeedbacks = addBoolParameter("Internal feedbacks", "send all internal feedbacks to outputs", false);
+
 	receiveCC.reset(new EnablingControllableContainer("OSC Input"));
 	receiveCC->customGetEditorFunc = &OSCInputEditor::create;
 	addChildControllableContainer(receiveCC.get());
@@ -41,16 +44,18 @@ OSCInterface::OSCInterface() :
 		if (!Engine::mainEngine->isLoadingFile) setupSenders();
 	}
 
+	addChildControllableContainer(&mappingManager);
+	addChildControllableContainer(&feedbackManager);
 
-//Script
-scriptObject.getDynamicObject()->setMethod("send", OSCInterface::sendOSCFromScript);
-scriptObject.getDynamicObject()->setMethod("sendTo", OSCInterface::sendOSCToFromScript);
-scriptObject.getDynamicObject()->setMethod("match", OSCInterface::matchOSCAddrFromScript);
-scriptObject.getDynamicObject()->setMethod("register", OSCInterface::registerOSCCallbackFromScript);
+	//Script
+	scriptObject.getDynamicObject()->setMethod("send", OSCInterface::sendOSCFromScript);
+	scriptObject.getDynamicObject()->setMethod("sendTo", OSCInterface::sendOSCToFromScript);
+	scriptObject.getDynamicObject()->setMethod("match", OSCInterface::matchOSCAddrFromScript);
+	scriptObject.getDynamicObject()->setMethod("register", OSCInterface::registerOSCCallbackFromScript);
 
-//scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
+	//scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
-genericSender.connect("0.0.0.0", 1);
+	genericSender.connect("0.0.0.0", 1);
 }
 
 OSCInterface::~OSCInterface()
@@ -114,6 +119,7 @@ void OSCInterface::processMessage(const OSCMessage& msg)
 
 	processMessageInternal(msg);
 
+	/*
 	if (scriptManager->items.size() > 0)
 	{
 		Array<var> params;
@@ -127,136 +133,14 @@ void OSCInterface::processMessage(const OSCMessage& msg)
 			if (std::get<0>(entry).matches(msg.getAddressPattern().toString()))
 				scriptManager->callFunctionOnAllItems(std::get<1>(entry), params);
 	}
+	*/
 }
 
 void OSCInterface::processMessageInternal(const OSCMessage& m)
 {
-	//Tmp comment out and remove special command support, maybe should be in OSC Global Remote Control anyway ?
-
-	/*
-	StringArray addSplit;
-	addSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
-	addSplit.remove(0);
-
-	if (addSplit.size() < 2) return;
-
-	if (addSplit[0] == "object")
-	{
-		if (Object* o = OSCHelpers::getItemForArgument<Object>(ObjectManager::getInstance(), m, 0))
-		{
-			if (addSplit[1] == "enable")
-			{
-				if (m.size() < 2) o->enabled->setValue(true);
-				else o->enabled->setValue(OSCHelpers::getIntArg(m[1]) > 0);
-			}
-			else if (addSplit[1] == "position")
-			{
-				if (m.size() >= 4)
-				{
-					o->stagePosition->setVector(OSCHelpers::getP3DArg(m, 1));
-				}
-			}
-			if (addSplit.size() > 2)
-			{
-				if (addSplit[1] == "component")
-				{
-					if (ObjectComponent* oc = OSCHelpers::getItemForArgument<ObjectComponent>(&o->componentManager, m, 1))
-					{
-						if (addSplit[2] == "enabled")
-						{
-							if (m.size() < 3) oc->enabled->setValue(true);
-							else oc->enabled->setValue(OSCHelpers::getIntArg(m[2]) > 0);
-						}
-					}
-				}
-				else if (addSplit[1] == "effect")
-				{
-					if (addSplit.size() < 3) return;
-
-					Effect* e = OSCHelpers::getItemForArgument<Effect>(&o->effectManager, m, 1);
-					if (addSplit[2] == "enabled")
-					{
-						if (m.size() < 3) e->enabled->setValue(true);
-						else e->enabled->setValue(OSCHelpers::getIntArg(m[2]) > 0);
-					}
-					else if (addSplit[2] == "weight")
-					{
-						if (m.size() >= 3) e->weight->setValue(OSCHelpers::getFloatArg(m[2]));
-					}
-				}
-			}
-		}
+	for (OSCMapping* mapping : mappingManager.items) {
+		mapping->processMessage(m);
 	}
-	else if (addSplit[0] == "effectGroup")
-	{
-		if (EffectGroup* eg = OSCHelpers::getItemForArgument<EffectGroup>(GlobalEffectManager::getInstance(), m, 0))
-		{
-			if (addSplit[1] == "enabled")
-			{
-				if (m.size() < 3) eg->enabled->setValue(true);
-				else eg->enabled->setValue(OSCHelpers::getIntArg(m[2]) > 0);
-			}
-		}
-	}
-	else if (addSplit[0] == "globalEffect")
-	{
-		if (EffectGroup* eg = OSCHelpers::getItemForArgument<EffectGroup>(GlobalEffectManager::getInstance(), m, 0))
-		{
-			if (Effect* e = OSCHelpers::getItemForArgument<Effect>(&eg->effectManager, m, 1))
-			{
-				if (addSplit[2] == "enabled")
-				{
-					if (m.size() < 3) e->enabled->setValue(true);
-					else e->enabled->setValue(OSCHelpers::getIntArg(m[2]) > 0);
-				}
-				else if (addSplit[2] == "weight")
-				{
-					if (m.size() >= 3) e->weight->setValue(OSCHelpers::getFloatArg(m[2]));
-				}
-			}
-		}
-	}
-	else if (addSplit[0] == "scene")
-	{
-		if (addSplit[1] == "loadNext") SceneManager::getInstance()->loadNextSceneTrigger->trigger();
-		else if (addSplit[1] == "loadPrevious") SceneManager::getInstance()->loadPreviousSceneTrigger->trigger();
-		else if (Scene* s = OSCHelpers::getItemForArgument<Scene>(SceneManager::getInstance(), m, 0))
-		{
-			if (addSplit[1] == "load")
-			{
-				float time = m.size() > 1 ? OSCHelpers::getFloatArg(m[1]) : -1;
-				s->loadScene(time);
-			}
-		}
-	}
-	else if (addSplit[0] == "sequence")
-	{
-		if (Sequence* s = OSCHelpers::getItemForArgument<Sequence>(GlobalSequenceManager::getInstance(), m, 0))
-		{
-			if (addSplit[1] == "play")
-			{
-				if (m.size() > 1) s->currentTime->setValue(OSCHelpers::getFloatArg(m[1]));
-				s->playTrigger->trigger();
-			}
-			else if (addSplit[1] == "pause")
-			{
-				s->pauseTrigger->trigger();
-			}
-			else if (addSplit[1] == "stop")
-			{
-				s->stopTrigger->trigger();
-			}
-			else if (addSplit[1] == "time")
-			{
-				if (m.size() > 1) s->currentTime->setValue(OSCHelpers::getFloatArg(m[1]));
-			}
-		}
-	}
-	else if (addSplit[0] == "blackout")
-	{
-		ObjectManager::getInstance()->blackOut->setValue(m.size() >= 1 ? (OSCHelpers::getIntArg(m[0]) > 0) : !ObjectManager::getInstance()->blackOut->boolValue());
-	}
-	*/
 }
 
 void OSCInterface::itemAdded(OSCOutput* output)
@@ -295,21 +179,19 @@ void OSCInterface::sendOSC(const OSCMessage& msg, String ip, int port)
 	}
 }
 
-//void OSCInterface::sendValuesForObject(Object* o)
-//{
-//	if (!enabled->boolValue()) return;
-//
-//	for (auto& c : o->componentManager->items)
-//	{
-//		if (!c->enabled->boolValue()) continue;
-//
-//		for (auto& p : c->computedParameters)
-//		{
-//			OSCMessage m = OSCHelpers::getOSCMessageForControllable(p);
-//			sendOSC(m);
-//		}
-//	}
-//}
+void OSCInterface::feedback(String address, var value, String origin)
+{
+	feedbackManager.feedback(address, value, origin, logOutgoingData->boolValue());
+
+	if (internalFeedbacks->boolValue()) {
+		if (value.isString()) {
+			address += "/name";
+		}
+		OSCMessage msg(address);
+		msg.addArgument(OSCHelpers::varToArgument(value, OSCHelpers::TF));
+		sendOSC(msg);
+	}
+}
 
 void OSCInterface::setupZeroConf()
 {

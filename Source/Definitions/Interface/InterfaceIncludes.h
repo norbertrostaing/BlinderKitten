@@ -19,7 +19,12 @@
 #include "InterfaceManager.h"
 #include "ui/InterfaceManagerUI.h"
 
+#include "interfaces/osc/OSCMapping.h"
+#include "interfaces/osc/OSCMappingManager.h"
+#include "interfaces/osc/OSCFeedback.h"
+#include "interfaces/osc/OSCFeedbackManager.h"
 #include "interfaces/osc/OSCInterface.h"
+#include "interfaces/osc/ui/OSCMappingEditor.h"
 #include "interfaces/osc/ui/OSCInputEditor.h"
 #include "interfaces/osc/ui/OSCOutputEditor.h"
 

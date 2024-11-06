@@ -494,8 +494,8 @@ void VirtualButton::feedback(ButtonStatus value)
 	int col = colNumber->intValue();
 	int row = rowNumber->intValue();
 
-	address += "/vbutton/" + String(page) + "/" + String(col) + "/" + String(row);
-	address0 += "/vbutton/0/" + String(col) + "/" + String(row);
+	address += "/virtbutton/" + String(page) + "/" + String(col) + "/" + String(row);
+	address0 += "/virtbutton/0/" + String(col) + "/" + String(row);
 
 	double sentValue = 0; 
 	sentValue = value;
@@ -519,8 +519,8 @@ void VirtualButton::feedback(String value)
 	int col = colNumber->intValue();
 	int row = rowNumber->intValue();
 
-	address += "/vbutton/" + String(page) + "/" + String(col) + "/" + String(row);
-	address0 += "/vbutton/0/" + String(col) + "/" + String(row);
+	address += "/virtbutton/" + String(page) + "/" + String(col) + "/" + String(row);
+	address0 += "/virtbutton/0/" + String(col) + "/" + String(row);
 
 	double sentValue = 0;
 

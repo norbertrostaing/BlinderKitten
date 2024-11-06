@@ -585,14 +585,30 @@
                       file="Source/Definitions/Interface/interfaces/osc/ui/OSCInputEditor.cpp"/>
                 <FILE id="pHWiJb" name="OSCInputEditor.h" compile="0" resource="0"
                       file="Source/Definitions/Interface/interfaces/osc/ui/OSCInputEditor.h"/>
+                <FILE id="apRsdT" name="OSCMappingEditor.cpp" compile="0" resource="0"
+                      file="Source/Definitions/Interface/interfaces/osc/ui/OSCMappingEditor.cpp"/>
+                <FILE id="iGT7Bq" name="OSCMappingEditor.h" compile="0" resource="0"
+                      file="Source/Definitions/Interface/interfaces/osc/ui/OSCMappingEditor.h"/>
                 <FILE id="YCcw1w" name="OSCOutputEditor.cpp" compile="0" resource="0"
                       file="Source/Definitions/Interface/interfaces/osc/ui/OSCOutputEditor.cpp"/>
                 <FILE id="uexlWr" name="OSCOutputEditor.h" compile="0" resource="0"
                       file="Source/Definitions/Interface/interfaces/osc/ui/OSCOutputEditor.h"/>
               </GROUP>
+              <FILE id="Jbv7r2" name="OSCFeedback.cpp" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/osc/OSCFeedback.cpp"/>
+              <FILE id="FkXd34" name="OSCFeedback.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/osc/OSCFeedback.h"/>
+              <FILE id="QXbbsW" name="OSCFeedbackManager.cpp" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/osc/OSCFeedbackManager.cpp"/>
+              <FILE id="zOSO4Y" name="OSCFeedbackManager.h" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/osc/OSCFeedbackManager.h"/>
               <FILE id="pc6bCf" name="OSCInterface.cpp" compile="0" resource="0"
                     file="Source/Definitions/Interface/interfaces/osc/OSCInterface.cpp"/>
               <FILE id="EU4W4v" name="OSCInterface.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/osc/OSCInterface.h"/>
+              <FILE id="N4I4hP" name="OSCMapping.cpp" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/osc/OSCMapping.cpp"/>
+              <FILE id="Rg4VDl" name="OSCMapping.h" compile="0" resource="0" file="Source/Definitions/Interface/interfaces/osc/OSCMapping.h"/>
+              <FILE id="ITPRE1" name="OSCMappingManager.cpp" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/osc/OSCMappingManager.cpp"/>
+              <FILE id="pcP2rG" name="OSCMappingManager.h" compile="0" resource="0"
+                    file="Source/Definitions/Interface/interfaces/osc/OSCMappingManager.h"/>
             </GROUP>
             <GROUP id="{81BB769C-BF4A-3A31-D1F2-2FC322053A69}" name="serial">
               <FILE id="yO6cLC" name="SerialInterface.cpp" compile="0" resource="0"

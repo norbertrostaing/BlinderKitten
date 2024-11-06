@@ -1447,10 +1447,25 @@
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCInputEditor.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCMappingEditor.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCOutputEditor.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedback.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedbackManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCInterface.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMapping.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMappingManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Interface\interfaces\serial\SerialInterface.cpp">
@@ -5214,10 +5229,25 @@
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCInputEditor.h">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCMappingEditor.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\ui\OSCOutputEditor.h">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedback.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCFeedbackManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCInterface.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMapping.h">
+      <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\osc\OSCMappingManager.h">
       <Filter>BlinderKitten\Source\Definitions\Interface\interfaces\osc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Interface\interfaces\serial\SerialInterface.h">
