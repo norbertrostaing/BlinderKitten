@@ -168,10 +168,18 @@ void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 			release();
 		}
 		Encoders::getInstance()->updateBlindButton();
+		if (UserInputManager::getInstance()->currentProgrammer == this) {
+			float v = editionMode->getValue() == "blind" ? 1 : 0;
+			UserInputManager::getInstance()->feedback("/blind", v, "");
+		}
 	}
 	if (p == highlightCurrentCommand) {
 		go();
 		Encoders::getInstance()->updateHLButton();
+		if (UserInputManager::getInstance()->currentProgrammer == this) {
+			float v = highlightCurrentCommand->boolValue() ? 1 : 0;
+			UserInputManager::getInstance()->feedback("/highlight", v, "");
+		}
 	}
 
 }

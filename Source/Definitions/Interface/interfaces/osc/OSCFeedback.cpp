@@ -34,7 +34,10 @@ OSCFeedback::OSCFeedback() :
                     ->addOption("Encoder", ENCODER)
                     ->addOption("Grand Master", GRANDMASTER)
                     ->addOption("Black out", BLACKOUT)
-        ;
+                    ->addOption("Midi lock", MIDILOCK)
+                    ->addOption("Blind", BLIND)
+                    ->addOption("Highlight", HL)
+                    ;
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
     sourcePage = addIntParameter("Source Page", "Source page, 0 means current page", 0);
@@ -164,6 +167,15 @@ String OSCFeedback::getLocalAdress()
     }
     else if (source == BLACKOUT) {
         localAddress = "/blackout";
+    }
+    else if (source == MIDILOCK) {
+        localAddress = "/midilock";
+    }
+    else if (source == BLIND) {
+        localAddress = "/blind";
+    }
+    else if (source == HL) {
+        localAddress = "/highlight";
     }
 
     return localAddress;

@@ -30,7 +30,10 @@ MIDIFeedback::MIDIFeedback() :
                     ->addOption("Encoder", ENCODER)
                     ->addOption("Grand Master", GRANDMASTER)
                     ->addOption("Black out", BLACKOUT)
-        ;
+                    ->addOption("Midi lock", MIDILOCK)
+                    ->addOption("Blind", BLIND)
+                    ->addOption("Highlight", HL)
+                    ;
 
     sourceId = addIntParameter("Source ID", "ID of the source", 0);
     sourcePage = addIntParameter("Source Page", "Source page, 0 means current page", 0);
@@ -283,23 +286,26 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
     }
     else if (source == ENCODER && !sameDevice) {
-        localAddress = "/encoder/" + String(sourceNumber->intValue());
-        if (address == localAddress) {
-            valid = true;
-        }
+        valid = true;
     }
     else if (source == GRANDMASTER && !sameDevice) {
-        localAddress = "/grandmaster";
-        if (address == localAddress) {
-            valid = true;
-        }
+        valid = true;
     }
     else if (source == BLACKOUT && !sameDevice) {
-        localAddress = "/blackout";
-        if (address == localAddress) {
-            valid = true;
-            sendValue = floatValue == 0 ? offValue->intValue() : onValue->intValue();
-        }
+        valid = true;
+        sendValue = floatValue == 0 ? offValue->intValue() : onValue->intValue();
+    }
+    else if (source == HL && !sameDevice) {
+        valid = true;
+        sendValue = floatValue == 0 ? offValue->intValue() : onValue->intValue();
+    }
+    else if (source == BLIND && !sameDevice) {
+        valid = true;
+        sendValue = floatValue == 0 ? offValue->intValue() : onValue->intValue();
+    }
+    else if (source == MIDILOCK && !sameDevice) {
+        valid = true;
+        sendValue = floatValue == 0 ? offValue->intValue() : onValue->intValue();
     }
 
     if (valid) {
@@ -507,6 +513,15 @@ String MIDIFeedback::getLocalAdress()
     }
     else if (source == BLACKOUT) {
         localAddress = "/blackout";
+    }
+    else if (source == MIDILOCK) {
+        localAddress = "/midilock";
+    }
+    else if (source == BLIND) {
+        localAddress = "/blind";
+    }
+    else if (source == HL) {
+        localAddress = "/highlight";
     }
 
     return localAddress;

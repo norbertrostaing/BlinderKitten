@@ -90,6 +90,8 @@ InputPanel::InputPanel()
             VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page);
             VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page);
         }
+        float v = remoteInLockBtn.getToggleState() ? 1 : 0;
+        UserInputManager::getInstance()->feedback("/midilock", v, "");
     };
 
 }

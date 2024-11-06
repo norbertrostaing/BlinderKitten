@@ -20,7 +20,7 @@ public:
 
     MIDIInterface* inter = nullptr;
 
-    enum FeedbackSource { VFADER, VROTARY, VABOVEBUTTON, VBELOWBUTTON, VBUTTON, ENCODER, GRANDMASTER, BLACKOUT};
+    enum FeedbackSource { VFADER, VROTARY, VABOVEBUTTON, VBELOWBUTTON, VBUTTON, ENCODER, GRANDMASTER, BLACKOUT, MIDILOCK, BLIND, HL};
     EnumParameter* feedbackSource;
     IntParameter* sourceId;
     IntParameter* sourcePage;
