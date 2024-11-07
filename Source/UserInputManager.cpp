@@ -775,7 +775,7 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			p->computing.enter();
 			p->currentUserCommand->cleanUnused();
 			p->computing.exit();
-		} else if (p->currentUserCommand->userCanPressNumber) {
+		} else if (p->currentUserCommand->lastTarget == "valuePresetThru") {
 			p->processUserInput(String(id));
 			p->computing.enter();
 			p->currentUserCommand->cleanUnused();
