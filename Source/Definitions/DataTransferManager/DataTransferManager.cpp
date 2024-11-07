@@ -93,11 +93,11 @@ DataTransferManager::DataTransferManager() :
 
     presetCopyMode = addEnumParameter("Preset merge mode", "Preset record mode");
     presetCopyMode->addOption("Merge", "merge");
-    presetCopyMode->addOption("Update", "update");
+    presetCopyMode->addOption("Merge", "merge");
     presetCopyMode->addOption("Replace", "replace");
 
     cuelistCopyMode = addEnumParameter("Cuelist merge mode", "Cuelist record mode");
-    cuelistCopyMode->addOption("Update current cue", "update");
+    cuelistCopyMode->addOption("Update current cue", "merge");
     cuelistCopyMode->addOption("Replace current cue", "replace");
     cuelistCopyMode->addOption("Add new cue", "add");
 
@@ -181,7 +181,7 @@ void DataTransferManager::execute() {
                 target->subFixtureValues.clear(); // erase data
             }
 
-            bool updateOnly = presetCopyMode->getValue() == "update";
+            bool updateOnly = presetCopyMode->getValue() == "merge";
 
             Array<ChannelFamily*> filters;
             if (UserInputManager::getInstance()->currentProgrammer == source) {

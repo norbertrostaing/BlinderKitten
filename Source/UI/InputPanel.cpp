@@ -237,7 +237,7 @@ void InputPanel::updateButtonsText()
         String action = p->cliActionType->getValueData().toString();
         if (action == "move") copyText = "Move";
         if (action == "loadcontent") editText = "Load content";
-        if (action == "update") recordText = "Update";
+        if (action == "merge") recordText = "Merge";
         if (action == "replace") recordText = "Replace";
 
     }

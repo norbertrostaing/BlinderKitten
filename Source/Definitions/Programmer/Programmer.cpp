@@ -68,7 +68,7 @@ Programmer::Programmer(var params) :
 	cliActionType->addOption("Copy", "copy");
 	cliActionType->addOption("Move", "move");
 	cliActionType->addOption("Record", "record");
-	cliActionType->addOption("Update", "update");
+	cliActionType->addOption("Merge", "merge");
 	cliActionType->addOption("Replace", "replace");
 	cliActionType->addOption("Edit", "edit");
 	cliActionType->addOption("Load content", "loadcontent");
@@ -535,17 +535,17 @@ void Programmer::processUserInput(String s) {
 		}
 		else if (s == "record") {
 			if (userCanPressAction) {
-				if (action == "record") { cliActionType->setValueWithData("update"); }
-				else if (action == "update") { cliActionType->setValueWithData("replace"); }
+				if (action == "record") { cliActionType->setValueWithData("merge"); }
+				else if (action == "merge") { cliActionType->setValueWithData("replace"); }
 				else { cliActionType->setValueWithData("record"); }
 			}
 			else {
 				LOGERROR(s + " not allowed");
 			}
 		}
-		else if (s == "update") {
+		else if (s == "merge") {
 			if (userCanPressAction) {
-				cliActionType->setValueWithData("update");
+				cliActionType->setValueWithData("merge");
 			}
 			else {
 				LOGERROR(s + " not allowed");
@@ -590,7 +590,7 @@ void Programmer::processUserInput(String s) {
 		return;
 	}
 
-	if (s == "record" || s == "update" || s == "replace" || s == "copy" || s == "move" || s == "edit" || s == "loadcontent" || s == "delete") {
+	if (s == "record" || s == "merge" || s == "replace" || s == "copy" || s == "move" || s == "edit" || s == "loadcontent" || s == "delete") {
 		cliActionType->setValueWithData(s);
 		UserInputManager::getInstance()->updateCommandLine();
 	}
@@ -702,7 +702,7 @@ void Programmer::runCliCommand() {
 	String action = cliActionType->getValue();
 	String targetType = cliParamAType->getValue();
 	int targetId = cliParamAId->getValue();
-	if (action == "record" || action == "update" || action == "replace") {
+	if (action == "record" || action == "merge" || action == "replace") {
 		DataTransferManager::getInstance()->sourceType->setValueWithData("programmer");
 		DataTransferManager::getInstance()->sourceId->setValue(id->getValue());
 		DataTransferManager::getInstance()->targetType->setValueWithData(targetType);

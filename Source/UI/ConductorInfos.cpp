@@ -95,7 +95,7 @@ ConductorInfos::ConductorInfos()
     displayBtn.setButtonText("Text");
     loadCurrentCueBtn.setButtonText("Load content current cue");
     inspectBtn.setButtonText("Inspect");
-    updateBtn.setButtonText("Update");
+    updateBtn.setButtonText("Merge");
 
     currentCueName.setText("", juce::NotificationType::dontSendNotification);
     currentCueId.setText("", juce::NotificationType::dontSendNotification);

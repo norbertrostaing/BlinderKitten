@@ -718,7 +718,7 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 		else if (p->currentUserCommand->userCanPressPlusOrMinus) {
 			bool pleaseAdd = true;
 			for (int i = p->currentUserCommand->selection.items.size() - 1; i >= 0; i--) {
-				CommandSelection* s = p->currentUserCommand->selection.items[i];
+				//CommandSelection* s = p->currentUserCommand->selection.items[i];
 				//if (false && s->targetType->getValue().toString() == "fixture" && (int)s->valueFrom->getValue() == id) {
 				//	pleaseAdd = false;
 				//	p->currentUserCommand->selection.removeItem(s);

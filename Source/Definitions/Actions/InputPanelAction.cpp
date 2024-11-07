@@ -50,7 +50,7 @@ InputPanelAction::InputPanelAction(var params) :
         targetButton->addOption("Clear", "Clear");
         targetButton->addOption("ClearAll", "ClearAll");
         targetButton->addOption("Record", "Record");
-        targetButton->addOption("Update", "Update");
+        targetButton->addOption("Merge", "Merge");
         targetButton->addOption("Replace", "Replace");
         targetButton->addOption("Edit", "Edit");
         targetButton->addOption("Load content", "Loadcontent");
