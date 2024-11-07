@@ -719,10 +719,10 @@ void UserInputManager::gridViewCellPressed(String type, int id) {
 			bool pleaseAdd = true;
 			for (int i = p->currentUserCommand->selection.items.size() - 1; i >= 0; i--) {
 				CommandSelection* s = p->currentUserCommand->selection.items[i];
-				if (false && s->targetType->getValue().toString() == "fixture" && (int)s->valueFrom->getValue() == id) {
-					pleaseAdd = false;
-					p->currentUserCommand->selection.removeItem(s);
-				}
+				//if (false && s->targetType->getValue().toString() == "fixture" && (int)s->valueFrom->getValue() == id) {
+				//	pleaseAdd = false;
+				//	p->currentUserCommand->selection.removeItem(s);
+				//}
 			}
 			if (pleaseAdd) {
 				p->processUserInput("+");
@@ -831,7 +831,7 @@ void UserInputManager::testPreset(Preset* p)
 void UserInputManager::resetFocus()
 {
 	// Component::unfocusAllComponents();
-	InputPanel::getInstance()->setFocusContainer(true);
+	InputPanel::getInstance()->setFocusContainerType(Component::FocusContainerType::keyboardFocusContainer);
 }
 
 void UserInputManager::feedback(String address, var value, String origin="")

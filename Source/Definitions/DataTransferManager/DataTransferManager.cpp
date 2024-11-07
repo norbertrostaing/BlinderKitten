@@ -299,7 +299,6 @@ void DataTransferManager::execute() {
                     targetCuelist = CuelistManager::getInstance()->addItem();
                     targetCuelist->cues.clear();
                     trg->targetType->setValueWithData("cuelist");
-                    int id = targetCuelist->id->intValue();
                     trg->targetId->setValue(targetCuelist->id->intValue());
                 }
                 targetType->setValueWithData("cuelist");
@@ -336,7 +335,6 @@ void DataTransferManager::execute() {
                 if (targetCuelist == nullptr) {
                     targetCuelist = CuelistManager::getInstance()->addItem();
                     targetCuelist->cues.clear();
-                    int id = targetCuelist->id->intValue();
                     if (trgButton != nullptr) {
                         trgButton->targetType->setValueWithData("cuelist");
                         trgButton->targetId->setValue(targetCuelist->id->intValue());

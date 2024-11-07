@@ -830,14 +830,14 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	Array<Command*> usefulCommands;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		if (it.getValue() != nullptr) {
-			Command* c = it.getValue()->parentCommand;
-			if (c != nullptr) usefulCommands.addIfNotAlreadyThere(c);
+			Command* cmd = it.getValue()->parentCommand;
+			if (cmd != nullptr) usefulCommands.addIfNotAlreadyThere(cmd);
 		}
 	}
 
 	for (int i = commandHistory.size() - 1; i >= 0; i--) {
-		Command* c = commandHistory[i];
-		if (!usefulCommands.contains(c)) {
+		Command* cmd = commandHistory[i];
+		if (!usefulCommands.contains(cmd)) {
 			commandHistory.removeRange(i,1);
 		}
 	}
@@ -1539,10 +1539,10 @@ Cue* Cuelist::getNextChaserCue() {
 
 }
 
-Cue* Cuelist::getCueAfterId(float id)
+Cue* Cuelist::getCueAfterId(float askedId)
 {
 	for (int i = 0; i < cues.items.size(); i++) {
-		if ((float)cues.items[i]->id->getValue() >= id) {
+		if ((float)cues.items[i]->id->getValue() >= askedId) {
 			return cues.items[i];
 		}
 	}
@@ -1604,17 +1604,17 @@ void Cuelist::autoCreateChaser()
 	}
 
 	int currentBuddy = nBuddy;
-	Cue* currentCue = nullptr;
+	Cue* cue = nullptr;
 	kill();
 	cues.clear();
 	CommandSelectionManager* csm = nullptr;
 	for (int i = 0; i < maxSize; i++) {
 		if (currentBuddy == nBuddy) {
-			currentCue = cues.addItem();
-			currentCue->commands.items[0]->values.loadJSONData(chaseGenValue.getJSONData());
-			currentCue->setNiceName("empty");
-			currentCue->id->setValue(i+1);
-			csm = & currentCue->commands.items[0]->selection;
+			cue = cues.addItem();
+			cue->commands.items[0]->values.loadJSONData(chaseGenValue.getJSONData());
+			cue->setNiceName("empty");
+			cue->id->setValue(i+1);
+			csm = & cue->commands.items[0]->selection;
 			csm->clear();
 			currentBuddy = 0;
 		}
@@ -1631,11 +1631,11 @@ void Cuelist::autoCreateChaser()
 					cs->subFrom->setValue(sf->subId);
 					name += "."+String(sf->subId);
 				}
-				if (currentCue->niceName == "empty") {
-					currentCue->setNiceName(name);
+				if (cue->niceName == "empty") {
+					cue->setNiceName(name);
 				}
 				else {
-					currentCue->setNiceName(currentCue->niceName +" + "+name);
+					cue->setNiceName(cue->niceName +" + "+name);
 				}
 			}
 		}
@@ -1673,16 +1673,16 @@ void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
 	isComputing.exit();
 }
 
-void Cuelist::forceCueId(Cue* c, float id)
+void Cuelist::forceCueId(Cue* c, float askedId)
 {
 	for (int i = 0; i < cues.items.size(); i++) {
-		if (cues.items[i] != c && cues.items[i]->id->floatValue() == id) {
+		if (cues.items[i] != c && cues.items[i]->id->floatValue() == askedId) {
 			float nextId = i < cues.items.size()-2 ? cues.items[i+1]->id->floatValue() : cues.items[i]->id->floatValue()+2;
-			float newId = id + ((nextId - id) / 2);
+			float newId = askedId + ((nextId - askedId) / 2);
 			cues.items[i]->id->setValue(newId);
 		}
 	}
-	c->id->setValue(id);
+	c->id->setValue(askedId);
 }
 
 void Cuelist::selectAsMainConductor()

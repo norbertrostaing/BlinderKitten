@@ -522,8 +522,6 @@ void VirtualButton::feedback(String value)
 	address += "/virtbutton/" + String(page) + "/" + String(col) + "/" + String(row);
 	address0 += "/virtbutton/0/" + String(col) + "/" + String(row);
 
-	double sentValue = 0;
-
 	UserInputManager::getInstance()->feedback(address, value, "");
 	if (page == VirtualButtonGrid::getInstance()->page) {
 		UserInputManager::getInstance()->feedback(address0, value, "");

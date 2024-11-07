@@ -107,7 +107,6 @@ void OSCFeedback::processFeedback(String address, var varValue, String origin, b
 {
     if (!enabled->boolValue()) return;
     String localAddress = "";
-    FeedbackSource source = feedbackSource->getValueDataAsEnum<FeedbackSource>();
     if (inter == nullptr) {
         inter = dynamic_cast<OSCInterface*>(parentContainer->parentContainer.get());
     }

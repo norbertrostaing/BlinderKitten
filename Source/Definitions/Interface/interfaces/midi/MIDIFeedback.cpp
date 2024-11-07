@@ -175,7 +175,6 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
 
     int faderPage = VirtualFaderColGrid::getInstance()->page;
     int buttonPage = VirtualButtonGrid::getInstance()->page;
-    int localPage = sourcePage->intValue();
 
     bool validPageButton = true;
     bool validPageFader = true;

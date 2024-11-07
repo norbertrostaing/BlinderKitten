@@ -78,33 +78,8 @@ void CueManager::correctCueIds()
     for (int j = 0; j < invalidCueIds.size(); j++) {
         invalidCueIds[j]->id->setValue(lastValidId+1+j);
     }
-    return;
-
-    
-    for (int i = 1; i < items.size(); i++) {
-        float id = items[i]->id->getValue();
-        float prevId = items[i-1]->id->getValue();
-        if (id == prevId) {
-            if (i == items.size() - 1) { // last element
-                items[i]->id->setValue(id+1);
-            }
-            else {
-                float nextId = items[i+1]->id->getValue();
-                if (nextId == prevId) {
-                    LOGERROR("Your cue IDs are the same, please consider renumber your cues.");
-                    return;
-                }
-                else {
-                    if (nextId < prevId) {
-                        LOGERROR("Your cue IDs are not ordered, please consider renumber your cues.");
-                        return;
-                    }
-                    items[i]->id->setValue(calcId(prevId, nextId));
-                }
-            }
-        }
-    }
-}
+ 
+ }
 
 void CueManager::setItemIndex(Cue* item, int newIndex, bool addToUndo)
 {
