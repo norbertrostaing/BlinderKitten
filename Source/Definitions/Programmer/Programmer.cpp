@@ -167,6 +167,9 @@ void Programmer::onContainerParameterChangedInternal(Parameter* p) {
 		if (editionMode->getValue() == "blind") {
 			release();
 		}
+		else {
+			go();
+		}
 		Encoders::getInstance()->updateBlindButton();
 		if (UserInputManager::getInstance()->currentProgrammer == this) {
 			float v = editionMode->getValue() == "blind" ? 1 : 0;
