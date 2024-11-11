@@ -16,6 +16,7 @@ OSCInterface::OSCInterface() :
 	servus("_osc._udp"),
 	receiveCC(nullptr)
 {
+	internalMappings = addBoolParameter("Internal mappings", "parse organic and blinderkitten mappings", false);
 	internalFeedbacks = addBoolParameter("Internal feedbacks", "send all internal feedbacks to outputs", false);
 
 	receiveCC.reset(new EnablingControllableContainer("OSC Input"));
@@ -118,6 +119,10 @@ void OSCInterface::processMessage(const OSCMessage& msg)
 	}
 
 	processMessageInternal(msg);
+
+	if (internalMappings->boolValue()) {
+		UserInputManager::getInstance()->processMessage(msg, "");
+	}
 
 	/*
 	if (scriptManager->items.size() > 0)

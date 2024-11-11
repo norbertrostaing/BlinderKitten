@@ -56,6 +56,7 @@ public:
 	OSCInterface();
 	~OSCInterface();
 
+	BoolParameter* internalMappings;
 	BoolParameter* internalFeedbacks;
 
 	//RECEIVE
