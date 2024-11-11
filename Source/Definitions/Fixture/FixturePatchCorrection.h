@@ -30,5 +30,7 @@ class FixturePatchCorrection:
     bool isOn = false;
 
     void onContainerParameterChangedInternal(Parameter* p);
+    void updateCorrection();
+    void afterLoadJSONDataInternal() override;
 
 };

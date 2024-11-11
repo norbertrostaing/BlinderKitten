@@ -45,7 +45,7 @@ FixturePatchCorrection::FixturePatchCorrection(var params) :
 	offsetValue = addFloatParameter("Offset", "add an offset to the output", 0, -1, 1);
 	addChildControllableContainer(&curve);
 	isOn = true;
-
+	
 };
 
 FixturePatchCorrection::~FixturePatchCorrection()
@@ -57,6 +57,11 @@ void FixturePatchCorrection::onContainerParameterChangedInternal(Parameter* p) {
 	if (Brain::getInstance()->loadingIsRunning) {
 		return; // bug au load
 	}
+	updateCorrection();
+}
+
+void FixturePatchCorrection::updateCorrection()
+{
 	if (parentContainer == nullptr) {
 		return;
 	}
@@ -64,9 +69,17 @@ void FixturePatchCorrection::onContainerParameterChangedInternal(Parameter* p) {
 	SubFixture* sf = f->subFixtures.contains(subFixtureId->getValue()) ? f->subFixtures.getReference(subFixtureId->getValue()) : nullptr;
 	if (sf == nullptr) { return; }
 	ChannelType* ct = dynamic_cast<ChannelType*>(channelType->targetContainer.get());
-	if (!sf->channelsMap.contains(ct)) {return; }
+	if (!sf->channelsMap.contains(ct)) { return; }
 	SubFixtureChannel* chan = sf->channelsMap.getReference(ct);
 	if (chan == nullptr) { return; }
 	Brain::getInstance()->pleaseUpdate(chan);
+}
+
+void FixturePatchCorrection::afterLoadJSONDataInternal()
+{
+	if (Brain::getInstance()->loadingIsRunning) {
+		return; // bug au load
+	}
+	MessageManager::callAsync([this](){updateCorrection(); });
 }
 
