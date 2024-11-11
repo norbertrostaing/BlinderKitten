@@ -710,8 +710,8 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->sourceId->setValue(id->getValue());
 		DataTransferManager::getInstance()->targetType->setValueWithData(targetType);
 		DataTransferManager::getInstance()->targetUserId->setValue(targetId);
-		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action == "record" ? "merge" : "replace");
-		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action == "record" ? "merge" : action);
+		DataTransferManager::getInstance()->groupCopyMode->setValueWithData(action);
+		DataTransferManager::getInstance()->presetCopyMode->setValueWithData(action);
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "add" : action);
 		DataTransferManager::getInstance()->execute();
 	}
