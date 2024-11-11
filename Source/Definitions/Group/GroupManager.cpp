@@ -34,7 +34,7 @@ GroupManager::~GroupManager()
 
 void GroupManager::addItemInternal(Group* o, var data)
 {
-    reorderItems();
+    //reorderItems();
 }
 
 void GroupManager::removeItemInternal(Group* o)
