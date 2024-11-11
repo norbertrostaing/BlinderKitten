@@ -92,7 +92,7 @@ DataTransferManager::DataTransferManager() :
     groupCopyMode->addOption("Replace", "replace");
 
     presetCopyMode = addEnumParameter("Preset merge mode", "Preset record mode");
-    presetCopyMode->addOption("Merge", "merge");
+    presetCopyMode->addOption("Record", "record");
     presetCopyMode->addOption("Merge", "merge");
     presetCopyMode->addOption("Replace", "replace");
 
@@ -229,7 +229,7 @@ void DataTransferManager::execute() {
                     }
                 }
             }
-            //target->reorderPresetContent();
+            target->reorderPresetContent();
             //target->updateDisplay();
             target->selectThis();
             LOG("Preset recorded");
