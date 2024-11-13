@@ -74,6 +74,9 @@ public:
 	OSCMappingManager mappingManager;
 	OSCFeedbackManager feedbackManager;
 
+	HashMap<String, var> sentValues;
+	CriticalSection cs;
+
 	//Script
 	const Identifier oscEventId = "oscEvent";
 

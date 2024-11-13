@@ -192,9 +192,16 @@ void OSCInterface::feedback(String address, var value, String origin)
 		if (value.isString()) {
 			address += "/name";
 		}
-		OSCMessage msg(address);
-		msg.addArgument(OSCHelpers::varToArgument(value, OSCHelpers::TF));
-		sendOSC(msg);
+		var sentVal;
+		if (sentValues.contains(address)) {
+			sentVal = sentValues.getReference(address);
+		}
+		if (sentVal != value) {
+			sentValues.set(address, value);
+			OSCMessage msg(address);
+			msg.addArgument(OSCHelpers::varToArgument(value, OSCHelpers::TF));
+			sendOSC(msg);
+		}
 	}
 }
 
