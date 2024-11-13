@@ -558,6 +558,7 @@ void Encoders::updateCommandLine()
         bool useNames = numberOrNames == 1;
         String txt = UserInputManager::getInstance()->getProgrammer(true)->getTextCommand(useNames);
         commandLine.setText(txt, juce::dontSendNotification);
+        UserInputManager::getInstance()->feedback("/encoders/cmdline", txt, "");
     }
 }
 
