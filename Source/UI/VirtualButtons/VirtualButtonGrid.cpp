@@ -98,6 +98,7 @@ void VirtualButtonGrid::goToPage(int n) {
     page = jmax(1,n);
     resetFeedbacks();
     fillCells();
+    UserInputManager::getInstance()->feedback("/virtbuttons/page", page, "");
 }
 
 void VirtualButtonGrid::initCells() {
@@ -146,15 +147,9 @@ void VirtualButtonGrid::fillCells() {
 
 void VirtualButtonGrid::buttonClicked(juce::Button* button) {
     if ((TextButton*)button == &pagePlusBtn) {
-        resetFeedbacks(true);
-        page += 1;
-        resetFeedbacks();
-        fillCells();
+        goToPage(page + 1);
     } else if ((TextButton*)button == &pageMinusBtn) {
-        resetFeedbacks(true);
-        page = jmax(1, page-1);
-        resetFeedbacks();
-        fillCells();
+        goToPage(page - 1);
     }
     else {
         buttonPressedUp((TextButton*)button);

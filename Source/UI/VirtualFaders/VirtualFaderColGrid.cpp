@@ -123,6 +123,7 @@ void VirtualFaderColGrid::goToPage(int n) {
     page = jmax(1, n);
     resetFeedbacks();
     fillCells();
+    UserInputManager::getInstance()->feedback("/virtfaders/page", page, "");
 }
 
 void VirtualFaderColGrid::resetFeedbacks()
@@ -455,15 +456,9 @@ void VirtualFaderColGrid::fillCells() {
 
 void VirtualFaderColGrid::buttonClicked(juce::Button* button) {
     if ((TextButton*)button == &pagePlusBtn) {
-        resetFeedbacks();
-        page += 1;
-        resetFeedbacks();
-        fillCells();
+        goToPage(page + 1);
     } else if ((TextButton*)button == &pageMinusBtn) {
-        resetFeedbacks();
-        page = jmax(1, page-1);
-        resetFeedbacks();
-        fillCells();
+        goToPage(page - 1);
     }
     else {
         buttonPressedUp((TextButton*)button);
