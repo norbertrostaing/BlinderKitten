@@ -24,7 +24,7 @@ namespace BinaryData
     const int            newFileContent_olgaSize = 42162;
 
     extern const char*   newFileDefaultContent_mochi;
-    const int            newFileDefaultContent_mochiSize = 25763;
+    const int            newFileDefaultContent_mochiSize = 103278;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 6;

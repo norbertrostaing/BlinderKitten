@@ -5906,860 +5906,1316 @@ const char* newFileContent_olga = (const char*) temp_binary_data_4;
 
 //================== newFileDefaultContent.mochi ==================
 static const unsigned char temp_binary_data_5[] =
-"{\r\n"
-"  \"interfaces\": [\r\n"
-"    {\r\n"
-"      \"niceName\": \"DMX Universe 1\",\r\n"
-"      \"containers\": {\r\n"
-"        \"pass_through\": {\r\n"
-"        },\r\n"
-"        \"openDMX\": {\r\n"
-"          \"containers\": {\r\n"
-"            \"output\": {\r\n"
-"              \"owned\": true,\r\n"
-"              \"niceName\": \"Output\"\r\n"
-"            }\r\n"
-"          }\r\n"
-"        },\r\n"
-"        \"mappings\": {\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"DMX\"\r\n"
-"    }\r\n"
-"  ],\r\n"
-"  \"channelFamilies\": [\r\n"
-"    {\r\n"
-"      \"niceName\": \"Dimmer\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"parameters\": [\r\n"
-"                {\r\n"
-"                  \"value\": \"Highest Takes Precedence\",\r\n"
-"                  \"controlAddress\": \"/channelMode\"\r\n"
-"                },\r\n"
-"                {\r\n"
-"                  \"value\": true,\r\n"
-"                  \"controlAddress\": \"/reactToGrandMaster\"\r\n"
-"                }\r\n"
-"              ],\r\n"
-"              \"niceName\": \"Intensity\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"parameters\": [\r\n"
-"                {\r\n"
-"                  \"value\": \"Highest Takes Precedence\",\r\n"
-"                  \"controlAddress\": \"/channelMode\"\r\n"
-"                }\r\n"
-"              ],\r\n"
-"              \"niceName\": \"Haze\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"parameters\": [\r\n"
-"                {\r\n"
-"                  \"value\": \"Highest Takes Precedence\",\r\n"
-"                  \"controlAddress\": \"/channelMode\"\r\n"
-"                }\r\n"
-"              ],\r\n"
-"              \"niceName\": \"Fan\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Shutter\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Strobe\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Chase\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Dimmer Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Chase Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Chase Fade\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    },\r\n"
-"    {\r\n"
-"      \"niceName\": \"Color\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"Red\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Green\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Blue\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"White\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Amber\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"UV\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Cyan\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Magenta\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Yellow\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Hue\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Sat\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Color\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Color Macro\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Color Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Color 1\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Color 2\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"CTC\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"CTO\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Color Ctrl\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    },\r\n"
-"    {\r\n"
-"      \"niceName\": \"Position\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"Pan\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Tilt\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"PT Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    },\r\n"
-"    {\r\n"
-"      \"niceName\": \"Focus\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"Frost\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Focus\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Zoom\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    },\r\n"
-"    {\r\n"
-"      \"niceName\": \"Gobo\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"Gobo 1\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Gobo 1 Rot\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Gobo 2\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Gobo 2 Rot\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Gobo Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    },\r\n"
-"    {\r\n"
-"      \"niceName\": \"Beam\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"Iris\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Prism\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Prism Rot\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Beam Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    },\r\n"
-"    {\r\n"
-"      \"niceName\": \"Control\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channelTypes\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"Ctrl\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Reset\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"Lamp\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            },\r\n"
-"            {\r\n"
-"              \"niceName\": \"FX Speed\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"ChannelFamily\"\r\n"
-"    }\r\n"
-"  ],\r\n"
-"  \"fixtureType\": [\r\n"
-"    {\r\n"
-"      \"niceName\": \"Channel\",\r\n"
-"      \"editorIsCollapsed\": true,\r\n"
-"      \"containers\": {\r\n"
-"        \"channels\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"parameters\": [\r\n"
-"                {\r\n"
-"                  \"value\": \"/dimmer/channelTypes/intensity\",\r\n"
-"                  \"controlAddress\": \"/channelType\"\r\n"
-"                },\r\n"
-"                {\r\n"
-"                  \"value\": 1.0,\r\n"
-"                  \"controlAddress\": \"/highlightValue\"\r\n"
-"                },\r\n"
-"                {\r\n"
-"                  \"value\": true,\r\n"
-"                  \"controlAddress\": \"/killedBySWOP\"\r\n"
-"                },\r\n"
-"                {\r\n"
-"                  \"value\": 1,\r\n"
-"                  \"hexMode\": false,\r\n"
-"                  \"controlAddress\": \"/dmxChannel\"\r\n"
-"                },\r\n"
-"                {\r\n"
-"                  \"value\": \"\",\r\n"
-"                  \"controlAddress\": \"/virtualMaster\"\r\n"
-"                }\r\n"
-"              ],\r\n"
-"              \"niceName\": \"Channel 1 - Intensity\",\r\n"
-"              \"type\": \"BaseItem\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        },\r\n"
-"        \"virtualChannels\": {\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        },\r\n"
-"        \"editorHelp\": {\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"FixtureType\"\r\n"
-"    }\r\n"
-"  ],\r\n"
-"  \"fixture\": null,\r\n"
-"  \"group\": null,\r\n"
-"  \"preset\": null,\r\n"
-"  \"command\": null,\r\n"
-"  \"cuelist\": null,\r\n"
-"  \"programmer\": [\r\n"
-"    {\r\n"
-"      \"niceName\": \"1 - New programmer\",\r\n"
-"      \"containers\": {\r\n"
-"        \"commands\": {\r\n"
-"          \"items\": [\r\n"
-"            {\r\n"
-"              \"niceName\": \"fixture\",\r\n"
-"              \"containers\": {\r\n"
-"                \"moveInBlack\": {\r\n"
-"                },\r\n"
-"                \"selections\": {\r\n"
-"                  \"items\": [\r\n"
-"                    {\r\n"
-"                      \"parameters\": [\r\n"
-"                        {\r\n"
-"                          \"value\": \"\",\r\n"
-"                          \"controlAddress\": \"/channelType\"\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"niceName\": \"Selection\",\r\n"
-"                      \"type\": \"BaseItem\"\r\n"
-"                    }\r\n"
-"                  ],\r\n"
-"                  \"viewOffset\": [\r\n"
-"                    0,\r\n"
-"                    0\r\n"
-"                  ],\r\n"
-"                  \"viewZoom\": 1.0\r\n"
-"                },\r\n"
-"                \"values\": {\r\n"
-"                  \"items\": [\r\n"
-"                    {\r\n"
-"                      \"parameters\": [\r\n"
-"                        {\r\n"
-"                          \"value\": \"\",\r\n"
-"                          \"controlAddress\": \"/channelType\"\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"niceName\": \"Value\",\r\n"
-"                      \"type\": \"BaseItem\"\r\n"
-"                    }\r\n"
-"                  ],\r\n"
-"                  \"viewOffset\": [\r\n"
-"                    0,\r\n"
-"                    0\r\n"
-"                  ],\r\n"
-"                  \"viewZoom\": 1.0\r\n"
-"                },\r\n"
-"                \"timing\": {\r\n"
-"                  \"containers\": {\r\n"
-"                    \"fadeCurve\": {\r\n"
-"                      \"parameters\": [\r\n"
-"                        {\r\n"
-"                          \"value\": 1.0,\r\n"
-"                          \"controlAddress\": \"/length\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"value\": [\r\n"
-"                            0.0,\r\n"
-"                            1.0\r\n"
-"                          ],\r\n"
-"                          \"controlAddress\": \"/viewValueRange\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"value\": [\r\n"
-"                            0.0,\r\n"
-"                            1.0\r\n"
-"                          ],\r\n"
-"                          \"controlAddress\": \"/range\",\r\n"
-"                          \"enabled\": true\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"editorIsCollapsed\": true,\r\n"
-"                      \"hideInEditor\": true,\r\n"
-"                      \"containers\": {\r\n"
-"                        \"key\": {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                              \"parameters\": [\r\n"
-"                                {\r\n"
-"                                  \"value\": [\r\n"
-"                                    0.300000011920929,\r\n"
-"                                    0.0\r\n"
-"                                  ],\r\n"
-"                                  \"controlAddress\": \"/anchor1\"\r\n"
-"                                },\r\n"
-"                                {\r\n"
-"                                  \"value\": [\r\n"
-"                                    -0.300000011920929,\r\n"
-"                                    0.0\r\n"
-"                                  ],\r\n"
-"                                  \"controlAddress\": \"/anchor2\"\r\n"
-"                                }\r\n"
-"                              ]\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        },\r\n"
-"                        \"key1\": {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/position\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/value\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key 1\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        }\r\n"
-"                      },\r\n"
-"                      \"items\": [\r\n"
-"                        {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                              \"parameters\": [\r\n"
-"                                {\r\n"
-"                                  \"value\": [\r\n"
-"                                    0.300000011920929,\r\n"
-"                                    0.0\r\n"
-"                                  ],\r\n"
-"                                  \"controlAddress\": \"/anchor1\"\r\n"
-"                                },\r\n"
-"                                {\r\n"
-"                                  \"value\": [\r\n"
-"                                    -0.300000011920929,\r\n"
-"                                    0.0\r\n"
-"                                  ],\r\n"
-"                                  \"controlAddress\": \"/anchor2\"\r\n"
-"                                }\r\n"
-"                              ]\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/position\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/value\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key 1\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"viewOffset\": [\r\n"
-"                        0,\r\n"
-"                        0\r\n"
-"                      ],\r\n"
-"                      \"viewZoom\": 1.0\r\n"
-"                    },\r\n"
-"                    \"delayRepartition\": {\r\n"
-"                      \"parameters\": [\r\n"
-"                        {\r\n"
-"                          \"value\": 1.0,\r\n"
-"                          \"controlAddress\": \"/length\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"value\": [\r\n"
-"                            0.0,\r\n"
-"                            1.0\r\n"
-"                          ],\r\n"
-"                          \"controlAddress\": \"/viewValueRange\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"value\": [\r\n"
-"                            0.0,\r\n"
-"                            1.0\r\n"
-"                          ],\r\n"
-"                          \"controlAddress\": \"/range\",\r\n"
-"                          \"enabled\": true\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"editorIsCollapsed\": true,\r\n"
-"                      \"hideInEditor\": true,\r\n"
-"                      \"containers\": {\r\n"
-"                        \"key\": {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": \"Linear\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        },\r\n"
-"                        \"key1\": {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/position\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/value\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key 1\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        }\r\n"
-"                      },\r\n"
-"                      \"items\": [\r\n"
-"                        {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": \"Linear\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/position\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/value\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key 1\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"viewOffset\": [\r\n"
-"                        0,\r\n"
-"                        0\r\n"
-"                      ],\r\n"
-"                      \"viewZoom\": 1.0\r\n"
-"                    },\r\n"
-"                    \"fadeRepartition\": {\r\n"
-"                      \"parameters\": [\r\n"
-"                        {\r\n"
-"                          \"value\": 1.0,\r\n"
-"                          \"controlAddress\": \"/length\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"value\": [\r\n"
-"                            0.0,\r\n"
-"                            1.0\r\n"
-"                          ],\r\n"
-"                          \"controlAddress\": \"/viewValueRange\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"value\": [\r\n"
-"                            0.0,\r\n"
-"                            1.0\r\n"
-"                          ],\r\n"
-"                          \"controlAddress\": \"/range\",\r\n"
-"                          \"enabled\": true\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"editorIsCollapsed\": true,\r\n"
-"                      \"hideInEditor\": true,\r\n"
-"                      \"containers\": {\r\n"
-"                        \"key\": {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": \"Linear\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        },\r\n"
-"                        \"key1\": {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/position\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/value\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key 1\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        }\r\n"
-"                      },\r\n"
-"                      \"items\": [\r\n"
-"                        {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": \"Linear\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        },\r\n"
-"                        {\r\n"
-"                          \"parameters\": [\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/position\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": 1.0,\r\n"
-"                              \"controlAddress\": \"/value\"\r\n"
-"                            },\r\n"
-"                            {\r\n"
-"                              \"value\": \"Bezier\",\r\n"
-"                              \"controlAddress\": \"/easingType\"\r\n"
-"                            }\r\n"
-"                          ],\r\n"
-"                          \"niceName\": \"Key 1\",\r\n"
-"                          \"containers\": {\r\n"
-"                            \"easing\": {\r\n"
-"                            }\r\n"
-"                          },\r\n"
-"                          \"type\": \"Key\"\r\n"
-"                        }\r\n"
-"                      ],\r\n"
-"                      \"viewOffset\": [\r\n"
-"                        0,\r\n"
-"                        0\r\n"
-"                      ],\r\n"
-"                      \"viewZoom\": 1.0\r\n"
-"                    },\r\n"
-"                    \"delayMultiplicators\": {\r\n"
-"                      \"viewOffset\": [\r\n"
-"                        0,\r\n"
-"                        0\r\n"
-"                      ],\r\n"
-"                      \"viewZoom\": 1.0\r\n"
-"                    },\r\n"
-"                    \"fadeMultiplicators\": {\r\n"
-"                      \"viewOffset\": [\r\n"
-"                        0,\r\n"
-"                        0\r\n"
-"                      ],\r\n"
-"                      \"viewZoom\": 1.0\r\n"
-"                    }\r\n"
-"                  }\r\n"
-"                }\r\n"
-"              },\r\n"
-"              \"type\": \"Command\"\r\n"
-"            }\r\n"
-"          ],\r\n"
-"          \"viewOffset\": [\r\n"
-"            0,\r\n"
-"            0\r\n"
-"          ],\r\n"
-"          \"viewZoom\": 1.0\r\n"
-"        },\r\n"
-"        \"commandLIne\": {\r\n"
-"          \"editorIsCollapsed\": true\r\n"
-"        }\r\n"
-"      },\r\n"
-"      \"type\": \"Programmer\"\r\n"
-"    }\r\n"
-"  ],\r\n"
-"  \"curvePreset\": null,\r\n"
-"  \"timingPreset\": null,\r\n"
-"  \"carousel\": null,\r\n"
-"  \"mapper\": null,\r\n"
-"  \"tracker\": null,\r\n"
-"  \"multiplicators\": null,\r\n"
-"  \"effect\": null,\r\n"
-"  \"2dPlans\": null,\r\n"
-"  \"virtualButton\": null,\r\n"
-"  \"virtualFaderCol\": null\r\n"
-"}";
+{ 123,13,10,32,32,34,105,110,116,101,114,102,97,99,101,115,34,58,32,91,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,68,77,88,32,85,110,105,118,101,114,115,101,32,49,34,44,13,10,32,32,32,32,32,32,34,99,111,110,
+116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,112,97,115,115,95,116,104,114,111,117,103,104,34,58,32,123,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,34,111,112,101,110,68,77,88,34,58,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,111,117,116,112,117,116,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,111,119,110,101,100,34,58,32,116,114,117,
+101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,79,117,116,112,117,116,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,34,109,97,112,112,105,110,103,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,
+32,34,68,77,88,34,13,10,32,32,32,32,125,13,10,32,32,93,44,13,10,32,32,34,99,104,97,110,110,101,108,70,97,109,105,108,105,101,115,34,58,32,91,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,68,105,109,109,101,
+114,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,
+110,110,101,108,84,121,112,101,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,
+115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,72,105,103,104,101,115,116,32,84,97,107,101,115,32,80,114,101,99,101,100,101,110,99,
+101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,99,104,97,110,110,101,108,77,111,100,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,114,101,97,99,116,84,111,71,114,97,110,100,77,97,115,116,101,114,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,73,110,116,101,110,115,105,116,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,72,105,103,104,101,115,116,32,84,97,107,101,115,32,80,114,101,99,101,100,101,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,
+65,100,100,114,101,115,115,34,58,32,34,47,99,104,97,110,110,101,108,77,111,100,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,
+105,99,101,78,97,109,101,34,58,32,34,72,97,122,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,
+101,34,58,32,34,72,105,103,104,101,115,116,32,84,97,107,101,115,32,80,114,101,99,101,100,101,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,99,104,97,
+110,110,101,108,77,111,100,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,70,97,110,34,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,83,104,117,116,116,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,83,116,114,111,98,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,
+73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,104,97,115,101,34,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,
+78,97,109,101,34,58,32,34,68,105,109,109,101,114,32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,104,97,115,101,32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,
+97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,104,97,115,101,32,70,97,100,101,
+34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,
+101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,
+58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,104,97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,
+32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,
+114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,84,121,112,101,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,82,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,114,101,101,110,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,
+73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,66,108,117,101,34,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,
+97,109,101,34,58,32,34,87,104,105,116,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,65,109,98,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,85,86,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,
+32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,121,97,110,34,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+110,105,99,101,78,97,109,101,34,58,32,34,77,97,103,101,110,116,97,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,89,101,108,108,111,119,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,
+109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,72,117,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,
+58,32,34,83,97,116,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,32,77,97,99,114,111,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,
+34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,
+32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,32,50,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,
+58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,84,67,34,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,
+105,99,101,78,97,109,101,34,58,32,34,67,84,79,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,108,111,114,32,67,116,114,108,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,
+34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,
+121,112,101,34,58,32,34,67,104,97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,80,111,115,105,116,105,111,110,34,44,13,10,32,32,32,32,32,32,
+34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,84,121,112,101,115,
+34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,80,97,110,34,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,
+99,101,78,97,109,101,34,58,32,34,84,105,108,116,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,80,84,32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,
+101,34,58,32,34,67,104,97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,70,111,99,117,115,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,
+114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,84,121,112,101,115,34,58,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,70,114,111,115,116,34,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,
+109,101,34,58,32,34,70,111,99,117,115,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,90,111,111,109,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,
+32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,104,
+97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,111,98,111,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,
+97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,84,121,112,101,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,111,98,111,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,
+111,98,111,32,49,32,82,111,116,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,111,98,111,32,50,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,111,98,111,32,50,32,82,111,116,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,
+121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,71,111,
+98,111,32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,
+32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,
+105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,104,97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,44,13,10,32,
+32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,66,101,97,109,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,
+111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,84,121,112,101,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,73,114,105,115,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,80,114,105,115,109,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,
+101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,80,114,105,115,
+109,32,82,111,116,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,66,101,97,109,32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,
+32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,104,
+97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,111,110,116,114,111,108,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,
+67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,84,121,112,101,115,34,58,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,116,114,108,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,
+32,34,82,101,115,101,116,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,76,97,109,112,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,70,88,32,83,112,101,101,100,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,
+32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,
+13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,104,97,110,110,101,108,70,97,109,105,108,121,34,13,10,32,32,32,32,125,13,10,32,32,93,44,13,10,32,32,34,102,105,120,116,117,114,101,84,121,112,101,34,58,32,91,13,10,32,32,32,32,123,13,10,32,32,
+32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,104,97,110,110,101,108,34,44,13,10,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,34,99,111,110,116,
+97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,104,97,110,110,101,108,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,47,100,105,109,109,
+101,114,47,99,104,97,110,110,101,108,84,121,112,101,115,47,105,110,116,101,110,115,105,116,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,99,104,97,110,110,
+101,108,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,104,105,103,104,108,105,103,104,116,86,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,107,105,108,108,101,100,66,121,83,87,79,80,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,100,109,120,67,104,97,110,110,101,108,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,114,116,117,97,108,77,97,115,116,101,114,34,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,67,104,97,110,110,101,108,32,49,32,45,32,73,110,
+116,101,110,115,105,116,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,
+32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,
+105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,34,118,105,114,116,117,97,108,67,104,97,110,110,101,108,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,
+115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,
+10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,34,101,100,105,116,111,114,72,101,108,112,34,58,32,123,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,70,105,120,
+116,117,114,101,84,121,112,101,34,13,10,32,32,32,32,125,13,10,32,32,93,44,13,10,32,32,34,102,105,120,116,117,114,101,34,58,32,110,117,108,108,44,13,10,32,32,34,103,114,111,117,112,34,58,32,110,117,108,108,44,13,10,32,32,34,112,114,101,115,101,116,34,
+58,32,110,117,108,108,44,13,10,32,32,34,99,111,109,109,97,110,100,34,58,32,110,117,108,108,44,13,10,32,32,34,99,117,101,108,105,115,116,34,58,32,110,117,108,108,44,13,10,32,32,34,112,114,111,103,114,97,109,109,101,114,34,58,32,91,13,10,32,32,32,32,123,
+13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,32,45,32,78,101,119,32,112,114,111,103,114,97,109,109,101,114,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,
+99,111,109,109,97,110,100,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,
+102,105,120,116,117,114,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,109,111,118,101,73,110,66,108,97,99,107,34,58,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,115,101,108,101,99,116,105,111,110,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,
+58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,99,104,97,110,110,101,108,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,83,101,108,101,99,116,105,111,110,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,
+121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,
+34,58,32,34,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,99,104,97,110,110,101,108,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,86,97,108,
+117,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,66,97,115,101,73,116,101,109,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,105,109,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,102,97,100,101,67,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,
+108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,104,105,100,101,73,110,69,100,105,116,111,114,34,58,32,116,114,
+117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,51,48,48,48,48,48,48,49,49,57,50,48,57,50,57,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,51,48,48,48,48,48,48,49,49,57,50,48,57,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,
+32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,
+58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,
+97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,
+121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,51,48,48,48,48,
+48,48,49,49,57,50,48,57,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,51,48,48,48,48,48,48,49,49,57,50,48,57,50,57,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,
+115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,
+103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,100,101,108,97,121,82,
+101,112,97,114,116,105,116,105,111,110,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,100,105,116,111,114,
+73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,104,105,100,101,73,110,69,100,105,116,111,114,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,
+47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,
+46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,
+97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,
+112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,
+114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,
+32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,102,97,100,101,82,101,112,97,114,116,105,116,105,111,110,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,
+91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,104,105,100,101,73,110,69,100,
+105,116,111,114,34,58,32,116,114,117,101,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,
+58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,
+47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,
+100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,
+58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,
+58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,
+114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,
+78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,
+121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,
+97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,100,101,108,97,121,77,117,108,116,105,112,108,105,99,97,116,111,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,102,97,100,101,77,117,108,116,105,112,108,105,99,97,116,111,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,
+34,67,111,109,109,97,110,100,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,34,
+99,111,109,109,97,110,100,76,73,110,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,101,100,105,116,111,114,73,115,67,111,108,108,97,112,115,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,80,114,111,103,114,97,109,109,101,114,34,13,10,32,32,32,32,125,13,10,32,32,93,44,13,10,32,32,34,99,117,114,118,101,80,114,101,115,101,116,34,58,32,91,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,
+112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,105,110,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,
+101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,32,45,32,83,105,110,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,
+105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,
+34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,
+34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,
+97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,
+97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,105,110,101,34,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,48,55,56,48,48,51,52,48,54,53,50,52,54,
+54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,52,56,51,51,51,51,51,52,57,50,50,55,57,48,53,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,102,114,101,113,117,101,110,99,121,65,109,112,108,105,116,117,100,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,
+34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,
+114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,
+97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,
+110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,
+101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,105,110,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,49,46,48,48,55,56,48,48,51,52,48,54,53,50,52,54,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,52,56,51,51,51,51,51,52,57,50,50,55,57,48,53,51,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,102,114,101,113,117,101,110,99,121,65,109,112,108,105,116,117,100,
+101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,
+97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,
+101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,50,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,
+101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,67,111,115,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,
+114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,50,32,45,32,67,111,115,34,44,13,10,32,32,32,32,
+32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,
+117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,
+34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,
+34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,
+101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,50,49,50,49,
+54,56,52,56,52,57,50,54,50,50,51,56,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,49,57,49,49,48,55,54,54,48,53,51,49,57,57,
+55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,51,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,
+112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,
+101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,
+101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,49,57,49,49,
+48,55,54,54,48,53,51,49,57,57,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+45,48,46,50,48,49,50,52,56,48,52,57,55,51,54,48,50,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,
+112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,
+32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,
+110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,50,49,50,49,54,56,52,56,52,57,50,54,50,50,51,56,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,45,48,46,49,57,49,49,48,55,54,54,48,53,51,49,57,57,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,
+32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,48,46,49,57,49,49,48,55,54,54,48,53,51,49,57,57,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,50,48,49,50,52,56,48,52,57,55,51,54,48,50,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,
+101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,
+111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,
+75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,
+34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,51,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,
+32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,82,97,109,112,32,85,112,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,51,32,45,32,82,97,109,112,32,85,112,34,44,13,10,32,32,
+32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,
+34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,
+97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,
+58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,
+34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,
+97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,
+32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,
+13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,
+101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,
+109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,
+118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,
+109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,
+32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,52,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,
+115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,34,58,32,34,82,97,109,112,32,68,111,119,110,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,
+10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,52,32,45,32,82,97,109,112,32,68,111,119,110,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,
+116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,
+34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,
+101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,
+110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,
+49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,
+100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,
+101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,
+121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,
+121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,34,118,97,108,117,101,34,58,32,53,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,
+47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,97,119,116,111,111,116,104,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,53,32,45,32,83,97,119,116,111,111,116,104,34,44,13,10,
+32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,
+104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,
+86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,
+34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,
+32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,51,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,
+110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,
+47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,
+101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,
+121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,
+112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,
+101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,
+58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,
+58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,
+32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,54,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,72,97,108,102,32,83,105,110,101,32,45,32,117,112,34,44,13,10,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,54,32,45,32,72,97,
+108,102,32,83,105,110,101,32,45,32,117,112,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,
+100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,
+97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,55,54,52,52,51,48,53,51,55,56,49,57,56,54,50,52,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,51,49,54,54,54,54,54,54,50,54,57,51,48,50,51,55,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,49,57,49,56,56,55,54,52,54,57,49,51,53,50,56,52,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,51,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,52,56,53,49,55,57,51,57,52,52,56,51,53,54,54,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,
+100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,
+111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,
+105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,49,57,49,56,56,55,54,52,54,57,49,51,53,50,56,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,45,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,55,52,56,56,50,57,56,52,49,54,49,51,55,54,57,53,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,51,50,52,57,57,57,57,56,56,48,55,57,48,55,49,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,
+101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,
+101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,55,54,52,52,51,48,53,51,55,
+56,49,57,56,54,50,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,51,49,54,54,54,54,54,54,50,54,57,51,48,50,51,55,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,49,57,49,56,
+56,55,54,52,54,57,49,51,53,50,56,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,
+101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,52,56,53,49,55,57,51,57,52,52,56,51,53,54,54,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,
+65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,49,57,49,56,56,55,54,52,54,57,49,51,53,50,56,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,48,56,51,51,51,51,50,53,51,56,54,48,52,55,51,54,51,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,55,52,56,56,50,57,56,52,49,54,49,51,55,54,57,53,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,51,50,52,57,57,57,57,56,56,48,55,57,48,55,49,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,
+121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,
+121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,34,118,97,108,117,101,34,58,32,55,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,
+47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,72,97,108,102,32,83,105,110,101,32,45,32,100,111,119,110,34,44,13,10,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,55,32,45,32,72,97,108,102,
+32,83,105,110,101,32,45,32,100,111,119,110,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,
+100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,
+97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,
+103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,
+97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,56,56,57,50,51,53,53,49,49,52,50,50,49,53,55,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,51,56,51,51,51,51,51,50,53,51,56,54,48,52,55,52,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,49,55,51,57,52,54,57,55,54,54,54,49,54,56,50,49,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,51,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,
+114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,
+101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,
+97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,49,55,51,57,52,54,57,55,54,54,54,49,54,56,50,49,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,45,48,46,48,54,50,52,48,50,52,56,54,56,48,49,49,52,55,52,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,51,51,51,51,51,51,51,55,51,48,54,57,55,54,51,50,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,
+115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,
+121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,
+97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,
+34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,56,56,57,50,51,53,53,49,49,52,50,50,49,53,55,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,51,56,51,51,51,51,51,50,53,51,56,54,48,
+52,55,52,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,
+49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,
+91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,49,55,51,57,52,54,57,55,54,54,54,49,54,56,50,49,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,
+58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,48,46,49,55,51,57,52,54,57,55,54,54,54,49,54,56,50,49,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+45,48,46,48,54,50,52,48,50,52,56,54,56,48,49,49,52,55,52,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,51,51,51,51,51,51,51,55,51,48,54,57,55,54,51,50,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,
+112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,
+101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,
+58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,
+32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,
+101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,
+32,56,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,
+32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,82,97,109,112,32,85,112,32,45,32,104,97,108,102,32,100,111,119,110,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,
+65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,56,32,45,32,82,97,109,112,32,85,112,32,45,32,104,97,108,102,
+32,100,111,119,110,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,
+32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,
+58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,
+34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,
+101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,51,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,
+32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,
+32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,
+105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,
+101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,
+34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,
+101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,
+115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,
+34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,51,34,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,
+47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,
+101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,
+34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,
+10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,57,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,82,97,109,112,32,85,112,32,45,32,104,97,
+108,102,32,117,112,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,
+99,101,78,97,109,101,34,58,32,34,57,32,45,32,82,97,109,112,32,85,112,32,45,32,104,97,108,102,32,117,112,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,
+114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,
+58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,
+34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,
+105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,52,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,
+101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,52,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,
+115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,
+121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,
+112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,
+101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,52,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,
+58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,
+103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,
+32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,
+105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,
+32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,48,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,
+100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,78,111,105,115,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,
+32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,48,32,45,32,78,111,105,115,101,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,
+34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,
+58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,
+121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,78,111,105,115,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,52,54,54,54,54,54,54,51,56,56,53,
+49,49,54,53,56,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,116,97,112,101,
+114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,
+97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,78,111,105,115,101,
+34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,
+123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,
+58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,78,111,105,115,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,
+99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,52,54,54,54,54,54,54,51,56,56,53,49,49,54,53,
+56,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,116,97,112,101,114,49,34,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,
+101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,78,111,105,115,101,34,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,
+32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,49,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,111,117,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,
+114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,49,32,45,32,66,111,117,110,99,101,34,44,13,
+10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,
+116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,
+119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,
+115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,
+32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,
+108,117,101,34,58,32,34,66,111,117,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,111,117,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,
+58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,
+32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,
+32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,
+115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,
+32,34,66,111,117,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,
+101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,
+115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,111,117,110,99,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,
+34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,
+111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,
+32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,50,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,
+32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+34,118,97,108,117,101,34,58,32,34,83,116,101,112,32,117,112,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,
+93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,50,32,45,32,83,116,101,112,32,117,112,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,
+34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,
+58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,
+121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,
+117,101,34,58,32,34,83,116,101,112,115,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,
+46,50,52,53,51,52,56,54,54,50,49,51,55,57,56,53,50,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,115,116,101,112,83,105,122,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,48,48,48,48,48,48,49,49,57,50,48,57,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,
+97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,
+114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,116,101,112,115,34,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,50,52,53,51,52,56,54,54,50,49,51,55,57,56,53,50,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,
+100,114,101,115,115,34,58,32,34,47,115,116,101,112,83,105,122,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,
+48,46,56,48,48,48,48,48,48,49,49,57,50,48,57,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,
+101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,
+90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,
+32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,51,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,
+58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,34,118,97,108,117,101,34,58,32,34,83,116,101,112,32,100,111,119,110,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,51,32,45,32,83,116,101,112,32,100,111,119,110,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,
+117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,
+108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,116,101,112,115,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,
+110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,50,52,53,51,52,56,55,53,49,53,52,52,57,53,50,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,
+115,116,101,112,83,105,122,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,
+48,48,48,48,48,48,49,49,57,50,48,57,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,83,116,101,112,115,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,
+105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,50,52,53,51,52,56,55,53,49,53,52,52,57,53,50,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,115,116,101,112,83,105,122,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,48,48,48,48,48,48,49,49,57,50,48,57,50,57,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,
+103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,
+32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,
+105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,
+32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,52,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,
+100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,80,104,97,115,101,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,
+32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,52,32,45,32,80,104,97,115,101,32,49,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,
+118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,
+101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,34,107,101,121,54,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,54,34,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,
+34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,34,107,101,121,55,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,49,54,53,57,57,57,57,57,51,54,56,49,57,48,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,
+105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,
+34,58,32,34,75,101,121,32,55,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,34,107,101,121,56,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,51,51,49,57,57,57,57,56,55,51,54,51,56,49,53,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,
+115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,
+101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,56,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,
+115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,57,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,
+97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,50,57,57,57,57,57,56,51,51,49,48,54,57,57,53,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,
+114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,
+78,97,109,101,34,58,32,34,75,101,121,32,57,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,
+105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,
+34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,
+115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,
+101,34,58,32,34,75,101,121,32,54,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,
+110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,49,54,53,57,57,57,57,57,51,54,56,49,57,48,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,
+32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,
+32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,
+99,101,78,97,109,101,34,58,32,34,75,101,121,32,55,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,
+44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,51,51,49,57,57,57,57,56,55,51,54,51,56,49,53,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,
+105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,
+97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,56,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,
+34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,
+32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,50,57,57,57,57,57,56,51,51,49,48,54,57,57,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,
+101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,
+121,32,57,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,
+34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,
+108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,
+102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,
+13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,
+97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,53,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,
+32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,
+34,80,104,97,115,101,32,50,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,
+110,105,99,101,78,97,109,101,34,58,32,34,49,53,32,45,32,80,104,97,115,101,32,50,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,
+97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,
+97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,
+32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,54,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,
+101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,49,54,53,57,57,57,57,57,51,54,56,49,57,48,55,55,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,
+34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,
+58,32,34,75,101,121,32,54,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,34,107,101,121,55,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,51,51,49,57,57,57,57,56,55,51,54,51,56,49,53,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,
+105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,
+34,58,32,34,75,101,121,32,55,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,34,107,101,121,56,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,52,57,55,57,57,57,57,57,53,57,52,54,56,56,52,50,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,
+115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,
+115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,
+101,34,58,32,34,75,101,121,32,56,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,34,107,101,121,57,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,54,54,51,57,57,57,57,55,52,55,50,55,54,51,48,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,
+111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,
+110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,57,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,
+114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,
+97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,
+105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,
+34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,
+115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,
+101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,
+97,108,117,101,34,58,32,48,46,49,54,53,57,57,57,57,57,51,54,56,49,57,48,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,54,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,
+112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,51,51,49,57,57,57,57,56,55,51,54,51,56,49,53,51,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,
+111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,55,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,
+75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,52,57,55,57,57,57,57,57,53,57,52,54,56,56,52,50,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,56,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,54,54,51,57,57,57,57,55,52,55,50,55,54,51,48,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,
+101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,
+108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,57,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,
+99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,
+97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,
+115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,
+49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,
+32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,44,13,10,
+32,32,32,32,123,13,10,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,54,44,13,10,32,32,32,32,32,32,32,32,32,32,34,104,101,
+120,77,111,100,101,34,58,32,102,97,108,115,101,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,105,100,34,13,10,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,80,104,97,115,101,32,51,34,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,110,97,109,101,34,13,10,32,32,32,32,32,32,32,32,125,13,
+10,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,49,54,32,45,32,80,104,97,115,101,32,51,34,44,13,10,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,34,
+99,117,114,118,101,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,
+48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,108,101,110,103,116,104,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,105,101,119,86,97,108,117,101,82,97,110,103,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,49,46,48,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,114,97,110,103,101,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,110,97,
+98,108,101,100,34,58,32,116,114,117,101,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,34,107,101,121,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,
+115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,53,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,49,54,53,57,57,57,57,57,51,54,56,49,57,48,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,
+108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,53,34,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,
+116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,48,46,49,53,54,50,52,52,49,56,56,53,52,55,49,51,52,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,
+48,46,49,53,54,50,52,52,49,56,56,53,52,55,49,51,52,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,93,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,54,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,54,54,51,57,57,57,57,55,52,55,50,55,54,51,48,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,
+100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,54,34,44,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,55,34,58,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,50,57,
+57,57,57,57,56,51,51,49,48,54,57,57,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,
+110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,
+10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,55,34,44,13,10,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,107,101,121,49,34,58,32,123,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,
+48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,
+115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,
+32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,
+105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,34,105,116,101,109,115,34,58,32,91,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,
+115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,49,54,53,57,57,57,57,57,51,54,56,49,57,48,55,55,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,
+34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,
+34,58,32,34,66,101,122,105,101,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,53,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,
+116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,
+46,49,53,54,50,52,52,49,56,56,53,52,55,49,51,52,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,49,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,45,48,46,49,53,54,50,52,52,49,56,56,
+53,52,55,49,51,52,52,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,48,46,48,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,97,110,99,104,111,114,50,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,118,97,108,117,101,34,58,32,48,46,54,54,51,57,57,57,57,55,52,55,50,55,54,51,48,54,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,
+111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,54,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,
+13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,48,46,56,50,57,57,57,57,57,56,51,51,49,48,54,57,57,53,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,
+32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,55,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,
+101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,112,97,114,97,109,101,116,101,114,115,34,58,32,91,13,10,32,32,32,32,32,32,
+32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,
+115,34,58,32,34,47,112,111,115,105,116,105,111,110,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,
+101,34,58,32,49,46,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,111,108,65,100,100,114,101,115,115,34,58,32,34,47,118,97,108,117,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,
+32,32,32,32,32,32,32,32,32,32,32,32,32,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,118,97,108,117,101,34,58,32,34,76,105,110,101,97,114,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,114,
+111,108,65,100,100,114,101,115,115,34,58,32,34,47,101,97,115,105,110,103,84,121,112,101,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,
+34,110,105,99,101,78,97,109,101,34,58,32,34,75,101,121,32,49,34,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,99,111,110,116,97,105,110,101,114,115,34,58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,101,97,115,105,110,103,34,
+58,32,123,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,75,101,121,34,13,10,32,32,32,32,32,32,32,32,32,32,
+32,32,125,13,10,32,32,32,32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,79,102,102,115,101,116,34,58,32,91,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,44,13,10,32,32,32,32,32,32,32,32,32,32,32,32,48,13,10,32,32,32,
+32,32,32,32,32,32,32,93,44,13,10,32,32,32,32,32,32,32,32,32,32,34,118,105,101,119,90,111,111,109,34,58,32,49,46,48,13,10,32,32,32,32,32,32,32,32,125,13,10,32,32,32,32,32,32,125,44,13,10,32,32,32,32,32,32,34,116,121,112,101,34,58,32,34,67,117,114,118,
+101,80,114,101,115,101,116,34,13,10,32,32,32,32,125,13,10,32,32,93,44,13,10,32,32,34,116,105,109,105,110,103,80,114,101,115,101,116,34,58,32,110,117,108,108,44,13,10,32,32,34,99,97,114,111,117,115,101,108,34,58,32,110,117,108,108,44,13,10,32,32,34,109,
+97,112,112,101,114,34,58,32,110,117,108,108,44,13,10,32,32,34,116,114,97,99,107,101,114,34,58,32,110,117,108,108,44,13,10,32,32,34,109,117,108,116,105,112,108,105,99,97,116,111,114,115,34,58,32,110,117,108,108,44,13,10,32,32,34,101,102,102,101,99,116,
+34,58,32,110,117,108,108,44,13,10,32,32,34,50,100,80,108,97,110,115,34,58,32,110,117,108,108,44,13,10,32,32,34,118,105,114,116,117,97,108,66,117,116,116,111,110,34,58,32,110,117,108,108,44,13,10,32,32,34,118,105,114,116,117,97,108,70,97,100,101,114,67,
+111,108,34,58,32,110,117,108,108,13,10,125,0,0 };
 
 const char* newFileDefaultContent_mochi = (const char*) temp_binary_data_5;
 
@@ -6780,7 +7236,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x1512beee:  numBytes = 5903; return default_blinderlayout;
         case 0xd4093963:  numBytes = 85868; return icon_png;
         case 0x933c1cd9:  numBytes = 42162; return newFileContent_olga;
-        case 0xf43e5d17:  numBytes = 25763; return newFileDefaultContent_mochi;
+        case 0xf43e5d17:  numBytes = 103278; return newFileDefaultContent_mochi;
         default: break;
     }
 
