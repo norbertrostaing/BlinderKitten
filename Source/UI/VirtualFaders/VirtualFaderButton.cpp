@@ -540,7 +540,7 @@ void VirtualFaderButton::feedback(ButtonStatus value)
 		index = parentColumn->belowButtons.items.indexOf(this);
 	}
 
-	String aboveOrBelow = isAbove ? "vabovebutton" : "vbelowbutton";
+	String aboveOrBelow = isAbove ? "virtabove" : "virtbelow";
 
 	address += "/"+aboveOrBelow+"/" + String(page) + "/" + String(col) + "/" + String(index+1);
 	address0 += "/"+aboveOrBelow+"/0/" + String(col) + "/" + String(index+1);
@@ -573,7 +573,7 @@ void VirtualFaderButton::feedback(String text)
 		index = parentColumn->belowButtons.items.indexOf(this);
 	}
 
-	String aboveOrBelow = isAbove ? "vabovebutton" : "vbelowbutton";
+	String aboveOrBelow = isAbove ? "virtabove" : "virtbelow";
 
 	address += "/" + aboveOrBelow + "/" + String(page) + "/" + String(col) + "/" + String(index + 1);
 	address0 += "/" + aboveOrBelow + "/0/" + String(col) + "/" + String(index + 1);

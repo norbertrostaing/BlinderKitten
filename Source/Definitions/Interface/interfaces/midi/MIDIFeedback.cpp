@@ -319,8 +319,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             if (needRemap) {
                 sendValue = round(jmap(floatValue, 0., 1., (double)outputRange7b->getValue()[0], (double)outputRange7b->getValue()[1]));
             }
-            if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
             if (dev->sentNote[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
+                if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
                 dev->sendNoteOn(sendChannel, sendPitch, sendValue);
             }
         }
@@ -328,8 +328,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             if (needRemap) {
                 sendValue = round(jmap(floatValue, 0., 1., (double)outputRange7b->getValue()[0], (double)outputRange7b->getValue()[1]));
             }
-            if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
             if (dev->sentCC[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
+                if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
                 dev->sendControlChange(sendChannel, sendPitch, sendValue);
             }
         }
@@ -337,8 +337,8 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
             if (needRemap) {
                 sendValue = round(jmap(floatValue, 0., 1., (double)outputRange14b->getValue()[0], (double)outputRange14b->getValue()[1]));
             }
-            if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
             if (dev->sentPW[sendChannel] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
+                if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
                 dev->sendPitchWheel(sendChannel, sendValue);
             }
         }

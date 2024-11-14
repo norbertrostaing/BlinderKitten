@@ -144,19 +144,19 @@ String OSCFeedback::getLocalAdress()
     bool validPageFader = true;
 
     if (source == VFADER && validPageFader) {
-        localAddress = "/vfader/" + String(localPage) + "/" + String(sourceCol->intValue());
+        localAddress = "/virtfader/" + String(localPage) + "/" + String(sourceCol->intValue());
     }
     else if (source == VROTARY && validPageFader) {
-        localAddress = "/vrotary/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
+        localAddress = "/virtrotary/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
     }
     else if (source == VBUTTON && validPageButton) {
-        localAddress = "/vbutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
+        localAddress = "/virtbutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceRow->intValue());
     }
     else if (source == VABOVEBUTTON && validPageFader) {
-        localAddress = "/vabovebutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
+        localAddress = "/virtabove/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
     }
     else if (source == VBELOWBUTTON && validPageFader) {
-        localAddress = "/vbelowbutton/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
+        localAddress = "/virtbelow/" + String(localPage) + "/" + String(sourceCol->intValue()) + "/" + String(sourceNumber->intValue());
     }
     else if (source == ENCODER) {
         localAddress = "/encoder/" + String(sourceNumber->intValue());
