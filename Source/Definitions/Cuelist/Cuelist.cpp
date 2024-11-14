@@ -650,16 +650,18 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				delay *= speedMultVal;
 				fade *= speedMultVal;
 				temp->TSInit = now;
-				temp->TSStart = now + (delay);
-				temp->TSEnd = temp->TSStart + (fade);
+				temp->TSStart = now;//+ (delay);
+				temp->TSEnd = now;//temp->TSStart + (fade);
 				TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
-				temp->isEnded = false;
+				temp->isEnded = true;
 				newActiveValues.set(it.getKey(), temp);
 				it.getKey()->cuelistOnTopOfStack(this);
 			}
 			tempCue->csComputing.exit();
-			tempCue->go();
-			tempCue->off();
+			tempCue->runTasks(0,0);
+			tempCue->runOffTasks(0,0);
+			//tempCue->go();
+			//tempCue->off();
 		}
 	}
 

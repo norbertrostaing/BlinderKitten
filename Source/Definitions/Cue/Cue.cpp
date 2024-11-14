@@ -229,7 +229,7 @@ void Cue::computeValues(Array<Cue*> history, Cue* callingCue) {
 
 void Cue::go() 
 {
-	go (-1, -1);
+	go (-1, -1); 
 }
 
 void Cue::go(float forcedDelay, float forcedFade)
@@ -246,12 +246,7 @@ void Cue::go(float forcedDelay, float forcedFade)
 		TSAutoFollowEnd = now + (delay * 1000);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	Array<Task*> allTasks = getTasks();
-	for (int i = 0; i < allTasks.size(); i++) {
-		if (allTasks[i]->enabled->boolValue()) {
-			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue(), forcedDelay, forcedFade);
-		}
-	}
+	runTasks(forcedDelay, forcedFade);
 }
 
 void Cue::off()
@@ -261,14 +256,7 @@ void Cue::off()
 
 void Cue::off(float forcedDelay, float forcedFade)
 {
-	double now = Brain::getInstance()->now;
-	checkParentCuelist();
-	Array<Task*> allTasks = getOffTasks();
-	for (int i = 0; i < allTasks.size(); i++) {
-		if (allTasks[i]->enabled->boolValue()) {
-			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue(), forcedDelay, forcedFade);
-		}
-	}
+	runOffTasks(forcedDelay, forcedFade);
 }
 
 
@@ -416,6 +404,30 @@ Array<Task*> Cue::getOffTasks(Array<Cue*> history)
 		ret.add(t);
 	}
 	return ret;
+}
+
+void Cue::runTasks(float forcedDelay, float forcedFade)
+{
+	checkParentCuelist();
+	double now = Brain::getInstance()->now;
+	Array<Task*> allTasks = getTasks();
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (allTasks[i]->enabled->boolValue()) {
+			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue(), forcedDelay, forcedFade);
+		}
+	}
+}
+
+void Cue::runOffTasks(float forcedDelay, float forcedFade)
+{
+	double now = Brain::getInstance()->now;
+	checkParentCuelist();
+	Array<Task*> allTasks = getOffTasks();
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (allTasks[i]->enabled->boolValue()) {
+			Brain::getInstance()->startTask(allTasks[i], now, parentCuelist->id->intValue(), forcedDelay, forcedFade);
+		}
+	}
 }
 
 String Cue::getCommandsText(bool useName)

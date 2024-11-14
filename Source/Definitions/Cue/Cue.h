@@ -95,6 +95,9 @@ public:
     Array<Task*> getOffTasks();
     Array<Task*> getOffTasks(Array<Cue*> history);
 
+    void runTasks(float forcedDelay = -1, float forcedFade = -1);
+    void runOffTasks(float forcedDelay =-1, float forcedFade = -1);
+
     String getCommandsText(bool useName);
 
     String getTypeString() const override { return objectType; }
