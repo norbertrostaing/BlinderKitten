@@ -80,6 +80,7 @@ Carousel::Carousel(var params) :
 Carousel::~Carousel()
 {
 	stop();
+	isComputing.enter();
 	rows.clear();
 	isOn = false;
 	Brain::getInstance()->unregisterCarousel(this);
@@ -99,7 +100,7 @@ Carousel::~Carousel()
 			rows.items[i]->paramContainer.items[j]->parentCarousel = nullptr;
 		}
 	}
-	
+	isComputing.enter();
 }
 
 void Carousel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {

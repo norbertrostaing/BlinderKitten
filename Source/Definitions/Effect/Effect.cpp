@@ -78,6 +78,7 @@ Effect::Effect(var params) :
 
 Effect::~Effect()
 {
+	isComputing.enter();
 	Brain::getInstance()->unregisterEffect(this);
 	Brain::getInstance()->usingCollections.enter();
 	Brain::getInstance()->effectPoolWaiting.removeAllInstancesOf(this);
@@ -95,6 +96,7 @@ Effect::~Effect()
 
 		}
 	}
+	isComputing.exit();
 }
 
 void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
