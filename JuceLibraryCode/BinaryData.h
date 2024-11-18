@@ -18,7 +18,7 @@ namespace BinaryData
     const int            default_blinderlayoutSize = 5903;
 
     extern const char*   icon_png;
-    const int            icon_pngSize = 85868;
+    const int            icon_pngSize = 90807;
 
     extern const char*   newFileContent_olga;
     const int            newFileContent_olgaSize = 42162;
