@@ -99,23 +99,39 @@ void CuelistSheetLine::resized()
 	int width = getWidth();
 	int w = width/10;
 	w = jmin(45, w);
-	int h = 30;
+
+	BKEngine* e = (BKEngine*)Engine::mainEngine;
+	float textSize = e->cuelistSheetTextSize->floatValue();
+	int h = textSize*2;
+
 	int nameWidth = width - (8.5*w);
 
-	isSelected.setBounds(0,0,0.5*w,h);
-	cueIdLabel.setBounds(0.5*w, 0, w, h);
-	cueNameLabel.setBounds(1.5*w, 0, nameWidth, 30);
+	Font f (textSize);
 
-	htpUpDelayLabel.setBounds( width - (7*w), 0, w, h);
-	htpDownDelayLabel.setBounds( width - (6*w), 0, w, h);
-	ltpDelayLabel.setBounds( width - (5*w), 0, w, h);
-	htpUpFadeLabel.setBounds( width - (4*w), 0, w, h);
-	htpDownFadeLabel.setBounds( width - (3*w), 0, w, h);
-	ltpFadeLabel.setBounds( width - (2*w), 0, w, h);
+	isSelected.setBounds(0,0,0.5*w,h); 
+	cueIdLabel.setBounds(0.5 * w, 0, w, h);
+	cueNameLabel.setBounds(1.5 * w, 0, nameWidth, h);
 
-	actionsBtn.setBounds(width - (1 * w), 0, 1*w, h);
+	htpUpDelayLabel.setBounds(width - (7 * w), 0, w, h);
+	htpDownDelayLabel.setBounds(width - (6 * w), 0, w, h);
+	ltpDelayLabel.setBounds(width - (5 * w), 0, w, h);
+	htpUpFadeLabel.setBounds(width - (4 * w), 0, w, h);
+	htpDownFadeLabel.setBounds(width - (3 * w), 0, w, h);
+	ltpFadeLabel.setBounds(width - (2 * w), 0, w, h);
 
-	finalHeight = 30;
+	actionsBtn.setBounds(width - (1 * w), 0, 1 * w, h);
+
+	cueIdLabel.setFont(f);
+	cueNameLabel.setFont(f);
+
+	htpUpDelayLabel.setFont(f);
+	htpDownDelayLabel.setFont(f);
+	ltpDelayLabel.setFont(f);
+	htpUpFadeLabel.setFont(f);
+	htpDownFadeLabel.setFont(f);
+	ltpFadeLabel.setFont(f);
+
+	finalHeight = h;
 }
 
 void CuelistSheetLine::updateContent()

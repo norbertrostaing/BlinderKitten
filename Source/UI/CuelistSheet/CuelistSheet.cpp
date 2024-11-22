@@ -111,12 +111,15 @@ void CuelistSheet::resized()
 
     int w = width / 10;
     w = jmin(45, w);
-    int h = 30;
+    BKEngine* e = (BKEngine*)Engine::mainEngine;
+    float textSize = e->cuelistSheetTextSize->floatValue();
+    int h = textSize * 2;
     int nameWidth = width - (8.5 * w);
+    Font f(textSize);
 
     isSelected.setBounds(0, 20, 0.5 * w, h);
     cueIdLabel.setBounds(0.5 * w, 20, w, h);
-    cueNameLabel.setBounds(1.5 * w, 20, nameWidth, 30);
+    cueNameLabel.setBounds(1.5 * w, 20, nameWidth, h);
 
     htpUpDelayLabel.setBounds(width - (7 * w), 20, w, h);
     htpDownDelayLabel.setBounds(width - (6 * w), 20, w, h);
@@ -125,7 +128,17 @@ void CuelistSheet::resized()
     htpDownFadeLabel.setBounds(width - (3 * w), 20, w, h);
     ltpFadeLabel.setBounds(width - (2 * w), 20, w, h);
 
-    viewport.setBounds(0,50,width, height-50);
+    cueIdLabel.setFont(f);
+    cueNameLabel.setFont(f);
+
+    htpUpDelayLabel.setFont(f);
+    htpDownDelayLabel.setFont(f);
+    ltpDelayLabel.setFont(f);
+    htpUpFadeLabel.setFont(f);
+    htpDownFadeLabel.setFont(f);
+    ltpFadeLabel.setFont(f);
+
+    viewport.setBounds(0,h+20,width, height-h-20);
 
     int currHeight = 0;
     for (int i = 0; i < lines.size(); i++) {

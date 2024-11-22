@@ -170,6 +170,8 @@ BKEngine::BKEngine() :
 	conductorCurrentCueColor->addParameterListener(this);
 	conductorNextCueColor = conductorInfosContainer.addColorParameter("Next cue color", "Text color for your next cue", Colour(196, 0, 0));
 	conductorNextCueColor->addParameterListener(this);
+	cuelistSheetTextSize = conductorInfosContainer.addIntParameter("Cuelist sheet font size", "Text size of cuelist sheet", 14, 1);;
+	cuelistSheetTextSize->addParameterListener(this);
 	//conductorCurrentCueColor->addParameterListener(ConductorInfos::getInstance());
 
 	colorPickerContainer.saveAndLoadRecursiveData = true;
@@ -1418,7 +1420,7 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	else if (p == virtualFaderCols || p == virtualFaderRotary || p == virtualFaderAbove || p == virtualFaderSize || p == virtualFaderBelow) {
 		VirtualFaderColGrid::getInstance()->initCells();
 	}
-	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor) {
+	else if (p == conductorCuelistId || p == conductorTextSize || p == conductorTitleSize || p == conductorCurrentCueColor || p == conductorNextCueColor || p == cuelistSheetTextSize) {
 		if (p == conductorCuelistId) {
 			ConductorInfos::getInstance()->linkFadeSlider();
 			ConductorInfos::getInstance()->updateContent();
