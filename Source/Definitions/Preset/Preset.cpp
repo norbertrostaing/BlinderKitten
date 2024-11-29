@@ -46,8 +46,10 @@ Preset::Preset(var params) :
 	userName = addStringParameter("Name", "Name of this preset", "New preset");
 	updateName();
 
+	useAnotherId = addIntParameter("Use another", "id of another preset to use instead of this one", 0,0);
+
 	String presetExplain = "Behaviour of the preset : \n\n";
-	presetExplain += "- SubFixture : preset applyes only to recorded SubFixtures\n\n";
+	presetExplain += "- SubFixture : preset applies only to recorded SubFixtures\n\n";
 	// presetExplain += "- SubFixture Type : preset applies only to SubFixtures who have the same SubFixture type (same SubFixture suffix in Fixture type)\n\n";
 	presetExplain += "- Fixture type : preset applies only to SubFixtures from the same Fixture type\n\n";
 	presetExplain += "- Same channels : preset applies to all SubFixtures with same channels\n\n";

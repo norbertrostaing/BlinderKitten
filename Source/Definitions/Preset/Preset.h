@@ -32,6 +32,8 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
 
+    IntParameter* useAnotherId;
+
     TargetParameter* devTypeParam;
     EnumParameter* presetType;
     Trigger* testMeButton;

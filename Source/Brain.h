@@ -154,11 +154,11 @@ public:
     SubFixture* getSubFixtureById(int id);
     Fixture* getFixtureById(int id);
     Group* getGroupById(int id);
-    Preset* getPresetById(int id);
+    Preset* getPresetById(int id, bool followIfAnother = false);
     Cuelist* getCuelistById(int id);
     Programmer* getProgrammerById(int id);
     CurvePreset* getCurvePresetById(int id);
-    TimingPreset* getTimingPresetById(int id);
+    TimingPreset* getTimingPresetById(int id, bool followIfAnother = false);
     Effect* getEffectById(int id);
     Carousel* getCarouselById(int id);
     Mapper* getMapperById(int id);

@@ -1188,8 +1188,13 @@ Group* Brain::getGroupById(int id) {
     }
 }
 
-Preset* Brain::getPresetById(int id) {
+Preset* Brain::getPresetById(int id, bool followIfAnother) {
     if (presets.contains(id)) {
+        if (followIfAnother) {
+            if (presets.getReference(id)->useAnotherId->intValue() > 0) {
+                return getPresetById(presets.getReference(id)->useAnotherId->intValue());
+            }
+        }
         return presets.getReference(id);
     }
     else {
@@ -1224,8 +1229,13 @@ CurvePreset* Brain::getCurvePresetById(int id) {
     }
 }
 
-TimingPreset* Brain::getTimingPresetById(int id) {
+TimingPreset* Brain::getTimingPresetById(int id, bool followIfAnother) {
     if (timingPresets.contains(id)) {
+        if (followIfAnother) {
+            if (timingPresets.getReference(id)->useAnotherId->intValue() > 0) {
+                return getTimingPresetById(timingPresets.getReference(id)->useAnotherId->intValue());
+            }
+        }
         return timingPresets.getReference(id);
     }
     else {

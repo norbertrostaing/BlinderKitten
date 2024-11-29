@@ -31,6 +31,8 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
 
+    IntParameter* useAnotherId;
+
     FloatParameter* fadeFrom;
     FloatParameter* delayFrom;
     FloatParameter* delayTo;

@@ -31,6 +31,8 @@ TimingPreset::TimingPreset(var params) :
 	userName = addStringParameter("Name", "Name of this timing preset", "New timing preset");
 	updateName();
 
+	useAnotherId = addIntParameter("Use another", "id of another preset to use instead of this one", 0, 0);
+
 	delayFrom = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
 	thruDelay = addBoolParameter("Thru delay", "Do you want to apply multiples delays ?", false);
 	delayTo = addFloatParameter("Delay To", "fade of th first element (in seconds)", 0, 0);

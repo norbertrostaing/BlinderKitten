@@ -158,7 +158,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	if (callingCuelist != nullptr) {
 		timingMode = callingCuelist->timing.presetOrValue->getValue();
 		if (timingMode == "preset") {
-			TimingPreset* tp = Brain::getInstance()->getTimingPresetById(callingCuelist->timing.presetId->getValue());
+			TimingPreset* tp = Brain::getInstance()->getTimingPresetById(callingCuelist->timing.presetId->getValue(), true);
 			if (tp != nullptr) {
 				float delayMult = tp->delayMult.getValue();
 				float fadeMult = tp->fadeMult.getValue();
@@ -195,7 +195,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	timingMode = timing.presetOrValue->getValue();
 
 	if (timingMode == "preset") {
-		TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timing.presetId->getValue());
+		TimingPreset* tp = Brain::getInstance()->getTimingPresetById(timing.presetId->getValue(), true);
 		if (tp != nullptr) {
 			float delayMult = tp->delayMult.getValue();
 			float fadeMult = tp->fadeMult.getValue();
@@ -234,8 +234,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			Preset* pFrom = nullptr;
 			Preset* pTo = nullptr;
 			if (cv->presetOrValue->getValue() == "preset") {
-				pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue());
-				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue());
+				pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue(), true);
+				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue(), true);
 				if (pFrom != nullptr) {
 					pFrom -> computeValues();
 				}

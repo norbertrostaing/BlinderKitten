@@ -91,8 +91,8 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 		Preset* pFrom = nullptr;
 		Preset* pTo = nullptr;
 		if (cv->presetOrValue->getValue() == "preset") {
-			pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue());
-			pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue());
+			pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue(), true);
+			pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue(), true);
 			if (pFrom != nullptr) {
 				pFrom->computeValues();
 			}
