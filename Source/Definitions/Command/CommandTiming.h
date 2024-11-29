@@ -31,11 +31,13 @@ public:
     FloatParameter* delayFrom;
     FloatParameter* delayTo;
     BoolParameter* symmetryDelay;
+    BoolParameter* randomizeDelay;
 
     BoolParameter* thruDelay;
     BoolParameter* thruFade;
     FloatParameter* fadeTo;
     BoolParameter* symmetryFade;
+    BoolParameter* randomizeFade;
 
     Automation curveFade;
     Automation curveDelayRepart;

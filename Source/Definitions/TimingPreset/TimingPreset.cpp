@@ -37,11 +37,13 @@ TimingPreset::TimingPreset(var params) :
 	thruDelay = addBoolParameter("Thru delay", "Do you want to apply multiples delays ?", false);
 	delayTo = addFloatParameter("Delay To", "fade of th first element (in seconds)", 0, 0);
 	symmetryDelay = addBoolParameter("Delay Symmetry", "Apply this delay in symmetry", false);
+	randomizeDelay = addBoolParameter("Delay random", "Randomize the delay values", false);
 
 	fadeFrom = addFloatParameter("Fade", "fade of th first element (in seconds)", 0, 0);
 	thruFade = addBoolParameter("Thru fade", "Do you want to apply multiple fades", false);
 	fadeTo = addFloatParameter("Fade To", "fade of th first element (in seconds)", 0, 0);
 	symmetryFade = addBoolParameter("Fade Symmetry", "Apply this fade in symmetry", false);
+	randomizeFade = addBoolParameter("Fade random", "Randomize the fade values", false);
 
 	curveFade.saveAndLoadRecursiveData = true;
 	curveFade.setNiceName("Fade curve");
@@ -123,9 +125,11 @@ void TimingPreset::updateDisplay()
 
 	delayTo->hideInEditor = !thd;
 	symmetryDelay->hideInEditor = !thd;
+	randomizeDelay->hideInEditor = !thd;
 
 	fadeTo->hideInEditor = !thf;
 	symmetryFade->hideInEditor = !thf;
+	randomizeFade->hideInEditor = !thf;
 
 	curveDelayRepart.hideInEditor = !thd;
 	curveFadeRepart.hideInEditor = !thf;

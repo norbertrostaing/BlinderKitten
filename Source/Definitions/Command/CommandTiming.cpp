@@ -32,11 +32,13 @@ CommandTiming::CommandTiming(var params) :
 	thruDelay = addBoolParameter("Thru delay", "Do you want to apply multiples delays ?", false);
 	delayTo = addFloatParameter("Delay To", "fade of th first element (in seconds)", 0, 0);
 	symmetryDelay = addBoolParameter("Delay Symmetry", "Apply this delay in symmetry", false);
+	randomizeDelay = addBoolParameter("Delay random", "Randomize the delay values", false);
 
 	fadeFrom = addFloatParameter("Fade", "fade of th first element (in seconds)", 0, 0);
 	thruFade = addBoolParameter("Thru fade", "Do you want to apply multiple fades", false);
 	fadeTo = addFloatParameter("Fade To", "fade of th first element (in seconds)", 0, 0);
 	symmetryFade = addBoolParameter("Fade Symmetry", "Apply this fade in symmetry", false);
+	randomizeFade = addBoolParameter("Fade random", "Randomize the fade values", false);
 
 	curveFade.saveAndLoadRecursiveData = true;
 	curveFade.setNiceName("Fade curve");
@@ -102,11 +104,13 @@ void CommandTiming::updateDisplay()
 	thruDelay->hideInEditor = !raw;
 	delayTo->hideInEditor = !raw || !thd;
 	symmetryDelay->hideInEditor = !raw || !thd;
+	randomizeDelay->hideInEditor = !thd;
 
 	fadeFrom->hideInEditor = !raw;
 	thruFade->hideInEditor = !raw;
 	fadeTo->hideInEditor = !raw || !thf;
 	symmetryFade->hideInEditor = !raw || !thf;
+	randomizeFade->hideInEditor = !thf;
 
 	curveFade.hideInEditor = !raw;
 	curveDelayRepart.hideInEditor = !raw || !thd;

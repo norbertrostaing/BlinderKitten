@@ -127,11 +127,13 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 	bool delaySym = false;
 	float delayFrom = 0;
 	float delayTo = 0;
+	bool delayRandom = false;
 
 	bool fadeThru = false;
 	bool fadeSym = false;
 	float fadeFrom = 0;
 	float fadeTo = 0;
+	bool fadeRandom = false;
 
 	Automation* fadeCurve = nullptr;
 	Automation* fadeRepartCurve = nullptr;
@@ -173,6 +175,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 				fadeCurve = &tp->curveFade;
 				fadeRepartCurve = &tp->curveFadeRepart;
 				delayRepartCurve = &tp->curveDelayRepart;
+				delayRandom = delayThru && tp->randomizeDelay->boolValue();
+				fadeRandom = fadeThru && tp->randomizeFade->boolValue();
 			}
 		}
 		else if (timingMode == "raw") {
@@ -189,6 +193,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			fadeCurve = &callingCuelist->timing.curveFade;
 			fadeRepartCurve = &callingCuelist->timing.curveFadeRepart;
 			delayRepartCurve = &callingCuelist->timing.curveDelayRepart;
+			delayRandom = delayThru && callingCuelist->timing.randomizeDelay->boolValue();
+			fadeRandom = fadeThru && callingCuelist->timing.randomizeFade->boolValue();
 		}
 	}
 
@@ -210,6 +216,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			fadeCurve = &tp->curveFade;
 			fadeRepartCurve = &tp->curveFadeRepart;
 			delayRepartCurve = &tp->curveDelayRepart;
+			delayRandom = delayThru && tp->randomizeDelay->boolValue();
+			fadeRandom = fadeThru && tp->randomizeFade->boolValue();
 		}
 	}
 	else if (timingMode == "raw"){
@@ -226,6 +234,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 		fadeCurve = &timing.curveFade;
 		fadeRepartCurve = &timing.curveFadeRepart;
 		delayRepartCurve = &timing.curveDelayRepart;
+		delayRandom = delayThru && timing.randomizeDelay->boolValue();
+		fadeRandom = fadeThru && timing.randomizeFade->boolValue();
 	}
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
@@ -320,6 +330,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 							if (delaySym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, subFixtures.size()); }
 							position = timing.curveDelayRepart.getValueAtPosition(position);
 							position = delayRepartCurve->getValueAtPosition(position);
+							if (delayRandom) {
+								Random r;
+								position = r.nextFloat();
+							}
 							delay = jmap(position, delayFrom, delayTo);
 						}
 						if (timingMode == "cue" && callingCuelist != nullptr) {
@@ -349,6 +363,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 								if (fadeSym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, subFixtures.size()); }
 								position = timing.curveFadeRepart.getValueAtPosition(position);
 								position = fadeRepartCurve->getValueAtPosition(position);
+								if (fadeRandom) {
+									Random r;
+									position = r.nextFloat();
+								}
 								fade = jmap(position, fadeFrom, fadeTo);
 							}
 							if (timingMode == "cue" && callingCuelist != nullptr) {
