@@ -296,6 +296,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		if (toApply == nullptr) {
 //			LOG("miaou !");
 //			LOG(offset);
+			isComputing.exit();
 			return currentVal;
 		}
 		std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
