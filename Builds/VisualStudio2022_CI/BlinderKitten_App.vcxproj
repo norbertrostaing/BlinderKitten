@@ -271,6 +271,7 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\InterfaceAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\PresetAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TrackerAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp"/>
@@ -3491,6 +3492,7 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\InterfaceAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\PresetAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TrackerAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h"/>

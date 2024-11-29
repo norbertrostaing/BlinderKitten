@@ -1237,6 +1237,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\PresetAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
@@ -5020,6 +5023,9 @@
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\PresetAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h">
