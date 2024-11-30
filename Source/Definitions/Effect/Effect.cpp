@@ -84,10 +84,12 @@ Effect::~Effect()
 	Brain::getInstance()->effectPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->effectPoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingCollections.exit();
-	for (auto it = chanToFxParam.begin(); it != chanToFxParam.end(); it.next()) {
-		SubFixtureChannel* sfc = it.getKey();
-		sfc->effectOutOfStack(this);
-		Brain::getInstance()->pleaseUpdate(sfc);
+	
+	for (auto sfc : Brain::getInstance()->allSubfixtureChannels) {
+		if (sfc->effectStack.contains(this)) {
+			sfc->effectOutOfStack(this);
+			Brain::getInstance()->pleaseUpdate(sfc);
+		}
 	}
 	for (int i = 0; i < values.items.size(); i++) {
 		values.items[i]->parentEffect = nullptr;
