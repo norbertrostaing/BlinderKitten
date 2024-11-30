@@ -988,15 +988,15 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             carouselActions.add("speed");
         }
         else if (t->bundleAction->getValue() == "size") {
-            if (t->useHTP) { cuelistActions.add("htplevel"); }
-            if (t->useLTP) { cuelistActions.add("ltplevel"); }
-            if (t->useSize) { 
+            if (t->useHTP->boolValue()) { cuelistActions.add("htplevel"); }
+            if (t->useLTP->boolValue()) { cuelistActions.add("ltplevel"); }
+            if (t->useSize->boolValue()) {
                 effectActions.add("size");
                 carouselActions.add("size");
                 mapperActions.add("size");
                 trackerActions.add("size");
             }
-            if (t->useFlash) { cuelistActions.add("flashlevel"); }
+            if (t->useFlash->boolValue()) { cuelistActions.add("flashlevel"); }
         }
 
         for (Cuelist* c : b->computedCuelists) {
