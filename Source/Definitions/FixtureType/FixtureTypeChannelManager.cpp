@@ -24,6 +24,9 @@ void FixtureTypeChannelManager::calcDmxChannels() {
 		if (items[i]->resolution->getValue() == "8bits") {
 			current += 1;
 		}
+		else if (items[i]->resolution->getValue() == "fine") {
+			current += 1;
+		}
 		else if (items[i]->resolution->getValue() == "16bits") {
 			name += " + "+String(current+1);
 			current += 2;

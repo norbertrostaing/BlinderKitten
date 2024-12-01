@@ -45,6 +45,7 @@ public:
     bool snapOnly = false;
     bool invertOutput = false;
     bool reactToGrandMaster = false;
+    int fineChannelDelta = 0;
 
     ChannelFamily* parentParamType = nullptr;
     ChannelType* parentParamDefinition = nullptr;

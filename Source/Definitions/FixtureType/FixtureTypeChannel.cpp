@@ -33,6 +33,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     resolution = addEnumParameter("Resolution", "");
     resolution->addOption("8bits", "8bits");
     resolution->addOption("16bits", "16bits");
+    resolution->addOption("Fine channel only", "fine");
 
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
     defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
