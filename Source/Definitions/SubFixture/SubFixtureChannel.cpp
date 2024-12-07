@@ -241,7 +241,7 @@ void SubFixtureChannel::updateVal(double now) {
 					std::shared_ptr<ChannelValue> cv = c->activeValues.contains(this) ? c->activeValues.getReference(this) : nullptr;
 					if (cv != nullptr && isApplied) {
 						activeCommand = cv->parentCommand;
-						if (cv->isEnded) {
+						if (cv->isEnded && !c->isFlashing) {
 							overWritten = i - 1;
 						}
 					}
