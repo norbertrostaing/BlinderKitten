@@ -727,13 +727,13 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				temp->parentCommand = nullptr;
 				float fadeTime = 0;
 				float delayTime = 0;
-				if (isChaser->getValue()) {
-					fadeTime = chaserFadeOutDuration;
-					temp->fadeCurve = &chaserFadeOutCurve;
-				}
-				else if (c == nullptr) {
+				if (c == nullptr) {
 					fadeTime = (float)offFade->getValue() * 1000;
 					temp->fadeCurve = &offFadeCurve;
+				} 
+				else if (isChaser->getValue()) {
+					fadeTime = chaserFadeOutDuration;
+					temp->fadeCurve = &chaserFadeOutCurve;
 				}
 				else {
 					if (it.getKey()->isHTP) {
