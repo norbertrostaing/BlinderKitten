@@ -315,13 +315,30 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         int sendPitch = pitchOrNumber->intValue();
         sendValue = round(sendValue);
 
+        double now = Time::getMillisecondCounter();
+
         if (midiType->getValueDataAsEnum<MidiType>() == NOTE ) {
             if (needRemap) {
                 sendValue = round(jmap(floatValue, 0., 1., (double)outputRange7b->getValue()[0], (double)outputRange7b->getValue()[1]));
             }
             if (dev->sentNote[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
-                if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
-                dev->sendNoteOn(sendChannel, sendPitch, sendValue);
+                String n = "Note-" + String(sendChannel) + "-" + String(sendPitch);
+                if (inter->TSLastReceived.contains(n) && inter->TSLastReceived.getReference(n) + 100 > now) 
+                {
+                    inter->delayedValue.set(n, sendValue);
+                    Timer::callAfterDelay(150, [this, n, sendChannel, sendPitch, sendValue, dev, logOutput](){
+                        if (inter->delayedValue.getReference(n) == sendValue) {
+                            inter->delayedValue.remove(n);
+                            if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
+                            dev->sendNoteOn(sendChannel, sendPitch, sendValue);
+                        }
+                    });
+                }
+                else 
+                {
+                    if (logOutput) { LOG("send Note On chan " + String(sendChannel) + ", pitch " + String(sendPitch) + ", vel " + String(sendValue)); }
+                    dev->sendNoteOn(sendChannel, sendPitch, sendValue);
+                }
             }
         }
         if (midiType->getValueDataAsEnum<MidiType>() == CONTROLCHANGE) {
@@ -329,8 +346,24 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
                 sendValue = round(jmap(floatValue, 0., 1., (double)outputRange7b->getValue()[0], (double)outputRange7b->getValue()[1]));
             }
             if (dev->sentCC[sendChannel][sendPitch] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
-                if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
-                dev->sendControlChange(sendChannel, sendPitch, sendValue);
+                String n = "CC-" + String(sendChannel) + "-" + String(sendPitch);
+                if (inter->TSLastReceived.contains(n) && inter->TSLastReceived.getReference(n) + 100 > now)
+                {
+                    inter->delayedValue.set(n, sendValue);
+                    Timer::callAfterDelay(150, [this, n, sendChannel, sendPitch, sendValue, dev, logOutput]() {
+                        if (inter->delayedValue.getReference(n) == sendValue) {
+                            inter->delayedValue.remove(n);
+                            if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
+                            dev->sendControlChange(sendChannel, sendPitch, sendValue);
+                        }
+                        });
+
+                }
+                else 
+                {
+                    if (logOutput) { LOG("send CC chan " + String(sendChannel) + ", number " + String(sendPitch) + ", val " + String(sendValue)); }
+                    dev->sendControlChange(sendChannel, sendPitch, sendValue);
+                }
             }
         }
         if (midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL) {
@@ -338,8 +371,24 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
                 sendValue = round(jmap(floatValue, 0., 1., (double)outputRange14b->getValue()[0], (double)outputRange14b->getValue()[1]));
             }
             if (dev->sentPW[sendChannel] != sendValue || lastSentChannel != sendChannel || lastSentValue != sendValue) {
-                if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
-                dev->sendPitchWheel(sendChannel, sendValue);
+                String n = "PW-" + String(sendChannel);
+                if (inter->TSLastReceived.contains(n) && inter->TSLastReceived.getReference(n) + 100 > now)
+                {
+                    inter->delayedValue.set(n, sendValue);
+                    Timer::callAfterDelay(150, [this, n, sendChannel, sendPitch, sendValue, dev, logOutput]() {
+                        if (inter->delayedValue.getReference(n) == sendValue) {
+                            inter->delayedValue.remove(n);
+                            if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
+                            dev->sendPitchWheel(sendChannel, sendValue);
+                        }
+                        });
+
+                }
+                else
+                {
+                    if (logOutput) { LOG("send Pitch Wheel chan " + String(sendChannel) + ", val " + String(sendValue)); }
+                    dev->sendPitchWheel(sendChannel, sendValue);
+                }
             }
         }
         lastSentValue = sendValue;

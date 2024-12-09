@@ -101,6 +101,7 @@ void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const i
     if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) {return;}
     if (logIncomingData->boolValue()) NLOG(niceName, "Note On received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
+    TSLastReceived.set("Note-"+String(channel)+"-"+String(pitch), Time::getApproximateMillisecondCounter());
     bool processed = mappingManager.handleNote(channel, pitch, velocity, niceName);
     if (autoAdd->boolValue() && !processed) {
         MessageManagerLock mmlock;
@@ -117,6 +118,7 @@ void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const 
     if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Note Off received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
+    TSLastReceived.set("Note-" + String(channel) + "-" + String(pitch), Time::getMillisecondCounter());
     bool processed = mappingManager.handleNote(channel, pitch, 0, niceName);
     if (autoAdd->boolValue() && !processed) {
         MessageManagerLock mmlock;
@@ -133,6 +135,7 @@ void MIDIInterface::controlChangeReceived(const int &channel, const int &number,
     if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Control Change received, channel : " << channel << ", number : " << number << ", value : " << value);
+    TSLastReceived.set("CC-" + String(channel) + "-" + String(number), Time::getMillisecondCounter());
     bool processed = mappingManager.handleCC(channel, number, value, niceName);
     if (autoAdd->boolValue() && !processed) {
         MessageManagerLock mmlock;
@@ -149,6 +152,7 @@ void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
     if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
+    TSLastReceived.set("PW-" + String(channel), Time::getMillisecondCounter());
     bool processed = mappingManager.handlePitchWheel(channel, value, niceName);
     if (autoAdd->boolValue() && !processed) {
         MessageManagerLock mmlock;

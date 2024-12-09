@@ -31,6 +31,8 @@ public:
     ControllableContainer dataContainer;
 
     StringParameter* infos;
+    HashMap<String, juce::uint32> TSLastReceived;
+    HashMap<String, int> delayedValue;
 
     void updateDevices();
     void updateBytesParams();
