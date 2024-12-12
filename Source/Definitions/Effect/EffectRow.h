@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "../Command/CommandSelectionManager.h"
 #include "EffectParam.h"
+using namespace siv;
 
 class EffectRow:
     public BaseItem
@@ -39,6 +40,8 @@ class EffectRow:
 
     HashMap<SubFixture*, double> computedPositions;
     CriticalSection isComputing;
+
+    PerlinNoise perlinNoise;
 
     double maxOffset = 0;
 

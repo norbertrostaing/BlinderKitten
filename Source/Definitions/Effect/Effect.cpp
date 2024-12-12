@@ -280,6 +280,8 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		EffectRow* row = p->parentEffectRow;
 		row->checkParentEffect();
 
+		bool isPerlin = row->curvePresetOrValue->getValue().toString() == "perlin";
+
 		double offset = totalElapsed*(double)row->speed->getValue();
 		double deltaOffset = p->subFixtureChannelOffsets.getReference(fc);
 		if (!noLoop->boolValue() || row->direction->getValueData() == "bounce") {
@@ -300,7 +302,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 			offset = 1 - offset;
 		}
 		offset += deltaOffset;
-		if (!noLoop->boolValue()) {
+		if (!noLoop->boolValue() && !isPerlin ) {
 			while (offset < 0) {
 				offset += 1;
 			}
@@ -327,7 +329,18 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 				value = jmap(f, (float)1, (float)0);
 			}
 		}
-		else {
+		else if (mode == "perlin") {
+			value = row->perlinNoise.octaveNoise0_1(offset, 0, 0, 8);
+			value -= (float)row->curveOrigin->getValue();
+			if (p->wingsInvertValues->getValue() && p->subFixtureChannelAreWinged.getReference(fc)) {
+				value = -value;
+			}
+			if (p->wingsSoloCenterDisable->getValue() && p->subFixtureChannelAreCentered.getReference(fc)) {
+				value = 0;
+			}
+		}
+		else
+			{
 			Automation* c = &row->curve;
 			if (mode == "preset") {
 				CurvePreset* pres = Brain::getInstance()->getCurvePresetById(row->presetId->getValue());

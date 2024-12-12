@@ -34,6 +34,7 @@ EffectRow::EffectRow(var params) :
     curvePresetOrValue->addOption("Drawed", "drawed");
     curvePresetOrValue->addOption("Preset", "preset");
     curvePresetOrValue->addOption("Chaser", "chaser");
+    curvePresetOrValue->addOption("Perlin", "perlin");
 
     paramContainer.selectItemWhenCreated = false;
 
@@ -78,6 +79,8 @@ EffectRow::EffectRow(var params) :
 
     }
     */
+    perlinNoise.reseed(juce::Random::getSystemRandom().nextInt() + 1);
+
 
 };
 
