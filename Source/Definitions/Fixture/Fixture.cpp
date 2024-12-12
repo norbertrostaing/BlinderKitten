@@ -374,7 +374,9 @@ Colour Fixture::getLayoutFillColor()
 void Fixture::selectThis(bool addToSelection, bool notify) {
 	BaseItem::selectThis(addToSelection, notify);
 	if (addToSelection) {
-		InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(ShapeShifterManager::getInstance()->getContentForName("Inspector")->contentComponent);
+		auto inspect = ShapeShifterManager::getInstance()->getContentForName("Inspector");
+		if (inspect == nullptr) return;
+		InspectorUI* inspectorUI = dynamic_cast<InspectorUI*>(inspect->contentComponent);
 		// multi fixture edition disabled organic ui update
 		auto currentSel = selectionManager->currentInspectables;
 		Array<Inspectable*> newSel;
