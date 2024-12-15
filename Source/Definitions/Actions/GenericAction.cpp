@@ -61,14 +61,18 @@ void GenericAction::triggerInternal()
 	{
 		if (value == nullptr) return;
 		Parameter* p = static_cast<Parameter*>(target->target.get());
-		p->setValue(value->getValue());
+		MessageManager::callAsync([this, p](){
+			p->setValue(value->getValue());
+		});
 	}
 	break;
 
 	case TRIGGER:
 	{
 		Trigger* t = static_cast<Trigger*>(target->target.get());
-		t->trigger();
+		MessageManager::callAsync([this, t]() {
+			t->trigger();
+		});
 	}
 	break;
 	}
