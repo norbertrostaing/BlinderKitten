@@ -400,6 +400,7 @@ void Encoders::updateEncoders() {
         }
         else if (channels.size() > channelId) {
             labels[i]->setText(String(channels[channelId]->niceName), juce::sendNotification);
+            UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), String(channels[channelId]->niceName), "");
             encoders[i]->setEnabled(true);
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(192, 192, 192));
             encoders[i]->setValue(0, juce::dontSendNotification);
@@ -419,6 +420,7 @@ void Encoders::updateEncoders() {
         }
         else {
             labels[i]->setText("", juce::dontSendNotification);
+            UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), "", "");
             encoders[i]->setEnabled(false);
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
             encoders[i]->setValue(0, juce::dontSendNotification);
