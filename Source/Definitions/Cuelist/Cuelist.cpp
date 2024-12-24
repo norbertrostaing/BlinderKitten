@@ -1190,9 +1190,11 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	}
 
 	float totTime = (cv->TSEnd - cv->TSInit);
-	cv->currentPosition = 0;
 	if (totTime > 0) {
 		cv->currentPosition = (now - cv->TSInit) / (totTime);
+	}
+	else {
+		cv->currentPosition = 1;
 	}
 
 	if (flashValues) {
