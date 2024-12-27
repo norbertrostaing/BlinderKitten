@@ -172,6 +172,9 @@ public:
     double TSTransitionEnd;
     double TSLateCompensation = 0;
 
+    double TSOffFlash = 0;
+    double TSOffFlashEnd = 0;
+
     CommandTiming timing;
     MoveInBlackManager moveInBlack;
     FloatParameter* moveInBlackDelay;

@@ -902,6 +902,8 @@ void Cuelist::goBack(float forcedDelay, float forcedFade)
 void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 	if (!isComputing.tryEnter()) {return; }
 	if (setOn) {
+		TSOffFlash = 0;
+		TSOffFlashEnd = 0;
 		isFlashing = true;
 		if (cueA == nullptr) {
 			if (withTiming) {
@@ -925,6 +927,8 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 	}
 	else {
 		isFlashing = false;
+		TSOffFlash = Time::getMillisecondCounterHiRes();
+		TSOffFlashEnd = TSOffFlash + (offFade->floatValue()*1000.0);
 		if (swop || isSwopping) {
 			isSwopping = false;
 			Brain::getInstance()->unswoppedCuelist(this);
@@ -1155,11 +1159,17 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 
 	faderLevel = (float)HTPLevel->getValue();
 
-	if (isFlashing) {
+	if (TSOffFlashEnd > now) {
+		double flashLvl = jmax(faderLevel, (float)flashLevel->getValue());
+		faderLevel = jmap(now, TSOffFlash, TSOffFlashEnd, flashLvl, (double)faderLevel);
+		keepUpdate = true;
+	}
+	else if (isFlashing) {
 		faderLevel = jmax(faderLevel,(float)flashLevel->getValue());
 	}
 	else {
 	}
+
 
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
