@@ -105,6 +105,7 @@ void Task::onContainerParameterChangedInternal(Parameter* c) {
 	if (c == targetType  || c == cuelistAction || c == effectAction|| c == carouselAction || c == mapperAction || c == trackerAction || c == bundleAction || c == targetThru) {
 		updateDisplay();
 	}
+	autoName();
 }
 
 void Task::updateDisplay() {
@@ -243,10 +244,26 @@ void Task::updateDisplay() {
 void Task::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	BaseItem::onControllableFeedbackUpdateInternal(cc, c);
-
 	if (!enabled->boolValue()) return;
 }
 
+
+void Task::autoName()
+{
+	String name = "";
+	name = targetId->stringValue();
+	if (targetThru->boolValue()) {
+		name += " thru "+targetIdTo->stringValue();
+	}
+	String type = targetType->getValueData();
+	if (type == "action") {name = "Generic action"; }
+	if (type == "cuelist") { name = cuelistAction->getValueKey() + " Cuelist " + name; }
+	if (type == "effect") { name = effectAction->getValueKey() + " Cuelist " + name; }
+	if (type == "carousel") { name = carouselAction->getValueKey() + " Cuelist " + name; }
+	if (type == "mapper") { name = mapperAction->getValueKey() + " Cuelist " + name; }
+	if (type == "tracker") { name = trackerAction->getValueKey() + " Cuelist " + name; }
+	setNiceName(name);
+}
 
 void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, String action, double value, int id)
 {

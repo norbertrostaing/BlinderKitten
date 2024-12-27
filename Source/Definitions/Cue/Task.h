@@ -56,6 +56,8 @@ public:
     String getTypeString() const override { return objectType; }
     static Task* create(var params) { return new Task(params); }
 
+    void autoName();
+
     static void triggerGivenTask(Task* parent, String targetType, int targetId, String action, double targetValue, int id);
 };
 
