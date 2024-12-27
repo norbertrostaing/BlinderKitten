@@ -16,6 +16,7 @@ CommandSelection::CommandSelection(var params) :
     objectType(params.getProperty("type", "CommandSelection").toString()),
     objectData(params)
 {
+
     plusOrMinus = addEnumParameter("Action", "Do you wan to add or remove elements to selection ?");
     plusOrMinus->addOption("+", "add");
     plusOrMinus->addOption("-", "remove");
@@ -147,4 +148,5 @@ void CommandSelection::onContainerParameterChangedInternal(Parameter* p) {
 void CommandSelection::afterLoadJSONDataInternal() {
     updateDisplay();
 }
+
 

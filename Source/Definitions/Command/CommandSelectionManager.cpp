@@ -10,6 +10,12 @@ CommandSelectionManager::CommandSelectionManager() :
 {
     itemDataType = "CommandSelection";
     selectItemWhenCreated = false; 
+
+	getProgButton = addTrigger("Get from prog.", "");
+	setProgButton = addTrigger("Set in prog.", "");
+	getProgButton->hideInEditor = true;
+	setProgButton->hideInEditor = true;
+
 }
 
 CommandSelectionManager::~CommandSelectionManager()
@@ -395,4 +401,49 @@ Array<ChannelType *> CommandSelectionManager::getControllableChannelsTypes() {
 		}
 	}
 	return chans;
+}
+
+InspectableEditor* CommandSelectionManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+{
+	return new CommandSelectionManagerEditor(this, isRoot);
+}
+
+void CommandSelectionManager::triggerTriggered(Trigger* t)
+{
+	if (t == getProgButton) {
+		Command* currentCommand = UserInputManager::getInstance()->targetCommand;
+		if (currentCommand != nullptr) {
+			loadJSONData(currentCommand->selection.getJSONData());
+		}
+	}
+	if (t == setProgButton) {
+		Command* currentCommand = UserInputManager::getInstance()->targetCommand;
+		if (currentCommand != nullptr) {
+			currentCommand->selection.loadJSONData(getJSONData());
+		}
+	}
+}
+
+
+
+
+CommandSelectionManagerEditor::CommandSelectionManagerEditor(CommandSelectionManager* item, bool isRoot) :
+	GenericManagerEditor(item, isRoot),
+	commandSel(item)
+{
+	getProgBT.reset(commandSel->getProgButton->createButtonUI());
+	setProgBT.reset(commandSel->setProgButton->createButtonUI());
+	addAndMakeVisible(getProgBT.get());
+	addAndMakeVisible(setProgBT.get());
+}
+
+CommandSelectionManagerEditor::~CommandSelectionManagerEditor()
+{
+}
+
+void CommandSelectionManagerEditor::resizedInternalHeader(Rectangle<int>& r)
+{
+	GenericManagerEditor::resizedInternalHeader(r);
+	getProgBT->setBounds(r.withTrimmedRight(80).removeFromRight(80).reduced(2));
+	setProgBT->setBounds(r.removeFromRight(80).reduced(2));
 }

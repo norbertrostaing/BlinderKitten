@@ -66,3 +66,4 @@ class CommandSelection:
     void onContainerParameterChangedInternal(Parameter* p);
 
 };
+

@@ -28,4 +28,27 @@ public:
     void computeSelection(Array<int> groupHistory);
     Array<ChannelType *> getControllableChannelsTypes();
 
+    Trigger* getProgButton;
+    Trigger* setProgButton;
+
+    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables);
+
+    void triggerTriggered(Trigger* t) override;
+
 };
+
+
+class CommandSelectionManagerEditor :
+    public GenericManagerEditor<CommandSelection>
+{
+public:
+    CommandSelectionManagerEditor(CommandSelectionManager* item, bool isRoot);
+    ~CommandSelectionManagerEditor();
+
+    CommandSelectionManager* commandSel;
+    std::unique_ptr<TriggerButtonUI> getProgBT;
+    std::unique_ptr<TriggerButtonUI> setProgBT;
+
+    void resizedInternalHeader(Rectangle<int>& r) override;
+};
+
