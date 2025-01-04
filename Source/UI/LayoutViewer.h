@@ -77,6 +77,8 @@ public:
     void mouseDrag(const MouseEvent& e) override;
     void mouseUp(const MouseEvent& e) override;
     void mouseMove(const MouseEvent& e) override;
+
+    void clickTracker(const MouseEvent& e);
     //void modifierKeysChanged(const ModifierKeys& keys) override;
     //bool keyPressed(const KeyPress& key, Component* originatingComponent);
     void changeListenerCallback(ChangeBroadcaster* source) override;

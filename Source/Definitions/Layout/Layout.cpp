@@ -66,6 +66,13 @@ Layout::Layout(var params) :
 	gridSize->setDefaultValue(gs);
 	gridColor = addColorParameter("Grid color", "", Colour(127,127,127));
 	gridSnapSize = addFloatParameter("Grid snap size", "", 0, 0);
+
+	controlTracker = addBoolParameter("controlTracker", "", false);
+	trackerId = addIntParameter("trackerId", "", 0,0);
+	trackerPlane = addEnumParameter("trackerPlane", "");
+	trackerPlane->addOption("XY", "XY")->addOption("XZ", "XZ")->addOption("YZ", "YZ");
+	trackerThirdValue = addFloatParameter("trackerThirdValue", "", 0);
+
 	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 

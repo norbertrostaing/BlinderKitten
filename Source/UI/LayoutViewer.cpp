@@ -250,11 +250,15 @@ void LayoutViewer::mouseDown(const MouseEvent& e)
 			}
 		}
 	}
+	else {
+		clickTracker(e);
+	}
 }
 
 void LayoutViewer::mouseDrag(const MouseEvent& e)
 {
-	if (selectedLayout!= nullptr && currentMousePath != nullptr) {
+	if (selectedLayout == nullptr) {return;}
+	if (currentMousePath != nullptr) {
 		float layoutX = jmap(float(e.getDistanceFromDragStartX() + e.getMouseDownX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
 		float layoutY = jmap(float(e.getDistanceFromDragStartY() + e.getMouseDownY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
 
@@ -373,6 +377,9 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 		}
 
 	}
+	else {
+		clickTracker(e);
+	}
 }
 
 void LayoutViewer::mouseUp(const MouseEvent& e)
@@ -408,6 +415,29 @@ void LayoutViewer::mouseMove(const MouseEvent& e)
 		}
 
 	}
+}
+
+void LayoutViewer::clickTracker(const MouseEvent& e)
+{
+	if (selectedLayout == nullptr) return;
+	if (!selectedLayout->controlTracker->boolValue()) return;
+	Tracker* t = Brain::getInstance()->getTrackerById(selectedLayout->trackerId->intValue());
+	if (t == nullptr) return;
+
+	float layoutX = jmap(float(e.position.getX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
+	float layoutY = jmap(float(e.position.getY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
+	float third = selectedLayout->trackerThirdValue->floatValue();
+	String plane = selectedLayout->trackerPlane->getValue();
+	if (plane == "XY") {
+		t->targetPosition->setVector(layoutX, layoutY, third);
+	}
+	else if (plane == "XZ") {
+		t->targetPosition->setVector(layoutX, third, layoutY);
+	}
+	else if (plane == "YZ") {
+		t->targetPosition->setVector(third, layoutX, layoutY);
+	}
+	
 }
 
 void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)

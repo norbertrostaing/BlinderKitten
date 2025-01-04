@@ -51,6 +51,11 @@ public:
     ColorParameter* gridColor;
     FloatParameter* gridSnapSize;
 
+    BoolParameter* controlTracker;
+    IntParameter* trackerId;
+    EnumParameter* trackerPlane;
+    FloatParameter* trackerThirdValue;
+
     BaseManager<BKPath> paths;
 
     void onContainerParameterChangedInternal(Parameter* p) override;
