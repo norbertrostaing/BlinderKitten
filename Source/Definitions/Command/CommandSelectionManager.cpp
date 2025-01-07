@@ -411,15 +411,19 @@ InspectableEditor* CommandSelectionManager::getEditorInternal(bool isRoot, Array
 void CommandSelectionManager::triggerTriggered(Trigger* t)
 {
 	if (t == getProgButton) {
-		Command* currentCommand = UserInputManager::getInstance()->targetCommand;
+		UserInputManager::getInstance()->getProgrammer(true)->checkCurrentUserCommand();
+		Command* currentCommand = UserInputManager::getInstance()->getProgrammer(true)->currentUserCommand;
 		if (currentCommand != nullptr) {
 			loadJSONData(currentCommand->selection.getJSONData());
+			UserInputManager::getInstance()->commandSelectionChanged(currentCommand);
 		}
 	}
 	if (t == setProgButton) {
+		UserInputManager::getInstance()->getProgrammer(true)->checkCurrentUserCommand();
 		Command* currentCommand = UserInputManager::getInstance()->targetCommand;
 		if (currentCommand != nullptr) {
 			currentCommand->selection.loadJSONData(getJSONData());
+			UserInputManager::getInstance()->commandSelectionChanged(currentCommand);
 		}
 	}
 }
