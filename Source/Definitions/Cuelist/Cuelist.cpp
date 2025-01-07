@@ -1623,14 +1623,17 @@ void Cuelist::autoCreateChaser()
 	Cue* cue = nullptr;
 	kill();
 	cues.clear();
+	Array<Cue*> toAdd;
 	CommandSelectionManager* csm = nullptr;
 	for (int i = 0; i < maxSize; i++) {
 		if (currentBuddy == nBuddy) {
-			cue = cues.addItem();
+			cue = new Cue();
+			toAdd.add(cue);
 			cue->commands.items[0]->values.loadJSONData(chaseGenValue.getJSONData());
 			cue->setNiceName("empty");
+			cue->editorIsCollapsed = true;
 			cue->id->setValue(i+1);
-			csm = & cue->commands.items[0]->selection;
+			csm = &cue->commands.items[0]->selection;
 			csm->clear();
 			currentBuddy = 0;
 		}
@@ -1656,6 +1659,7 @@ void Cuelist::autoCreateChaser()
 			}
 		}
 	}
+	cues.addItems(toAdd, var(), false);
 	blocks.clear();
 }
 
