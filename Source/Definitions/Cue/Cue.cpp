@@ -332,7 +332,7 @@ void Cue::loadContent(Programmer* p)
 				com->loadJSONData(commands.items[i]->getJSONData());
 				}
 
-			p->selectNextCommand();
+			p->checkCurrentUserCommand();
 			UserInputManager::getInstance()->programmerCommandStructureChanged(p);
 			LOG("Cue content loaded in programmer");
 			}
