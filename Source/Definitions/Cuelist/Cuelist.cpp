@@ -1711,6 +1711,24 @@ void Cuelist::selectAsMainConductor()
 	e->conductorCuelistId->setValue(id->intValue());
 }
 
+void Cuelist::mergeWithProgrammer(Programmer* p)
+{
+	Cue* targetCue = nullptr;
+	if (cueA != nullptr) targetCue = cueA;
+	else if (cues.items.size() > 0) targetCue = cues.items[0];
+
+	if (targetCue != nullptr) targetCue->mergeContent(p);
+}
+
+void Cuelist::replaceWithProgrammer(Programmer* p)
+{
+	Cue* targetCue = nullptr;
+	if (cueA != nullptr) targetCue = cueA;
+	else if (cues.items.size() > 0) targetCue = cues.items[0];
+
+	if (targetCue != nullptr) targetCue->replaceContent(p);
+}
+
 void Cuelist::tapTempo() {
 	double now = Time::getMillisecondCounterHiRes();
 	double delta = now - lastTapTempo;

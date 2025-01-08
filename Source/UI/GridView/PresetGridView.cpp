@@ -13,6 +13,7 @@
 #include "Brain.h"
 #include "Definitions/Preset/Preset.h"
 #include "Definitions/Preset/PresetManager.h"
+#include "DataTransferManager/DataTransferManager.h"
 
 //==============================================================================
 PresetGridViewUI::PresetGridViewUI(const String& contentName):

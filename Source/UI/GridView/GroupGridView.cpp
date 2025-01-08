@@ -13,6 +13,7 @@
 #include "Brain.h"
 #include "Definitions/Group/Group.h"
 #include "Definitions/Group/GroupManager.h"
+#include "DataTransferManager/DataTransferManager.h"
 
 //==============================================================================
 GroupGridViewUI::GroupGridViewUI(const String& contentName):

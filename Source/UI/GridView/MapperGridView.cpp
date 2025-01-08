@@ -13,6 +13,7 @@
 #include "Brain.h"
 #include "Definitions/Mapper/Mapper.h"
 #include "Definitions/Mapper/MapperManager.h"
+#include "DataTransferManager/DataTransferManager.h"
 
 //==============================================================================
 MapperGridViewUI::MapperGridViewUI(const String& contentName):
@@ -80,12 +81,15 @@ void MapperGridView::updateButtons()
 void MapperGridView::showContextMenu(int id)
 {
     Mapper* target = Brain::getInstance()->getMapperById(id);
+    PopupMenu p;
     if (target != nullptr) {
-        PopupMenu p;
         p.addItem("Start", [target]() {target->start(); });
         p.addItem("Stop", [target]() {target->stop(); });
-        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
+    else {
+        p.addItem("Add", [id]() {DataTransferManager::getInstance()->editObject("mapper", id); });
+    }
+    p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
 
 }
 

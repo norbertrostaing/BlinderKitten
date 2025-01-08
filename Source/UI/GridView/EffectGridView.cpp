@@ -13,6 +13,7 @@
 #include "Brain.h"
 #include "Definitions/Effect/Effect.h"
 #include "Definitions/Effect/EffectManager.h"
+#include "DataTransferManager/DataTransferManager.h"
 
 //==============================================================================
 EffectGridViewUI::EffectGridViewUI(const String& contentName):
@@ -81,12 +82,15 @@ void EffectGridView::updateButtons()
 void EffectGridView::showContextMenu(int id)
 {
     Effect* target = Brain::getInstance()->getEffectById(id);
+    PopupMenu p;
     if (target != nullptr) {
-        PopupMenu p;
         p.addItem("Start", [target]() {target->start(); });
         p.addItem("Stop", [target]() {target->stop(); });
-        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
+    else {
+        p.addItem("Add", [id]() {DataTransferManager::getInstance()->editObject("effect", id); });
+    }
+    p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
 }
 
 void EffectGridView::newMessage(const EffectManager::ManagerEvent& e)

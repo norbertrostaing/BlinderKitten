@@ -252,6 +252,9 @@ public:
     void forceCueId(Cue*c, float id);
     void selectAsMainConductor();
 
+    void mergeWithProgrammer(Programmer* p);
+    void replaceWithProgrammer(Programmer* p);
+
     static Cuelist* create(var params) { return new Cuelist(params); }
 
 };

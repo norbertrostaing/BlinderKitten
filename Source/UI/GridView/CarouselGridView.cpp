@@ -13,6 +13,7 @@
 #include "Brain.h"
 #include "Definitions/Carousel/Carousel.h"
 #include "Definitions/Carousel/CarouselManager.h"
+#include "DataTransferManager/DataTransferManager.h"
 
 //==============================================================================
 CarouselGridViewUI::CarouselGridViewUI(const String& contentName):
@@ -82,12 +83,15 @@ void CarouselGridView::updateButtons()
 void CarouselGridView::showContextMenu(int id)
 {
     Carousel* target = Brain::getInstance()->getCarouselById(id);
+    PopupMenu p;
     if (target != nullptr) {
-        PopupMenu p;
         p.addItem("Start", [target]() {target->start(); });
         p.addItem("Stop", [target]() {target->stop(); });
-        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
     }
+    else {
+        p.addItem("Add", [id]() {DataTransferManager::getInstance()->editObject("carousel", id); });
+    }
+    p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
 }
 
 void CarouselGridView::newMessage(const CarouselManager::ManagerEvent& e)
