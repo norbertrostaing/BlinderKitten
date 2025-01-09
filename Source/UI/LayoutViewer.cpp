@@ -72,7 +72,7 @@ void LayoutViewer::rebuildLayoutsList()
 
 void LayoutViewer::newMessage(const LayoutManager::ManagerEvent& e)
 {
-	if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED || e.type == LayoutManager::ManagerEvent::ITEM_REMOVED) {
+	if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED) {
 		selectedLayout = nullptr;
 	}
 	rebuildLayoutsList();
@@ -1033,6 +1033,7 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 {
 	if (selectedLayout == nullptr) return;
 	bool fillBox = selectedLayout->viewOutput->boolValue();
+	Colour forcedFillColor = path->fillColor->getColor();
 
 	FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
 	if (ft != nullptr && ft->useLayoutIcon) {
@@ -1081,7 +1082,6 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 		if (fillBox) {
 			//g.saveState();
 
-			Colour forcedFillColor = path->fillColor->getColor();
 
 			float sfCount = f->subFixtures.size();
 			if (sfCount > 0) {
@@ -1095,12 +1095,12 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 				//g.reduceClipRegion(path->fixtImageContent.getReference(f), path->fixtTransform.getReference(f));
 				for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
 					Colour fill = it.getValue()->getOutputColor();
-					if (path->overrideFillColor->boolValue()) {
-						float red = fill.getFloatRed() * forcedFillColor.getFloatRed();
-						float green = fill.getFloatGreen() * forcedFillColor.getFloatGreen();
-						float blue = fill.getFloatBlue() * forcedFillColor.getFloatBlue();
-						fill = Colour(red,green,blue, 1.0f,1.0f);
-					}
+					Colour mult = f->getLayoutFillColor();
+					if (path->overrideFillColor->boolValue()) mult = forcedFillColor;
+					float red = fill.getFloatRed() * mult.getFloatRed();
+					float green = fill.getFloatGreen() * mult.getFloatGreen();
+					float blue = fill.getFloatBlue() * mult.getFloatBlue();
+					fill = Colour(red,green,blue, 1.0f,1.0f);
 					tempGraphics.setColour(fill);
 					tempGraphics.fillRect(0.0 + (i * wSub), 0.0, wSub, imgH);
 					i++;
@@ -1122,6 +1122,12 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 			float wSub = w / sfCount;
 			for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
 				Colour fill = it.getValue()->getOutputColor();
+				Colour mult = f->getLayoutFillColor();
+				if (path->overrideFillColor->boolValue()) mult = forcedFillColor;
+				float red = fill.getFloatRed() * mult.getFloatRed();
+				float green = fill.getFloatGreen() * mult.getFloatGreen();
+				float blue = fill.getFloatBlue() * mult.getFloatBlue();
+				fill = Colour(red, green, blue, 1.0f, 1.0f);
 				g.setColour(fill);
 				g.fillRect(x + (i * wSub), y, wSub, h);
 				i++;

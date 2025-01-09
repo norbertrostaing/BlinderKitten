@@ -359,7 +359,7 @@ Colour Fixture::getLayoutStrokeColor()
 Colour Fixture::getLayoutFillColor()
 {
 	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
-	if (useCustomLayoutFillColor) {
+	if (useCustomLayoutFillColor->boolValue()) {
 		return layoutFillColor->getColor();
 	}
 	else if (ft != nullptr) {
