@@ -127,12 +127,16 @@ void Mapper::stop() {
 	isOn = false;
 	isMapperOn->setValue(false);
 	isComputing.enter();
+	Array<SubFixtureChannel*> toRemove;
 	for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 		if (it.getKey() != nullptr) {
-			it.getKey()->mapperOutOfStack(this);
+			toRemove.add(it.getKey());
 		}
 	}
 	isComputing.exit();
+	for (SubFixtureChannel* sfc : toRemove) {
+		sfc->mapperOutOfStack(this);
+	}
 }
 
 void Mapper::update(double now) {
