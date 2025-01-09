@@ -89,7 +89,7 @@ void VirtualFaderColManager::setAboveButtonValue(int page, int col, int row, flo
     }
     usingLibraries.exit();
     if (vb != nullptr) {
-        if (value > 0) {
+        if (value == 1 ) {
             vb->pressed();
         }
         else {
@@ -111,7 +111,7 @@ void VirtualFaderColManager::setBelowButtonValue(int page, int col, int row, flo
     }
     usingLibraries.exit();
     if (vb != nullptr) {
-        if (value > 0) {
+        if (value == 1) {
             vb->pressed();
         }
         else {
