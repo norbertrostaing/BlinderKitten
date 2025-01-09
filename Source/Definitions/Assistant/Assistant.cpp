@@ -632,12 +632,15 @@ void Assistant::createSoloPalette()
     Brain::getInstance()->usingCollections.enter();
     int id = 1;
     bool nextIsNewLine = false;
+    Array<Cue*> cuesToAdd;
+
     for (auto it = Brain::getInstance()->cuelists.begin(); it != Brain::getInstance()->cuelists.end(); it.next()) {
         Cuelist* target = it.getValue();
         if (target->soloPool->intValue() == poolId) {
             const MessageManagerLock mmLock;
             String name = target->userName->stringValue();
-            Cue* c = cl->cues.addItem();
+            Cue* c = new Cue();
+            cuesToAdd.add(c);
             c->commands.clear();
             c->editorIsCollapsed = true;
             c->setNiceName(name);
@@ -649,6 +652,10 @@ void Assistant::createSoloPalette()
             t->targetType->setValueWithData("cuelist");
             t->targetId->setValue(target->id->intValue());
             t->cuelistAction->setValueWithData("go");
+            Task* t2 = c->tasksOffCue.addItem();
+            t2->targetType->setValueWithData("cuelist");
+            t2->targetId->setValue(target->id->intValue());
+            t2->cuelistAction->setValueWithData("off");
         }
     }
 
@@ -658,7 +665,8 @@ void Assistant::createSoloPalette()
         if (target->soloPool->intValue() == poolId) {
             const MessageManagerLock mmLock;
             String name = target->userName->stringValue();
-            Cue* c = cl->cues.addItem();
+            Cue* c = new Cue();
+            cuesToAdd.add(c);
             c->commands.clear();
             c->editorIsCollapsed = true;
             c->setNiceName(name);
@@ -670,6 +678,10 @@ void Assistant::createSoloPalette()
             t->targetType->setValueWithData("effect");
             t->targetId->setValue(target->id->intValue());
             t->effectAction->setValueWithData("start");
+            Task* t2 = c->tasksOffCue.addItem();
+            t2->targetType->setValueWithData("effect");
+            t2->targetId->setValue(target->id->intValue());
+            t2->effectAction->setValueWithData("stop");
         }
     }
 
@@ -679,7 +691,8 @@ void Assistant::createSoloPalette()
         if (target->soloPool->intValue() == poolId) {
             const MessageManagerLock mmLock;
             String name = target->userName->stringValue();
-            Cue* c = cl->cues.addItem();
+            Cue* c = new Cue();
+            cuesToAdd.add(c);
             c->commands.clear();
             c->editorIsCollapsed = true;
             c->setNiceName(name);
@@ -691,8 +704,14 @@ void Assistant::createSoloPalette()
             t->targetType->setValueWithData("carousel");
             t->targetId->setValue(target->id->intValue());
             t->carouselAction->setValueWithData("start");
+            Task* t2 = c->tasksOffCue.addItem();
+            t2->targetType->setValueWithData("carousel");
+            t2->targetId->setValue(target->id->intValue());
+            t2->carouselAction->setValueWithData("stop");
         }
     }
+
+    cl->cues.addItems(cuesToAdd);
 
     Brain::getInstance()->usingCollections.exit();
 
