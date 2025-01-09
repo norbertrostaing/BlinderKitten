@@ -675,9 +675,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				if (it.getKey()->isHTP && !temp->htpOverride) {
 					if (current != nullptr) {
 						double fader = HTPLevel->getValue();
-						double currentFade = jmap(now, (double)current->TSStart, (double)current->TSEnd,0.0,1.0);
-						currentFade = jlimit(0.0,1.0,currentFade);
-						temp->startValue = jmap(currentFade, 0.0,1.0, (double)current->startValue, (double)current->endValue)*fader;
+						double currentTiming = jmap(now, (double)current->TSStart, (double)current->TSEnd,0.0,1.0);
+						currentTiming = jlimit(0.0,1.0,currentTiming);
+						temp->startValue = jmap(currentTiming, 0.0,1.0, (double)current->startValue, (double)current->endValue)*fader;
 					}
 					else {
 						temp->startValue = 0;
