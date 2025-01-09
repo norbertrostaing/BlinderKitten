@@ -177,6 +177,9 @@ void DataTransferManager::execute() {
                 target->subFixtureValues.clear();
             }
 
+            ScopedLock lock(source->computing);
+            source->computeValues();
+
             if (presetCopyMode->getValue() == "replace") {
                 target->subFixtureValues.clear(); // erase data
             }
@@ -188,8 +191,6 @@ void DataTransferManager::execute() {
                 filters.addArray(Encoders::getInstance()->selectedFilters);
             }
 
-            ScopedLock lock(source->computing);
-            source->computeValues();
             for (auto it = source->computedValues.begin(); it != source->computedValues.end(); it.next()) {
                 // HashMap<SubFixtureChannel*, ChannelValue*> computedValues;
                 SubFixtureChannel* chan = it.getKey();
