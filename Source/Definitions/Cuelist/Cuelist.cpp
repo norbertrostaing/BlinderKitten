@@ -1263,16 +1263,17 @@ void Cuelist::insertProgCueAfter(Cue* c)
 
 void Cuelist::insertProgCueAtIndex(int index)
 {
-	const MessageManagerLock mmlock;
+	//const MessageManagerLock mmlock;
 	Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
 	if (p != nullptr) {
 		Cue * cue = cues.addItem();
-		cues.setItemIndex(cue, index);
+		cues.setItemIndex(cue, index);	
 		cue->commands.clear();
 		for (int i = 0; i < p->commands.items.size(); i++) {
 			Command* com = cue->commands.addItem();
 			com->loadJSONData(p->commands.items[i]->getJSONData());
 		}
+		go(cue);
 	}
 
 }

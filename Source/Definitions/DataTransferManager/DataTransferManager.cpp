@@ -273,9 +273,9 @@ void DataTransferManager::execute() {
                 c->loadJSONData(source->commands.items[i]->getJSONData());
             }
             target->selectThis();
-            if (target->cueA == targetCue) {
+            //if (target->cueA == targetCue) {
                 target->go(targetCue,0,0);
-            }
+            //}
 
             dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(targetCue, BKEngine::SET);
 
