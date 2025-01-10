@@ -430,6 +430,7 @@ void BKEngine::clearInternal()
 	EffectManager::getInstance()->clear();
 	CarouselManager::getInstance()->clear();
 	EncodersMult::getInstance()->clear();
+	EncodersMult::getInstance()->targetCommandManager = nullptr;
 	ProgrammerManager::getInstance()->clear();
 	CuelistManager::getInstance()->clear();
 	CommandManager::getInstance()->clear();
