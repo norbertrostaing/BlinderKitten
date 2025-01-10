@@ -55,6 +55,8 @@ public:
     void toggleHightlight();
     void toggleBlind();
 
+    void goMainCuelist();
+
     String toUserText(String s);
     Programmer* getProgrammer(bool createIfNotThere);
 

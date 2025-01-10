@@ -57,6 +57,7 @@ namespace BlinderKittenCommandId
 
 	static const int keyHighlight = 0x60320;
 	static const int keyBlind = 0x60321;
+	static const int keyGo = 0x60322;
 
 	static const int key1 = 0x60401;
 	static const int key2 = 0x60402;
@@ -269,6 +270,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::createFromDescription("b").getKeyCode(), ModifierKeys::noModifiers);
 		break;
 
+	case BlinderKittenCommandId::keyGo:
+		result.setInfo("Go main cuelist", "", "Direct Commands", 0);
+		result.addDefaultKeypress(KeyPress::createFromDescription(" ").getKeyCode(), ModifierKeys::noModifiers);
+		break;
+
 
 
 
@@ -393,6 +399,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 
 		BlinderKittenCommandId::keyHighlight,
 		BlinderKittenCommandId::keyBlind,
+		BlinderKittenCommandId::keyGo,
 
 		BlinderKittenCommandId::key1,
 		BlinderKittenCommandId::key2,
@@ -547,7 +554,8 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::keyMapper: {	UserInputManager::getInstance()->processInput("Mapper"); }break;
 
 	case BlinderKittenCommandId::keyHighlight: {UserInputManager::getInstance()->toggleHightlight(); }break;
-	case BlinderKittenCommandId::keyBlind: {	UserInputManager::getInstance()->toggleBlind(); }break;
+	case BlinderKittenCommandId::keyBlind: { UserInputManager::getInstance()->toggleBlind(); }break;
+	case BlinderKittenCommandId::keyGo: { UserInputManager::getInstance()->goMainCuelist(); }break;
 
 	case BlinderKittenCommandId::keyClear: {	UserInputManager::getInstance()->processInput("Clear"); }break;
 	case BlinderKittenCommandId::keyBackspace: {UserInputManager::getInstance()->processInput("Backspace"); }break;

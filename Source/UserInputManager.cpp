@@ -639,6 +639,15 @@ void UserInputManager::toggleBlind()
 	}
 }
 
+void UserInputManager::goMainCuelist()
+{
+	BKEngine* engine = (BKEngine*) Engine::mainEngine;
+	int targetCueId = engine->conductorCuelistId->intValue();
+	Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+	if (target == nullptr) return;
+	target->go();
+}
+
 String UserInputManager::toUserText(String s) {
 	if (s.containsOnly("1234567890.")) {return s;}
 	if (s == "group") { return "Group"; }
