@@ -50,4 +50,8 @@
       </dict>
     </array>
   </dict>
+  <dict>
+    <key>NSAppSleepDisabled</key>
+    <true/>
+  </dict>
 </plist>
