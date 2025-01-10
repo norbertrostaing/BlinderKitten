@@ -72,7 +72,7 @@ void EncodersMultCmd::commandContentChanged()
                     encoders.add(f);
                     f->orientation = FloatSliderUI::VERTICAL;
                     f->customLabel = ct->niceName;
-                    f->showValue = false;
+                    f->showValue = true;
                     f->useCustomFGColor = true;
                     f->customFGColor = Colour(168,127,16);
                     addAndMakeVisible(f);
@@ -81,7 +81,7 @@ void EncodersMultCmd::commandContentChanged()
                         encoders.add(fThru);
                         fThru->orientation = FloatSliderUI::VERTICAL;
                         fThru->customLabel = ct->niceName+" thru";
-                        fThru->showValue = false;
+                        fThru->showValue = true;
                         fThru->useCustomFGColor = true;
                         fThru->customFGColor = Colour(168, 127, 16);
                         addAndMakeVisible(fThru);
@@ -112,7 +112,7 @@ void EncodersMultCmd::resized()
 void EncodersMultCmd::calcSize()
 {
     int w = 50;
-    int h = 100;
+    int h = 150;
     int limitX = encodersMulView->viewport.getWidth();
     if (limitX == 0) {limitX = 300;} // to prevent bug at reload
     int maxX = 0;
