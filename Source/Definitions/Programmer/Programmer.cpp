@@ -28,6 +28,7 @@ il faudrait que le formulaire soit pré rempli genre
 #include "ProgrammerManager.h"
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
+#include "UI/EncodersMult/EncodersMult.h"
 
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
@@ -133,6 +134,13 @@ Programmer::~Programmer()
 		UserInputManager::getInstance()->targetCommand = nullptr;
 		UserInputManager::getInstance()->currentProgrammer = nullptr;
 	}
+
+	if (EncodersMult::getInstanceWithoutCreating() != nullptr) {
+		if (EncodersMult::getInstance()->targetCommandManager == &commands) {
+			EncodersMult::getInstance()->targetCommandManager = nullptr;
+		}
+	}
+
 
 	isDeleted = true;
 	clearAll();
