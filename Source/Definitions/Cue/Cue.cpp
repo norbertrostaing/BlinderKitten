@@ -243,6 +243,7 @@ void Cue::go(float forcedDelay, float forcedFade)
 			float mult = parentCuelist->speedMult.getValue();
 			delay *= mult;
 		}
+		if (delay == 0) {delay = 0.05;}
 		TSAutoFollowEnd = now + (delay * 1000);
 		Brain::getInstance()->pleaseUpdate(this);
 	}
