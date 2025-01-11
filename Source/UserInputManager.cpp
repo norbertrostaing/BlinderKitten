@@ -407,8 +407,17 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 		}
 	}
 
+	else if (firstWord == "virtbuttonsgrid" && aList.size() > 1) {
+		if (aList[1] == "pageplus") VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page + 1);
+		else if (aList[1] == "pageminus") VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page - 1);
+	}
 
-	/*
+	else if (firstWord == "virtfadersgrid" && aList.size() > 1) {
+		if (aList[1] == "pageplus") VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page + 1);
+		else if (aList[1] == "pageminus") VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page - 1);
+		}
+
+		/*
 	if (aList[1] == "model")
 	{
 		String modelName = OSCHelpers::getStringArg(m[0]);
