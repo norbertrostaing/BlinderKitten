@@ -36,6 +36,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 	computedSelectedSubFixtures.clear();
 	computedSelectedFixtures.clear();
 	subFixtureToPosition.clear();
+	subFixtureToPositionNoGap.clear();
 	Brain* b = Brain::getInstance();
 	Array<CommandSelection*> selections = getItemsWithType<CommandSelection>();
 	for (int selId = 0; selId < selections.size(); selId++) {
@@ -323,12 +324,15 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 							currentNextOffset = max;
 						}
 					}
+					float maxNoGap = max;
 					max += maxGap;
 					for (int i = 0; i < tempSelection.size(); i++) {
 						if (sfToPos->contains(tempSelection[i])) {
 							float v = sfToPos->getReference(tempSelection[i]);
-							v = jmap(v, min, max, 0.f, 1.f);
-							subFixtureToPosition.set(tempSelection[i], v);
+							float vWithGap = jmap(v, min, max, 0.f, 1.f);
+							subFixtureToPosition.set(tempSelection[i], vWithGap);
+							float vNoGap = jmap(v, min, maxNoGap, 0.f, 1.f);
+							subFixtureToPositionNoGap.set(tempSelection[i], vNoGap);
 						}
 					}
 				}

@@ -112,10 +112,13 @@ void EffectRow::computeData() {
 
     maxOffset = 0;
 
+    float minPosition = 1;
+    float maxPosition = 0;
+
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
-        //double deltaPos = 0;
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
+
     for (int i = 0; i < paramContainer.items.size(); i++) {
         EffectParam* p = paramContainer.items[i];
         if (p->enabled->boolValue()) {
@@ -165,8 +168,14 @@ void EffectRow::computeData() {
                     if (selection.subFixtureToPosition.contains(chans[chanIndex]->parentSubFixture)) {
                         isWinged = false;
                         isCentered = false;
-                        offset = selection.subFixtureToPosition.getReference(chans[chanIndex]->parentSubFixture);
+                        if (nWings > 1 && selection.subFixtureToPositionNoGap.contains(chans[chanIndex]->parentSubFixture)) {
+                            offset = selection.subFixtureToPositionNoGap.getReference(chans[chanIndex]->parentSubFixture);
+                        }
+                        else {
+                            offset = selection.subFixtureToPosition.getReference(chans[chanIndex]->parentSubFixture);
+                        }
                         if (offset == 1) {offset = 0.999999999;}
+
                         offset *= nBlocks;
                         offset = fmod(offset,1.0f);
                         offset *= nWings;

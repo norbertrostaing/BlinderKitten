@@ -24,6 +24,7 @@ public:
     Array<SubFixture*> computedSelectedSubFixtures;
     Array<Fixture*> computedSelectedFixtures;
     HashMap<SubFixture*, float> subFixtureToPosition;
+    HashMap<SubFixture*, float> subFixtureToPositionNoGap;
     void computeSelection();
     void computeSelection(Array<int> groupHistory);
     Array<ChannelType *> getControllableChannelsTypes();
