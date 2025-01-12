@@ -222,7 +222,7 @@ void Effect::update(double now) {
 		if (TSEndFadeOut > 0 && TSEndFadeOut < now) {
 			kill();
 		}
-		if (noLoop->boolValue() && totalElapsed > maxOffset) {
+		if (noLoop->boolValue() && totalElapsed > maxOffset && TSEndFadeOut == 0) {
 			stop();
 		}
 	}
