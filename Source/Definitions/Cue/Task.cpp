@@ -250,18 +250,18 @@ void Task::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 
 void Task::autoName()
 {
+	String type = targetType->getValueData();
+	if (type == "action") return;
 	String name = "";
 	name = targetId->stringValue();
 	if (targetThru->boolValue()) {
 		name += " thru "+targetIdTo->stringValue();
 	}
-	String type = targetType->getValueData();
-	if (type == "action") {name = "Generic action"; }
-	if (type == "cuelist") { name = cuelistAction->getValueKey() + " Cuelist " + name; }
-	if (type == "effect") { name = effectAction->getValueKey() + " Cuelist " + name; }
-	if (type == "carousel") { name = carouselAction->getValueKey() + " Cuelist " + name; }
-	if (type == "mapper") { name = mapperAction->getValueKey() + " Cuelist " + name; }
-	if (type == "tracker") { name = trackerAction->getValueKey() + " Cuelist " + name; }
+	if (type == "cuelist") { name = cuelistAction->getValueKey() + " cuelist " + name; }
+	if (type == "effect") { name = effectAction->getValueKey() + " effect " + name; }
+	if (type == "carousel") { name = carouselAction->getValueKey() + " carousel " + name; }
+	if (type == "mapper") { name = mapperAction->getValueKey() + " mapper " + name; }
+	if (type == "tracker") { name = trackerAction->getValueKey() + " tracker " + name; }
 	setNiceName(name);
 }
 
