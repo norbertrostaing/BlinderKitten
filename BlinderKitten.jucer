@@ -486,6 +486,10 @@
                 file="Source/Definitions/Fixture/FixtureManagerUI.cpp"/>
           <FILE id="Aiz7Hr" name="FixtureManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Fixture/FixtureManagerUI.h"/>
+          <FILE id="geEsIu" name="FixtureMapping.cpp" compile="1" resource="0"
+                file="Source/Definitions/Fixture/FixtureMapping.cpp"/>
+          <FILE id="kD4zSA" name="FixtureMapping.h" compile="0" resource="0"
+                file="Source/Definitions/Fixture/FixtureMapping.h"/>
           <FILE id="v3RU8H" name="FixtureMultiEditor.cpp" compile="1" resource="0"
                 file="Source/Definitions/Fixture/FixtureMultiEditor.cpp"/>
           <FILE id="wKPZ6t" name="FixtureMultiEditor.h" compile="0" resource="0"

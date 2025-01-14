@@ -59,6 +59,8 @@ Fixture::Fixture(var params) :
 	// to add a manager with defined data
 	patchs.selectItemWhenCreated = false;
 	addChildControllableContainer(&patchs);
+	mappings.selectItemWhenCreated = false;
+	addChildControllableContainer(&mappings);
 
 	//Logger::writeToLog("call from constructor");
 	Brain::getInstance()->registerFixture(this, id->getValue());
@@ -392,6 +394,13 @@ void Fixture::autoName() {
 	FixtureType* ft = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
 	if (ft!=nullptr) {
 		userName->setValue(ft->niceName);
+	}
+}
+
+void Fixture::channelValueChanged(int subId, ChannelType* type, double val)
+{
+	for (FixtureMapping* m : mappings.items) {
+		m->process(subId, type, val);
 	}
 }
 

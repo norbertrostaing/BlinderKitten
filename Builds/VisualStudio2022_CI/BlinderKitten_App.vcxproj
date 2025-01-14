@@ -318,6 +318,7 @@
     <ClCompile Include="..\..\Source\Definitions\Fixture\Fixture.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureMapping.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureMultiEditor.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixturePatch.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixturePatchCorrection.cpp"/>
@@ -3539,6 +3540,7 @@
     <ClInclude Include="..\..\Source\Definitions\Fixture\Fixture.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureMapping.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureMultiEditor.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixturePatch.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixturePatchCorrection.h"/>

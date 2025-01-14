@@ -95,6 +95,7 @@
 		6E1C654FA6D9B3DD9E4ABFF5 /* MainComponentCommands.cpp */ = {isa = PBXBuildFile; fileRef = 895575A86AEAD001F77EE12B; };
 		6F79BE3F94B03AA855A176F3 /* list_ports_linux.cc */ = {isa = PBXBuildFile; fileRef = BDD2B5577988CD1CF0AEE831; };
 		702FC97CEC79C9BCC0F380C1 /* FixtureTypeChannelManager.cpp */ = {isa = PBXBuildFile; fileRef = B8CEFDA69D0DC456DBC25FED; };
+		70BF3135D97CBE86B904DC50 /* FixtureMapping.cpp */ = {isa = PBXBuildFile; fileRef = 79112F4B6F6E2D7B6538C263; };
 		72A36ECFF806C88045F2704E /* MapperGridView.cpp */ = {isa = PBXBuildFile; fileRef = 7157545FC52CE7114A90AF0B; };
 		73D158F699FEF8F0DA6C6E92 /* VirtualFaderCol.cpp */ = {isa = PBXBuildFile; fileRef = 00BBE1E1036E9CCD36A3CB65; };
 		766F1A35A6C6A03CB837EB11 /* Main.cpp */ = {isa = PBXBuildFile; fileRef = 0485A53B7923969BE8E62C07; };
@@ -416,6 +417,7 @@
 		76452AA35AD3EBE3FCFC39DA /* MultiplicatorManagerUI.h */ /* MultiplicatorManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplicatorManagerUI.h; path = ../../Source/Definitions/Multiplicator/MultiplicatorManagerUI.h; sourceTree = SOURCE_ROOT; };
 		766A02F38CEC09F483081604 /* CommandValue.h */ /* CommandValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandValue.h; path = ../../Source/Definitions/Command/CommandValue.h; sourceTree = SOURCE_ROOT; };
 		7674AD828A933EF8047D8211 /* MultiplicatorLink.cpp */ /* MultiplicatorLink.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplicatorLink.cpp; path = ../../Source/Definitions/Multiplicator/MultiplicatorLink.cpp; sourceTree = SOURCE_ROOT; };
+		79112F4B6F6E2D7B6538C263 /* FixtureMapping.cpp */ /* FixtureMapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureMapping.cpp; path = ../../Source/Definitions/Fixture/FixtureMapping.cpp; sourceTree = SOURCE_ROOT; };
 		7937232407EF2E3EBD18E0AC /* MapperManagerUI.cpp */ /* MapperManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperManagerUI.cpp; path = ../../Source/Definitions/Mapper/MapperManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		79CADB7855F5E45E7C3F3562 /* OSCMappingManager.cpp */ /* OSCMappingManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSCMappingManager.cpp; path = ../../Source/Definitions/Interface/interfaces/osc/OSCMappingManager.cpp; sourceTree = SOURCE_ROOT; };
 		7A77445F4CFCE2026BA5C4E5 /* icon.png */ /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Ressources/icon.png; sourceTree = SOURCE_ROOT; };
@@ -548,6 +550,7 @@
 		C2BCDF4037840E45BA3E7E08 /* VirtualFaderColManagerUI.h */ /* VirtualFaderColManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualFaderColManagerUI.h; path = ../../Source/UI/VirtualFaders/VirtualFaderColManagerUI.h; sourceTree = SOURCE_ROOT; };
 		C341F4837AA231F0D1F5AB62 /* colorpicker.png */ /* colorpicker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = colorpicker.png; path = ../../Ressources/colorpicker.png; sourceTree = SOURCE_ROOT; };
 		C367855733BE23EFCB64EA4E /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
+		C3DEA777296931874600C0E8 /* FixtureMapping.h */ /* FixtureMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureMapping.h; path = ../../Source/Definitions/Fixture/FixtureMapping.h; sourceTree = SOURCE_ROOT; };
 		C3F4E0B7220A005B961C1F49 /* TrackerManager.cpp */ /* TrackerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrackerManager.cpp; path = ../../Source/Definitions/Tracker/TrackerManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6DEAF58E7E2C03A08D4EC20 /* VirtualFaderColManager.cpp */ /* VirtualFaderColManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderColManager.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderColManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6E8B1EF1AE52D6DE06C84F5 /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
@@ -962,6 +965,8 @@
 				30F9E28B4C82D5CD38057F4F,
 				6AF6D8DD273039E83F5E3DA3,
 				EDF7659AF2BF069B48D54B7D,
+				79112F4B6F6E2D7B6538C263,
+				C3DEA777296931874600C0E8,
 				0853D55BBDEEFC447790246B,
 				AD861E96EB2578CD4E903BF6,
 				BB88E9227FD8BEE252B334F6,
@@ -1887,6 +1892,7 @@
 				1867C58085B50E437679EC1A,
 				7D5DCD1AAC97FDD344D21B30,
 				FAAEAB583902B64AC95CCF00,
+				70BF3135D97CBE86B904DC50,
 				0D5D78BF4A33ACC578B2BD0A,
 				AC3A2538752AEED8F22BDCE4,
 				2050237122F52FD6F34E6450,

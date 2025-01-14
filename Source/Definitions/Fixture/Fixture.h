@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "FixturePatch.h"
+#include "FixtureMapping.h"
 #include "../SubFixture/SubFixture.h"
 
 class Fixture:
@@ -48,6 +49,7 @@ public:
     OwnedArray<SubFixture> subFixturesContainer;
     HashMap<int, SubFixture*> subFixtures;
     FixturePatchManager patchs;
+    FixtureMappingManager mappings;
     String getTypeString() const override { return objectType; }
 
     void applyPatchs();
@@ -62,5 +64,7 @@ public:
 
     void selectThis(bool addToSelection=false, bool notify = true);
     void autoName();
+
+    void channelValueChanged(int subId, ChannelType* type, double val);
 
 };

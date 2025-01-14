@@ -1378,6 +1378,9 @@
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureManagerUI.cpp">
       <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureMapping.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureMultiEditor.cpp">
       <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
     </ClCompile>
@@ -5164,6 +5167,9 @@
       <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureMapping.h">
       <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureMultiEditor.h">

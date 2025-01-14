@@ -170,6 +170,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Fixture_975a195.o \
   $(JUCE_OBJDIR)/FixtureManager_47eed0e2.o \
   $(JUCE_OBJDIR)/FixtureManagerUI_487e9a36.o \
+  $(JUCE_OBJDIR)/FixtureMapping_ff366183.o \
   $(JUCE_OBJDIR)/FixtureMultiEditor_727ec0bb.o \
   $(JUCE_OBJDIR)/FixturePatch_f6b75bfd.o \
   $(JUCE_OBJDIR)/FixturePatchCorrection_dd7e6e7b.o \
@@ -747,6 +748,11 @@ $(JUCE_OBJDIR)/FixtureManager_47eed0e2.o: ../../Source/Definitions/Fixture/Fixtu
 $(JUCE_OBJDIR)/FixtureManagerUI_487e9a36.o: ../../Source/Definitions/Fixture/FixtureManagerUI.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling FixtureManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FixtureMapping_ff366183.o: ../../Source/Definitions/Fixture/FixtureMapping.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureMapping.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/FixtureMultiEditor_727ec0bb.o: ../../Source/Definitions/Fixture/FixtureMultiEditor.cpp
