@@ -76,6 +76,8 @@ Layout::Layout(var params) :
 	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());
 
+	paths.addBaseManagerListener(this);
+
 }
 
 Layout::~Layout()
@@ -317,4 +319,29 @@ void Layout::sizeChanged()
 	}
 }
 
+
+void Layout::itemAdded(BKPath* p) {
+	computeData();
+	sendChangeMessage();
+}
+
+void Layout::itemsAdded(juce::Array<BKPath*> ps) {
+	computeData();
+	sendChangeMessage();
+}
+
+void Layout::itemRemoved(BKPath* p) {
+	computeData();
+	sendChangeMessage();
+}
+
+void Layout::itemsRemoved(juce::Array<BKPath*> ps) {
+	computeData();
+	sendChangeMessage();
+}
+
+void Layout::itemsReordered() {
+	computeData();
+	sendChangeMessage();
+}
 

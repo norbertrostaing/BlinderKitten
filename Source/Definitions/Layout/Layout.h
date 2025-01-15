@@ -17,7 +17,8 @@ class Fixture;
 
 class Layout :
     public BaseItem,
-    public ChangeBroadcaster
+    public ChangeBroadcaster,
+    public BaseManagerListener<BKPath>
     // public ChainVizTarget
 {
 public:
@@ -76,5 +77,13 @@ public:
     static Layout* create(var params) { return new Layout(params); }
 
     void sizeChanged();
+
+    void itemAdded(BKPath*);
+    void itemsAdded(juce::Array<BKPath*>);
+    void itemRemoved(BKPath*);
+    void itemsRemoved(juce::Array<BKPath*>);
+    void itemsReordered();
+
+
 };
 
