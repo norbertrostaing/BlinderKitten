@@ -29,12 +29,16 @@ public:
                         CL_LOADCONTENT, CL_INSERTBEFORE, CL_INSERTAFTER
     };
     ActionType actionType;
+    BoolParameter* useMainConductor;
     IntParameter* cuelistId;
     FloatParameter* cueId;
     FloatParameter* maxSpeed;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
+
+    void onContainerParameterChangedInternal(Parameter*);
+    void updateDisplay();
 
     var getValue();
 

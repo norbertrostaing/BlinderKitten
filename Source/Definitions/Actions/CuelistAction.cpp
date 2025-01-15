@@ -11,12 +11,14 @@
 #include "CuelistAction.h"
 #include "../Cuelist/Cuelist.h"
 #include "../../Brain.h"
+#include "BKEngine.h"
 
 CuelistAction::CuelistAction(var params) :
     Action(params)
 {
     actionType = (ActionType)(int)params.getProperty("actionType", CL_GO);
 
+    useMainConductor = addBoolParameter("Use main conductor", "", false);
     if (actionType != CL_GOALLLOADED) {
         cuelistId = addIntParameter("Cuelist ID", "Id oth the target cuelist", 0, 0);
     }
@@ -34,7 +36,12 @@ CuelistAction::~CuelistAction()
 
 void CuelistAction::triggerInternal()
 {
-    Cuelist * target = Brain::getInstance()->getCuelistById(cuelistId->getValue());
+    int id = cuelistId->intValue();
+    if (useMainConductor->boolValue()) {
+        BKEngine* engine = (BKEngine*)Engine::mainEngine;
+        id = engine->conductorCuelistId->intValue();
+    }
+    Cuelist * target = Brain::getInstance()->getCuelistById(id);
     if (target == nullptr) return;
 }
 
@@ -43,7 +50,12 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         Brain::getInstance()->goAllLoadedCuelists();
         return;
     }
-    Cuelist* target = Brain::getInstance()->getCuelistById(cuelistId->getValue());
+    int id = cuelistId->intValue();
+    if (useMainConductor->boolValue()) {
+        BKEngine* engine = (BKEngine*)Engine::mainEngine;
+        id = engine->conductorCuelistId->intValue();
+    }
+    Cuelist* target = Brain::getInstance()->getCuelistById(id);
     if (target == nullptr) return;
 
     float val = value;
@@ -290,6 +302,18 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
     }
 
 
+}
+
+void CuelistAction::onContainerParameterChangedInternal(Parameter* p)
+{
+    if (p == useMainConductor) updateDisplay();
+}
+
+void CuelistAction::updateDisplay()
+{
+    cuelistId->hideInEditor = useMainConductor->boolValue();
+    
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 var CuelistAction::getValue()
