@@ -265,6 +265,28 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         break;
 
 
+    case CL_LOADCONTENT:
+        if (val == 1) {
+            MessageManager::callAsync([target]() {target->loadContent(); });
+        }
+        break;
+
+    case CL_INSERTBEFORE:
+        if (val == 1) {
+            MessageManager::callAsync([target]() {
+                target->insertProgCueBefore();
+            });
+        }
+        break;
+
+    case CL_INSERTAFTER:
+        if (val == 1) {
+            MessageManager::callAsync([target]() {
+                target->insertProgCueAfter();
+            });
+        }
+        break;
+
     }
 
 

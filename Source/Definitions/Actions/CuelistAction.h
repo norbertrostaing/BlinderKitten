@@ -25,7 +25,8 @@ public:
                         CL_LOAD, CL_LOADANDGO, CL_GORANDOM, CL_TOGGLE, CL_GOALLLOADED, 
                         CL_CHASERSPEED, CL_CHASERTAPTEMPO, 
                         CL_CROSSFADE, CL_UPFADE, CL_DOWNFADE,
-                        CL_OFF_INSTANT
+                        CL_OFF_INSTANT, 
+                        CL_LOADCONTENT, CL_INSERTBEFORE, CL_INSERTAFTER
     };
     ActionType actionType;
     IntParameter* cuelistId;

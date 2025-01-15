@@ -214,6 +214,8 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
+    void insertProgCueBefore();
+    void insertProgCueAfter();
     void insertProgCueBefore(Cue* c);
     void insertProgCueAfter(Cue* c);
     void insertProgCueAtIndex(int index);
@@ -246,7 +248,8 @@ public:
 
     void autoCreateChaser();
 
-    void loadContent( Programmer* p);
+    void loadContent();
+    void loadContent(Programmer* p);
     void tempMergeProgrammer(Programmer* p, bool trackValues = true);
 
     void forceCueId(Cue*c, float id);

@@ -69,6 +69,9 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Cross fade", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_CROSSFADE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Up fade", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_UPFADE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Down fade", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_DOWNFADE));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Load content", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LOADCONTENT));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Insert before", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_INSERTBEFORE));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Insert after", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_INSERTAFTER));
 
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));

@@ -1249,6 +1249,18 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	return val;
 }
 
+void Cuelist::insertProgCueBefore()
+{
+	int index = cueA == nullptr ? 0 : cues.items.indexOf(cueA);
+	insertProgCueAtIndex(index);
+}
+
+void Cuelist::insertProgCueAfter()
+{
+	int index = cueA == nullptr ? cues.items.size() : cues.items.indexOf(cueA)+1;
+	insertProgCueAtIndex(index);
+}
+
 void Cuelist::insertProgCueBefore(Cue* c)
 {
 	int index = cues.items.indexOf(c);
@@ -1258,6 +1270,7 @@ void Cuelist::insertProgCueBefore(Cue* c)
 void Cuelist::insertProgCueAfter(Cue* c)
 {
 	int index = cues.items.indexOf(c);
+	if (index == -1) index = cues.items.size()-1;
 	insertProgCueAtIndex(index+1);
 }
 
@@ -1662,6 +1675,12 @@ void Cuelist::autoCreateChaser()
 	}
 	cues.addItems(toAdd, var(), false);
 	blocks.clear();
+}
+
+void Cuelist::loadContent()
+{
+	Programmer* p = UserInputManager::getInstance()->getProgrammer(true);
+	loadContent(p);
 }
 
 void Cuelist::loadContent(Programmer *p)
