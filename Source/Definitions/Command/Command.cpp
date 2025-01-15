@@ -429,6 +429,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 
 void Command::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) {
 	if (&selection == cc) {
+		computeValues();
 		UserInputManager::getInstance()->commandSelectionChanged(this);
 	}
 	else if (&values == cc) {

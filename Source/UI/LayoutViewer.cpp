@@ -40,11 +40,13 @@ LayoutViewer::LayoutViewer() :
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
 
 	engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
-	stopAndCheckTimer();
+	repaint();
+	startTimerHz(30);
 }
 
 LayoutViewer::~LayoutViewer()
 {
+	stopTimer();
 	if (selectedLayout != nullptr) {
 		selectedLayout->removeChangeListener(this);
 	}
@@ -166,7 +168,6 @@ void LayoutViewer::selectLayout(int id)
 		selectedLayout = nullptr;
 	}
 	repaint();
-	stopAndCheckTimer();
 }
 
 void LayoutViewer::resized()
@@ -443,7 +444,6 @@ void LayoutViewer::clickTracker(const MouseEvent& e)
 void LayoutViewer::changeListenerCallback(ChangeBroadcaster* source)
 {
 	repaint();
-	stopAndCheckTimer();
 }
 
 void LayoutViewer::drawMidArrow(Graphics& g, Point<float>& from, Point<float>& to)
@@ -471,6 +471,7 @@ void LayoutViewer::drawMidArrow(Graphics& g, float fromX, float fromY, float toX
 
 void LayoutViewer::paint(Graphics& g)
 {
+	Brain::getInstance()->layoutViewerNeedRepaint = false;
 	if (Brain::getInstance()->layoutViewerNeedRefresh == true && selectedLayout!=nullptr) {
 		Brain::getInstance()->layoutViewerNeedRefresh = false;
 		selectedLayout->computeData();
@@ -1020,13 +1021,6 @@ void LayoutViewer::paint(Graphics& g)
 
 void LayoutViewer::stopAndCheckTimer()
 {
-	stopTimer();
-	if (selectedLayout != nullptr && selectedLayout->viewOutput->boolValue()) {
-		startTimerHz(30);
-	}
-	else {
-		repaint();
-	}
 }
 
 void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, float y, float w, float h, float angle, Colour c, BKPath::LabelPosition pos)
@@ -1034,6 +1028,16 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 	if (selectedLayout == nullptr) return;
 	bool fillBox = selectedLayout->viewOutput->boolValue();
 	Colour forcedFillColor = path->fillColor->getColor();
+
+	bool fixtureIsSelected = false;
+	Programmer* prog = UserInputManager::getInstance()->getProgrammer(false);
+	if (prog != nullptr && prog->currentUserCommand != nullptr) {
+		if (prog->currentUserCommand->selection.computedSelectedFixtures.contains(f)) {
+			fixtureIsSelected = true;
+		}
+	}
+
+
 
 	FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
 	if (ft != nullptr && ft->useLayoutIcon) {
@@ -1067,6 +1071,27 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 			path->fixtImageBorder.set(f, i);
 		}
 
+		if (!path->fixtImageSelected.contains(f)) {
+			int size = sqrt(pow(ft->layoutBorderImage.getWidth(), 2) + pow(ft->layoutBorderImage.getHeight(), 2));
+			Image i(Image::PixelFormat::ARGB, size, size, true);
+			Graphics tempG(i);
+			AffineTransform t;
+			t = t.translated(-ft->layoutBorderImage.getWidth() / 2, -ft->layoutBorderImage.getHeight() / 2);
+			t = t.rotated(degreesToRadians(angle));
+			//t = t.translated(ft->layoutBorderImage.getWidth() / 2, ft->layoutBorderImage.getHeight() / 2);
+			t = t.translated(size / 2, size / 2);
+			tempG.setColour(Colours::white.withAlpha(0.3f));
+			tempG.drawImageTransformed(ft->layoutBorderImage, t.translated(-2, -2), true);
+			tempG.drawImageTransformed(ft->layoutBorderImage, t.translated(-2, 2), true);
+			tempG.drawImageTransformed(ft->layoutBorderImage, t.translated(2, -2), true);
+			tempG.drawImageTransformed(ft->layoutBorderImage, t.translated(2, 2), true);
+			//tempG.drawImageTransformed(ft->layoutContentImage, t.translated(-2, -2), true);
+			//tempG.drawImageTransformed(ft->layoutContentImage, t.translated(-2, 2), true);
+			//tempG.drawImageTransformed(ft->layoutContentImage, t.translated(2, -2), true);
+			//tempG.drawImageTransformed(ft->layoutContentImage, t.translated(2, 2), true);
+			path->fixtImageSelected.set(f, i);
+		}
+
 		if (!path->fixtTransform.contains(f)) {
 			Rectangle<float> r(x, y, w, h);
 			RectanglePlacement placement(0);
@@ -1077,6 +1102,10 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 			t = t.translated(i.getWidth() / 2, i.getHeight() / 2);
 			t = t.followedBy(placement.getTransformToFit(i.getBounds().toFloat(), r));
 			path->fixtTransform.set(f, t);
+		}
+
+		if (fixtureIsSelected) {
+			g.drawImageTransformed(path->fixtImageSelected.getReference(f), path->fixtTransform.getReference(f), false);
 		}
 
 		if (fillBox) {
@@ -1110,11 +1139,14 @@ void LayoutViewer::drawFixture(Graphics& g, Fixture* f, BKPath* path, float x, f
 			//g.restoreState();
 		}
 
-
 		g.drawImageTransformed(path->fixtImageBorder.getReference(f), path->fixtTransform.getReference(f), false);
 		//g.drawImageWithin(ft->layoutBorderImage, x, y, w, h, RectanglePlacement::fillDestination, true);
 	}
 	else {
+		if (fixtureIsSelected) {
+			g.setColour(Colours::white.withAlpha(0.3f));
+			g.drawRect(x-2, y-2, w+4, h+4, (float)5);
+		}
 		if (fillBox) {
 			float sfCount = f->subFixtures.size();
 			if (sfCount == 0) return;
@@ -1148,6 +1180,19 @@ void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y,
 	if (selectedLayout == nullptr) return;
 	bool fillBox = selectedLayout->viewOutput->boolValue();
 
+	bool subFixtureIsSelected = false;
+	Programmer* prog = UserInputManager::getInstance()->getProgrammer(false);
+	if (prog != nullptr && prog->currentUserCommand != nullptr) {
+		if (prog->currentUserCommand->selection.computedSelectedSubFixtures.contains(sf)) {
+			subFixtureIsSelected = true;
+		}
+	}
+
+	if (subFixtureIsSelected) {
+		g.setColour(Colours::white.withAlpha(0.3f));
+		g.drawRect(x-2, y-2, w+4, h+4, (float)5);
+
+	}
 	if (fillBox) {
 		Colour fill = sf->getOutputColor();
 		g.setColour(fill);
@@ -1244,6 +1289,11 @@ void LayoutViewer::itemDropped(const SourceDetails& source)
 
 void LayoutViewer::timerCallback()
 {
-	repaint();
+	if (selectedLayout != nullptr && selectedLayout->viewOutput->boolValue()) {
+		repaint();
+	}
+	else if (Brain::getInstance()->layoutViewerNeedRefresh || Brain::getInstance()->layoutViewerNeedRepaint){
+		repaint();
+	}
 }
 

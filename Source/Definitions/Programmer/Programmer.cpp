@@ -231,6 +231,7 @@ void Programmer::computeValues() {
 		}
 	}
 	computing.exit();
+	Brain::getInstance()->layoutViewerNeedRepaint = true;
 }
 
 void Programmer::go() {

@@ -71,6 +71,7 @@ class BKPath:
     HashMap<Fixture*, AffineTransform> fixtTransform;
     HashMap<Fixture*, Image> fixtImageBorder;
     HashMap<Fixture*, Image> fixtImageContent;
+    HashMap<Fixture*, Image> fixtImageSelected;
 
     void computeData();
 

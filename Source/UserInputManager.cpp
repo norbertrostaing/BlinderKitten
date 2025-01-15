@@ -34,6 +34,7 @@
 #include "UI/InputPanel.h"
 #include "Definitions/Assistant/Assistant.h"
 #include "UI/BKColorPicker.h"
+#include "UI/LayoutViewer.h"
 
 juce_ImplementSingleton(UserInputManager);
 
@@ -482,6 +483,7 @@ void UserInputManager::programmerCommandStructureChanged()
 {
 	EncodersMult::getInstance()->reconstructSubComponents();
 	Encoders::getInstance()->updateChannels();
+	Brain::getInstance()->layoutViewerNeedRepaint = true;
 }
 
 void UserInputManager::programmerCommandStructureChanged(Programmer* p)
@@ -490,6 +492,7 @@ void UserInputManager::programmerCommandStructureChanged(Programmer* p)
 		EncodersMult::getInstance()->reconstructSubComponents();
 		Encoders::getInstance()->updateChannels();
 	}
+	Brain::getInstance()->layoutViewerNeedRepaint = true;
 }
 
 void UserInputManager::programmerCommandValueChanged(Programmer* p)
@@ -497,6 +500,7 @@ void UserInputManager::programmerCommandValueChanged(Programmer* p)
 	if (p == getProgrammer(false)) {
 		EncodersMult::getInstance()->reconstructNames();
 	}
+	Brain::getInstance()->layoutViewerNeedRepaint = true;
 }
 
 void UserInputManager::commandSelectionChanged(Command* c) {
@@ -505,6 +509,7 @@ void UserInputManager::commandSelectionChanged(Command* c) {
 		Encoders::getInstance()->updateChannels();
 		commandValueChanged(c);
 	}
+	Brain::getInstance()->layoutViewerNeedRepaint = true;
 }
 
 void UserInputManager::redrawEncoders() {

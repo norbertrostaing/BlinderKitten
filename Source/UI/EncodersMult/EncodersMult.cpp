@@ -122,7 +122,7 @@ void EncodersMult::targetChanged()
 void EncodersMult::reconstructSubComponents()
 {
     clear();
-    if (targetCommandManager != nullptr) {
+    if (targetCommandManager != nullptr) { // bug ici !!!!!
         for (int i = 0; i < targetCommandManager->items.size(); i++) {
             auto elmt = targetCommandManager->items[i];
             EncodersMultCmd* test = commandItems.add(new EncodersMultCmd(this, elmt));

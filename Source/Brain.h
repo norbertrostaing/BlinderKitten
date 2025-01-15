@@ -98,6 +98,7 @@ public:
     bool effectGridNeedRefresh = false;
     bool mapperGridNeedRefresh = false;
     bool layoutViewerNeedRefresh = false;
+    bool layoutViewerNeedRepaint = false;
     bool defaultValuesNeedRefresh = false;
 
     void run() override;

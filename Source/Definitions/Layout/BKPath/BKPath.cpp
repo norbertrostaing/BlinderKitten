@@ -400,6 +400,7 @@ void BKPath::clearFixtImages()
     fixtTransform.clear();
     fixtImageBorder.clear();
     fixtImageContent.clear();
+    fixtImageSelected.clear();
 }
 
 void BKPath::rotateVect(Point<float>* vect, float angleInDegrees)
