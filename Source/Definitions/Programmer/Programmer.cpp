@@ -300,21 +300,23 @@ void Programmer::release(double now) {
 	computing.enter();
 	Array<SubFixtureChannel*> toUpdate;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		std::shared_ptr<ChannelValue> temp = std::make_shared<ChannelValue>();
-		float fadeTime = releaseTime->floatValue() * 1000.0f;
+		if (it.getValue()->endValue != -1) {
+			std::shared_ptr<ChannelValue> temp = std::make_shared<ChannelValue>();
+			float fadeTime = releaseTime->floatValue() * 1000.0f;
 
-		temp->TSInit = now;
-		temp->TSStart = now;
-		temp->TSEnd = now + fadeTime;
+			temp->TSInit = now;
+			temp->TSStart = now;
+			temp->TSEnd = now + fadeTime;
 
-		temp->endValue = -1;
-		temp->startValue = it.getValue()->value;
-		temp->isEnded = false;
+			temp->endValue = -1;
+			temp->startValue = it.getValue()->value;
+			temp->isEnded = false;
 
-		temp->fadeCurve = nullptr;
+			temp->fadeCurve = nullptr;
 
-		activeValues.set(it.getKey(), temp);
-		toUpdate.add(it.getKey());
+			activeValues.set(it.getKey(), temp);
+			toUpdate.add(it.getKey());
+		}
 	}
 	computing.exit();
 	for (SubFixtureChannel* sfc : toUpdate) {
