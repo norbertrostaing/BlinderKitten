@@ -172,19 +172,37 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			else if (action == "flash" && m.size() > 0) {
 				int val = OSCHelpers::getIntArg(m[0]);
 				if (val == 1) {
-					target->flash(true, false, false);
+					target->flash(true, false);
 				}
 				else {
-					target->flash(false, false, false);
+					target->flash(false, false);
 				}
 			}
 			else if (action == "swop" && m.size() > 0) {
 				int val = OSCHelpers::getIntArg(m[0]);
 				if (val == 1) {
-					target->flash(true, false, true);
+					target->flash(true, true);
 				}
 				else {
-					target->flash(false, false, true);
+					target->flash(false, true);
+				}
+			}
+			else if (action == "timedflash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false);
+				}
+				else {
+					target->flash(false, false);
+				}
+			}
+			else if (action == "timedswop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true);
+				}
+				else {
+					target->flash(false, true);
 				}
 			}
 			else if (action == "htplevel" && m.size() > 0) {
@@ -202,6 +220,12 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			else if (action == "chaserspeed" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->chaserSpeed->setValue(val);
+			}
+			else if (action == "doublespeed") {
+				target->chaserSpeed->setValue(target->chaserSpeed->floatValue() * 2);
+			}
+			else if (action == "halfspeed") {
+				target->chaserSpeed->setValue(target->chaserSpeed->floatValue() / 2);
 			}
 
 		}
@@ -224,6 +248,48 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			else if (action == "speed" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->speed->setValue(val);
+			}
+			else if (action == "flash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false);
+				}
+				else {
+					target->flash(false, false);
+				}
+			}
+			else if (action == "swop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true);
+				}
+				else {
+					target->flash(false, true);
+				}
+			}
+			else if (action == "timedflash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false);
+				}
+				else {
+					target->flash(false, false);
+				}
+			}
+			else if (action == "timedswop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true);
+				}
+				else {
+					target->flash(false, true);
+				}
+			}
+			else if (action == "doublespeed") {
+					target->speed->setValue(target->speed->floatValue() * 2);
+				}
+			else if (action == "halfspeed") {
+					target->speed->setValue(target->speed->floatValue() / 2);
 				}
 		}
 		else {
@@ -245,6 +311,48 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			else if (action == "speed" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->speed->setValue(val);
+			}
+			else if (action == "flash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false);
+				}
+				else {
+					target->flash(false, false);
+				}
+			}
+			else if (action == "swop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true);
+				}
+				else {
+					target->flash(false, true);
+				}
+			}
+			else if (action == "timedflash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false);
+				}
+				else {
+					target->flash(false, false);
+				}
+			}
+			else if (action == "timedswop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true);
+				}
+				else {
+					target->flash(false, true);
+				}
+			}
+			else if (action == "doublespeed") {
+				target->speed->setValue(target->speed->floatValue() * 2);
+			}
+			else if (action == "halfspeed") {
+				target->speed->setValue(target->speed->floatValue() / 2);
 			}
 		}
 		else {
@@ -309,6 +417,48 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			else if (action == "speed" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);
 				target->setSpeed(val);
+			}
+			else if (action == "flash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false, false);
+				}
+				else {
+					target->flash(false, false, false);
+				}
+			}
+			else if (action == "swop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, false, true);
+				}
+				else {
+					target->flash(false, false, true);
+				}
+			}
+			else if (action == "timedflash" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true, false);
+				}
+				else {
+					target->flash(false, true, false);
+				}
+			}
+			else if (action == "timedswop" && m.size() > 0) {
+				int val = OSCHelpers::getIntArg(m[0]);
+				if (val == 1) {
+					target->flash(true, true, true);
+				}
+				else {
+					target->flash(false, true, true);
+				}
+			}
+			else if (action == "doublespeed") {
+				target->speedMult(2);
+			}
+			else if (action == "halfspeed") {
+				target->speedMult(0.5);
 			}
 		}
 		else {
