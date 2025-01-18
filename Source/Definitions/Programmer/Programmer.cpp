@@ -35,7 +35,7 @@ Programmer::Programmer(var params) :
 	objectType(params.getProperty("type", "Programmer").toString()),
 	objectData(params),
 	commands("Commands"),
-	cliContainer("Command LIne"),
+	cliContainer("Command Line"),
 	timing()
 {
 	saveAndLoadRecursiveData = true;
