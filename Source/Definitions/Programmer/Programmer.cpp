@@ -35,7 +35,8 @@ Programmer::Programmer(var params) :
 	objectType(params.getProperty("type", "Programmer").toString()),
 	objectData(params),
 	commands("Commands"),
-	cliContainer("Command LIne")
+	cliContainer("Command LIne"),
+	timing()
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -103,6 +104,10 @@ Programmer::Programmer(var params) :
 	cliParamBId = cliContainer.addIntParameter("Param B ID", "second object id for copy, move", 0, 0);
 
 	cliGo = cliContainer.addTrigger("GO", "Execute this command");
+
+	timing.presetOrValue->removeOption("Cue timing");
+	timing.presetOrValue->setValue("Raw Timing");
+	addChildControllableContainer(&timing);
 
 	commands.selectItemWhenCreated = false;
 	addChildControllableContainer(&commands);
@@ -201,7 +206,7 @@ void Programmer::computeValues() {
 	computedValues.clear();
 	Array<Command*> cs = commands.getItemsWithType<Command>();
 	for (int i = 0; i < cs.size(); i++) {
-		cs[i]->computeValues();
+		cs[i]->computeValues(nullptr, nullptr, this);
 		maxTiming = std::max(maxTiming, cs[i]->maxTiming);
 		cs[i]->isComputing.enter();
 

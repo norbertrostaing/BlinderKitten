@@ -22,6 +22,7 @@ public:
     String objectType;
     var objectData;
 
+    CommandTiming timing;
     BaseManager<Command> commands;
 
     IntParameter* id;

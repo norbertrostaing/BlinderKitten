@@ -58,7 +58,7 @@ public:
 
     double maxTiming;
     void computeValues();
-    void computeValues(Cuelist* cl, Cue* c);
+    void computeValues(Cuelist* cl, Cue* c, Programmer* p = nullptr);
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
     void triggerTriggered(Trigger* t);

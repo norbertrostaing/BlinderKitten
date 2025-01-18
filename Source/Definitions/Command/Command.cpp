@@ -95,7 +95,7 @@ void Command::computeValues() {
 	computeValues(nullptr, nullptr);
 }
 
-void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
+void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer* callingProgrammer) {
 	maxTiming = 0;
 	isComputing.enter();
 	computedValues.clear();
@@ -195,6 +195,47 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue) {
 			delayRepartCurve = &callingCuelist->timing.curveDelayRepart;
 			delayRandom = delayThru && callingCuelist->timing.randomizeDelay->boolValue();
 			fadeRandom = fadeThru && callingCuelist->timing.randomizeFade->boolValue();
+		}
+	}
+
+	if (callingProgrammer != nullptr) {
+		timingMode = callingProgrammer->timing.presetOrValue->getValue();
+		if (timingMode == "preset") {
+			TimingPreset* tp = Brain::getInstance()->getTimingPresetById(callingProgrammer->timing.presetId->getValue(), true);
+			if (tp != nullptr) {
+				float delayMult = tp->delayMult.getValue();
+				float fadeMult = tp->fadeMult.getValue();
+				delayThru = tp->thruDelay->getValue();
+				delaySym = tp->symmetryDelay->getValue();
+				delayFrom = (float)tp->delayFrom->getValue() * 1000 * delayMult;
+				delayTo = (float)tp->delayTo->getValue() * 1000 * delayMult;
+				fadeThru = tp->thruFade->getValue();
+				fadeSym = tp->symmetryFade->getValue();
+				fadeFrom = (float)tp->fadeFrom->getValue() * 1000 * fadeMult;
+				fadeTo = (float)tp->fadeTo->getValue() * 1000 * fadeMult;
+				fadeCurve = &tp->curveFade;
+				fadeRepartCurve = &tp->curveFadeRepart;
+				delayRepartCurve = &tp->curveDelayRepart;
+				delayRandom = delayThru && tp->randomizeDelay->boolValue();
+				fadeRandom = fadeThru && tp->randomizeFade->boolValue();
+			}
+		}
+		else if (timingMode == "raw") {
+			float delayMult = callingProgrammer->timing.delayMult.getValue();
+			float fadeMult = callingProgrammer->timing.fadeMult.getValue();
+			delayThru = callingProgrammer->timing.thruDelay->getValue();
+			delaySym = callingProgrammer->timing.symmetryDelay->getValue();
+			delayFrom = (float)callingProgrammer->timing.delayFrom->getValue() * 1000 * delayMult;
+			delayTo = (float)callingProgrammer->timing.delayTo->getValue() * 1000 * delayMult;
+			fadeThru = callingProgrammer->timing.thruFade->getValue();
+			fadeSym = callingProgrammer->timing.symmetryFade->getValue();
+			fadeFrom = (float)callingProgrammer->timing.fadeFrom->getValue() * 1000 * fadeMult;
+			fadeTo = (float)callingProgrammer->timing.fadeTo->getValue() * 1000 * fadeMult;
+			fadeCurve = &callingProgrammer->timing.curveFade;
+			fadeRepartCurve = &callingProgrammer->timing.curveFadeRepart;
+			delayRepartCurve = &callingProgrammer->timing.curveDelayRepart;
+			delayRandom = delayThru && callingProgrammer->timing.randomizeDelay->boolValue();
+			fadeRandom = fadeThru && callingProgrammer->timing.randomizeFade->boolValue();
 		}
 	}
 
