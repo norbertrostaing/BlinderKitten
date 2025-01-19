@@ -552,6 +552,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	isComputing.enter();
 	TSTransitionStart = now;
+	TSTransitionEnd = now;
 	currentManualInTransition= 0;
 	currentManualOutTransition = 0;
 	stopTransition = false;
@@ -676,6 +677,12 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					if (current != nullptr) {
 						double fader = HTPLevel->getValue();
 						double currentTiming = jmap(now, (double)current->TSStart, (double)current->TSEnd,0.0,1.0);
+						if (stopTransition) {
+							currentTiming = currentManualInTransition;
+						}
+						if (current->isEnded) {
+							currentTiming = 1;
+						}
 						currentTiming = jlimit(0.0,1.0,currentTiming);
 						temp->startValue = jmap(currentTiming, 0.0,1.0, (double)current->startValue, (double)current->endValue)*fader;
 					}
@@ -1174,8 +1181,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
 	float outIsOff = false;
-	// comportement OK, calcul de valeurs nok
-	
+
 	if (cv->startValue >= 0) {
 		valueFrom = cv->startValue; 
 	}
