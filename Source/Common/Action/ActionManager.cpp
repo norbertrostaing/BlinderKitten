@@ -27,6 +27,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/BundleAction.h"
 #include "Definitions/Actions/InterfaceAction.h"
 #include "Definitions/Actions/PresetAction.h"
+#include "Definitions/Actions/SoloPoolAction.h"
 #include "ActionManager.h"
 
 ActionFactory::ActionFactory()
@@ -121,6 +122,8 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Timed Flash", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TIMED_FLASH));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Timed Swop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TIMED_SWOP));
 
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Stop", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_STOP));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Random", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_RANDOM));
 
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));

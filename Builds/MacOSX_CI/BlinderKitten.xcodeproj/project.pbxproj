@@ -168,6 +168,7 @@
 		D2670406E7A2779AADAE9E39 /* MultiplicatorAction.cpp */ = {isa = PBXBuildFile; fileRef = 9FBA8625820E163A1C6B3E3A; };
 		D36B7F6E7ACD8652F5DDFF87 /* CommandSelectionManager.cpp */ = {isa = PBXBuildFile; fileRef = 5941FA6A90768BF9A5502B6B; };
 		D50BF2669952BA61BE3DD3CB /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = E7884757F9B8B7D885716D90; settings = { ATTRIBUTES = (Weak, ); }; };
+		D8C9CF95286978E6BA1BA7A5 /* SoloPoolAction.cpp */ = {isa = PBXBuildFile; fileRef = 479A8F52055483E8B1910A32; };
 		D9C9A54D6DEC72524EE616B3 /* CarouselManager.cpp */ = {isa = PBXBuildFile; fileRef = 50ED73539A7F5278007C908C; };
 		D9F94B11A324BD07501E5860 /* PresetValue.cpp */ = {isa = PBXBuildFile; fileRef = 7AFC413AC8C5156599197A0E; };
 		DA907EAFD0653CC737B7CE3A /* CuelistGridView.cpp */ = {isa = PBXBuildFile; fileRef = A4D0A7FB9A3B36A7F4752EEF; };
@@ -245,6 +246,7 @@
 		10BBD342C81F48FCAC8DF9CC /* ConductorInfos.cpp */ /* ConductorInfos.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConductorInfos.cpp; path = ../../Source/UI/ConductorInfos.cpp; sourceTree = SOURCE_ROOT; };
 		10D9A15A954EB7A7A91D6AAC /* SerialInterface.h */ /* SerialInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialInterface.h; path = ../../Source/Definitions/Interface/interfaces/serial/SerialInterface.h; sourceTree = SOURCE_ROOT; };
 		112E31B097432893CF74EF8F /* Encoders.h */ /* Encoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Encoders.h; path = ../../Source/UI/Encoders.h; sourceTree = SOURCE_ROOT; };
+		1216673AEF7457F6165D7D77 /* SoloPoolAction.h */ /* SoloPoolAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SoloPoolAction.h; path = ../../Source/Definitions/Actions/SoloPoolAction.h; sourceTree = SOURCE_ROOT; };
 		130392BD75D6C1EFC0D3353D /* BKEngine.cpp */ /* BKEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BKEngine.cpp; path = ../../Source/BKEngine.cpp; sourceTree = SOURCE_ROOT; };
 		13615B57BB162ED3F6D80A5A /* BKColorPicker.cpp */ /* BKColorPicker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BKColorPicker.cpp; path = ../../Source/UI/BKColorPicker.cpp; sourceTree = SOURCE_ROOT; };
 		13F36346C612897148C47671 /* BentoInterface.cpp */ /* BentoInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoInterface.cpp; path = ../../Source/Definitions/Interface/interfaces/bento/BentoInterface.cpp; sourceTree = SOURCE_ROOT; };
@@ -331,6 +333,7 @@
 		46B5AE93ACFD4515D6EDC59A /* SceneHelpers.h */ /* SceneHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SceneHelpers.h; path = ../../Source/Common/Helpers/SceneHelpers.h; sourceTree = SOURCE_ROOT; };
 		46BD404844CF5EAF3D92F27E /* SubFixture.h */ /* SubFixture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SubFixture.h; path = ../../Source/Definitions/SubFixture/SubFixture.h; sourceTree = SOURCE_ROOT; };
 		476097FAB285D9C99B750F5F /* MapperAction.cpp */ /* MapperAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperAction.cpp; path = ../../Source/Definitions/Actions/MapperAction.cpp; sourceTree = SOURCE_ROOT; };
+		479A8F52055483E8B1910A32 /* SoloPoolAction.cpp */ /* SoloPoolAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SoloPoolAction.cpp; path = ../../Source/Definitions/Actions/SoloPoolAction.cpp; sourceTree = SOURCE_ROOT; };
 		499845ABEE168A07449EC477 /* VirtualButton.h */ /* VirtualButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualButton.h; path = ../../Source/UI/VirtualButtons/VirtualButton.h; sourceTree = SOURCE_ROOT; };
 		4A6CA0C393F81BC1392432D5 /* OSCInputEditor.h */ /* OSCInputEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCInputEditor.h; path = ../../Source/Definitions/Interface/interfaces/osc/ui/OSCInputEditor.h; sourceTree = SOURCE_ROOT; };
 		4AA08A6F8AD84AB20D7FD9A5 /* FixturePatchCorrection.cpp */ /* FixturePatchCorrection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixturePatchCorrection.cpp; path = ../../Source/Definitions/Fixture/FixturePatchCorrection.cpp; sourceTree = SOURCE_ROOT; };
@@ -916,6 +919,8 @@
 				0E6A745B3C95316A09A16D22,
 				B33A448462CD8471C060C7D6,
 				82F636FEC5D1A7F567C7942A,
+				479A8F52055483E8B1910A32,
+				1216673AEF7457F6165D7D77,
 				BFC78652CA4EA1563B4F7100,
 				95844B8F9AEEF440460D9AC8,
 				C7B740747EF76E26953F01CB,
@@ -1846,6 +1851,7 @@
 				172939FB619E288DEABA5AFA,
 				D2670406E7A2779AADAE9E39,
 				1967714E680572F05EE87BD6,
+				D8C9CF95286978E6BA1BA7A5,
 				4D596A9BF29491C0F092F228,
 				41F15F1C7F291B2C37689D4C,
 				CBE33BFAAD53BF982A32FFBB,

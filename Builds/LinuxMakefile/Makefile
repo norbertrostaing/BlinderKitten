@@ -124,6 +124,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MapperAction_7d027a1.o \
   $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o \
   $(JUCE_OBJDIR)/PresetAction_e4e29ebf.o \
+  $(JUCE_OBJDIR)/SoloPoolAction_e45293b.o \
   $(JUCE_OBJDIR)/TapTempoMultiple_3a521832.o \
   $(JUCE_OBJDIR)/TrackerAction_c5bb14e.o \
   $(JUCE_OBJDIR)/VirtualButtonAction_1210c9b3.o \
@@ -518,6 +519,11 @@ $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o: ../../Source/Definitions/Actions/
 $(JUCE_OBJDIR)/PresetAction_e4e29ebf.o: ../../Source/Definitions/Actions/PresetAction.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PresetAction.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SoloPoolAction_e45293b.o: ../../Source/Definitions/Actions/SoloPoolAction.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling SoloPoolAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TapTempoMultiple_3a521832.o: ../../Source/Definitions/Actions/TapTempoMultiple.cpp

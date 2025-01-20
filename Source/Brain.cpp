@@ -1597,3 +1597,81 @@ void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
     for (Carousel* c : offCarousels) c->stop();
 
 }
+
+void Brain::soloPoolRandom(int poolId)
+{
+    if (poolId == 0) return;
+
+    Array<String> types;
+    Array<int>ids;
+
+    usingCollections.enter();
+    for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
+        Cuelist* c = it.getValue();
+        if (c->soloPool->intValue() == poolId) {
+            types.add("cuelist");
+            ids.add(c->id->intValue());
+        }
+    }
+    for (auto it = effects.begin(); it != effects.end(); it.next()) {
+        Effect* c = it.getValue();
+        if (c->soloPool->intValue() == poolId) {
+            types.add("effect");
+            ids.add(c->id->intValue());
+        }
+    }
+    for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
+        Carousel* c = it.getValue();
+        if (c->soloPool->intValue() == poolId) {
+            types.add("carousel");
+            ids.add(c->id->intValue());
+        }
+    }
+
+    usingCollections.exit();
+
+    Random r;
+    int i = r.nextInt(ids.size());
+    int id = ids[i];
+    String type = types[i];
+
+    if (type == "cuelist") { Brain::getCuelistById(id)->go(); }
+    else if (type == "effect") { Brain::getEffectById(id)->start(); }
+    else if (type == "carousel") { Brain::getCarouselById(id)->start(); }
+}
+
+void Brain::soloPoolStop(int poolId)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> offCuelists;
+    Array<Effect*> offEffects;
+    Array<Carousel*> offCarousels;
+
+    usingCollections.enter();
+    for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
+        Cuelist* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isCuelistOn->boolValue()) {
+            offCuelists.add(c);
+        }
+    }
+    for (auto it = effects.begin(); it != effects.end(); it.next()) {
+        Effect* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isEffectOn->boolValue()) {
+            offEffects.add(c);
+        }
+    }
+    for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
+        Carousel* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isCarouselOn->boolValue()) {
+            offCarousels.add(c);
+        }
+    }
+
+    usingCollections.exit();
+    for (Cuelist* c : offCuelists) c->off();
+    for (Effect* c : offEffects) c->stop();
+    for (Carousel* c : offCarousels) c->stop();
+
+
+}

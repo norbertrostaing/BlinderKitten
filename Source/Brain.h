@@ -202,4 +202,6 @@ public:
     void soloPoolEffectStarted(int poolId, Effect* c);
     void soloPoolCarouselStarted(int poolId, Carousel* c);
     void soloPoolCheck(int poolId, String excludeType, int excludeId);
+    void soloPoolRandom(int poolId);
+    void soloPoolStop(int poolId);
 };

@@ -315,6 +315,10 @@
           <FILE id="onIrJC" name="PresetAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/PresetAction.cpp"/>
           <FILE id="pWJqFW" name="PresetAction.h" compile="0" resource="0" file="Source/Definitions/Actions/PresetAction.h"/>
+          <FILE id="ogmjMd" name="SoloPoolAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/SoloPoolAction.cpp"/>
+          <FILE id="LZgVMq" name="SoloPoolAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/SoloPoolAction.h"/>
           <FILE id="XXLjiy" name="TapTempoMultiple.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/TapTempoMultiple.cpp"/>
           <FILE id="VX4gZH" name="TapTempoMultiple.h" compile="0" resource="0"
