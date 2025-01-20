@@ -1429,7 +1429,7 @@ void Brain::stopAllCarousels()
 void Brain::resetRandomSeed(int seed)
 {
     mainRandom.setSeed(seed);
-    int init = mainRandom.nextInt();
+    mainRandom.nextInt();
 }
 
 void Brain::showWindow(String name)

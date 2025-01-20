@@ -117,8 +117,6 @@ void SubFixtureChannel::writeValue(float v) {
 		v *= virtualMaster->currentValue;
 	}
 
-	if (currentValue == v) return;
-
 	currentValue = v;
 	parentFixture->channelValueChanged(subFixtureId, channelType, v);
 
