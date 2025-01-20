@@ -291,7 +291,6 @@ void DataTransferManager::execute() {
                 valid = true;
             }
             else if (trg->targetType->stringValue() == "cuelist") {
-                LOG(trg->targetId->intValue());
                 targetCuelist = Brain::getInstance()->getCuelistById(trg->targetId->intValue());
                 valid = true;
             }
@@ -850,7 +849,6 @@ void DataTransferManager::moveObject(String type, int id, String typeTo, int idT
 
         if (vfbFrom != nullptr || vfsFrom != nullptr) {
             var data = vfbFrom != nullptr ? vfbFrom->getJSONData() : vfsFrom->getJSONData();
-            LOG(data.toString());
             VirtualButton* vb = VirtualButtonGrid::getInstance()->getVirtualButton(idTo, true);
             if (vb != nullptr) {
                 vb->loadJSONData(data);
