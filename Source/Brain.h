@@ -84,6 +84,8 @@ public:
 
     Array<DMXArtNetDevice*> syncedArtnetDevices;
 
+    Random mainRandom;
+
     double now;
     bool loadingIsRunning = false;
     bool isClearing = false;

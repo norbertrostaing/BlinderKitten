@@ -1024,7 +1024,7 @@ void Cuelist::goRandom() {
 
 	int s = allowedCues.size();
 	if (s > 0) {
-		int r = rand()%s;
+		int r = Brain::getInstance()->mainRandom.nextInt(s);
 		userGo(allowedCues[r]);
 	}
 }
@@ -1440,7 +1440,7 @@ void Cuelist::loadRandom() {
 
 	int s = allowedCues.size();
 	if (s > 0) {
-		int r = rand() % s;
+		int r = Brain::getInstance()->mainRandom.nextInt(s);
 		nextCue->setValueFromTarget(allowedCues[r]);
 		fillTexts();
 	}
@@ -1524,7 +1524,7 @@ Cue* Cuelist::getNextChaserCue() {
 
 		int s = allowedCues.size();
 		if (s > 0) {
-			int r = rand() % s;
+			int r = Brain::getInstance()->mainRandom.nextInt(s);
 			return allowedCues[r];
 		}
 	}

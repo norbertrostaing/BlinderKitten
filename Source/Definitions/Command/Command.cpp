@@ -372,8 +372,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 							position = timing.curveDelayRepart.getValueAtPosition(position);
 							position = delayRepartCurve->getValueAtPosition(position);
 							if (delayRandom) {
-								Random r;
-								position = r.nextFloat();
+								position = Brain::getInstance()->mainRandom.nextFloat();
 							}
 							delay = jmap(position, delayFrom, delayTo);
 						}
@@ -405,8 +404,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 								position = timing.curveFadeRepart.getValueAtPosition(position);
 								position = fadeRepartCurve->getValueAtPosition(position);
 								if (fadeRandom) {
-									Random r;
-									position = r.nextFloat();
+									position = Brain::getInstance()->mainRandom.nextFloat();
 								}
 								fade = jmap(position, fadeFrom, fadeTo);
 							}

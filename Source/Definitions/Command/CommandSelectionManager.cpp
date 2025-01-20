@@ -164,16 +164,17 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			else if (selections[selId]->filter->getValue() == "shuffle") {
 				Array<SubFixture*> filteredSelection;
 
-				Random r;
+				Random randObj;
+				Random* r = &randObj;
 				if ((int)selections[selId]->randomSeed->getValue() == 0) {
-					r.setSeed(rand());
+					r = &Brain::getInstance()->mainRandom;
 				}
 				else {
-					r.setSeed((int)selections[selId]->randomSeed->getValue());
+					r->setSeed((int)selections[selId]->randomSeed->getValue());
 				}
 			
 				while (tempSelection.size() > 0) {
-					int randIndex = r.nextInt(tempSelection.size());
+					int randIndex = r->nextInt(tempSelection.size());
 					filteredSelection.add(tempSelection[randIndex]);
 					tempSelection.remove(randIndex);
 				}
@@ -217,9 +218,10 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					subfixtureToIndex.set(tempSelection[chanIndex], realIndex);
 				}
 
-				Random r;
+				Random randObject;
+				Random* r = &randObject;
 				if (selections[selId]->randomSeed->intValue() == 0) {
-					r.setSeed(rand());
+					r = &Brain::getInstance()->mainRandom;
 					if (tempSelection.size() - selections[selId]->lastRandom.size() > to) {
 						for (int i = 0; i < selections[selId]->lastRandom.size(); i++) {
 							tempSelection.removeAllInstancesOf(selections[selId]->lastRandom[i]);
@@ -227,7 +229,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					}
 				}
 				else {
-					r.setSeed((int)selections[selId]->randomSeed->getValue());
+					r->setSeed((int)selections[selId]->randomSeed->getValue());
 				}
 
 				if (indexes.size() > to * 2 && selections[selId]->randomSeed->intValue() == 0) {
@@ -239,8 +241,8 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				}
 
 				for (int i = 0; i < to && indexes.size()>0; i++) {
-					int randI = r.nextInt(indexes.size());
-					randI = r.nextInt(indexes.size());
+					int randI = r->nextInt(indexes.size());
+					//randI = r.nextInt(indexes.size());
 					int index = indexes[randI];
 					if (indexToSubFixtures.contains(index)) {
 						auto a = indexToSubFixtures.getReference(index);

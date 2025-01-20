@@ -1428,7 +1428,8 @@ void Brain::stopAllCarousels()
 
 void Brain::resetRandomSeed(int seed)
 {
-    srand(seed);
+    mainRandom.setSeed(seed);
+    int init = mainRandom.nextInt();
 }
 
 void Brain::showWindow(String name)
@@ -1630,8 +1631,7 @@ void Brain::soloPoolRandom(int poolId)
 
     usingCollections.exit();
 
-    Random r;
-    int i = r.nextInt(ids.size());
+    int i = mainRandom.nextInt(ids.size());
     int id = ids[i];
     String type = types[i];
 
