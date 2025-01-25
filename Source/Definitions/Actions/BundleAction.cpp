@@ -82,14 +82,12 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
         }
         else {
             target->setSize(val, useSize->boolValue(), useHTP->boolValue(), useLTP->boolValue(), useFlash->boolValue());
-            lastValue = val;
         }
         break;
 
     case BUN_SET_SIZE:
         if (val == 1) {
             target->setSize(finalSize->floatValue(), useSize->boolValue(), useHTP->boolValue(), useLTP->boolValue(), useFlash->boolValue());
-            lastValue = val;
         }
         break;
 
@@ -99,7 +97,6 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
             target->setSpeedRel(val);
         }
         else {
-            lastValue = val;
             val *= (float)maxSpeed->getValue();
             target->setSpeed(val);
         }
@@ -156,11 +153,14 @@ var BundleAction::getValue()
         break;
 
     case BUN_SIZE:
-        val = lastValue;
+        if (useHTP->boolValue()) val = target->lastHTP;
+        else if (useLTP->boolValue()) val = target->lastLTP;
+        else if (useSize->boolValue()) val = target->lastSize;
+        else if (useFlash->boolValue()) val = target->lastFlash;
         break;
 
     case BUN_SPEED:
-        val = lastValue;
+        val = target->lastSpeed/(jmax(maxSpeed->floatValue(),0.001f));
         break;
 
     case BUN_DOUBLESPEED:

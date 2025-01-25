@@ -42,6 +42,13 @@ public:
     Array<Tracker*> computedTrackers;
 
     CriticalSection isComputing;
+
+    float lastHTP = 0;
+    float lastLTP = 0;
+    float lastSize = 0;
+    float lastFlash = 0;
+    float lastSpeed = 0;
+
     bool toDelete = false;
 
     String getTypeString() const override { return objectType; }

@@ -172,6 +172,13 @@ void Bundle::tapTempo()
 
 void Bundle::setSize(float val, bool size, bool HTP, bool LTP, bool flash)
 {
+	if (HTP) lastHTP == val;
+	if (LTP) lastLTP == val;
+	if (size) lastSize == val;
+	if (flash) lastFlash == val;
+
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
 	computeValues();
 	isComputing.enter();
 	for (Cuelist* c : computedCuelists) {
@@ -198,6 +205,9 @@ void Bundle::setSize(float val, bool size, bool HTP, bool LTP, bool flash)
 
 void Bundle::setSpeed(float val)
 {
+	lastSpeed = val;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
 	computeValues();
 	isComputing.enter();
 	for (Cuelist* c : computedCuelists) c->chaserSpeed->setValue(val);
@@ -208,6 +218,12 @@ void Bundle::setSpeed(float val)
 
 void Bundle::setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash)
 {
+	if (HTP) lastHTP += val;
+	if (LTP) lastLTP += val;
+	if (size) lastSize += val;
+	if (flash) lastFlash += val;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
 	computeValues();
 	isComputing.enter();
 	for (Cuelist* c : computedCuelists) {
@@ -234,6 +250,9 @@ void Bundle::setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash)
 
 void Bundle::setSpeedRel(float val)
 {
+	lastSpeed += val;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
 	computeValues();
 	isComputing.enter();
 	for (Cuelist* c : computedCuelists) c->chaserSpeed->setValue(c->chaserSpeed->floatValue()+val);
@@ -244,6 +263,9 @@ void Bundle::setSpeedRel(float val)
 
 void Bundle::speedMult(float mult)
 {
+	lastSpeed *= mult;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
 	computeValues();
 	isComputing.enter();
 	for (Cuelist* c : computedCuelists) c->chaserSpeed->setValue(c->chaserSpeed->floatValue() * mult);
