@@ -105,6 +105,12 @@ SubFixtureChannel::~SubFixtureChannel()
 		c->isComputing.exit();
 	}
 
+	for (DMXInterface* inter : InterfaceManager::getInstance()->getInterfacesOfType<DMXInterface>()) {
+		for (int i = 0; i < 512; i++) {
+			if (inter->channelToSubFixtureChannel[i] == this) inter->channelToSubFixtureChannel.set(i,nullptr);
+		}
+	}
+
 	cs.exit();
 
 }
