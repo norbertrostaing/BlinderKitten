@@ -74,8 +74,9 @@ void LayoutViewer::rebuildLayoutsList()
 
 void LayoutViewer::newMessage(const LayoutManager::ManagerEvent& e)
 {
-	if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED) {
+	if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED || e.type == LayoutManager::ManagerEvent::ITEMS_REMOVED) {
 		selectedLayout = nullptr;
+		selectLayout(0);
 	}
 	rebuildLayoutsList();
 }
