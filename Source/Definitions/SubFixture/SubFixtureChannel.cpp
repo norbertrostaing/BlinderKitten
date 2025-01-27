@@ -238,7 +238,7 @@ void SubFixtureChannel::updateVal(double now) {
 		{
 			Cuelist* c = cuelistStack[i];
 			if (c->layerId->intValue() == currentLayer) {
-				if (!checkSwop || c->isSwopping) {
+				if (!checkSwop || c->isSwopping || c->excludeFromSwop->boolValue()) {
 					bool isApplied;
 					newValue = c->applyToChannel(this, newValue, now, isApplied);
 					if (c->excludeFromGrandMaster->boolValue()) {

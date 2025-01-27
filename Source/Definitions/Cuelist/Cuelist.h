@@ -127,6 +127,7 @@ public:
     BoolParameter* autoStart;
     BoolParameter* autoStop;
     BoolParameter* excludeFromGrandMaster;
+    BoolParameter* excludeFromSwop;
 
     FloatParameter* nextCueId;
 
