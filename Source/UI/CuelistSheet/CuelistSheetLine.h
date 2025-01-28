@@ -43,6 +43,8 @@ public:
     Label htpDownFadeLabel;
     Label ltpFadeLabel;
 
+    ToggleButton releaseTrackingButton;
+
     ToggleButton isSelected;
     TextButton actionsBtn;
 

@@ -29,6 +29,7 @@ CuelistSheet::CuelistSheet()
     addAndMakeVisible(htpUpFadeLabel); htpUpFadeLabel.setText("F Up", juce::dontSendNotification);
     addAndMakeVisible(htpDownFadeLabel); htpDownFadeLabel.setText("F Down", juce::dontSendNotification);
     addAndMakeVisible(ltpFadeLabel); ltpFadeLabel.setText("F LTP", juce::dontSendNotification);
+    addAndMakeVisible(releaseTrackingLabel); releaseTrackingLabel.setText("RT", juce::dontSendNotification);
 
     htpUpDelayLabel.setJustificationType(Justification::centred);
     htpDownDelayLabel.setJustificationType(Justification::centred);
@@ -36,6 +37,7 @@ CuelistSheet::CuelistSheet()
     htpUpFadeLabel.setJustificationType(Justification::centred);
     htpDownFadeLabel.setJustificationType(Justification::centred);
     ltpFadeLabel.setJustificationType(Justification::centred);
+    releaseTrackingLabel.setJustificationType(Justification::centred);
 
     addAndMakeVisible(isSelected);
     isSelected.onClick = [this](){
@@ -109,7 +111,7 @@ void CuelistSheet::resized()
     labelAndTimeBtn.setBounds(width * 3 / 5, 0, width / 5, 20);
     inspectBtn.setBounds(width * 4 / 5, 0, width / 5, 20);
 
-    int w = width / 10;
+    int w = width / 10.5;
     w = jmin(45, w);
     BKEngine* e = (BKEngine*)Engine::mainEngine;
     float textSize = e->cuelistSheetTextSize->floatValue();
@@ -121,12 +123,13 @@ void CuelistSheet::resized()
     cueIdLabel.setBounds(0.5 * w, 20, w, h);
     cueNameLabel.setBounds(1.5 * w, 20, nameWidth, h);
 
-    htpUpDelayLabel.setBounds(width - (7 * w), 20, w, h);
-    htpDownDelayLabel.setBounds(width - (6 * w), 20, w, h);
-    ltpDelayLabel.setBounds(width - (5 * w), 20, w, h);
-    htpUpFadeLabel.setBounds(width - (4 * w), 20, w, h);
-    htpDownFadeLabel.setBounds(width - (3 * w), 20, w, h);
-    ltpFadeLabel.setBounds(width - (2 * w), 20, w, h);
+    htpUpDelayLabel.setBounds(width - (7.5 * w), 20, w, h);
+    htpDownDelayLabel.setBounds(width - (6.5 * w), 20, w, h);
+    ltpDelayLabel.setBounds(width - (5.5 * w), 20, w, h);
+    htpUpFadeLabel.setBounds(width - (4.5 * w), 20, w, h);
+    htpDownFadeLabel.setBounds(width - (3.5 * w), 20, w, h);
+    ltpFadeLabel.setBounds(width - (2.5 * w), 20, w, h);
+    releaseTrackingLabel.setBounds(width - (1.5 * w), 20, w/2, h);
 
     cueIdLabel.setFont(f);
     cueNameLabel.setFont(f);
@@ -137,6 +140,7 @@ void CuelistSheet::resized()
     htpUpFadeLabel.setFont(f);
     htpDownFadeLabel.setFont(f);
     ltpFadeLabel.setFont(f);
+    releaseTrackingLabel.setFont(f);
 
     viewport.setBounds(0,h+20,width, height-h-20);
 

@@ -41,6 +41,8 @@ public:
     Label cueIdLabel;
     Label cueNameLabel;
 
+    Label releaseTrackingLabel;
+
     Label htpUpDelayLabel;
     Label htpDownDelayLabel;
     Label ltpDelayLabel;

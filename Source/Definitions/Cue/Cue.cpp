@@ -132,6 +132,9 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 			sendChangeMessage();
 		}
 	}
+	else if (p == releaseCurrentTracking && parentCuelist!= nullptr && parentCuelist->cueA != nullptr) {
+		parentCuelist->go(parentCuelist->cueA, 0,0);
+	}
 }
 
 void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)

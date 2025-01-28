@@ -24,6 +24,7 @@ CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 
 	addAndMakeVisible(cueIdLabel);
 	addAndMakeVisible(cueNameLabel);
+	addAndMakeVisible(releaseTrackingButton);
 
 	addAndMakeVisible(htpUpDelayLabel);
 	addAndMakeVisible(htpDownDelayLabel);
@@ -58,6 +59,7 @@ CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 	htpDownFadeLabel.addListener(this);
 	ltpFadeLabel.setEditable(false, true, false);
 	ltpFadeLabel.addListener(this);
+	releaseTrackingButton.addListener(this);
 
 	cueIdLabel.setJustificationType(Justification::right);
 	cueNameLabel.setJustificationType(Justification::left);
@@ -97,7 +99,7 @@ void CuelistSheetLine::paint(Graphics& g)
 void CuelistSheetLine::resized()
 {
 	int width = getWidth();
-	int w = width/10;
+	int w = width/10.5;
 	w = jmin(45, w);
 
 	BKEngine* e = (BKEngine*)Engine::mainEngine;
@@ -112,12 +114,13 @@ void CuelistSheetLine::resized()
 	cueIdLabel.setBounds(0.5 * w, 0, w, h);
 	cueNameLabel.setBounds(1.5 * w, 0, nameWidth, h);
 
-	htpUpDelayLabel.setBounds(width - (7 * w), 0, w, h);
-	htpDownDelayLabel.setBounds(width - (6 * w), 0, w, h);
-	ltpDelayLabel.setBounds(width - (5 * w), 0, w, h);
-	htpUpFadeLabel.setBounds(width - (4 * w), 0, w, h);
-	htpDownFadeLabel.setBounds(width - (3 * w), 0, w, h);
-	ltpFadeLabel.setBounds(width - (2 * w), 0, w, h);
+	htpUpDelayLabel.setBounds(width - (7.5 * w), 0, w, h);
+	htpDownDelayLabel.setBounds(width - (6.5 * w), 0, w, h);
+	ltpDelayLabel.setBounds(width - (5.5 * w), 0, w, h);
+	htpUpFadeLabel.setBounds(width - (4.5 * w), 0, w, h);
+	htpDownFadeLabel.setBounds(width - (3.5 * w), 0, w, h);
+	ltpFadeLabel.setBounds(width - (2.5 * w), 0, w, h);
+	releaseTrackingButton.setBounds(width - (1.5 * w), 0, w/2, h);
 
 	actionsBtn.setBounds(width - (1 * w), 0, 1 * w, h);
 
@@ -151,17 +154,23 @@ void CuelistSheetLine::updateContent()
 	ltpDelayLabel.setText(ltpDelay < 0 ? "-" : String(ltpDelay), juce::dontSendNotification);
 	htpUpFadeLabel.setText(htpInFade < 0 ? "-" : String(htpInFade), juce::dontSendNotification);
 	htpDownFadeLabel.setText(htpOutFade < 0 ? "-" : String(htpOutFade), juce::dontSendNotification);
-	ltpFadeLabel.setText(ltpFade < 0 ? "-" : String(ltpFade), juce::dontSendNotification);
+	ltpFadeLabel.setText(ltpFade < 0 ? "-" : String(ltpFade), juce::dontSendNotification); 
+	releaseTrackingButton.setToggleState(targetCue->releaseCurrentTracking->boolValue(), juce::dontSendNotification);
 
 }
 
 void CuelistSheetLine::buttonClicked(Button* b)
 {
-	ModifierKeys k = ModifierKeys::getCurrentModifiersRealtime();
-	BKEngine::selectionMode m = BKEngine::SET;
-	if (k.isCtrlDown()) m = BKEngine::ADD;
-	if (k.isShiftDown()) m = BKEngine::ADDMULTIPLE;
-	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(targetCue, m);
+	if (b == &isSelected) {
+		ModifierKeys k = ModifierKeys::getCurrentModifiersRealtime();
+		BKEngine::selectionMode m = BKEngine::SET;
+		if (k.isCtrlDown()) m = BKEngine::ADD;
+		if (k.isShiftDown()) m = BKEngine::ADDMULTIPLE;
+		dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(targetCue, m);
+	}
+	else if (b == &releaseTrackingButton) {
+		targetCue->releaseCurrentTracking->setValue(b->getToggleState());
+	}
 }
 
 void CuelistSheetLine::changeListenerCallback(ChangeBroadcaster* source)
