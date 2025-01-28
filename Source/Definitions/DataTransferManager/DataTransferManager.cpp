@@ -250,7 +250,10 @@ void DataTransferManager::execute() {
             Cue* targetCue;
 
             if (copyMode == "add") {
-                targetCue = target->cues.addItem();
+                targetCue = new Cue();
+                target->cues.addItem(targetCue);
+                target->cues.addItemInternal(targetCue, var());
+                target->cues.reorderItems();
                 targetCue->commands.clear();
             }
             else {
@@ -274,7 +277,8 @@ void DataTransferManager::execute() {
             }
             target->selectThis();
             //if (target->cueA == targetCue) {
-                target->go(targetCue,0,0);
+
+            target->go(targetCue,0,0);
             //}
 
             dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(targetCue, BKEngine::SET);
