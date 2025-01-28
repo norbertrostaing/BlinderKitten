@@ -108,6 +108,9 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 		if (userName->getValue().toString() == "New Fixture") {
 			autoName();
 		}
+		for (FixturePatch* p : patchs.items) {
+			p->tryToEnablePatch();
+		}
 	}
 	else if(p == id) 
 	{
