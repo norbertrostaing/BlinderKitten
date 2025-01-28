@@ -123,7 +123,7 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 			if (isOn && (float)sizeValue->getValue() == 0) {
 				kill();
 			}
-			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0) {
+			else if(!isOn && (float)sizeValue->getValue() > 0 && lastSize == 0 && !Engine::mainEngine->isLoadingFile) {
 				userStart(false);
 			}
 		}
