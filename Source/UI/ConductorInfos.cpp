@@ -81,8 +81,8 @@ ConductorInfos::ConductorInfos()
         p.addItem("Insert before", [this]() { updateClicked(INSERTBEFORE); });
         p.addItem("Insert after", [this]() { updateClicked(INSERTAFTER); });
         p.addSeparator();
-        p.addItem("Temp update tracked", [this]() { updateClicked(TEMPTRACKED); });
-        p.addItem("Temp update not tracked", [this]() { updateClicked(TEMPNOTTRACKED);});
+        p.addItem("Temp merge tracked", [this]() { updateClicked(TEMPTRACKED); });
+        p.addItem("Temp merge not tracked", [this]() { updateClicked(TEMPNOTTRACKED);});
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
         };
 
