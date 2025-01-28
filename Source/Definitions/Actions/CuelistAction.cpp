@@ -17,9 +17,9 @@ CuelistAction::CuelistAction(var params) :
     Action(params)
 {
     actionType = (ActionType)(int)params.getProperty("actionType", CL_GO);
-
-    useMainConductor = addBoolParameter("Use main conductor", "", false);
+    cuelistId = nullptr;
     if (actionType != CL_GOALLLOADED) {
+        useMainConductor = addBoolParameter("Use main conductor", "", false);
         cuelistId = addIntParameter("Cuelist ID", "Id oth the target cuelist", 0, 0);
     }
     if (actionType == CL_LOAD || actionType == CL_LOADANDGO) {
@@ -311,7 +311,7 @@ void CuelistAction::onContainerParameterChangedInternal(Parameter* p)
 
 void CuelistAction::updateDisplay()
 {
-    cuelistId->hideInEditor = useMainConductor->boolValue();
+    if (cuelistId != nullptr) cuelistId->hideInEditor = useMainConductor->boolValue();
     
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
