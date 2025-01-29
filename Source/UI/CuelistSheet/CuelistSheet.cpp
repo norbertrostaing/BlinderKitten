@@ -60,6 +60,8 @@ CuelistSheet::CuelistSheet()
         p.addItem("Next cue", [this]() { inspect(1); });
         p.addSeparator();
         p.addItem("Cuelist", [this]() { inspectCuelist(); });
+        p.addSeparator();
+        p.addItem("Export Cuelist as HTML", [this]() { exportCuelist(); });
         p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
         };
 
@@ -219,6 +221,12 @@ void CuelistSheet::inspectCuelist()
 {
     if (targetCuelist == nullptr) { return; }
     targetCuelist->selectThis();
+}
+
+void CuelistSheet::exportCuelist()
+{
+    if (targetCuelist == nullptr) { return; }
+    targetCuelist->exportInTextFile();
 }
 
 void CuelistSheet::updateSelection()

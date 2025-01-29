@@ -259,6 +259,8 @@ public:
     void mergeWithProgrammer(Programmer* p);
     void replaceWithProgrammer(Programmer* p);
 
+    void exportInTextFile();
+
     static Cuelist* create(var params) { return new Cuelist(params); }
 
 };

@@ -67,6 +67,7 @@ public:
 
     void inspect(int delta);
     void inspectCuelist();
+    void exportCuelist();
 
     void updateSelection();
 

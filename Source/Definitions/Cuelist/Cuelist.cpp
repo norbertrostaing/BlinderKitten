@@ -1756,6 +1756,113 @@ void Cuelist::replaceWithProgrammer(Programmer* p)
 	if (targetCue != nullptr) targetCue->replaceContent(p);
 }
 
+void Cuelist::exportInTextFile()
+{
+	FileChooser fc("Save conductor as HTML", File::getCurrentWorkingDirectory(), "*.html");
+	if (!fc.browseForFileToSave(true)) return;
+
+	String output = "";
+	output += "<html><head>";
+	output += "<style>";
+	output += "h2 {margin-bottom:0;}";
+	output += "ul {margin:0;}";
+	output += ".cueText {font-style: italic;}";
+	output += ".goText {font-weight: bold;margin:10px;}";
+	output += "</style>";
+	output += "</head><body>";
+	output += "<h1>"+niceName+"</h1>";
+
+	StringArray offtasks;
+
+	for (Cue* c : cues.items) {
+		if (c->goText->stringValue() != "") {
+			output += "<div class='goText'>Event : "+ c->goText->stringValue()+"</div>";
+		}
+		output += "<h2>" + c->id->stringValue() + " - "+c->niceName+"</h2>";
+
+		float delayIn = c->htpInDelay->floatValue();
+		float delayOut = c->htpOutDelay->floatValue();
+		float delayLTP = c->ltpDelay->floatValue();
+
+		if (delayIn >= 0 && delayOut < 0 && delayLTP < 0) {
+			output += "<div class='timing'>delay : " + c->htpInDelay->stringValue() + "</div>";
+		}
+		else if (delayIn >= 0 || delayOut >= 0 || delayLTP >= 0) {
+			StringArray delays;
+			output += "<div class='timing'> delay : ";
+			if (delayIn > 0) delays.add("in " + c->htpInDelay->stringValue());
+			if (delayOut > 0) delays.add("out " + c->htpOutDelay->stringValue());
+			else if (delayIn > 0) delays.add("out " + c->htpInDelay->stringValue());
+			if (delayLTP > 0) delays.add("ltp " + c->ltpDelay->stringValue());
+			else if (delayIn > 0) delays.add("ltp " + c->htpInDelay->stringValue());
+			output += delays.joinIntoString(", ");
+			output += "</div>";
+		}
+
+
+		float fadeIn = c->htpInFade->floatValue();
+		float fadeOut = c->htpOutFade->floatValue();
+		float fadeLTP = c->ltpFade->floatValue();
+
+		if (fadeIn >= 0 && fadeOut < 0 && fadeLTP < 0) {
+			output += "<div class='timing'>fade : " + c->htpInFade->stringValue() + "</div>";
+		}
+		else if (fadeIn >= 0 || fadeOut >= 0 || fadeLTP >= 0) {
+			StringArray fades;
+			output += "<div class='timing'> fade : ";
+			if (fadeIn > 0) fades.add("in " + c->htpInFade->stringValue());
+			if (fadeOut > 0) fades.add("out " + c->htpOutFade->stringValue());
+			else if (fadeIn > 0) fades.add("out " + c->htpInFade->stringValue());
+			if (fadeLTP > 0) fades.add("ltp " + c->ltpFade->stringValue());
+			else if (fadeIn > 0) fades.add("ltp " + c->htpInFade->stringValue());
+			output += fades.joinIntoString(", ");
+			output += "</div>";
+		}
+
+
+		if (c->cueText->stringValue() != "") {
+			output += "<div class='cueText'>" + c->cueText->stringValue() + "</div>";
+		}
+
+		output += "<ul class='commands'>";
+		if (c->releaseCurrentTracking->boolValue()) {
+			output += "<li>release tracking</li>";
+		}
+		for (String cmd : offtasks) {
+			output += "<li>" + cmd + "</li>";
+		}
+		offtasks.clear();
+		StringArray commands;
+		commands.addTokens(c->getCommandsText(true), "\n", "\"");
+		for (String cmd : commands) {
+			output += "<li>" + cmd + "</li>";
+		}
+		for (Task* t : c->tasks.items) {
+			output += "<li>" + t->niceName + "</li>";
+		}
+		for (Task* t : c->tasksOffCue.items) {
+			offtasks.add(t->niceName);
+		}
+		output += "</ul>";
+	}
+
+	output += "</body></html>";
+
+	File file = fc.getResult();
+	if (file.exists()) file.deleteFile();
+	file.create();
+	std::unique_ptr<OutputStream> os(file.createOutputStream());
+	if (os == nullptr)
+	{
+		LOGERROR("Error saving document, please try again");
+		return;
+	}
+
+	os->writeString(output);
+	os->flush();
+
+}
+
 void Cuelist::tapTempo() {
 	double now = Time::getMillisecondCounterHiRes();
 	double delta = now - lastTapTempo;
