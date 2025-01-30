@@ -583,13 +583,7 @@ void VirtualFaderColGrid::sliderClicked(Slider* s)
 
 void VirtualFaderColGrid::editCol(int id) {
     if (id < 1 || id > cols) {return; }
-    VirtualFaderCol* vf = columnToVFC.getReference(id);
-    if (vf == nullptr) {
-        vf = VirtualFaderColManager::getInstance()->addItem();
-        vf->pageNumber->setValue(page);
-        vf->colNumber->setValue(id);
-        fillCells();
-    }
+    VirtualFaderCol* vf = VirtualFaderColGrid::getInstance()->getVirtualFaderCol(id, true);
     vf->selectThis();
 }
 
