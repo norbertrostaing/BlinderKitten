@@ -35,7 +35,12 @@ public:
     Point2DParameter* outputRange14b = nullptr;
 
     StringParameter* address = nullptr;
-    FloatParameter* oscOutputValue = nullptr;
+    enum OscType { TRIGGER, BOOLEAN, INTEGER, FLOAT, STRING};
+    EnumParameter* oscType = nullptr;
+    BoolParameter* oscOutputValueBool = nullptr;
+    IntParameter* oscOutputValueInt = nullptr;
+    FloatParameter* oscOutputValueFloat = nullptr;
+    StringParameter* oscOutputValueString = nullptr;
     Point2DParameter* outputRangeOSC = nullptr;
 
     BoolParameter* linkInput;

@@ -46,8 +46,13 @@ InterfaceAction::InterfaceAction(var params) :
         oscInterface->maxDefaultSearchLevel = 0;
 
         address = addStringParameter("Address", "OSC address you wanna send", "/example");
+        oscType = addEnumParameter("Value type", "Sets the type to send");
+        oscType->addOption("Trigger", TRIGGER)->addOption("Boolean", BOOLEAN)->addOption("Integer", INTEGER)->addOption("Float", FLOAT)->addOption("String", STRING);
         linkInput = addBoolParameter("Link value with input", "", false);
-        oscOutputValue = addFloatParameter("Output Value", "Value you wanna send", 0);
+        oscOutputValueBool = addBoolParameter("Bool Output Value", "Value you wanna send", 0);
+        oscOutputValueInt = addIntParameter("Int Output Value", "Value you wanna send", 0);
+        oscOutputValueFloat = addFloatParameter("Float Output Value", "Value you wanna send", 0);
+        oscOutputValueString = addStringParameter("String Output Value", "Value you wanna send", "");
         outputRangeOSC = addPoint2DParameter("OSC Output Range", "The range to remap the value to.");
     }
     updateDisplay();
@@ -69,15 +74,23 @@ void InterfaceAction::updateDisplay()
         pitchOrNumber->hideInEditor = midiType->getValueDataAsEnum<MidiType>() == PITCHWHEEL;
     }
     else if (actionType == OSC_SEND) {
-        oscOutputValue->hideInEditor = linkInput->boolValue();
-        outputRangeOSC->hideInEditor = !linkInput->boolValue();
+        OscType t = oscType->getValueDataAsEnum<OscType>();
+        
+        linkInput->hideInEditor = t != BOOLEAN && t != INTEGER && t != FLOAT;
+
+        oscOutputValueBool->hideInEditor = t != BOOLEAN || linkInput->boolValue();
+        oscOutputValueInt->hideInEditor = t != INTEGER || linkInput->boolValue();
+        oscOutputValueFloat->hideInEditor = t != FLOAT || linkInput->boolValue();
+        oscOutputValueString->hideInEditor = t != STRING;
+
+        outputRangeOSC->hideInEditor = !((t == INTEGER || t == FLOAT) && linkInput->boolValue());
     }
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void InterfaceAction::onContainerParameterChangedInternal(Parameter* p)
 {
-    if (p == linkInput || p == midiType) {
+    if (p == linkInput || p == midiType || p == oscType) {
         updateDisplay();
     }
 }
@@ -141,14 +154,26 @@ void InterfaceAction::setValueInternal(var value, String origin, int incrementIn
         }
 
         OSCMessage msg(address->stringValue());
-        float sendValue = 0;
-        if (linkInput->boolValue()) {
-            sendValue = jmap((float)value, 0.0f, 1.0f, outputRangeOSC->x, outputRangeOSC->y);
+
+        OscType t = oscType->getValueDataAsEnum<OscType>();
+        bool link = linkInput->boolValue();
+        if (!link && (float)value != 1) return;
+
+        if (t == BOOLEAN) {
+            bool sendValue = link ? (float)value == 1 : oscOutputValueBool->boolValue();
+            msg.addArgument(OSCHelpers::varToArgument(sendValue, OSCHelpers::TF));
         }
-        else {
-            sendValue = oscOutputValue->floatValue();
+        else if (t == INTEGER) {
+            int sendValue = link ? round(jmap((float)value, 0.0f, 1.0f, outputRangeOSC->x, outputRangeOSC->y)) : oscOutputValueInt->intValue();
+            msg.addArgument(OSCHelpers::varToArgument(sendValue, OSCHelpers::TF));
         }
-        msg.addArgument(OSCHelpers::varToArgument(sendValue, OSCHelpers::TF));
+        else if (t == FLOAT) {
+            float sendValue = link ? jmap((float)value, 0.0f, 1.0f, outputRangeOSC->x, outputRangeOSC->y) : oscOutputValueFloat->floatValue();
+            msg.addArgument(OSCHelpers::varToArgument(sendValue, OSCHelpers::TF));
+        }
+        else if(t == STRING) {
+            msg.addArgument(OSCHelpers::varToArgument(oscOutputValueString->stringValue(), OSCHelpers::TF));
+        }
 
         for (OSCInterface* i : interfaces) {
             i->sendOSC(msg);
