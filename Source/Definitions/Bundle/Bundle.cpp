@@ -172,10 +172,10 @@ void Bundle::tapTempo()
 
 void Bundle::setSize(float val, bool size, bool HTP, bool LTP, bool flash)
 {
-	if (HTP) lastHTP == val;
-	if (LTP) lastLTP == val;
-	if (size) lastSize == val;
-	if (flash) lastFlash == val;
+	if (HTP) lastHTP = val;
+	if (LTP) lastLTP = val;
+	if (size) lastSize = val;
+	if (flash) lastFlash = val;
 
 	Brain::getInstance()->virtualFadersNeedUpdate = true;
 

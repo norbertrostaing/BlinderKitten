@@ -68,7 +68,9 @@ void FixtureMapping::onContainerParameterChangedInternal(Parameter* p)
         Interface* i = dynamic_cast<Interface*>(outputInterface->targetContainer.get());
         outputInterfaceType = i->getTypeString();
     }
-    updateDisplay();
+    if (p == outputInterface || p == midiType) {
+        updateDisplay();
+    }
 }
 
 void FixtureMapping::updateDisplay()
