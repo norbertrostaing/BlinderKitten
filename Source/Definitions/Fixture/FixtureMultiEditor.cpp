@@ -34,7 +34,7 @@ FixtureMultiEditor::FixtureMultiEditor() :
     targetInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
     targetInterface->maxDefaultSearchLevel = 0;
     firstAddress = repatcher.addIntParameter("Address", "First address ", 1, 1, 512);
-    adressesInterval = repatcher.addIntParameter("Interval", "Fixtures will be patched every X", 1, 1, 512);
+    adressesInterval = repatcher.addIntParameter("Interval", "Fixtures will be patched every X", 1);
     addPatchBtn = repatcher.addTrigger("Add patchs", "add the patch to fixtures");
     unpatchBtn = repatcher.addTrigger("Reset patch", "Delete all patchs of selected fixtures");
     addChildControllableContainer(&repatcher);
@@ -121,7 +121,8 @@ void FixtureMultiEditor::goAddPatch() {
     int interval = adressesInterval->getValue();
     Interface* outInterface = dynamic_cast<Interface*>(targetInterface->targetContainer.get());
     if (outInterface == nullptr) { LOGWARNING("you must specify a target interface"); return; }
-    for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
+    bool continuePatch = true;
+    for (int i = 0; i < selectionManager->currentInspectables.size() && continuePatch; i++) {
         Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
 
         if (f->objectType == "Fixture") {
@@ -130,13 +131,15 @@ void FixtureMultiEditor::goAddPatch() {
                 FixturePatch* p = f->patchs.addItem();
                 p->targetInterface->setValueFromTarget(outInterface);
                 p->address->setValue(address);
-                int delta = interval;
+                int delta = abs(interval);
 
                 for (int cn = 0; cn < ft->chansManager.items.size(); cn++) {
                     int chanSize = ft->chansManager.items[cn]->resolution->getValue().toString()=="16bits" ? 1 : 0;
                     delta = jmax(delta, (int)ft->chansManager.items[cn]->dmxDelta->getValue()+chanSize);
                 }
-                address += delta;
+                if (interval >= 0) address += delta;
+                else address -= delta;
+                if (address > 512 || address < 1) continuePatch = false;
             }
             else {
                 LOGWARNING("Fixture type not valid");

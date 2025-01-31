@@ -298,7 +298,8 @@ void Assistant::patchFixtures()
     int currentAdress = firstAddress;
 
     Array<Fixture*> newFixts;
-    for (int i = 0; i < amount; i++) {
+    bool continuePatch = true;
+    for (int i = 0; i < amount && continuePatch; i++) {
         const MessageManagerLock mmLock;
         Fixture* f = new Fixture();
         newFixts.add(f);
@@ -314,13 +315,17 @@ void Assistant::patchFixtures()
             FixturePatch* p = f->patchs.addItem();
             p->targetInterface->setValueFromTarget(targetInterface);
             p->address->setValue(currentAdress);
-            int delta = addressInterval;
+            int delta = abs(addressInterval);
 
             for (int cn = 0; cn < fixtureType->chansManager.items.size(); cn++) {
                 int chanSize = fixtureType->chansManager.items[cn]->resolution->getValue().toString() == "16bits" ? 1 : 0;
                 delta = jmax(delta, (int)fixtureType->chansManager.items[cn]->dmxDelta->getValue() + chanSize);
+
             }
-            currentAdress += delta;
+
+            if (addressInterval >= 0) currentAdress += delta;
+            else currentAdress -= delta;
+            if (currentAdress>512||currentAdress<1) continuePatch = false;
         }
     }
 
