@@ -98,6 +98,8 @@ public:
     void offsetEncoders(int n);
     void clear();
 
+    void mouseDown(const MouseEvent& e);
+    bool disableNextExplode = false;
 
     int encoderRange = 0;
 

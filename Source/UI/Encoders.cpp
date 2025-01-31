@@ -97,6 +97,9 @@ Encoders::Encoders():
     addAndMakeVisible(&commandNumber);
     commandNumber.setJustificationType(juce::Justification::centred);
     initEncoders();
+
+    explodeCommandBtn.addMouseListener(this, false);
+
 }
 
 Encoders::~Encoders()
@@ -241,7 +244,9 @@ void Encoders::buttonClicked(Button* b) {
         updateChannels();
     }
     else if (b == &explodeCommandBtn) {
-        if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+        if (disableNextExplode) {
+            disableNextExplode = false;
+        } else if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
@@ -623,4 +628,34 @@ void Encoders::clear()
 {
     channels.clear();
     clearFilters();
+}
+
+void Encoders::mouseDown(const MouseEvent& e)
+{
+    if (e.eventComponent != &explodeCommandBtn) return;
+    if (e.mods.isRightButtonDown()) {
+        PopupMenu p;
+        p.addItem("Explode command", [this]() {
+            if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+                UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
+                UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+            }
+            });
+        p.addItem("Explode command with output", [this]() {
+            if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+                UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection(true);
+                UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+            }
+            });
+        p.showMenuAsync(PopupMenu::Options(), [this](int result) {});
+
+    }
+    else {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
+            UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+        }
+    }
+    // do something else
+    updateChannels();
 }

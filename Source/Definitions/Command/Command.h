@@ -92,7 +92,7 @@ public:
     float getChannelValue(ChannelType* t, bool thru = false);
     String lastTarget = "";
 
-    void explodeSelection();
+    void explodeSelection(bool takeOutputValue = false);
     void cleanUnused();
 
 };

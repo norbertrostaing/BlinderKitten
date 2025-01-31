@@ -906,7 +906,7 @@ float Command::getChannelValue(ChannelType* t, bool thru) {
 	return val;
 }
 
-void Command::explodeSelection()
+void Command::explodeSelection(bool takeOutputValue)
 {
 	const MessageManagerLock mmLock;
 	BaseManager<Command>* parentManager = dynamic_cast<BaseManager<Command>*>(parentContainer.get());
@@ -935,7 +935,10 @@ void Command::explodeSelection()
 					CommandValue* cv = newCommand->values.addItem();
 					cv->channelType->setValueFromTarget(chan->channelType);
 					std::shared_ptr<ChannelValue> chanVal = computedValues.contains(chan) ? computedValues.getReference(chan) : nullptr;
-					if (chanVal != nullptr) {
+					if (takeOutputValue) {
+						cv->valueFrom->setValue(chan->currentValue);
+					}
+					else if (chanVal != nullptr) {
 						cv->valueFrom->setValue(chanVal->endValue);
 					}
 				}
