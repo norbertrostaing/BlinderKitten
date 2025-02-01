@@ -183,6 +183,16 @@ void Tracker::computeData() {
 				
 				Fixture* f = sf->parentFixture;
 
+				bool invertPan = sfcPan->invertOutput;
+				bool invertTilt = sfcTilt->invertOutput;
+				if (f->patchs.items.size() > 0) {
+					for (FixturePatchCorrection* fpc : f->patchs.items[0]->corrections.items) {
+						ChannelType* chanType = dynamic_cast<ChannelType*>(fpc->channelType->targetContainer.get());
+						if (chanType == panChanType && fpc->invertChannel->boolValue()) invertPan = !invertPan;
+						if (chanType == tiltChanType && fpc->invertChannel->boolValue()) invertTilt = !invertTilt;
+					}
+				}
+
 				Vector3D<float> fixtPosition = f->position->getVector(); 
 				Vector3D<float> fixtRotation = -f->rotation->getVector(); 
 				fixtRotation.x = degreesToRadians(fixtRotation.x);
@@ -208,6 +218,13 @@ void Tracker::computeData() {
 				float maxPan =  sfcPan->parentFixtureTypeChannel->physicalRange->y;
 				float minTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->x;
 				float maxTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->y;
+
+				if (invertPan) {
+					float temp = minPan; minPan = maxPan; maxPan = temp;
+				}
+				if (invertTilt) {
+					float temp = minTilt; minTilt = maxTilt; maxTilt = temp;
+				}
 
 				//LOG("origin pan : " << panAngle << "    origin tilt : "<< tiltAngle);
 				if (minPan < maxPan) {
