@@ -139,6 +139,7 @@ void Layout::computeData()
 			p->isComputing.enter();
 			for (auto it = p->subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
 				subFixtToPos.set(it.getKey(), it.getValue());
+				fixtToPos.set(it.getKey()->parentFixture, it.getValue());
 			}
 			p->isComputing.exit();
 			p->clearFixtImages();

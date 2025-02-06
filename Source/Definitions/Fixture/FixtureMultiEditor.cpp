@@ -15,6 +15,8 @@
 #include "FixtureManager.h"
 #include "FixturePatch.h"
 #include "../Interface/InterfaceIncludes.h"
+#include "Brain.h"
+#include "Definitions/Layout/Layout.h"
 
 juce_ImplementSingleton(FixtureMultiEditor)
 
@@ -23,7 +25,8 @@ FixtureMultiEditor::FixtureMultiEditor() :
     renamer("Rename fixtures"),
     repatcher("Repatch fixtures"),
     renumberer("Change fixture IDs"),
-    typeChanger("Change Fixture type")
+    typeChanger("Change Fixture type"),
+    positionnerContainer("Reposition fixtures")
 {    
     newName = renamer.addStringParameter("New Name", "if ends with a space then a number, this number will be used to increment name", "");
     renameBtn = renamer.addTrigger("Rename Fixtures", "");
@@ -48,11 +51,30 @@ FixtureMultiEditor::FixtureMultiEditor() :
     newType->maxDefaultSearchLevel = 0;
     changeTypeBtn = typeChanger.addTrigger("Change Fixtures type", "Change the type al all these fixtures");
     addChildControllableContainer(&typeChanger);
-    // updateDisplay();
+
+    posAxis = positionnerContainer.addEnumParameter("Axis", "Axis to change");
+    posAxis->addOption("X", "X")->addOption("Y", "Y")->addOption("Z", "Z");
+    posAction = positionnerContainer.addEnumParameter("Action", "What kind of data do you want");
+    posAction->addOption("Set Value", "value")->addOption("Set range", "range")->addOption("Get from Layout", "layout");
+    posValue = positionnerContainer.addFloatParameter("Value", "", 0.0);
+    posRange = positionnerContainer.addPoint2DParameter("First and last", "");
+    posLayoutId = positionnerContainer.addIntParameter("Layout ID", "", 0);
+    posLayoutAxis = positionnerContainer.addEnumParameter("Layout Axis", "");
+    posLayoutAxis->addOption("X", "X")->addOption("Y", "Y");
+    positionnerBtn = positionnerContainer.addTrigger("Move Fixtures", "");
+    addChildControllableContainer(&positionnerContainer);
+    updateDisplay();
 }
 
 void FixtureMultiEditor::updateDisplay() {
+    
+    String action = posAction->getValueData();
+    posValue->hideInEditor = action != "value";
+    posRange->hideInEditor = action != "range";
+    posLayoutId->hideInEditor = action != "layout";
+    posLayoutAxis->hideInEditor = action != "layout";
 
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
 void FixtureMultiEditor::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
@@ -70,6 +92,12 @@ void FixtureMultiEditor::onControllableFeedbackUpdateInternal(ControllableContai
     }
     else if (c == changeTypeBtn) {
         goChangeType();
+    } 
+    else if (c == positionnerBtn) {
+        goMove();
+    }
+    else if (c == posAction) {
+        updateDisplay();
     }
 }
 
@@ -163,6 +191,54 @@ void FixtureMultiEditor::goRenumber() {
         }
     }
     FixtureManager::getInstance()->queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, FixtureManager::getInstance()));
+}
+
+void FixtureMultiEditor::goMove()
+{
+    Array<Fixture*> fixts;
+    for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
+        Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
+        if (f != nullptr && f->objectType == "Fixture") {
+            fixts.add(f);
+        }
+    }
+
+    String act = posAction->getValueData();
+    Layout * l = nullptr;
+    int layAxis = 0;
+    if (act == "layout") {
+        l = Brain::getInstance()->getLayoutById(posLayoutId->intValue());
+        l->computeData();
+        if (posLayoutAxis->getValueData() == "Y") layAxis = 1;
+    }
+    for (int i = 0; i < fixts.size(); i++) {
+        Fixture* f = fixts[i];
+        int axis = 0;
+        String axisName = posAxis->getValueKey();
+        var arrValue = var();
+        arrValue.append(f->position->value[0]);
+        arrValue.append(f->position->value[1]);
+        arrValue.append(f->position->value[2]);
+        //arrValue = f->position->getValue();
+        if (axisName == "Y") axis = 1;
+        if (axisName == "Z") axis = 2;
+        float v = f->position->value[axis];
+
+        if (act == "value") {
+            v = posValue->getValue();
+        }
+        else if (act == "range") {
+            v = jmap((float)i, (float)0, (float)fixts.size()-1, (float)posRange->value[0], (float)posRange->value[1]);
+        }
+        else if (act == "layout" && l != nullptr) {
+            auto p = l->fixtToPos.getReference(f);
+            if (p != nullptr) {
+                v = layAxis == 1 ? p->getY() : p->getX();
+            }
+        }
+        arrValue[axis] = v;
+        f->position->setVector(arrValue[0], arrValue[1], arrValue[2]);
+    }
 }
 
 void FixtureMultiEditor::goChangeType() {

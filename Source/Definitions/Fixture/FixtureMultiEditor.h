@@ -44,6 +44,15 @@ public:
 	TargetParameter* newType;
 	Trigger* changeTypeBtn;
 
+	ControllableContainer positionnerContainer;
+	EnumParameter* posAxis;
+	EnumParameter* posAction;
+	FloatParameter* posValue;
+	Point2DParameter* posRange;
+	IntParameter* posLayoutId;
+	EnumParameter* posLayoutAxis;
+	Trigger* positionnerBtn;
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 	void updateDisplay();
 	void goChangeType();
@@ -51,5 +60,6 @@ public:
 	void goUnpatch();
 	void goAddPatch();
 	void goRenumber();
+	void goMove();
 
 };
