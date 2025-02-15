@@ -809,7 +809,7 @@ void UserInputManager::goMainCuelist()
 	int targetCueId = engine->conductorCuelistId->intValue();
 	Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
 	if (target == nullptr) return;
-	target->go();
+	target->userGo();
 }
 
 String UserInputManager::toUserText(String s) {
