@@ -65,7 +65,7 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
     {
     case CL_GO:
         if (val == 1) {
-            target->go();
+            target->userGo();
         }
         break;
 
@@ -77,7 +77,7 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
 
     case CL_GOINSTANT:
         if (val == 1) {
-            target->go(0,0);
+            target->userGo(0,0);
         }
         break;
 
@@ -89,7 +89,7 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
 
     case CL_GORANDOM:
         if (val == 1) {
-            target->go();
+            target->goRandom();
         }
         break;
 
@@ -111,7 +111,7 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
                 target->off();
             }
             else {
-                target->go();
+                target->userGo();
             }
         }
         break;
