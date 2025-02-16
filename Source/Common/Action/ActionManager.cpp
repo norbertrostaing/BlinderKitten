@@ -115,6 +115,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Size", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SET_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Tap Tempo", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TAPTEMPO));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SET_SPEED));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Double Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_DOUBLESPEED));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Half Speed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_HALFSPEED));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Flash", &BundleAction::create)->addParam("actionType", BundleAction::BUN_FLASH));

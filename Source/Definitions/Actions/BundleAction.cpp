@@ -23,6 +23,10 @@ BundleAction::BundleAction(var params) :
         maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
     }
 
+    if (actionType == BUN_SET_SPEED) {
+        finalSpeed = addFloatParameter("Speed", "Speed you want to give", 600, 0);
+    }
+
 
     if (actionType == BUN_SIZE || actionType == BUN_SET_SIZE) {
         useHTP = addBoolParameter("Move HTP", "Change size of HTP Level of cuelists", true);
@@ -101,6 +105,13 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
             target->setSpeed(val);
         }
         break;
+
+    case BUN_SET_SPEED:
+        if (val == 1) {
+            target->setSpeed(finalSpeed->floatValue());
+        }
+        break;
+
 
     case BUN_DOUBLESPEED:
         if (val == 1) {
