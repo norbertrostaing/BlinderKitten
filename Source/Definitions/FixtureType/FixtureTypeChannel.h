@@ -35,8 +35,10 @@ class FixtureTypeChannel:
     TargetParameter* virtualMaster;
 
     Point2DParameter* physicalRange;
+    Automation curve;
 
     void onContainerParameterChangedInternal(Parameter* p);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 };
 

@@ -24,6 +24,23 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     objectData(params)
 
 {
+
+    curve.editorIsCollapsed = true;
+    curve.setNiceName("Out curve");
+    curve.allowKeysOutside = false;
+    curve.isSelectable = false;
+    curve.length->setValue(1);
+    curve.addKey(0, 0, false);
+    curve.items[0]->easingType->setValueWithData(Easing::LINEAR);
+    curve.addKey(1, 1, false);
+    curve.selectItemWhenCreated = false;
+    curve.editorCanBeCollapsed = true;
+    curve.setCanBeDisabled(true);
+    curve.enabled->setValue(false);
+
+    curve.saveAndLoadRecursiveData = true;
+    saveAndLoadRecursiveData = true;
+
     nameCanBeChangedByUser = false;
     canBeDisabled = false;
     channelType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
@@ -54,6 +71,11 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     virtualMaster->maxDefaultSearchLevel = 2;
 
     physicalRange = addPoint2DParameter("Physical range", "Range output (degrees for pan, tilt, zoom etc...");
+
+
+    addChildControllableContainer(&curve);
+
+
 };
 
 FixtureTypeChannel::~FixtureTypeChannel()
@@ -85,5 +107,16 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     }
     else if (p == defaultValue || p == invertOutput) {
         FixtureManager::getInstance()->defaultValueChanged(this);
+    }
+}
+
+void FixtureTypeChannel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+    if (cc == &curve) {
+        for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
+            if (sfc->parentFixtureTypeChannel == this) {
+                Brain::getInstance()->pleaseUpdate(sfc);
+            }
+        }
     }
 }

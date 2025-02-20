@@ -140,6 +140,10 @@ void SubFixtureChannel::writeValue(float v) {
 
 	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
 
+		if (parentFixtureTypeChannel->curve.enabled->boolValue()) {
+			v = parentFixtureTypeChannel->curve.getValueAtPosition(v);
+		}
+
 		int deltaAdress = parentFixtureTypeChannel->dmxDelta->intValue();
 		deltaAdress--;
 		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
