@@ -270,11 +270,12 @@ void DataTransferManager::execute() {
                 targetCue->commands.clear();
             }
 
-            ScopedLock lock(source->computing);
+            source->computing.enter();
             for (int i = 0; i < source->commands.items.size(); i++) {
                 Command* c = targetCue->commands.addItem();
                 c->loadJSONData(source->commands.items[i]->getJSONData());
             }
+            source->computing.exit();
             target->selectThis();
             //if (target->cueA == targetCue) {
 
