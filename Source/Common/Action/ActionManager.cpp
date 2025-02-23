@@ -154,6 +154,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Load all cuelists in programmer", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_LOADALLCUELISTS));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Select Window", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SELECTWINDOW));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Save", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SAVE));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Use another", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_USEANOTHER));
 
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value Parameter", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TYPE));
@@ -175,9 +176,6 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Interface", "Send MIDI", &InterfaceAction::create)->addParam("actionType", InterfaceAction::MIDI_SEND));
     defs.add(Factory<Action>::Definition::createDef("Interface", "Send OSC", &InterfaceAction::create)->addParam("actionType", InterfaceAction::OSC_SEND));
-
-    defs.add(Factory<Action>::Definition::createDef("Preset", "Preset use another", &PresetAction::create)->addParam("actionType", PresetAction::PRESET_SET));
-    defs.add(Factory<Action>::Definition::createDef("Preset", "Timing preset use another", &PresetAction::create)->addParam("actionType", PresetAction::TIMING_PRESET_SET));
 
     defs.add(Factory<Action>::Definition::createDef("Generic", "Set Parameter Value", &GenericAction::create)->addParam("actionType", GenericAction::SET_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Generic", "Trigger a control", &GenericAction::create)->addParam("actionType", GenericAction::TRIGGER));

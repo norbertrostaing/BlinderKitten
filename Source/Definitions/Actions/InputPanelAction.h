@@ -19,15 +19,28 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE, IP_UPDATE, IP_REPLACE, IP_LOADCONTENT};
+    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE, IP_UPDATE, IP_REPLACE, IP_LOADCONTENT, IP_USEANOTHER};
     ActionType actionType;
     EnumParameter* targetButton;
     IntParameter* randomSeed;
     IntParameter* targetEncoder;
     EnumParameter* targetWindow;
 
+    EnumParameter* useAnotherTargetType;
+    IntParameter* useAnotherTargetId;
+    BoolParameter* useAnotherRandomize;
+
+    IntParameter* useAnotherOtherId;
+    IntParameter* useAnotherFromId;
+    IntParameter* useAnotherToId;
+
+
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
+    void setAnother();
+
+    void onContainerParameterChangedInternal(Parameter*);
+    void updateDisplay();
 
     var getValue();
 
