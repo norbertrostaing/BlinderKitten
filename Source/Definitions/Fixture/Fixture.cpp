@@ -43,6 +43,7 @@ Fixture::Fixture(var params) :
 	id = addIntParameter("ID", "ID of this Fixture", 1, 1);
 	userName = addStringParameter("Name", "Name of this Fixture", "New Fixture");
 	updateName();
+	useAnotherId = addIntParameter("Use another", "id of another fixture to use instead of this one", 0, 0);
 
 	devTypeParam = addTargetParameter("Fixture type", "Type of Fixture", FixtureTypeManager::getInstance());
 	devTypeParam -> targetType = TargetParameter::CONTAINER;

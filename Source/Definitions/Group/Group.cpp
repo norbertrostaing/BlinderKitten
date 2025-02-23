@@ -30,6 +30,7 @@ Group::Group(var params) :
 	id = addIntParameter("ID", "ID of this group", 1, 1);
 	userName = addStringParameter("Name", "Name of this group","New group");
 	updateName();
+	useAnotherId = addIntParameter("Use another", "id of another group to use instead of this one", 0, 0);
 
 	addChildControllableContainer(&selection);
 	Brain::getInstance()->registerGroup(this, id->getValue());

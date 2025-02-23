@@ -1170,8 +1170,13 @@ SubFixture* Brain::getSubFixtureById(int id) {
     }
 }
 
-Fixture* Brain::getFixtureById(int id) {
+Fixture* Brain::getFixtureById(int id, bool followIfAnother) {
     if (fixtures.contains(id)) {
+        if (followIfAnother) {
+            if (fixtures.getReference(id)->useAnotherId->intValue() > 0) {
+                return getFixtureById(fixtures.getReference(id)->useAnotherId->intValue());
+            }
+        }
         return fixtures.getReference(id);
     }
     else {
@@ -1179,8 +1184,13 @@ Fixture* Brain::getFixtureById(int id) {
     }
 }
 
-Group* Brain::getGroupById(int id) {
+Group* Brain::getGroupById(int id, bool followIfAnother) {
     if (groups.contains(id)) {
+        if (followIfAnother) {
+            if (groups.getReference(id)->useAnotherId->intValue() > 0) {
+                return getGroupById(groups.getReference(id)->useAnotherId->intValue());
+            }
+        }
         return groups.getReference(id);
     }
     else {

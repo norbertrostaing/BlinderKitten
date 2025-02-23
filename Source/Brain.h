@@ -155,8 +155,8 @@ public:
     //void updateChannel(SubFixtureChannel* fc);
 
     SubFixture* getSubFixtureById(int id);
-    Fixture* getFixtureById(int id);
-    Group* getGroupById(int id);
+    Fixture* getFixtureById(int id, bool followIfAnother = false);
+    Group* getGroupById(int id, bool followIfAnother = false);
     Preset* getPresetById(int id, bool followIfAnother = false);
     Cuelist* getCuelistById(int id);
     Programmer* getProgrammerById(int id);

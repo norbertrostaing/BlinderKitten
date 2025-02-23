@@ -25,6 +25,7 @@ public:
     IntParameter* id;
     int registeredId = 0;
     StringParameter* userName;
+    IntParameter* useAnotherId;
     void onContainerParameterChangedInternal(Parameter* p);
     void updateName();
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);

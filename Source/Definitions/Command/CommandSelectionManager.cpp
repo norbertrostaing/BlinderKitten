@@ -48,8 +48,8 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 
 			if (selections[selId]->targetType->getValue() == "fixture") {
 				for (int id = idFrom; id != idThru + mod; id = id + mod) {
-					if (b->fixtures.contains(id)) {
-						Fixture* fixt = b->fixtures.getReference(id);
+					Fixture* fixt = b->getFixtureById(id, true);
+					if (fixt != nullptr) {
 						if (selections[selId]->subSel->getValue()) {
 							int subFrom = selections[selId]->subFrom->getValue();
 							int subThru = selections[selId]->subThru->getValue() ? selections[selId]->subTo->intValue() : subFrom;
@@ -69,8 +69,8 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 			}
 			else if (selections[selId]->targetType->stringValue() == "group") {
 				for (int id = idFrom; id != idThru + mod; id = id + mod) {
-					if (b->groups.contains(id)) {
-						Group* g = b->groups.getReference(id);
+					Group* g = b->getGroupById(id, true);
+					if (g!=nullptr) {
 						int count = 0;
 						int groupId = g->id->getValue();
 						for (int histIndex = 0; histIndex < groupHistory.size(); histIndex++) {
