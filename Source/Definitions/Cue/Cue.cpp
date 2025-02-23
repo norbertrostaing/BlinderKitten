@@ -281,6 +281,13 @@ void Cue::update(double now) {
 			parentCuelist->go();
 		}
 	}
+
+	if (parentCuelist->isChaser->boolValue() && parentCuelist->isCuelistOn->boolValue()) {
+		if (parentCuelist->lastGoTS + parentCuelist->chaserStepDuration + 500 < now) {
+			parentCuelist->go();
+		}
+	}
+
 }
 
 void Cue::endTransition() {

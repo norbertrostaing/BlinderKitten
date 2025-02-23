@@ -30,6 +30,8 @@ public:
     bool isDeleting = false;
     bool transitionRunning = false;
 
+    double lastGoTS = 0;
+
     IntParameter* id;
     IntParameter* layerId;
     int registeredId = 0;

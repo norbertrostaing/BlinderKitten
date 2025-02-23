@@ -536,6 +536,7 @@ void Cuelist::go(float forcedDelay, float forcedFade) {
 void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	//const MessageManagerLock mmLock;
 	double now = Time::getMillisecondCounterHiRes();
+	lastGoTS = now;
 	if (TSLateCompensation > 0) {
 		bool compensate = false;
 		if (isChaser->boolValue()) {
@@ -549,7 +550,6 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		}
 		TSLateCompensation = 0;
 	}
-
 
 	isComputing.enter();
 	TSTransitionStart = now;
@@ -1112,6 +1112,7 @@ void Cuelist::update() {
 			wannaOffFlash = false;
 		}
 	}
+
 	isComputing.exit();
 }
 
