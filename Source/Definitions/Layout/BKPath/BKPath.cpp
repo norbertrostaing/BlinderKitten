@@ -27,16 +27,12 @@ BKPath::BKPath(var params) :
     pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Rod", PATH_ROD)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE);
     position = addPoint2DParameter("Position", "Position in your layout");
 
-    d[0] = 5;    d[1] = 0;
     lineEndPosition = addPoint2DParameter("End position", "");
-    lineEndPosition->setDefaultValue(d);
 
     rodSize = addFloatParameter("Rod size", "", 1,0);
     rodAngle = addFloatParameter("Rod Angle", "Angle of your rod", 0, -360, 360);
 
-    d[0] = 4;    d[1] = 4;
     gridSize = addPoint2DParameter("Size", "Size of your grid");
-    gridSize->setDefaultValue(d);
     //gridSize->setBounds(0,0, (float)INT16_MAX, (float)INT16_MAX);
     gridAngle = addFloatParameter("Grid Angle", "Angle of your grid", 0,-360,360);
     gridNumberOfElements = addIntParameter("Number per line", "Change direction after N elements",8,2);
@@ -53,9 +49,7 @@ BKPath::BKPath(var params) :
     circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
     circleTo = addFloatParameter("To angle", "Angle of the last element", 360, -360, 360);
 
-    d[0] = 20;    d[1] = 20;
     tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
-    tilesSize->setDefaultValue(d);
     textSize = addFloatParameter("Text size", "", 10, 0);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", false);
 
@@ -68,6 +62,14 @@ BKPath::BKPath(var params) :
     fixturesAngleTo = addFloatParameter("Fixture rotation to", "Angle of the last element", 0, -360, 360);
     labelPosition = addEnumParameter("Label position", "Position of your labels for this path");
     labelPosition->addOption("Centered", CENTER)->addOption("Top", TOP)->addOption("Bottom", BOTTOM)->addOption("Left", LEFT)->addOption("Right", RIGHT)->addOption("Hidden", HIDDEN);
+
+    d[0] = 5;    d[1] = 0;
+    lineEndPosition->setDefaultValue(d);
+    d[0] = 4;    d[1] = 4;
+    gridSize->setDefaultValue(d);
+    d[0] = 20;    d[1] = 20;
+    tilesSize->setDefaultValue(d);
+
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&actionManager);
