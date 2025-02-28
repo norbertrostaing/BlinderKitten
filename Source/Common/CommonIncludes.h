@@ -32,6 +32,7 @@
 #include "DMX/device/DMXArtNetDevice.h"
 #include "DMX/device/DMXEnttecProDevice.h"
 #include "DMX/device/DMXOpenUSBDevice.h"
+#include "DMX/device/DMXEuroliteDevice.h"
 
 #include "Helpers/SceneHelpers.h"
 

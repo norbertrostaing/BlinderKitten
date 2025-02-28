@@ -306,6 +306,7 @@
 		38932A380E1BB6186445C4AF /* CoreMIDI.framework */ /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		3B7CA73F066A8AF9A8DFC410 /* kittenLayout.layout */ /* kittenLayout.layout */ = {isa = PBXFileReference; lastKnownFileType = file.layout; name = kittenLayout.layout; path = ../../Ressources/kittenLayout.layout; sourceTree = SOURCE_ROOT; };
 		3C6349112B0C6D567503E82B /* list_ports_win.cc */ /* list_ports_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = list_ports_win.cc; path = ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc; sourceTree = SOURCE_ROOT; };
+		3CBA8F4337A7E507D8D40C07 /* DMXEuroliteDevice.cpp */ /* DMXEuroliteDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXEuroliteDevice.cpp; path = ../../Source/Common/DMX/device/DMXEuroliteDevice.cpp; sourceTree = SOURCE_ROOT; };
 		3D2E478A25C065FD01187888 /* CuelistManagerUI.h */ /* CuelistManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistManagerUI.h; path = ../../Source/Definitions/Cuelist/CuelistManagerUI.h; sourceTree = SOURCE_ROOT; };
 		3DAD360B9AEE6137414EA321 /* MapperStep.cpp */ /* MapperStep.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperStep.cpp; path = ../../Source/Definitions/Mapper/MapperStep.cpp; sourceTree = SOURCE_ROOT; };
 		3DF64A60C84674804460E892 /* Mapper.h */ /* Mapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapper.h; path = ../../Source/Definitions/Mapper/Mapper.h; sourceTree = SOURCE_ROOT; };
@@ -334,6 +335,7 @@
 		46BD404844CF5EAF3D92F27E /* SubFixture.h */ /* SubFixture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SubFixture.h; path = ../../Source/Definitions/SubFixture/SubFixture.h; sourceTree = SOURCE_ROOT; };
 		476097FAB285D9C99B750F5F /* MapperAction.cpp */ /* MapperAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MapperAction.cpp; path = ../../Source/Definitions/Actions/MapperAction.cpp; sourceTree = SOURCE_ROOT; };
 		479A8F52055483E8B1910A32 /* SoloPoolAction.cpp */ /* SoloPoolAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SoloPoolAction.cpp; path = ../../Source/Definitions/Actions/SoloPoolAction.cpp; sourceTree = SOURCE_ROOT; };
+		49482E859F6AF960EF1DEFB4 /* DMXEuroliteDevice.h */ /* DMXEuroliteDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXEuroliteDevice.h; path = ../../Source/Common/DMX/device/DMXEuroliteDevice.h; sourceTree = SOURCE_ROOT; };
 		499845ABEE168A07449EC477 /* VirtualButton.h */ /* VirtualButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualButton.h; path = ../../Source/UI/VirtualButtons/VirtualButton.h; sourceTree = SOURCE_ROOT; };
 		4A6CA0C393F81BC1392432D5 /* OSCInputEditor.h */ /* OSCInputEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCInputEditor.h; path = ../../Source/Definitions/Interface/interfaces/osc/ui/OSCInputEditor.h; sourceTree = SOURCE_ROOT; };
 		4AA08A6F8AD84AB20D7FD9A5 /* FixturePatchCorrection.cpp */ /* FixturePatchCorrection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixturePatchCorrection.cpp; path = ../../Source/Definitions/Fixture/FixturePatchCorrection.cpp; sourceTree = SOURCE_ROOT; };
@@ -1515,6 +1517,8 @@
 				4FE6612BB9154E6643987C60,
 				1F4A84A1AF9CDB48E3E47DEC,
 				0035ABB06ECA7EDCAB496C6A,
+				3CBA8F4337A7E507D8D40C07,
+				49482E859F6AF960EF1DEFB4,
 				014EDAA820EA34A7242D76BE,
 				57341F98A54F5BBA7EC89B3F,
 				9F22787BBBDFC2967B992A26,
@@ -2002,7 +2006,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
@@ -2035,7 +2038,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
@@ -2051,7 +2053,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.0.1b77",
+					"JUCE_APP_VERSION=1.0.1b77-git",
 					"JUCE_APP_VERSION_HEX=0x10001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -2097,7 +2099,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
@@ -2115,7 +2116,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.0.1b77",
+					"JUCE_APP_VERSION=1.0.1b77-git",
 					"JUCE_APP_VERSION_HEX=0x10001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -2166,7 +2167,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
@@ -2184,7 +2184,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.0.1b77",
+					"JUCE_APP_VERSION=1.0.1b77-git",
 					"JUCE_APP_VERSION_HEX=0x10001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -2251,7 +2251,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
@@ -2300,7 +2299,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;

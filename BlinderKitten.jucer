@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="0" jucerFormatVersion="1"
               compilerFlagSchemes="NewScheme" headerPath="../../Source&#10;../../Source/Definitions&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/libusb/include/libusb-1.0"
               defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;&#10;_ITERATOR_DEBUG_LEVEL=1"
-              version="1.0.1b77" companyName="Norbert Rostaing" companyCopyright="Norbert Rostaing"
+              version="1.0.1b77-git" companyName="Norbert Rostaing" companyCopyright="Norbert Rostaing"
               companyWebsite="http://blinderkitten.lighting" companyEmail="blinderkitten@gmail.com"
               bundleIdentifier="norbertrostaing.BlinderKitten">
   <MAINGROUP id="K7UlHD" name="BlinderKitten">
@@ -191,6 +191,10 @@
                   file="Source/Common/DMX/device/DMXEnttecProDevice.cpp"/>
             <FILE id="QS0L0n" name="DMXEnttecProDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXEnttecProDevice.h"/>
+            <FILE id="lNcEcE" name="DMXEuroliteDevice.cpp" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXEuroliteDevice.cpp"/>
+            <FILE id="eEhRpL" name="DMXEuroliteDevice.h" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXEuroliteDevice.h"/>
             <FILE id="Ewy8kr" name="DMXOpenUSBDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.cpp"/>
             <FILE id="WuC6ul" name="DMXOpenUSBDevice.h" compile="0" resource="0"
@@ -972,7 +976,7 @@
     <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="LINK_PLATFORM_LINUX=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;atomic"
-                smallIcon="qTJiMk" bigIcon="qTJiMk">
+                smallIcon="qTJiMk" bigIcon="qTJiMk" linuxExtraPkgConfig="freetype2">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="/usr/include/freetype2"

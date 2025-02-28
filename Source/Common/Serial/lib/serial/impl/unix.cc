@@ -185,7 +185,7 @@ Serial::SerialImpl::reconfigurePort ()
 #endif
 
   // setup baud rate
-  bool custom_baud = false;
+  bool do_setspeed = true;
   speed_t baud;
   switch (baudrate_) {
 #ifdef B0
@@ -300,7 +300,7 @@ Serial::SerialImpl::reconfigurePort ()
   case 4000000: baud = B4000000; break;
 #endif
   default:
-    custom_baud = true;
+    do_setspeed = false;
     // OS X support
 #if defined(MAC_OS_X_VERSION_10_4) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_4)
     // Starting with Tiger, the IOSSIOSPEED ioctl can be used to set arbitrary baud rates
@@ -328,11 +328,15 @@ Serial::SerialImpl::reconfigurePort ()
     if (-1 == ioctl (fd_, TIOCSSERIAL, &ser)) {
       THROW (IOException, errno);
     }
+
+    // SPD_CUST must be used in combination with the magic value of 38400.
+    do_setspeed = true;
+    baud = B38400;
 #else
     throw invalid_argument ("OS does not currently support custom bauds");
 #endif
   }
-  if (custom_baud == false) {
+  if (do_setspeed) {
 #ifdef _BSD_SOURCE
     ::cfsetspeed(&options, baud);
 #else
