@@ -128,6 +128,10 @@ DMXDevice * DMXDevice::create(Type type)
 		return new DMXArtNetDevice();
 		break;
 
+	case EUROLITE:
+		return new DMXEuroliteDevice();
+		break;
+
 	default:
 		DBG("Not handled");
 		break;
