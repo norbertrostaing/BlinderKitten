@@ -23,9 +23,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.1b77</string>
+    <string>1.0.1b77-git</string>
     <key>CFBundleVersion</key>
-    <string>1.0.1b77</string>
+    <string>1.0.1b77-git</string>
     <key>NSHumanReadableCopyright</key>
     <string>Norbert Rostaing</string>
     <key>NSHighResolutionCapable</key>
