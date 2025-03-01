@@ -40,6 +40,7 @@ LayoutViewer::LayoutViewer() :
 	LayoutManager::getInstance()->addAsyncManagerListener(this);
 
 	engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	engine->layoutViewerLayout->addParameterListener(this);
 	repaint();
 	startTimerHz(30);
 }
@@ -47,6 +48,7 @@ LayoutViewer::LayoutViewer() :
 LayoutViewer::~LayoutViewer()
 {
 	stopTimer();
+	engine->layoutViewerLayout->removeParameterListener(this);
 	if (selectedLayout != nullptr) {
 		selectedLayout->removeChangeListener(this);
 	}
@@ -76,7 +78,7 @@ void LayoutViewer::newMessage(const LayoutManager::ManagerEvent& e)
 {
 	if (e.type == LayoutManager::ManagerEvent::ITEM_REMOVED || e.type == LayoutManager::ManagerEvent::ITEMS_REMOVED) {
 		selectedLayout = nullptr;
-		selectLayout(0);
+		engine->layoutViewerLayout->resetValue();
 	}
 	rebuildLayoutsList();
 }
@@ -136,7 +138,21 @@ void LayoutViewer::resetClickColour()
 void LayoutViewer::comboBoxChanged(ComboBox* comboBoxThatHasChanged)
 {
 	int id = comboBoxThatHasChanged->getSelectedId();
-	selectLayout(id);
+	Layout* l = Brain::getInstance()->getLayoutById(id);
+	if (l == nullptr) {
+		engine->layoutViewerLayout->resetValue(l);
+	} else {
+		engine->layoutViewerLayout->setValueFromTarget(l);
+	}
+}
+
+void LayoutViewer::parameterValueChanged(Parameter* p)
+{
+	if (p == engine->layoutViewerLayout) {
+		Layout* l = engine->layoutViewerLayout->getTargetContainerAs<Layout>();
+		selectLayout(l);
+		rebuildLayoutsList();
+	}
 }
 
 void LayoutViewer::buttonStateChanged(Button* b)
@@ -151,12 +167,11 @@ void LayoutViewer::buttonClicked(Button* b)
 	}
 }
 
-void LayoutViewer::selectLayout(int id)
+void LayoutViewer::selectLayout(Layout* l)
 {
 	if (selectedLayout != nullptr) {
 		selectedLayout->removeChangeListener(this);
 	}
-	Layout* l = Brain::getInstance()->getLayoutById(id);
 	if (l != nullptr) {
 		selectedLayout = l;
 		selectedLayout->addChangeListener(this);

@@ -32,14 +32,16 @@ DMXChannelView::DMXChannelView() :
 	viewport.setViewedComponent(&channelContainer);
 	addKeyListener(this);
 	InterfaceManager::getInstance()->addAsyncManagerListener(this);
-	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->currentDMXChannelView = this;
+	engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	engine->currentDMXChannelView = this;
+	engine->dmxTesterInterface->addParameterListener(this);
 }
 
 DMXChannelView::~DMXChannelView()
 {
-	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
-	if (e->currentDMXChannelView == this) {
-		e->currentDMXChannelView = nullptr;
+	engine->dmxTesterInterface->removeParameterListener(this);
+	if (engine->currentDMXChannelView == this) {
+		engine->currentDMXChannelView = nullptr;
 	}
 	if (InterfaceManager::getInstanceWithoutCreating()) InterfaceManager::getInstance()->removeAsyncManagerListener(this);
 	setCurrentInterface(nullptr);
@@ -212,8 +214,13 @@ void DMXChannelView::rangeOff(int from, int to)
 
 void DMXChannelView::comboBoxChanged(ComboBox* comboBoxThatHasChanged)
 {
-	DMXInterface* d = (dmxList.getSelectedId() == -1) ? nullptr : (DMXInterface*)InterfaceManager::getInstance()->items[dmxList.getSelectedId() - 1];
-	setCurrentInterface(d);
+	int id = dmxList.getSelectedId();
+	if (id == -1) {
+		engine->dmxTesterInterface->resetValue();
+	} else {
+		DMXInterface* d = (DMXInterface*)InterfaceManager::getInstance()->items[id - 1];
+		engine->dmxTesterInterface->setValueFromTarget(d);
+	}
 }
 
 float DMXChannelView::getFlashValue()
@@ -252,6 +259,17 @@ void DMXChannelView::inspectableDestroyed(Inspectable* i)
 {
 	if (i == currentInterface) setCurrentInterface(nullptr);
 	rebuildDMXList();
+}
+
+void DMXChannelView::parameterValueChanged(Parameter* p)
+{
+	if (p == engine->dmxTesterInterface) {
+		DMXInterface* i = engine->dmxTesterInterface->getTargetContainerAs<DMXInterface>();
+		if (currentInterface != i) {
+			setCurrentInterface(i, true);
+			rebuildDMXList();
+		}
+	}
 }
 
 DMXChannelItem::DMXChannelItem(int channel, DMXChannelView* v) :
