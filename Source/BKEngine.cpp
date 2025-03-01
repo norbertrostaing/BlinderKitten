@@ -99,7 +99,8 @@ BKEngine::BKEngine() :
 	trackerContainer("Tracker Settings"),
 	virtualParamsContainer("Virtual Playbacks Settings"),
 	uiParamsContainer("UI Settings"),
-	loadWindowContainer("Cuelist load window")
+	loadWindowContainer("Cuelist load window"),
+	dmxTesterWindowContainer("DMX Tester window")
 	//defaultBehaviors("Test"),
 	//ossiaFixture(nullptr)
 {
@@ -122,6 +123,7 @@ BKEngine::BKEngine() :
 	ProjectSettings::getInstance()->addChildControllableContainer(&virtualParamsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&uiParamsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&loadWindowContainer);
+	ProjectSettings::getInstance()->addChildControllableContainer(&dmxTesterWindowContainer);
 
 	tapTempoHistory = genericSettingsContainer.addIntParameter("Tap tempo history", "number of hits in history to calculate tempo", 8, 1);
 	tapTempoHistory->addParameterListener(this);
@@ -237,6 +239,13 @@ BKEngine::BKEngine() :
 	loadWindowHeight = loadWindowContainer.addIntParameter("Windows Height", "", 610,100);
 	loadWindowButtonPerLine = loadWindowContainer.addIntParameter("Buttons per line", "", 5,1);
 	loadWindowButtonHeight = loadWindowContainer.addIntParameter("Button height", "", 40,30);
+
+
+	dmxTesterInterface = dmxTesterWindowContainer.addTargetParameter("Interface", "", InterfaceManager::getInstance());
+	dmxTesterInterface->targetType = TargetParameter::CONTAINER;
+	dmxTesterInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<DMXInterface>;
+	dmxTesterInterface->maxDefaultSearchLevel = 0;
+
 
 	mainBrain = Brain::getInstance();
 	currentDMXChannelView = nullptr;
