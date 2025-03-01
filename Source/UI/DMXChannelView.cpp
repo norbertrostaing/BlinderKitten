@@ -32,14 +32,14 @@ DMXChannelView::DMXChannelView() :
 	viewport.setViewedComponent(&channelContainer);
 	addKeyListener(this);
 	InterfaceManager::getInstance()->addAsyncManagerListener(this);
-	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->currentDMXChannelView = this;
+	engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+	engine->currentDMXChannelView = this;
 }
 
 DMXChannelView::~DMXChannelView()
 {
-	BKEngine* e = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
-	if (e->currentDMXChannelView == this) {
-		e->currentDMXChannelView = nullptr;
+	if (engine->currentDMXChannelView == this) {
+		engine->currentDMXChannelView = nullptr;
 	}
 	if (InterfaceManager::getInstanceWithoutCreating()) InterfaceManager::getInstance()->removeAsyncManagerListener(this);
 	setCurrentInterface(nullptr);

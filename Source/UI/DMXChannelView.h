@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "Definitions/Interface/InterfaceManager.h"
 
+class BKEngine;
 class DMXInterface;
 class DMXChannelView;
 
@@ -61,6 +62,8 @@ public:
 
     //std::unique_ptr<BoolButtonToggleUI> testingUI;
     std::unique_ptr<FloatSliderUI> flashValue;
+
+    BKEngine* engine;
 
     ComboBox dmxList;
     OwnedArray<DMXChannelItem> channelItems;
