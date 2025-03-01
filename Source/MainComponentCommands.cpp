@@ -11,6 +11,13 @@
  #include "UserInputManager.h"
  #include "Definitions/Assistant/Assistant.h"
 
+namespace OrganicCommandId
+{
+	// we override these with additional code
+	static const int editProjectSettings = 0x50001;
+	static const int editGlobalSettings = 0x50002;
+}
+
 namespace BlinderKittenCommandId
 {
 	static const int showAbout = 0x60000;
@@ -580,6 +587,14 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::key8: {		UserInputManager::getInstance()->processInput("8"); }break;
 	case BlinderKittenCommandId::key9: {		UserInputManager::getInstance()->processInput("9"); }break;
 	case BlinderKittenCommandId::key0: {		UserInputManager::getInstance()->processInput("0"); }break;
+
+	case OrganicCommandId::editProjectSettings:
+	case OrganicCommandId::editGlobalSettings:
+	{
+		bool handled = OrganicMainContentComponent::perform(info);
+		Brain::getInstance()->showWindow("Inspector");
+		return handled;
+        }
 
 	default:
 		return OrganicMainContentComponent::perform(info);
