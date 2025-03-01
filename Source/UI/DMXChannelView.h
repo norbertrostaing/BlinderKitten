@@ -49,7 +49,8 @@ class DMXChannelView :
     public InterfaceManager::AsyncListener,
     public ComboBox::Listener,
     public Inspectable::InspectableListener,
-    public KeyListener
+    public KeyListener,
+    public ParameterListener
 {
 public:
     juce_DeclareSingleton(DMXChannelView, true);
@@ -94,6 +95,7 @@ public:
     bool keyPressed(const KeyPress& key, Component* originatingComponent);
 
     void inspectableDestroyed(Inspectable* i) override;
+    void parameterValueChanged(Parameter* p) override;
 
     static DMXChannelView* create(const String& name) { return new DMXChannelView(); }
 
