@@ -21,7 +21,8 @@ class LayoutViewer :
     public LayoutManager::AsyncListener,
     public ChangeListener,
     public Timer,
-    public DragAndDropTarget
+    public DragAndDropTarget,
+    public ParameterListener
 
 {
 public:
@@ -62,11 +63,12 @@ public:
     void resetClickColour();
 
     void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override;
+    void parameterValueChanged(Parameter* p) override;
     Layout* selectedLayout = nullptr;
     void buttonStateChanged(Button*) override;
     void buttonClicked(Button*) override;
 
-    void selectLayout(int id);
+    void selectLayout(Layout* l);
 
     void resized() override;
     int currentWidth = 0; 

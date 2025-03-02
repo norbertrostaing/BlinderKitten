@@ -92,6 +92,12 @@ public:
 	IntParameter* loadWindowButtonPerLine;
 	IntParameter* loadWindowButtonHeight;
 
+	ControllableContainer dmxTesterWindowContainer;
+	TargetParameter* dmxTesterInterface;
+
+	ControllableContainer layoutViewerContainer;
+	TargetParameter* layoutViewerLayout;
+
 
 	void createNewGraphInternal() override;
 

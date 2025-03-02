@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "Definitions/Interface/InterfaceManager.h"
 
+class BKEngine;
 class DMXInterface;
 class DMXChannelView;
 
@@ -48,7 +49,8 @@ class DMXChannelView :
     public InterfaceManager::AsyncListener,
     public ComboBox::Listener,
     public Inspectable::InspectableListener,
-    public KeyListener
+    public KeyListener,
+    public ParameterListener
 {
 public:
     juce_DeclareSingleton(DMXChannelView, true);
@@ -61,6 +63,8 @@ public:
 
     //std::unique_ptr<BoolButtonToggleUI> testingUI;
     std::unique_ptr<FloatSliderUI> flashValue;
+
+    BKEngine* engine;
 
     ComboBox dmxList;
     OwnedArray<DMXChannelItem> channelItems;
@@ -91,6 +95,7 @@ public:
     bool keyPressed(const KeyPress& key, Component* originatingComponent);
 
     void inspectableDestroyed(Inspectable* i) override;
+    void parameterValueChanged(Parameter* p) override;
 
     static DMXChannelView* create(const String& name) { return new DMXChannelView(); }
 
