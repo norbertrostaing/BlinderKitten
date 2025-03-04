@@ -20,6 +20,7 @@
 #include "Definitions/Programmer/Programmer.h"
 #include "Definitions/CurvePreset/CurvePreset.h"
 #include "Definitions/TimingPreset/TimingPreset.h"
+#include "Definitions/BKPathPreset/BKPathPreset.h"
 #include "Definitions/Effect/Effect.h"
 #include "Definitions/Carousel/Carousel.h"
 #include "Definitions/Mapper/Mapper.h"
@@ -48,6 +49,7 @@ public:
     HashMap<int, Programmer*>programmers;
     HashMap<int, CurvePreset*>curvePresets;
     HashMap<int, TimingPreset*>timingPresets;
+    HashMap<int, BKPathPreset*>bkPathPresets;
     HashMap<int, Effect*>effects;
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
@@ -126,6 +128,8 @@ public:
     void unregisterCurvePreset(CurvePreset* p);
     void registerTimingPreset(TimingPreset* p, int id, bool swap = false);
     void unregisterTimingPreset(TimingPreset* p);
+    void registerBKPathPreset(BKPathPreset* p, int id, bool swap = false);
+    void unregisterBKPathPreset(BKPathPreset* p);
     void registerEffect(Effect* p, int id, bool swap = false);
     void unregisterEffect(Effect* p);
     void registerCarousel(Carousel* p, int id, bool swap = false);
@@ -162,6 +166,7 @@ public:
     Programmer* getProgrammerById(int id);
     CurvePreset* getCurvePresetById(int id);
     TimingPreset* getTimingPresetById(int id, bool followIfAnother = false);
+    BKPathPreset* getBKPathPresetById(int id, bool followIfAnother = false);
     Effect* getEffectById(int id);
     Carousel* getCarouselById(int id);
     Mapper* getMapperById(int id);

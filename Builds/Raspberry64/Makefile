@@ -130,6 +130,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/VirtualButtonAction_1210c9b3.o \
   $(JUCE_OBJDIR)/VirtualFaderAction_b95e624b.o \
   $(JUCE_OBJDIR)/Assistant_feae32ff.o \
+  $(JUCE_OBJDIR)/BKPathPreset_490b261.o \
+  $(JUCE_OBJDIR)/BKPathPresetManager_82b18296.o \
+  $(JUCE_OBJDIR)/BKPathPresetManagerUI_dd5baeea.o \
   $(JUCE_OBJDIR)/Bundle_9d272dc1.o \
   $(JUCE_OBJDIR)/BundleManager_5a5b7b36.o \
   $(JUCE_OBJDIR)/BundleManagerUI_7269ff8a.o \
@@ -549,6 +552,21 @@ $(JUCE_OBJDIR)/VirtualFaderAction_b95e624b.o: ../../Source/Definitions/Actions/V
 $(JUCE_OBJDIR)/Assistant_feae32ff.o: ../../Source/Definitions/Assistant/Assistant.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling Assistant.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKPathPreset_490b261.o: ../../Source/Definitions/BKPathPreset/BKPathPreset.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BKPathPreset.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKPathPresetManager_82b18296.o: ../../Source/Definitions/BKPathPreset/BKPathPresetManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BKPathPresetManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BKPathPresetManagerUI_dd5baeea.o: ../../Source/Definitions/BKPathPreset/BKPathPresetManagerUI.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling BKPathPresetManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Bundle_9d272dc1.o: ../../Source/Definitions/Bundle/Bundle.cpp

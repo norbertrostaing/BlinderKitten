@@ -13,6 +13,7 @@
 #include "Definitions/Programmer/ProgrammerManagerUI.h"
 #include "Definitions/CurvePreset/CurvePresetManagerUI.h"
 #include "Definitions/TimingPreset/TimingPresetManagerUI.h"
+#include "Definitions/BKPathPreset/BKPathPresetManagerUI.h"
 #include "Definitions/Effect/EffectManagerUI.h"
 #include "Definitions/Carousel/CarouselManagerUI.h"
 #include "Definitions/Mapper/MapperManagerUI.h"
@@ -119,6 +120,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Groups", &GroupManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Presets", &PresetManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timing Presets", &TimingPresetManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Path Presets", &BKPathPresetManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Curve Presets", &CurvePresetManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Cuelists", &CuelistManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Programmers", &ProgrammerManagerUI::create));
@@ -161,6 +163,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Groups", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Presets", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Timing Presets", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Path Presets", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Curve Presets", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Cuelists", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Programmers", "Lists");

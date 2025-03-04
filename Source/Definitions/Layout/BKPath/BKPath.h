@@ -23,7 +23,7 @@ class BKPath:
     String objectType;
     var objectData;
 
-    enum PathType { PATH_POINT, PATH_LINE, PATH_ROD, PATH_GRID, PATH_CIRCLE };
+    enum PathType { PATH_POINT, PATH_LINE, PATH_ROD, PATH_GRID, PATH_CIRCLE, PATH_PRESET};
     enum GridOrentation { 
         GRID_LR, GRID_RL, GRID_TB, GRID_BT
     };
@@ -51,6 +51,10 @@ class BKPath:
 
     FloatParameter* fixturesAngleFrom;
     FloatParameter* fixturesAngleTo;
+
+    IntParameter* presetId;
+    FloatParameter* presetScale;
+    FloatParameter* presetAngle;
 
     BoolParameter* spreadSubFixtures;
     Point2DParameter* tilesSize;

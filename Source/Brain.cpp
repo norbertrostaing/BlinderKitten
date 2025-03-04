@@ -49,6 +49,7 @@ void Brain::clear()
     programmers.clear();
     curvePresets.clear();
     timingPresets.clear();
+    bkPathPresets.clear();
     effects.clear();
     carousels.clear();
     mappers.clear();
@@ -618,6 +619,42 @@ void Brain::registerTimingPreset(TimingPreset* p, int id, bool swap) {
 void Brain::unregisterTimingPreset(TimingPreset* c) {
     if (timingPresets.containsValue(c)) {
         timingPresets.removeValue(c);
+    }
+}
+
+void Brain::registerBKPathPreset(BKPathPreset* p, int id, bool swap) {
+    int askedId = id;
+    if (bkPathPresets.getReference(id) == p) { return; }
+    if (bkPathPresets.containsValue(p)) {
+        bkPathPresets.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (bkPathPresets.contains(id) && bkPathPresets.getReference(id) != nullptr) {
+            BKPathPreset* presentItem = bkPathPresets.getReference(id);
+            unregisterBKPathPreset(p);
+            registerBKPathPreset(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (bkPathPresets.contains(id) && bkPathPresets.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    bkPathPresets.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+}
+
+
+void Brain::unregisterBKPathPreset(BKPathPreset* c) {
+    if (bkPathPresets.containsValue(c)) {
+        bkPathPresets.removeValue(c);
     }
 }
 
@@ -1247,6 +1284,20 @@ TimingPreset* Brain::getTimingPresetById(int id, bool followIfAnother) {
             }
         }
         return timingPresets.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+BKPathPreset* Brain::getBKPathPresetById(int id, bool followIfAnother) {
+    if (bkPathPresets.contains(id)) {
+        if (followIfAnother) {
+            if (bkPathPresets.getReference(id)->useAnotherId->intValue() > 0) {
+                return getBKPathPresetById(bkPathPresets.getReference(id)->useAnotherId->intValue());
+            }
+        }
+        return bkPathPresets.getReference(id);
     }
     else {
         return nullptr;

@@ -343,6 +343,19 @@
           <FILE id="qQxHMP" name="Assistant.cpp" compile="1" resource="0" file="Source/Definitions/Assistant/Assistant.cpp"/>
           <FILE id="uexuKL" name="Assistant.h" compile="0" resource="0" file="Source/Definitions/Assistant/Assistant.h"/>
         </GROUP>
+        <GROUP id="{0A7A76B3-5F3D-B7D3-0D31-158685311E05}" name="BKPathPreset">
+          <FILE id="tSyZQE" name="BKPathPreset.cpp" compile="1" resource="0"
+                file="Source/Definitions/BKPathPreset/BKPathPreset.cpp"/>
+          <FILE id="YZcl6R" name="BKPathPreset.h" compile="0" resource="0" file="Source/Definitions/BKPathPreset/BKPathPreset.h"/>
+          <FILE id="DepDpc" name="BKPathPresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/BKPathPreset/BKPathPresetManager.cpp"/>
+          <FILE id="euBCy7" name="BKPathPresetManager.h" compile="0" resource="0"
+                file="Source/Definitions/BKPathPreset/BKPathPresetManager.h"/>
+          <FILE id="sQL9WC" name="BKPathPresetManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/BKPathPreset/BKPathPresetManagerUI.cpp"/>
+          <FILE id="elzMjT" name="BKPathPresetManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/BKPathPreset/BKPathPresetManagerUI.h"/>
+        </GROUP>
         <GROUP id="{73D46886-2B84-96F3-C061-A851C74457B5}" name="Bundle">
           <FILE id="ckXZhN" name="Bundle.cpp" compile="1" resource="0" file="Source/Definitions/Bundle/Bundle.cpp"/>
           <FILE id="NMo8Ir" name="Bundle.h" compile="0" resource="0" file="Source/Definitions/Bundle/Bundle.h"/>

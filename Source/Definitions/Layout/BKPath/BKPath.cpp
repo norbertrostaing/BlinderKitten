@@ -14,6 +14,8 @@
 #include "UserInputManager.h"
 #include "Programmer/Programmer.h"
 #include "Command/Command.h"
+#include "Brain.h"
+#include "Definitions/BKPathPreset/BKPathPreset.h"
 
 BKPath::BKPath(var params) :
     BaseItem(params.getProperty("name", "Path")),
@@ -24,7 +26,7 @@ BKPath::BKPath(var params) :
     saveAndLoadRecursiveData = true;
     var d; d.append(0); d.append(0);
     pathType = addEnumParameter("Type", "Type of path");
-    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Rod", PATH_ROD)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE);
+    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Rod", PATH_ROD)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE)->addOption("Preset", PATH_PRESET);
     position = addPoint2DParameter("Position", "Position in your layout");
 
     lineEndPosition = addPoint2DParameter("End position", "");
@@ -49,6 +51,10 @@ BKPath::BKPath(var params) :
     circleFrom = addFloatParameter("From angle", "Angle of first element", 0, -360, 360);
     circleTo = addFloatParameter("To angle", "Angle of the last element", 360, -360, 360);
 
+    presetId = addIntParameter("Preset ID", "Id if the path preset",0);
+    presetScale = addFloatParameter("Preset scale","Scale of the preset", 1,0);
+    presetAngle = addFloatParameter("Preset angle", "Rotate your preset",0,-360,360);
+
     tilesSize = addPoint2DParameter("Tiles size", "Size of your tiles in px");
     textSize = addFloatParameter("Text size", "", 10, 0);
     spreadSubFixtures = addBoolParameter("Spread Subfixts", "if checked, subfixtures will be spread along the path, if not, only fixture wil be", false);
@@ -69,7 +75,6 @@ BKPath::BKPath(var params) :
     gridSize->setDefaultValue(d);
     d[0] = 20;    d[1] = 20;
     tilesSize->setDefaultValue(d);
-
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&actionManager);
@@ -323,7 +328,29 @@ void BKPath::computeData()
         }
 
     }
+    else if (type == BKPath::PATH_PRESET) {
+        BKPathPreset* preset = Brain::getInstance()->getBKPathPresetById(presetId->intValue(), true);
+        if (preset != nullptr) {
+            auto params = preset->pointsManager->getAllParameters();
+            int currentSub = 0;
+            for (Parameter* param : params) {
+                Point2DParameter* p2d = dynamic_cast<Point2DParameter*>(param);
+                if (p2d != nullptr && currentSub < subFixts.size()) {
+                    Point finalPoint = p2d->getPoint();
+                    finalPoint = finalPoint.rotatedAboutOrigin(degreesToRadians(presetAngle->floatValue()));
+                    finalPoint *= presetScale->floatValue();
+                    finalPoint.addXY(position->x, position->y);
+                    subFixtToPos.set(subFixts[currentSub], std::make_shared<Point<float>>(finalPoint.x, finalPoint.y));
+                    Fixture* parentFixture = subFixts[currentSub]->parentFixture;
+                    if (!fixtToPos.contains(parentFixture)) {
+                        fixtToPos.set(parentFixture, std::make_shared<Point<float>>(finalPoint.x, finalPoint.y));
+                    }
+                    currentSub++;
+                }
+            }
 
+        }
+    }
     if (!spreadSubFixtures->boolValue()) {
         for (auto it = fixtToPos.begin(); it != fixtToPos.end(); it.next()) {
             Fixture* f = it.getKey();
@@ -360,6 +387,10 @@ void BKPath::updateDisplay() {
     circleRadius->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
     circleFrom->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
     circleTo->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
+
+    presetId->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_PRESET;
+    presetScale->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_PRESET;
+    presetAngle->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_PRESET;
 
     strokeColor->hideInEditor = !overrideStrokeColor->boolValue();
     fillColor->hideInEditor = !overrideFillColor->boolValue();

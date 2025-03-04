@@ -83,6 +83,9 @@
     <Filter Include="BlinderKitten\Source\Definitions\Assistant">
       <UniqueIdentifier>{D2A9376D-F965-E48A-0B09-7102F83E1DF7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\BKPathPreset">
+      <UniqueIdentifier>{FCAD9489-59B0-0007-9FB7-11AFF4AC302D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\Bundle">
       <UniqueIdentifier>{949BBD7E-A188-0513-A892-0DBC4CECC92B}</UniqueIdentifier>
     </Filter>
@@ -1260,6 +1263,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Assistant\Assistant.cpp">
       <Filter>BlinderKitten\Source\Definitions\Assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\BKPathPreset\BKPathPreset.cpp">
+      <Filter>BlinderKitten\Source\Definitions\BKPathPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\BKPathPreset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\BKPathPreset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Bundle\Bundle.cpp">
       <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>
@@ -5057,6 +5069,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Assistant\Assistant.h">
       <Filter>BlinderKitten\Source\Definitions\Assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\BKPathPreset\BKPathPreset.h">
+      <Filter>BlinderKitten\Source\Definitions\BKPathPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManager.h">
+      <Filter>BlinderKitten\Source\Definitions\BKPathPreset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\BKPathPreset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Bundle\Bundle.h">
       <Filter>BlinderKitten\Source\Definitions\Bundle</Filter>

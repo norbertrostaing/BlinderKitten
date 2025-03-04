@@ -284,6 +284,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualFaderAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Assistant\Assistant.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\BKPathPreset\BKPathPreset.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Bundle\Bundle.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Bundle\BundleManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Bundle\BundleManagerUI.cpp"/>
@@ -3508,6 +3511,9 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualFaderAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Assistant\Assistant.h"/>
+    <ClInclude Include="..\..\Source\Definitions\BKPathPreset\BKPathPreset.h"/>
+    <ClInclude Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\BKPathPreset\BKPathPresetManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\Bundle\Bundle.h"/>
     <ClInclude Include="..\..\Source\Definitions\Bundle\BundleManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Bundle\BundleManagerUI.h"/>
