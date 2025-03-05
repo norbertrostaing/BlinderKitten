@@ -530,83 +530,83 @@ void BKEngine::clearInternal()
 	autoFillDefaultChannels();
 }
 
-var BKEngine::getJSONData()
+var BKEngine::getJSONData(bool includeNonOverriden)
 {
-	var data = Engine::getJSONData();
+	var data = Engine::getJSONData(includeNonOverriden);
 
-	//var mData = ModuleManager::getInstance()->getJSONData();
+	//var mData = ModuleManager::getInstance()->getJSONData(includeNonOverriden);
 	//if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, mData);
 
-	var iData = InterfaceManager::getInstance()->getJSONData();
+	var iData = InterfaceManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!iData.isVoid() && iData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(InterfaceManager::getInstance()->shortName, iData);
 
-	var dtData = FixtureTypeManager::getInstance()->getJSONData();
+	var dtData = FixtureTypeManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!dtData.isVoid() && dtData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(FixtureTypeManager::getInstance()->shortName, dtData);
 
-	var fptData = ChannelFamilyManager::getInstance()->getJSONData();
+	var fptData = ChannelFamilyManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!fptData.isVoid() && fptData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, fptData);
 
-	var gData = GroupManager::getInstance()->getJSONData();
+	var gData = GroupManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!gData.isVoid() && gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(GroupManager::getInstance()->shortName, gData);
 
-	var pData = PresetManager::getInstance()->getJSONData();
+	var pData = PresetManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(PresetManager::getInstance()->shortName, pData);
 
-	var dData = FixtureManager::getInstance()->getJSONData();
+	var dData = FixtureManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!dData.isVoid() && dData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(FixtureManager::getInstance()->shortName, dData);
 
-	var cData = CommandManager::getInstance()->getJSONData();
+	var cData = CommandManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!cData.isVoid() && cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CommandManager::getInstance()->shortName, cData);
 
-	var clData = CuelistManager::getInstance()->getJSONData();
+	var clData = CuelistManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!clData.isVoid() && clData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CuelistManager::getInstance()->shortName, clData);
 
-	var prData = ProgrammerManager::getInstance()->getJSONData();
+	var prData = ProgrammerManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!prData.isVoid() && prData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ProgrammerManager::getInstance()->shortName, prData);
 
-	var cpData = CurvePresetManager::getInstance()->getJSONData();
+	var cpData = CurvePresetManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!cpData.isVoid() && cpData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CurvePresetManager::getInstance()->shortName, cpData);
 
-	var tpData = TimingPresetManager::getInstance()->getJSONData();
+	var tpData = TimingPresetManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!tpData.isVoid() && tpData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(TimingPresetManager::getInstance()->shortName, tpData);
 
-	var ptData = BKPathPresetManager::getInstance()->getJSONData();
+	var ptData = BKPathPresetManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!ptData.isVoid() && ptData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(BKPathPresetManager::getInstance()->shortName, ptData);
 
-	var fxData = EffectManager::getInstance()->getJSONData();
+	var fxData = EffectManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!fxData.isVoid() && fxData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, fxData);
 
-	var carData = CarouselManager::getInstance()->getJSONData();
+	var carData = CarouselManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!carData.isVoid() && carData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, carData);
 
-	var tData = MapperManager::getInstance()->getJSONData();
+	var tData = MapperManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(MapperManager::getInstance()->shortName, tData);
 
-	var trackData = TrackerManager::getInstance()->getJSONData();
+	var trackData = TrackerManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!trackData.isVoid() && trackData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(TrackerManager::getInstance()->shortName, trackData);
 
-	var multData = MultiplicatorManager::getInstance()->getJSONData();
+	var multData = MultiplicatorManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!multData.isVoid() && multData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(MultiplicatorManager::getInstance()->shortName, multData);
 
-	var vbData = VirtualButtonManager::getInstance()->getJSONData();
+	var vbData = VirtualButtonManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!vbData.isVoid() && vbData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, vbData);
 
-	var vfData = VirtualFaderColManager::getInstance()->getJSONData();
+	var vfData = VirtualFaderColManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!vfData.isVoid() && vfData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, vfData);
 
-	var layData = LayoutManager::getInstance()->getJSONData();
+	var layData = LayoutManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!layData.isVoid() && layData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, layData);
 
-	var bunData = BundleManager::getInstance()->getJSONData();
+	var bunData = BundleManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!bunData.isVoid() && bunData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(BundleManager::getInstance()->shortName, bunData);
 
-	//var sData = StateManager::getInstance()->getJSONData();
+	//var sData = StateManager::getInstance()->getJSONData(includeNonOverriden);
 	//if (!sData.isVoid() && sData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, sData);
 
-	//var seqData = ChataigneSequenceManager::getInstance()->getJSONData();
+	//var seqData = ChataigneSequenceManager::getInstance()->getJSONData(includeNonOverriden);
 	//if (!seqData.isVoid() && seqData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ChataigneSequenceManager::getInstance()->shortName, seqData);
 
-	//var rData = ModuleRouterManager::getInstance()->getJSONData();
+	//var rData = ModuleRouterManager::getInstance()->getJSONData(includeNonOverriden);
 	//if (!rData.isVoid() && rData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleRouterManager::getInstance()->shortName, rData);
 
 	return data;
