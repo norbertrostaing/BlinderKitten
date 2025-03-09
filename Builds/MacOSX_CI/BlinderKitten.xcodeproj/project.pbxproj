@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0103D84D6C1C52727082AC72 /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = 8ED78D8525CA943880942547; };
 		01E5DE8FD50364D2D989DFFB /* FixtureTypeManager.cpp */ = {isa = PBXBuildFile; fileRef = 5B57028B2036D809ABB1C6B9; };
 		04FACC0F6268FA1765B6FEAC /* Command.cpp */ = {isa = PBXBuildFile; fileRef = F14AD653B0E6DBCF27805662; };
 		05239FDAEC64EC238B42E1DE /* BKPath.cpp */ = {isa = PBXBuildFile; fileRef = 6BADF0508D8252CEBF434598; };
@@ -22,6 +23,7 @@
 		0E3AF8AF0B0F9924A362F52A /* LayoutViewer.cpp */ = {isa = PBXBuildFile; fileRef = 66A99752EE9116904075A593; };
 		0FF77981EF088504A1B86EDF /* VirtualFaderSlider.cpp */ = {isa = PBXBuildFile; fileRef = A87EA1A69B977CF0F0DB441E; };
 		10029360EE534F5E7C324026 /* MultiplicatorManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = C1055405C3F27574BAADAAEF; };
+		107C23CCAAE34EBA90A8CFEB /* include_juce_simpleweb2.cpp */ = {isa = PBXBuildFile; fileRef = 8AECF5FBC5616ED0AA992D1C; };
 		13A790636D02503F42ACDED8 /* MultiplicatorManager.cpp */ = {isa = PBXBuildFile; fileRef = 60E725F7F817BAF17F426156; };
 		15E54D59735BC9FE85CDA52E /* CuelistAction.cpp */ = {isa = PBXBuildFile; fileRef = EA7B69199ED5B4C59D391EBA; };
 		16D891ED06F306C1BDD01F1F /* EffectRow.cpp */ = {isa = PBXBuildFile; fileRef = CE32C06E813EFB1C742D1FCC; };
@@ -466,11 +468,13 @@
 		8A141B50127977490A31BCE4 /* CoreAudio.framework */ /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		8A9E3F76A6ED73E263F5C3DD /* CommandValueManager.cpp */ /* CommandValueManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandValueManager.cpp; path = ../../Source/Definitions/Command/CommandValueManager.cpp; sourceTree = SOURCE_ROOT; };
 		8AB996CFD7C0FD090A45962C /* CommonIncludes.h */ /* CommonIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonIncludes.h; path = ../../Source/Common/CommonIncludes.h; sourceTree = SOURCE_ROOT; };
+		8AECF5FBC5616ED0AA992D1C /* include_juce_simpleweb2.cpp */ /* include_juce_simpleweb2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb2.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb2.cpp; sourceTree = SOURCE_ROOT; };
 		8AF23CBD5D2042993876644A /* EffectManagerUI.h */ /* EffectManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EffectManagerUI.h; path = ../../Source/Definitions/Effect/EffectManagerUI.h; sourceTree = SOURCE_ROOT; };
 		8BA0BE46D16F83F16BB4CC20 /* Preset.cpp */ /* Preset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Preset.cpp; path = ../../Source/Definitions/Preset/Preset.cpp; sourceTree = SOURCE_ROOT; };
 		8BC912C35F204774B2A7E603 /* CuelistSheetLine.h */ /* CuelistSheetLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistSheetLine.h; path = ../../Source/UI/CuelistSheet/CuelistSheetLine.h; sourceTree = SOURCE_ROOT; };
 		8C03416DE516F7073FBE0D28 /* AudioToolbox.framework */ /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8D1CF95397F01EE181C1ABF0 /* RunningTask.cpp */ /* RunningTask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RunningTask.cpp; path = ../../Source/Definitions/RunningTask.cpp; sourceTree = SOURCE_ROOT; };
+		8ED78D8525CA943880942547 /* include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
 		90770EDF9B63A26DCFAF455C /* FixtureTypeVirtualChannelManager.h */ /* FixtureTypeVirtualChannelManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureTypeVirtualChannelManager.h; path = ../../Source/Definitions/FixtureType/FixtureTypeVirtualChannelManager.h; sourceTree = SOURCE_ROOT; };
 		91B514B5A04E323C91FC1EDD /* OSCMappingManager.h */ /* OSCMappingManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCMappingManager.h; path = ../../Source/Definitions/Interface/interfaces/osc/OSCMappingManager.h; sourceTree = SOURCE_ROOT; };
 		921C533D70443C98B358020A /* CurvePresetManager.h */ /* CurvePresetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CurvePresetManager.h; path = ../../Source/Definitions/CurvePreset/CurvePresetManager.h; sourceTree = SOURCE_ROOT; };
@@ -631,6 +635,7 @@
 		E4A6AA0FD3167E0003888D0C /* BundleManagerUI.cpp */ /* BundleManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BundleManagerUI.cpp; path = ../../Source/Definitions/Bundle/BundleManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		E6100648C258327C6238CE1B /* WebKit.framework */ /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E6911D05168FDF2FB76AB207 /* EncodersMultUI.cpp */ /* EncodersMultUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EncodersMultUI.cpp; path = ../../Source/UI/EncodersMult/EncodersMultUI.cpp; sourceTree = SOURCE_ROOT; };
+		E7065068A90C3A94F3EFB2F6 /* juce_simpleweb */ /* juce_simpleweb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_simpleweb; path = ../../Modules/juce_simpleweb; sourceTree = SOURCE_ROOT; };
 		E70C3FAF3AAE783408D9E0A9 /* VirtualButtonManagerUI.cpp */ /* VirtualButtonManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualButtonManagerUI.cpp; path = ../../Source/UI/VirtualButtons/VirtualButtonManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		E77B5B5A8BB7AC45FC1EC566 /* juce_core */ /* juce_core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_core; path = ../../JUCE/modules/juce_core; sourceTree = SOURCE_ROOT; };
 		E7884757F9B8B7D885716D90 /* MetalKit.framework */ /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -1375,6 +1380,8 @@
 				20CE80DE139F3B0F383B26E9,
 				5902880D8C6266E7A543E631,
 				6ACCF891ECD360E6B8543AD1,
+				8ED78D8525CA943880942547,
+				8AECF5FBC5616ED0AA992D1C,
 				9322864C164D79E104A69C95,
 			);
 			name = "JUCE Library Code";
@@ -1704,6 +1711,7 @@
 				DB640204496F415C6B425E07,
 				1E25B2C3BD30C77EBCFAFC20,
 				4606FCC232C68D675C8C6850,
+				E7065068A90C3A94F3EFB2F6,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -2004,6 +2012,8 @@
 				B961FC011CF1EE7F1F6E2DF1,
 				4171C0B5BAE18B415F3009FC,
 				1EAA7EBF201BDE0F0EDF8E29,
+				0103D84D6C1C52727082AC72,
+				107C23CCAAE34EBA90A8CFEB,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2110,9 +2120,14 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
-				OTHER_LDFLAGS = "-lServus";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
 				USE_HEADERMAP = NO;
@@ -2177,11 +2192,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
-				OTHER_LDFLAGS = "-lServus";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
 				USE_HEADERMAP = NO;
@@ -2246,11 +2263,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/silicon/release\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../Source/Definitions $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/libusb/include/libusb-1.0";
-				OTHER_LDFLAGS = "-lServus";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = norbertrostaing.BlinderKitten;
 				PRODUCT_NAME = "BlinderKitten";
 				USE_HEADERMAP = NO;

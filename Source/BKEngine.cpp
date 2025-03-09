@@ -108,11 +108,12 @@ BKEngine::BKEngine() :
 {
 	convertURL = "http://hazlab.fr/";
 	
-	//Communication
-	OSCRemoteControl::getInstance()->addRemoteControlListener(UserInputManager::getInstance());
 	//init here
 	Engine::mainEngine = this;
 	BKEngine::mainEngine = this;
+
+	//Communication
+	OSCRemoteControl::getInstance()->addRemoteControlListener(UserInputManager::getInstance());
 
 	Desktop::setScreenSaverEnabled(false);
 

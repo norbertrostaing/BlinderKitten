@@ -61,6 +61,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_opengl                1
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
+#define JUCE_MODULE_AVAILABLE_juce_simpleweb             1
 
 #define JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED 1
 
@@ -299,7 +300,7 @@
 // juce_organicui flags:
 
 #ifndef    ORGANICUI_USE_SERVUS
- //#define ORGANICUI_USE_SERVUS 0
+ #define   ORGANICUI_USE_SERVUS 1
 #endif
 
 #ifndef    ORGANICUI_USE_SHAREDTEXTURE
@@ -307,7 +308,7 @@
 #endif
 
 #ifndef    ORGANICUI_USE_WEBSERVER
- //#define ORGANICUI_USE_WEBSERVER 0
+ #define   ORGANICUI_USE_WEBSERVER 1
 #endif
 
 #ifndef    ORGANICUI_USE_DASHBOARDPANEL
@@ -354,7 +355,7 @@
 #endif
 
 #ifndef    JUCE_IP_AND_PORT_DETECTION
- //#define JUCE_IP_AND_PORT_DETECTION 0
+ #define   JUCE_IP_AND_PORT_DETECTION 1
 #endif
 
 //==============================================================================

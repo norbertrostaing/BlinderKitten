@@ -45,7 +45,7 @@ ifeq ($(CONFIG),Debug)
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl freetype2) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lServus -lcurl -lusb-1.0 -lhidapi-hidraw -lpthread -latomic $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../Modules/juce_simpleweb/libs/Linux/${JUCE_ARCH_LABEL} $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl freetype2) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lServus -lcurl -lusb-1.0 -lhidapi-hidraw -lpthread -latomic $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -66,7 +66,7 @@ ifeq ($(CONFIG),Release)
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl freetype2) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lServus -lcurl -lusb-1.0 -lhidapi-hidraw -lpthread -latomic $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry64 -L../../Modules/juce_simpleweb/libs/Linux/${JUCE_ARCH_LABEL} $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl freetype2) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lServus -lcurl -lusb-1.0 -lhidapi-hidraw -lpthread -latomic $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -250,6 +250,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_organicui3_5ac6ddd0.o \
   $(JUCE_OBJDIR)/include_juce_organicui4_5ad4f551.o \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
+  $(JUCE_OBJDIR)/include_juce_simpleweb_acec7570.o \
+  $(JUCE_OBJDIR)/include_juce_simpleweb2_f0c24e8c.o \
 
 .PHONY: clean all strip
 
@@ -1152,6 +1154,16 @@ $(JUCE_OBJDIR)/include_juce_organicui4_5ad4f551.o: ../../JuceLibraryCode/include
 $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o: ../../JuceLibraryCode/include_juce_osc.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_osc.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_simpleweb_acec7570.o: ../../JuceLibraryCode/include_juce_simpleweb.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_simpleweb.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_simpleweb2_f0c24e8c.o: ../../JuceLibraryCode/include_juce_simpleweb2.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_simpleweb2.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/execinfo.cmd:
