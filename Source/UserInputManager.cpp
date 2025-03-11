@@ -58,10 +58,10 @@ void UserInputManager::processInput(String s) {
 		dynamic_cast<BKEngine*>(Engine::mainEngine)->showLabelAndTime();
 	}
 	if (s.toLowerCase() == "midilock") {
-		InputPanel::getInstance()->remoteInLockBtn.triggerClick();
+		InputPanel::getInstance()->paramInLock->setValue(!InputPanel::getInstance()->paramInLock->boolValue());
 	}
 	if (s.toLowerCase() == "blackout") {
-		InputPanel::getInstance()->blackoutBtn.triggerClick();
+		InputPanel::getInstance()->paramBlackOut->setValue(!InputPanel::getInstance()->paramBlackOut->boolValue());
 	}
 
 	getProgrammer(true)->processUserInput(s);
@@ -126,7 +126,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 	}
 	else if (firstWord == "grandmaster" && m.size() > 0) {
 		float val = OSCHelpers::getFloatArg(m[0]);
-		InputPanel::getInstance()->grandMaster.setValue(val);
+		InputPanel::getInstance()->paramGrandMaster->setValue(val);
 	}
 	else if (firstWord == "cuelist" && aList.size() > 2) {
 		int targetNumber = (int)((var)aList[1]);

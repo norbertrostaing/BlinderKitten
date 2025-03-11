@@ -258,6 +258,7 @@ BKEngine::BKEngine() :
 	mainBrain = Brain::getInstance();
 	currentDMXChannelView = nullptr;
 
+	addChildControllableContainer(InputPanel::getInstance());
 	addChildControllableContainer(InterfaceManager::getInstance());
 	addChildControllableContainer(ChannelFamilyManager::getInstance());
 	addChildControllableContainer(FixtureTypeManager::getInstance());

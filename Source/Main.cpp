@@ -23,7 +23,7 @@ void BlinderKittenApplication::initialiseInternal(const String &)
 
 	CrashDumpUploader::getInstance()->init("http://hazlab.fr/BlinderKitten/crash_report.php",ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize));
 
-	// DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
+	DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
 	
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_blinderlayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("blinderlayout", "BlinderKitten/layouts");

@@ -198,7 +198,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Clock", "Panels");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Outliner", "");
-    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Dashboard", "");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Dashboard", "Organic Tools");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Help", "");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Parrots", "Organic Tools");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("The Detective", "Organic Tools");

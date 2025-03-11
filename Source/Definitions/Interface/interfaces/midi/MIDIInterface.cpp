@@ -98,7 +98,7 @@ void MIDIInterface::sendStartupBytes()
 
 void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const int &velocity)
 {
-    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
+    if (InputPanel::getInstance()->paramInLock->boolValue()) return;
     if (!enabled->boolValue()) {return;}
     if (logIncomingData->boolValue()) NLOG(niceName, "Note On received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
     TSLastReceived.set("Note-"+String(channel)+"-"+String(pitch), Time::getApproximateMillisecondCounter());
@@ -115,7 +115,7 @@ void MIDIInterface::noteOnReceived(const int &channel, const int &pitch, const i
 
 void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const int &velocity)
 {
-    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
+    if (InputPanel::getInstance()->paramInLock->boolValue()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Note Off received, channel : " << channel << ", pitch : " << pitch << ", velocity : " << velocity);
     TSLastReceived.set("Note-" + String(channel) + "-" + String(pitch), Time::getMillisecondCounter());
@@ -126,13 +126,13 @@ void MIDIInterface::noteOffReceived(const int &channel, const int &pitch, const 
         m->midiType->setValueWithData(MIDIMapping::MidiType::NOTE);
         m->channel->setValue(channel);
         m->pitchOrNumber->setValue(pitch);
-        m->setNiceName("Note "+String(pitch)+" Channel "+String(channel));
+        m->setNiceName("Note " + String(pitch) + " Channel " + String(channel));
     }
 }
 
-void MIDIInterface::controlChangeReceived(const int &channel, const int &number, const int &value)
+void MIDIInterface::controlChangeReceived(const int& channel, const int& number, const int& value)
 {
-    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
+    if (InputPanel::getInstance()->paramInLock->boolValue()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Control Change received, channel : " << channel << ", number : " << number << ", value : " << value);
     TSLastReceived.set("CC-" + String(channel) + "-" + String(number), Time::getMillisecondCounter());
@@ -149,7 +149,7 @@ void MIDIInterface::controlChangeReceived(const int &channel, const int &number,
 
 void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
 {
-    if (InputPanel::getInstance()->remoteInLockBtn.getToggleState()) return;
+    if (InputPanel::getInstance()->paramInLock->boolValue()) return;
     if (!enabled->boolValue()) { return; }
     if (logIncomingData->boolValue()) NLOG(niceName, "Pitch wheel received, channel : " << channel << ", value : " << value);
     TSLastReceived.set("PW-" + String(channel), Time::getMillisecondCounter());

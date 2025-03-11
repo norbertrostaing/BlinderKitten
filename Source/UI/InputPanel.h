@@ -15,6 +15,7 @@ class BKEngine;
 //==============================================================================
 /*
 */
+
 class InputPanelUI : public ShapeShifterContent
 {
 public:
@@ -27,10 +28,9 @@ public:
 };
 
 
-class InputPanel  : public 
-    juce::Component,
-    juce::Button::Listener,
-    juce::Slider::Listener
+class InputPanel  : 
+    public ControllableContainer,
+    public juce::Component
 {
 public:
     juce_DeclareSingleton(InputPanel, true);
@@ -39,45 +39,47 @@ public:
 
     BKEngine * engine = nullptr;
 
-    TextButton btnFixture;
-    TextButton btnGroup;
-    TextButton btnSub;
-    TextButton btnCuelist;
-    TextButton btnCue;
-    TextButton btnPreset;
-    TextButton btnEffect;
-    TextButton btnCarousel;
-    TextButton btn1;
-    TextButton btn2;
-    TextButton btn3;
-    TextButton btn4;
-    TextButton btn5;
-    TextButton btn6;
-    TextButton btn7;
-    TextButton btn8;
-    TextButton btn9;
-    TextButton btn0;
-    TextButton btnPlus;
-    TextButton btnMinus;
-    TextButton btnDot;
-    TextButton btnThru;
-    TextButton btnBackspace;
-    TextButton btnEnter;
-    TextButton btnClear;
-    TextButton btnRecord;
-    TextButton btnEdit;
-    TextButton btnCopy;
-    TextButton btnDelete;
-    TextButton btnAssistant;
+    Trigger* paramFixture; TriggerButtonUI* btnFixture;
+    Trigger* paramGroup; TriggerButtonUI* btnGroup;
+    Trigger* paramSub; TriggerButtonUI* btnSub;
+    Trigger* paramCuelist; TriggerButtonUI* btnCuelist;
+    Trigger* paramCue; TriggerButtonUI* btnCue;
+    Trigger* paramPreset; TriggerButtonUI* btnPreset;
+    Trigger* paramEffect; TriggerButtonUI* btnEffect;
+    Trigger* paramCarousel; TriggerButtonUI* btnCarousel;
+    Trigger* param1; TriggerButtonUI* btn1;
+    Trigger* param2; TriggerButtonUI* btn2;
+    Trigger* param3; TriggerButtonUI* btn3;
+    Trigger* param4; TriggerButtonUI* btn4;
+    Trigger* param5; TriggerButtonUI* btn5;
+    Trigger* param6; TriggerButtonUI* btn6;
+    Trigger* param7; TriggerButtonUI* btn7;
+    Trigger* param8; TriggerButtonUI* btn8;
+    Trigger* param9; TriggerButtonUI* btn9;
+    Trigger* param0; TriggerButtonUI* btn0;
+    Trigger* paramPlus; TriggerButtonUI* btnPlus;
+    Trigger* paramMinus; TriggerButtonUI* btnMinus;
+    Trigger* paramDot; TriggerButtonUI* btnDot;
+    Trigger* paramThru; TriggerButtonUI* btnThru;
+    Trigger* paramBackspace; TriggerButtonUI* btnBackspace;
+    Trigger* paramEnter; TriggerButtonUI* btnEnter;
+    Trigger* paramClear; TriggerButtonUI* btnClear;
+    Trigger* paramRecord; TriggerButtonUI* btnRecord;
+    Trigger* paramEdit; TriggerButtonUI* btnEdit;
+    Trigger* paramCopy; TriggerButtonUI* btnCopy;
+    Trigger* paramDelete; TriggerButtonUI* btnDelete;
+    Trigger* paramAssistant; TriggerButtonUI* btnAssistant;
 
-    Slider grandMaster;
-    TextButton blackoutBtn;
-    TextButton remoteInLockBtn;
+    BoolParameter* paramBlackOut; BoolButtonToggleUI* btnBlackout;
+    BoolParameter* paramInLock; BoolButtonToggleUI* btnInLock;
+
+    FloatParameter* paramGrandMaster; FloatSliderUI* sliderGrandMaster;
 
     void paint (juce::Graphics&) override;
     void resized() override;
-    void buttonClicked(juce::Button* button) override;
-    void sliderValueChanged(Slider* slider) override;
+    void triggerTriggered(Trigger* t) override;
+    void parameterValueChanged(Parameter*p) override;
+
 
     void setGrandMaster(float value, String origin);
     void updateButtonsText();

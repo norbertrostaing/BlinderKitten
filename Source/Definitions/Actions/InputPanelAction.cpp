@@ -107,7 +107,7 @@ void InputPanelAction::setValueInternal(var value, String origin, int incrementI
         const MessageManagerLock mmLock;
         if (isRelative) 
             {
-            float v = InputPanel::getInstance()->grandMaster.getValue() + val;
+            float v = InputPanel::getInstance()->paramGrandMaster->floatValue() + val;
             v = jlimit<float>(0,1,v);
             
             InputPanel::getInstance()->setGrandMaster(v, origin);
@@ -123,14 +123,14 @@ void InputPanelAction::setValueInternal(var value, String origin, int incrementI
     {
         const MessageManagerLock mmLock;
 
-        InputPanel::getInstance()->blackoutBtn.setToggleState(val == 1, juce::sendNotification);
+        InputPanel::getInstance()->paramBlackOut->setValue(val == 1, juce::sendNotification);
         break;
     }
     case IP_BLACKOUTTOGGLE:
     {
         const MessageManagerLock mmLock;
 
-        if (val == 1) InputPanel::getInstance()->blackoutBtn.setToggleState(!InputPanel::getInstance()->blackoutBtn.getToggleState(), juce::sendNotification);
+        if (val == 1) InputPanel::getInstance()->paramBlackOut->setValue(!InputPanel::getInstance()->paramBlackOut->boolValue(), juce::sendNotification);
         break;
     }
 
@@ -324,7 +324,7 @@ var InputPanelAction::getValue()
         break;
 
     case IP_GM:
-        val = InputPanel::getInstance()->grandMaster.getValue();
+        val = InputPanel::getInstance()->paramGrandMaster->floatValue();
         break;
 
     case IP_OFFCL:

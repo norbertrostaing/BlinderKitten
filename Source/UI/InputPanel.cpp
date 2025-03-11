@@ -29,116 +29,122 @@ InputPanelUI::~InputPanelUI()
 
 juce_ImplementSingleton(InputPanel);
 
-InputPanel::InputPanel()
+InputPanel::InputPanel():
+    ControllableContainer("Input Panel")
 {
-    addAndMakeVisible(btnClear); btnClear.setButtonText("Clear"); btnClear.addListener(this); btnClear.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnEdit); btnEdit.setButtonText("Edit"); btnEdit.addListener(this); btnEdit.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnRecord); btnRecord.setButtonText("Record"); btnRecord.addListener(this); btnRecord.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnDelete); btnDelete.setButtonText("Delete"); btnDelete.addListener(this); btnDelete.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnCopy); btnCopy.setButtonText("Copy"); btnCopy.addListener(this); btnCopy.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnFixture); btnFixture.setButtonText("Fixture"); btnFixture.addListener(this); btnFixture.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnGroup); btnGroup.setButtonText("Group"); btnGroup.addListener(this); btnGroup.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnSub); btnSub.setButtonText("SubFixture"); btnSub.addListener(this); btnSub.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnPreset); btnPreset.setButtonText("Preset"); btnPreset.addListener(this); btnPreset.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnCuelist); btnCuelist.setButtonText("Cuelist"); btnCuelist.addListener(this); btnCuelist.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnCue); btnCue.setButtonText("Cue"); btnCue.addListener(this); btnCue.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnEffect); btnEffect.setButtonText("Cuelist"); btnEffect.addListener(this); btnEffect.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnEffect); btnEffect.setButtonText("Effect"); btnEffect.addListener(this); btnEffect.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnCarousel); btnCarousel.setButtonText("Carousel"); btnCarousel.addListener(this); btnCarousel.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn1); btn1.setButtonText("1"); btn1.addListener(this); btn1.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn2); btn2.setButtonText("2"); btn2.addListener(this); btn2.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn3); btn3.setButtonText("3"); btn3.addListener(this); btn3.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn4); btn4.setButtonText("4"); btn4.addListener(this); btn4.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn5); btn5.setButtonText("5"); btn5.addListener(this); btn5.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn6); btn6.setButtonText("6"); btn6.addListener(this); btn6.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn7); btn7.setButtonText("7"); btn7.addListener(this); btn7.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn8); btn8.setButtonText("8"); btn8.addListener(this); btn8.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn9); btn9.setButtonText("9"); btn9.addListener(this); btn9.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btn0); btn0.setButtonText("0"); btn0.addListener(this); btn0.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnPlus); btnPlus.setButtonText("+"); btnPlus.addListener(this); btnPlus.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnMinus); btnMinus.setButtonText("-"); btnMinus.addListener(this); btnMinus.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnDot); btnDot.setButtonText("."); btnDot.addListener(this); btnDot.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnThru); btnThru.setButtonText("Thru"); btnThru.addListener(this); btnThru.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnBackspace); btnBackspace.setButtonText("<-"); btnBackspace.addListener(this); btnBackspace.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnEnter); btnEnter.setButtonText("Enter"); btnEnter.addListener(this); btnEnter.setWantsKeyboardFocus(false);
-    addAndMakeVisible(btnAssistant); btnAssistant.setButtonText("Assistant"); btnAssistant.addListener(this); btnAssistant.setWantsKeyboardFocus(false);
+    paramClear = addTrigger("Clear", ""); btnClear = paramClear->createButtonUI(); addAndMakeVisible(btnClear);   
+    btnClear->customBGColor = Colour(59, 59, 59); btnClear->useCustomBGColor = true; 
+    paramEdit = addTrigger("Edit", ""); btnEdit = paramEdit->createButtonUI(); addAndMakeVisible(btnEdit);  
+    btnEdit->customBGColor = Colour(59, 59, 59); btnEdit->useCustomBGColor = true;
+    paramRecord = addTrigger("Record", ""); btnRecord = paramRecord->createButtonUI(); addAndMakeVisible(btnRecord);  
+    btnRecord->customBGColor = Colour(59, 59, 59); btnRecord->useCustomBGColor = true;
+    paramDelete = addTrigger("Delete", ""); btnDelete = paramDelete->createButtonUI(); addAndMakeVisible(btnDelete);  
+    btnDelete->customBGColor = Colour(59, 59, 59); btnDelete->useCustomBGColor = true;
+    paramCopy = addTrigger("Copy", ""); btnCopy = paramCopy->createButtonUI(); addAndMakeVisible(btnCopy);  
+    btnCopy->customBGColor = Colour(59, 59, 59); btnCopy->useCustomBGColor = true;
+    paramFixture = addTrigger("Fixture", ""); btnFixture = paramFixture->createButtonUI(); addAndMakeVisible(btnFixture);  
+    btnFixture->customBGColor = Colour(59, 59, 59); btnFixture->useCustomBGColor = true;
+    paramGroup = addTrigger("Group", ""); btnGroup = paramGroup->createButtonUI(); addAndMakeVisible(btnGroup);  
+    btnGroup->customBGColor = Colour(59, 59, 59); btnGroup->useCustomBGColor = true;
+    paramSub = addTrigger("Sub", ""); btnSub = paramSub->createButtonUI(); addAndMakeVisible(btnSub);  
+    btnSub->customBGColor = Colour(59, 59, 59); btnSub->useCustomBGColor = true;
+    paramPreset = addTrigger("Preset", ""); btnPreset = paramPreset->createButtonUI(); addAndMakeVisible(btnPreset);  
+    btnPreset->customBGColor = Colour(59, 59, 59); btnPreset->useCustomBGColor = true;
+    paramCuelist = addTrigger("Cuelist", ""); btnCuelist = paramCuelist->createButtonUI(); addAndMakeVisible(btnCuelist);  
+    btnCuelist->customBGColor = Colour(59, 59, 59); btnCuelist->useCustomBGColor = true;
+    paramCue = addTrigger("Cue", ""); btnCue = paramCue->createButtonUI(); addAndMakeVisible(btnCue);  
+    btnCue->customBGColor = Colour(59, 59, 59); btnCue->useCustomBGColor = true;
+    paramEffect = addTrigger("Effect", ""); btnEffect = paramEffect->createButtonUI(); addAndMakeVisible(btnEffect);  
+    btnEffect->customBGColor = Colour(59, 59, 59); btnEffect->useCustomBGColor = true;
+    paramEffect = addTrigger("Effect", ""); btnEffect = paramEffect->createButtonUI(); addAndMakeVisible(btnEffect);  
+    btnEffect->customBGColor = Colour(59, 59, 59); btnEffect->useCustomBGColor = true;
+    paramCarousel = addTrigger("Carousel", ""); btnCarousel = paramCarousel->createButtonUI(); addAndMakeVisible(btnCarousel);  
+    btnCarousel->customBGColor = Colour(59, 59, 59); btnCarousel->useCustomBGColor = true;
+    param1 = addTrigger("1", ""); btn1 = param1->createButtonUI(); addAndMakeVisible(btn1);  
+    btn1->customBGColor = Colour(59, 59, 59); btn1->useCustomBGColor = true;
+    param2 = addTrigger("2", ""); btn2 = param2->createButtonUI(); addAndMakeVisible(btn2);  
+    btn2->customBGColor = Colour(59, 59, 59); btn2->useCustomBGColor = true;
+    param3 = addTrigger("3", ""); btn3 = param3->createButtonUI(); addAndMakeVisible(btn3);  
+    btn3->customBGColor = Colour(59, 59, 59); btn3->useCustomBGColor = true;
+    param4 = addTrigger("4", ""); btn4 = param4->createButtonUI(); addAndMakeVisible(btn4);  
+    btn4->customBGColor = Colour(59, 59, 59); btn4->useCustomBGColor = true;
+    param5 = addTrigger("5", ""); btn5 = param5->createButtonUI(); addAndMakeVisible(btn5);  
+    btn5->customBGColor = Colour(59, 59, 59); btn5->useCustomBGColor = true;
+    param6 = addTrigger("6", ""); btn6 = param6->createButtonUI(); addAndMakeVisible(btn6);  
+    btn6->customBGColor = Colour(59, 59, 59); btn6->useCustomBGColor = true;
+    param7 = addTrigger("7", ""); btn7 = param7->createButtonUI(); addAndMakeVisible(btn7);  
+    btn7->customBGColor = Colour(59, 59, 59); btn7->useCustomBGColor = true;
+    param8 = addTrigger("8", ""); btn8 = param8->createButtonUI(); addAndMakeVisible(btn8);  
+    btn8->customBGColor = Colour(59, 59, 59); btn8->useCustomBGColor = true;
+    param9 = addTrigger("9", ""); btn9 = param9->createButtonUI(); addAndMakeVisible(btn9);  
+    btn9->customBGColor = Colour(59, 59, 59); btn9->useCustomBGColor = true;
+    param0 = addTrigger("0", ""); btn0 = param0->createButtonUI(); addAndMakeVisible(btn0);  
+    btn0->customBGColor = Colour(59, 59, 59); btn0->useCustomBGColor = true;
+    paramPlus = addTrigger("Plus", ""); btnPlus = paramPlus->createButtonUI(); addAndMakeVisible(btnPlus);  
+    btnPlus->customBGColor = Colour(59, 59, 59); btnPlus->useCustomBGColor = true;
+    paramMinus = addTrigger("Minus", ""); btnMinus = paramMinus->createButtonUI(); addAndMakeVisible(btnMinus);  
+    btnMinus->customBGColor = Colour(59, 59, 59); btnMinus->useCustomBGColor = true;
+    paramDot = addTrigger("Dot", ""); btnDot = paramDot->createButtonUI(); addAndMakeVisible(btnDot);  
+    btnDot->customBGColor = Colour(59, 59, 59); btnDot->useCustomBGColor = true;
+    paramThru = addTrigger("Thru", ""); btnThru = paramThru->createButtonUI(); addAndMakeVisible(btnThru);  
+    btnThru->customBGColor = Colour(59, 59, 59); btnThru->useCustomBGColor = true;
+    paramBackspace = addTrigger("Backspace", ""); btnBackspace = paramBackspace->createButtonUI(); addAndMakeVisible(btnBackspace);  
+    btnBackspace->customBGColor = Colour(59, 59, 59); btnBackspace->useCustomBGColor = true;
+    paramEnter = addTrigger("Enter", ""); btnEnter = paramEnter->createButtonUI(); addAndMakeVisible(btnEnter);  
+    btnEnter->customBGColor = Colour(59, 59, 59); btnEnter->useCustomBGColor = true;
+    paramAssistant = addTrigger("Assistant", ""); btnAssistant = paramAssistant->createButtonUI(); addAndMakeVisible(btnAssistant);  
+    btnAssistant->customBGColor = Colour(59, 59, 59); btnAssistant->useCustomBGColor = true;
 
-    addAndMakeVisible(grandMaster); 
-    grandMaster.setSliderStyle(Slider::LinearBarVertical);
-    grandMaster.setSliderSnapsToMousePosition(false);
-    grandMaster.setRange(0, 1);
-    grandMaster.setValue(1, juce::dontSendNotification);
-    grandMaster.setTextBoxStyle(Slider::NoTextBox, true, 0, 0);
-    grandMaster.addListener(this);
-    grandMaster.setWantsKeyboardFocus(false);
+    paramGrandMaster = addFloatParameter("Grand Master", "Grand Master",1,0,1); sliderGrandMaster = paramGrandMaster->createSlider(); addAndMakeVisible(sliderGrandMaster);
+    sliderGrandMaster->orientation = FloatSliderUI::VERTICAL;
+    sliderGrandMaster->showValue = false;
 
-    addAndMakeVisible(blackoutBtn);
-    blackoutBtn.setButtonText("Black Out");
-    blackoutBtn.addListener(this);
-    blackoutBtn.setToggleable(true);
-    blackoutBtn.setClickingTogglesState(true);
-    blackoutBtn.setWantsKeyboardFocus(false);
+    paramBlackOut = addBoolParameter("BlackOut", "", false); btnBlackout = paramBlackOut->createButtonToggle(); addAndMakeVisible(btnBlackout);  
+    btnBlackout->customBGColor = Colour(59, 59, 59); btnBlackout->useCustomBGColor = true;
 
-    addAndMakeVisible(remoteInLockBtn);
-    remoteInLockBtn.setButtonText("MIDI Lock");
-    remoteInLockBtn.addListener(this);
-    remoteInLockBtn.setToggleable(true);
-    remoteInLockBtn.setClickingTogglesState(true);
-    remoteInLockBtn.setWantsKeyboardFocus(false);
-    remoteInLockBtn.onClick = [this]() {
-        if (!remoteInLockBtn.getToggleState()) {
-            VirtualButtonGrid::getInstance()->goToPage(VirtualButtonGrid::getInstance()->page);
-            VirtualFaderColGrid::getInstance()->goToPage(VirtualFaderColGrid::getInstance()->page);
-        }
-        float v = remoteInLockBtn.getToggleState() ? 1 : 0;
-        UserInputManager::getInstance()->feedback("/midilock", v, "");
-    };
-
+    paramInLock = addBoolParameter("Remote lock", "", false); btnInLock = paramInLock->createButtonToggle(); addAndMakeVisible(btnInLock);  
+    btnInLock->customBGColor = Colour(59, 59, 59); btnInLock->useCustomBGColor = true;
 }
 
 InputPanel::~InputPanel()
 {
-}
-
-void InputPanel::buttonClicked(juce::Button* button) {
-    UserInputManager::getInstance()->resetFocus();
-    ModifierKeys k = ModifierKeys::getCurrentModifiersRealtime();
-    if (button == &btnAssistant){
-        Assistant::getInstance()->selectThis();
-    }
-    else if (button == &btnBackspace) {
-        UserInputManager::getInstance()->processInput("backspace");
-    }
-    else if (button == &btnClear && k.isShiftDown()) {
-        UserInputManager::getInstance()->processInput("clearall");
-    }
-    else if (button == &blackoutBtn) {
-        Brain::getInstance()->grandMasterChanged();
-        UserInputManager::getInstance()->feedback("/blackout", blackoutBtn.getToggleState() ? 1 : 0, "");
-    }
-    else if (button == &btnCopy) {
-        UserInputManager::getInstance()->processInput("copy");
-    }
-    else if (button == &btnRecord) {
-        UserInputManager::getInstance()->processInput("record");
-    }
-    else if (button == &btnEdit) {
-        UserInputManager::getInstance()->processInput("edit");
-    }
-    else {
-        UserInputManager::getInstance()->processInput(button->getButtonText());
-    }
+    delete btnFixture;
+    delete btnGroup;
+    delete btnSub;
+    delete btnCuelist;
+    delete btnCue;
+    delete btnPreset;
+    delete btnEffect;
+    delete btnCarousel;
+    delete btn1;
+    delete btn2;
+    delete btn3;
+    delete btn4;
+    delete btn5;
+    delete btn6;
+    delete btn7;
+    delete btn8;
+    delete btn9;
+    delete btn0;
+    delete btnPlus;
+    delete btnMinus;
+    delete btnDot;
+    delete btnThru;
+    delete btnBackspace;
+    delete btnEnter;
+    delete btnClear;
+    delete btnRecord;
+    delete btnEdit;
+    delete btnCopy;
+    delete btnDelete;
+    delete btnAssistant;
+    delete btnBlackout;
+    delete btnInLock;
+    delete sliderGrandMaster;
 }
 
 void InputPanel::paint (juce::Graphics& g)
 {
-    /* This demo code just fills the component's background and
-       draws some placeholder text to get you started.
-
-       You should replace everything in this method with your own
-       drawing code..
-    */
-
 }
 
 void InputPanel::resized()
@@ -166,65 +172,95 @@ void InputPanel::resized()
     int tot = p3+lg;
     int firstLineMargin = (tot-(3*lg))/2;
 
-    btnAssistant.setBounds  (0,0,lg, h);
-    btnClear.setBounds      (lg+firstLineMargin, 0 * r, lg, h);
-    btnRecord.setBounds     (2*(lg + firstLineMargin), 0 * r, lg, h);
+    btnAssistant -> setBounds  (0,0,lg, h);
+    btnClear -> setBounds      (lg+firstLineMargin, 0 * r, lg, h);
+    btnRecord -> setBounds     (2*(lg + firstLineMargin), 0 * r, lg, h);
 
-    btnEdit.setBounds       (0 * lg + p3, 1 * r, lg, h);
-    btnCopy.setBounds       (0 * lg + p3, 2 * r, lg, h);
-    btnDelete.setBounds     (0 * lg + p3, 3 * r, lg, h);
+    btnEdit -> setBounds       (0 * lg + p3, 1 * r, lg, h);
+    btnCopy -> setBounds       (0 * lg + p3, 2 * r, lg, h);
+    btnDelete -> setBounds     (0 * lg + p3, 3 * r, lg, h);
 
-    btnFixture.setBounds    (0 * lg, 1 * r, lg, h);
-    btnSub.setBounds        (1 * lg, 1 * r, lg, h);
-    btnGroup.setBounds      (0 * lg, 2 * r, lg, h);
-    btnPreset.setBounds     (1 * lg, 2 * r, lg, h);
+    btnFixture -> setBounds    (0 * lg, 1 * r, lg, h);
+    btnSub -> setBounds        (1 * lg, 1 * r, lg, h);
+    btnGroup -> setBounds      (0 * lg, 2 * r, lg, h);
+    btnPreset -> setBounds     (1 * lg, 2 * r, lg, h);
 
-    btnCuelist.setBounds    (0 * lg, 3 * r, lg, h);
-    btnCue.setBounds        (1 * lg, 3 * r, lg, h);
-    btnEffect.setBounds     (0 * lg, 4 * r, lg, h);
-    btnCarousel.setBounds   (1 * lg, 4 * r, lg, h);
+    btnCuelist -> setBounds    (0 * lg, 3 * r, lg, h);
+    btnCue -> setBounds        (1 * lg, 3 * r, lg, h);
+    btnEffect -> setBounds     (0 * lg, 4 * r, lg, h);
+    btnCarousel -> setBounds   (1 * lg, 4 * r, lg, h);
 
-    btn7.setBounds          (0 * sm + p2, 1 * r, sm, h);
-    btn8.setBounds          (1 * sm + p2, 1 * r, sm, h);
-    btn9.setBounds          (2 * sm + p2, 1 * r, sm, h);
-    btnPlus.setBounds       (3 * sm + p2, 1 * r, sm, h);
-    btn4.setBounds          (0 * sm + p2, 2 * r, sm, h);
-    btn5.setBounds          (1 * sm + p2, 2 * r, sm, h);
-    btn6.setBounds          (2 * sm + p2, 2 * r, sm, h);
-    btnMinus.setBounds      (3 * sm + p2, 2 * r, sm, h);
-    btn1.setBounds          (0 * sm + p2, 3 * r, sm, h);
-    btn2.setBounds          (1 * sm + p2, 3 * r, sm, h);
-    btn3.setBounds          (2 * sm + p2, 3 * r, sm, h);
-    btnThru.setBounds       (3 * sm + p2, 3 * r, sm, h);
-    btn0.setBounds          (0 * sm + p2, 4 * r, sm, h);
-    btnBackspace.setBounds  (1 * sm + p2, 4 * r, sm, h);
-    btnEnter.setBounds      (2 * sm + p2, 4 * r, sm*2, h);
+    btn7 -> setBounds          (0 * sm + p2, 1 * r, sm, h);
+    btn8 -> setBounds          (1 * sm + p2, 1 * r, sm, h);
+    btn9 -> setBounds          (2 * sm + p2, 1 * r, sm, h);
+    btnPlus -> setBounds       (3 * sm + p2, 1 * r, sm, h);
+    btn4 -> setBounds          (0 * sm + p2, 2 * r, sm, h);
+    btn5 -> setBounds          (1 * sm + p2, 2 * r, sm, h);
+    btn6 -> setBounds          (2 * sm + p2, 2 * r, sm, h);
+    btnMinus -> setBounds      (3 * sm + p2, 2 * r, sm, h);
+    btn1 -> setBounds          (0 * sm + p2, 3 * r, sm, h);
+    btn2 -> setBounds          (1 * sm + p2, 3 * r, sm, h);
+    btn3 -> setBounds          (2 * sm + p2, 3 * r, sm, h);
+    btnThru -> setBounds       (3 * sm + p2, 3 * r, sm, h);
+    btn0 -> setBounds          (0 * sm + p2, 4 * r, sm, h);
+    btnBackspace -> setBounds  (1 * sm + p2, 4 * r, sm, h);
+    btnEnter -> setBounds      (2 * sm + p2, 4 * r, sm*2, h);
 
-    remoteInLockBtn.setBounds(0 * lg + p3 + 0*(lg / 2), 4 * r, lg / 2, h);
-    blackoutBtn.setBounds(0 * lg + p3 + 1*(lg / 2), 4 * r, lg / 2, h);
-    grandMaster.setBounds(p3 + 2*(lg / 2), 0, sm, 5*h);
+    btnInLock -> setBounds(0 * lg + p3 + 0*(lg / 2), 4 * r, lg / 2, h);
+    btnBlackout -> setBounds(0 * lg + p3 + 1*(lg / 2), 4 * r, lg / 2, h);
+    sliderGrandMaster -> setBounds(p3 + 2*(lg / 2), 0, sm, 5*h);
 
 
     // This method is where you should set the bounds of any child
     // components that your component contains..
 }
 
-void InputPanel::sliderValueChanged(Slider* slider)
+void InputPanel::triggerTriggered(Trigger* t)
 {
-    if (slider == &grandMaster) {
+    ModifierKeys k = ModifierKeys::getCurrentModifiersRealtime();
+
+    if (t == paramAssistant){
+        Assistant::getInstance()->selectThis();
+    }
+    else if (t == paramBackspace) {
+        UserInputManager::getInstance()->processInput("backspace");
+    }
+    else if (t == paramClear && k.isShiftDown()) {
+        UserInputManager::getInstance()->processInput("clearall");
+    }
+    else if (t == paramCopy) {
+        UserInputManager::getInstance()->processInput("copy");
+    }
+    else if (t == paramRecord) {
+        UserInputManager::getInstance()->processInput("record");
+    }
+    else if (t == paramEdit) {
+        UserInputManager::getInstance()->processInput("edit");
+    }
+    else {
+        UserInputManager::getInstance()->processInput(t->niceName);
+    }
+
+}
+
+void InputPanel::parameterValueChanged(Parameter* p)
+{
+    if (p == paramBlackOut) {
+        Brain::getInstance()->grandMasterChanged();
+        UserInputManager::getInstance()->feedback("/blackout", paramBlackOut->boolValue() ? 1 : 0, "");
+    }
+    if (p == paramGrandMaster) {
         setGrandMaster(-1, "");
     }
-    //UserInputManager::getInstance()->encoderValueChanged(index, slider->getValue());
-
 }
 
 void InputPanel::setGrandMaster(float value, String origin)
 {
     if (value >= 0) {
-        grandMaster.setValue(value, juce::dontSendNotification);
+        paramGrandMaster->setValue(value, true);
     }
     Brain::getInstance()->grandMasterChanged();
-    UserInputManager::getInstance()->feedback("/grandmaster", grandMaster.getValue(), origin);
+    UserInputManager::getInstance()->feedback("/grandmaster", paramGrandMaster->floatValue(), origin);
 }
 
 void InputPanel::updateButtonsText()
@@ -242,7 +278,8 @@ void InputPanel::updateButtonsText()
 
     }
 
-    btnCopy.setButtonText(copyText);
-    btnEdit.setButtonText(editText);
-    btnRecord.setButtonText(recordText);
+    paramRecord->setNiceName(recordText);
+    paramEdit->setNiceName(editText);
+    paramCopy->setNiceName(copyText);
+    
 }

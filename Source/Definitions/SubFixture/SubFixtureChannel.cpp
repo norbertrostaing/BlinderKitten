@@ -311,8 +311,8 @@ void SubFixtureChannel::updateVal(double now) {
 	}
 
 	if (reactToGrandMaster) {
-		double gm = InputPanel::getInstance()->grandMaster.getValue();
-		if (InputPanel::getInstance()->blackoutBtn.getToggleState()) {
+		double gm = InputPanel::getInstance()->paramGrandMaster->floatValue();
+		if (InputPanel::getInstance()->paramBlackOut->boolValue()) {
 			newValue = 0;
 		}
 		if (isHTP) {
