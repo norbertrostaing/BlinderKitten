@@ -56,8 +56,6 @@ InputPanel::InputPanel():
     btnCue->customBGColor = Colour(59, 59, 59); btnCue->useCustomBGColor = true;
     paramEffect = addTrigger("Effect", ""); btnEffect = paramEffect->createButtonUI(); addAndMakeVisible(btnEffect);  
     btnEffect->customBGColor = Colour(59, 59, 59); btnEffect->useCustomBGColor = true;
-    paramEffect = addTrigger("Effect", ""); btnEffect = paramEffect->createButtonUI(); addAndMakeVisible(btnEffect);  
-    btnEffect->customBGColor = Colour(59, 59, 59); btnEffect->useCustomBGColor = true;
     paramCarousel = addTrigger("Carousel", ""); btnCarousel = paramCarousel->createButtonUI(); addAndMakeVisible(btnCarousel);  
     btnCarousel->customBGColor = Colour(59, 59, 59); btnCarousel->useCustomBGColor = true;
     param1 = addTrigger("1", ""); btn1 = param1->createButtonUI(); addAndMakeVisible(btn1);  
