@@ -812,6 +812,15 @@ void UserInputManager::goMainCuelist()
 	target->userGo();
 }
 
+void UserInputManager::goBackMainCuelist()
+{
+	BKEngine* engine = (BKEngine*) Engine::mainEngine;
+	int targetCueId = engine->conductorCuelistId->intValue();
+	Cuelist* target = Brain::getInstance()->getCuelistById(targetCueId);
+	if (target == nullptr) return;
+	target->goBack();
+}
+
 String UserInputManager::toUserText(String s) {
 	if (s.containsOnly("1234567890.")) {return s;}
 	if (s == "group") { return "Group"; }

@@ -56,6 +56,7 @@ public:
     void toggleBlind();
 
     void goMainCuelist();
+    void goBackMainCuelist();
 
     String toUserText(String s);
     Programmer* getProgrammer(bool createIfNotThere);
