@@ -19,14 +19,13 @@ public:
     PresetAction(var params = var());
     ~PresetAction();
 
-    enum ActionType { PRESET_SET, TIMING_PRESET_SET};
+    enum ActionType { TIMING_PRESET_SET, TIMING_PRESET_FIXED};
     ActionType actionType;
     IntParameter* targetId;
-    BoolParameter* randomize;
-    
-    IntParameter* otherId;
-    IntParameter* fromId;
-    IntParameter* toId;
+    EnumParameter* component;
+    FloatParameter* fromValue;
+    FloatParameter* toValue;
+    FloatParameter* fixedValue;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();
@@ -37,5 +36,4 @@ public:
     var getValue();
 
     static PresetAction* create(var params) { return new PresetAction(params); }
-
 };

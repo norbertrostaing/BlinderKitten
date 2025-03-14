@@ -170,6 +170,9 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Thru", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_THRU));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Explode", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_EXPLODE));
 
+    defs.add(Factory<Action>::Definition::createDef("Presets", "Timing Preset set", &PresetAction::create)->addParam("actionType", PresetAction::TIMING_PRESET_SET));
+    defs.add(Factory<Action>::Definition::createDef("Presets", "Timing Preset fixed", &PresetAction::create)->addParam("actionType", PresetAction::TIMING_PRESET_FIXED));
+
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Cuelist", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CUELIST));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "FX", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_FX));
     defs.add(Factory<Action>::Definition::createDef("Tap tempo multiple", "Carousel", &TapTempoMultiple::create)->addParam("actionType", TapTempoMultiple::TAPTEMPO_CAR));

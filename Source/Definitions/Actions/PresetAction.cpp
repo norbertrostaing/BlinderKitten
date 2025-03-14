@@ -15,15 +15,21 @@
 PresetAction::PresetAction(var params) :
     Action(params)
 {
-    actionType = (ActionType)(int)params.getProperty("actionType", PRESET_SET);
+    actionType = (ActionType)(int)params.getProperty("actionType", TIMING_PRESET_SET);
 
     targetId = addIntParameter("Preset id", "it of the new target", 0, 0);
-    randomize = addBoolParameter("Randomize", "Random selection of other preset", false);
 
-    otherId = addIntParameter("Other Id", "", 0, 0);
-    fromId = addIntParameter("From Id", "", 0, 0);
-    toId = addIntParameter("To Id", "", 0, 0);
-    updateDisplay();
+    if (actionType == TIMING_PRESET_SET) {
+        component = addEnumParameter("Component", "");
+        component->addOption("Delay from", "dFrom")->addOption("Delay to", "dTo")->addOption("Fade from", "fFrom")->addOption("Fade to", "fTo");
+
+        fromValue = addFloatParameter("From value", "Low value", 0);
+        toValue = addFloatParameter("To value", "High value", 0);
+    }
+    else if (actionType == TIMING_PRESET_FIXED) {
+        component->addOption("Delay from", "dFrom")->addOption("Delay to", "dTo")->addOption("Fade from", "fFrom")->addOption("Fade to", "fTo");
+        fixedValue = addFloatParameter("Value", "Value", 0);
+    }
 }
 
 PresetAction::~PresetAction()
@@ -32,17 +38,10 @@ PresetAction::~PresetAction()
 
 void PresetAction::onContainerParameterChangedInternal(Parameter* p)
 {
-    if (p == randomize) {
-        updateDisplay();
-    }
 }
 
 void PresetAction::updateDisplay()
 {
-    bool rand = randomize->boolValue();
-    otherId->hideInEditor = rand;
-    fromId->hideInEditor = !rand;
-    toId->hideInEditor = !rand;
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
@@ -53,57 +52,30 @@ void PresetAction::triggerInternal()
 
 void PresetAction::setValueInternal(var value, String origin, int indexIncrement, bool isRelative) {
     float val = value;
-    if (val < 1) {
-        return;
-    }
 
-    int min = fromId->intValue();
-    int max = toId->intValue();
-    if (min > max) {
-        min = toId->intValue();
-        max = fromId->intValue();
-    }
-    int newId = 0;
-
-    if (actionType == PRESET_SET) {
-        Preset* target = Brain::getInstance()->getPresetById(targetId->intValue());
-        if (target == nullptr) { return; }
-        if (randomize->boolValue()) {
-            Array<Preset*> available;
-            for (int i = min; i <= max; i++) {
-                Preset* p = Brain::getInstance()->getPresetById(i);
-                if (p != nullptr) available.add(p);
-            }
-            if (available.size() > 0) {
-                Random r;
-                int index = r.nextInt(available.size());
-                newId = available[index]->id->intValue();
-            }
-        }
-        else {
-            newId = otherId->intValue();
-        }
-        target->useAnotherId->setValue(newId);
-    }
-    else if (actionType == TIMING_PRESET_SET) {
+    if (actionType == TIMING_PRESET_SET) {
         TimingPreset* target = Brain::getInstance()->getTimingPresetById(targetId->intValue());
+        String comp = component->getValueData().toString();
         if (target == nullptr) { return; }
-        if (randomize->boolValue()) {
-            Array<TimingPreset*> available;
-            for (int i = min; i <= max; i++) {
-                TimingPreset* p = Brain::getInstance()->getTimingPresetById(i);
-                if (p != nullptr) available.add(p);
-            }
-            if (available.size() > 0) {
-                Random r;
-                int index = r.nextInt(available.size());
-                newId = available[index]->id->intValue();
-            }
+        float newVal = jmap(val, 0.f, 1.f, fromValue->floatValue(), toValue->floatValue());
+        if (comp == "dFrom") target->delayFrom->setValue(newVal);
+        else if (comp == "dTo") target->delayTo->setValue(newVal);
+        else if (comp == "fFrom") target->fadeFrom->setValue(newVal);
+        else if (comp == "fTo") target->fadeTo->setValue(newVal);
+    }
+
+    else if (actionType == TIMING_PRESET_FIXED) {
+        if (val < 1) {
+            return;
         }
-        else {
-            newId = otherId->intValue();
-        }
-        target->useAnotherId->setValue(newId);
+        TimingPreset* target = Brain::getInstance()->getTimingPresetById(targetId->intValue());
+        String comp = component->getValueData().toString();
+        if (target == nullptr) { return; }
+        float newVal = fixedValue->floatValue();
+        if (comp == "dFrom") target->delayFrom->setValue(newVal);
+        else if (comp == "dTo") target->delayTo->setValue(newVal);
+        else if (comp == "fFrom") target->fadeFrom->setValue(newVal);
+        else if (comp == "fTo") target->fadeTo->setValue(newVal);
     }
 
 
