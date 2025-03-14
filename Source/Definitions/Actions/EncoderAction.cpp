@@ -106,13 +106,13 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
 
     case ENC_NEXTCOMMAND:
         if (val == 1) {
-            Encoders::getInstance()->commandUpBtn.triggerClick();
+            Encoders::getInstance()->paramCommandUp->trigger();
         }
         break;
 
     case ENC_PREVCOMMAND:
         if (val == 1) {
-            Encoders::getInstance()->commandDownBtn.triggerClick();
+            Encoders::getInstance()->paramCommandDown->trigger();
         }
         break;
 
@@ -143,27 +143,27 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
 
     case ENC_HL:
         if (val == 1) {
-            Encoders::getInstance()->HLBtn.triggerClick();
+            Encoders::getInstance()->paramHighLight->trigger();
         }
         break;
     case ENC_BLIND:
         if (val == 1) {
-            Encoders::getInstance()->blindBtn.triggerClick();
+            Encoders::getInstance()->paramBlind->trigger();
         }
         break;
     case ENC_RANGE:
         if (val == 1) {
-            Encoders::getInstance()->encoderRangeBtn.triggerClick();
+            Encoders::getInstance()->paramEncoderRange->trigger();
         }
         break;
     case ENC_THRU:
         if (val == 1) {
-            Encoders::getInstance()->btnMode.triggerClick();
+            Encoders::getInstance()->paramMode->trigger();
         }
         break;
     case ENC_EXPLODE:
         if (val == 1) {
-            Encoders::getInstance()->explodeCommandBtn.triggerClick();
+            Encoders::getInstance()->paramExplodeCommand->trigger();
         }
         break;
 

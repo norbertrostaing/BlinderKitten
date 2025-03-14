@@ -30,80 +30,55 @@ EncodersUI::~EncodersUI()
 juce_ImplementSingleton(Encoders);
 
 Encoders::Encoders():
-    channels()
+    channels(),
+    ControllableContainer("Encoders")
 {
     addAndMakeVisible(&commandLine);
 
-    addAndMakeVisible(&numbersOrNamesBtn);
-    numbersOrNamesBtn.addListener(this);
-    numbersOrNamesBtn.setButtonText("123");
-    numbersOrNamesBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&HLBtn);
-    HLBtn.addListener(this);
-    HLBtn.setButtonText("HL");
-    HLBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&blindBtn);
-    blindBtn.addListener(this);
-    blindBtn.setButtonText("Blind");
-    blindBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&btnMode);
-    btnMode.addListener(this);
-    btnMode.setButtonText("Val");
-    btnMode.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&bigMoveLeftBtn);
-    bigMoveLeftBtn.addListener(this);
-    bigMoveLeftBtn.setButtonText("<<");
-    bigMoveLeftBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&littleMoveLeftBtn);
-    littleMoveLeftBtn.addListener(this);
-    littleMoveLeftBtn.setButtonText("<");
-    littleMoveLeftBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&bigMoveRightBtn);
-    bigMoveRightBtn.addListener(this);
-    bigMoveRightBtn.setButtonText(">>");
-    bigMoveRightBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&littleMoveRightBtn);
-    littleMoveRightBtn.addListener(this);
-    littleMoveRightBtn.setButtonText(">");
-    littleMoveRightBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&encoderRangeBtn);
-    encoderRangeBtn.addListener(this);
-    encoderRangeBtn.setButtonText("0-1");
-    encoderRangeBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&commandDownBtn);
-    commandDownBtn.addListener(this);
-    commandDownBtn.setButtonText("Cmd -");
-    commandDownBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&commandUpBtn);
-    commandUpBtn.addListener(this);
-    commandUpBtn.setButtonText("Cmd +");
-    commandUpBtn.setWantsKeyboardFocus(false);
-
-    addAndMakeVisible(&explodeCommandBtn);
-    explodeCommandBtn.addListener(this);
-    explodeCommandBtn.setButtonText("<>");
-    explodeCommandBtn.setWantsKeyboardFocus(false);
-
+    paramNumbersOrNames = addTrigger("123", ""); btnNumbersOrNames = paramNumbersOrNames->createButtonUI(); addAndMakeVisible(btnNumbersOrNames);
+    btnNumbersOrNames->customBGColor = Colour(59, 59, 59); btnNumbersOrNames->useCustomBGColor = true;
+    paramHighLight = addTrigger("HL", ""); btnHighLight = paramHighLight->createButtonUI(); addAndMakeVisible(btnHighLight);
+    btnHighLight->customBGColor = Colour(59, 59, 59); btnHighLight->useCustomBGColor = true;
+    paramBlind = addTrigger("Blind", ""); btnBlind = paramBlind->createButtonUI(); addAndMakeVisible(btnBlind);
+    btnBlind->customBGColor = Colour(59, 59, 59); btnBlind->useCustomBGColor = true;
+    paramMode = addTrigger("Val", ""); btnMode = paramMode->createButtonUI(); addAndMakeVisible(btnMode);
+    btnMode->customBGColor = Colour(59, 59, 59); btnMode->useCustomBGColor = true;
+    paramBigMoveLeft = addTrigger("<<", ""); btnBigMoveLeft = paramBigMoveLeft->createButtonUI(); addAndMakeVisible(btnBigMoveLeft);
+    btnBigMoveLeft->customBGColor = Colour(59, 59, 59); btnBigMoveLeft->useCustomBGColor = true;
+    paramLittleMoveLeft = addTrigger("<", ""); btnLittleMoveLeft = paramLittleMoveLeft->createButtonUI(); addAndMakeVisible(btnLittleMoveLeft);
+    btnLittleMoveLeft->customBGColor = Colour(59, 59, 59); btnLittleMoveLeft->useCustomBGColor = true;
+    paramBigMoveRight = addTrigger(">>", ""); btnBigMoveRight = paramBigMoveRight->createButtonUI(); addAndMakeVisible(btnBigMoveRight);
+    btnBigMoveRight->customBGColor = Colour(59, 59, 59); btnBigMoveRight->useCustomBGColor = true;
+    paramLittleMoveRight = addTrigger(">", ""); btnLittleMoveRight = paramLittleMoveRight->createButtonUI(); addAndMakeVisible(btnLittleMoveRight);
+    btnLittleMoveRight->customBGColor = Colour(59, 59, 59); btnLittleMoveRight->useCustomBGColor = true;
+    paramEncoderRange = addTrigger("0-1", ""); btnEncoderRange = paramEncoderRange->createButtonUI(); addAndMakeVisible(btnEncoderRange);
+    btnEncoderRange->customBGColor = Colour(59, 59, 59); btnEncoderRange->useCustomBGColor = true;
+    paramCommandDown = addTrigger("Cmd -", ""); btnCommandDown = paramCommandDown->createButtonUI(); addAndMakeVisible(btnCommandDown);
+    btnCommandDown->customBGColor = Colour(59, 59, 59); btnCommandDown->useCustomBGColor = true;
+    paramCommandUp = addTrigger("Cmd +", ""); btnCommandUp = paramCommandUp->createButtonUI(); addAndMakeVisible(btnCommandUp);
+    btnCommandUp->customBGColor = Colour(59, 59, 59); btnCommandUp->useCustomBGColor = true;
+    paramExplodeCommand = addTrigger("<>", ""); btnExplodeCommand = paramExplodeCommand->createButtonUI(); addAndMakeVisible(btnExplodeCommand);
+    btnExplodeCommand->customBGColor = Colour(59, 59, 59); btnExplodeCommand->useCustomBGColor = true;
     addAndMakeVisible(&commandNumber);
     commandNumber.setJustificationType(juce::Justification::centred);
     initEncoders();
-
-    explodeCommandBtn.addMouseListener(this, false);
 
 }
 
 Encoders::~Encoders()
 {
+    delete btnNumbersOrNames;
+    delete btnHighLight;
+    delete btnBlind;
+    delete btnMode;
+    delete btnBigMoveLeft;
+    delete btnLittleMoveLeft;
+    delete btnBigMoveRight;
+    delete btnLittleMoveRight;
+    delete btnEncoderRange;
+    delete btnCommandDown;
+    delete btnCommandUp;
+    delete btnExplodeCommand;
 }
 
 void Encoders::initEncoders()
@@ -158,18 +133,18 @@ void Encoders::resized()
     margin *= ratio;
 
     commandNumber.setBounds(0,0, btnWidth, btnHeight);
-    btnMode.setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, btnHeight);
-    numbersOrNamesBtn.setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
-    encoderRangeBtn.setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
-    HLBtn.setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, btnHeight);
-    blindBtn.setBounds(windowW - (0 * margin) - (5 * btnWidth), 0, btnWidth, btnHeight);
-    bigMoveRightBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (1 * btnWidth), 0, btnWidth, btnHeight);
-    littleMoveRightBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (2 * btnWidth), 0, btnWidth, btnHeight);
-    littleMoveLeftBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (3 * btnWidth), 0, btnWidth, btnHeight);
-    bigMoveLeftBtn.setBounds(windowW - (1 * margin) - (5 * btnWidth) - (4 * btnWidth), 0, btnWidth, btnHeight);
-    commandUpBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
-    commandDownBtn.setBounds(windowW - (2 * margin) - (5 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
-    explodeCommandBtn.setBounds(windowW - (3 * margin) - (5 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
+    btnMode->setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, btnHeight);
+    btnNumbersOrNames->setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
+    btnEncoderRange->setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
+    btnHighLight->setBounds(windowW - (0 * margin) - (4 * btnWidth), 0, btnWidth, btnHeight);
+    btnBlind->setBounds(windowW - (0 * margin) - (5 * btnWidth), 0, btnWidth, btnHeight);
+    btnBigMoveRight->setBounds(windowW - (1 * margin) - (5 * btnWidth) - (1 * btnWidth), 0, btnWidth, btnHeight);
+    btnLittleMoveRight->setBounds(windowW - (1 * margin) - (5 * btnWidth) - (2 * btnWidth), 0, btnWidth, btnHeight);
+    btnLittleMoveLeft->setBounds(windowW - (1 * margin) - (5 * btnWidth) - (3 * btnWidth), 0, btnWidth, btnHeight);
+    btnBigMoveLeft->setBounds(windowW - (1 * margin) - (5 * btnWidth) - (4 * btnWidth), 0, btnWidth, btnHeight);
+    btnCommandUp->setBounds(windowW - (2 * margin) - (5 * btnWidth) - (5 * btnWidth), 0, btnWidth, btnHeight);
+    btnCommandDown->setBounds(windowW - (2 * margin) - (5 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
+    btnExplodeCommand->setBounds(windowW - (3 * margin) - (5 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
 
     commandLine.setBounds(0, 2 * btnHeight, windowW, btnHeight);
 
@@ -204,88 +179,91 @@ void Encoders::sliderValueChanged(Slider* slider)
 
 
 void Encoders::buttonClicked(Button* b) {
-    if (b == &encoderRangeBtn) {
+        // filters
+    int i = filterBtns.indexOf(dynamic_cast<TextButton*>(b));
+    if (i >= 0) {
+        ChannelFamily* target = availableFilters[i];
+        if (selectedFilters.indexOf(target) >= 0) {
+            selectedFilters.removeAllInstancesOf(target);
+        }
+        else {
+            selectedFilters.add(target);
+        }
+        updateChannels();
+    }
+}
+
+void Encoders::triggerTriggered(Trigger* t)
+{
+    if (t == paramEncoderRange) {
         encoderRange = (encoderRange + 1) % 3;
         updateRangeButton();
     }
-    else if (b == &btnMode) {
+    else if (t == paramMode) {
         mode = (mode + 1) % 2;
         updateModeButton();
     }
-    else if (b == &numbersOrNamesBtn) {
+    else if (t == paramNumbersOrNames) {
         numberOrNames = (numberOrNames + 1) % 2;
         updateNumbersOrNamesButton();
         updateCommandLine();
     }
-    else if (b == &bigMoveLeftBtn) {
+    else if (t == paramBigMoveLeft) {
         int bigOffset = engine->encoderBigNumber->getValue();
         offsetEncoders(-bigOffset);
     }
-    else if (b == &bigMoveRightBtn) {
+    else if (t == paramBigMoveRight) {
         int bigOffset = engine->encoderBigNumber->getValue();
         offsetEncoders(bigOffset);
     }
-    else if (b == &littleMoveLeftBtn) {
+    else if (t == paramLittleMoveLeft) {
         offsetEncoders(-1);
     }
-    else if (b == &littleMoveRightBtn) {
+    else if (t == paramLittleMoveRight) {
         offsetEncoders(1);
     }
-    else if (b == &commandUpBtn) {
+    else if (t == paramCommandUp) {
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
         updateChannels();
     }
-    else if (b == &commandDownBtn) {
+    else if (t == paramCommandDown) {
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->selectPrevCommand();
         }
         updateChannels();
     }
-    else if (b == &explodeCommandBtn) {
+    else if (t == paramExplodeCommand) {
         if (disableNextExplode) {
             disableNextExplode = false;
-        } else if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+        }
+        else if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
         updateChannels();
     }
-    else if (b == &HLBtn) {
+    else if (t == paramHighLight) {
         UserInputManager::getInstance()->toggleHightlight();
         updateChannels();
     }
-    else if (b == &blindBtn) {
+    else if (t == paramBlind) {
         UserInputManager::getInstance()->toggleBlind();
         updateChannels();
     }
-    else
-    {
-        // filters
-        int i = filterBtns.indexOf(dynamic_cast<TextButton*>(b));
-        if (i >= 0) {
-            ChannelFamily* target = availableFilters[i];
-            if (selectedFilters.indexOf(target) >= 0) {
-                selectedFilters.removeAllInstancesOf(target);
-            }
-            else {
-                selectedFilters.add(target);
-            }
-            updateChannels();
-        }
-    }
+
 }
 
 void Encoders::updateModeButton() {
     if (mode == 0) {
-        btnMode.setButtonText("Val");
+        paramMode->setNiceName("Val");
     }
     else if (mode == 1) {
-        btnMode.setButtonText("Thru");
+        paramMode->setNiceName("Thru");
     }
     else if (mode == 2) {
-        btnMode.setButtonText("Time");
+        paramMode->setNiceName("Time");
     }
     updateEncoders();
 }
@@ -293,10 +271,10 @@ void Encoders::updateModeButton() {
 void Encoders::updateNumbersOrNamesButton()
 {
     if (numberOrNames == 0) {
-        numbersOrNamesBtn.setButtonText("123");
+        paramNumbersOrNames->setNiceName("123");
     }
     else if (numberOrNames == 1) {
-        numbersOrNamesBtn.setButtonText("Abc");
+        paramNumbersOrNames->setNiceName("Abc");
     }
     updateCommandLine();
 }
@@ -306,10 +284,10 @@ void Encoders::updateHLButton()
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         bool hl = UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->getValue();
         if (hl) {
-            HLBtn.setColour(TextButton::buttonColourId, Colour(127,0,0));
+            btnHighLight->customBGColor = Colour(127,0,0);
         }
         else {
-            HLBtn.removeColour(TextButton::buttonColourId);
+            btnHighLight->customBGColor = Colour(59, 59, 59);
         }
     }
 
@@ -320,10 +298,10 @@ void Encoders::updateBlindButton()
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         String editMode = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
         if (editMode == "blind") {
-            blindBtn.setColour(TextButton::buttonColourId, Colour(127, 0, 0));
+            btnBlind->customBGColor = Colour(127, 0, 0);
         }
         else {
-            blindBtn.removeColour(TextButton::buttonColourId);
+            btnBlind->customBGColor = Colour(59, 59, 59);
         }
     }
 }
@@ -332,15 +310,15 @@ void Encoders::updateRangeButton() {
     double min = 0;
     double max = 1;
     if (encoderRange == 0) {
-        encoderRangeBtn.setButtonText("0-1");
+        paramEncoderRange->setNiceName("0-1");
         max = 1;
     }
     else if (encoderRange == 1) {
-        encoderRangeBtn.setButtonText("%");
+        paramEncoderRange->setNiceName("%");
         max = 100;
     }
     else if (encoderRange == 2) {
-        encoderRangeBtn.setButtonText("255");
+        paramEncoderRange->setNiceName("255");
         max = 255;
     }
     for (int i = 0; i < nEncoders; i++) {
@@ -632,7 +610,7 @@ void Encoders::clear()
 
 void Encoders::mouseDown(const MouseEvent& e)
 {
-    if (e.eventComponent != &explodeCommandBtn) return;
+    if (e.eventComponent != btnExplodeCommand) return;
     if (e.mods.isRightButtonDown()) {
         PopupMenu p;
         p.addItem("Explode command", [this]() {

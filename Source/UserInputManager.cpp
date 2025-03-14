@@ -535,18 +535,18 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 	}
 
 	else if (firstWord == "encoders" && aList.size() > 1) {
-		if (aList[1] == "hl") { Encoders::getInstance()->HLBtn.triggerClick();}
-		else if (aList[1] == "blind") { Encoders::getInstance()->blindBtn.triggerClick(); }
-		else if (aList[1] == "mode") { Encoders::getInstance()->btnMode.triggerClick(); }
-		else if (aList[1] == "encoderrange") { Encoders::getInstance()->encoderRangeBtn.triggerClick(); }
-		else if (aList[1] == "numbersornames") { Encoders::getInstance()->numbersOrNamesBtn.triggerClick(); }
-		else if (aList[1] == "littlemoveleft") { Encoders::getInstance()->littleMoveLeftBtn.triggerClick(); }
-		else if (aList[1] == "littlemoveright") { Encoders::getInstance()->littleMoveRightBtn.triggerClick(); }
-		else if (aList[1] == "bigmoveleft") { Encoders::getInstance()->bigMoveLeftBtn.triggerClick(); }
-		else if (aList[1] == "bigmoveright") { Encoders::getInstance()->bigMoveRightBtn.triggerClick(); }
-		else if (aList[1] == "commanddown") { Encoders::getInstance()->commandDownBtn.triggerClick(); }
-		else if (aList[1] == "commandup") { Encoders::getInstance()->commandUpBtn.triggerClick(); }
-		else if (aList[1] == "explodecommand") { Encoders::getInstance()->explodeCommandBtn.triggerClick(); }
+		if (aList[1] == "hl") { Encoders::getInstance()->paramHighLight->trigger();}
+		else if (aList[1] == "blind") { Encoders::getInstance()->paramBlind->trigger(); }
+		else if (aList[1] == "mode") { Encoders::getInstance()->paramMode->trigger(); }
+		else if (aList[1] == "encoderrange") { Encoders::getInstance()->paramEncoderRange->trigger(); }
+		else if (aList[1] == "numbersornames") { Encoders::getInstance()->paramNumbersOrNames->trigger(); }
+		else if (aList[1] == "littlemoveleft") { Encoders::getInstance()->paramLittleMoveLeft->trigger(); }
+		else if (aList[1] == "littlemoveright") { Encoders::getInstance()->paramLittleMoveRight->trigger(); }
+		else if (aList[1] == "bigmoveleft") { Encoders::getInstance()->paramBigMoveLeft->trigger(); }
+		else if (aList[1] == "bigmoveright") { Encoders::getInstance()->paramBigMoveRight->trigger(); }
+		else if (aList[1] == "commanddown") { Encoders::getInstance()->paramCommandDown->trigger(); }
+		else if (aList[1] == "commandup") { Encoders::getInstance()->paramCommandUp->trigger(); }
+		else if (aList[1] == "explodecommand") { Encoders::getInstance()->paramExplodeCommand->trigger(); }
 		else if (aList[1] == "value" && aList.size() > 2 && m.size()>0) {
 			int encoderNum = aList[2].getIntValue()-1;
 			float val = OSCHelpers::getFloatArg(m[0]);
