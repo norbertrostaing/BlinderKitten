@@ -94,5 +94,7 @@ public:
 
     String getTextCommand(bool useNames = false);
     void checkCurrentUserCommand();
+
+    bool autoSelectCommand = true;
 };
 

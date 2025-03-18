@@ -667,6 +667,9 @@ void UserInputManager::redrawEncoders() {
 
 void UserInputManager::commandValueChanged(Command* c) {
 	Programmer* p = getProgrammer(false);
+	if (p != nullptr && p->autoSelectCommand && p->currentUserCommand != c && p->commands.items.indexOf(c) >= 0) {
+		p->selectCommand(c);
+	}
 	if (p != nullptr && p->currentUserCommand == c) {
 		Encoders::getInstance()->updateEncodersValues();
 		Encoders::getInstance()->updateCommandLine();
