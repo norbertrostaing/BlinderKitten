@@ -19,9 +19,12 @@
 EncodersMultCmd::EncodersMultCmd(EncodersMult* v, Command* c)
 {
     encodersMulView = v;
-    commandLine.setText("empty command", juce::dontSendNotification);
-    commandLine.setBounds(0, 0, 50, 20);
-    addAndMakeVisible(&commandLine);
+    commandLineBtn.setButtonText("empty command");
+    commandLineBtn.setBounds(0, 0, 50, 20);
+    commandLineBtn.setToggleable(true);
+    commandLineBtn.setToggleState(true, juce::dontSendNotification);
+    commandLineBtn.setClickingTogglesState(true);
+    addAndMakeVisible(&commandLineBtn);
     explodeBtn.setBounds(0, 20, 25, 20);
     explodeBtn.setButtonText("<>");
     explodeBtn.setHelpText("Explode command");
@@ -97,10 +100,10 @@ void EncodersMultCmd::commandContentChanged()
 void EncodersMultCmd::commandValueChanged()
 {
     if (targetCommand != nullptr) {
-        commandLine.setText(targetCommand->getCommandSelectionAsTexts().joinIntoString(" "), juce::dontSendNotification);
+        commandLineBtn.setButtonText(targetCommand->getCommandSelectionAsTexts().joinIntoString(" "));
     }
     else {
-        commandLine.setText("no cmd", juce::dontSendNotification);
+        commandLineBtn.setButtonText("no cmd");
     }
 }
 
@@ -129,7 +132,7 @@ void EncodersMultCmd::calcSize()
     }
     calculatedHeight = currentY + h;
     calculatedWidth = maxX;
-    commandLine.setSize(calculatedWidth, 20);
+    commandLineBtn.setSize(calculatedWidth, 20);
 }
 
 void EncodersMultCmd::sliderValueChanged(Slider* slider)

@@ -16,6 +16,44 @@
 EncodersMult::EncodersMult() 
 	//testingUI(nullptr),
 {
+    addAndMakeVisible(btnSelectAll); 
+    btnSelectAll.setWantsKeyboardFocus(false);
+    btnSelectAll.setButtonText("Select all");
+    btnSelectAll.onClick=[this](){selectAll();};
+    addAndMakeVisible(btnSelectNone);
+    btnSelectNone.setWantsKeyboardFocus(false);
+    btnSelectNone.setButtonText("Select none");
+    btnSelectNone.onClick = [this]() {selectNone();};
+    addAndMakeVisible(btnAllEqual);
+    btnAllEqual.setWantsKeyboardFocus(false);
+    btnAllEqual.setButtonText("=");
+    btnAllEqual.onClick = [this]() {selectAlign(Align::EQUAL); };
+    addAndMakeVisible(btnMoveOnlyLeft);
+    btnMoveOnlyLeft.setWantsKeyboardFocus(false);
+    btnMoveOnlyLeft.setButtonText(">");
+    btnMoveOnlyLeft.onClick = [this]() {selectAlign(Align::ONLYLEFT); };
+    addAndMakeVisible(btnMoveOnlyRight);
+    btnMoveOnlyRight.setWantsKeyboardFocus(false);
+    btnMoveOnlyRight.setButtonText("<");
+    btnMoveOnlyRight.onClick = [this]() {selectAlign(Align::ONLYRIGHT); };
+    addAndMakeVisible(btnMoveOnlyIn);
+    btnMoveOnlyIn.setWantsKeyboardFocus(false);
+    btnMoveOnlyIn.setButtonText("<>");
+    btnMoveOnlyIn.onClick = [this]() {selectAlign(Align::ONLYIN); };
+    addAndMakeVisible(btnMoveOnlyOut);
+    btnMoveOnlyOut.setWantsKeyboardFocus(false);
+    btnMoveOnlyOut.setButtonText("><");
+    btnMoveOnlyOut.onClick = [this]() {selectAlign(Align::ONLYOUT); };
+    addAndMakeVisible(btnMoveBalanced);
+    btnMoveBalanced.setWantsKeyboardFocus(false);
+    btnMoveBalanced.setButtonText("\\");
+    btnMoveBalanced.onClick = [this]() {selectAlign(Align::BALANCED); };
+    addAndMakeVisible(btnMoveBalancedSym);
+    btnMoveBalancedSym.setWantsKeyboardFocus(false);
+    btnMoveBalancedSym.setButtonText("\\/");
+    btnMoveBalancedSym.onClick = [this]() {selectAlign(Align::BALANCEDSYM); };
+
+
 	addAndMakeVisible(viewport);
 	viewport.setViewedComponent(&cmdContainer);
     viewport.setBounds(0,20,100,100);
@@ -35,6 +73,9 @@ EncodersMult::EncodersMult()
     sensitivityLabel.setText("Sensit.", juce::dontSendNotification);
     sensitivityLabel.attachToComponent(&sensitivity, false);
     sensitivityLabel.setWantsKeyboardFocus(false);
+
+    updateAlignButtons();
+
 
 }
 
@@ -68,15 +109,29 @@ float EncodersMult::setSensitivity(float v)
 void EncodersMult::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	Rectangle<int> hr = r.removeFromTop(20);
+
     int maxWidth = r.getWidth();
+    int btnWidth = maxWidth / 12;
+    btnSelectAll.setBounds(0*btnWidth,0,2*btnWidth, 20);
+    btnSelectNone.setBounds(2 * btnWidth, 0, 2 * btnWidth, 20);
+    btnAllEqual.setBounds(5 * btnWidth, 0, 1 * btnWidth, 20);
+    btnMoveOnlyLeft.setBounds(6 * btnWidth, 0, 1 * btnWidth, 20);
+    btnMoveOnlyRight.setBounds(7 * btnWidth, 0, 1 * btnWidth, 20);
+    btnMoveOnlyIn.setBounds(8 * btnWidth, 0, 1 * btnWidth, 20);
+    btnMoveOnlyOut.setBounds(9 * btnWidth, 0, 1 * btnWidth, 20);
+    btnMoveBalanced.setBounds(10 * btnWidth, 0, 1 * btnWidth, 20);
+    btnMoveBalancedSym.setBounds(11 * btnWidth, 0, 1 * btnWidth, 20);
+
+
+
+	Rectangle<int> hr = r.removeFromTop(20);
     float w = 57;
     float h = 57;
-    sensitivity.setBounds(0, 20, w, h);
+    sensitivity.setBounds(0, 40, w, h);
     sensitivity.setTextBoxStyle(Slider::TextBoxBelow, false, 44, 20);
 
     int currentX = w;
-    int currentY = 0;
+    int currentY = 20;
     for (int i = 0; i < encoders.size(); i++) {
         if (currentX + w > maxWidth) {
             currentY += 80; 
@@ -92,7 +147,7 @@ void EncodersMult::resized()
     viewport.setBounds(0,currentY+80, r.getWidth(), r.getHeight()-currentY);
 
     currentX = 0;
-    currentY = 0;
+    currentY = 20;
     int highestY = 0;
     for (int i = 0; i < commandItems.size(); i++) {
         commandItems[i]->calcSize();
@@ -113,8 +168,8 @@ void EncodersMult::targetChanged()
     if (targetCommandManager != nullptr) {
         //targetCommandManager->removeAsyncManagerListener(this);
     }
-    Programmer* prog = UserInputManager::getInstance()->getProgrammer(true);
-    targetCommandManager = &prog->commands;
+    targetProgrammer = UserInputManager::getInstance()->getProgrammer(true);
+    targetCommandManager = &targetProgrammer->commands;
     targetCommandManager->addAsyncManagerListener(this);
     reconstructSubComponents();
 }
@@ -193,20 +248,64 @@ void EncodersMult::sliderValueChanged(Slider* slider)
         delta *= currentSensitivity;
         lastValues.set(index, val);
         ChannelType* ct = channels[index];
+        if (targetProgrammer!= nullptr) targetProgrammer->autoSelectCommand = false;
+
+        Array<CommandValue*> toChange;
+        Array<Command*> canBeChanged;
+
+        for (EncodersMultCmd* cmd : commandItems) {
+            if (cmd->commandLineBtn.getToggleState()) {
+                canBeChanged.add(cmd->targetCommand);
+            }
+        }
+
         for (int i = 0; i < targetCommandManager->items.size(); i++) {
-            for (int v = 0; v < targetCommandManager->items[i]->values.items.size(); v++) {
-                CommandValue* cv = targetCommandManager->items[i]->values.items[v];
-                if (cv->presetOrValue->stringValue() == "value") {
-                    ChannelType* localCt = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
-                    if (localCt == ct) {
-                        cv->valueFrom->setValue(cv->valueFrom->floatValue() + delta);
-                        if (cv->thru->boolValue()) {
-                            cv->valueTo->setValue(cv->valueTo->floatValue() + delta);
+            Command* cmd = targetCommandManager->items[i];
+            if (canBeChanged.contains(cmd)) {
+                for (int v = 0; v < targetCommandManager->items[i]->values.items.size(); v++) {
+                    CommandValue* cv = targetCommandManager->items[i]->values.items[v];
+                    if (cv->presetOrValue->stringValue() == "value") {
+                        ChannelType* localCt = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+                        if (localCt == ct) {
+                            toChange.add(cv);
                         }
                     }
                 }
             }
         }
+
+        int nMax = toChange.size()-1;
+        double nMaxDouble = (double)nMax;
+        for (int i = 0; i < toChange.size(); i++) {
+            CommandValue* cv = toChange[i];
+            double ratio = i / nMaxDouble;
+            double localDelta = delta;
+            if (nMax > 0) {
+
+                if (currentAlign == ONLYIN || currentAlign == ONLYOUT || currentAlign == BALANCEDSYM) {
+                    int index = i > nMaxDouble/2. ? nMax - i : i;
+                    ratio = nMax % 2 == 0 ? (double)index / (nMaxDouble/2) : (double)index / ((nMaxDouble-1)/2);
+                }
+
+                switch (currentAlign) {
+                    case EQUAL: break;
+                    case ONLYLEFT: localDelta = jmap(ratio,0.,1.,delta, 0.); break;
+                    case ONLYRIGHT: localDelta = jmap(ratio, 0., 1., 0., delta); break;
+                    case ONLYIN: localDelta = jmap(ratio, 0., 1., 0., delta); break;
+                    case ONLYOUT: localDelta = jmap(ratio, 0., 1., delta, 0.); break;
+                    case BALANCED: localDelta = jmap(ratio, 0., 1., delta, -delta); break;
+                    case BALANCEDSYM: localDelta = jmap(ratio, 0., 1., delta, -delta); break;
+
+                }
+            }
+
+            cv->valueFrom->setValue(cv->valueFrom->floatValue() + localDelta);
+            if (cv->thru->boolValue()) {
+                cv->valueTo->setValue(cv->valueTo->floatValue() + localDelta);
+            }
+        }
+
+        if (targetProgrammer != nullptr) targetProgrammer->autoSelectCommand = true;
     }
 }
 
@@ -216,6 +315,47 @@ void EncodersMult::sliderDragEnded(Slider* slider)
     if (index != -1) {
         lastValues.set(index, 0);
         slider->setValue(0, juce::dontSendNotification);
+    }
+}
+
+void EncodersMult::selectAlign(Align a)
+{
+    currentAlign = a;
+    updateAlignButtons();
+}
+
+void EncodersMult::updateAlignButtons()
+{
+    btnAllEqual.removeColour(TextButton::buttonColourId); 
+    btnMoveOnlyLeft.removeColour(TextButton::buttonColourId);
+    btnMoveOnlyRight.removeColour(TextButton::buttonColourId);
+    btnMoveOnlyIn.removeColour(TextButton::buttonColourId);
+    btnMoveOnlyOut.removeColour(TextButton::buttonColourId);
+    btnMoveBalanced.removeColour(TextButton::buttonColourId);
+    btnMoveBalancedSym.removeColour(TextButton::buttonColourId);
+
+    switch (currentAlign) {
+        case EQUAL: btnAllEqual.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+        case ONLYLEFT: btnMoveOnlyLeft.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+        case ONLYRIGHT: btnMoveOnlyRight.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+        case ONLYIN: btnMoveOnlyIn.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+        case ONLYOUT: btnMoveOnlyOut.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+        case BALANCED: btnMoveBalanced.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+        case BALANCEDSYM: btnMoveBalancedSym.setColour(TextButton::buttonColourId, Colour(127,64,0)); break;
+    }
+}
+
+void EncodersMult::selectAll()
+{
+    for (EncodersMultCmd* cmd : commandItems) {
+        cmd->commandLineBtn.setToggleState(true, juce::dontSendNotification);
+    }
+}
+
+void EncodersMult::selectNone()
+{
+    for (EncodersMultCmd* cmd : commandItems) {
+        cmd->commandLineBtn.setToggleState(false, juce::dontSendNotification);
     }
 }
 

@@ -29,7 +29,7 @@ public:
     
     EncodersMult* encodersMulView = nullptr;
     OwnedArray<FloatSliderUI> encoders;
-    Label commandLine;
+    TextButton commandLineBtn;
     int nEncoders = 0;
     int calculatedHeight;
     int calculatedWidth;

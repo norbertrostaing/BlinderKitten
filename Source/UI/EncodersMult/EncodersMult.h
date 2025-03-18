@@ -31,7 +31,22 @@ public:
     Viewport viewport;
     Component cmdContainer;
     BaseManager<Command>* targetCommandManager = nullptr;
+    Programmer* targetProgrammer = nullptr;
     void newMessage(const CommandManager::ManagerEvent& e) override;
+
+    enum Align{EQUAL, ONLYLEFT, ONLYRIGHT, ONLYIN, ONLYOUT, BALANCED, BALANCEDSYM};
+
+    Align currentAlign = EQUAL;
+
+    TextButton btnSelectAll;
+    TextButton btnSelectNone;
+    TextButton btnAllEqual;
+    TextButton btnMoveOnlyLeft;
+    TextButton btnMoveOnlyRight;
+    TextButton btnMoveOnlyIn;
+    TextButton btnMoveOnlyOut;
+    TextButton btnMoveBalanced;
+    TextButton btnMoveBalancedSym;
 
     OwnedArray<EncodersMultCmd> commandItems;
     OwnedArray<Label> labels;
@@ -52,4 +67,9 @@ public:
     static EncodersMult* create(const String& name) { return new EncodersMult(); }
     void sliderValueChanged(Slider* slider) override;
     void sliderDragEnded(Slider* slider) override;
+
+    void selectAlign(Align a);
+    void updateAlignButtons();
+    void selectAll();
+    void selectNone();
 };
