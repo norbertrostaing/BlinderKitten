@@ -1,4 +1,4 @@
-﻿/*
+/*
  ==============================================================================
 
  Engine.cpp
@@ -259,6 +259,7 @@ BKEngine::BKEngine() :
 	currentDMXChannelView = nullptr;
 
 	addChildControllableContainer(InputPanel::getInstance());
+	addChildControllableContainer(Encoders::getInstance());
 	addChildControllableContainer(InterfaceManager::getInstance());
 	addChildControllableContainer(ChannelFamilyManager::getInstance());
 	addChildControllableContainer(FixtureTypeManager::getInstance());
