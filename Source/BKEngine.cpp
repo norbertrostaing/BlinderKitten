@@ -1,4 +1,4 @@
-/*
+﻿/*
  ==============================================================================
 
  Engine.cpp
@@ -901,6 +901,7 @@ void BKEngine::importMochi(var data)
 	LayoutManager::getInstance()->addItemsFromData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
 	VirtualFaderColManager::getInstance()->addItemsFromData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
+	DashboardManager::getInstance()->addItemsFromData(data.getProperty(DashboardManager::getInstance()->shortName, var()));
 
 	FixtureGridView::getInstance()->updateCells();
 	GroupGridView::getInstance()->updateCells();
@@ -937,7 +938,7 @@ void BKEngine::exportSelection()
 	data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, LayoutManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, VirtualFaderColManager::getInstance()->getExportSelectionData());
-
+	data.getDynamicObject()->setProperty(DashboardManager::getInstance()->shortName, DashboardManager::getInstance()->getExportSelectionData());
 	String s = JSON::toString(data);
 
 	FileChooser fc("Save a mochi", File::getCurrentWorkingDirectory(), "*.mochi");
