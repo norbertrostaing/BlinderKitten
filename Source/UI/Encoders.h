@@ -47,7 +47,9 @@ public:
     OwnedArray<Label> labels;
 
     HashMap<ChannelType*, String> lastOrigin;
-    Label commandLine;
+
+    StringParameter* paramCommandLine; StringParameterUI* uiCommandLine;
+    StringParameter* paramCommandNumber; StringParameterUI* uiCommandNumber;
 
     OwnedArray<TextButton> filterBtns;
     Array<ChannelFamily*> availableFilters;
@@ -69,7 +71,6 @@ public:
     Trigger* paramCommandUp; TriggerUI* btnCommandUp;
     Trigger* paramExplodeCommand; TriggerUI* btnExplodeCommand;
 
-    Label commandNumber;
 
     int nEncoders = 10;
     int encodersOffset = 0;

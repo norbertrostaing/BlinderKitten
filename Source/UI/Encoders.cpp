@@ -33,7 +33,20 @@ Encoders::Encoders():
     channels(),
     ControllableContainer("Encoders")
 {
-    addAndMakeVisible(&commandLine);
+    //addAndMakeVisible(&uiCommandLine);
+    paramCommandLine = addStringParameter("Command line", "current command line", ""); uiCommandLine = paramCommandLine->createStringParameterUI(); addAndMakeVisible(uiCommandLine);
+    uiCommandLine->customBGColor = Colour(59, 59, 59); uiCommandLine->useCustomBGColor = true;
+    uiCommandLine->customTextColor = Colour(204, 204, 204); uiCommandLine->useCustomTextColor = true;
+    uiCommandLine->customTextSize = 14;
+    uiCommandLine->showLabel =  false;
+    uiCommandLine->valueLabel.setColour(Label::textColourId, Colour(204,204,204));
+
+    paramCommandNumber= addStringParameter("Command Number", "Command line number", ""); uiCommandNumber= paramCommandNumber->createStringParameterUI(); addAndMakeVisible(uiCommandNumber);
+    uiCommandNumber->customBGColor = Colour(59, 59, 59); uiCommandNumber->useCustomBGColor = true;
+    uiCommandNumber->customTextColor = Colour(204, 204, 204); uiCommandNumber->useCustomTextColor = true;
+    uiCommandNumber->customTextSize = 14;
+    uiCommandNumber->showLabel = false;
+    uiCommandNumber->valueLabel.setColour(Label::textColourId, Colour(204, 204, 204));
 
     paramNumbersOrNames = addTrigger("123", ""); paramNumbersOrNames->setCustomShortName("verbose"); btnNumbersOrNames = paramNumbersOrNames->createButtonUI(); addAndMakeVisible(btnNumbersOrNames);
     btnNumbersOrNames->customBGColor = Colour(59, 59, 59); btnNumbersOrNames->useCustomBGColor = true;
@@ -59,8 +72,6 @@ Encoders::Encoders():
     btnCommandUp->customBGColor = Colour(59, 59, 59); btnCommandUp->useCustomBGColor = true;
     paramExplodeCommand = addTrigger("<>", ""); paramExplodeCommand->setCustomShortName("explode"); btnExplodeCommand = paramExplodeCommand->createButtonUI(); addAndMakeVisible(btnExplodeCommand);
     btnExplodeCommand->customBGColor = Colour(59, 59, 59); btnExplodeCommand->useCustomBGColor = true;
-    addAndMakeVisible(&commandNumber);
-    commandNumber.setJustificationType(juce::Justification::centred);
     initEncoders();
 
 }
@@ -79,6 +90,8 @@ Encoders::~Encoders()
     delete btnCommandDown;
     delete btnCommandUp;
     delete btnExplodeCommand;
+    delete uiCommandLine;
+    delete uiCommandNumber;
 }
 
 void Encoders::initEncoders()
@@ -132,7 +145,7 @@ void Encoders::resized()
     btnWidth *= ratio;
     margin *= ratio;
 
-    commandNumber.setBounds(0,0, btnWidth, btnHeight);
+    uiCommandNumber->setBounds(0,0, btnWidth, btnHeight);
     btnMode->setBounds(windowW - (0 * margin) - (1 * btnWidth), 0, btnWidth, btnHeight);
     btnNumbersOrNames->setBounds(windowW - (0 * margin) - (2 * btnWidth), 0, btnWidth, btnHeight);
     btnEncoderRange->setBounds(windowW - (0 * margin) - (3 * btnWidth), 0, btnWidth, btnHeight);
@@ -146,7 +159,7 @@ void Encoders::resized()
     btnCommandDown->setBounds(windowW - (2 * margin) - (5 * btnWidth) - (6 * btnWidth), 0, btnWidth, btnHeight);
     btnExplodeCommand->setBounds(windowW - (3 * margin) - (5 * btnWidth) - (7 * btnWidth), 0, btnWidth, btnHeight);
 
-    commandLine.setBounds(0, 2 * btnHeight, windowW, btnHeight);
+    uiCommandLine->setBounds(0, 2 * btnHeight, windowW, btnHeight);
 
     if (filterBtns.size() > 0) {
         float w = getWidth() / filterBtns.size();
@@ -419,7 +432,7 @@ void Encoders::updateEncoders() {
         int tot = UserInputManager::getInstance()->currentProgrammer->commands.items.size();
         cmdNumText = String(index)+"/"+String(tot);
     }
-    commandNumber.setText(cmdNumText, juce::NotificationType::dontSendNotification);
+    paramCommandNumber->setValue(cmdNumText);
     updateEncodersValues();
 
 
@@ -542,7 +555,7 @@ void Encoders::updateCommandLine()
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         bool useNames = numberOrNames == 1;
         String txt = UserInputManager::getInstance()->getProgrammer(true)->getTextCommand(useNames);
-        commandLine.setText(txt, juce::dontSendNotification);
+        paramCommandLine->setValue(txt);
         UserInputManager::getInstance()->feedback("/encoders/cmdline", txt, "");
     }
 }
