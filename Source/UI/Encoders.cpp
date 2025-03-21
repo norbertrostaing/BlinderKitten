@@ -239,13 +239,11 @@ void Encoders::triggerTriggered(Trigger* t)
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
-        updateChannels();
     }
     else if (t == paramCommandDown) {
         if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
             UserInputManager::getInstance()->currentProgrammer->selectPrevCommand();
         }
-        updateChannels();
     }
     else if (t == paramExplodeCommand) {
         if (disableNextExplode) {
@@ -255,7 +253,6 @@ void Encoders::triggerTriggered(Trigger* t)
             UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
-        updateChannels();
     }
     else if (t == paramHighLight) {
         UserInputManager::getInstance()->toggleHightlight();

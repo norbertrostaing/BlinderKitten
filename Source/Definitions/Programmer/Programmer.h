@@ -41,11 +41,13 @@ public:
     Trigger* releaseBtn;
     Trigger* recBtn;
     Trigger* clearAllBtn;
+    Trigger* cleanUnusedCommandsBtn;
 
     BoolParameter* highlightCurrentCommand;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> activeValues;
+    HashMap<SubFixtureChannel*, Command*> channelToCommand;
 
     ControllableContainer cliContainer;
     EnumParameter* cliActionType;
@@ -94,6 +96,8 @@ public:
 
     String getTextCommand(bool useNames = false);
     void checkCurrentUserCommand();
+
+    void cleanUnused();
 
     bool autoSelectCommand = true;
 };
