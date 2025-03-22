@@ -46,7 +46,7 @@ InputPanel::InputPanel():
     btnFixture->customBGColor = Colour(59, 59, 59); btnFixture->useCustomBGColor = true;
     paramGroup = addTrigger("Group", "Select a group"); btnGroup = paramGroup->createButtonUI(); addAndMakeVisible(btnGroup);  
     btnGroup->customBGColor = Colour(59, 59, 59); btnGroup->useCustomBGColor = true;
-    paramSub = addTrigger("Sub", "Select a subfixture"); btnSub = paramSub->createButtonUI(); addAndMakeVisible(btnSub);  
+    paramSub = addTrigger("Subfixture", "Select a subfixture"); btnSub = paramSub->createButtonUI(); addAndMakeVisible(btnSub);  
     btnSub->customBGColor = Colour(59, 59, 59); btnSub->useCustomBGColor = true;
     paramPreset = addTrigger("Preset", "Select a preset"); btnPreset = paramPreset->createButtonUI(); addAndMakeVisible(btnPreset);  
     btnPreset->customBGColor = Colour(59, 59, 59); btnPreset->useCustomBGColor = true;
