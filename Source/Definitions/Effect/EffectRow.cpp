@@ -112,9 +112,6 @@ void EffectRow::computeData() {
 
     maxOffset = 0;
 
-    float minPosition = 1;
-    float maxPosition = 0;
-
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
     }
