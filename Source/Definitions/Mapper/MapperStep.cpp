@@ -133,7 +133,7 @@ void MapperStep::computeValues(Array<SubFixture*> SubFixtures) {
 						if (symValues) { position = Brain::symPosition(indexFixt, SubFixtures.size()); }
 						val = jmap(position, val, valueTo);
 					}
-					finalValue->endValue = val;
+					finalValue->values.set(1,val);
 				}
 			}
 

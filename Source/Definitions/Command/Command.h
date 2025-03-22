@@ -36,11 +36,10 @@ public:
     String objectType;
     var objectData;
 
-    TargetParameter* devTypeParam;
-
     BoolParameter* doNotTrack;
     MoveInBlackManager moveInBlack;
     FloatParameter* moveInBlackDelay;
+    BoolParameter* useValuesAsPath;
 
     CommandSelectionManager selection;
     BaseManager<CommandValue> values;

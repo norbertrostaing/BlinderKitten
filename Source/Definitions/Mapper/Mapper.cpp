@@ -216,8 +216,8 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 						// fadeValue = toApply->curve.getValueAtPosition(fadeValue);
 					}
 
-					float start = cVal->startValue;
-					float end = cVal->endValue;
+					float start = cVal->startValue();
+					float end = cVal->endValue();
 					start = start == -1 ? currentVal : start;
 					end = end == -1 ? currentVal : end;
 					calcValue = jmap(fadeValue, start, end);

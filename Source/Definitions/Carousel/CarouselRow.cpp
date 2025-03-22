@@ -137,7 +137,7 @@ void CarouselRow::computeData() {
             SubFixtureChannel* chan = targetChannels[ci];
             if (!currentStep->computedValues.contains(chan)) {
                 std::shared_ptr<ChannelValue> newVal = std::make_shared<ChannelValue>();
-                newVal->endValue = -1;
+                newVal->values.set(1,-1);
                 currentStep->computedValues.set(chan, newVal);
             }
         }
@@ -181,7 +181,7 @@ void CarouselRow::computeData() {
                 // LOG(offset);
                 subFixtureChannelOffsets.set(chan, -offset);
             }
-            currentStep->computedValues.getReference(chan)->startValue = cValue->endValue;
+            currentStep->computedValues.getReference(chan)->values.set(0,cValue->endValue());
         }
 
     }

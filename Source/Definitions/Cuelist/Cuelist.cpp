@@ -642,10 +642,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				std::shared_ptr<ChannelValue> temp = it.getValue();
 				if (newActiveValues.contains(it.getKey())) {
 					//ChannelValue* current = newActiveValues.getReference(it.getKey());
-					temp->startValue = it.getKey()->postCuelistValue;
+					temp->values.set(0,it.getKey()->postCuelistValue);
 				}
 				else {
-					temp->startValue = -1;
+					temp->values.set(0, -1);
 				}
 				float delay = forcedDelay != -1 ? forcedDelay : temp->delay;
 				float fade = forcedFade != -1 ? forcedFade : temp->fade;
@@ -685,18 +685,18 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 							currentTiming = 1;
 						}
 						currentTiming = jlimit(0.0,1.0,currentTiming);
-						temp->startValue = jmap(currentTiming, 0.0,1.0, (double)current->startValue, (double)current->endValue)*fader;
+						temp->values.set(0, current->valueAt(currentTiming, 0)*fader);
 					}
 					else {
-						temp->startValue = 0;
+						temp->values.set(0, 0);
 					}
 				}
 				else {
-					temp->startValue = it.getKey()->postCuelistValue;
+					temp->values.set(0, it.getKey()->postCuelistValue);
 				}
 			}
 			else {
-				temp->startValue = -1;
+				temp->values.set(0, -1);
 			}
 			if (isChaser->getValue()) {
 				temp->TSInit = now;
@@ -732,7 +732,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		if (!newActiveValues.contains(it.getKey())) {
 			std::shared_ptr<ChannelValue> temp = it.getValue();
-			if (temp != nullptr && temp -> endValue != -1 && (releaseTracking || temp->canBeTracked == false)) {
+			if (temp != nullptr && temp -> endValue() != -1 && (releaseTracking || temp->canBeTracked == false)) {
 				temp->isTransitionOut = true;
 				temp->parentCommand = nullptr;
 				float fadeTime = 0;
@@ -774,8 +774,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				temp->TSStart = now + delay;
 				temp->TSEnd = now + fade + delay;
 				TSTransitionEnd = jmax(TSTransitionEnd, (double)temp->TSEnd);
-				temp->endValue = -1;
-				temp->startValue = temp->value;
+				temp->values.clear();
+				temp->values.set(0, temp->value);
+				temp->values.set(1, -1);
 				temp->isEnded = false;
 
 				newActiveValues.set(it.getKey(), temp);
@@ -800,11 +801,11 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 						bool canMove = true;
 						int64 moveAfter = now;
 						if (activeValues.contains(sfcDimmer) && activeValues.getReference(sfcDimmer)!= nullptr) {
-							if (activeValues.getReference(sfcDimmer)->endValue >= 0) canMove = false;
+							if (activeValues.getReference(sfcDimmer)->endValue() >= 0) canMove = false;
 						}
 						if (newActiveValues.contains(sfcDimmer) && newActiveValues.getReference(sfcDimmer) != nullptr) {
 							std::shared_ptr<ChannelValue> cvDim = newActiveValues.getReference(sfcDimmer);
-							if (cvDim->endValue > 0) {
+							if (cvDim->endValue() > 0) {
 								canMove = false;
 							}
 							else {
@@ -820,7 +821,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 							if (activeValues.contains(sfc)) {
 								std::shared_ptr<ChannelValue> currentCV = activeValues.getReference(sfc);
-								cv->startValue = currentCV->endValue;
+								cv->values.set(0,currentCV->endValue());
 							}
 							newActiveValues.set(sfc, cv);
 							sfc->cuelistOnTopOfStack(this);
@@ -1071,7 +1072,7 @@ void Cuelist::update() {
 		std::shared_ptr<ChannelValue> cv = it.getValue();
 		if (cv != nullptr) {
 			tempPosition = jmin(tempPosition, cv->currentPosition);
-			isUseFul = isUseFul || cv->endValue != -1 || !cv->isEnded;
+			isUseFul = isUseFul || cv->endValue() != -1 || !cv->isEnded;
 			isEnded = isEnded && cv->isEnded;
 			isOverWritten = isOverWritten && cv->isOverWritten;
 		}
@@ -1182,29 +1183,12 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
-	float outIsOff = false;
 
-	if (cv->startValue >= 0) {
-		valueFrom = cv->startValue; 
+	if (cv->startValue() >= 0) {
+		valueFrom = cv->startValue(); 
 	}
-	if (cv->endValue >= 0) { 
-		valueTo = cv->endValue; 
-		if (HTP) {
-			valueTo *= faderLevel;
-		}
-		else {
-			if (!isFlashing || flashWithLtpLevel->boolValue()) {
-				if (absoluteLTPValue->boolValue()) {
-					valueTo *= (double)LTPLevel->getValue();
-				}
-				else {
-					valueTo = jmap(LTPLevel->floatValue(), currentVal, valueTo);
-				}
-			}
-		}
-	}
-	else {
-		outIsOff= true;
+	if (cv->endValue() >= 0) { 
+		valueTo = cv->endValue(); 
 	}
 
 	float totTime = (cv->TSEnd - cv->TSInit);
@@ -1215,38 +1199,58 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		cv->currentPosition = 1;
 	}
 
+	float fade = 0;
 	if (flashValues) {
 		localValue = valueTo;
+		fade = 1;
 	}
 	else if (cv -> TSStart > now) {
+		fade = 0;
 		localValue = valueFrom; 
 		keepUpdate = true;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	else if (cv -> TSEnd <= now) {
 		localValue = valueTo;
-		cv->currentPosition = 1;
+		fade = 1;
 		if (!cv->isEnded) {
 			cv->isEnded = true;
 			Brain::getInstance()->pleaseUpdate(this);
 		}
 	}
 	else {
-		float fade = double(now - cv->TSStart) / double(cv -> TSEnd - cv->TSStart);
+		fade = double(now - cv->TSStart) / double(cv->TSEnd - cv->TSStart);
 		if (cv->fadeCurve != nullptr) fade = cv->fadeCurve->getValueAtPosition(fade);
-		localValue = jmap(fade, valueFrom, valueTo);
+		//localValue = jmap(fade, valueFrom, valueTo);
+		localValue = cv->valueAt(fade, currentVal);
 		keepUpdate = true;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	cv->value = localValue;
+
+	if (HTP) {
+		localValue *= faderLevel;
+	}
+	else {
+		if (!isFlashing || flashWithLtpLevel->boolValue()) {
+			float localValueNoFade = localValue;
+			if (absoluteLTPValue->boolValue()) {
+				localValue *= (double)LTPLevel->getValue();
+			}
+			else {
+				localValue = jmap(LTPLevel->floatValue(), currentVal, localValue);
+			}
+			localValue = jmap(fade,0.f,1.f,localValueNoFade, localValue);
+		}
+	}
+
+
 
 	if (HTP && !cv->htpOverride) {
 		isApplied = localValue >= val;
 		val = jmax(val, localValue);
 	}
 	else {
-		// float ratio = LTPLevel->getValue();
-		// val = jmap(ratio,valueFrom,localValue);
 		isApplied = true;
 		val = localValue;
 	}
@@ -1708,10 +1712,10 @@ void Cuelist::tempMergeProgrammer(Programmer* p, bool trackValues)
 	isComputing.enter();
 	p->computing.enter();
 	for (auto it = p->activeValues.begin(); it != p->activeValues.end(); it.next()) {
-		if (it.getValue()->endValue >=0) {
+		if (it.getValue()->endValue() >= 0) {
 			SubFixtureChannel* sfc = it.getKey();
 			std::shared_ptr<ChannelValue> cv = std::make_shared<ChannelValue>();
-			cv->endValue = it.getValue()->endValue;
+			cv->values.set(1,it.getValue()->endValue());
 			cv->canBeTracked = trackValues;
 			activeValues.set(sfc, cv);
 			sfc->cuelistOnTopOfStack(this);

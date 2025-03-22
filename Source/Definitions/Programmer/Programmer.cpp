@@ -237,7 +237,7 @@ void Programmer::computeValues() {
 						cv = std::make_shared<ChannelValue>();
 						computedValues.set(sfc, cv);
 					}
-					cv->endValue = sfc->highlightValue;
+					cv->values.set(0,sfc->highlightValue);
 				}
 			}
 		}
@@ -280,10 +280,10 @@ void Programmer::render(double now) {
 		for (auto it = computedValues.begin(); it != computedValues.end(); it.next()) {
 			std::shared_ptr<ChannelValue> temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
-				temp->startValue = it.getKey()->currentValue;
+				temp->values.set(0, it.getKey()->currentValue);
 			}
 			else {
-				temp->startValue = -1;
+				temp->values.set(0, -1);
 			}
 			temp->TSInit = now;
 			if (mode == "timed") {
@@ -312,7 +312,7 @@ void Programmer::release(double now) {
 	computing.enter();
 	Array<SubFixtureChannel*> toUpdate;
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
-		if (it.getValue()->endValue != -1) {
+		if (it.getValue()->endValue() != -1) {
 			std::shared_ptr<ChannelValue> temp = std::make_shared<ChannelValue>();
 			float fadeTime = releaseTime->floatValue() * 1000.0f;
 
@@ -320,8 +320,8 @@ void Programmer::release(double now) {
 			temp->TSStart = now;
 			temp->TSEnd = now + fadeTime;
 
-			temp->endValue = -1;
-			temp->startValue = it.getValue()->value;
+			temp->values.set(1, -1);
+			temp->values.set(0, it.getValue()->value);
 			temp->isEnded = false;
 
 			temp->fadeCurve = nullptr;
@@ -352,11 +352,11 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 	float outIsOff = false;
 	// comportement OK, calcul de valeurs nok
 
-	if (cv->startValue >= 0) {
-		valueFrom = cv->startValue;
+	if (cv->startValue() >= 0) {
+		valueFrom = cv->startValue();
 	}
-	if (cv->endValue >= 0) {
-		valueTo = cv->endValue;
+	if (cv->endValue() >= 0) {
+		valueTo = cv->endValue();
 	}
 	else {
 		outIsOff = true;

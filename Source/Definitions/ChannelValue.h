@@ -21,8 +21,11 @@ public:
     float delay=0;
     float fade=0;
 
-    float startValue = -1;
-    float endValue = -1;
+    Array<float> values;
+
+    float startValue();
+    float endValue();
+    float valueAt(double ratio, double baseVal);
 
     int64 TSInit = 0;
     int64 TSStart = 0;

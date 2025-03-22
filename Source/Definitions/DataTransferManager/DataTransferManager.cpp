@@ -197,7 +197,7 @@ void DataTransferManager::execute() {
                 std::shared_ptr<ChannelValue> cValue = it.getValue();
                 ChannelFamily* chanType = dynamic_cast<ChannelFamily*>(chan->channelType->parentContainer->parentContainer.get());
 
-                if (cValue->endValue != -1 && (filters.size() == 0 || filters.contains(chanType))) {
+                if (cValue->endValue() != -1 && (filters.size() == 0 || filters.contains(chanType))) {
                     int subfixtId = chan->parentSubFixture->subId;
                     int fixtId = dynamic_cast<Fixture*>(chan->parentSubFixture->parentFixture)->id->getValue();
                     PresetSubFixtureValues* pfv = nullptr;
@@ -226,7 +226,7 @@ void DataTransferManager::execute() {
                             pv = pfv->values.addItem();
                             pv->param->setValueFromTarget(chan->channelType);
                         }
-                        pv->paramValue->setValue(cValue->endValue);
+                        pv->paramValue->setValue(cValue->endValue());
                     }
                 }
             }

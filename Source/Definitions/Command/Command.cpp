@@ -38,6 +38,7 @@ Command::Command(var params) :
 	explodeSelectionBtn = addTrigger("Explode Selection", "Transform this command in one command per subfixture");
 
 	moveInBlackDelay = addFloatParameter("MIB Delay", "Delay to wait after light goes off to trigger move in black", -1, -1);
+	useValuesAsPath = addBoolParameter("Use values as path", "If checked, values will not be applied all at once, but one after the other to create a path", false);
 
 	// to add a manager with defined data
 	//selection = new CommandSelectionManager();
@@ -122,6 +123,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 	for (auto f : moveInBlack.getFamilies()) moveInBlackFamilies.addIfNotAlreadyThere(f);
 	if (moveInBlackDelay->floatValue() >= 0) mibDelay = moveInBlackDelay->floatValue();
 
+	bool pathMode = useValuesAsPath->boolValue();
 
 	bool delayThru = false;
 	bool delaySym = false;
@@ -350,7 +352,9 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 
 					if (fchan != nullptr) {
 						if (!computedValues.contains(fchan)) {
-							computedValues.set(fchan, std::make_shared<ChannelValue>());
+							auto tempCV = std::make_shared<ChannelValue>();
+							tempCV->values.remove(1);
+							computedValues.set(fchan, tempCV);
 						}
 						channelToCommandValue.set(fchan, cv);
 						std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);
@@ -363,7 +367,12 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 							if (symValues) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, subFixtures.size()); }
 							val = jmap(position, val, valueTo);
 						}
-						finalValue->endValue = val;
+						if (pathMode) {
+							finalValue->values.add(val);
+						}
+						else {
+							finalValue->values.set(1, val);
+						}
 
 						float delay = delayFrom;
 						if (delayThru && subFixtures.size() > 1) {
@@ -382,7 +391,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 							}
 							else {
 								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
-								if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+								if (currentCuelistVal == nullptr || currentCuelistVal->endValue() < val) {
 									if (delayHTPIn != -1) delay = delayHTPIn * 1000.;
 								}
 								else {
@@ -417,7 +426,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 								}
 								else {
 									std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.contains(fchan) ? callingCuelist->activeValues.getReference(fchan) : nullptr;
-									if (currentCuelistVal == nullptr || currentCuelistVal->endValue < val) {
+									if (currentCuelistVal == nullptr || currentCuelistVal->endValue() < val) {
 										if (fadeHTPIn != -1) {
 											fade = fadeHTPIn * 1000.;
 											finalValue->fadeCurve = nullptr;
@@ -437,7 +446,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 						if (fchan->isHTP) {
 							if (callingCuelist != nullptr && callingCue != nullptr) {
 								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.contains(fchan) ? callingCuelist->activeValues.getReference(fchan) : nullptr;
-								if (currentCuelistVal != nullptr && currentCuelistVal->endValue > finalValue->endValue) {
+								if (currentCuelistVal != nullptr && currentCuelistVal->endValue() > finalValue->endValue()) {
 									finalValue->isTransitionOut = true;
 								}
 							}
@@ -939,7 +948,7 @@ void Command::explodeSelection(bool takeOutputValue)
 						cv->valueFrom->setValue(chan->currentValue);
 					}
 					else if (chanVal != nullptr) {
-						cv->valueFrom->setValue(chanVal->endValue);
+						cv->valueFrom->setValue(chanVal->endValue());
 					}
 				}
 
