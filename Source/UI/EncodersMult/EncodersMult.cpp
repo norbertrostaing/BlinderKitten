@@ -212,6 +212,7 @@ void EncodersMult::reconstructSubComponents()
 
     }
     resized();
+    setSensitivity(sensitivity.getValue());
 }
 
 void EncodersMult::reconstructNames()
