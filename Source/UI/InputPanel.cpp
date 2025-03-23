@@ -256,7 +256,7 @@ void InputPanel::parameterValueChanged(Parameter* p)
 void InputPanel::setGrandMaster(float value, String origin)
 {
     if (value >= 0) {
-        paramGrandMaster->setValue(value, true);
+        paramGrandMaster->setValue(value);
     }
     Brain::getInstance()->grandMasterChanged();
     UserInputManager::getInstance()->feedback("/grandmaster", paramGrandMaster->floatValue(), origin);
