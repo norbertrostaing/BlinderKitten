@@ -298,8 +298,15 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 			}
 
 			ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
+			float maxNormalizedPosition = 0;
 			for (int indexFixt = 0; indexFixt < subFixtures.size(); indexFixt++) {
+				SubFixture* sf = subFixtures[indexFixt];
+				if (selection.subFixtureToPosition.contains(sf)) {
+					maxNormalizedPosition = jmax(maxNormalizedPosition, selection.subFixtureToPosition.getReference(sf));
+				}
+			}
 
+			for (int indexFixt = 0; indexFixt < subFixtures.size(); indexFixt++) {
 				SubFixture* sf = subFixtures[indexFixt];
 				float normalizedPosition = indexFixt / (float)(subFixtures.size()-1);
 				bool useNormalized = false;
@@ -307,7 +314,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 					useNormalized = true;
 					normalizedPosition = selection.subFixtureToPosition.getReference(sf);
 				}
-				float normalizedPositionSym = normalizedPosition * 2;
+				float normalizedPositionSym = jmap(normalizedPosition,0.f,maxNormalizedPosition,0.f,1.f) * 2;
 				normalizedPositionSym = normalizedPositionSym > 1 ? 2 - normalizedPositionSym : normalizedPositionSym;
 
 				std::shared_ptr<HashMap<ChannelType*, float>> valuesFrom = std::make_shared <HashMap<ChannelType*, float>>();
