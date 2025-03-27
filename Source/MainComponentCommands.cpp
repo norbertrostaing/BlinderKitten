@@ -147,7 +147,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	case BlinderKittenCommandId::exportSelection:
 		result.setInfo("Export Selection", "This will export the current selection as *.mochi file that can be later imported", "File", result.readOnlyInKeyEditor);
 		result.addDefaultKeypress(KeyPress::createFromDescription("s").getKeyCode(), ModifierKeys::altModifier);
-		result.setActive(InspectableSelectionManager::mainSelectionManager->currentInspectables.size() > 0);
+		//result.setActive(InspectableSelectionManager::mainSelectionManager->currentInspectables.size() > 0);
 		break;
 
 	case BlinderKittenCommandId::importSelection:
