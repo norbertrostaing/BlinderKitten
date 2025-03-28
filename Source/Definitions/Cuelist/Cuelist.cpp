@@ -766,6 +766,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					}
 				}
 
+				if (it.getKey()->snapOnly) {
+					fadeTime = 0;
+				}
+
 				float delay = forcedDelay != -1 ? forcedDelay : delayTime;
 				float fade = forcedFade != -1 ? forcedFade : fadeTime;
 				delay *= speedMultVal;
