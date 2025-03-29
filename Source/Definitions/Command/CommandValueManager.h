@@ -18,5 +18,9 @@ class CommandValueManager :
 public:
     CommandValueManager();
     ~CommandValueManager();
+
+    bool shouldShowStepSize = false;
+    void showStepSize(bool should);
+    void addItemInternal(CommandValue*, juce::var data) override;
 };
 

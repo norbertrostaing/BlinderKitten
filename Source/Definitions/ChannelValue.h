@@ -22,6 +22,7 @@ public:
     float fade=0;
 
     Array<float> values;
+    Array<float> stepSizes;
 
     float startValue();
     float endValue();
@@ -46,4 +47,6 @@ public:
     float moveInBlackDelay = 0;
 
     Command* parentCommand = nullptr;
+
+    float pathLength = 0;
 };

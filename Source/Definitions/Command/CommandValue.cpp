@@ -38,6 +38,9 @@ CommandValue::CommandValue(var params) :
     symmetry = addBoolParameter("Symmetry", "Apply value with symmetry ?", false);
 
     HTPOverride = addBoolParameter("HTP Override", "If checked, HTP channels will be computed as LTP.", false);
+
+    stepSize = addFloatParameter("Step size", "Size of the step",1,0);
+    stepSize-> hideInEditor = true;
     updateDisplay();
 };
 
@@ -60,6 +63,8 @@ void CommandValue::updateDisplay()
     presetIdTo->hideInEditor = !(th && prst);
 
     symmetry->hideInEditor = !th;
+
+    stepSize->hideInEditor = !shouldShowStepSize;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

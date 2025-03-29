@@ -24,7 +24,7 @@ Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),
 	objectType(params.getProperty("type", "Command").toString()),
 	objectData(params),
-	values("Values"),
+	values(),
 	timing("Timing"),
 	moveInBlack()
 {
@@ -88,7 +88,10 @@ void Command::afterLoadJSONDataInternal() {
 	updateDisplay();
 }
 void Command::parameterValueChanged(Parameter* p) {
-	BaseItem::parameterControlModeChanged(p);
+	//BaseItem::parameterControlModeChanged(p);
+	if (p == useValuesAsPath) {
+		values.showStepSize(useValuesAsPath->boolValue());
+	}
 	updateDisplay();
 }
 
@@ -376,6 +379,8 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 						}
 						if (pathMode) {
 							finalValue->values.add(val);
+							finalValue->stepSizes.add(cv->stepSize->floatValue());
+							finalValue->pathLength += cv->stepSize->floatValue();
 						}
 						else {
 							finalValue->values.set(1, val);

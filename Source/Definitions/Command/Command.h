@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "CommandValue.h"
 #include "CommandTiming.h"
+#include "CommandValueManager.h"
 #include "CommandSelectionManager.h"
 #include "MoveInBlackManager.h"
 
@@ -42,7 +43,7 @@ public:
     BoolParameter* useValuesAsPath;
 
     CommandSelectionManager selection;
-    BaseManager<CommandValue> values;
+    CommandValueManager values;
     CommandTiming timing;
 
     HashMap<SubFixtureChannel*, std::shared_ptr<ChannelValue>> computedValues;

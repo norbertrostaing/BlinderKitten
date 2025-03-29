@@ -39,6 +39,9 @@ class CommandValue:
 
     BoolParameter* HTPOverride;
 
+    bool shouldShowStepSize = false;
+    FloatParameter* stepSize;
+
     void updateDisplay();
 
     void afterLoadJSONDataInternal();

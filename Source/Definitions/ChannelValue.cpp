@@ -39,12 +39,23 @@ float ChannelValue::valueAt(double ratio, double baseVal)
         v = v == -1 ? baseVal : v;
     }
     else {
-        double mainRatio = ratio * (values.size()-1);
-        int index = floor(mainRatio);
-        double subRatio = mainRatio - index;
-        float from = values[index] != -1 ? values[index] : baseVal;
-        float to = values[index+1] != -1 ? values[index+1] : baseVal;
-        v = jmap(subRatio, 0., 1. , (double)from, (double)to);
+        if (values.size() == 2) {
+            v = jmap(ratio, 0., 1., (double)values[0], (double)values[1]);
+        }
+        else {
+            double pathRatio = ratio * pathLength;
+            int currentIndex = 0;
+            double currentPathFrom = 0;
+            double currentPathTo = stepSizes[currentIndex];
+            while (pathRatio > currentPathTo) {
+                currentIndex++;
+                currentPathFrom = currentPathTo;
+                currentPathTo += stepSizes[currentIndex];
+            }
+            double from = values[currentIndex] != -1 ? values[currentIndex] : baseVal;
+            double to = values[currentIndex + 1] != -1 ? values[currentIndex + 1] : baseVal;
+            v = jmap(pathRatio, currentPathFrom, currentPathTo, (double)from, (double)to);
+        }
     }
     return v;
 }
