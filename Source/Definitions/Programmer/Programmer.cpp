@@ -499,6 +499,7 @@ void Programmer::selectCommand(Command* c)
 			}
 			if (UserInputManager::getInstance()->currentProgrammer == this) {
 				Encoders::getInstance()->updateEncoders();
+				Encoders::getInstance()->updateCommandLine();
 			}
 		}
 	}
