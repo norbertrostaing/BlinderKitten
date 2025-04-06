@@ -119,6 +119,12 @@ void Encoders::initEncoders()
         labels.add(l);
         l->setWantsKeyboardFocus(false);
         l->addMouseListener(this,true);
+
+        if (encodersParam.size() <= i) {
+            FloatParameter* p = addFloatParameter("Encodeur " + String(i + 1), "", 0, 0, 1);
+            p->setCustomShortName("encoder" + String(i + 1));
+            encodersParam.add(p);
+        }
     }
     resized();
     updateEncoders();
@@ -185,6 +191,7 @@ void Encoders::sliderValueChanged(Slider* slider)
     double v = slider->getValue();
     if (encoderRange == 1) { v /= 100.; }
     else if (encoderRange == 2) { v /= 255.; }
+    encodersParam[index]->setValue(v);
 
     UserInputManager::getInstance()->encoderValueChanged(index, v, "");
 }
@@ -380,6 +387,11 @@ void Encoders::updateEncoders() {
     encodersOffset = jmax(encodersOffset, 0);
 
     lastOrigin.clear();
+    transmitOrganicToEncoder = false;
+
+    for (int i = 0; i < nEncoders; i++) {
+        encodersParam[i]->setNiceName("e" + String(i + 1));
+    }
 
     for (int i = 0; i < nEncoders; i++) {
         int channelId = i+encodersOffset;
@@ -393,18 +405,24 @@ void Encoders::updateEncoders() {
         }
         else if (channels.size() > channelId) {
             labels[i]->setText(String(channels[channelId]->niceName), juce::sendNotification);
+            encodersParam[i]->setNiceName(String(channels[channelId]->niceName));
+            encodersParam[i]->notifyStateChanged();
             UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), String(channels[channelId]->niceName), "");
             encoders[i]->setEnabled(true);
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(192, 192, 192));
             encoders[i]->setValue(0, juce::dontSendNotification);
+            encodersParam[i]->setEnabled(true);
+            encodersParam[i]->setValue(0);
             if (currentCommand != nullptr) {
                 float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
                 if (v >= 0) {
                     UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), v, "");
                     encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
-                    if (encoderRange == 1) { v *= 100; }
-                    else if (encoderRange == 2) { v *= 255; }
-                    encoders[i]->setValue(v, juce::dontSendNotification);
+                    float vMod = v;
+                    if (encoderRange == 1) { vMod *= 100; }
+                    else if (encoderRange == 2) { vMod *= 255; }
+                    encoders[i]->setValue(vMod, juce::dontSendNotification);
+                    encodersParam[i]->setValue(v);
                 }
                 else {
                     UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), 0, "");
@@ -413,10 +431,14 @@ void Encoders::updateEncoders() {
         }
         else {
             labels[i]->setText("", juce::dontSendNotification);
+            encodersParam[i]->setNiceName("e"+String(i+1));
+            encodersParam[i]->notifyStateChanged();
             UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), "", "");
             encoders[i]->setEnabled(false);
             encoders[i]->setColour(Slider::rotarySliderFillColourId, Colour(63, 63, 63));
             encoders[i]->setValue(0, juce::dontSendNotification);
+            encodersParam[i]->setEnabled(false);
+            encodersParam[i]->setValue(0);
             UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), 0, "");
         }
         //labels[i]->repaint();
@@ -430,6 +452,7 @@ void Encoders::updateEncoders() {
         cmdNumText = String(index)+"/"+String(tot);
     }
     paramCommandNumber->setValue(cmdNumText);
+    transmitOrganicToEncoder = true;
     updateEncodersValues();
 
 
@@ -480,6 +503,7 @@ void Encoders::updateChannels()
 }
 
 void Encoders::updateEncodersValues() {
+    transmitOrganicToEncoder = false;
     const MessageManagerLock mmLock;
     Command* currentCommand = nullptr;
     Array<ChannelType* >chans;
@@ -497,10 +521,12 @@ void Encoders::updateEncodersValues() {
                         int channelId = ci + encodersOffset;
                         if (channels[channelId] == ct) {
                             float v = currentCommand->getChannelValue(channels[channelId], mode == 1);
-                            if (encoderRange == 1) { v *= 100; }
-                            else if (encoderRange == 2) { v *= 255; }
+                            float vMod = v;
+                            if (encoderRange == 1) { vMod *= 100; }
+                            else if (encoderRange == 2) { vMod *= 255; }
                             encoders[ci]->setValue(v, juce::dontSendNotification);
                             encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
+                            encodersParam[ci]->setValue(v);
                             filledEncoders.add(ci);
                         }
                     }
@@ -532,9 +558,11 @@ void Encoders::updateEncodersValues() {
 
                     if (n > 0) {
                         value = value / (float)n;
-                        if (encoderRange == 1) { value *= 100; }
-                        else if (encoderRange == 2) { value *= 255; }
-                        encoders[ci]->setValue(value, juce::dontSendNotification);
+                        float vMod = value;
+                        if (encoderRange == 1) { vMod *= 100; }
+                        else if (encoderRange == 2) { vMod *= 255; }
+                        encoders[ci]->setValue(vMod, juce::dontSendNotification);
+                        encodersParam[ci] -> setValue(value);
                     }
                 }
                 //encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
@@ -543,8 +571,7 @@ void Encoders::updateEncodersValues() {
 
     }
 
-
-
+    transmitOrganicToEncoder = true;
 }
 
 void Encoders::updateCommandLine()
@@ -646,4 +673,17 @@ void Encoders::mouseDown(const MouseEvent& e)
     }
     // do something else
     updateChannels();
+}
+
+void Encoders::parameterValueChanged(Parameter* p)
+{
+    if (!transmitOrganicToEncoder) return;
+    FloatParameter* fp = dynamic_cast<FloatParameter*>(p);
+    if (fp == nullptr) return;
+    int index = encodersParam.indexOf(fp);
+    if (index == -1) return;
+    float newVal = p->floatValue();
+    float oldVal = encoders[index]->getValue();
+    if (newVal == oldVal) return;
+    UserInputManager::getInstance()->encoderValueChanged(index, newVal, "");
 }

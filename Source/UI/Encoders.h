@@ -45,6 +45,7 @@ public:
 
     OwnedArray<Slider> encoders;
     OwnedArray<Label> labels;
+    Array<FloatParameter*> encodersParam;
 
     HashMap<ChannelType*, String> lastOrigin;
 
@@ -102,7 +103,11 @@ public:
     void clear();
 
     void mouseDown(const MouseEvent& e);
+
+    void parameterValueChanged(Parameter* p) override;
+
     bool disableNextExplode = false;
+    bool transmitOrganicToEncoder = true;
 
     int encoderRange = 0;
 
