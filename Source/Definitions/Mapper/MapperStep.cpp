@@ -19,7 +19,8 @@
 MapperStep::MapperStep(var params) :
     BaseItem(params.getProperty("name", "MapperStep")),
     objectType(params.getProperty("type", "MapperStep").toString()),
-    objectData(params)
+    objectData(params),
+	values("CommandValue")
 {
     saveAndLoadRecursiveData = true;
 

@@ -2,8 +2,8 @@
 #include "../SubFixture/SubFixture.h"
 #include "../../Brain.h"
 
-CommandValueManager::CommandValueManager() :
-    BaseManager("Values")
+CommandValueManager::CommandValueManager(const juce::String& name) :
+    BaseManager(name)
 {
     itemDataType = "CommandValue";
     selectItemWhenCreated = false;

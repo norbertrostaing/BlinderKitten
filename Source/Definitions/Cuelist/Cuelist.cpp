@@ -32,7 +32,7 @@ Cuelist::Cuelist(var params) :
 	chaserOptions("Chaser options"),
 	chaserGenContainer("Regenerate Chaser"),
 	offFadeCurve(),
-	chaseGenValue(),
+	chaseGenValue("CommandValue"),
 	cues(),
 	speedMult("Speed multiplicators"),
 	timing()

@@ -19,7 +19,8 @@
 CarouselStep::CarouselStep(var params) :
     BaseItem(params.getProperty("name", "CarouselStep")),
     objectType(params.getProperty("type", "CarouselStep").toString()),
-    objectData(params)
+    objectData(params),
+	values("CommandValue")
 {
     saveAndLoadRecursiveData = true;
 

@@ -43,7 +43,8 @@ Assistant::Assistant() :
     midiMapperCC("Midi mappings"),
     asciiCC("ASCII import / export"),
     controlsCC("Generic controls"),
-    Thread("Assistant")
+    Thread("Assistant"),
+    masterValue("CommandValue")
 {
     updateDisplay(); 
 

@@ -16,7 +16,7 @@ class CommandValueManager :
     public BaseManager<CommandValue>
 {
 public:
-    CommandValueManager();
+    CommandValueManager(const juce::String& name = "CommandValue");
     ~CommandValueManager();
 
     bool shouldShowStepSize = false;
