@@ -57,8 +57,8 @@ public:
     Array<ChannelFamily*> selectedFilters;
     Array<ChannelType*> channels;
 
-    Trigger* paramHighLight; TriggerUI* btnHighLight;
-    Trigger* paramBlind; TriggerUI* btnBlind;
+    BoolParameter* paramHighLight; BoolButtonToggleUI* btnHighLight;
+    BoolParameter* paramBlind; BoolButtonToggleUI* btnBlind;
     Trigger* paramMode; TriggerUI* btnMode;
     Trigger* paramEncoderRange; TriggerUI* btnEncoderRange;
     Trigger* paramNumbersOrNames; TriggerUI* btnNumbersOrNames;

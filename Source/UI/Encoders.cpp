@@ -50,10 +50,12 @@ Encoders::Encoders():
 
     paramNumbersOrNames = addTrigger("123", "Displays command line with numbers or with names"); paramNumbersOrNames->setCustomShortName("verbose"); btnNumbersOrNames = paramNumbersOrNames->createButtonUI(); addAndMakeVisible(btnNumbersOrNames);
     btnNumbersOrNames->customBGColor = Colour(59, 59, 59); btnNumbersOrNames->useCustomBGColor = true;
-    paramHighLight = addTrigger("HL", "Enable or disable highlight"); paramHighLight->setCustomShortName("hl"); btnHighLight = paramHighLight->createButtonUI(); addAndMakeVisible(btnHighLight);
+    paramHighLight = addBoolParameter("HL", "Enable or disable highlight", false); paramHighLight->setCustomShortName("hl"); btnHighLight = paramHighLight->createButtonToggle(); addAndMakeVisible(btnHighLight);
     btnHighLight->customBGColor = Colour(59, 59, 59); btnHighLight->useCustomBGColor = true;
-    paramBlind = addTrigger("Blind", "Enable or disable blind mode"); paramBlind->setCustomShortName("blind"); btnBlind = paramBlind->createButtonUI(); addAndMakeVisible(btnBlind);
+    btnHighLight->customFGColor = Colour(127,0,0);  btnHighLight->useCustomFGColor = true;
+    paramBlind = addBoolParameter("Blind", "Enable or disable blind mode", false); paramBlind->setCustomShortName("blind"); btnBlind = paramBlind->createButtonToggle(); addAndMakeVisible(btnBlind);
     btnBlind->customBGColor = Colour(59, 59, 59); btnBlind->useCustomBGColor = true;
+    btnBlind->customFGColor = Colour(0, 0, 127);  btnBlind->useCustomFGColor = true;
     paramMode = addTrigger("Val", "enable or disable thru mode"); paramMode->setCustomShortName("valThru"); btnMode = paramMode->createButtonUI(); addAndMakeVisible(btnMode);
     btnMode->customBGColor = Colour(59, 59, 59); btnMode->useCustomBGColor = true;
     paramBigMoveLeft = addTrigger("<<", "Shift encoders to the left"); paramBigMoveLeft->setCustomShortName("moveLeftBig"); btnBigMoveLeft = paramBigMoveLeft->createButtonUI(); addAndMakeVisible(btnBigMoveLeft);
@@ -261,15 +263,6 @@ void Encoders::triggerTriggered(Trigger* t)
             UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
         }
     }
-    else if (t == paramHighLight) {
-        UserInputManager::getInstance()->toggleHightlight();
-        updateChannels();
-    }
-    else if (t == paramBlind) {
-        UserInputManager::getInstance()->toggleBlind();
-        updateChannels();
-    }
-
 }
 
 void Encoders::updateModeButton() {
@@ -300,12 +293,7 @@ void Encoders::updateHLButton()
 {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         bool hl = UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->getValue();
-        if (hl) {
-            btnHighLight->customBGColor = Colour(127,0,0);
-        }
-        else {
-            btnHighLight->customBGColor = Colour(59, 59, 59);
-        }
+        paramHighLight->setValue(hl);
     }
 
 }
@@ -314,12 +302,7 @@ void Encoders::updateBlindButton()
 {
     if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
         String editMode = UserInputManager::getInstance()->currentProgrammer->editionMode->getValueData();
-        if (editMode == "blind") {
-            btnBlind->customBGColor = Colour(127, 0, 0);
-        }
-        else {
-            btnBlind->customBGColor = Colour(59, 59, 59);
-        }
+        paramBlind->setValue(editMode == "blind");
     }
 }
 
@@ -677,13 +660,30 @@ void Encoders::mouseDown(const MouseEvent& e)
 
 void Encoders::parameterValueChanged(Parameter* p)
 {
-    if (!transmitOrganicToEncoder) return;
-    FloatParameter* fp = dynamic_cast<FloatParameter*>(p);
-    if (fp == nullptr) return;
-    int index = encodersParam.indexOf(fp);
-    if (index == -1) return;
-    float newVal = p->floatValue();
-    float oldVal = encoders[index]->getValue();
-    if (newVal == oldVal) return;
-    UserInputManager::getInstance()->encoderValueChanged(index, newVal, "");
+
+    if (p == paramHighLight) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->highlightCurrentCommand->setValue(paramHighLight->boolValue());
+        }
+        updateChannels();
+    }
+    else if (p == paramBlind) {
+        if (UserInputManager::getInstance()->currentProgrammer != nullptr) {
+            UserInputManager::getInstance()->currentProgrammer->editionMode->setValueWithData(paramBlind->boolValue() ? "blind" : "notTimed");
+        }
+        updateChannels();
+        }
+    else {
+        if (!transmitOrganicToEncoder) return;
+        FloatParameter* fp = dynamic_cast<FloatParameter*>(p);
+        if (fp == nullptr) return;
+        int index = encodersParam.indexOf(fp);
+        if (index == -1) return;
+        float newVal = p->floatValue();
+        float oldVal = encoders[index]->getValue();
+        if (newVal == oldVal) return;
+        UserInputManager::getInstance()->encoderValueChanged(index, newVal, "");
+    }
+
+
 }

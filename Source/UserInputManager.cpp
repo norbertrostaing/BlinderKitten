@@ -535,8 +535,8 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 	}
 
 	else if (firstWord == "encoders" && aList.size() > 1) {
-		if (aList[1] == "hl") { Encoders::getInstance()->paramHighLight->trigger();}
-		else if (aList[1] == "blind") { Encoders::getInstance()->paramBlind->trigger(); }
+		if (aList[1] == "hl") { Encoders::getInstance()->paramHighLight->setValue(!Encoders::getInstance()->paramHighLight->boolValue()); }
+		else if (aList[1] == "blind") { Encoders::getInstance()->paramBlind->setValue(!Encoders::getInstance()->paramBlind->boolValue()); }
 		else if (aList[1] == "mode") { Encoders::getInstance()->paramMode->trigger(); }
 		else if (aList[1] == "encoderrange") { Encoders::getInstance()->paramEncoderRange->trigger(); }
 		else if (aList[1] == "numbersornames") { Encoders::getInstance()->paramNumbersOrNames->trigger(); }
@@ -792,7 +792,7 @@ void UserInputManager::updateCommandLine() {
 void UserInputManager::toggleHightlight()
 {
 	if (currentProgrammer != nullptr) {
-		bool hl = !currentProgrammer->highlightCurrentCommand->getValue();
+		bool hl = !currentProgrammer->highlightCurrentCommand->boolValue();
 		currentProgrammer->highlightCurrentCommand->setValue(hl);
 	}
 }

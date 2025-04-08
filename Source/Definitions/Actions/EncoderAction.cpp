@@ -143,12 +143,12 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
 
     case ENC_HL:
         if (val == 1) {
-            Encoders::getInstance()->paramHighLight->trigger();
+            Encoders::getInstance()->paramHighLight->setValue(!Encoders::getInstance()->paramHighLight->boolValue());
         }
         break;
     case ENC_BLIND:
         if (val == 1) {
-            Encoders::getInstance()->paramBlind->trigger();
+            Encoders::getInstance()->paramBlind->setValue(!Encoders::getInstance()->paramBlind->boolValue());
         }
         break;
     case ENC_RANGE:
