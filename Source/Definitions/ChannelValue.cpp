@@ -40,7 +40,9 @@ float ChannelValue::valueAt(double ratio, double baseVal)
     }
     else {
         if (values.size() == 2) {
-            v = jmap(ratio, 0., 1., (double)values[0], (double)values[1]);
+            double from = values[0] == -1 ? baseVal : values[0];
+            double to = values[1] == -1 ? baseVal : values[1];
+            v = jmap(ratio, 0., 1., from, to);
         }
         else {
             double pathRatio = ratio * pathLength;
