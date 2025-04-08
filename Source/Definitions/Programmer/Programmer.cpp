@@ -237,7 +237,7 @@ void Programmer::computeValues() {
 						cv = std::make_shared<ChannelValue>();
 						computedValues.set(sfc, cv);
 					}
-					cv->values.set(0,sfc->highlightValue);
+					cv->values.set(1,sfc->highlightValue);
 				}
 			}
 		}
