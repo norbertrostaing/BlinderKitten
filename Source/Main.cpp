@@ -18,10 +18,10 @@ void BlinderKittenApplication::initialiseInternal(const String &)
 	if(useWindow) mainComponent.reset(new MainContentComponent());
 
 	//Call after engine init
-	AppUpdater::getInstance()->setURLs("http://blinderkitten.lighting/update.json", "http://blinderkitten.lighting/installs/", "BlinderKitten");
+	AppUpdater::getInstance()->setURLs("https://blinderkitten.lighting/update.json", "https://blinderkitten.lighting/installs/", "BlinderKitten");
 	// HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/help/");
 
-	CrashDumpUploader::getInstance()->init("http://hazlab.fr/BlinderKitten/crash_report.php",ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize));
+	CrashDumpUploader::getInstance()->init("https://hazlab.fr/BlinderKitten/crash_report.php",ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize));
 
 	DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
 	
