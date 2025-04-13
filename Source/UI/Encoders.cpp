@@ -507,7 +507,7 @@ void Encoders::updateEncodersValues() {
                             float vMod = v;
                             if (encoderRange == 1) { vMod *= 100; }
                             else if (encoderRange == 2) { vMod *= 255; }
-                            encoders[ci]->setValue(v, juce::dontSendNotification);
+                            encoders[ci]->setValue(vMod, juce::dontSendNotification);
                             encoders[ci]->setColour(Slider::rotarySliderFillColourId, Colour(255, 0, 0));
                             encodersParam[ci]->setValue(v);
                             filledEncoders.add(ci);
@@ -680,6 +680,8 @@ void Encoders::parameterValueChanged(Parameter* p)
         int index = encodersParam.indexOf(fp);
         if (index == -1) return;
         float newVal = p->floatValue();
+        if (encoderRange == 1) { newVal *= 100.; }
+        else if (encoderRange == 2) { newVal *= 255.; }
         float oldVal = encoders[index]->getValue();
         if (newVal == oldVal) return;
         UserInputManager::getInstance()->encoderValueChanged(index, newVal, "");
