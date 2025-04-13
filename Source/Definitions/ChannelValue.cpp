@@ -15,7 +15,11 @@ ChannelValue::ChannelValue()
     values.set(0, -1);
     values.set(1, -1);
 };
-ChannelValue::~ChannelValue() {}
+ChannelValue::~ChannelValue() 
+{
+    cs.enter();
+    cs.exit();
+}
 
 float ChannelValue::startValue()
 {
@@ -29,6 +33,7 @@ float ChannelValue::endValue()
 
 float ChannelValue::valueAt(double ratio, double baseVal)
 {
+    cs.enter();
     float v = baseVal;
     if (ratio == 0) {
         v = startValue();
@@ -59,6 +64,7 @@ float ChannelValue::valueAt(double ratio, double baseVal)
             v = jmap(pathRatio, currentPathFrom, currentPathTo, (double)from, (double)to);
         }
     }
+    cs.exit();
     return v;
 }
 ;

@@ -21,6 +21,8 @@ public:
     float delay=0;
     float fade=0;
 
+    CriticalSection cs;
+
     Array<float> values;
     Array<float> stepSizes;
 
