@@ -309,6 +309,8 @@ void Encoders::updateBlindButton()
 void Encoders::updateRangeButton() {
     double min = 0;
     double max = 1;
+    double interval = 0;
+    int dec = 5;
     if (encoderRange == 0) {
         paramEncoderRange->setNiceName("0-1");
         max = 1;
@@ -316,13 +318,17 @@ void Encoders::updateRangeButton() {
     else if (encoderRange == 1) {
         paramEncoderRange->setNiceName("%");
         max = 100;
+        dec = 1;
     }
     else if (encoderRange == 2) {
         paramEncoderRange->setNiceName("255");
         max = 255;
+        interval = 1;
+        dec = 0;
     }
     for (int i = 0; i < nEncoders; i++) {
-        encoders[i]->setRange(min, max);
+        encoders[i]->setRange(min, max, interval);
+        encoders[i]->setNumDecimalPlacesToDisplay(dec);
     }
     updateEncoders();
 }
