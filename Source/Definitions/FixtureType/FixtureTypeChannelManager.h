@@ -29,6 +29,6 @@ public:
     void askForPaste();
     void askForMoveBefore(BaseItem* i);
     void askForMoveAfter(BaseItem* i);
-
+    void setItemIndex(FixtureTypeChannel* item, int newIndex, bool addToUndo = true) override;
 
 };

@@ -92,3 +92,10 @@ void FixtureTypeChannelManager::askForMoveAfter(BaseItem* i) {
 	BaseManager::askForMoveAfter(i);
 	calcDmxChannels();
 }
+
+void FixtureTypeChannelManager::setItemIndex(FixtureTypeChannel* item, int newIndex, bool addToUndo)
+{
+	BaseManager::setItemIndex(item, newIndex, addToUndo);
+	calcDmxChannels();
+}
+
