@@ -28,15 +28,15 @@ CommandTiming::CommandTiming(var params) :
 	presetId = addIntParameter("ID", "ID of the preset", 1, 1);
 
 	// to add a manager with defined data
-	delayFrom = addFloatParameter("Delay", "fade of th first element (in seconds)", 0, 0);
+	delayFrom = addFloatParameter("Delay", "delay of the first element (in seconds)", 0, 0);
 	thruDelay = addBoolParameter("Thru delay", "Do you want to apply multiples delays ?", false);
-	delayTo = addFloatParameter("Delay To", "fade of th first element (in seconds)", 0, 0);
+	delayTo = addFloatParameter("Delay To", "delay of the last element (in seconds)", 0, 0);
 	symmetryDelay = addBoolParameter("Delay Symmetry", "Apply this delay in symmetry", false);
 	randomizeDelay = addBoolParameter("Delay random", "Randomize the delay values", false);
 
-	fadeFrom = addFloatParameter("Fade", "fade of th first element (in seconds)", 0, 0);
+	fadeFrom = addFloatParameter("Fade", "fade of the first element (in seconds)", 0, 0);
 	thruFade = addBoolParameter("Thru fade", "Do you want to apply multiple fades", false);
-	fadeTo = addFloatParameter("Fade To", "fade of th first element (in seconds)", 0, 0);
+	fadeTo = addFloatParameter("Fade To", "fade of the last element (in seconds)", 0, 0);
 	symmetryFade = addBoolParameter("Fade Symmetry", "Apply this fade in symmetry", false);
 	randomizeFade = addBoolParameter("Fade random", "Randomize the fade values", false);
 
