@@ -59,17 +59,20 @@ InputPanelAction::InputPanelAction(var params) :
         targetButton->addOption("Black Out", "Blackout");
         targetButton->addOption("Midi Lock", "MidiLock");
     }
-    if (actionType == IP_RANDOMSEED) {
+    else if (actionType == IP_RANDOMSEED) {
         randomSeed = addIntParameter("Random Seed", "Initialise all random events with this value",0,0);
     }
-    if (actionType == IP_SELECTWINDOW) {
+    else if (actionType == IP_SELECTWINDOW) {
         targetWindow = addEnumParameter("Window", "Wich tab do you want to magically appear ?");
         for (int i = 0; i < ShapeShifterFactory::getInstance()->defs.size(); i++) {
             String windowName = ShapeShifterFactory::getInstance()->defs[i]->contentName;
             targetWindow->addOption(windowName, windowName);
         }
     }
-    if (actionType == IP_USEANOTHER) {
+    else if (actionType == IP_ORGANICLAYOUT) {
+        organicLayoutId = addIntParameter("Layout Number", "number of the layout", 1,1,10);
+    }
+    else if (actionType == IP_USEANOTHER) {
         useAnotherTargetType = addEnumParameter("Target type", "");
         useAnotherTargetType->addOption("Fixture", "Fixture")->addOption("Group", "Group")->addOption("Preset", "Preset")->addOption("Timing Preset", "Timing Preset");
         useAnotherTargetId = addIntParameter("Target ID", "", 0,0);
@@ -197,7 +200,16 @@ void InputPanelAction::setValueInternal(var value, String origin, int incrementI
             setAnother();
         }
         break;
+    case IP_ORGANICLAYOUT:
+        if (val == 1) {
+            MessageManager::callAsync([this](){
+                int commandId = 0x9000 + organicLayoutId->intValue() - 1;
+                ShapeShifterManager::getInstance()->handleCommandID(commandId);
+                }
+            );
+        }
     }
+
 
 }
 

@@ -19,7 +19,7 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE, IP_UPDATE, IP_REPLACE, IP_LOADCONTENT, IP_USEANOTHER};
+    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE, IP_UPDATE, IP_REPLACE, IP_LOADCONTENT, IP_USEANOTHER, IP_ORGANICLAYOUT};
     ActionType actionType;
     EnumParameter* targetButton;
     IntParameter* randomSeed;
@@ -33,6 +33,8 @@ public:
     IntParameter* useAnotherOtherId;
     IntParameter* useAnotherFromId;
     IntParameter* useAnotherToId;
+
+    IntParameter* organicLayoutId;
 
 
     void triggerInternal() override;

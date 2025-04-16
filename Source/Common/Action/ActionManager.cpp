@@ -155,6 +155,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Select Window", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SELECTWINDOW));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Save", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_SAVE));
     defs.add(Factory<Action>::Definition::createDef("Input Panel", "Use another", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_USEANOTHER));
+    defs.add(Factory<Action>::Definition::createDef("Input Panel", "Window layout change", &InputPanelAction::create)->addParam("actionType", InputPanelAction::IP_ORGANICLAYOUT));
 
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value Parameter", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TYPE));
