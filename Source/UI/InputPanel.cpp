@@ -97,10 +97,10 @@ InputPanel::InputPanel():
     sliderGrandMaster->orientation = FloatSliderUI::VERTICAL;
     sliderGrandMaster->showValue = false;
 
-    paramBlackOut = addBoolParameter("BlackOut", "", false); btnBlackout = paramBlackOut->createButtonToggle(); addAndMakeVisible(btnBlackout);  
+    paramBlackOut = addBoolParameter("BlackOut", "It's like set the grand master to 0", false); btnBlackout = paramBlackOut->createButtonToggle(); addAndMakeVisible(btnBlackout);  
     btnBlackout->customBGColor = Colour(59, 59, 59); btnBlackout->useCustomBGColor = true;
 
-    paramInLock = addBoolParameter("Remote lock", "", false); btnInLock = paramInLock->createButtonToggle(); addAndMakeVisible(btnInLock);  
+    paramInLock = addBoolParameter("Remote lock", "Disable all midi inputs", false); btnInLock = paramInLock->createButtonToggle(); addAndMakeVisible(btnInLock);  
     btnInLock->customBGColor = Colour(59, 59, 59); btnInLock->useCustomBGColor = true;
 }
 
