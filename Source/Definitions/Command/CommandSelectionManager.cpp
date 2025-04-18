@@ -198,6 +198,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
                 float wingSize = realTot / (float)nWings;
                 realTot = ceil(realTot / (float)nWings);
                 int roundedWingSize = round(wingSize);
+				roundedWingSize = jmax(roundedWingSize,1);
 
                 for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
                     int realIndex = chanIndex/nBuddy;
