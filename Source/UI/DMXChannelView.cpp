@@ -301,9 +301,10 @@ void DMXChannelItem::mouseExit(const MouseEvent& e)
 
 void DMXChannelItem::mouseDown(const MouseEvent& e)
 {
-	if (e.mods.isLeftButtonDown() && !e.mods.isAltDown())
+	valueAtMouseDown = value;
+	if (e.mods.isLeftButtonDown())
 	{
-		if (e.mods.isShiftDown()) {
+		if (e.mods.isShiftDown() && !e.mods.isAltDown()) {
 		if (!channelView->selectedItems.contains(this)) {
 			channelView->rangeOn(channelView->lastClickedId, channelView->channelItems.indexOf(this));
 		}
@@ -311,13 +312,13 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 			channelView->rangeOff(channelView->lastClickedId, channelView->channelItems.indexOf(this));
 		}
 		}
-		else if (channelView->selectedItems.contains(this)) {
+		else if (channelView->selectedItems.contains(this) && !e.mods.isAltDown()) {
 			updateDMXValue(savedValue);
 
 			channelView->selectedItems.removeAllInstancesOf(this);
 			tmpFlash = false;
 		}
-		else if (e.mods.isCtrlDown()) {
+		else if (e.mods.isCtrlDown() && !e.mods.isAltDown()) {
 			savedValue = value;
 			updateDMXValue(channelView->getFlashValue());
 			channelView->selectedItems.add(this);
@@ -326,7 +327,9 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 		else {
 			channelView->clearSelection();
 			savedValue = value;
-			updateDMXValue(channelView->getFlashValue());
+			if (!e.mods.isAltDown()) {
+				updateDMXValue(channelView->getFlashValue());
+			}
 			channelView->selectedItems.add(this);
 			tmpFlash = true;
 
@@ -337,7 +340,6 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 		if (!e.mods.isShiftDown()) {
 			channelView->keyboardStartSelection = channelView->channelItems.indexOf(this);
 		}
-		//valueAtMouseDown = value;
 			//updateDMXValue(channelView->getFlashValue());
 	}
 	else if (e.mods.isRightButtonDown())
@@ -408,11 +410,12 @@ void DMXChannelItem::mouseDown(const MouseEvent& e)
 
 void DMXChannelItem::mouseDrag(const MouseEvent& e)
 {
-	if (tmpFlash || e.mods.isShiftDown()) return;
+	if (e.mods.isShiftDown()) return;
 
 	if (e.mods.isLeftButtonDown() && e.mods.isAltDown())
 	{
 		updateDMXValue(valueAtMouseDown - e.getOffsetFromDragStart().y * 1.0f / getHeight());
+		tmpFlash = true;
 	}
 }
 
