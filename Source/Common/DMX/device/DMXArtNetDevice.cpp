@@ -160,6 +160,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 DMXArtNetDevice::~DMXArtNetDevice()
 {
 	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
+	Brain::getInstance()->syncedArtnetDevices.removeAllInstancesOf(this);
 }
 
 void DMXArtNetDevice::triggerTriggered(Trigger* t)
