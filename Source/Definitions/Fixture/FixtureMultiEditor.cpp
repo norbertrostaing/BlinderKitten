@@ -122,7 +122,7 @@ void FixtureMultiEditor::goRename() {
     name += " ";
     for (int i = 0; i < selectionManager->currentInspectables.size(); i++) {
         Fixture* f = dynamic_cast<Fixture*>(selectionManager->currentInspectables[i].get());
-        if (f != nullptr && f->objectType == "Fixture") {
+        if (f != nullptr) {
             String localName = name + String(num);
             f->userName->setValue(localName);
             num++;
