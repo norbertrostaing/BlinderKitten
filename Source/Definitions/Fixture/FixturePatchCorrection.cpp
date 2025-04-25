@@ -25,6 +25,8 @@ FixturePatchCorrection::FixturePatchCorrection(var params) :
 	channelType = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
 	channelType->maxDefaultSearchLevel = 2;
 	channelType->targetType = TargetParameter::CONTAINER;
+	channelType->typesFilter.add("ChannelType");
+
 
 	curve.editorIsCollapsed = true;
 	curve.setNiceName("Out curve");

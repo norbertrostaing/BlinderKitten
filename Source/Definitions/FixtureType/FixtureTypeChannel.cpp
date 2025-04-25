@@ -46,6 +46,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     channelType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     channelType -> targetType = TargetParameter::CONTAINER;
     channelType -> maxDefaultSearchLevel = 2;
+    channelType->typesFilter.add("ChannelType");
 
     resolution = addEnumParameter("Resolution", "");
     resolution->addOption("8bits", "8bits");

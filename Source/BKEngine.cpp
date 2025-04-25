@@ -185,58 +185,72 @@ BKEngine::BKEngine() :
 	CPRedChannel = colorPickerContainer.addTargetParameter("Red channel", "", ChannelFamilyManager::getInstance());
 	CPRedChannel->targetType = TargetParameter::CONTAINER;
 	CPRedChannel->maxDefaultSearchLevel = 2;
+	CPRedChannel->typesFilter.add("ChannelType");
 
 	CPGreenChannel = colorPickerContainer.addTargetParameter("Green channel", "", ChannelFamilyManager::getInstance());
 	CPGreenChannel->targetType = TargetParameter::CONTAINER;
 	CPGreenChannel->maxDefaultSearchLevel = 2;
+	CPGreenChannel->typesFilter.add("ChannelType");
 
 	CPBlueChannel = colorPickerContainer.addTargetParameter("Blue channel", "", ChannelFamilyManager::getInstance());
 	CPBlueChannel->targetType = TargetParameter::CONTAINER;
 	CPBlueChannel->maxDefaultSearchLevel = 2;
+	CPBlueChannel->typesFilter.add("ChannelType");
 
 	CPWhiteChannel = colorPickerContainer.addTargetParameter("White channel", "", ChannelFamilyManager::getInstance());
 	CPWhiteChannel->targetType = TargetParameter::CONTAINER;
 	CPWhiteChannel->maxDefaultSearchLevel = 2;
+	CPWhiteChannel->typesFilter.add("ChannelType");
 
 	CPAmberChannel = colorPickerContainer.addTargetParameter("Amber channel", "", ChannelFamilyManager::getInstance());
 	CPAmberChannel->targetType = TargetParameter::CONTAINER;
 	CPAmberChannel->maxDefaultSearchLevel = 2;
+	CPAmberChannel->typesFilter.add("ChannelType");
 
 	CPUVChannel = colorPickerContainer.addTargetParameter("UV channel", "", ChannelFamilyManager::getInstance());
 	CPUVChannel->targetType = TargetParameter::CONTAINER;
 	CPUVChannel->maxDefaultSearchLevel = 2;
+	CPUVChannel->typesFilter.add("ChannelType");
 
 	CPCyanChannel = colorPickerContainer.addTargetParameter("Cyan channel", "", ChannelFamilyManager::getInstance());
 	CPCyanChannel->targetType = TargetParameter::CONTAINER;
 	CPCyanChannel->maxDefaultSearchLevel = 2;
+	CPCyanChannel->typesFilter.add("ChannelType");
 
 	CPMagentaChannel = colorPickerContainer.addTargetParameter("Magenta channel", "", ChannelFamilyManager::getInstance());
 	CPMagentaChannel->targetType = TargetParameter::CONTAINER;
 	CPMagentaChannel->maxDefaultSearchLevel = 2;
+	CPMagentaChannel->typesFilter.add("ChannelType");
 
 	CPYellowChannel = colorPickerContainer.addTargetParameter("Yellow channel", "", ChannelFamilyManager::getInstance());
 	CPYellowChannel->targetType = TargetParameter::CONTAINER;
 	CPYellowChannel->maxDefaultSearchLevel = 2;
+	CPYellowChannel->typesFilter.add("ChannelType");
 
 	CPHueChannel = colorPickerContainer.addTargetParameter("Hue channel", "", ChannelFamilyManager::getInstance());
 	CPHueChannel->targetType = TargetParameter::CONTAINER;
 	CPHueChannel->maxDefaultSearchLevel = 2;
+	CPHueChannel->typesFilter.add("ChannelType");
 
 	CPSaturationChannel = colorPickerContainer.addTargetParameter("Saturation channel", "", ChannelFamilyManager::getInstance());
 	CPSaturationChannel->targetType = TargetParameter::CONTAINER;
 	CPSaturationChannel->maxDefaultSearchLevel = 2;
+	CPSaturationChannel->typesFilter.add("ChannelType");
 
 	IntensityChannel = trackerContainer.addTargetParameter("Intensity channel", "", ChannelFamilyManager::getInstance());
 	IntensityChannel->targetType = TargetParameter::CONTAINER;
 	IntensityChannel->maxDefaultSearchLevel = 2;
+	IntensityChannel->typesFilter.add("ChannelType");
 
 	TPanChannel = trackerContainer.addTargetParameter("Pan channel", "", ChannelFamilyManager::getInstance());
 	TPanChannel->targetType = TargetParameter::CONTAINER;
 	TPanChannel->maxDefaultSearchLevel = 2;
+	TPanChannel->typesFilter.add("ChannelType");
 
 	TTiltChannel = trackerContainer.addTargetParameter("Tilt channel", "", ChannelFamilyManager::getInstance());
 	TTiltChannel->targetType = TargetParameter::CONTAINER;
 	TTiltChannel->maxDefaultSearchLevel = 2;
+	TTiltChannel->typesFilter.add("ChannelType");
 
 
 	loadWindowWidth = loadWindowContainer.addIntParameter("Window Width", "", 810,100);

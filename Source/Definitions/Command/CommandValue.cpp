@@ -25,6 +25,7 @@ CommandValue::CommandValue(var params) :
     channelType = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
     channelType->maxDefaultSearchLevel = 2;
     channelType->targetType = TargetParameter::CONTAINER;
+    channelType->typesFilter.add("ChannelType");
 
     // release = addBoolParameter("Release value", "release tracked values", false);
     valueFrom = addFloatParameter("Value", "Value of the first element", 0, 0, 1);

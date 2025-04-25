@@ -28,6 +28,7 @@ EncoderAction::EncoderAction(var params) :
         encoderType = addTargetParameter("Parameter", "Wich encoder parameter do you want to move ?", ChannelFamilyManager::getInstance());
         encoderType->targetType = TargetParameter::CONTAINER;
         encoderType->maxDefaultSearchLevel = 2;
+        encoderType->typesFilter.add("ChannelType");
     }
     else if (actionType == ENC_SELECT) {
         selectionDelta = addIntParameter("Selection delta", "If positive, it will select nth next encoder, if negative, nth previous encoder", 1);
@@ -40,6 +41,7 @@ EncoderAction::EncoderAction(var params) :
         filterFamily = addTargetParameter("Family", "Wich filter do you want to toggle ?", ChannelFamilyManager::getInstance());
         filterFamily->targetType = TargetParameter::CONTAINER;
         filterFamily->maxDefaultSearchLevel = 0;
+        filterFamily->typesFilter.add("ChannelType");
         soloMode = addBoolParameter("Solo", "Disable other filters whene selected", false);
     }
 }

@@ -22,6 +22,8 @@ EffectParam::EffectParam(var params) :
     paramType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     paramType->targetType = TargetParameter::CONTAINER;
     paramType->maxDefaultSearchLevel = 2;
+    paramType->typesFilter.add("ChannelType");
+
 
     String modeExplain = "How does effect changes the current output value : \n";
     modeExplain += "- Relative adds the effect value to current output\n\n";

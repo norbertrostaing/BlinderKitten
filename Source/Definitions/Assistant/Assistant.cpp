@@ -124,9 +124,12 @@ Assistant::Assistant() :
     asciiChannelFixtureType = asciiCC.addTargetParameter("Channel Fixture type", "Fixture used for ascii import/export", FixtureTypeManager::getInstance());
     asciiChannelFixtureType->targetType = TargetParameter::CONTAINER;
     asciiChannelFixtureType->maxDefaultSearchLevel = 0;
+    asciiChannelFixtureType->typesFilter.add("FixtureType");
     asciiDimmerChannel = asciiCC.addTargetParameter("Intensity Channel", "Channel used as intensity for ascii import/export", ChannelFamilyManager::getInstance());
     asciiDimmerChannel->targetType = TargetParameter::CONTAINER;
     asciiDimmerChannel->maxDefaultSearchLevel = 2;
+    asciiDimmerChannel->typesFilter.add("ChannelType");
+
     asciiCuelistId = asciiCC.addIntParameter("Main Sequence ID", "Sequence to export or to import in", 1, 1);
     importAsciiBtn = asciiCC.addTrigger("Import", "Click to import a file");
     //exportAsciiBtn = asciiCC.addTrigger("Export", "Click to export selected cuelist in file");

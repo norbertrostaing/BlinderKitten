@@ -30,6 +30,8 @@ MapperRow::MapperRow(var params) :
     followedChannel = addTargetParameter("Followed Channel", "Channel to follow", ChannelFamilyManager::getInstance());
     followedChannel->targetType = TargetParameter::CONTAINER;
     followedChannel->maxDefaultSearchLevel = 2;
+    followedChannel->typesFilter.add("ChannelType");
+
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&paramContainer);

@@ -56,6 +56,8 @@ CommandSelection::CommandSelection(var params) :
     conditionChannel = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
     conditionChannel->maxDefaultSearchLevel = 2;
     conditionChannel->targetType = TargetParameter::CONTAINER;
+    conditionChannel->typesFilter.add("ChannelType");
+
 
     conditionTest = addEnumParameter("Test", "");
     conditionTest->addOption("equal to", EQUAL);

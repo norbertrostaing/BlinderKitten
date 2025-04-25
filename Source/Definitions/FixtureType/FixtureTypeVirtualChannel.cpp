@@ -23,6 +23,7 @@ FixtureTypeVirtualChannel::FixtureTypeVirtualChannel(var params) :
     channelType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     channelType -> targetType = TargetParameter::CONTAINER;
     channelType -> maxDefaultSearchLevel = 2;
+    channelType->typesFilter.add("ChannelType");
 
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
     defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
