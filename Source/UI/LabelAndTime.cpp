@@ -41,6 +41,14 @@ LabelAndTimeWindow::LabelAndTimeWindow():
     fadeLabel.setText("Fade", juce::dontSendNotification);
     fadeLabel.setJustificationType(Justification::centred);
 
+    addAndMakeVisible(followLabel);
+    followLabel.setText("Follow", juce::dontSendNotification);
+    followLabel.setJustificationType(Justification::centred);
+    addAndMakeVisible(followTimingLabel);
+    followTimingLabel.setText("Follow time", juce::dontSendNotification);
+    followTimingLabel.setJustificationType(Justification::centred);
+    
+
     Colour back(31,31,31);
     Colour text(204,204,204);
 
@@ -85,6 +93,22 @@ LabelAndTimeWindow::LabelAndTimeWindow():
     ltpFadeEdit.setColour(TextEditor::backgroundColourId, back);
     ltpFadeEdit.setColour(TextEditor::textColourId, text);
 
+    addAndMakeVisible(followTimingEdit);
+    followTimingEdit.onReturnKey = [this]() {validBtn.triggerClick(); };
+    followTimingEdit.setInputFilter(&filter, false);
+    followTimingEdit.setColour(TextEditor::backgroundColourId, back);
+    followTimingEdit.setColour(TextEditor::textColourId, text);
+
+    addAndMakeVisible(followEdit);
+    followEdit.addItem("Keep actual mode", 1);
+    followEdit.addItem("Wait for go", 2);
+    followEdit.addItem("End of transition", 3);
+    followEdit.addItem("Immediate", 4);
+    followEdit.setSelectedId(1);
+    followEdit.setColour(ComboBox::backgroundColourId, back);
+    followEdit.setColour(ComboBox::textColourId, text);
+
+
 
     addAndMakeVisible(validBtn);
     validBtn.setButtonText("Apply");
@@ -113,7 +137,7 @@ void LabelAndTimeWindow::resized()
     int margin = 10;
 
     int col = (width - (2*margin))/4;
-    int line = (height - (2*margin))/8;
+    int line = (height - (2*margin))/11;
     nameLabel.setBounds(margin + 0.5 * col,margin+ 0, 3 * col, line);
     htpUpLabel.setBounds(margin + col, margin + 3 * line, col, line);
     htpDownLabel.setBounds(margin + 2 * col, margin + 3 * line, col, line);
@@ -127,8 +151,15 @@ void LabelAndTimeWindow::resized()
     htpUpFadeEdit.setBounds(margin + 1 * col, margin + 5 * line, col, line);
     htpDownFadeEdit.setBounds(margin + 2 * col, margin + 5 * line, col, line);
     ltpFadeEdit.setBounds(margin + 3 * col, margin + 5 * line, col, line);
-    validBtn.setBounds(margin + 0.5 * col, margin + 7 * line, col, line);
-    exitBtn.setBounds(margin + 2.5 * col, margin + 7 * line, col, line);
+
+    followLabel.setBounds(margin + 0.5 * col, margin + 7 * line, 1.5 * col, line);
+    followTimingLabel.setBounds(margin + 2 * col, margin + 7 * line, 1.5 * col, line);
+
+    followEdit.setBounds(margin + 0.5 * col, margin + 8 * line, 1.5 * col, line);
+    followTimingEdit.setBounds(margin + 2 * col, margin + 8 * line, 1.5 * col, line);
+
+    validBtn.setBounds(margin + 0.5 * col, margin + 10 * line, col, line);
+    exitBtn.setBounds(margin + 2.5 * col, margin + 10 * line, col, line);
 }
 
 void LabelAndTimeWindow::applyValues()
@@ -143,6 +174,8 @@ void LabelAndTimeWindow::applyValues()
     String inFadeString = htpUpFadeEdit.getText().trim();
     String outFadeString = htpDownFadeEdit.getText().trim();
     String ltpFadeString = ltpFadeEdit.getText().trim();
+    String followTimingString = followTimingEdit.getText().trim();
+    int followMode = followEdit.getSelectedId();
 
     for (int i = 0; i < e->selectedCues.size(); i++) {
         Cue* c = e->selectedCues[i];
@@ -190,6 +223,17 @@ void LabelAndTimeWindow::applyValues()
             }
         }
 
+        if (followTimingString != "") {
+            float followTiming = c->autoFollowTiming->floatValue();
+            if (newValue(followTimingString, followTiming)) {
+                c->autoFollowTiming->setValue(followTiming);
+            }
+        }
+
+        if (followMode == 2) c->autoFollow->setValueAtIndex(0);
+        else if (followMode == 3) c->autoFollow->setValueAtIndex(1);
+        else if (followMode == 4) c->autoFollow->setValueAtIndex(2);
+
     }
 
 }
@@ -215,7 +259,7 @@ void LabelAndTimeWindow::showWindow(int element)
         UserInputManager::getInstance()->lastLabelAndTimeWindowTS = now;
 
         int w = 400;
-        int h = 200;
+        int h = 300;
 
         closeWindow();
         setSize(w, h);
@@ -254,6 +298,8 @@ void LabelAndTimeWindow::buttonClicked(Button* b)
     htpUpFadeEdit.setText("", juce::dontSendNotification);
     htpDownFadeEdit.setText("", juce::dontSendNotification);
     ltpFadeEdit.setText("", juce::dontSendNotification);
+    followTimingEdit.setText("", juce::dontSendNotification);
+    followEdit.setSelectedId(1);
 }
 
 void LabelAndTimeWindow::closeWindow() {

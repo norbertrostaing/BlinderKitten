@@ -47,6 +47,8 @@ public:
     Label ltpLabel;
     Label delayLabel;
     Label fadeLabel;
+    Label followLabel;
+    Label followTimingLabel;
 
     TextEditor htpUpDelayEdit;
     TextEditor htpDownDelayEdit;
@@ -54,6 +56,9 @@ public:
     TextEditor htpUpFadeEdit;
     TextEditor htpDownFadeEdit;
     TextEditor ltpFadeEdit;
+
+    ComboBox followEdit;
+    TextEditor followTimingEdit;
 
     void showWindow(int element = 0);
     void buttonClicked(Button*);
