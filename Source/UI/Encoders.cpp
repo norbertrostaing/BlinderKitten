@@ -74,6 +74,21 @@ Encoders::Encoders():
     btnCommandUp->customBGColor = Colour(59, 59, 59); btnCommandUp->useCustomBGColor = true;
     paramExplodeCommand = addTrigger("<>", "Explode current command, right clic for more options"); paramExplodeCommand->setCustomShortName("explode"); btnExplodeCommand = paramExplodeCommand->createButtonUI(); addAndMakeVisible(btnExplodeCommand);
     btnExplodeCommand->customBGColor = Colour(59, 59, 59); btnExplodeCommand->useCustomBGColor = true;
+    btnExplodeCommand->customAddToContextMenuFunc = [this](ControllableUI*, juce::PopupMenu* p){
+        p->addItem("Explode command", [this]() {
+            if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+                UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection();
+                UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+            }
+            });
+        p->addItem("Explode command with output", [this]() {
+            if (UserInputManager::getInstance()->currentProgrammer != nullptr && UserInputManager::getInstance()->currentProgrammer->currentUserCommand != nullptr) {
+                UserInputManager::getInstance()->currentProgrammer->currentUserCommand->explodeSelection(true);
+                UserInputManager::getInstance()->currentProgrammer->selectNextCommand();
+            }
+            });
+    };
+
     initEncoders();
 
 }
