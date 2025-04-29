@@ -194,22 +194,22 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				int maxIndex = 0;
 				Array<int> indexes;
 
-                int realTot = ceil(tempSelection.size()/(float)nBuddy);
-                float wingSize = realTot / (float)nWings;
-                realTot = ceil(realTot / (float)nWings);
-                int roundedWingSize = round(wingSize);
-				roundedWingSize = jmax(roundedWingSize,1);
+				int realTot = ceil(tempSelection.size() / (float)nBuddy);
+				float wingSize = realTot / (float)nWings;
+				realTot = ceil(realTot / (float)nWings);
+				int roundedWingSize = round(wingSize);
+				roundedWingSize = jmax(roundedWingSize, 1);
 
-                for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
-                    int realIndex = chanIndex/nBuddy;
+				for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
+					int realIndex = chanIndex / nBuddy;
 
-                    int nWing = realIndex/wingSize;
-                    if (nWing % 2 == 1) {
-                        realIndex = realIndex % roundedWingSize;
-                        realIndex = wingSize - 1 - realIndex;
-                    }
-                    realIndex = realIndex*nBlocks;
-                    realIndex = realIndex % roundedWingSize;
+					int nWing = realIndex / wingSize;
+					if (nWing % 2 == 1) {
+						realIndex = realIndex % roundedWingSize;
+						realIndex = wingSize - 1 - realIndex;
+					}
+					realIndex = realIndex * nBlocks;
+					realIndex = realIndex % roundedWingSize;
 					maxIndex = jmax(maxIndex, realIndex);
 					indexes.addIfNotAlreadyThere(realIndex);
 					if (!indexToSubFixtures.contains(realIndex)) {
@@ -256,6 +256,50 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				}
 
 				tempSelection = filteredSelection;
+				selections[selId]->lastRandom.clear();
+				selections[selId]->lastRandom.addArray(filteredSelection);
+			}
+			else if (selections[selId]->filter->getValue() == "bbw") {
+				Array<SubFixture*> filteredSelection;
+
+				int nBuddy = selections[selId]->randomBuddy->getValue();
+				int nBlocks = selections[selId]->randomBlock->getValue();
+				int nWings = selections[selId]->randomWing->getValue();
+				int maxIndex = 0;
+				Array<int> indexes;
+
+				int realTot = ceil(tempSelection.size() / (float)nBuddy);
+				float wingSize = realTot / (float)nWings;
+				realTot = ceil(realTot / (float)nWings);
+				int roundedWingSize = round(wingSize);
+				roundedWingSize = jmax(roundedWingSize, 1);
+
+				HashMap<SubFixture*, int> subFixtToIndex;
+
+				for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
+					int realIndex = chanIndex / nBuddy;
+
+					int nWing = realIndex / wingSize;
+					if (nWing % 2 == 1) {
+						realIndex = realIndex % roundedWingSize;
+						realIndex = wingSize - 1 - realIndex;
+					}
+					realIndex = realIndex * nBlocks;
+					realIndex = realIndex % roundedWingSize;
+					maxIndex = jmax(maxIndex, realIndex);
+					subFixtToIndex.set(tempSelection[chanIndex], realIndex);
+				}
+
+				for (auto it = subFixtToIndex.begin(); it != subFixtToIndex.end(); it.next()) {
+					SubFixture* sf = it.getKey();
+					int index = it.getValue();
+
+					float vWithGap = jmap((float)index, (float)0, (float)(maxIndex+1), 0.f, 1.f);
+					subFixtureToPosition.set(sf, vWithGap);
+					float vNoGap = jmap((float)index, (float)0, (float)(maxIndex), 0.f, 1.f);
+					subFixtureToPositionNoGap.set(sf, vNoGap);
+				}
+
 				selections[selId]->lastRandom.clear();
 				selections[selId]->lastRandom.addArray(filteredSelection);
 			}
