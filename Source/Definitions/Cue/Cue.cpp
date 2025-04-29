@@ -52,7 +52,7 @@ Cue::Cue(var params) :
 	autoFollow->addOption("End of transitions", "auto");
 	autoFollow->addOption("Immediate", "immediate");
 	autoFollowTiming = addFloatParameter("Auto Follow delay", "Number of seconds before trigger the auto go ", 0, 0);
-	autoFollowCountDown = addFloatParameter("Auto Follow CountdDown", "Triggers next cue when arrives to 0", 0, 0);
+	autoFollowCountDown = addFloatParameter("Auto Follow Countdown", "Triggers next cue when arrives to 0", 0, 0);
 	autoFollowCountDown->isControllableFeedbackOnly = true;
 
 	canBeRandomlyCalled = addBoolParameter("Random callable", "Can this cue be called by the randomGo of its cuelist ?", true);
