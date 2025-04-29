@@ -1,4 +1,4 @@
-﻿/*
+/*
   ==============================================================================
 
     CommandTypeChannel.cpp
@@ -61,14 +61,14 @@ CommandSelection::CommandSelection(var params) :
 
     conditionTest = addEnumParameter("Test", "");
     conditionTest->addOption("equal to", EQUAL);
-    conditionTest->addOption("defferent than", DIFFERENT);
+    conditionTest->addOption("different than", DIFFERENT);
     conditionTest->addOption("less than", LESS);
     conditionTest->addOption("greater than", MORE);
     conditionTest->addOption("less or equal to", LESSEQ);
     conditionTest->addOption("greater or equal to", MOREEQ);
     conditionValue = addFloatParameter("Value","",0,0,1);
 
-
+ 
     layoutId = addIntParameter("Layout ID", "Id ot desired layout", 0, 0);
     layoutDirection = addFloatParameter("Direction angle", "angle of selection direction", 0, -360, 360);
     //layoutUseOnlySelection = addBoolParameter("Use selected only", "If checked, the min and max indexes will be contrained on selection and not on all elements of the layout", true);
