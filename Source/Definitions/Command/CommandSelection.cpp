@@ -1,4 +1,4 @@
-/*
+﻿/*
   ==============================================================================
 
     CommandTypeChannel.cpp
@@ -40,6 +40,7 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Pattern", "pattern");
     filter->addOption("Shuffle", "shuffle");
     filter->addOption("Pick Random", "random");
+    filter->addOption("Buddy Block Wing", "bbw");
     filter->addOption("Output Condition", "outcondition");
     filter->addOption("Layout Direction", "layoutdir");
     filter->addOption("Layout Circle", "layoutcircle");
@@ -100,6 +101,7 @@ void CommandSelection::updateDisplay()
     bool layoutCir = filter->getValue() == "layoutcircle";
     bool layoutPnt = filter->getValue() == "layoutpoint";
     bool layoutPerl = filter->getValue() == "layoutperlin";
+    bool bbw = filter->getValue() == "bbw";
 
 
     randSeed = randSeed && mult;
@@ -119,9 +121,9 @@ void CommandSelection::updateDisplay()
 
     randomSeed -> hideInEditor = !randSeed;
     randomNumber->hideInEditor = !randNum;
-    randomBuddy->hideInEditor = !randNum;
-    randomBlock->hideInEditor = !randNum;
-    randomWing->hideInEditor = !randNum;
+    randomBuddy->hideInEditor = !randNum && !bbw;
+    randomBlock->hideInEditor = !randNum && !bbw;
+    randomWing->hideInEditor = !randNum && !bbw;
 
     layoutId->hideInEditor = !layout;
     layoutDirection->hideInEditor = !layoutDir;
