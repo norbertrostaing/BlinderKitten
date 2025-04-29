@@ -965,10 +965,10 @@ float Brain::symPosition(int index, int nElements) {
     float position = 0;
     if (nElements == 0) { return 0; }
     if (index < float(nElements / 2)) {
-        position = float(index) / float((nElements - 1) / 2);
+        position = float(index) / float((nElements - 1) / 2.0);
     }
     else {
-        position = float(nElements - index - 1) / float((nElements - 1) / 2);
+        position = float(nElements - index - 1) / float((nElements - 1) / 2.0);
     }
     return position;
 }
