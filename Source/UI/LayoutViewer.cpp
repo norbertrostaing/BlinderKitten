@@ -31,6 +31,11 @@ LayoutViewer::LayoutViewer() :
 	viewPaths.addListener(this);
 	addAndMakeVisible(&viewPaths);
 
+	viewCoords.setButtonText("Mouse coords");
+	viewCoords.setWantsKeyboardFocus(false);
+	viewCoords.addListener(this);
+	addAndMakeVisible(&viewCoords);
+
 	exportBtn.setButtonText("Export");
 	exportBtn.setWantsKeyboardFocus(false);
 	addAndMakeVisible(exportBtn);
@@ -197,6 +202,7 @@ void LayoutViewer::resized()
 	layoutsList.setBounds(hr.removeFromLeft(80).reduced(2));
 	viewPaths.setBounds(hr.removeFromLeft(80).reduced(2));
 	editMode.setBounds(hr.removeFromLeft(80).reduced(2));
+	viewCoords.setBounds(hr.removeFromLeft(80).reduced(2));
 	exportBtn.setBounds(hr.removeFromLeft(80).reduced(2));
 
 	if (selectedLayout != nullptr) {
@@ -210,6 +216,8 @@ void LayoutViewer::mouseExit(const MouseEvent& e)
 	currentMouseAction = CLIC_NOACTION;
 	currentMousePath = nullptr;
 	hoveredPath = nullptr;
+	mouseInLayout = false;
+	repaint();
 }
 
 void LayoutViewer::mouseDown(const MouseEvent& e)
@@ -439,6 +447,21 @@ void LayoutViewer::mouseMove(const MouseEvent& e)
 			repaint();
 		}
 
+	}
+
+	if (selectedLayout != nullptr)
+	{
+		float layoutX = jmap(float(e.position.getX()), topLeftX, bottomRightX,
+			(float)selectedLayout->dimensionsX->getValue()[0],
+			(float)selectedLayout->dimensionsX->getValue()[1]);
+		float layoutY = jmap(float(e.position.getY()), topLeftY, bottomRightY,
+			(float)selectedLayout->dimensionsY->getValue()[1],
+			(float)selectedLayout->dimensionsY->getValue()[0]);
+		mouseLayoutX = layoutX;
+		mouseLayoutY = layoutY;
+		mouseInLayout = (e.position.getX() >= topLeftX && e.position.getX() <= bottomRightX &&
+			e.position.getY() >= topLeftY && e.position.getY() <= bottomRightY);
+		repaint();
 	}
 }
 
@@ -1118,6 +1141,16 @@ void LayoutViewer::paint(Graphics& g)
 			}
 		}
 	}
+
+	if (mouseInLayout && viewCoords.getToggleState())
+	{
+		g.setFont(10.0f);
+		g.setColour(Colours::white.darker());
+		g.drawText("" + String(mouseLayoutX, 2) + ", " + String(mouseLayoutY, 2),
+			0, 0, getWidth(), 20,
+			Justification::centredLeft);
+	}
+
 }
 
 void LayoutViewer::stopAndCheckTimer()

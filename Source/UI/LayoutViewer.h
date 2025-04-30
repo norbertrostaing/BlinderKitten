@@ -35,6 +35,7 @@ public:
     
     ToggleButton viewPaths;
     ToggleButton editMode;
+    ToggleButton viewCoords;
     TextButton exportBtn;
 
     BKEngine* engine;
@@ -100,6 +101,10 @@ public:
     float topLeftY = 0;
     float bottomRightX = 0;
     float bottomRightY = 0;
+
+    float mouseLayoutX = 0.0f;
+    float mouseLayoutY = 0.0f;
+    bool mouseInLayout = false;
 
     bool isInterestedInDragSource(const SourceDetails& source) override;
     void itemDropped(const SourceDetails& source) override;
