@@ -1447,10 +1447,10 @@ void Brain::goAllLoadedCuelists() {
         Cuelist* c = it.getValue();
         Cue* cueB = dynamic_cast<Cue*>(c->nextCue->targetContainer.get());
         if (cueB != nullptr) {
-            c->go();
+            c->userGo();
         }
         else if ((int)c->nextCueId->getValue() > 0) {
-            c->go();
+            c->userGo();
         }
     }
 }
