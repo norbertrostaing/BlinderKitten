@@ -100,6 +100,9 @@ GridView::~GridView()
 
 void GridView::initArrays() {
     gridButtons.clear();
+    if (engine != nullptr && engine->gridScale != nullptr) {
+        numberOfCells = engine->gridCols->intValue()* engine->gridRows->intValue();
+    }
     for (int i = 0; i < numberOfCells; i++) {
         GridViewButton* b = new GridViewButton();
         b->id = i+1;
@@ -107,6 +110,7 @@ void GridView::initArrays() {
         b->addListener(this);
         addAndMakeVisible(b);
     }
+    resized();
 }
 
 void GridView::paint (juce::Graphics& g)
