@@ -1,4 +1,4 @@
-﻿/*
+/*
  ==============================================================================
 
  Engine.cpp
@@ -160,8 +160,10 @@ BKEngine::BKEngine() :
 	//panelScale->addParameterListener(this);
 	encodersScale = uiParamsContainer.addFloatParameter("Encoders scale", "scale the encoders view", 1, 0.1, 3);
 	encodersScale->addParameterListener(this);
-	gridCols= uiParamsContainer.addIntParameter("Grid Columns", "Number of columns for grid viewss", 10, 1);
+	gridCols = uiParamsContainer.addIntParameter("Grid Columns", "Number of columns for grid views", 10, 1);
 	gridCols->addParameterListener(this);
+	gridRows = uiParamsContainer.addIntParameter("Grid rows", "Number of rows for grid views", 20, 5);
+	gridRows->addParameterListener(this);
 	gridScale = uiParamsContainer.addFloatParameter("Grid scale", "scale the grid view", 1, 0.1, 3);
 	gridScale->addParameterListener(this);
 	encoderBigNumber = uiParamsContainer.addIntParameter("Encoder big offset", "Offset of encoders when << or >> pressed",4,2);
@@ -502,6 +504,7 @@ void BKEngine::clearInternal()
 	defaultPresetId->resetValue();
 	encodersNumber->resetValue();
 	gridCols->resetValue();
+	gridRows->resetValue();
 	gridScale->resetValue();
 	encodersScale->resetValue();
 	encoderBigNumber->resetValue();
@@ -540,6 +543,7 @@ void BKEngine::clearInternal()
 	encodersNumber->resetValue();
 	encodersScale->resetValue();
 	gridCols->resetValue();
+	gridRows->resetValue();
 	gridScale->resetValue();
 
 
@@ -1456,6 +1460,23 @@ void BKEngine::parameterValueChanged(Parameter* p) {
 	if (p == encodersScale) {
 		Encoders::getInstance()->resized();
 		//EncodersMult::getInstance()->resized();
+	}
+	else if (p == gridRows) {
+		FixtureGridView::getInstance()->initArrays();
+		FixtureGridView::getInstance()->updateCells();
+		GroupGridView::getInstance()->initArrays();
+		GroupGridView::getInstance()->updateCells();
+		PresetGridView::getInstance()->initArrays();
+		PresetGridView::getInstance()->updateCells();
+		CuelistGridView::getInstance()->initArrays();
+		CuelistGridView::getInstance()->updateCells();
+		EffectGridView::getInstance()->initArrays();
+		EffectGridView::getInstance()->updateCells();
+		CarouselGridView::getInstance()->initArrays();
+		CarouselGridView::getInstance()->updateCells();
+		MapperGridView::getInstance()->initArrays();
+		MapperGridView::getInstance()->updateCells();
+
 	}
 	else if (p == gridScale || p == gridCols) {
 		FixtureGridView::getInstance()->resized();

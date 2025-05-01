@@ -39,6 +39,7 @@ public:
 	ControllableContainer uiParamsContainer;
 	IntParameter* encodersNumber;
 	IntParameter* gridCols;
+	IntParameter* gridRows;
 	FloatParameter* gridScale;
 	//FloatParameter* panelScale;
 	FloatParameter* encodersScale;
