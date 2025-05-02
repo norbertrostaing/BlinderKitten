@@ -155,10 +155,10 @@ void DMXDevice::run()
 {
 	while (!threadShouldExit()) 
 	{
-		if (!enabled) return;
-		if (!alwaysSend->boolValue()) return;
-
-		sendDMXValues();
+		if (enabled && alwaysSend->boolValue()) 
+		{
+			sendDMXValues();
+		}
 		wait(1000 / targetRate->intValue());
 	}
 }
