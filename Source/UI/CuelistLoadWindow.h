@@ -45,7 +45,6 @@ public:
     void loadCuelist(Cuelist * c, bool triggerGoWhenSelected = false);
     void buttonClicked(Button*);
     bool triggerGo = false;
-    Cuelist* currentCuelist = nullptr;
 
     int posX = 0;
     int posY = 0;
