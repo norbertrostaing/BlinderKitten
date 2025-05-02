@@ -78,7 +78,7 @@ void GenericAction::triggerInternal()
 	}
 }
 
-void GenericAction::setValueInternal(var _value)
+void GenericAction::setValueInternal(var _value, String origin, int incrementIndex, bool isRelative)
 {
 	switch (actionType)
 	{

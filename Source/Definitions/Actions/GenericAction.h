@@ -32,7 +32,7 @@ public:
 	void setValueParameter(Parameter* p);
 
 	virtual void triggerInternal() override;
-	virtual void setValueInternal(var value) override;
+	void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
 	void onContainerParameterChanged(Parameter*) override;
 
