@@ -257,7 +257,9 @@ Cuelist::~Cuelist()
 	if (CuelistSheet::getInstanceWithoutCreating() && CuelistSheet::getInstance()->targetCuelist == this) {
 		CuelistSheet::getInstance()->targetCuelist = nullptr;
 	}
-
+	if (CuelistLoadWindow::getInstanceWithoutCreating() != nullptr && CuelistLoadWindow::getInstance()->currentTarget == this) {
+		CuelistLoadWindow::getInstance()->currentTarget = nullptr;
+	}
 }
 
 void Cuelist::reorderCues() {
