@@ -670,6 +670,8 @@ void LayoutViewer::paint(Graphics& g)
 		bool drawPaths = viewPaths.getToggleState();
 		bool edit = editMode.getToggleState();
 
+		p->selection.computing.enter();
+
 		if (type == BKPath::PATH_POINT) {
 			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
@@ -1140,6 +1142,8 @@ void LayoutViewer::paint(Graphics& g)
 				p->isComputing.exit();
 			}
 		}
+
+		p->selection.computing.exit();
 	}
 
 	if (mouseInLayout && viewCoords.getToggleState())
