@@ -938,6 +938,19 @@ void BKEngine::exportSelection()
 {
 	var data(new DynamicObject());
 
+	for (Inspectable* i : selectionManager->currentInspectables) {
+		FixtureType* ft = dynamic_cast<FixtureType*>(i);
+		if (ft != nullptr) {
+			for (FixtureTypeChannel* ftc : ft->chansManager.items) {
+				ChannelType* ct = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
+				if (ct != nullptr) {
+					ChannelFamily *cf = dynamic_cast<ChannelFamily*>(ct->parentContainer->parentContainer.get());
+					if (cf != nullptr) cf->selectThis(true);
+				}
+			}
+		}
+	}
+
 	data.getDynamicObject()->setProperty(InterfaceManager::getInstance()->shortName, InterfaceManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, ChannelFamilyManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(FixtureTypeManager::getInstance()->shortName, FixtureTypeManager::getInstance()->getExportSelectionData());
