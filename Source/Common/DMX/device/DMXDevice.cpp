@@ -37,7 +37,7 @@ DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	alwaysSend = outputCC->addBoolParameter("Always Send", "If checked, the device will always send the stored values to the constant rate set by the target rate parameter.\nIf you experience some lags, try unchecking this option.", true);
 	targetRate = outputCC->addIntParameter("Target send rate", "If fixed rate is checked, this is the frequency in Hz of the sending rate", 40, 1, 100);
 	
-	if (alwaysSend->boolValue()) startThread();
+	if (alwaysSend->boolValue()) startThread(juce::Thread::Priority::highest);
 }
 
 DMXDevice::~DMXDevice()
@@ -108,7 +108,7 @@ void DMXDevice::clearDevice()
 	stopThread(100);
 }
 
-DMXDevice * DMXDevice::create(Type type)
+DMXDevice* DMXDevice::create(Type type)
 {
 	switch (type)
 	{
@@ -145,8 +145,8 @@ void DMXDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Controll
 	if (c == alwaysSend || c == targetRate)
 	{
 		if (c == alwaysSend) targetRate->setEnabled(alwaysSend->boolValue());
-		
-		if (alwaysSend->boolValue()) startThread();
+
+		if (alwaysSend->boolValue()) startThread(juce::Thread::Priority::highest);
 		else stopThread(100);
 	}
 }
