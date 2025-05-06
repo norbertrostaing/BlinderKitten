@@ -36,6 +36,7 @@ class CommandValue:
     IntParameter* presetIdTo;
     FloatParameter* valueTo;
     BoolParameter* symmetry;
+    BoolParameter* randomize;
 
     BoolParameter* HTPOverride;
 

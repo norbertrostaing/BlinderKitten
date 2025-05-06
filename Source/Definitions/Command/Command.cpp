@@ -286,12 +286,13 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
 		if (cv->enabled->boolValue()) {
-			bool symValues = cv->symmetry->getValue();
+			bool symValues = cv->symmetry->boolValue();
+			bool randomizeValue = cv->randomize->boolValue();
 			Preset* pFrom = nullptr;
 			Preset* pTo = nullptr;
 			if (cv->presetOrValue->getValue() == "preset") {
-				pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->getValue(), true);
-				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->getValue(), true);
+				pFrom = Brain::getInstance()->getPresetById(cv->presetIdFrom->intValue(), true);
+				pTo = Brain::getInstance()->getPresetById(cv->presetIdTo->intValue(), true);
 				if (pFrom != nullptr) {
 					pFrom -> computeValues();
 				}
@@ -302,8 +303,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 
 			ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
 			float maxNormalizedPosition = 0;
+			HashMap<SubFixture*, float> subfixtToRandom;
 			for (int indexFixt = 0; indexFixt < subFixtures.size(); indexFixt++) {
 				SubFixture* sf = subFixtures[indexFixt];
+				if (randomizeValue) subfixtToRandom.set(sf, Brain::getInstance()->mainRandom.nextFloat());
 				if (selection.subFixtureToPosition.contains(sf)) {
 					maxNormalizedPosition = jmax(maxNormalizedPosition, selection.subFixtureToPosition.getReference(sf));
 				}
@@ -375,6 +378,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 						if (cv->thru->getValue() && subFixtures.size() > 1) {
 							float position = normalizedPosition;
 							if (symValues) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, subFixtures.size()); }
+							if (randomizeValue) {position = subfixtToRandom.getReference(sf);}
 							val = jmap(position, val, valueTo);
 						}
 						if (pathMode) {
