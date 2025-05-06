@@ -759,6 +759,7 @@ void Assistant::importAscii()
         cuelist->userName->setValue("ASCII Cuelist");
     }
     Cue* currentCue = nullptr;
+    Cue* previousCue = nullptr;
     Group* currentGroup = nullptr;
     Preset* currentPreset = nullptr;
     Cuelist* currentSub = nullptr;
@@ -802,7 +803,7 @@ void Assistant::importAscii()
                 currentPrimary = words[0];
                 currentSecondary = words[0];
             }
-            else if (words[0] == "CHAN" || words[0] == "DOWN" || words[0] == "FOLLOWON" || words[0] == "LINK" || words[0] == "PART" || words[0] == "TEXT" || words[0] == "UP") 
+            else if (words[0] == "CHAN" || words[0] == "DOWN" || words[0] == "FOLLOWON" || words[0] == "LINK" || words[0] == "PART" || words[0] == "TEXT" || words[0] == "UP" || words[0] == "$$WAIT")
             {
                 currentSecondary = words[0];
             }
@@ -853,6 +854,7 @@ void Assistant::importAscii()
                     if (words.size() == 1) {
                         LOGERROR("invalid file, CUE word must have an id in parameter");
                     }
+                    previousCue = currentCue;
                     currentCue = new Cue();
                     cuesToAdd.add(currentCue);
                     currentCue->editorIsCollapsed = true;
@@ -864,17 +866,26 @@ void Assistant::importAscii()
                     }
                 }
                 else if (currentSecondary == "TEXT") {
-                    String text = originalLine.trim().substring(5);
+                    String text = currentCue->cueText->stringValue() + originalLine.trim().substring(5);
                     currentCue->cueText->setValue(text);
                     currentCue->goText->setValue(text);
                     currentCue->setNiceName(text);
                 }
                 else if (currentSecondary == "FOLLOWON") {
                     if (words.size() == 1) {
-                        LOGERROR("invalid file, UP word must have at least one parameter");
+                        LOGERROR("invalid file, FOLLOWON word must have at least one parameter");
                     }
-                    currentCue->autoFollow->setValueWithData("Immediate");
+                    currentCue->autoFollow->setValueWithKey("Immediate");
                     currentCue->autoFollowTiming->setValue(words[1].getFloatValue());
+                }
+                else if (currentSecondary == "$$WAIT") {
+                    if (words.size() == 1) {
+                        LOGERROR("invalid file, WAIT word must have at least one parameter");
+                    }
+                    if (previousCue != nullptr) {
+                        previousCue->autoFollow->setValueWithKey("End of transitions");
+                        previousCue->autoFollowTiming->setValue(words[1].getFloatValue());
+                    }
                 }
                 else if (currentSecondary == "UP") {
                     if (words.size() == 1) {
