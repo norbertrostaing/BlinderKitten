@@ -882,7 +882,7 @@ void Assistant::importAscii()
                     if (words.size() == 1) {
                         LOGERROR("invalid file, WAIT word must have at least one parameter");
                     }
-                    if (previousCue != nullptr) {
+                    if (previousCue != nullptr && words[1].getFloatValue()>0) {
                         previousCue->autoFollow->setValueWithKey("End of transitions");
                         previousCue->autoFollowTiming->setValue(words[1].getFloatValue());
                     }
