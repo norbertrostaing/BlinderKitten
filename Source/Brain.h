@@ -28,6 +28,7 @@
 #include "Definitions/Cue/Task.h"
 #include "Definitions/Layout/Layout.h"
 #include "Definitions/Tracker/Tracker.h"
+#include "Definitions/SelectionMaster/SelectionMaster.h"
 #include "Definitions/Bundle/Bundle.h"
 
 
@@ -54,6 +55,7 @@ public:
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
     HashMap<int, Tracker*>trackers;
+    HashMap<int, SelectionMaster*>selectionMasters;
     HashMap<int, Layout*>layouts;
     HashMap<int, Bundle*>bundles;
 
@@ -73,6 +75,8 @@ public:
     Array<Mapper*> mapperPoolWaiting;
     Array<Tracker*> trackerPoolUpdating;
     Array<Tracker*> trackerPoolWaiting;
+    Array<SelectionMaster*> selectionMasterPoolUpdating;
+    Array<SelectionMaster*> selectionMasterPoolWaiting;
 
     Array<SubFixtureChannel*> swoppableChannels;
     Array<SubFixtureChannel*> grandMasterChannels;
@@ -140,6 +144,8 @@ public:
     void unregisterLayout(Layout* p);
     void registerTracker(Tracker* p, int id, bool swap = false);
     void unregisterTracker(Tracker* p);
+    void registerSelectionMaster(SelectionMaster* p, int id, bool swap = false);
+    void unregisterSelectionMaster(SelectionMaster* p);
     void registerBundle(Bundle* p, int id, bool swap = false);
     void unregisterBundle(Bundle* p);
 
@@ -151,6 +157,7 @@ public:
     void pleaseUpdate(Carousel* c);
     void pleaseUpdate(Mapper* c);
     void pleaseUpdate(Tracker* c);
+    void pleaseUpdate(SelectionMaster* c);
 
     void updateAllChannels();
 
@@ -172,6 +179,7 @@ public:
     Mapper* getMapperById(int id);
     Layout* getLayoutById(int id);
     Tracker* getTrackerById(int id);
+    SelectionMaster* getSelectionMasterById(int id);
     Bundle* getBundleById(int id);
 
     void swoppedCuelist(Cuelist* c);

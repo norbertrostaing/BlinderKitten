@@ -176,6 +176,9 @@
     <Filter Include="BlinderKitten\Source\Definitions\Programmer">
       <UniqueIdentifier>{166D0C99-5B9A-E645-30E2-3B61A6497BAE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\SelectionMaster">
+      <UniqueIdentifier>{CE95BC86-5208-4620-4343-CAC96BEF5704}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\SubFixture">
       <UniqueIdentifier>{31ABCE2F-E396-1009-4A33-7C970B554790}</UniqueIdentifier>
     </Filter>
@@ -1369,6 +1372,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\PresetAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\SelectionMasterAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\SoloPoolAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
@@ -1701,6 +1707,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.cpp">
       <Filter>BlinderKitten\Source\Definitions\Programmer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMaster.cpp">
+      <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
@@ -5211,6 +5226,9 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\PresetAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\SelectionMasterAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\SoloPoolAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
@@ -5543,6 +5561,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.h">
       <Filter>BlinderKitten\Source\Definitions\Programmer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMaster.h">
+      <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManager.h">
+      <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>

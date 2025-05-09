@@ -54,6 +54,7 @@ void Brain::clear()
     carousels.clear();
     mappers.clear();
     trackers.clear();
+    selectionMasters.clear();
     bundles.clear();
     layouts.clear();
     cuelistPoolUpdating.clear();
@@ -204,6 +205,20 @@ void Brain::brainLoop() {
         }
     }
     programmerPoolUpdating.clear();
+
+    if (selectionMasterPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < selectionMasterPoolWaiting.size(); i++) {
+            selectionMasterPoolUpdating.add(selectionMasterPoolWaiting[i]);
+        }
+        selectionMasterPoolWaiting.clear();
+    }
+    for (int i = 0; i < selectionMasterPoolUpdating.size(); i++) {
+        selectionMasterPoolUpdating[i]->update(now);
+    }
+    selectionMasterPoolUpdating.clear();
+
+
 
     Array<SubFixtureChannel* > modifiedSF;
 
@@ -850,6 +865,45 @@ void Brain::unregisterTracker(Tracker* c) {
 }
 
 
+void Brain::registerSelectionMaster(SelectionMaster* p, int id, bool swap) {
+    int askedId = id;
+    if (selectionMasters.getReference(id) == p) { return; }
+    if (selectionMasters.containsValue(p)) {
+        selectionMasters.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (selectionMasters.contains(id) && selectionMasters.getReference(id) != nullptr) {
+            SelectionMaster* presentItem = selectionMasters.getReference(id);
+            unregisterSelectionMaster(p);
+            registerSelectionMaster(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (selectionMasters.contains(id) && selectionMasters.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    selectionMasters.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+    TSBundles = Time::getMillisecondCounterHiRes();
+}
+
+
+void Brain::unregisterSelectionMaster(SelectionMaster* c) {
+    if (selectionMasters.containsValue(c)) {
+        selectionMasters.removeValue(c);
+    }
+    TSBundles = Time::getMillisecondCounterHiRes();
+}
+
+
 void Brain::registerBundle(Bundle* p, int id, bool swap) {
     int askedId = id;
     if (bundles.getReference(id) == p) { return; }
@@ -948,6 +1002,14 @@ void Brain::pleaseUpdate(Tracker* f) {
     ScopedLock lock(usingCollections);
     if (!trackerPoolWaiting.contains(f)) {
         trackerPoolWaiting.add(f);
+    }
+}
+
+void Brain::pleaseUpdate(SelectionMaster* f) {
+    if (f == nullptr || f->objectType != "SelectionMaster") { return; }
+    ScopedLock lock(usingCollections);
+    if (!selectionMasterPoolWaiting.contains(f)) {
+        selectionMasterPoolWaiting.add(f);
     }
 }
 
@@ -1343,6 +1405,15 @@ Layout* Brain::getLayoutById(int id) {
 Tracker* Brain::getTrackerById(int id) {
     if (trackers.contains(id)) {
         return trackers.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
+SelectionMaster* Brain::getSelectionMasterById(int id) {
+    if (selectionMasters.contains(id)) {
+        return selectionMasters.getReference(id);
     }
     else {
         return nullptr;

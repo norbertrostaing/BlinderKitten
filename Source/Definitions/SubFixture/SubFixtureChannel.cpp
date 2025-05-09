@@ -97,6 +97,12 @@ SubFixtureChannel::~SubFixtureChannel()
 		if (c->chanToVal.contains(this)) c->chanToVal.remove(this);
 		c->isComputing.exit();
 	}
+	for (auto it = Brain::getInstance()->selectionMasters.begin(); it != Brain::getInstance()->selectionMasters.end(); it.next()) {
+		SelectionMaster* c = it.getValue();
+		c->isComputing.enter();
+		if (c->channels.contains(this)) c->channels.removeAllInstancesOf(this);
+		c->isComputing.exit();
+	}
 
 	for (Command* c : Brain::getInstance()->allCommands) {
 		c->isComputing.enter();
@@ -308,6 +314,12 @@ void SubFixtureChannel::updateVal(double now) {
 			}
 		}
 
+		for (int i = 0; i < selectionMasterStack.size(); i++) {
+			if (selectionMasterStack[i]->layerId->intValue() == currentLayer) {
+				newValue = selectionMasterStack[i]->applyToChannel(this, newValue, now);
+			}
+		}
+
 	}
 
 	if (reactToGrandMaster) {
@@ -414,6 +426,19 @@ void SubFixtureChannel::trackerOutOfStack(Tracker* f) {
 	cs.enter();
 	while (trackerStack.indexOf(f) >= 0) {
 		trackerStack.removeAllInstancesOf(f);
+	}
+	cs.exit();
+}
+
+void SubFixtureChannel::selectionMasterOnTopOfStack(SelectionMaster* f) {
+	selectionMasterOutOfStack(f);
+	selectionMasterStack.add(f);
+}
+
+void SubFixtureChannel::selectionMasterOutOfStack(SelectionMaster* f) {
+	cs.enter();
+	while (selectionMasterStack.indexOf(f) >= 0) {
+		selectionMasterStack.removeAllInstancesOf(f);
 	}
 	cs.exit();
 }

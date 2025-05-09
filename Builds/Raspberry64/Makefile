@@ -124,6 +124,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MapperAction_7d027a1.o \
   $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o \
   $(JUCE_OBJDIR)/PresetAction_e4e29ebf.o \
+  $(JUCE_OBJDIR)/SelectionMasterAction_222c7aa4.o \
   $(JUCE_OBJDIR)/SoloPoolAction_e45293b.o \
   $(JUCE_OBJDIR)/TapTempoMultiple_3a521832.o \
   $(JUCE_OBJDIR)/TrackerAction_c5bb14e.o \
@@ -211,6 +212,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Programmer_37f4f5c1.o \
   $(JUCE_OBJDIR)/ProgrammerManager_59fcb336.o \
   $(JUCE_OBJDIR)/ProgrammerManagerUI_e9d378a.o \
+  $(JUCE_OBJDIR)/SelectionMaster_68a389f.o \
+  $(JUCE_OBJDIR)/SelectionMasterManager_c9e1a98.o \
+  $(JUCE_OBJDIR)/SelectionMasterManagerUI_9e824e6c.o \
   $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o \
   $(JUCE_OBJDIR)/SubFixtureChannel_8716636c.o \
   $(JUCE_OBJDIR)/TimingPreset_47a547e1.o \
@@ -524,6 +528,11 @@ $(JUCE_OBJDIR)/MultiplicatorAction_f579383b.o: ../../Source/Definitions/Actions/
 $(JUCE_OBJDIR)/PresetAction_e4e29ebf.o: ../../Source/Definitions/Actions/PresetAction.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PresetAction.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SelectionMasterAction_222c7aa4.o: ../../Source/Definitions/Actions/SelectionMasterAction.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling SelectionMasterAction.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SoloPoolAction_e45293b.o: ../../Source/Definitions/Actions/SoloPoolAction.cpp
@@ -959,6 +968,21 @@ $(JUCE_OBJDIR)/ProgrammerManager_59fcb336.o: ../../Source/Definitions/Programmer
 $(JUCE_OBJDIR)/ProgrammerManagerUI_e9d378a.o: ../../Source/Definitions/Programmer/ProgrammerManagerUI.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling ProgrammerManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SelectionMaster_68a389f.o: ../../Source/Definitions/SelectionMaster/SelectionMaster.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling SelectionMaster.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SelectionMasterManager_c9e1a98.o: ../../Source/Definitions/SelectionMaster/SelectionMasterManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling SelectionMasterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SelectionMasterManagerUI_9e824e6c.o: ../../Source/Definitions/SelectionMaster/SelectionMasterManagerUI.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling SelectionMasterManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o: ../../Source/Definitions/SubFixture/SubFixture.cpp

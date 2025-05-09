@@ -18,6 +18,7 @@
 #include "Definitions/Carousel/CarouselManagerUI.h"
 #include "Definitions/Mapper/MapperManagerUI.h"
 #include "Definitions/Tracker/TrackerManagerUI.h"
+#include "Definitions/SelectionMaster/SelectionMasterManagerUI.h"
 #include "Definitions/Multiplicator/MultiplicatorManagerUI.h"
 #include "Definitions/Layout/LayoutManagerUI.h"
 #include "Definitions/Bundle/BundleManagerUI.h"
@@ -128,6 +129,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Carousels", &CarouselManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Mappers", &MapperManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Trackers", &TrackerManagerUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Selection Masters", &SelectionMasterManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Multiplicators", &MultiplicatorManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Layouts", &LayoutManagerUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Bundles", &BundleManagerUI::create));
@@ -171,6 +173,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Carousels", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Mappers", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Trackers", "Lists");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("Selection Masters", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Multiplicators", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Layouts", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Bundles", "Lists");

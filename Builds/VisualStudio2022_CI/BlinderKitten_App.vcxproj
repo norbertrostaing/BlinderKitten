@@ -278,6 +278,7 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\MapperAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\MultiplicatorAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\PresetAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\SelectionMasterAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\SoloPoolAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TrackerAction.cpp"/>
@@ -437,6 +438,9 @@
     <ClCompile Include="..\..\Source\Definitions\Programmer\Programmer.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Programmer\ProgrammerManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMaster.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPreset.cpp"/>
@@ -3537,6 +3541,7 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\MapperAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\MultiplicatorAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\PresetAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\SelectionMasterAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\SoloPoolAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TrackerAction.h"/>
@@ -3648,6 +3653,9 @@
     <ClInclude Include="..\..\Source\Definitions\Programmer\Programmer.h"/>
     <ClInclude Include="..\..\Source\Definitions\Programmer\ProgrammerManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Programmer\ProgrammerManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMaster.h"/>
+    <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPreset.h"/>

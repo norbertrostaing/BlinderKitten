@@ -17,6 +17,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/CarouselAction.h"
 #include "Definitions/Actions/MapperAction.h"
 #include "Definitions/Actions/TrackerAction.h"
+#include "Definitions/Actions/SelectionMasterAction.h"
 #include "Definitions/Actions/VirtualButtonAction.h"
 #include "Definitions/Actions/VirtualFaderAction.h"
 #include "Definitions/Actions/InputPanelAction.h"
@@ -107,6 +108,12 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Stop", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_STOP));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Toggle", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Size", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_SIZE));
+
+    defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Start", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_START));
+    defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Stop", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Toggle", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_TOGGLE));
+    defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Size", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Fixed Size", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_STATIC_SIZE));
 
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Start", &BundleAction::create)->addParam("actionType", BundleAction::BUN_START));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Stop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_STOP));

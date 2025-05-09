@@ -319,6 +319,10 @@
           <FILE id="onIrJC" name="PresetAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/PresetAction.cpp"/>
           <FILE id="pWJqFW" name="PresetAction.h" compile="0" resource="0" file="Source/Definitions/Actions/PresetAction.h"/>
+          <FILE id="EgwWfJ" name="SelectionMasterAction.cpp" compile="1" resource="0"
+                file="Source/Definitions/Actions/SelectionMasterAction.cpp"/>
+          <FILE id="EGc2wx" name="SelectionMasterAction.h" compile="0" resource="0"
+                file="Source/Definitions/Actions/SelectionMasterAction.h"/>
           <FILE id="ogmjMd" name="SoloPoolAction.cpp" compile="1" resource="0"
                 file="Source/Definitions/Actions/SoloPoolAction.cpp"/>
           <FILE id="LZgVMq" name="SoloPoolAction.h" compile="0" resource="0"
@@ -747,6 +751,20 @@
                 file="Source/Definitions/Programmer/ProgrammerManagerUI.cpp"/>
           <FILE id="cVpv9b" name="ProgrammerManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/Programmer/ProgrammerManagerUI.h"/>
+        </GROUP>
+        <GROUP id="{7ABAACF7-D27C-A93F-AB78-620D203811F3}" name="SelectionMaster">
+          <FILE id="ERVQLC" name="SelectionMaster.cpp" compile="1" resource="0"
+                file="Source/Definitions/SelectionMaster/SelectionMaster.cpp"/>
+          <FILE id="XyKfoL" name="SelectionMaster.h" compile="0" resource="0"
+                file="Source/Definitions/SelectionMaster/SelectionMaster.h"/>
+          <FILE id="hFCTgu" name="SelectionMasterManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/SelectionMaster/SelectionMasterManager.cpp"/>
+          <FILE id="jFBh2M" name="SelectionMasterManager.h" compile="0" resource="0"
+                file="Source/Definitions/SelectionMaster/SelectionMasterManager.h"/>
+          <FILE id="hS1Hn3" name="SelectionMasterManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/SelectionMaster/SelectionMasterManagerUI.cpp"/>
+          <FILE id="nKgJLB" name="SelectionMasterManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/SelectionMaster/SelectionMasterManagerUI.h"/>
         </GROUP>
         <GROUP id="{7FB4DF5D-8DCA-AC2D-DD2C-F67ECA24743D}" name="SubFixture">
           <FILE id="jbO0qH" name="SubFixture.cpp" compile="1" resource="0" file="Source/Definitions/SubFixture/SubFixture.cpp"/>
