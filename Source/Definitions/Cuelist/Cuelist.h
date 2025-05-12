@@ -91,6 +91,7 @@ public:
     Trigger* loadAndGoBtn;
     Trigger* loadRandomBtn;
     Trigger* cleanAllBtn;
+    Trigger* regroupAllBtn;
 
     Trigger* selectAsMainConductorBtn;
 

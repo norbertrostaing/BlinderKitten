@@ -56,6 +56,7 @@ public:
     Trigger* createAfterBtn;
     Trigger* createBeforeBtn;
     Trigger* cleanUnusedCommandsBtn;
+    Trigger* regroupCommandsBtn;
 
     MoveInBlackManager moveInBlack;
     FloatParameter* moveInBlackDelay;
@@ -82,6 +83,7 @@ public:
     void endTransition();
 
     void cleanUnused();
+    void regroupCommands();
 
     void loadContent(Programmer *p);
     void replaceContent(Programmer* p);

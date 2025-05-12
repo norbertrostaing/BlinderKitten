@@ -16,6 +16,7 @@
 #include "BKEngine.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
 #include "Cuelist/CuelistManager.h"
+#include "ChannelValue.h"
 
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue 1")),
@@ -59,6 +60,7 @@ Cue::Cue(var params) :
 	loadWindowBreakLine = addBoolParameter("New line load window", "If checked, this element will force a new line in the cuelist window", false);
 	goBtn = actionsContainer.addTrigger("GO", "trigger this cue");
 	cleanUnusedCommandsBtn = actionsContainer.addTrigger("Clean", "Clean the duplicates commands in this cue.");
+	regroupCommandsBtn = actionsContainer.addTrigger("Regroup", "Regroup similar commands on fixtures to corresponding group.");
 	loadBtn = actionsContainer.addTrigger("Load content", "load the content of this cue in programmer");
 	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");
 	mergeBtn = actionsContainer.addTrigger("Merge", "The content of the programmer is added to this cue");
@@ -147,6 +149,9 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 	else if (c == cleanUnusedCommandsBtn) {
 		computeValues();
 		cleanUnused();
+	}
+	else if (c == regroupCommandsBtn) {
+		regroupCommands();
 	}
 	else if (c == loadBtn) {
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
@@ -329,6 +334,73 @@ void Cue::cleanUnused()
 	}
 
 	csComputing.exit();
+}
+
+void Cue::regroupCommands()
+{
+	computeValues();
+
+	for (auto it = Brain::getInstance()->groups.begin(); it != Brain::getInstance()->groups.end(); it.next()) {
+		it.getValue()->selection.computeSelection();
+	}
+	
+	Array<int> dontProcess;
+	Array<Command*> toDelete;
+
+	for (int i = 0; i < commands.items.size(); i++) {
+		if (dontProcess.contains(i)) continue;
+		Command* cmdOrigin = commands.items[i];
+		if (cmdOrigin->selection.items.size() != 1) continue;
+		if (cmdOrigin->selection.items[0]->targetType->getValueData() != "fixture") continue;
+		if (cmdOrigin->values.items.size() != 1) continue;
+		if (cmdOrigin->values.items[0]->thru->boolValue()) continue;
+
+		for (int j = i + 1; j < commands.items.size(); j++) {
+			Command* cmdTest = commands.items[j];
+			if (cmdTest->selection.items.size() != 1) continue;
+			if (cmdTest->selection.items[0]->targetType->getValueData() != "fixture") continue;
+			if (cmdTest->values.items.size() != 1) continue;
+			if (cmdTest->values.items[0]->thru->boolValue()) continue;
+
+			if (cmdOrigin->values.items[0]->presetOrValue->getValue() != cmdTest->values.items[0]->presetOrValue->getValue()) continue;
+			if (cmdOrigin->values.items[0]->presetOrValue->getValue() == "preset") {
+				if (cmdOrigin->values.items[0]->presetIdFrom->getValue() != cmdTest->values.items[0]->presetIdFrom->getValue()) continue;
+			}
+			else if (cmdOrigin->values.items[0]->presetOrValue->getValue() == "value") {
+				if (cmdOrigin->values.items[0]->valueFrom->getValue() != cmdTest->values.items[0]->valueFrom->getValue()) continue;
+			}
+
+			cmdOrigin->selection.addItemFromData(cmdTest->selection.items[0]->getJSONData());
+			dontProcess.add(j);
+			toDelete.add(cmdTest);
+		}
+
+	}
+	commands.removeItems(toDelete);
+
+	for (Command* cmd : commands.items) {
+		if (cmd->selection.items.size() > 1) {
+			cmd->selection.computeSelection();
+			bool replaced = false;
+			for (auto it = Brain::getInstance()->groups.begin(); it != Brain::getInstance()->groups.end() && !replaced; it.next()) {
+				Group* g = it.getValue();
+				if (g->selection.computedSelectedSubFixtures.size() != cmd->selection.computedSelectedFixtures.size()) continue;
+				bool valid = true;
+				for (SubFixture* sf : g->selection.computedSelectedSubFixtures) {
+					valid = valid && cmd->selection.computedSelectedSubFixtures.contains(sf);
+				}
+				if (valid) {
+					cmd->selection.clear();
+					CommandSelection* cs = cmd->selection.addItem();
+					cs->targetType->setValueWithData("group");
+					cs->valueFrom->setValue(g->id->intValue());
+				}
+			}
+		}
+	}
+
+
+
 }
 
 void Cue::loadContent(Programmer* p)
