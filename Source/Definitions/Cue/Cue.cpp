@@ -378,10 +378,15 @@ void Cue::regroupCommands()
 	}
 	commands.removeItems(toDelete);
 
+	toDelete.clear();
+	Array<var> toAdd;
+
 	for (Command* cmd : commands.items) {
 		if (cmd->selection.items.size() > 1) {
 			cmd->selection.computeSelection();
 			bool replaced = false;
+
+			// check for one corresponding group
 			for (auto it = Brain::getInstance()->groups.begin(); it != Brain::getInstance()->groups.end() && !replaced; it.next()) {
 				Group* g = it.getValue();
 				if (g->selection.computedSelectedSubFixtures.size() != cmd->selection.computedSelectedFixtures.size()) continue;
@@ -394,12 +399,65 @@ void Cue::regroupCommands()
 					CommandSelection* cs = cmd->selection.addItem();
 					cs->targetType->setValueWithData("group");
 					cs->valueFrom->setValue(g->id->intValue());
+					replaced = true;
 				}
+			}
+
+			if (!replaced) {
+				Array<Group*> allGroups;
+				for (auto it = Brain::getInstance()->groups.begin(); it != Brain::getInstance()->groups.end(); it.next()) {
+					allGroups.add(it.getValue());
+				}
+				Array<Group*> selectedGroups;
+				for (int i = 0; i < allGroups.size() && !replaced; i++) {
+					selectedGroups.clear();
+					Group* firstGroup = allGroups[i];
+					Array<SubFixture*> remainingSelection;
+					remainingSelection.addArray(cmd->selection.computedSelectedSubFixtures);
+
+					bool valid = true;
+					for (SubFixture* sf : firstGroup->selection.computedSelectedSubFixtures) {
+						valid = valid && remainingSelection.contains(sf);
+						remainingSelection.removeAllInstancesOf(sf);
+					}
+					if (!valid) continue;
+					selectedGroups.add(firstGroup);
+
+					for (int j = i + 1; j < allGroups.size(); j++) {
+						Group* secondGroup = allGroups[j];
+						for (SubFixture* sf : secondGroup->selection.computedSelectedSubFixtures) {
+							valid = valid && remainingSelection.contains(sf);
+						}
+						if (valid) {
+							selectedGroups.add(secondGroup);
+							for (SubFixture* sf : secondGroup->selection.computedSelectedSubFixtures) {
+								remainingSelection.removeAllInstancesOf(sf);
+							}
+						}
+					}
+
+					if (remainingSelection.size() == 0) {
+						replaced = true;
+						toDelete.add(cmd);
+						cmd->selection.clear();
+						CommandSelection* cs = cmd->selection.addItem();
+						cs->targetType->setValueWithData("group");
+
+						for (Group* g : selectedGroups) {
+							cs->valueFrom->setValue(g->id->intValue());
+							toAdd.add(cmd->getJSONData());
+						}
+					}
+				}
+
 			}
 		}
 	}
 
-
+	commands.removeItems(toDelete);
+	for (var v : toAdd) {
+		commands.addItemFromData(v);
+	}
 
 }
 
