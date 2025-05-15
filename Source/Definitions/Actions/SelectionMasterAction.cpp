@@ -77,10 +77,13 @@ void SelectionMasterAction::setValueInternal(var value, String origin, int incre
     case SELM_SIZE:
         if (isRelative) {
             target->nextSizeController = origin;
-            target->sizeValue->setValue(target->sizeValue->floatValue() + val);
+            float newVal = target->sizeValue->floatValue() + val;
+            newVal = jlimit(sizeRange->x, sizeRange->y, newVal);
+            target->sizeValue->setValue(newVal);
         }
         else {
-            target->sizeValue->setValue(val);
+            float newVal = jmap(val,0.f,1.f, sizeRange->x, sizeRange->y);
+            target->sizeValue->setValue(newVal);
         }
         break;
 
