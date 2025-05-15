@@ -4,16 +4,17 @@
       "parameters": [
         {
           "value": [
-            "",
-            ""
+            "\\\\?\\usb#vid_09e8&pid_0028&mi_00#7&17b6db37&2&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global",
+            "\\\\?\\usb#vid_09e8&pid_0028&mi_00#7&17b6db37&2&0000#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global"
           ],
           "controlAddress": "/device"
         }
       ],
       "niceName": "APC mini",
       "containers": {
+        "startSysexContent": {
+        },
         "mappings": {
-          "editorIsCollapsed": true,
           "items": [
             {
               "parameters": [
@@ -21,6 +22,20 @@
                   "value": 56,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -69,6 +84,20 @@
                   "value": 57,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -128,6 +157,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -179,6 +222,20 @@
                   "value": 59,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -238,6 +295,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -289,6 +360,20 @@
                   "value": 61,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -348,6 +433,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -399,6 +498,20 @@
                   "value": 63,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -458,6 +571,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -509,6 +636,20 @@
                   "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -573,6 +714,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -629,6 +784,20 @@
                   "value": 51,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -693,6 +862,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -749,6 +932,20 @@
                   "value": 53,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -813,6 +1010,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -869,6 +1080,20 @@
                   "value": 55,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -933,6 +1158,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -984,6 +1223,20 @@
                   "value": 41,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1048,6 +1301,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1104,6 +1371,20 @@
                   "value": 43,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1168,6 +1449,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1224,6 +1519,20 @@
                   "value": 45,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1288,6 +1597,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1344,6 +1667,20 @@
                   "value": 47,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1408,6 +1745,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1459,6 +1810,20 @@
                   "value": 33,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1523,6 +1888,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1579,6 +1958,20 @@
                   "value": 35,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1643,6 +2036,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1699,6 +2106,20 @@
                   "value": 37,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1763,6 +2184,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1819,6 +2254,20 @@
                   "value": 39,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1883,6 +2332,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1934,6 +2397,20 @@
                   "value": 25,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -1998,6 +2475,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2058,6 +2549,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2078,6 +2583,7 @@
                 }
               ],
               "niceName": "bouton ligne 5 col 4",
+              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -2113,6 +2619,20 @@
                   "value": 28,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2177,6 +2697,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2233,6 +2767,20 @@
                   "value": 30,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2297,6 +2845,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2357,6 +2919,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2408,6 +2984,20 @@
                   "value": 17,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2472,6 +3062,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2528,6 +3132,20 @@
                   "value": 19,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2592,6 +3210,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2648,6 +3280,20 @@
                   "value": 21,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2712,6 +3358,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2768,6 +3428,20 @@
                   "value": 23,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2832,6 +3506,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2883,6 +3571,20 @@
                   "value": 9,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -2947,6 +3649,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3003,6 +3719,20 @@
                   "value": 11,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3067,6 +3797,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3123,6 +3867,20 @@
                   "value": 13,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3187,6 +3945,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3247,6 +4019,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3302,6 +4088,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3353,6 +4153,20 @@
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3417,6 +4231,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3473,6 +4301,20 @@
                   "value": 3,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3537,6 +4379,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3593,6 +4449,20 @@
                   "value": 5,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3657,6 +4527,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3713,6 +4597,20 @@
                   "value": 7,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3781,6 +4679,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3836,6 +4748,20 @@
                   "value": 49,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3904,6 +4830,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3968,6 +4908,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3988,6 +4942,7 @@
                 }
               ],
               "niceName": "Fader 4",
+              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
@@ -4027,6 +4982,20 @@
                   "value": 52,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4095,6 +5064,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -4155,6 +5138,20 @@
                   "value": 54,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4223,6 +5220,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -4276,9 +5287,82 @@
             {
               "parameters": [
                 {
+                  "value": "Control Change",
+                  "controlAddress": "/type"
+                },
+                {
+                  "value": 56,
+                  "hexMode": false,
+                  "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
+                    10.0
+                  ],
+                  "controlAddress": "/upRange"
+                },
+                {
+                  "value": [
+                    65.0,
+                    75.0
+                  ],
+                  "controlAddress": "/downRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    0.1000000014901161
+                  ],
+                  "controlAddress": "/valueRange"
+                }
+              ],
+              "niceName": "Fader 9",
+              "containers": {
+                "actions": {
+                  "viewOffset": [
+                    0,
+                    0
+                  ],
+                  "viewZoom": 1.0
+                }
+              },
+              "type": "BaseItem"
+            },
+            {
+              "parameters": [
+                {
                   "value": 64,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4334,6 +5418,20 @@
                   "value": 65,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4398,6 +5496,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -4454,6 +5566,20 @@
                   "value": 67,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4518,6 +5644,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -4574,6 +5714,20 @@
                   "value": 69,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4638,6 +5792,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -4698,6 +5866,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -4754,6 +5936,20 @@
                   "value": 98,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -4853,6 +6049,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -4904,6 +6107,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -4959,6 +6169,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5010,6 +6227,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5065,6 +6289,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5116,6 +6347,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5171,6 +6409,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5224,6 +6469,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5275,6 +6527,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5335,6 +6594,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5391,6 +6657,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5451,6 +6724,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5507,6 +6787,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5567,6 +6854,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5623,6 +6917,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5683,6 +6984,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5734,6 +7042,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5794,6 +7109,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5850,6 +7172,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -5910,6 +7239,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -5966,6 +7302,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6026,6 +7369,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6082,6 +7432,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6142,6 +7499,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6193,6 +7557,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6253,6 +7624,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6309,6 +7687,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6369,6 +7754,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6425,6 +7817,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6485,6 +7884,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6541,6 +7947,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6601,6 +8014,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6652,6 +8072,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6712,6 +8139,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6768,6 +8202,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6828,6 +8269,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -6884,6 +8332,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -6944,6 +8399,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7000,6 +8462,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7060,6 +8529,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7111,6 +8587,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7171,6 +8654,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7227,6 +8717,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7287,6 +8784,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7343,6 +8847,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7403,6 +8914,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7459,6 +8977,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7519,6 +9044,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7570,6 +9102,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7630,6 +9169,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7686,6 +9232,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7746,6 +9299,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7802,6 +9362,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7862,6 +9429,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -7918,6 +9492,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -7978,6 +9559,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -8024,6 +9612,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -8084,6 +9679,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -8140,6 +9742,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -8200,6 +9809,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -8256,6 +9872,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -8316,6 +9939,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -8372,6 +10002,13 @@
                     127.0
                   ],
                   "controlAddress": "/midiOutputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
                 },
                 {
                   "value": 1,
@@ -8432,6 +10069,13 @@
                   "controlAddress": "/midiOutputRange"
                 },
                 {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/midiOutputRange14b"
+                },
+                {
                   "value": 1,
                   "hexMode": false,
                   "controlAddress": "/onValue"
@@ -8482,10 +10126,16 @@
   "programmer": null,
   "curvePreset": null,
   "timingPreset": null,
+  "bKPathPreset": null,
   "carousel": null,
   "mapper": null,
+  "tracker": null,
+  "selectionMaster": null,
   "multiplicators": null,
   "effect": null,
+  "2dPlans": null,
   "virtualButton": null,
-  "virtualFaderCol": null
+  "virtualFaderCol": null,
+  "bundle": null,
+  "dashboards": null
 }

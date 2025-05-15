@@ -3,15 +3,21 @@
     {
       "parameters": [
         {
+          "value": true,
+          "controlAddress": "/enabled"
+        },
+        {
           "value": [
-            "",
-            ""
+            "\\\\?\\usb#vid_09e8&pid_0031&mi_01#7&1efafa27&3&0001#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global",
+            "\\\\?\\usb#vid_09e8&pid_0031&mi_01#7&1efafa27&3&0001#{6994ad04-93ef-11d0-a3cc-00a0c9223196}\\global"
           ],
           "controlAddress": "/device"
         }
       ],
       "niceName": "APC MidiMix",
       "containers": {
+        "startSysexContent": {
+        },
         "mappings": {
           "items": [
             {
@@ -24,6 +30,20 @@
                   "value": 16,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -48,14 +68,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         }
@@ -87,6 +106,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -107,14 +140,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -151,6 +183,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -171,14 +217,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -215,6 +260,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -235,14 +294,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -279,6 +337,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -299,14 +371,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -343,6 +414,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -363,14 +448,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -407,6 +491,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -427,14 +525,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -471,6 +568,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -491,14 +602,13 @@
                 }
               ],
               "niceName": "Rota ligne 1 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -535,6 +645,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -555,14 +679,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -599,6 +722,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -619,14 +756,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -668,6 +804,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -688,14 +838,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -737,6 +886,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -757,14 +920,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -806,6 +968,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -826,14 +1002,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -875,6 +1050,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -895,14 +1084,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -944,6 +1132,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -964,14 +1166,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1013,6 +1214,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1033,14 +1248,13 @@
                 }
               ],
               "niceName": "Rota ligne 2 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1057,16 +1271,6 @@
                       ],
                       "niceName": "Encoder Move",
                       "type": "Encoder Move"
-                    },
-                    {
-                      "parameters": [
-                        {
-                          "value": "/fxMoveSize",
-                          "controlAddress": "/multiplicator"
-                        }
-                      ],
-                      "niceName": "Set Mult Value",
-                      "type": "Set Mult Value"
                     }
                   ],
                   "viewOffset": [
@@ -1092,6 +1296,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1112,14 +1330,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1156,6 +1373,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1176,14 +1407,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1225,6 +1455,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1245,14 +1489,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1294,6 +1537,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1314,14 +1571,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1363,6 +1619,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1383,14 +1653,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1432,6 +1701,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1452,14 +1735,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1501,6 +1783,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1521,14 +1817,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1570,6 +1865,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1590,14 +1899,13 @@
                 }
               ],
               "niceName": "Rota ligne 3 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1635,6 +1943,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1655,14 +1977,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         }
@@ -1690,6 +2011,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1710,14 +2045,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1750,6 +2084,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1770,14 +2118,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1810,6 +2157,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1830,14 +2191,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1870,6 +2230,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1890,14 +2264,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1930,6 +2303,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -1950,14 +2337,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -1990,6 +2376,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2010,14 +2410,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2050,6 +2449,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2070,14 +2483,13 @@
                 }
               ],
               "niceName": "Bouton ligne 1 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2110,6 +2522,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2130,14 +2556,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2170,6 +2595,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2190,14 +2629,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2235,6 +2673,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2255,14 +2707,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2300,6 +2751,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2320,14 +2785,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2365,6 +2829,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2385,14 +2863,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2430,6 +2907,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2450,14 +2941,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2495,6 +2985,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2515,14 +3019,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2560,6 +3063,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2580,14 +3097,13 @@
                 }
               ],
               "niceName": "Bouton ligne 2 col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2629,6 +3145,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2649,14 +3179,13 @@
                 }
               ],
               "niceName": "Fader col 1",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         }
@@ -2688,6 +3217,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2708,14 +3251,13 @@
                 }
               ],
               "niceName": "Fader col 2",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2752,6 +3294,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2772,14 +3328,13 @@
                 }
               ],
               "niceName": "Fader col 3",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2816,6 +3371,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2836,14 +3405,13 @@
                 }
               ],
               "niceName": "Fader col 4",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2880,6 +3448,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2900,14 +3482,13 @@
                 }
               ],
               "niceName": "Fader col 5",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -2944,6 +3525,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -2964,14 +3559,13 @@
                 }
               ],
               "niceName": "Fader col 6",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -3008,6 +3602,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3028,14 +3636,13 @@
                 }
               ],
               "niceName": "Fader col 7",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -3072,6 +3679,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3092,14 +3713,13 @@
                 }
               ],
               "niceName": "Fader col 8",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
                   "items": [
                     {
                       "parameters": [
                         {
-                          "value": 1,
+                          "value": 0,
                           "hexMode": false,
                           "controlAddress": "/page"
                         },
@@ -3136,6 +3756,20 @@
                 {
                   "value": [
                     0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
+                },
+                {
+                  "value": [
+                    0.0,
                     10.0
                   ],
                   "controlAddress": "/upRange"
@@ -3156,15 +3790,8 @@
                 }
               ],
               "niceName": "Fader col 9",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
-                  "items": [
-                    {
-                      "niceName": "Grand Master",
-                      "type": "Grand Master"
-                    }
-                  ],
                   "viewOffset": [
                     0,
                     0
@@ -3180,6 +3807,20 @@
                   "value": 25,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3204,22 +3845,8 @@
                 }
               ],
               "niceName": "Bank L",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/cuelistID"
-                        }
-                      ],
-                      "niceName": "Go back",
-                      "type": "Go back"
-                    }
-                  ],
                   "viewOffset": [
                     0,
                     0
@@ -3235,6 +3862,20 @@
                   "value": 26,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3259,22 +3900,8 @@
                 }
               ],
               "niceName": "Bank R",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/cuelistID"
-                        }
-                      ],
-                      "niceName": "Go",
-                      "type": "Go"
-                    }
-                  ],
                   "viewOffset": [
                     0,
                     0
@@ -3290,6 +3917,20 @@
                   "value": 27,
                   "hexMode": false,
                   "controlAddress": "/pitchOrNumber"
+                },
+                {
+                  "value": [
+                    0.0,
+                    127.0
+                  ],
+                  "controlAddress": "/inputRange"
+                },
+                {
+                  "value": [
+                    0.0,
+                    16383.0
+                  ],
+                  "controlAddress": "/inputRange14b"
                 },
                 {
                   "value": [
@@ -3314,43 +3955,8 @@
                 }
               ],
               "niceName": "Solo",
-              "editorIsCollapsed": true,
               "containers": {
                 "actions": {
-                  "items": [
-                    {
-                      "parameters": [
-                        {
-                          "value": 21,
-                          "hexMode": false,
-                          "controlAddress": "/firstID"
-                        },
-                        {
-                          "value": 30,
-                          "hexMode": false,
-                          "controlAddress": "/lastID"
-                        }
-                      ],
-                      "niceName": "FX",
-                      "type": "FX"
-                    },
-                    {
-                      "parameters": [
-                        {
-                          "value": 1,
-                          "hexMode": false,
-                          "controlAddress": "/firstID"
-                        },
-                        {
-                          "value": 20,
-                          "hexMode": false,
-                          "controlAddress": "/lastID"
-                        }
-                      ],
-                      "niceName": "Carousel",
-                      "type": "Carousel"
-                    }
-                  ],
                   "viewOffset": [
                     0,
                     0
@@ -3388,10 +3994,16 @@
   "programmer": null,
   "curvePreset": null,
   "timingPreset": null,
+  "bKPathPreset": null,
   "carousel": null,
   "mapper": null,
+  "tracker": null,
+  "selectionMaster": null,
   "multiplicators": null,
   "effect": null,
+  "2dPlans": null,
   "virtualButton": null,
-  "virtualFaderCol": null
+  "virtualFaderCol": null,
+  "bundle": null,
+  "dashboards": null
 }
