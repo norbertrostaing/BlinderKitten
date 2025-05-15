@@ -60,7 +60,7 @@ Carousel::Carousel(var params) :
 	fadeOutTime = addFloatParameter("Fade out", "Fade out time in seconds", 0, 0);
 
 	beatPerCycle = addIntParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
-	tapTempoBtn = addTrigger("Tap tempo", "");
+	tapTempoBtn = addTrigger("Tap tempo", "Hit me at least twice to se tempo");
 
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0,0);
 

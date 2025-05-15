@@ -80,7 +80,7 @@ Cuelist::Cuelist(var params) :
 	chaserOutFade = chaserOptions.addFloatParameter("Out fade", "Fade for out values, not in seconds, but in number of steps !", 0, 0);
 	chaserRunXTimes = chaserOptions.addFloatParameter("Run X times", "number of cycles of the chaser, 0 mean infinite",0,0);
 	chaserStepPerTap = chaserOptions.addFloatParameter("Step per hits", "Number of steps per tap tempo hit",1,0.001);
-	chaserTapTempo = chaserOptions.addTrigger("Tap tempo", "");
+	chaserTapTempo = chaserOptions.addTrigger("Tap tempo", "Hit me at least twice to se tempo");
 
 	chaserFadeInCurve.allowKeysOutside = false;
 	chaserFadeInCurve.setNiceName("In curve");
