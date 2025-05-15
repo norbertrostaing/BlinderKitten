@@ -109,7 +109,7 @@ var SelectionMasterAction::getValue()
         break;
 
     case SELM_SIZE:
-        val = target->sizeValue->floatValue();
+        val = jmap(target->sizeValue->floatValue(), sizeRange->x, sizeRange->y, 0.f, 1.f);
         break;
 
     }
