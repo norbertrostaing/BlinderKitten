@@ -716,8 +716,7 @@ void LayoutViewer::paint(Graphics& g)
 				if (p->customText->stringValue() != "") {
 					name = p->customText->stringValue().trim();
 				}
-				g.drawText(name, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, juce::Justification::centred);
-
+				drawName(g, name, fromX - halfTileWidth, fromY - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
 			}
 			if (p == hoveredPath) {
 				g.setColour(handleColour);
