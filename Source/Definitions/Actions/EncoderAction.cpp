@@ -41,7 +41,7 @@ EncoderAction::EncoderAction(var params) :
         filterFamily = addTargetParameter("Family", "Wich filter do you want to toggle ?", ChannelFamilyManager::getInstance());
         filterFamily->targetType = TargetParameter::CONTAINER;
         filterFamily->maxDefaultSearchLevel = 0;
-        filterFamily->typesFilter.add("ChannelType");
+        filterFamily->typesFilter.add("ChannelFamily");
         soloMode = addBoolParameter("Solo", "Disable other filters whene selected", false);
     }
 }
