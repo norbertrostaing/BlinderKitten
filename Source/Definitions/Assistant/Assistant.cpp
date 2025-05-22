@@ -315,7 +315,7 @@ void Assistant::patchFixtures()
             f->userName->setValue(name);
         }
         f->devTypeParam->setValueFromTarget(fixtureType);
-        if (targetInterface != nullptr) {
+        if (targetInterface != nullptr && firstAddress > 0) {
             FixturePatch* p = f->patchs.addItem();
             p->targetInterface->setValueFromTarget(targetInterface);
             p->address->setValue(currentAdress);
