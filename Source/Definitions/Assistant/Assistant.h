@@ -76,6 +76,7 @@ public:
 	BoolParameter* asciiCues;
 	BoolParameter* asciiSubs;
 	BoolParameter* asciiRespectCueNumbers;
+	BoolParameter* asciiUpdateValues;
 	IntParameter* asciiCuelistId;
 	TargetParameter* asciiChannelFixtureType;
 	TargetParameter* asciiDimmerChannel;

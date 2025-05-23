@@ -121,6 +121,7 @@ Assistant::Assistant() :
     asciiCues = asciiCC.addBoolParameter("Cues", "Do you want to import or export cues ?", true);
     asciiSubs = asciiCC.addBoolParameter("Subs", "Do you want to import or export subs ?", true);
     asciiRespectCueNumbers = asciiCC.addBoolParameter("Respect cue number", "If checked, the cues will be ordered by cue ID, if not, they will be ordered by step number", true);
+    asciiEraseCuelist = asciiCC.addBoolParameter("Erase main cuelist", "If not checked, the current cuelist will be updated with ascii values", false);
     asciiChannelFixtureType = asciiCC.addTargetParameter("Channel Fixture type", "Fixture used for ascii import/export", FixtureTypeManager::getInstance());
     asciiChannelFixtureType->targetType = TargetParameter::CONTAINER;
     asciiChannelFixtureType->maxDefaultSearchLevel = 0;
@@ -753,11 +754,21 @@ void Assistant::importAscii()
         cuelist = Brain::getInstance()->getCuelistById(mainCuelistId);
         if (cuelist == nullptr) {
             cuelist = CuelistManager::getInstance()->addItem();
+            cuelist->userName->setValue("ASCII Cuelist");
         }
         cuelist->kill();
-        cuelist->cues.clear();
-        cuelist->userName->setValue("ASCII Cuelist");
+        if (asciiEraseCuelist->boolValue()) {
+            cuelist->cues.clear();
+        }
     }
+
+    HashMap<int, Cue*> idToCue;
+    if (!asciiEraseCuelist->boolValue()) {
+        for (Cue* c : cuelist->cues.items) {
+            idToCue.set(c->id->floatValue()*100000, c);
+        }
+    }
+
     Cue* currentCue = nullptr;
     Cue* previousCue = nullptr;
     Group* currentGroup = nullptr;
@@ -855,21 +866,31 @@ void Assistant::importAscii()
                         LOGERROR("invalid file, CUE word must have an id in parameter");
                     }
                     previousCue = currentCue;
-                    currentCue = new Cue();
-                    cuesToAdd.add(currentCue);
-                    currentCue->editorIsCollapsed = true;
-                    String cueName = "Cue " + words[1];
-                    currentCue->setNiceName(cueName);
-                    currentCue->commands.clear();
-                    if (asciiRespectCueNumbers->boolValue()) {
-                        currentCue->id->setValue(words[1].getFloatValue());
+                    int cueId = words[1].getFloatValue() * 100000;
+
+                    if (!asciiEraseCuelist->boolValue() && idToCue.contains(cueId)) {
+                        currentCue = idToCue.getReference(cueId);
+                        currentCue->commands.clear();
+                    } else {
+                        currentCue = new Cue();
+                        cuesToAdd.add(currentCue);
+                        currentCue->editorIsCollapsed = true;
+                        String cueName = "Cue " + words[1];
+                        currentCue->setNiceName(cueName);
+                        currentCue->commands.clear();
+                        if (asciiRespectCueNumbers->boolValue()) {
+                            currentCue->id->setValue(words[1].getFloatValue());
+                        }
+                        idToCue.set(currentCue->id->floatValue() * 100000, currentCue);
                     }
                 }
                 else if (currentSecondary == "TEXT") {
-                    String text = currentCue->cueText->stringValue() + originalLine.trim().substring(5);
-                    currentCue->cueText->setValue(text);
-                    currentCue->goText->setValue(text);
-                    currentCue->setNiceName(text);
+                    if (cuesToAdd.contains(currentCue)) {
+                        String text = currentCue->cueText->stringValue() + originalLine.trim().substring(5);
+                        currentCue->cueText->setValue(text);
+                        currentCue->goText->setValue(text);
+                        currentCue->setNiceName(text);
+                    }
                 }
                 else if (currentSecondary == "FOLLOWON") {
                     if (words.size() == 1) {
