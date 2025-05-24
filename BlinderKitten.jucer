@@ -181,6 +181,10 @@
         </GROUP>
         <GROUP id="{0043DA5B-3310-403C-3BE0-130CE23DD1DA}" name="DMX">
           <GROUP id="{91C545DA-A48D-57A6-B384-1C4519922732}" name="device">
+            <GROUP id="{72F48E22-6516-3633-CE95-172924652A53}" name="sacn">
+              <FILE id="qver9Z" name="e131.c" compile="0" resource="0" file="Source/Common/DMX/device/sacn/e131.c"/>
+              <FILE id="yXkEO9" name="e131.h" compile="0" resource="0" file="Source/Common/DMX/device/sacn/e131.h"/>
+            </GROUP>
             <FILE id="jJgUKn" name="DMXArtNetDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXArtNetDevice.cpp"/>
             <FILE id="te1zwv" name="DMXArtNetDevice.h" compile="0" resource="0"
@@ -199,6 +203,9 @@
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.cpp"/>
             <FILE id="WuC6ul" name="DMXOpenUSBDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.h"/>
+            <FILE id="NzSayL" name="DMXSACNDevice.cpp" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXSACNDevice.cpp"/>
+            <FILE id="vRdL5M" name="DMXSACNDevice.h" compile="0" resource="0" file="Source/Common/DMX/device/DMXSACNDevice.h"/>
             <FILE id="Z4LqhJ" name="DMXSerialDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXSerialDevice.cpp"/>
             <FILE id="YA224Q" name="DMXSerialDevice.h" compile="0" resource="0"

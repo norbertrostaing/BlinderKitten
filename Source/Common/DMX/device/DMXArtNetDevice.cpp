@@ -221,7 +221,6 @@ void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 	
 
 	DMXDevice::sendDMXRange(startChannel, values);
-
 }
 
 void DMXArtNetDevice::sendDMXValuesInternal()

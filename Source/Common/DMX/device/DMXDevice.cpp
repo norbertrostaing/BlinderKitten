@@ -132,6 +132,10 @@ DMXDevice* DMXDevice::create(Type type)
 		return new DMXEuroliteDevice();
 		break;
 
+	case SACN:
+		return new DMXSACNDevice();
+		break;
+
 	default:
 		DBG("Not handled");
 		break;

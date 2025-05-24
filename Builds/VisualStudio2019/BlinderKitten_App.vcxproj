@@ -199,6 +199,9 @@
     <ClCompile Include="..\..\Source\Common\ComponentSelector\ComponentSelector.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -212,6 +215,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\DMXSACNDevice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXSerialDevice.cpp">
@@ -3508,11 +3514,13 @@
     <ClInclude Include="..\..\Source\Common\CommonClasses\SceneListener.h"/>
     <ClInclude Include="..\..\Source\Common\ComponentSelector\ui\ComponentSelectorUI.h"/>
     <ClInclude Include="..\..\Source\Common\ComponentSelector\ComponentSelector.h"/>
+    <ClInclude Include="..\..\Source\Common\DMX\device\sacn\e131.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXEuroliteDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.h"/>
+    <ClInclude Include="..\..\Source\Common\DMX\device\DMXSACNDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXSerialDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\DMXManager.h"/>
     <ClInclude Include="..\..\Source\Common\Helpers\SceneHelpers.h"/>

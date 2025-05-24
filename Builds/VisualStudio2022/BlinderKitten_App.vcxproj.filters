@@ -38,6 +38,9 @@
     <Filter Include="BlinderKitten\Source\Common\ComponentSelector">
       <UniqueIdentifier>{CEAC4443-F62F-A515-EAA5-7056CDDA1A20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Common\DMX\device\sacn">
+      <UniqueIdentifier>{FF49C177-E9CF-29D5-A4C4-68814186A1FE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Common\DMX\device">
       <UniqueIdentifier>{7795E17B-C7D4-D7CB-5DA8-EDBEF981BB02}</UniqueIdentifier>
     </Filter>
@@ -1258,6 +1261,9 @@
     <ClCompile Include="..\..\Source\Common\ComponentSelector\ComponentSelector.cpp">
       <Filter>BlinderKitten\Source\Common\ComponentSelector</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c">
+      <Filter>BlinderKitten\Source\Common\DMX\device\sacn</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClCompile>
@@ -1271,6 +1277,9 @@
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.cpp">
+      <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\DMXSACNDevice.cpp">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXSerialDevice.cpp">
@@ -5130,6 +5139,9 @@
     <ClInclude Include="..\..\Source\Common\ComponentSelector\ComponentSelector.h">
       <Filter>BlinderKitten\Source\Common\ComponentSelector</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\device\sacn\e131.h">
+      <Filter>BlinderKitten\Source\Common\DMX\device\sacn</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClInclude>
@@ -5143,6 +5155,9 @@
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.h">
+      <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\device\DMXSACNDevice.h">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXSerialDevice.h">
