@@ -49,6 +49,9 @@ Fixture::Fixture(var params) :
 	devTypeParam -> targetType = TargetParameter::CONTAINER;
 	devTypeParam -> maxDefaultSearchLevel = 0;
 	
+	infos = addStringParameter("Infos", "Note informations about your fixture here.", "");
+	infos->multiline = true;
+
 	useCustomLayoutStrokeColor = addBoolParameter("Custom stroke Color", "", false);
 	layoutStrokeColor = addColorParameter("Stroke Color", "", Colours::orange);
 	useCustomLayoutFillColor = addBoolParameter("Custom fill Color", "", false);

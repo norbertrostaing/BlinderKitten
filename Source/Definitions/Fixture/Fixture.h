@@ -52,6 +52,8 @@ public:
     FixtureMappingManager mappings;
     String getTypeString() const override { return objectType; }
 
+    StringParameter* infos;
+
     IntParameter* useAnotherId;
     void applyPatchs();
     void checkChildrenSubFixtures();
