@@ -57,6 +57,7 @@ public:
     Trigger* createBeforeBtn;
     Trigger* cleanUnusedCommandsBtn;
     Trigger* regroupCommandsBtn;
+    Trigger* takeSelectionBtn;
 
     MoveInBlackManager moveInBlack;
     FloatParameter* moveInBlackDelay;
@@ -84,6 +85,7 @@ public:
 
     void cleanUnused();
     void regroupCommands();
+    void takeSelection(Programmer* p);
 
     void loadContent(Programmer *p);
     void replaceContent(Programmer* p);

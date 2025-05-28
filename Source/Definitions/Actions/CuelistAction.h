@@ -26,7 +26,8 @@ public:
                         CL_CHASERSPEED, CL_CHASERTAPTEMPO, 
                         CL_CROSSFADE, CL_UPFADE, CL_DOWNFADE,
                         CL_OFF_INSTANT, 
-                        CL_LOADCONTENT, CL_INSERTBEFORE, CL_INSERTAFTER
+                        CL_LOADCONTENT, CL_INSERTBEFORE, CL_INSERTAFTER,
+                        CL_TAKESELECTION
     };
     ActionType actionType;
     BoolParameter* useMainConductor;

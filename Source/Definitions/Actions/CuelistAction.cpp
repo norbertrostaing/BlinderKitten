@@ -295,7 +295,15 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         if (val == 1) {
             MessageManager::callAsync([target]() {
                 target->insertProgCueAfter();
-            });
+                });
+        }
+        break;
+
+    case CL_TAKESELECTION:
+        if (val == 1) {
+            MessageManager::callAsync([target]() {
+                target->takeSelection(nullptr);
+                });
         }
         break;
 

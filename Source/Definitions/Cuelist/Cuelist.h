@@ -264,6 +264,8 @@ public:
 
     void exportInTextFile();
 
+    void takeSelection(Programmer* p);
+
     static Cuelist* create(var params) { return new Cuelist(params); }
 
 };

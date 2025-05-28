@@ -1880,6 +1880,15 @@ void Cuelist::exportInTextFile()
 
 }
 
+void Cuelist::takeSelection(Programmer* p)
+{
+	Cue* target = cueA;
+	if (target == nullptr && cues.items.size() > 0) target = cues.items[0];
+	if (target != nullptr) {
+		target->takeSelection(nullptr);
+	}
+}
+
 void Cuelist::tapTempo() {
 	double now = Time::getMillisecondCounterHiRes();
 	double delta = now - lastTapTempo;

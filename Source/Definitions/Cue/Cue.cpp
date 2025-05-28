@@ -61,6 +61,7 @@ Cue::Cue(var params) :
 	goBtn = actionsContainer.addTrigger("GO", "trigger this cue");
 	cleanUnusedCommandsBtn = actionsContainer.addTrigger("Clean", "Clean the duplicates commands in this cue.");
 	regroupCommandsBtn = actionsContainer.addTrigger("Regroup", "Regroup similar commands on fixtures to corresponding group.");
+	takeSelectionBtn = actionsContainer.addTrigger("Take Selection", "Get this cue's selections in the programmer.");
 	loadBtn = actionsContainer.addTrigger("Load content", "load the content of this cue in programmer");
 	replaceBtn = actionsContainer.addTrigger("Replace", "The content of this cue is deleted and replaced with actual content of programmer");
 	mergeBtn = actionsContainer.addTrigger("Merge", "The content of the programmer is added to this cue");
@@ -152,6 +153,9 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 	}
 	else if (c == regroupCommandsBtn) {
 		regroupCommands();
+	}
+	else if (c == takeSelectionBtn) {
+		takeSelection(nullptr);
 	}
 	else if (c == loadBtn) {
 		Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
@@ -459,6 +463,28 @@ void Cue::regroupCommands()
 		commands.addItemFromData(v);
 	}
 
+}
+
+void Cue::takeSelection(Programmer* p)
+{
+	if (p == nullptr) p = UserInputManager::getInstance()->getProgrammer(true);
+	MessageManager::callAsync([this, p]() {
+		Command* cmd = p->currentUserCommand;
+		if (cmd == nullptr || !cmd -> userCanPressSelectionType) {
+			cmd = p->commands.addItem();
+			cmd->selection.clear();
+		}
+		for (Command* c : commands.items) {
+			for (CommandSelection* cs : c->selection.items) {
+				CommandSelection* newCs  = cmd->selection.addItem();
+				newCs->loadJSONData(cs->getJSONData());
+			}
+		}
+		p->checkCurrentUserCommand();
+		p->selectCommand(cmd);
+		UserInputManager::getInstance()->programmerCommandStructureChanged(p);
+		UserInputManager::getInstance()->commandSelectionChanged(cmd);
+		});
 }
 
 void Cue::loadContent(Programmer* p)
