@@ -1154,6 +1154,32 @@ void LayoutViewer::paint(Graphics& g)
 			Justification::centredLeft);
 	}
 
+	if (selectedLayout->controlTracker->boolValue() && selectedLayout->trackerId->intValue() > 0) {
+		Tracker* t = Brain::getInstance()->getTrackerById(selectedLayout->trackerId->intValue());
+		if (t != nullptr) {
+			float tx = 0;//jmap(float(e.position.getX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
+			float ty = 0;//jmap(float(e.position.getY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
+			String plane = selectedLayout->trackerPlane->getValue();
+			if (plane == "XY") {
+				tx = t->targetPosition->x;
+				ty = t->targetPosition->y;
+			}
+			else if (plane == "XZ") {
+				tx = t->targetPosition->x;
+				ty = t->targetPosition->z;
+			}
+			else if (plane == "YZ") {
+				tx = t->targetPosition->y;
+				ty = t->targetPosition->z;
+			}
+			tx = jmap(tx, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1], 0.f, width);
+			ty = jmap(ty, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0], 0.f, height);
+			g.setColour(juce::Colours::lightgrey);
+			g.drawLine(tx - 10, ty - 10, tx + 10, ty + 10);
+			g.drawLine(tx - 10, ty + 10, tx + 10, ty - 10);
+		}
+	}
+
 }
 
 void LayoutViewer::stopAndCheckTimer()
