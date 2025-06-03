@@ -1157,8 +1157,8 @@ void LayoutViewer::paint(Graphics& g)
 	if (selectedLayout->controlTracker->boolValue() && selectedLayout->trackerId->intValue() > 0) {
 		Tracker* t = Brain::getInstance()->getTrackerById(selectedLayout->trackerId->intValue());
 		if (t != nullptr) {
-			float tx = 0;//jmap(float(e.position.getX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
-			float ty = 0;//jmap(float(e.position.getY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
+			float tx = 0;
+			float ty = 0;
 			String plane = selectedLayout->trackerPlane->getValue();
 			if (plane == "XY") {
 				tx = t->targetPosition->x;
