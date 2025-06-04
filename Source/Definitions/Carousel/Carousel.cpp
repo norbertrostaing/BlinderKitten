@@ -100,7 +100,7 @@ Carousel::~Carousel()
 			rows.items[i]->paramContainer.items[j]->parentCarousel = nullptr;
 		}
 	}
-	isComputing.enter();
+	isComputing.exit();
 }
 
 void Carousel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
