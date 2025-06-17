@@ -85,7 +85,7 @@ void CuelistGridView::showContextMenu(int id)
     Cuelist* target = Brain::getInstance()->getCuelistById(id);
     PopupMenu p;
     if (target != nullptr) {
-        p.addItem("Go", [target]() {target->go(); });
+        p.addItem("Go", [target]() {target->userGo(); });
         p.addItem("Load", [target]() {target->showLoad(); });
         p.addItem("Load and go", [target]() {target->showLoadAndGo(); });
         if (target->cueA != nullptr) {
