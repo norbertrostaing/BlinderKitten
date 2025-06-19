@@ -599,13 +599,21 @@ void Cue::runOffTasks(float forcedDelay, float forcedFade)
 
 String Cue::getCommandsText(bool useName)
 {
+	Array<Cue*> histo;
+	return getCommandsText(useName, histo);
+}
+
+String Cue::getCommandsText(bool useName, Array<Cue*> history)
+{
 	String ret = "";
+	if (history.contains(this)) { return ret; }
+	history.add(this);
 	Cue* original = dynamic_cast<Cue*>(reuseCue->targetContainer.get());
 	if (original != nullptr) {
-		ret += original->getCommandsText(useName);
+		ret += original->getCommandsText(useName, history);
 	}
 	for (int i = 0; i < commands.items.size(); i++) {
-		if (ret != "") {ret += "\n"; }
+		if (ret != "") { ret += "\n"; }
 		ret += commands.items[i]->getCommandAsTexts(useName).joinIntoString(" ");
 	}
 	return ret;

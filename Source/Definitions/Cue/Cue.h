@@ -103,6 +103,7 @@ public:
     void runOffTasks(float forcedDelay =-1, float forcedFade = -1);
 
     String getCommandsText(bool useName);
+    String getCommandsText(bool useName, Array<Cue*> history);
 
     String getTypeString() const override { return objectType; }
     static Cue* create(var params) { return new Cue(params); }
