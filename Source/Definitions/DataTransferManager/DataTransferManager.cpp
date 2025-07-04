@@ -95,6 +95,7 @@ DataTransferManager::DataTransferManager() :
     presetCopyMode->addOption("Record", "record");
     presetCopyMode->addOption("Merge", "merge");
     presetCopyMode->addOption("Replace", "replace");
+    presetCopyMode->addOption("Remove", "remove");
 
     cuelistCopyMode = addEnumParameter("Cuelist merge mode", "Cuelist record mode");
     cuelistCopyMode->addOption("Update current cue", "merge");
@@ -185,6 +186,7 @@ void DataTransferManager::execute() {
             }
 
             bool updateOnly = presetCopyMode->getValue() == "merge";
+            bool remove = presetCopyMode->getValue() == "remove";
 
             Array<ChannelFamily*> filters;
             if (UserInputManager::getInstance()->currentProgrammer == source) {
@@ -222,11 +224,18 @@ void DataTransferManager::execute() {
                                 pv = pfv->values.items[i];
                             }
                         }
-                        if (pv == nullptr) {
-                            pv = pfv->values.addItem();
-                            pv->param->setValueFromTarget(chan->channelType);
+                        if (remove) {
+                            if (pv != nullptr) {
+                                pfv->values.removeItem(pv);
+                            }
                         }
-                        pv->paramValue->setValue(cValue->endValue());
+                        else {
+                            if (pv == nullptr) {
+                                pv = pfv->values.addItem();
+                                pv->param->setValueFromTarget(chan->channelType);
+                            }
+                            pv->paramValue->setValue(cValue->endValue());
+                        }
                     }
                 }
             }

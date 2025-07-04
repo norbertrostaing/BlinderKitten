@@ -38,6 +38,7 @@ public:
     EnumParameter* presetType;
     Trigger* testMeButton;
     Trigger* reOrderButton;
+    Trigger* removeProgContentBtn;
 
     HashMap<SubFixture*, std::shared_ptr <HashMap<ChannelType*, float>>> computedSubFixtureValues;
     HashMap<FixtureType*, std::shared_ptr <HashMap<ChannelType*, float>>> computedFixtureTypeValues;
@@ -59,6 +60,8 @@ public:
     void updateDisplay();
 
     void reorderPresetContent();
+
+    void removeProgContent();
 
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void checkIfProgrammerNeedUpdate();
