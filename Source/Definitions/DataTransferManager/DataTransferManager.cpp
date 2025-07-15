@@ -286,10 +286,10 @@ void DataTransferManager::execute() {
             }
             source->computing.exit();
             target->selectThis();
-            //if (target->cueA == targetCue) {
 
-            target->go(targetCue,0,0);
-            //}
+            if (source->editionMode->getValueData() != "blind") {
+                target->go(targetCue, 0, 0);
+            }
 
             dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectCue(targetCue, BKEngine::SET);
 
