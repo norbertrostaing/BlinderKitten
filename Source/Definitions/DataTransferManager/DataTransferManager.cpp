@@ -90,17 +90,20 @@ DataTransferManager::DataTransferManager() :
     groupCopyMode = addEnumParameter("Group merge mode", "Group record mode");
     groupCopyMode->addOption("Merge", "merge");
     groupCopyMode->addOption("Replace", "replace");
+    groupCopyMode->addOption("Set another", "setanother");
 
     presetCopyMode = addEnumParameter("Preset merge mode", "Preset record mode");
     presetCopyMode->addOption("Record", "record");
     presetCopyMode->addOption("Merge", "merge");
     presetCopyMode->addOption("Replace", "replace");
     presetCopyMode->addOption("Remove", "remove");
+    presetCopyMode->addOption("Set another", "setanother");
 
     cuelistCopyMode = addEnumParameter("Cuelist merge mode", "Cuelist record mode");
     cuelistCopyMode->addOption("Update current cue", "merge");
     cuelistCopyMode->addOption("Replace current cue", "replace");
     cuelistCopyMode->addOption("Add new cue", "add");
+    cuelistCopyMode->addOption("Set another", "setanother");
 
     go = addTrigger("Transfer Data", "Run the data transfer");
     updateDisplay();

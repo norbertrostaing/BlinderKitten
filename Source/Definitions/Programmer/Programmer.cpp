@@ -76,6 +76,7 @@ Programmer::Programmer(var params) :
 	cliActionType->addOption("Edit", "edit");
 	cliActionType->addOption("Load content", "loadcontent");
 	cliActionType->addOption("Delete", "delete");
+	cliActionType->addOption("Set Another", "setanother");
 
 	cliParamAType = cliContainer.addEnumParameter("Param A type", "What kind of object do you want to target");
 	cliParamAType->addOption("None", "");
@@ -93,6 +94,7 @@ Programmer::Programmer(var params) :
 
 	cliParamBType = cliContainer.addEnumParameter("Param B type", "second object type");
 	cliParamBType->addOption("None", "");
+	cliParamBType->addOption("Fixture", "fixture");
 	cliParamBType->addOption("Group", "group");
 	cliParamBType->addOption("Preset", "preset");
 	cliParamBType->addOption("Cuelist", "cuelist");
@@ -586,6 +588,7 @@ void Programmer::processUserInput(String s) {
 		else if (s == "copy") {
 			if (userCanPressAction) {
 				if (action == "copy") { cliActionType->setValueWithData("move"); }
+				else if (action == "move") { cliActionType->setValueWithData("setanother"); }
 				else { cliActionType->setValueWithData("copy"); }
 			}
 			else {
@@ -614,7 +617,7 @@ void Programmer::processUserInput(String s) {
 		return;
 	}
 
-	if (s == "record" || s == "merge" || s == "replace" || s == "copy" || s == "move" || s == "edit" || s == "loadcontent" || s == "delete") {
+	if (s == "record" || s == "merge" || s == "replace" || s == "copy" || s == "move" || s == "setanother" || s == "edit" || s == "loadcontent" || s == "delete") {
 		cliActionType->setValueWithData(s);
 		UserInputManager::getInstance()->updateCommandLine();
 	}
@@ -746,6 +749,20 @@ void Programmer::runCliCommand() {
 		DataTransferManager::getInstance()->cuelistCopyMode->setValueWithData(action == "record" ? "add" : "replace");
 		DataTransferManager::getInstance()->execute();
 	}
+	else if (action == "setanother") {
+		if (targetType == "fixture") {
+			Fixture* f = Brain::getInstance()->getFixtureById(targetId);
+			if (f != nullptr) { f->useAnotherId->setValue((int)cliParamBId->getValue()); }
+		}
+		if (targetType == "group") {
+			Group* g = Brain::getInstance()->getGroupById(targetId);
+			if (g != nullptr) { g->useAnotherId->setValue((int)cliParamBId->getValue()); }
+		}
+		if (targetType == "preset") {
+			Preset* p = Brain::getInstance()->getPresetById(targetId);
+			if (p != nullptr) { p->useAnotherId->setValue((int)cliParamBId->getValue()); }
+		}
+	}
 	else if (action == "loadcontent") {
 		Cuelist* c = Brain::getInstance()->getCuelistById(targetId);
 		if (c != nullptr) {
@@ -789,7 +806,7 @@ StringArray Programmer::getCliAsTexts() {
 				words.add(cliParamAId->getValue());
 				cliLastTarget = "paramAId";
 				// value entered
-				if (action == "copy" || action == "move") {
+				if (action == "copy" || action == "move" || action == "setanother") {
 					userCanPressTargetType = true;
 					currentUserTargetType = cliParamBType;
 

@@ -271,14 +271,13 @@ void InputPanel::updateButtonsText()
     if (p != nullptr) {
         String action = p->cliActionType->getValueData().toString();
         if (action == "move") copyText = "Move";
+        if (action == "setanother") copyText = "Set another";
         if (action == "loadcontent") editText = "Load content";
         if (action == "merge") recordText = "Merge";
         if (action == "replace") recordText = "Replace";
-
     }
 
     paramRecord->setNiceName(recordText);
     paramEdit->setNiceName(editText);
     paramCopy->setNiceName(copyText);
-    
 }
