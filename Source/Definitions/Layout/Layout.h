@@ -72,6 +72,7 @@ public:
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOriginAndAngle(Point<float>* vect, float angle, bool normalize, bool clockwise);
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOrigin(Point<float>* vect);
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioPerlin(float scale, int seed);
+    std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromWake(Point<float>* vect, float angle, float wakeAngle, bool normalize);
 
     String getTypeString() const override { return objectType; }
     static Layout* create(var params) { return new Layout(params); }

@@ -43,6 +43,7 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Buddy Block Wing", "bbw");
     filter->addOption("Output Condition", "outcondition");
     filter->addOption("Layout Direction", "layoutdir");
+    filter->addOption("Layout Wake", "layoutwake");
     filter->addOption("Layout Circle", "layoutcircle");
     filter->addOption("Layout Droplet wave", "layoutpoint");
     filter->addOption("Layout Perlin", "layoutperlin");
@@ -81,6 +82,9 @@ CommandSelection::CommandSelection(var params) :
     layoutPerlinSeed = addIntParameter("Perlin Seed", "If 0, a new seed will be generated each time", 0, 0);
     layoutPerlinScale = addFloatParameter("Perlin scale", "", 1, 0);
 
+    layoutWakeAnchor = addPoint2DParameter("Wake anchor", "");
+    layoutWakeAngle = addFloatParameter("Wake angle","",45,1,179);
+
     updateDisplay();
 };
 
@@ -96,11 +100,12 @@ void CommandSelection::updateDisplay()
     bool cond = filter->getValue() == "outcondition";
     bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
     bool randNum = filter->getValue() == "random";
-    bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" || filter->getValue() == "layoutperlin";
+    bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" || filter->getValue() == "layoutperlin" || filter->getValue() == "layoutwake";
     bool layoutDir = filter->getValue() == "layoutdir";
     bool layoutCir = filter->getValue() == "layoutcircle";
     bool layoutPnt = filter->getValue() == "layoutpoint";
     bool layoutPerl = filter->getValue() == "layoutperlin";
+    bool layoutWake = filter->getValue() == "layoutwake";
     bool bbw = filter->getValue() == "bbw";
 
 
@@ -126,7 +131,7 @@ void CommandSelection::updateDisplay()
     randomWing->hideInEditor = !randNum && !bbw;
 
     layoutId->hideInEditor = !layout;
-    layoutDirection->hideInEditor = !layoutDir;
+    layoutDirection->hideInEditor = !layoutDir && !layoutWake;
 
     layoutCircleOrigin->hideInEditor = !layoutCir && !layoutPnt;
     layoutCircleStartAngle->hideInEditor = !layoutCir;
@@ -138,6 +143,9 @@ void CommandSelection::updateDisplay()
     conditionChannel->hideInEditor = !cond;
     conditionTest->hideInEditor = !cond;
     conditionValue->hideInEditor = !cond;
+
+    layoutWakeAnchor->hideInEditor = !layoutWake;
+    layoutWakeAngle->hideInEditor = !layoutWake;
     //layoutUseOnlySelection->hideInEditor = !layout || layoutPerl;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));

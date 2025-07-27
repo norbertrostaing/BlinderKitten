@@ -314,6 +314,58 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioPerlin(f
 	return ret;
 }
 
+std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromWake(Point<float>* vect, float angleDeg, float wakeAngleDeg, bool normalize)
+{
+	std::shared_ptr<HashMap<SubFixture*, float>> ret = std::make_shared<HashMap<SubFixture*, float>>();
+
+	// Convertir angle en radians
+	float angle = degreesToRadians(angleDeg);
+	float wakeAng = degreesToRadians(wakeAngleDeg);
+
+	// Vecteur unitaire de direction du scan
+	Point<float> dir(std::cos(angle), std::sin(angle));
+
+	// Vecteur orthogonal à l’axe de scan
+	Point<float> dirPerp(-dir.y, dir.x);
+
+	// Limites pour la normalisation
+	float minWeight = std::numeric_limits<float>::max();
+	float maxWeight = std::numeric_limits<float>::lowest();
+
+	computeData();
+	isComputing.enter();
+
+	for (auto it = subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
+		Point<float> S = *(it.getValue());           // Position subfixture
+		Point<float> V = S - *vect;                  // Vecteur de vect -> S
+
+		float dot = V.getDotProduct(dir);            // scalaire : distance sur axe
+		float dist = std::abs(V.getDotProduct(dirPerp));
+
+		float addDot = dist / tan(wakeAng);
+		float weight = dot + addDot; // ou : weight = dot + f(dist)
+
+		minWeight = jmin(minWeight, weight);
+		maxWeight = jmax(maxWeight, weight);
+
+		ret->set(it.getKey(), weight);
+
+		// Debug log :
+		LOG("S:" <<  S.x <<  S.y <<  "  dot:" <<  dot << "  dist:" << dist << "  add:" << addDot);
+	}
+	isComputing.exit();
+
+	// Normalisation
+	if (normalize && minWeight != maxWeight) {
+		for (auto it = ret->begin(); it != ret->end(); it.next()) {
+			float mapped = jmap(it.getValue(), minWeight, maxWeight, 0.0f, 1.0f);
+			ret->set(it.getKey(), mapped);
+		}
+	}
+
+	return ret;
+}
+
 void Layout::sizeChanged()
 {
 	for (BKPath* p : paths.items) {
