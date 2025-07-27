@@ -72,6 +72,7 @@ Layout::Layout(var params) :
 	trackerPlane = addEnumParameter("trackerPlane", "");
 	trackerPlane->addOption("XY", "XY")->addOption("XZ", "XZ")->addOption("YZ", "YZ");
 	trackerThirdValue = addFloatParameter("trackerThirdValue", "", 0);
+	trackerThirdValue->canBeDisabledByUser = true;
 
 	//var objectsData = params.getProperty("objects", var());
 	Brain::getInstance()->registerLayout(this, id->getValue());

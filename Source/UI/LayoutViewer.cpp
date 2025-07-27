@@ -475,15 +475,21 @@ void LayoutViewer::clickTracker(const MouseEvent& e)
 	float layoutX = jmap(float(e.position.getX()), topLeftX, bottomRightX, (float)selectedLayout->dimensionsX->getValue()[0], (float)selectedLayout->dimensionsX->getValue()[1]);
 	float layoutY = jmap(float(e.position.getY()), topLeftY, bottomRightY, (float)selectedLayout->dimensionsY->getValue()[1], (float)selectedLayout->dimensionsY->getValue()[0]);
 	float third = selectedLayout->trackerThirdValue->floatValue();
+	Vector3D<float> currentVal = t->targetPosition->getVector();
+	if (selectedLayout->trackerThirdValue->enabled) {
+		currentVal.x = third;
+		currentVal.y = third;
+		currentVal.z = third;
+	}
 	String plane = selectedLayout->trackerPlane->getValue();
 	if (plane == "XY") {
-		t->targetPosition->setVector(layoutX, layoutY, third);
+		t->targetPosition->setVector(layoutX, layoutY, currentVal.z);
 	}
 	else if (plane == "XZ") {
-		t->targetPosition->setVector(layoutX, third, layoutY);
+		t->targetPosition->setVector(layoutX, currentVal.y, layoutY);
 	}
 	else if (plane == "YZ") {
-		t->targetPosition->setVector(third, layoutX, layoutY);
+		t->targetPosition->setVector(currentVal.x, layoutX, layoutY);
 	}
 	
 }
