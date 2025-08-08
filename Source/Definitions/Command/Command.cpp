@@ -76,6 +76,12 @@ Command::~Command()
 	if (UserInputManager::getInstance()->targetCommand == this) {
 		UserInputManager::getInstance()->targetCommand = nullptr;
 	}
+	Programmer* p = UserInputManager::getInstance()->getProgrammer(false);
+	if (p != nullptr) {
+		if (p->currentUserCommand == this) {
+			p->currentUserCommand = nullptr;
+		}
+	}
 
 }
 
