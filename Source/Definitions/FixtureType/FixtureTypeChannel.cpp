@@ -85,7 +85,7 @@ FixtureTypeChannel::~FixtureTypeChannel()
         Array<SubFixtureChannel*> toDelete;
         for (auto it = sf->channelsMap.begin(); it != sf->channelsMap.end(); it.next()) {
             SubFixtureChannel* sfc = it.getValue();
-            if (sfc->parentFixtureTypeChannel == this) {
+            if (sfc != nullptr && sfc->parentFixtureTypeChannel == this) {
                 toDelete.add(sfc);
             }
         }
