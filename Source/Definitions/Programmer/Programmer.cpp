@@ -493,17 +493,17 @@ void Programmer::selectPrevCommand()
 void Programmer::selectCommand(Command* c)
 {
 	checkCurrentUserCommand();
-	if (commands.items.size() > 0) {
-		if (commands.items.indexOf(c) >= 0) {
-			currentUserCommand = c;
-			if (highlightCurrentCommand->boolValue()) {
-				go();
-			}
-			if (UserInputManager::getInstance()->currentProgrammer == this) {
-				Encoders::getInstance()->updateEncoders();
-				Encoders::getInstance()->updateCommandLine();
-			}
-		}
+    if (commands.items.indexOf(c) >= 0) {
+        currentUserCommand = c;
+        if (highlightCurrentCommand->boolValue()) {
+            go();
+        }
+        if (UserInputManager::getInstance()->currentProgrammer == this) {
+            auto e = Encoders::getInstance();
+            e->updateChannels();
+            e->updateEncoders();
+            e->updateCommandLine();
+        }
 	}
 }
 
