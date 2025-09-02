@@ -109,6 +109,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Stop", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_STOP));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Toggle", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Size", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Axis", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_AXIS));
 
     defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Start", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_START));
     defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Stop", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_STOP));

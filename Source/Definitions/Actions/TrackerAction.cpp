@@ -19,6 +19,13 @@ TrackerAction::TrackerAction(var params) :
 
     targetId = addIntParameter("Tracker ID", "Id oth the target Tracker", 0, 0);
 
+    if (actionType == TRK_AXIS) {
+        axis = addEnumParameter("Axis", "Wich axis dou you want to move");
+        axis->addOption("X", Xaxis)->addOption("Y", Yaxis)->addOption("Z", Zaxis);
+
+        axisRange = addPoint2DParameter("Range", "Range of the fader");
+    }
+
 }
 
 TrackerAction::~TrackerAction()
@@ -75,6 +82,23 @@ void TrackerAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
+    case TRK_AXIS:
+        {
+        var vect = target->targetPosition->getValue();
+        float vals[3];
+        for (int i = 0; i <3; i++) vals[i] = vect[i];
+        Axis a = axis->getValueDataAsEnum<Axis>();
+        int index = 0;
+        if (a == Yaxis) index = 1;
+        if (a == Zaxis) index = 2;
+
+        float currentVal = vals[index];
+        float newVal = jmap(val, 0.f,1.f, axisRange->x, axisRange->y);
+        newVal += isRelative ? currentVal : 0;
+        vals[index] = newVal;
+        target->targetPosition->setVector(vals[0], vals[1], vals[2]);
+        }
+        break;
     }
 }
 
@@ -99,6 +123,18 @@ var TrackerAction::getValue()
     case TRK_SIZE:
         val = target->sizeValue->floatValue();
         break;
+
+    case TRK_AXIS:
+        {
+        var vect = target->targetPosition->getValue();
+        Axis a = axis->getValueDataAsEnum<Axis>();
+        int index = 0;
+        if (a == Yaxis) index = 1;
+        if (a == Zaxis) index = 2;
+
+        float currentVal = vect[index];
+        val = jmap(currentVal, axisRange->x, axisRange->y, 0.f,1.f);
+    }
 
     }
 

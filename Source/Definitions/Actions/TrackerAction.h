@@ -19,10 +19,14 @@ public:
     TrackerAction(var params = var());
     ~TrackerAction();
 
-    enum ActionType { TRK_START, TRK_STOP, TRK_SIZE, TRK_TOGGLE};
+    enum ActionType { TRK_START, TRK_STOP, TRK_SIZE, TRK_TOGGLE, TRK_AXIS};
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;
+
+    enum Axis {Xaxis,Yaxis,Zaxis};
+    EnumParameter* axis;
+    Point2DParameter* axisRange;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
