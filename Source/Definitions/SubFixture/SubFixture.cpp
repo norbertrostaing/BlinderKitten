@@ -71,8 +71,22 @@ Colour SubFixture::getOutputColor()
 	ChannelType* cyan = dynamic_cast<ChannelType*>(e->CPCyanChannel->targetContainer.get());
 	ChannelType* magenta = dynamic_cast<ChannelType*>(e->CPMagentaChannel->targetContainer.get());
 	ChannelType* yellow = dynamic_cast<ChannelType*>(e->CPYellowChannel->targetContainer.get());
+	ChannelType* hue = dynamic_cast<ChannelType*>(e->CPHueChannel->targetContainer.get());
+	ChannelType* sat = dynamic_cast<ChannelType*>(e->CPSaturationChannel->targetContainer.get());
 
 	bool colorIsSet = false;
+
+	if (hue != nullptr && sat != nullptr) {
+		if (channelsMap.contains(hue) && channelsMap.contains(sat)) {
+			float h = channelsMap.getReference(hue)->currentValue;
+			float s = channelsMap.getReference(sat)->currentValue;
+			Colour c = Colour::fromHSV(h,s,1,1);
+			r = c.getFloatRed();
+			g = c.getFloatGreen();
+			b = c.getFloatBlue();
+			colorIsSet = true;
+		}
+	}
 
 	if (red != nullptr && green != nullptr && blue != nullptr) {
 		if (channelsMap.contains(red)) { colorIsSet = true; r += channelsMap.getReference(red)->currentValue; }
