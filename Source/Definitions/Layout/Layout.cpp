@@ -351,7 +351,7 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromWake
 		ret->set(it.getKey(), weight);
 
 		// Debug log :
-		LOG("S:" <<  S.x <<  S.y <<  "  dot:" <<  dot << "  dist:" << dist << "  add:" << addDot);
+		//LOG("S:" <<  S.x <<  S.y <<  "  dot:" <<  dot << "  dist:" << dist << "  add:" << addDot);
 	}
 	isComputing.exit();
 
