@@ -203,16 +203,28 @@ void Bundle::setSize(float val, bool size, bool HTP, bool LTP, bool flash)
 	isComputing.exit();
 }
 
-void Bundle::setSpeed(float val)
+void Bundle::setSpeed(float val, bool tapTempoDivide)
 {
 	lastSpeed = val;
 	Brain::getInstance()->virtualFadersNeedUpdate = true;
 
 	computeValues();
 	isComputing.enter();
-	for (Cuelist* c : computedCuelists) c->chaserSpeed->setValue(val);
-	for (Effect* c : computedEffects) c->speed->setValue(val);
-	for (Carousel* c : computedCarousels) c->speed->setValue(val);
+	for (Cuelist* c : computedCuelists) {
+		double mult = 1;
+		if (tapTempoDivide) mult = c->chaserStepPerTap->floatValue();
+		c->chaserSpeed->setValue(val*mult);
+	}
+	for (Effect* c : computedEffects) {
+		double mult = 1;
+		if (tapTempoDivide) mult = 1.0/c->beatPerCycle->floatValue();
+		c->speed->setValue(val*mult);
+	}
+	for (Carousel* c : computedCarousels) {
+		double mult = 1;
+		if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+		c->speed->setValue(val*mult);
+	}
 	isComputing.exit();
 }
 
@@ -248,16 +260,28 @@ void Bundle::setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash)
 	isComputing.exit();
 }
 
-void Bundle::setSpeedRel(float val)
+void Bundle::setSpeedRel(float val, bool tapTempoDivide)
 {
 	lastSpeed += val;
 	Brain::getInstance()->virtualFadersNeedUpdate = true;
 
 	computeValues();
 	isComputing.enter();
-	for (Cuelist* c : computedCuelists) c->chaserSpeed->setValue(c->chaserSpeed->floatValue()+val);
-	for (Effect* c : computedEffects) c->speed->setValue(c->speed->floatValue()+val);
-	for (Carousel* c : computedCarousels) c->speed->setValue(c->speed->floatValue()+val);
+	for (Cuelist* c : computedCuelists) {
+		double mult = 1;
+		if (tapTempoDivide) mult = c->chaserStepPerTap->floatValue();
+		c->chaserSpeed->setValue(c->chaserSpeed->floatValue() + (val * mult));
+	}
+	for (Effect* c : computedEffects) {
+		double mult = 1;
+		if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+		c->speed->setValue(c->speed->floatValue() + (val * mult));
+	}
+	for (Carousel* c : computedCarousels) {
+		double mult = 1;
+		if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+		c->speed->setValue(c->speed->floatValue() + (val * mult));
+	}
 	isComputing.exit();
 }
 

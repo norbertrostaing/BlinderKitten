@@ -21,10 +21,12 @@ BundleAction::BundleAction(var params) :
 
     if (actionType == BUN_SPEED) {
         maxSpeed = addFloatParameter("Max Speed", "Speed when your fader is up high", 600, 0);
+        adaptSpeedTapTempo = addBoolParameter("Adapt with beat by cycles", "If checked, the speed will be set depending the tap tempo beat by cycle option", false);
     }
 
     if (actionType == BUN_SET_SPEED) {
         finalSpeed = addFloatParameter("Speed", "Speed you want to give", 600, 0);
+        adaptSpeedTapTempo = addBoolParameter("Adapt with beat by cycles", "If checked, the speed will be set depending the tap tempo beat by cycle option", false);
     }
 
 
@@ -98,17 +100,17 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
     case BUN_SPEED:
         if (isRelative) {
             val *= (float)maxSpeed->getValue();
-            target->setSpeedRel(val);
+            target->setSpeedRel(val, adaptSpeedTapTempo->boolValue());
         }
         else {
             val *= (float)maxSpeed->getValue();
-            target->setSpeed(val);
+            target->setSpeed(val, adaptSpeedTapTempo->boolValue());
         }
         break;
 
     case BUN_SET_SPEED:
         if (val == 1) {
-            target->setSpeed(finalSpeed->floatValue());
+            target->setSpeed(finalSpeed->floatValue(), adaptSpeedTapTempo->boolValue());
         }
         break;
 

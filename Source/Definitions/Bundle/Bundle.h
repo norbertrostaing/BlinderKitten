@@ -63,9 +63,9 @@ public:
     void stop(float forcedFade = -1);
     void tapTempo();
     void setSize(float val, bool size, bool HTP, bool LTP, bool flash);
-    void setSpeed(float val);
+    void setSpeed(float val, bool tapTempoDivide = false);
     void setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash);
-    void setSpeedRel(float val);
+    void setSpeedRel(float val, bool tapTempoDivide = false);
     void speedMult(float mult);
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;

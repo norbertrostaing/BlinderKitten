@@ -25,6 +25,7 @@ public:
     FloatParameter* maxSpeed;
     FloatParameter* finalSize;
     FloatParameter* finalSpeed;
+    BoolParameter* adaptSpeedTapTempo;
 
     BoolParameter* useHTP;
     BoolParameter* useLTP;

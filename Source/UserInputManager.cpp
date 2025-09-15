@@ -416,7 +416,7 @@ void UserInputManager::processMessage(const juce::OSCMessage& m, const juce::Str
 			}
 			else if (action == "speed" && m.size() > 0) {
 				float val = OSCHelpers::getFloatArg(m[0]);
-				target->setSpeed(val);
+				target->setSpeed(val, true);
 			}
 			else if (action == "flash" && m.size() > 0) {
 				int val = OSCHelpers::getIntArg(m[0]);
