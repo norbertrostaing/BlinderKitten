@@ -39,11 +39,13 @@ namespace BlinderKittenCommandId
 
 	//static const int keyBackspace = 0x60100;
 	static const int keyClear = 0x60101;
+	static const int keyClearAll = 0x60107;
 	static const int keyEnter = 0x60102;
 	static const int keyThru = 0x60103;
 	static const int keyBackspace = 0x60104;
 	static const int keyPlus = 0x60105;
 	static const int keyMinus = 0x60106;
+	// 0x60107 = KeyClearAll
 
 	static const int keyRecord = 0x60201;
 	static const int keyEdit = 0x60202;
@@ -166,6 +168,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 	case BlinderKittenCommandId::keyClear:
 		result.setInfo("Clear", "", "Direct Commands", 0);
 		result.addDefaultKeypress(KeyPress::createFromDescription("backspace").getKeyCode(), ModifierKeys::shiftModifier);
+		break;
+
+	case BlinderKittenCommandId::keyClearAll:
+		result.setInfo("Clear All", "", "Direct Commands", 0);
+		//result.addDefaultKeypress(KeyPress::createFromDescription("backspace").getKeyCode(), ModifierKeys::ctrlModifier);
 		break;
 
 	case BlinderKittenCommandId::keyEnter:
@@ -389,6 +396,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		BlinderKittenCommandId::keyEnter,
 		BlinderKittenCommandId::keyBackspace,
 		BlinderKittenCommandId::keyClear,
+		BlinderKittenCommandId::keyClearAll,
 		BlinderKittenCommandId::keyThru,
 		BlinderKittenCommandId::keyPlus,
 		BlinderKittenCommandId::keyMinus,
@@ -572,7 +580,8 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case BlinderKittenCommandId::keyGo: { UserInputManager::getInstance()->goMainCuelist(); }break;
 	case BlinderKittenCommandId::keyGoBack: { UserInputManager::getInstance()->goBackMainCuelist(); }break;
 
-	case BlinderKittenCommandId::keyClear: {	UserInputManager::getInstance()->processInput("Clear"); }break;
+	case BlinderKittenCommandId::keyClear:	{	UserInputManager::getInstance()->processInput("Clear"); }break;
+	case BlinderKittenCommandId::keyClearAll: { UserInputManager::getInstance()->processInput("ClearAll"); }break;
 	case BlinderKittenCommandId::keyBackspace: {UserInputManager::getInstance()->processInput("Backspace"); }break;
 	case BlinderKittenCommandId::keyEnter: {	UserInputManager::getInstance()->processInput("Enter"); }break;
 	case BlinderKittenCommandId::keyThru: {		UserInputManager::getInstance()->processInput("Thru"); }break;
