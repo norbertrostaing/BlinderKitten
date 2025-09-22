@@ -17,7 +17,7 @@ PresetAction::PresetAction(var params) :
 {
     actionType = (ActionType)(int)params.getProperty("actionType", TIMING_PRESET_SET);
 
-    targetId = addIntParameter("Preset id", "it of the new target", 0, 0);
+    targetId = addIntParameter("Preset id", "Id of the new target", 0, 0);
 
     if (actionType == TIMING_PRESET_SET) {
         component = addEnumParameter("Component", "");
@@ -27,6 +27,7 @@ PresetAction::PresetAction(var params) :
         toValue = addFloatParameter("To value", "High value", 0);
     }
     else if (actionType == TIMING_PRESET_FIXED) {
+        component = addEnumParameter("Component", "");
         component->addOption("Delay from", "dFrom")->addOption("Delay to", "dTo")->addOption("Fade from", "fFrom")->addOption("Fade to", "fTo");
         fixedValue = addFloatParameter("Value", "Value", 0);
     }
