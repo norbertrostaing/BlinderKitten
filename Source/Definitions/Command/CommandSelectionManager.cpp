@@ -182,6 +182,22 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				tempSelection = filteredSelection;
 
 			}
+			else if (selections[selId]->filter->getValue() == "begin") {
+				Array<SubFixture*> filteredSelection;
+				int n = jmin(selections[selId]->randomNumber->intValue(), tempSelection.size());
+				for (int i = 0; i < n; i++) {
+					filteredSelection.add(tempSelection[i]);
+				}
+				tempSelection = filteredSelection;
+			}
+			else if (selections[selId]->filter->getValue() == "end") {
+				Array<SubFixture*> filteredSelection;
+				int n = jmin(selections[selId]->randomNumber->intValue(), tempSelection.size());
+				for (int i = tempSelectionSize-n; i < tempSelectionSize; i++) {
+					filteredSelection.add(tempSelection[i]);
+				}
+				tempSelection = filteredSelection;
+			}
 			else if (selections[selId]->filter->getValue() == "random") {
 				Array<SubFixture*> filteredSelection;
 				HashMap<int, std::shared_ptr<Array<SubFixture*>>> indexToSubFixtures;

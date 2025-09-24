@@ -40,6 +40,8 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Pattern", "pattern");
     filter->addOption("Shuffle", "shuffle");
     filter->addOption("Pick Random", "random");
+    filter->addOption("Pick at begin", "begin");
+    filter->addOption("Pick at end", "end");
     filter->addOption("Buddy Block Wing", "bbw");
     filter->addOption("Output Condition", "outcondition");
     filter->addOption("Layout Direction", "layoutdir");
@@ -47,6 +49,8 @@ CommandSelection::CommandSelection(var params) :
     filter->addOption("Layout Circle", "layoutcircle");
     filter->addOption("Layout Droplet wave", "layoutpoint");
     filter->addOption("Layout Perlin", "layoutperlin");
+
+
     pattern = addStringParameter("Pattern", "type 1 to select SubFixtures and 0 to skip them, for example, 100 will select every first SubFixture of three in pattern mode, and the first third of all SubFixtures in divide mode", "");
     symmetry = addBoolParameter("Symmetry", "Apply this pattern with symmetry", false);
     randomSeed = addIntParameter("Seed", "Seed used to generate random, if 0, selection will change each call, if not, the random selection will alway be the same", 0, 0);
@@ -101,6 +105,7 @@ void CommandSelection::updateDisplay()
     bool randSeed = filter->getValue() == "shuffle" || filter->getValue() == "random";
     bool randNum = filter->getValue() == "random";
     bool layout = filter->getValue() == "layoutdir" || filter->getValue() == "layoutcircle" || filter->getValue() == "layoutpoint" || filter->getValue() == "layoutperlin" || filter->getValue() == "layoutwake";
+    bool beginOrEnd = filter->getValue() == "begin" || filter->getValue() == "end";
     bool layoutDir = filter->getValue() == "layoutdir";
     bool layoutCir = filter->getValue() == "layoutcircle";
     bool layoutPnt = filter->getValue() == "layoutpoint";
@@ -125,7 +130,7 @@ void CommandSelection::updateDisplay()
     subTo->hideInEditor = !(sub && subTh);
 
     randomSeed -> hideInEditor = !randSeed;
-    randomNumber->hideInEditor = !randNum;
+    randomNumber->hideInEditor = !randNum && !beginOrEnd;
     randomBuddy->hideInEditor = !randNum && !bbw;
     randomBlock->hideInEditor = !randNum && !bbw;
     randomWing->hideInEditor = !randNum && !bbw;
