@@ -56,6 +56,8 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
     defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
     highlightValue = addFloatParameter("Highlight value", "Value of the channel during highlight", 0, 0, 1);
+    highlightValue->canBeDisabledByUser = true;
+    highlightValue->setEnabled(false);
     killedBySWOP = addBoolParameter("Killed By SWOP", "if checked, this parameter will be set to its default value when cuelists with no command for ot are called with SWOP", false);
 
     fadeOrSnap = addEnumParameter("Fade or snap", "Is ths channel allowed to fade or should it jump to his new value ?");
@@ -108,6 +110,9 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     }
     else if (p == defaultValue || p == invertOutput) {
         FixtureManager::getInstance()->defaultValueChanged(this);
+    }
+    else if (p == highlightValue) {
+        if (!p->enabled) p->setEnabled(true);
     }
 }
 

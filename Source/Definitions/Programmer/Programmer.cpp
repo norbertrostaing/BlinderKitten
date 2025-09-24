@@ -233,7 +233,7 @@ void Programmer::computeValues() {
 		for (int i = 0; i < subFixtures.size(); i++) {
 			for (auto it = subFixtures[i]->channelsMap.begin(); it != subFixtures[i]->channelsMap.end(); it.next()) {
 				SubFixtureChannel* sfc = it.getValue();
-				if (sfc != nullptr && sfc->highlightValue > 0) {
+				if (sfc != nullptr && sfc->highlightValue >= 0) {
 					std::shared_ptr<ChannelValue> cv = computedValues.getReference(sfc);
 					if (cv == nullptr) {
 						cv = std::make_shared<ChannelValue>();
