@@ -233,6 +233,9 @@ void SubFixtureChannel::updateVal(double now) {
 	for (int i = 0; i < effectStack.size(); i++) {
 		layers.addIfNotAlreadyThere(effectStack[i]->layerId->intValue());
 	}
+	for (int i = 0; i < selectionMasterStack.size(); i++) {
+		layers.addIfNotAlreadyThere(selectionMasterStack[i]->layerId->intValue());
+	}
 
 	layers.sort();
 	
