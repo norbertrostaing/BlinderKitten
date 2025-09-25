@@ -676,6 +676,7 @@ void LayoutViewer::paint(Graphics& g)
 		bool drawPaths = viewPaths.getToggleState();
 		bool edit = editMode.getToggleState();
 
+		p->isComputing.enter(); // lock here
 		p->selection.computing.enter();
 
 		if (type == BKPath::PATH_POINT) {
@@ -753,7 +754,6 @@ void LayoutViewer::paint(Graphics& g)
 			float currentArrowX = -1;
 			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
 					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
 					if (p->subFixtToPos.contains(sf)) {
@@ -778,10 +778,8 @@ void LayoutViewer::paint(Graphics& g)
 						}
 					}
 				}
-				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				Array<Fixture*> drawedFixtures;
 				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
 					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
@@ -808,7 +806,6 @@ void LayoutViewer::paint(Graphics& g)
 						}
 					}
 				}
-				p->isComputing.exit();
 			}
 
 			if (p == hoveredPath) {
@@ -839,7 +836,6 @@ void LayoutViewer::paint(Graphics& g)
 			float currentArrowX = -1;
 			float currentArrowY = -1;
 			if (p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
 					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
 					if (p->subFixtToPos.contains(sf)) {
@@ -864,10 +860,8 @@ void LayoutViewer::paint(Graphics& g)
 						}
 					}
 				}
-				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				Array<Fixture*> drawedFixtures;
 				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
 					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
@@ -894,7 +888,6 @@ void LayoutViewer::paint(Graphics& g)
 						}
 					}
 				}
-				p->isComputing.exit();
 			}
 
 			if (p == hoveredPath) {
@@ -931,7 +924,6 @@ void LayoutViewer::paint(Graphics& g)
 
 			//g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float Y = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
@@ -946,10 +938,8 @@ void LayoutViewer::paint(Graphics& g)
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
-				p->isComputing.exit();
 			}
-			if (!p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
+			if (!p->spreadSubFixtures->boolValue()) { 
 				int iFixt = 0;
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float X = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -967,7 +957,6 @@ void LayoutViewer::paint(Graphics& g)
 						clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
-				p->isComputing.exit();
 			}
 
 			if (edit) {
@@ -1030,7 +1019,6 @@ void LayoutViewer::paint(Graphics& g)
 
 			//g.setColour(juce::Colours::orange);
 			if (p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
@@ -1045,10 +1033,8 @@ void LayoutViewer::paint(Graphics& g)
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
-				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				int iFixt = 0;
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -1067,7 +1053,6 @@ void LayoutViewer::paint(Graphics& g)
 					}
 					iFixt++;
 				}
-				p->isComputing.exit();
 			}
 		}
 		if (type == BKPath::PATH_PRESET) {
@@ -1107,7 +1092,6 @@ void LayoutViewer::paint(Graphics& g)
 			}
 
 			if (p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
 					float YFixt = jmap((float)it.getValue()->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
@@ -1122,10 +1106,8 @@ void LayoutViewer::paint(Graphics& g)
 						clicg.fillRect(XFixt - halfTileWidth, YFixt - halfTileHeight, tileWidth, tileHeight);
 					}
 				}
-				p->isComputing.exit();
 			}
 			if (!p->spreadSubFixtures->boolValue()) {
-				p->isComputing.enter();
 				int iFixt = 0;
 				for (auto it = p->fixtToPos.begin(); it != p->fixtToPos.end(); it.next()) {
 					float XFixt = jmap((float)it.getValue()->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
@@ -1144,11 +1126,11 @@ void LayoutViewer::paint(Graphics& g)
 					}
 					iFixt++;
 				}
-				p->isComputing.exit();
 			}
 		}
 
 		p->selection.computing.exit();
+		p->isComputing.exit();
 	}
 
 	if (mouseInLayout && viewCoords.getToggleState())
