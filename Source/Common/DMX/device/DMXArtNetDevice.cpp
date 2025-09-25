@@ -242,7 +242,13 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 
 void DMXArtNetDevice::sendArtPoll()
 {
-	ArtnetSocket::getInstance()->sendArtPoll(discoverNodesIP->stringValue());
+	if (inputCC->enabled->boolValue()) {
+		ArtnetSocket::getInstance()->sendArtPoll(discoverNodesIP->stringValue());
+		LOG("Art poll sent");
+	}
+	else {
+		LOGERROR("You must enable artnet input to search for nodes !");
+	}
 }
 
 void DMXArtNetDevice::sendArtSync()
