@@ -3,3 +3,6 @@ workFile_autosave
 SharedData/captureStudent_autosave/
 .vs
 Builds/*/x64
+
+Builds/MacOSX_CI/build/
+xcuserdata/
