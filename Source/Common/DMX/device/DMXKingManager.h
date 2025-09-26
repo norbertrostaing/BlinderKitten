@@ -26,6 +26,9 @@
 #define DMXKING_RECEIVE_ON_CHANGE_LABEL 8
 #define DMXKING_RECEIVE_SERIAL_NUMBER_LABEL 10
 
+#define DMXKING_DMX_PORT_COUNT_LABEL 0x63
+#define DMXKING_DMX_PORT_DIRECTION_LABEL 0x71
+
 #define DMXKING_START_CODE 0
 #define DMXKING_CHANNEL_COUNT 512
 
@@ -49,7 +52,10 @@ public:
         Array<DMXKingDevice*> connectedDevices;
         Array<uint8> serialBuffer;
 
-        SharedHardware() : serialDevice(nullptr) {}
+        int detectedOutputPortCount;
+        bool outputPortCountDetected;
+
+        SharedHardware() : serialDevice(nullptr), detectedOutputPortCount(1), outputPortCountDetected(false) {}
     };
 
     HashMap<String, SharedHardware*> hardwareMap;
@@ -62,6 +68,11 @@ public:
     SharedHardware* getOrCreateHardware(SerialDevice* serialDevice);
     void sendDMXData(const String& serialPortId, int outputPort, const uint8* data);
     void setSerialConfig(SharedHardware* hardware);
+    void pollDeviceCapabilities(SharedHardware* hardware);
+
+    // Ouput Port count detection
+    int getOutputPortCount(const String& serialPortId);
+    void notifyDevicesOutputPortCountChanged(SharedHardware* hardware);
 
     // SerialDeviceListener implementation
     void serialDataReceived(const var &data) override;

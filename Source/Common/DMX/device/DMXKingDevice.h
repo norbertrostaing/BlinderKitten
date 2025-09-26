@@ -21,7 +21,7 @@ public:
 
 	// Port selection parameter
 	EnumParameter* outputPort;
-	int getCurrentPortNumber() const;
+	int getCurrentOutputPortNumber() const;
 
 	// Override DMXSerialDevice methods to use shared hardware
 	void setCurrentPort(SerialDevice * port);
@@ -31,6 +31,9 @@ public:
 	// Called by DMXKingManager when shared hardware connects/disconnects
 	void onSharedHardwareConnected();
 	void onSharedHardwareDisconnected();
+
+	// Called by DMXKingManager when port count is detected
+	void onPortCountDetected(int portCount);
 
 	// Override parameter changes to handle port selection
 	void onContainerParameterChanged(Parameter * p) override;

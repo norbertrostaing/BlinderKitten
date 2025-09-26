@@ -16,17 +16,10 @@ DMXKingDevice::DMXKingDevice() :
 {
 	inputCC->enabled->setValue(false);
 
-	// Add port selection parameter
+	// Start with just Port 1, will be updated when device capabilities are detected
 	outputPort = outputCC->addEnumParameter("Output Port", "Select which physical output port to use");
 	outputPort->addOption("Port 1", 1);
-	outputPort->addOption("Port 2", 2);
-	outputPort->addOption("Port 3", 3);
-	outputPort->addOption("Port 4", 4);
-	outputPort->addOption("Port 5", 5);
-	outputPort->addOption("Port 6", 6);
-	outputPort->addOption("Port 7", 7);
-	outputPort->addOption("Port 8", 8);
-	outputPort->setValue(1); // Default to Port 1
+	outputPort->setValueWithKey("Port 1");
 }
 
 DMXKingDevice::~DMXKingDevice()
@@ -37,27 +30,31 @@ DMXKingDevice::~DMXKingDevice()
 	}
 }
 
-int DMXKingDevice::getCurrentPortNumber() const
+int DMXKingDevice::getCurrentOutputPortNumber() const
 {
 	return outputPort->getValueData();
 }
 
 void DMXKingDevice::setCurrentPort(SerialDevice * port)
 {
-	// Unregister from old hardware if switching
 	if (DMXKingManager::getInstanceWithoutCreating() && dmxPort && sharedHardwareId.isNotEmpty())
 	{
 		DMXKingManager::getInstance()->unregisterDevice(this);
 	}
 
-	// Call parent implementation
 	DMXSerialDevice::setCurrentPort(port);
 
-	// Register with new shared hardware
 	if (port)
 	{
 		sharedHardwareId = port->info->deviceID;
 		DMXKingManager::getInstance()->registerDevice(this, port);
+
+		// Check if port count has already been detected for this hardware
+		int detectedOutputPortCount = DMXKingManager::getInstance()->getOutputPortCount(sharedHardwareId);
+		if (detectedOutputPortCount > 0)
+		{
+			onPortCountDetected(detectedOutputPortCount);
+		}
 	}
 	else
 	{
@@ -74,7 +71,7 @@ void DMXKingDevice::setPortConfig()
 void DMXKingDevice::sendDMXValuesSerialInternal()
 {
     // Send data through the shared manager with the selected port
-    int portNumber = getCurrentPortNumber();
+    int portNumber = getCurrentOutputPortNumber();
 
 	if (!outputCC->enabled->boolValue() || sharedHardwareId.isEmpty() || portNumber < 1 || portNumber > 8)
 		return;
@@ -92,26 +89,40 @@ void DMXKingDevice::onSharedHardwareDisconnected()
 	setConnected(false);
 }
 
+void DMXKingDevice::onPortCountDetected(int portCount)
+{
+	// Update the output port parameter options based on detected port count
+	outputPort->clearOptions();
+
+	for (int i = 1; i <= portCount; ++i)
+	{
+		outputPort->addOption("Port " + String(i), i);
+	}
+
+	int currentPort = getCurrentOutputPortNumber();
+	if (currentPort > portCount)
+	{
+		outputPort->setValueWithKey("Port 1");
+	}
+}
+
 void DMXKingDevice::onContainerParameterChanged(Parameter * p)
 {
 	DMXSerialDevice::onContainerParameterChanged(p);
 
 	if (p == portParam)
 	{
-		// Serial port changed - update hardware registration
 		SerialDevice* newPort = portParam->getDevice();
 		setCurrentPort(newPort);
 	}
 	else if (p == outputPort)
 	{
-		// Output port selection changed - update registration if needed
 		updatePortRegistration();
 	}
 }
 
 void DMXKingDevice::updatePortRegistration()
 {
-	// If we're connected to hardware, re-register to update port mapping
 	if (!sharedHardwareId.isEmpty() && dmxPort)
 	{
 		DMXKingManager::getInstance()->unregisterDevice(this);

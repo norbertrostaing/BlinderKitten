@@ -30,7 +30,7 @@ DMXInterface::DMXInterface() :
 		->addOption("Art-Net", DMXDevice::ARTNET)
 		->addOption("Eurolite USB-DMX512 Pro", DMXDevice::EUROLITE)
 		->addOption("sACN", DMXDevice::SACN)
-        ->addOption("DMX King", DMXDevice::DMXKING);
+        ->addOption("DMXKing", DMXDevice::DMXKING);
 	dmxType->setValueWithKey("Open DMX");
 
 	dmxConnected = addBoolParameter("Connected", "DMX is connected ?", false);

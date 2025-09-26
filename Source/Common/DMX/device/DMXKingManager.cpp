@@ -38,8 +38,6 @@ void DMXKingManager::registerDevice(DMXKingDevice* device, SerialDevice* serialD
     if (!serialDevice) return;
 
     String serialPortId = serialDevice->info->deviceID;
-    NLOG("DMXKingManager: ", "registerDevice " + serialPortId);
-
     SharedHardware* hardware = getOrCreateHardware(serialDevice);
     hardware->connectedDevices.addIfNotAlreadyThere(device);
 }
@@ -52,7 +50,6 @@ void DMXKingManager::unregisterDevice(DMXKingDevice* device)
         SharedHardware* hw = it.getValue();
         hw->connectedDevices.removeAllInstancesOf(device);
 
-        // If no devices left, clean up hardware
         if (hw->connectedDevices.isEmpty())
         {
             if (hw->serialDevice)
@@ -78,41 +75,33 @@ DMXKingManager::SharedHardware* DMXKingManager::getOrCreateHardware(SerialDevice
         hardware->deviceID = serialPortId;
         hardware->serialDevice = serialDevice;
 
-        // Set up serial device listener
         serialDevice->addSerialDeviceListener(this);
 
-        // Configure port if it's open
         if (serialDevice->isOpen())
         {
             setSerialConfig(hardware);
         }
 
-        NLOG("DMXKingManager: ", "Created new SharedHardware for " + serialPortId);
         hardwareMap.set(serialPortId, hardware);
     }
     else
     {
-        // Make sure the hardware has the correct serial device reference
         SharedHardware* hardware = hardwareMap[serialPortId];
         if (hardware->serialDevice != serialDevice)
         {
-            // Remove listener from old device if it exists
             if (hardware->serialDevice)
             {
                 hardware->serialDevice->removeSerialDeviceListener(this);
             }
 
-            // Update to new device
             hardware->serialDevice = serialDevice;
             serialDevice->addSerialDeviceListener(this);
 
-            // Configure port if it's open
             if (serialDevice->isOpen())
             {
                 setSerialConfig(hardware);
             }
         }
-        NLOG("DMXKingManager: ", "Updated SharedHardware for " + serialPortId);
     }
 
     return hardwareMap[serialPortId];
@@ -139,12 +128,10 @@ void DMXKingManager::sendDMXData(const String& serialPortId, int outputPort, con
 
         uint8 footerData[1] = { DMXKING_END_MESSAGE };
 
-        NLOG("DMXKingManager: ", "Sending DMX data to port " + String(outputPort) + " (label 0x" + String::toHexString(outputPortLabel) + ")");
-
         hardware->serialDevice->port->write(headerData, 5);
         hardware->serialDevice->port->write(data, 512);
         hardware->serialDevice->port->write(footerData, 1);
-        hardware->serialDevice->port->flush();
+        hardware->serialDevice->port->flushInput();
     }
     catch (serial::IOException e)
     {
@@ -168,48 +155,96 @@ void DMXKingManager::setSerialConfig(SharedHardware* hardware)
     hardware->serialDevice->port->setBytesize(serial::eightbits);
     hardware->serialDevice->port->setStopbits(serial::stopbits_one);
     hardware->serialDevice->port->setParity(serial::parity_none);
-    hardware->serialDevice->port->flush();
+    hardware->serialDevice->port->flushInput();
 
-    // Get serial number
-    Array<uint8> getSerialNumberBytes((uint8)0x7E, (uint8)10, (uint8)0, (uint8)0, (uint8)0xE7);
-    hardware->serialDevice->writeBytes(getSerialNumberBytes);
+   // Get serial number
+    uint8 getSerial[5] = { DMXKING_START_MESSAGE, DMXKING_RECEIVE_SERIAL_NUMBER_LABEL, 0, 0, DMXKING_END_MESSAGE };
+    hardware->serialDevice->port->write(getSerial, 5);
+    hardware->serialDevice->port->flushInput();
 
-    // Enable change-on-data mode
-    uint8 changeAlwaysData[6] = { DMXKING_START_MESSAGE, DMXKING_RECEIVE_ON_CHANGE_LABEL, 1, 0, DMXKING_CHANGE_ALWAYS_CODE, DMXKING_END_MESSAGE };
-    hardware->serialDevice->port->write(changeAlwaysData, 6);
+    // Poll device capabilities to detect port count
+    pollDeviceCapabilities(hardware);
+}
+
+void DMXKingManager::pollDeviceCapabilities(SharedHardware* hardware)
+{
+    if (!hardware->serialDevice || !hardware->serialDevice->isOpen()) {
+        return;
+    }
+
+    try
+    {
+        // Request port count
+        uint8 outputPortCountRequest[5] = { DMXKING_START_MESSAGE, DMXKING_DMX_PORT_COUNT_LABEL, 0, 0, DMXKING_END_MESSAGE };
+        hardware->serialDevice->port->write(outputPortCountRequest, 5);
+        hardware->serialDevice->port->flushInput();
+
+        LOG("Polling port count for " + hardware->deviceID);
+    }
+    catch (serial::IOException e)
+    {
+        LOGERROR("IO Exception while polling DMXKing capabilities for " + hardware->deviceID + ": " + e.what());
+    }
+    catch (serial::SerialException e)
+    {
+        LOGERROR("Serial Exception while polling DMXKing capabilities for " + hardware->deviceID + ": " + e.what());
+    }
+}
+
+int DMXKingManager::getOutputPortCount(const String& serialPortId)
+{
+    if (hardwareMap.contains(serialPortId))
+    {
+        SharedHardware* hardware = hardwareMap[serialPortId];
+        if (hardware->outputPortCountDetected)
+        {
+            return hardware->detectedOutputPortCount;
+        }
+    }
+    return 0; // Not detected yet or hardware not found
+}
+
+void DMXKingManager::notifyDevicesOutputPortCountChanged(SharedHardware* hardware)
+{
+    LOG("Detected " + String(hardware->detectedOutputPortCount) + " output ports");
+
+    // Notify all connected devices about the port count change
+    for (auto device : hardware->connectedDevices)
+    {
+        device->onPortCountDetected(hardware->detectedOutputPortCount);
+    }
 }
 
 void DMXKingManager::serialDataReceived(const var& data)
 {
-    // Find which hardware this data belongs to
-    SerialDevice* sender = dynamic_cast<SerialDevice*>(data.getObject());
-    if (!sender) return;
+    int dataSize = (int)data.getBinaryData()->getSize();
 
-    SharedHardware* hardware = nullptr;
+    // Simplified: Since we now register as a listener on specific SerialDevices,
+    // we need to find which hardware this data belongs to.
+    // For now, try all hardware (should typically be just one DMXKing device)
     HashMap<String, SharedHardware*>::Iterator it(hardwareMap);
     while (it.next())
     {
-        SharedHardware* hw = it.getValue();
-        if (hw->serialDevice == sender)
-        {
-            hardware = hw;
-            break;
+        SharedHardware* hardware = it.getValue();
+        if (!hardware || !hardware->serialDevice || !hardware->serialDevice->isOpen()) {
+            continue;
         }
-    }
 
-    if (!hardware) return;
+        // Add data to buffer and try to parse
+        hardware->serialBuffer.addArray((const uint8_t*)data.getBinaryData()->getData(), dataSize);
 
-    hardware->serialBuffer.addArray((const uint8_t*)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
-
-    int endIndex = 0;
-    Array<uint8> packet = getDMXPacket(hardware->serialBuffer, endIndex);
-    while (packet.size() > 0)
-    {
-        processDMXPacket(hardware, packet);
-        hardware->serialBuffer.removeRange(0, endIndex);
-        packet = getDMXPacket(hardware->serialBuffer, endIndex);
+        int endIndex = 0;
+        Array<uint8> packet = getDMXPacket(hardware->serialBuffer, endIndex);
+        while (packet.size() > 0)
+        {
+            processDMXPacket(hardware, packet);
+            hardware->serialBuffer.removeRange(0, endIndex);
+            packet = getDMXPacket(hardware->serialBuffer, endIndex);
+        }
+        return; // Processed data, exit (assuming single device for now)
     }
 }
+
 
 void DMXKingManager::portOpened(SerialDevice* port)
 {
@@ -318,9 +353,31 @@ void DMXKingManager::processDMXPacket(SharedHardware* hardware, Array<uint8> byt
     case DMXKING_RECEIVE_SERIAL_NUMBER_LABEL:
     {
         int serialNumber = (int)(bytes[4] + (bytes[5] << 8) + (bytes[6] << 16) + (bytes[7] << 24));
-        LOG("DMXKing serial number (" << length << ") : " << String::toHexString(serialNumber));
+        LOG("Got DMXKing serial number: " << String::toHexString(serialNumber));
     }
     break;
+
+    case DMXKING_DMX_PORT_COUNT_LABEL:
+    {
+        if (length >= 1)
+        {
+            int portCount = (int)bytes[4]; // First data byte contains port count
+            hardware->detectedOutputPortCount = portCount;
+            hardware->outputPortCountDetected = true;
+
+            // Notify all connected devices about the detected port count
+            notifyDevicesOutputPortCountChanged(hardware);
+        }
+        else
+        {
+            LOGWARNING("DMXKing: Invalid port count response length: " << length);
+        }
+    }
+    break;
+
+    case DMXKING_DMX_PORT_DIRECTION_LABEL:
+        // Port direction response - for future use if needed
+        break;
 
     default:
         // Handle other messages if needed
