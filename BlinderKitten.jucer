@@ -195,6 +195,14 @@
                   file="Source/Common/DMX/device/DMXEnttecProDevice.cpp"/>
             <FILE id="QS0L0n" name="DMXEnttecProDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXEnttecProDevice.h"/>
+            <FILE id="DMXKng1" name="DMXKingDevice.cpp" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXKingDevice.cpp"/>
+            <FILE id="DMXKng2" name="DMXKingDevice.h" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXKingDevice.h"/>
+            <FILE id="DMXKngM1" name="DMXKingManager.cpp" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXKingManager.cpp"/>
+            <FILE id="DMXKngM2" name="DMXKingManager.h" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXKingManager.h"/>
             <FILE id="lNcEcE" name="DMXEuroliteDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXEuroliteDevice.cpp"/>
             <FILE id="eEhRpL" name="DMXEuroliteDevice.h" compile="0" resource="0"
