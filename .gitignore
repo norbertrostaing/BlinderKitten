@@ -4,5 +4,6 @@ SharedData/captureStudent_autosave/
 .vs
 Builds/*/x64
 
+.DS_Store
 Builds/MacOSX_CI/build/
 xcuserdata/
