@@ -22,10 +22,13 @@ EncoderAction::EncoderAction(var params) :
     actionType = (ActionType)(int)params.getProperty("actionType", ENC_VALUE);
 
     if (actionType == ENC_VALUE) {
-        targetEncoder = addIntParameter("Encoder", "Wich encoder do you want to modify ?", 1, 1);
+        targetEncoder = addIntParameter("Encoder", "Which encoder do you want to modify?", 1, 1);
+    }
+    else if (actionType == ENC_RESET) {
+        targetEncoder = addIntParameter("Encoder", "Which encoder do you want to reset?", 1, 1);
     }
     else if (actionType == ENC_TYPE) {
-        encoderType = addTargetParameter("Parameter", "Wich encoder parameter do you want to move ?", ChannelFamilyManager::getInstance());
+        encoderType = addTargetParameter("Parameter", "Which encoder parameter do you want to move?", ChannelFamilyManager::getInstance());
         encoderType->targetType = TargetParameter::CONTAINER;
         encoderType->maxDefaultSearchLevel = 2;
         encoderType->typesFilter.add("ChannelType");
@@ -34,15 +37,15 @@ EncoderAction::EncoderAction(var params) :
         selectionDelta = addIntParameter("Selection delta", "If positive, it will select nth next encoder, if negative, nth previous encoder", 1);
     }
     else if (actionType == ENC_TOGGLEFILTERNUM) {
-        filterNumber = addIntParameter("Filter", "Wich filter do you want to toggle ?", 1, 1);
+        filterNumber = addIntParameter("Filter", "Which filter do you want to toggle ?", 1, 1);
         soloMode = addBoolParameter("Solo", "Disable other filters whene selected",false);
     }
     else if (actionType == ENC_TOGGLEFILTERFAMILY) {
-        filterFamily = addTargetParameter("Family", "Wich filter do you want to toggle ?", ChannelFamilyManager::getInstance());
+        filterFamily = addTargetParameter("Family", "Which filter do you want to toggle ?", ChannelFamilyManager::getInstance());
         filterFamily->targetType = TargetParameter::CONTAINER;
         filterFamily->maxDefaultSearchLevel = 0;
         filterFamily->typesFilter.add("ChannelFamily");
-        soloMode = addBoolParameter("Solo", "Disable other filters whene selected", false);
+        soloMode = addBoolParameter("Solo", "Disable other filters when selected", false);
     }
 }
 
@@ -76,7 +79,14 @@ void EncoderAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
-    case ENC_TYPE: 
+    case ENC_RESET:
+        index = targetEncoder->intValue() - 1;
+        if (index >= 0 && index < Encoders::getInstance()->encoders.size()) {
+            UserInputManager::getInstance()->encoderValueChanged(index, -2, origin);
+        }
+        break;
+
+    case ENC_TYPE:
         {
             ChannelType* ct = dynamic_cast<ChannelType*>(encoderType->targetContainer.get());
 

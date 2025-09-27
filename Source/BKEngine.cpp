@@ -1035,6 +1035,8 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 	changedNames.set("ColorAdd_B", "Blue");
 	changedNames.set("ColorAdd_W", "White");
 	changedNames.set("ColorAdd_A", "Amber");
+    changedNames.set("ColorAdd_RY", "Amber");
+    changedNames.set("ColorAdd_UV", "UV");
 	changedNames.set("ColorSub_C", "Cyan");
 	changedNames.set("ColorSub_M", "Magenta");
 	changedNames.set("ColorSub_Y", "Yellow");
