@@ -16,10 +16,10 @@ DMXKingDevice::DMXKingDevice() :
 {
 	inputCC->enabled->setValue(false);
 
-	// Start with just Port 1, will be updated when device capabilities are detected
+	// Start with just Port A, will be updated when device capabilities are detected
 	outputPort = outputCC->addEnumParameter("Output Port", "Select which physical output port to use");
-	outputPort->addOption("Port 1", 1);
-	outputPort->setValueWithKey("Port 1");
+	outputPort->addOption("Port A", 1);
+	outputPort->setValueWithKey("Port A");
 }
 
 DMXKingDevice::~DMXKingDevice()
@@ -96,13 +96,14 @@ void DMXKingDevice::onPortCountDetected(int portCount)
 
 	for (int i = 1; i <= portCount; ++i)
 	{
-		outputPort->addOption("Port " + String(i), i);
+		char portLetter = 'A' + (i - 1);
+		outputPort->addOption("Port " + String::charToString(portLetter), i);
 	}
 
 	int currentPort = getCurrentOutputPortNumber();
 	if (currentPort > portCount)
 	{
-		outputPort->setValueWithKey("Port 1");
+		outputPort->setValueWithKey("Port A");
 	}
 }
 
