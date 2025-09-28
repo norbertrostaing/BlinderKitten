@@ -10,6 +10,7 @@
 
 #include "CommandValue.h"
 #include "../ChannelFamily/ChannelFamilyManager.h"
+#include "Brain.h"
 
 CommandValue::CommandValue(var params) :
     BaseItem(params.getProperty("name", "Value")),
@@ -43,11 +44,16 @@ CommandValue::CommandValue(var params) :
 
     stepSize = addFloatParameter("Step size", "Size of the step",1,0);
     stepSize-> hideInEditor = true;
+
+    Brain::getInstance()->allCommandValues.add(this);
+
     updateDisplay();
 };
 
 CommandValue::~CommandValue()
 {
+    Brain::getInstance()->allCommandValues.removeAllInstancesOf(this);
+
 };
 
 void CommandValue::updateDisplay() 

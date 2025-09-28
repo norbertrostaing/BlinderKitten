@@ -799,31 +799,43 @@ void DataTransferManager::moveObject(String type, int id, String typeTo, int idT
         Fixture* source = Brain::getInstance()->getFixtureById(id);
         Fixture* target = Brain::getInstance()->getFixtureById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
-        source->id->setValue(idTo);
-        if (target != nullptr) { target->id->setValue(id); }
+        if (target != nullptr) { 
+            target->id->setValue(998989); 
+        }
+        source->id->setValue(idTo); 
+        if (target != nullptr) {
+            target->id->setValue(id); 
+        }
     }
     else if (type == "group" && typeTo == "group") {
         Group* source = Brain::getInstance()->getGroupById(id);
         Group* target = Brain::getInstance()->getGroupById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
-        source->id->setValue(idTo);
-        if (target != nullptr) { target->id->setValue(id); }
+        if (target != nullptr) {
+            target->id->setValue(998989); 
+        }
+        source->id->setValue(idTo); 
+        if (target != nullptr) {
+            target->id->setValue(id); 
+        }
     }
     else if (type == "preset" && typeTo == "preset") {
         Preset* source = Brain::getInstance()->getPresetById(id);
         Preset* target = Brain::getInstance()->getPresetById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
-        source->id->setValue(idTo);
-        if (target != nullptr) { target->id->setValue(id); }
+        if (target != nullptr) {
+            target->id->setValue(998989); 
+        }
+        source->id->setValue(idTo); 
+        if (target != nullptr) {
+            target->id->setValue(id); 
+        }
     }
     else if (type == "cuelist" && typeTo == "cuelist") {
         Cuelist* source = Brain::getInstance()->getCuelistById(id);
         Cuelist* target = Brain::getInstance()->getCuelistById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
+        if (target != nullptr) { target->id->setValue(998989); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
@@ -831,7 +843,7 @@ void DataTransferManager::moveObject(String type, int id, String typeTo, int idT
         Effect* source = Brain::getInstance()->getEffectById(id);
         Effect* target = Brain::getInstance()->getEffectById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
+        if (target != nullptr) { target->id->setValue(998989); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
@@ -839,7 +851,7 @@ void DataTransferManager::moveObject(String type, int id, String typeTo, int idT
         Carousel* source = Brain::getInstance()->getCarouselById(id);
         Carousel* target = Brain::getInstance()->getCarouselById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
+        if (target != nullptr) { target->id->setValue(998989); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
@@ -847,7 +859,7 @@ void DataTransferManager::moveObject(String type, int id, String typeTo, int idT
         Mapper* source = Brain::getInstance()->getMapperById(id);
         Mapper* target = Brain::getInstance()->getMapperById(idTo);
         if (source == nullptr) { return; }
-        if (target != nullptr) { target->id->setValue(99999999); }
+        if (target != nullptr) { target->id->setValue(998989); }
         source->id->setValue(idTo);
         if (target != nullptr) { target->id->setValue(id); }
     }
@@ -896,3 +908,4 @@ void DataTransferManager::moveObject(String type, int id, String typeTo, int idT
         LOGERROR("copy not allowed");
     }
 }
+

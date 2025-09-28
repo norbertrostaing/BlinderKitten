@@ -10,6 +10,7 @@
 
 #include "CommandSelection.h"
 #include "ChannelFamily/ChannelFamilyManager.h"
+#include "Brain.h"
 
 CommandSelection::CommandSelection(var params) :
     BaseItem(params.getProperty("name", "Selection")),
@@ -89,11 +90,14 @@ CommandSelection::CommandSelection(var params) :
     layoutWakeAnchor = addPoint2DParameter("Wake anchor", "");
     layoutWakeAngle = addFloatParameter("Wake angle","",45,1,179);
 
+    Brain::getInstance()->allCommandSelections.add(this);
+
     updateDisplay();
 };
 
 CommandSelection::~CommandSelection()
 {
+    Brain::getInstance()->allCommandSelections.removeAllInstancesOf(this);
 };
 
 void CommandSelection::updateDisplay()

@@ -85,6 +85,8 @@ public:
     Array<Carousel*> swoppedCarousels;
 
     Array<Command*> allCommands;
+    Array<CommandSelection*> allCommandSelections;
+    Array<CommandValue*> allCommandValues;
     Array<SubFixture*> allSubfixtures;
     Array<SubFixtureChannel*> allSubfixtureChannels;
 
@@ -219,4 +221,11 @@ public:
     void soloPoolCheck(int poolId, String excludeType, int excludeId);
     void soloPoolRandom(int poolId);
     void soloPoolStop(int poolId);
+
+    void replaceFixtureIdEverywhere(int from, int to);
+    void replaceGroupIdEverywhere(int from, int to);
+    void replacePresetIdEverywhere(int from, int to);
+
+
+
 };

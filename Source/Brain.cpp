@@ -367,32 +367,29 @@ void Brain::unregisterSubFixture(SubFixture* f) {
     }
 }
 
-void Brain::registerFixture(Fixture* p, int id, bool swap) {
-    int askedId = id;
-    if (fixtures.getReference(id) == p) { return; }
-    if (fixtures.containsValue(p)) {
-        fixtures.removeValue(p);
+void Brain::registerFixture(Fixture* target, int askedId, bool swap) {
+    int currentId = target->registeredId;
+    if (fixtures.getReference(askedId) == target) { return; }
+    if (fixtures.containsValue(target)) {
+        fixtures.removeValue(target);
     }
     bool idIsOk = false;
-    if (swap && p->registeredId != 0) {
-        if (fixtures.contains(id) && fixtures.getReference(id) != nullptr) {
-            Fixture* presentItem = fixtures.getReference(id);
-            unregisterFixture(p);
-            registerFixture(presentItem, p->registeredId, false);
-        }
+
+    int delta = askedId < currentId ? -1 : 1;
+    int newId = askedId;
+    while (!idIsOk && newId > 0) {
+        idIsOk = fixtures.getReference(newId) == nullptr;
+        if (!idIsOk) newId += delta;
     }
-    while (!idIsOk) {
-        if (fixtures.contains(id) && fixtures.getReference(id) != nullptr) {
-            id++;
-        }
-        else {
-            idIsOk = true;
-        }
+
+    if (!idIsOk) {
+        newId = currentId;
     }
-    fixtures.set(id, p);
-    p->id->setValue(id);
-    p->registeredId = id;
-    if (id != askedId) {
+    fixtures.set(newId, target);
+    target->id->setValue(newId);
+    target->registeredId = newId;
+    if (currentId != newId && currentId != 0) {
+        replaceFixtureIdEverywhere(currentId, newId);
     }
 }
 
@@ -402,32 +399,29 @@ void Brain::unregisterFixture(Fixture* d) {
     }
 }
 
-void Brain::registerGroup(Group* p, int id, bool swap) {
-    int askedId = id;
-    if (groups.getReference(id) == p) { return; }
-    if (groups.containsValue(p)) {
-        groups.removeValue(p);
+void Brain::registerGroup(Group* target, int askedId, bool swap) {
+    int currentId = target->registeredId;
+    if (groups.getReference(askedId) == target) { return; }
+    if (groups.containsValue(target)) {
+        groups.removeValue(target);
     }
     bool idIsOk = false;
-    if (swap && p->registeredId != 0) {
-        if (groups.contains(id) && groups.getReference(id) != nullptr) {
-            Group* presentItem = groups.getReference(id);
-            unregisterGroup(p);
-            registerGroup(presentItem, p->registeredId, false);
-        }
+
+    int delta = askedId < currentId ? -1 : 1;
+    int newId = askedId;
+    while (!idIsOk && newId > 0) {
+        idIsOk = groups.getReference(newId) == nullptr;
+        if (!idIsOk) newId += delta;
     }
-    while (!idIsOk) {
-        if (groups.contains(id) && groups.getReference(id) != nullptr) {
-            id++;
-        }
-        else {
-            idIsOk = true;
-        }
+
+    if (!idIsOk) {
+        newId = currentId;
     }
-    groups.set(id, p);
-    p->id->setValue(id);
-    p->registeredId = id;
-    if (id != askedId) {
+    groups.set(newId, target);
+    target->id->setValue(newId);
+    target->registeredId = newId;
+    if (currentId != newId && currentId != 0) {
+        replaceGroupIdEverywhere(currentId, newId);
     }
 }
 
@@ -437,32 +431,29 @@ void Brain::unregisterGroup(Group* g) {
     }
 }
 
-void Brain::registerPreset(Preset* p, int id, bool swap) {
-    int askedId = id;
-    if (presets.getReference(id) == p) { return; }
-    if (presets.containsValue(p)) {
-        presets.removeValue(p);
+void Brain::registerPreset(Preset* target, int askedId, bool swap) {
+    int currentId = target->registeredId;
+    if (presets.getReference(askedId) == target) { return; }
+    if (presets.containsValue(target)) {
+        presets.removeValue(target);
     }
     bool idIsOk = false;
-    if (swap && p->registeredId != 0) {
-        if (presets.contains(id) && presets.getReference(id) != nullptr ){
-            Preset* presentItem = presets.getReference(id);
-            unregisterPreset(p);
-            registerPreset(presentItem, p->registeredId, false);
-        }
+
+    int delta = askedId < currentId ? -1 : 1;
+    int newId = askedId;
+    while (!idIsOk && newId > 0) {
+        idIsOk = presets.getReference(newId) == nullptr;
+        if (!idIsOk) newId += delta;
     }
-    while (!idIsOk) {
-        if (presets.contains(id) && presets.getReference(id) != nullptr) {
-            id++;
-        }
-        else {
-            idIsOk = true;
-        }
+
+    if (!idIsOk) {
+        newId = currentId;
     }
-    presets.set(id, p);
-    p->id->setValue(id);
-    p->registeredId = id;
-    if (id != askedId) {
+    presets.set(newId, target);
+    target->id->setValue(newId);
+    target->registeredId = newId;
+    if (currentId != newId && currentId != 0) {
+        replacePresetIdEverywhere(currentId, newId);
     }
 }
 
@@ -1806,4 +1797,41 @@ void Brain::soloPoolStop(int poolId)
     for (Carousel* c : offCarousels) c->stop();
 
 
+}
+
+
+void Brain::replaceFixtureIdEverywhere(int from, int to)
+{
+    usingCollections.enter();
+    for (int i = 0; i < allCommandSelections.size(); i++) {
+        CommandSelection* sel = allCommandSelections[i];
+        if (sel->targetType->getValueData() == "fixture" && sel->valueFrom->intValue() == from && !sel->thru->boolValue()) {
+            sel->valueFrom->setValue(to);
+        }
+    }
+    usingCollections.exit();
+}
+
+void Brain::replaceGroupIdEverywhere(int from, int to)
+{
+    usingCollections.enter();
+    for (int i = 0; i < allCommandSelections.size(); i++) {
+        CommandSelection* sel = allCommandSelections[i];
+        if (sel->targetType->getValueData() == "group" && sel->valueFrom->intValue() == from && !sel->thru->boolValue()) {
+            sel->valueFrom->setValue(to);
+        }
+    }
+    usingCollections.exit();
+}
+
+void Brain::replacePresetIdEverywhere(int from, int to)
+{
+    usingCollections.enter();
+    for (int i = 0; i < allCommandValues.size(); i++) {
+        CommandValue* sel = allCommandValues[i];
+        if (sel->presetOrValue->getValueData() == "preset" && sel->presetIdFrom->intValue() == from && !sel->thru->boolValue()) {
+            sel->presetIdFrom->setValue(to);
+        }
+    }
+    usingCollections.exit();
 }
