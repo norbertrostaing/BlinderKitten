@@ -168,6 +168,7 @@ ActionFactory::ActionFactory()
 
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_VALUE));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Value Parameter", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_TYPE));
+    defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Reset", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_RESET));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder Select", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_SELECT));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder select next command", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_NEXTCOMMAND));
     defs.add(Factory<Action>::Definition::createDef("Encoder", "Encoder select previous command", &EncoderAction::create)->addParam("actionType", EncoderAction::ENC_PREVCOMMAND));
