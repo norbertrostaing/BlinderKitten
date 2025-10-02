@@ -48,6 +48,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     channelType -> maxDefaultSearchLevel = 2;
     channelType->typesFilter.add("ChannelType");
 
+    // TODO: Remove this
     resolution = addEnumParameter("Resolution", "");
     resolution->addOption("8bits", "8bits");
     resolution->addOption("16bits", "16bits");
@@ -65,20 +66,22 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     fadeOrSnap->addOption("Snap", "snap");
 
     invertOutput = addBoolParameter("Invert output", "if checked, output will be inverted", false);
-
-    dmxDelta = addIntParameter("DMX Channel", "Number of the channel in the DMX chart", 1, 1);
-    dmxDelta -> setEnabled(false);
-
+    
+    dmxChannel = addTargetParameter("DMX Channel", "DMX Channel used");
+    dmxChannel->targetType = TargetParameter::CONTAINER;
+    dmxChannel->maxDefaultSearchLevel = 2;
+    dmxRange = addPoint2DParameter("DMX Output Range", "The range to remap the value to.");
+    dmxRange->setBounds(0, 0, 256, 256); // TODO: based on resolution
+    dmxRange->setDefaultPoint(0, 256);
+    dmxRange->canShowExtendedEditor = false;
+    
     virtualMaster = addTargetParameter("Virtual Master", "Select a virtual master");
     virtualMaster->targetType = TargetParameter::CONTAINER;
     virtualMaster->maxDefaultSearchLevel = 2;
 
     physicalRange = addPoint2DParameter("Physical range", "Range output (degrees for pan, tilt, zoom etc...");
 
-
     addChildControllableContainer(&curve);
-
-
 };
 
 FixtureTypeChannel::~FixtureTypeChannel()

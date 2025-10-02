@@ -87,8 +87,7 @@ Fixture::~Fixture()
 	if (PatchSheet::getInstanceWithoutCreating()) {
 		patchs.removeAsyncManagerListener(PatchSheet::getInstance());
 	}
-
-	
+    fixtureDMXChannels.clear();
 }
 
 
@@ -163,6 +162,13 @@ void Fixture::checkChildrenSubFixtures() {
 	FixtureType* t = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
 	if (t== nullptr) {
 		return ;
+	}
+
+	fixtureDMXChannels.clear();
+    for (int i = 0; i< t->dmxChannelsManager.items.size(); i++) {
+        FixtureTypeDMXChannel* typeDMXChannel = t->dmxChannelsManager.items[i];
+		FixtureDMXChannel* fixtureDMXChannel = new FixtureDMXChannel(this, typeDMXChannel);
+		fixtureDMXChannels.add(fixtureDMXChannel);
 	}
 
 	//Array<WeakReference<ControllableContainer>> chans = t->chansManager.getAllContainers();
@@ -247,9 +253,10 @@ void Fixture::checkChildrenSubFixtures() {
 						continue;
 					}
 					SubFixtureChannel* chan = subFixt->channelsMap.getReference(param);
-					int indexCoarse = chan->parentFixtureTypeChannel->dmxDelta->intValue();
-					int indexFine = c->dmxDelta->intValue();
-					chan->fineChannelDelta = indexFine-indexCoarse;
+                    
+//					int indexCoarse = chan->parentFixtureTypeChannel->dmxDelta->intValue();
+//					int indexFine = c->dmxDelta->intValue();
+					chan->fineChannelDelta = 0;
 				}
 				else {
 					if (subFixt->channelsMap.contains(param)) {
@@ -274,6 +281,18 @@ void Fixture::checkChildrenSubFixtures() {
 					chan->parentSubFixture = subFixt;
 					chan->subFixtureId = subId;
 					chan->invertOutput = c->invertOutput->boolValue();
+
+					FixtureTypeDMXChannel* assignedDMXChannel = dynamic_cast<FixtureTypeDMXChannel*>(c->dmxChannel->targetContainer.get());
+                    
+					if (assignedDMXChannel != nullptr) {
+						// Find the corresponding FixtureDMXChannel
+						for (FixtureDMXChannel* fixtureDMXChannel : fixtureDMXChannels) {
+							if (fixtureDMXChannel->fixtureTypeDMXChannel == assignedDMXChannel) {
+								fixtureDMXChannel->registerLogicalChannel(chan);
+								break;
+							}
+						}
+					}
 
 					if (param->reactGM->getValue()) {
 						chan->reactToGrandMaster = true;

@@ -16,6 +16,7 @@ FixtureType::FixtureType(var params) :
 	BaseItem(params.getProperty("name", "FixtureType")),
 	objectType(params.getProperty("type", "FixtureType").toString()),
 	objectData(params),
+    dmxChannelsManager(),
 	chansManager(),
 	virtualChansManager(),
 	helpContainer("Editor Help")
@@ -35,6 +36,7 @@ FixtureType::FixtureType(var params) :
 	//chansManager = new BaseManager<FixtureTypeChannel>("Channels");
 	// ContainerAsyncListener* newListener = new ContainerAsyncListener();
 	// chansManager->addAsyncContainerListener();
+	addChildControllableContainer(&dmxChannelsManager);
 	addChildControllableContainer(&chansManager);
 	addChildControllableContainer(&virtualChansManager);
 	addChildControllableContainer(&helpContainer);
@@ -54,6 +56,11 @@ void FixtureType::updateVirtualLists() {
 		String value = chansManager.items[i]->virtualMaster->getValue();
 		chansManager.items[i]->virtualMaster->setRootContainer(&virtualChansManager);
 		chansManager.items[i]->virtualMaster->setValue(value);
+
+		// Set up DMX channel assignment target
+		String dmxValue = chansManager.items[i]->dmxChannel->getValue();
+		chansManager.items[i]->dmxChannel->setRootContainer(&dmxChannelsManager);
+		chansManager.items[i]->dmxChannel->setValue(dmxValue);
 	}
 
 }

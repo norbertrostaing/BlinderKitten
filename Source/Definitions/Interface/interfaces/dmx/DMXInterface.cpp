@@ -16,6 +16,7 @@
 #include "Programmer/Programmer.h"
 #include "Fixture/Fixture.h"
 #include "FixtureType/FixtureTypeChannel.h"
+#include "FixtureType/FixtureTypeDMXChannel.h"
 
 DMXInterface::DMXInterface() :
 	Interface(getTypeString())
@@ -432,7 +433,9 @@ void DMXInterface::inputToProgrammer()
 					cv->channelType->setValueFromTarget(sfc->channelType);
 					if (sfc->resolution == "16bits") {
 						int address = channelToFixturePatch[i+1]->address->intValue();
-						address += sfc->parentFixtureTypeChannel->dmxDelta->intValue() -1;
+                        FixtureTypeDMXChannel* channel = sfc->parentFixtureTypeChannel->dmxChannel->getTargetContainerAs<FixtureTypeDMXChannel>();
+                        int deltaAddress = channel->dmxDelta->intValue();
+                        address += deltaAddress;
 						float finalValue = dmxDevice->dmxDataIn[address-1]*256;
 						finalValue += dmxDevice->dmxDataIn[address];
 						finalValue /= 65535.0;

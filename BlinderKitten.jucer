@@ -541,6 +541,10 @@
                 file="Source/Definitions/Fixture/FixturePatchCorrection.cpp"/>
           <FILE id="ewWOys" name="FixturePatchCorrection.h" compile="0" resource="0"
                 file="Source/Definitions/Fixture/FixturePatchCorrection.h"/>
+          <FILE id="FixDMXCh1" name="FixtureDMXChannel.cpp" compile="1" resource="0"
+                file="Source/Definitions/Fixture/FixtureDMXChannel.cpp"/>
+          <FILE id="FixDMXCh2" name="FixtureDMXChannel.h" compile="0" resource="0"
+                file="Source/Definitions/Fixture/FixtureDMXChannel.h"/>
         </GROUP>
         <GROUP id="{E085C61F-8028-E2EB-ADB4-64DE163A396C}" name="FixtureType">
           <FILE id="N9RdkS" name="FixtureType.cpp" compile="1" resource="0" file="Source/Definitions/FixtureType/FixtureType.cpp"/>
@@ -569,6 +573,14 @@
                 resource="0" file="Source/Definitions/FixtureType/FixtureTypeVirtualChannelManager.cpp"/>
           <FILE id="m8duwb" name="FixtureTypeVirtualChannelManager.h" compile="0"
                 resource="0" file="Source/Definitions/FixtureType/FixtureTypeVirtualChannelManager.h"/>
+          <FILE id="FTDMXCh1" name="FixtureTypeDMXChannel.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeDMXChannel.cpp"/>
+          <FILE id="FTDMXCh2" name="FixtureTypeDMXChannel.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeDMXChannel.h"/>
+          <FILE id="FTDMXMgr1" name="FixtureTypeDMXChannelManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeDMXChannelManager.cpp"/>
+          <FILE id="FTDMXMgr2" name="FixtureTypeDMXChannelManager.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeDMXChannelManager.h"/>
         </GROUP>
         <GROUP id="{8FBBC202-46A1-5C6A-F171-296B517ED469}" name="Group">
           <FILE id="D4h4qs" name="Group.cpp" compile="1" resource="0" file="Source/Definitions/Group/Group.cpp"/>

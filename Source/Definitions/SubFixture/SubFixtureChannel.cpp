@@ -18,6 +18,7 @@
 #include "../Interface/InterfaceIncludes.h"
 #include "../Cuelist/Cuelist.h"
 #include "../Programmer/Programmer.h"
+#include "../Fixture/FixtureDMXChannel.h"
 #include "../Effect/Effect.h"
 #include "../Tracker/Tracker.h"
 #include "../ChannelValue.h"
@@ -121,6 +122,7 @@ SubFixtureChannel::~SubFixtureChannel()
 
 }
 
+// DEPRECATED - use setLogicalValue instead
 void SubFixtureChannel::writeValue(float v) {
 	v= jmin((float)1, v);
 	v= jmax((float)0, v);
@@ -150,7 +152,8 @@ void SubFixtureChannel::writeValue(float v) {
 			v = parentFixtureTypeChannel->curve.getValueAtPosition(v);
 		}
 
-		int deltaAdress = parentFixtureTypeChannel->dmxDelta->intValue();
+        FixtureTypeDMXChannel* channel = parentFixtureTypeChannel->dmxChannel->getTargetContainerAs<FixtureTypeDMXChannel>();
+        int deltaAdress = channel->dmxDelta->intValue();
 		deltaAdress--;
 		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
 		for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
@@ -202,6 +205,36 @@ void SubFixtureChannel::writeValue(float v) {
 
 }
 
+void SubFixtureChannel::writeLogicalValue(float v)
+{
+    v = jlimit(0.0f, 1.0f, v);
+    
+    if (virtualMaster != nullptr) {
+        v *= virtualMaster->currentValue;
+    }
+
+    currentValue = v;
+    parentFixture->channelValueChanged(subFixtureId, channelType, v);
+
+    if (virtualChildren.size() > 0) {
+        for (int i = 0; i < virtualChildren.size(); i++) {
+            virtualChildren[i]->isDirty = true;
+            //Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
+        }
+        return;
+    }
+    
+    // Notify physical channel of the change
+    if (physicalChannel != nullptr) {
+        physicalChannel->onLogicalChannelChanged(this);
+    }
+}
+
+bool SubFixtureChannel::isContributing()
+{
+    return currentValue > 0.0f && physicalChannel != nullptr;
+}
+
 
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
@@ -211,7 +244,7 @@ void SubFixtureChannel::updateVal(double now) {
 	}
 
 	postCuelistValue = newValue;
-
+    
 	cs.enter();
 	Array<int> layers;
 
@@ -339,7 +372,7 @@ void SubFixtureChannel::updateVal(double now) {
 	}
 
 	cs.exit();
-	writeValue(newValue);
+	writeLogicalValue(newValue);
 }
 
 void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
@@ -445,4 +478,3 @@ void SubFixtureChannel::selectionMasterOutOfStack(SelectionMaster* f) {
 	}
 	cs.exit();
 }
-

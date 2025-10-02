@@ -13,6 +13,7 @@
 #include "FixtureTypeChannel.h"
 #include "FixtureTypeChannelManager.h"
 #include "FixtureTypeVirtualChannelManager.h"
+#include "FixtureTypeDMXChannelManager.h"
 
 class FixtureType:
     public BaseItem
@@ -37,6 +38,7 @@ public:
     IntParameter* copyToId;
     Trigger* copyTemplateButton;
 
+    FixtureTypeDMXChannelManager dmxChannelsManager;
     FixtureTypeChannelManager chansManager;
     FixtureTypeVirtualChannelManager virtualChansManager;
     ControllableContainer helpContainer;

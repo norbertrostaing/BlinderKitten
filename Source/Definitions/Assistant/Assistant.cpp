@@ -322,9 +322,9 @@ void Assistant::patchFixtures()
             p->address->setValue(currentAdress);
             int delta = abs(addressInterval);
 
-            for (int cn = 0; cn < fixtureType->chansManager.items.size(); cn++) {
-                int chanSize = fixtureType->chansManager.items[cn]->resolution->getValue().toString() == "16bits" ? 1 : 0;
-                delta = jmax(delta, (int)fixtureType->chansManager.items[cn]->dmxDelta->getValue() + chanSize);
+            for (int cn = 0; cn < fixtureType->dmxChannelsManager.items.size(); cn++) {
+                int chanSize = fixtureType->dmxChannelsManager.items[cn]->resolution->getValue().toString() == "16bits" ? 1 : 0;
+                delta = jmax(delta, (int)fixtureType->dmxChannelsManager.items[cn]->dmxDelta->intValue() + chanSize);
 
             }
 

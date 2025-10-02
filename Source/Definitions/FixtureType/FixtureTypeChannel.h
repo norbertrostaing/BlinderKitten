@@ -31,7 +31,9 @@ class FixtureTypeChannel:
     BoolParameter* invertOutput;
     EnumParameter* resolution;
     EnumParameter* fadeOrSnap;
-    IntParameter* dmxDelta;
+    TargetParameter* dmxChannel;
+    Point2DParameter* dmxRange;
+    
     TargetParameter* virtualMaster;
 
     Point2DParameter* physicalRange;
