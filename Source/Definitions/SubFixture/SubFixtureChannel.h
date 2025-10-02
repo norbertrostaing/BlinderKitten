@@ -59,7 +59,7 @@ public:
 
     FixtureDMXChannel* physicalChannel = nullptr;  // Shared DMX channel
 
-    void writeValue(float v);                      // DEPRECATED - use setLogicalValue instead
+    void writeValue(float v);                      // DEPRECATED - use writeLogicalValue instead
 
     // NEW: Logical channel methods
     void writeLogicalValue(float v);               // Set logical value and notify physical channel

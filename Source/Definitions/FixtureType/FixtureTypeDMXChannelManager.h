@@ -17,7 +17,7 @@ class FixtureTypeDMXChannelManager : public BaseManager<FixtureTypeDMXChannel>
 public:
     FixtureTypeDMXChannelManager();
     ~FixtureTypeDMXChannelManager();
-
+    
     void calcDmxChannels();
     void addItemInternal(FixtureTypeDMXChannel* c, var data) override;
     void askForRemoveBaseItem(BaseItem* item) override;

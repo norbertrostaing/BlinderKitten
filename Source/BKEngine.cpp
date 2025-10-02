@@ -952,18 +952,21 @@ void BKEngine::exportSelection()
 {
 	var data(new DynamicObject());
 
-	for (Inspectable* i : selectionManager->currentInspectables) {
-		FixtureType* ft = dynamic_cast<FixtureType*>(i);
-		if (ft != nullptr) {
-			for (FixtureTypeChannel* ftc : ft->chansManager.items) {
-				ChannelType* ct = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
-				if (ct != nullptr) {
-					ChannelFamily *cf = dynamic_cast<ChannelFamily*>(ct->parentContainer->parentContainer.get());
-					if (cf != nullptr) cf->selectThis(true);
-				}
-			}
-		}
-	}
+    // TODO: Fix export
+//	for (Inspectable* i : selectionManager->currentInspectables) {
+//		FixtureType* ft = dynamic_cast<FixtureType*>(i);
+//		if (ft != nullptr) {
+//            for (FixtureTypeDMXChannel* dmx : ft->dmxChannelsManager.items) {
+//                for (FixtureTypeChannel* ftc : ft->chansManager.items) {
+//                    ChannelType* ct = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
+//                    if (ct != nullptr) {
+//                        ChannelFamily *cf = dynamic_cast<ChannelFamily*>(ct->parentContainer->parentContainer.get());
+//                        if (cf != nullptr) cf->selectThis(true);
+//                    }
+//                }
+//            }
+//		}
+//	}
 
 	data.getDynamicObject()->setProperty(InterfaceManager::getInstance()->shortName, InterfaceManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(ChannelFamilyManager::getInstance()->shortName, ChannelFamilyManager::getInstance()->getExportSelectionData());
@@ -1110,135 +1113,136 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 			XmlElement* dmxModesNode = fixtureTypeNode->getChildByName("DMXModes");
 			if (dmxModesNode == nullptr) { LOGERROR("import not finished, the fixture has no DMXModes tag"); }
-			for (int iMode = 0; iMode < dmxModesNode->getNumChildElements(); iMode++) {
-				auto modeNode = dmxModesNode->getChildElement(iMode);
-				String modeName = modeNode->getStringAttribute("Name");
-				if (importModeName == "" || importModeName == modeName) {
-
-					FixtureType* ft = FixtureTypeManager::getInstance()->addItem();
-					ret = ft;
-					ft->setNiceName(fixtureName + " - " + modeName);
-
-					Array<tempChannel> tempChannels;
-					Array<String> getMasterDimmer;
-					HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
-					auto modeRelations = modeNode->getChildByName("Relations");
-					if (modeRelations != nullptr) {
-						for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
-							getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
-						}
-					}
-					XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
-					Array<String> subFixtureNames;
-					auto modeChannels = modeNode->getChildByName("DMXChannels");
-					if (modeChannels != nullptr) {
-						for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
-							auto dmxChannelNode = modeChannels->getChildElement(iChan);
-							String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
-							String geometry = dmxChannelNode->getStringAttribute("Geometry");
-							String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
-							int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
-							int dmxAdress = 0;
-							int resolution = 0;
-
-							auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
-							float physicalFrom = 0;
-							float physicalTo = 0;
-							String attribute = "###dummy###";
-							if (logicalChannelNode != nullptr) {
-								attribute = logicalChannelNode->getStringAttribute("Attribute");
-								if (logicalChannelNode->getNumChildElements() == 1) {
-									auto chanFunctionTag = logicalChannelNode->getFirstChildElement();
-									if (chanFunctionTag->hasTagName("ChannelFunction")) {
-										physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
-										physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
-									}
-								}
-							}
-
-							if (DMXOffset == "") {
-								// virtual
-							}
-							else if (DMXOffset.indexOf(",") != -1) {
-								dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
-								resolution = 2;
-							}
-							else {
-								dmxAdress = DMXOffset.getIntValue();
-								resolution = 1;
-							}
-							Array<geometryBreaks> breaks;
-
-							getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
-							if (dmxAdress > 0) {
-								if (breaks.size() > 0) {
-									for (int i = 0; i < breaks.size(); i++) {
-										subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
-										tempChannel tc;
-										tc.attribute = attribute;
-										tc.resolution = resolution;
-										tc.subFixtId = subFixtureNames.indexOf(breaks[i].name) + 1;
-										tc.initialFunction = initialFunction;
-										tc.physicalFrom = physicalFrom;
-										tc.physicalTo = physicalTo;
-										int index = dmxAdress;
-										index += breaks[i].offset;
-										index -= 2;
-										while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
-										tempChannels.set(index, tc);
-									}
-								}
-								else {
-									tempChannel tc;
-									tc.attribute = attribute;
-									tc.resolution = resolution;
-									tc.initialFunction = initialFunction;
-									tc.physicalFrom = physicalFrom;
-									tc.physicalTo = physicalTo;
-									if (subFixtureNames.indexOf(geometry) == -1) { subFixtureNames.add(geometry); }
-									tc.subFixtId = subFixtureNames.indexOf(geometry) + 1;
-									int index = dmxAdress - 1;
-									while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
-									tempChannels.set(index, tc);
-								}
-							}
-						}
-					}
-
-					// got all channels
-					for (int i = 0; i < tempChannels.size(); i++) {
-						if (tempChannels[i].attribute != "") {
-							FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
-							ftc->subFixtureId->setValue(1);
-							if (tempChannels[i].attribute != "###dummy###") {
-								String attrName = tempChannels[i].attribute;
-								if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
-
-								ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
-								ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
-								var phys;
-								phys.append(tempChannels[i].physicalFrom);
-								phys.append(tempChannels[i].physicalTo);
-								ftc->physicalRange->setValue(phys);
-								if (tempChannels[i].resolution == 2)
-								{
-									ftc->resolution->setValue("16bits");
-								}
-								if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
-									if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
-										FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(),false, false);
-										subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
-										virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
-										virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
-										virtDim->setNiceName("Dimmer " + String(tempChannels[i].subFixtId));
-									}
-									ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
-								}
-							}
-						}
-					}
-				}
-			}
+            // TODO: Fix import for new structure
+//			for (int iMode = 0; iMode < dmxModesNode->getNumChildElements(); iMode++) {
+//				auto modeNode = dmxModesNode->getChildElement(iMode);
+//				String modeName = modeNode->getStringAttribute("Name");
+//				if (importModeName == "" || importModeName == modeName) {
+//
+//					FixtureType* ft = FixtureTypeManager::getInstance()->addItem();
+//					ret = ft;
+//					ft->setNiceName(fixtureName + " - " + modeName);
+//
+//					Array<tempChannel> tempChannels;
+//					Array<String> getMasterDimmer;
+//					HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
+//					auto modeRelations = modeNode->getChildByName("Relations");
+//					if (modeRelations != nullptr) {
+//						for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
+//							getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
+//						}
+//					}
+//					XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
+//					Array<String> subFixtureNames;
+//					auto modeChannels = modeNode->getChildByName("DMXChannels");
+//					if (modeChannels != nullptr) {
+//						for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
+//							auto dmxChannelNode = modeChannels->getChildElement(iChan);
+//							String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
+//							String geometry = dmxChannelNode->getStringAttribute("Geometry");
+//							String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
+//							int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
+//							int dmxAdress = 0;
+//							int resolution = 0;
+//
+//							auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
+//							float physicalFrom = 0;
+//							float physicalTo = 0;
+//							String attribute = "###dummy###";
+//							if (logicalChannelNode != nullptr) {
+//								attribute = logicalChannelNode->getStringAttribute("Attribute");
+//								if (logicalChannelNode->getNumChildElements() == 1) {
+//									auto chanFunctionTag = logicalChannelNode->getFirstChildElement();
+//									if (chanFunctionTag->hasTagName("ChannelFunction")) {
+//										physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
+//										physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
+//									}
+//								}
+//							}
+//
+//							if (DMXOffset == "") {
+//								// virtual
+//							}
+//							else if (DMXOffset.indexOf(",") != -1) {
+//								dmxAdress = StringArray::fromTokens(DMXOffset, ",", "")[0].getIntValue();
+//								resolution = 2;
+//							}
+//							else {
+//								dmxAdress = DMXOffset.getIntValue();
+//								resolution = 1;
+//							}
+//							Array<geometryBreaks> breaks;
+//
+//							getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
+//							if (dmxAdress > 0) {
+//								if (breaks.size() > 0) {
+//									for (int i = 0; i < breaks.size(); i++) {
+//										subFixtureNames.addIfNotAlreadyThere(breaks[i].name);
+//										tempChannel tc;
+//										tc.attribute = attribute;
+//										tc.resolution = resolution;
+//										tc.subFixtId = subFixtureNames.indexOf(breaks[i].name) + 1;
+//										tc.initialFunction = initialFunction;
+//										tc.physicalFrom = physicalFrom;
+//										tc.physicalTo = physicalTo;
+//										int index = dmxAdress;
+//										index += breaks[i].offset;
+//										index -= 2;
+//										while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+//										tempChannels.set(index, tc);
+//									}
+//								}
+//								else {
+//									tempChannel tc;
+//									tc.attribute = attribute;
+//									tc.resolution = resolution;
+//									tc.initialFunction = initialFunction;
+//									tc.physicalFrom = physicalFrom;
+//									tc.physicalTo = physicalTo;
+//									if (subFixtureNames.indexOf(geometry) == -1) { subFixtureNames.add(geometry); }
+//									tc.subFixtId = subFixtureNames.indexOf(geometry) + 1;
+//									int index = dmxAdress - 1;
+//									while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+//									tempChannels.set(index, tc);
+//								}
+//							}
+//						}
+//					}
+//
+//					// got all channels
+//					for (int i = 0; i < tempChannels.size(); i++) {
+//						if (tempChannels[i].attribute != "") {
+//							FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
+//							ftc->subFixtureId->setValue(1);
+//							if (tempChannels[i].attribute != "###dummy###") {
+//								String attrName = tempChannels[i].attribute;
+//								if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
+//
+//								ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
+//								ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+//								var phys;
+//								phys.append(tempChannels[i].physicalFrom);
+//								phys.append(tempChannels[i].physicalTo);
+//								ftc->physicalRange->setValue(phys);
+//								if (tempChannels[i].resolution == 2)
+//								{
+//									ftc->resolution->setValue("16bits");
+//								}
+//								if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
+//									if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
+//										FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(),false, false);
+//										subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
+//										virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
+//										virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
+//										virtDim->setNiceName("Dimmer " + String(tempChannels[i].subFixtId));
+//									}
+//									ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
 			LOG("ok");
 		}
 	}

@@ -119,15 +119,16 @@ void FixturePatch::tryToEnablePatch()
 	if (ft == nullptr) {return;}
 	if (inter == nullptr) {return;}
 
+    // TODO: channelTypes mapping cleanup
 	Array<ChannelType *> channelTypes;
 	int n = 0;
-	for (int i = 0; i < ft->chansManager.items.size(); i++) {
-		FixtureTypeChannel* chan = ft->chansManager.items[i];
-        int c = 0; //chan->dmxDelta->intValue();
-		channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
+	for (int i = 0; i < ft->dmxChannelsManager.items.size(); i++) {
+		FixtureTypeDMXChannel* chan = ft->dmxChannelsManager.items[i];
+        int c = chan->dmxDelta->intValue();
+		// channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
 		if (chan->resolution->getValue() == "16bits") {
 			c+=1;
-			channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
+			// channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
 		}
 		n = jmax(n,c);
 	}
@@ -180,6 +181,7 @@ void FixturePatch::tryToEnablePatch()
 
 	currentInterface->setValueFromTarget(inter);
 
+    // TODO: these channelTo... mappings
 	for (int i = 0; i < n; i++) {
 		inter->channelToFixturePatch.set(a+i,this);
 		if (channelTypes.size() > i) {

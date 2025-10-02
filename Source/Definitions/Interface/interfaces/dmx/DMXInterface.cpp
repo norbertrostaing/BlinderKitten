@@ -433,7 +433,7 @@ void DMXInterface::inputToProgrammer()
 					cv->channelType->setValueFromTarget(sfc->channelType);
 					if (sfc->resolution == "16bits") {
 						int address = channelToFixturePatch[i+1]->address->intValue();
-                        FixtureTypeDMXChannel* channel = sfc->parentFixtureTypeChannel->dmxChannel->getTargetContainerAs<FixtureTypeDMXChannel>();
+                        FixtureTypeDMXChannel* channel = sfc->parentFixtureTypeChannel->getParentDMXChannel();
                         int deltaAddress = channel->dmxDelta->intValue();
                         address += deltaAddress;
 						float finalValue = dmxDevice->dmxDataIn[address-1]*256;

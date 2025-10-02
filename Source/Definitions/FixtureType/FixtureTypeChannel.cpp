@@ -12,6 +12,7 @@
 #include "../ChannelFamily/ChannelFamilyManager.h"
 #include "FixtureTypeChannelManager.h"
 #include "FixtureTypeVirtualChannelManager.h"
+#include "FixtureTypeDMXChannel.h"
 #include "FixtureType.h"
 #include "Tracker/TrackerManager.h"
 #include "Fixture/FixtureManager.h"
@@ -66,10 +67,7 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     fadeOrSnap->addOption("Snap", "snap");
 
     invertOutput = addBoolParameter("Invert output", "if checked, output will be inverted", false);
-    
-    dmxChannel = addTargetParameter("DMX Channel", "DMX Channel used");
-    dmxChannel->targetType = TargetParameter::CONTAINER;
-    dmxChannel->maxDefaultSearchLevel = 2;
+
     dmxRange = addPoint2DParameter("DMX Output Range", "The range to remap the value to.");
     dmxRange->setBounds(0, 0, 256, 256); // TODO: based on resolution
     dmxRange->setDefaultPoint(0, 256);
@@ -128,4 +126,10 @@ void FixtureTypeChannel::onControllableFeedbackUpdateInternal(ControllableContai
             }
         }
     }
+}
+
+FixtureTypeDMXChannel* FixtureTypeChannel::getParentDMXChannel()
+{
+    // Get parent from object hierarchy - should be a FixtureTypeDMXChannel
+    return dynamic_cast<FixtureTypeDMXChannel*>(parentContainer.get());
 }

@@ -14,7 +14,8 @@
 FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     BaseItem(params.getProperty("name", "DMX Channel")),
     objectType(params.getProperty("type", "FixtureTypeDMXChannel").toString()),
-    objectData(params)
+    objectData(params),
+    chansManager()
 {
     itemDataType = "FixtureTypeDMXChannel";
 
@@ -29,6 +30,10 @@ FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     highlightValue = addFloatParameter("Highlight Value", "Value to use when highlighting this channel", 0, 0, 1);
     highlightValue->canBeDisabledByUser = true;
     highlightValue->setEnabled(false);
+    
+    chansManager.addItem();
+    
+    addChildControllableContainer(&chansManager);
 }
 
 FixtureTypeDMXChannel::~FixtureTypeDMXChannel()

@@ -152,7 +152,7 @@ void SubFixtureChannel::writeValue(float v) {
 			v = parentFixtureTypeChannel->curve.getValueAtPosition(v);
 		}
 
-        FixtureTypeDMXChannel* channel = parentFixtureTypeChannel->dmxChannel->getTargetContainerAs<FixtureTypeDMXChannel>();
+        FixtureTypeDMXChannel* channel = parentFixtureTypeChannel->getParentDMXChannel();
         int deltaAdress = channel->dmxDelta->intValue();
 		deltaAdress--;
 		String chanRes = parentFixtureTypeChannel->resolution->stringValue();

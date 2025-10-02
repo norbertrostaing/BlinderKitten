@@ -39,7 +39,6 @@ public:
     Trigger* copyTemplateButton;
 
     FixtureTypeDMXChannelManager dmxChannelsManager;
-    FixtureTypeChannelManager chansManager;
     FixtureTypeVirtualChannelManager virtualChansManager;
     ControllableContainer helpContainer;
 

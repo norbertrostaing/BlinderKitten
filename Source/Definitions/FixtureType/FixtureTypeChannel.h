@@ -31,7 +31,6 @@ class FixtureTypeChannel:
     BoolParameter* invertOutput;
     EnumParameter* resolution;
     EnumParameter* fadeOrSnap;
-    TargetParameter* dmxChannel;
     Point2DParameter* dmxRange;
     
     TargetParameter* virtualMaster;
@@ -41,6 +40,9 @@ class FixtureTypeChannel:
 
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+    // Get parent DMX channel from object hierarchy
+    class FixtureTypeDMXChannel* getParentDMXChannel();
 
 };
 
