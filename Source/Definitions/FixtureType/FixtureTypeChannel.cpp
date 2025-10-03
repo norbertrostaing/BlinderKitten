@@ -49,12 +49,6 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     channelType -> maxDefaultSearchLevel = 2;
     channelType->typesFilter.add("ChannelType");
 
-    // TODO: Remove this
-    resolution = addEnumParameter("Resolution", "");
-    resolution->addOption("8bits", "8bits");
-    resolution->addOption("16bits", "16bits");
-    resolution->addOption("Fine channel only", "fine");
-
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
     defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
     highlightValue = addFloatParameter("Highlight value", "Value of the channel during highlight", 0, 0, 1);
@@ -100,13 +94,7 @@ FixtureTypeChannel::~FixtureTypeChannel()
 };
 
 void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
-    if (p == resolution || p == channelType) {
-        FixtureTypeChannelManager* manager = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
-        if (manager != nullptr) {
-            manager->calcDmxChannels();
-        }
-    }
-    else if (p == physicalRange) {
+    if (p == physicalRange) {
         TrackerManager::getInstance()->recomputeAllTrackers();
     }
     else if (p == defaultValue || p == invertOutput) {

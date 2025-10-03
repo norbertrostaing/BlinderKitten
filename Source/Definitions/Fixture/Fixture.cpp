@@ -245,16 +245,13 @@ void Fixture::checkChildrenSubFixtures() {
             if (subFixt != nullptr && c != nullptr) {
                 ChannelType* param = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
                 if (param != nullptr) {
-                    String res = c->resolution->getValue();
+                    String res = typeDMXChannel->resolution->getValue();
                     if (res == "fine") {
                         if (!subFixt->channelsMap.contains(param)) {
                             LOGERROR("fine parameter must be after coarse parameter -_- (" + String(subId) + " - " + param->niceName + " )");
                             continue;
                         }
                         SubFixtureChannel* chan = subFixt->channelsMap.getReference(param);
-                        
-                        //					int indexCoarse = chan->parentFixtureTypeChannel->dmxDelta->intValue();
-                        //					int indexFine = c->dmxDelta->intValue();
                         chan->fineChannelDelta = 0;
                     }
                     else {
@@ -268,7 +265,7 @@ void Fixture::checkChildrenSubFixtures() {
                         chan->defaultValue = c->defaultValue->getValue();
                         chan->highlightValue = c->highlightValue->getValue();
                         chan->isHTP = param->priority->getValue() == "HTP";
-                        chan->resolution = c->resolution->getValue();
+                        chan->resolution = res;
                         if (chan->resolution == "16bits") {
                             chan->fineChannelDelta = 1;
                         }

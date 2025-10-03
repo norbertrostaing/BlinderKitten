@@ -153,9 +153,9 @@ void SubFixtureChannel::writeValue(float v) {
 		}
 
         FixtureTypeDMXChannel* channel = parentFixtureTypeChannel->getParentDMXChannel();
-        int deltaAdress = channel->dmxDelta->intValue();
-		deltaAdress--;
-		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
+        int deltaAdress = channel->dmxDelta->intValue() - 1;
+        String chanRes = channel->resolution->stringValue();
+        
 		for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
 			FixturePatch* p = parentFixture->patchs.items[i];
 			if (p->enabled->boolValue()) {

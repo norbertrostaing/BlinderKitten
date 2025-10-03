@@ -96,7 +96,7 @@ void FixtureDMXChannel::resolveActiveLogicalChannel()
     }
 
     // For now, use highest range resolution (array is kept sorted by DMX range)
-    // TODO: Implement other resolution modes, LTP, etc
+    // TODO: Implement other resolution modes, LTP, highlight contention?
     for (SubFixtureChannel* sfc : logicalChannels) {
         if (sfc != nullptr && sfc->isContributing()) {
             activeLogicalChannel = sfc;
@@ -174,12 +174,4 @@ void FixtureDMXChannel::outputToHardware()
         }
 
     }
-}
-
-float FixtureDMXChannel::getHighlightValue()
-{
-    if (fixtureTypeDMXChannel != nullptr) {
-        return fixtureTypeDMXChannel->highlightValue->floatValue();
-    }
-    return 1.0f; // Default highlight value
 }

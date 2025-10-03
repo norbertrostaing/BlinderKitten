@@ -27,10 +27,6 @@ FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     resolution->addOption("16bits", "16bits");
     resolution->addOption("Fine channel only", "fine");
     
-    highlightValue = addFloatParameter("Highlight Value", "Value to use when highlighting this channel", 0, 0, 1);
-    highlightValue->canBeDisabledByUser = true;
-    highlightValue->setEnabled(false);
-    
     chansManager.addItem();
     
     addChildControllableContainer(&chansManager);
@@ -47,12 +43,5 @@ void FixtureTypeDMXChannel::onContainerParameterChangedInternal(Parameter* p)
         if (manager != nullptr) {
             manager->calcDmxChannels();
         }
-    }
-//    else if (p == physicalRange) {
-//        TrackerManager::getInstance()->recomputeAllTrackers();
-//    }
-
-    else if (p == highlightValue) {
-        if (!p->enabled) p->setEnabled(true);
     }
 }

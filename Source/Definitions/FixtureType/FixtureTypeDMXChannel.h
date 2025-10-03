@@ -22,7 +22,6 @@ public:
     var objectData;
 
     IntParameter* dmxDelta;
-    FloatParameter* highlightValue;
     EnumParameter* resolution;
     
     FixtureTypeChannelManager chansManager;

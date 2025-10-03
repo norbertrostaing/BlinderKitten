@@ -50,9 +50,7 @@ void FixtureType::afterLoadJSONDataInternal() {
 }
 
 void FixtureType::updateVirtualLists() {
-	// Add safety check to prevent crash during destruction
-	if (dmxChannelsManager.items.getLock().tryEnter()) {
-		for (int x = 0; x < dmxChannelsManager.items.size(); x++) {
+    for (int x = 0; x < dmxChannelsManager.items.size(); x++) {
         FixtureTypeDMXChannel* dmxChannel = dmxChannelsManager.items[x];
         
         for (int i=0; i < dmxChannel->chansManager.items.size(); i++) {
@@ -60,13 +58,6 @@ void FixtureType::updateVirtualLists() {
             dmxChannel->chansManager.items[i]->virtualMaster->setRootContainer(&virtualChansManager);
             dmxChannel->chansManager.items[i]->virtualMaster->setValue(value);
         }
-
-		// Set up DMX channel assignment target
-//		String dmxValue = chansManager.items[i]->dmxChannel->getValue();
-//		chansManager.items[i]->dmxChannel->setRootContainer(&dmxChannelsManager);
-//		chansManager.items[i]->dmxChannel->setValue(dmxValue);
-		}
-		dmxChannelsManager.items.getLock().exit();
 	}
 }
 

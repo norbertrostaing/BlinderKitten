@@ -33,7 +33,6 @@ public:
     void onLogicalChannelChanged(SubFixtureChannel* sfc);
     void resolveAndOutput();
 
-    float getHighlightValue();                   // Get highlight value from type
     int getDMXAddress();                         // Get resolved DMX address
 
 private:

@@ -12,6 +12,7 @@ FixtureTypeChannelManager::~FixtureTypeChannelManager()
 {
 }
 
+// TODO: change this to calculate/check ranges for collisions?
 void FixtureTypeChannelManager::calcDmxChannels() {
 	if (massiveImport) return;
 //	int current = 1;
@@ -66,14 +67,6 @@ void FixtureTypeChannelManager::askForMoveAfter(BaseItem* c) {
 
 void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data) {
 	calcDmxChannels();
-	// Temporarily disabled to prevent crash during nested DMX channel restructuring
-	// TODO: Re-enable after restructuring is complete
-	/*
-	if (parentContainer != nullptr && !Brain::getInstance()->loadingIsRunning) {
-		FixtureType* ft = dynamic_cast<FixtureType* >(parentContainer.get());
-		ft->updateVirtualLists();
-	}
-	*/
 }
 void FixtureTypeChannelManager::askForRemoveBaseItem(BaseItem* item) {
 	BaseManager::askForRemoveBaseItem(item);
