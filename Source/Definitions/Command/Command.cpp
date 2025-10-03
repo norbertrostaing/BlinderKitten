@@ -321,12 +321,18 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 			for (int indexFixt = 0; indexFixt < subFixtures.size(); indexFixt++) {
 				SubFixture* sf = subFixtures[indexFixt];
 				float normalizedPosition = indexFixt / (float)(subFixtures.size()-1);
+                if(isnan(normalizedPosition)) {
+                    normalizedPosition = 0;
+                }
 				bool useNormalized = false;
 				if (selection.subFixtureToPosition.contains(sf)) {
 					useNormalized = true;
 					normalizedPosition = selection.subFixtureToPosition.getReference(sf);
 				}
-				float normalizedPositionSym = jmap(normalizedPosition,0.f,maxNormalizedPosition,0.f,1.f) * 2;
+                float normalizedPositionSym = 0;
+                if (maxNormalizedPosition > 0) {
+                    normalizedPositionSym = jmap(normalizedPosition,0.f,maxNormalizedPosition,0.f,1.f) * 2;
+                }
 				normalizedPositionSym = normalizedPositionSym > 1 ? 2 - normalizedPositionSym : normalizedPositionSym;
 
 				std::shared_ptr<HashMap<ChannelType*, float>> valuesFrom = std::make_shared <HashMap<ChannelType*, float>>();
