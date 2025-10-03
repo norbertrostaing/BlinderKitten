@@ -1370,7 +1370,7 @@ void BKEngine::importFixtureFromMVR(XmlElement* child, std::shared_ptr<ZipFile> 
 
 	id = child->getChildByName("FixtureID")->getAllSubText().trim().getIntValue();
 	if (id == 0) {
-		id = child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue();
+		id = child->getChildByName("UnitNumber") != nullptr ? child->getChildByName("UnitNumber")->getAllSubText().trim().getIntValue() : 0;
 	}
 
 	if (valid) {
