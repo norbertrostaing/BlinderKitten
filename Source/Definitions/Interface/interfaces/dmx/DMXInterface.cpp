@@ -29,7 +29,8 @@ DMXInterface::DMXInterface() :
 		->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)
 		->addOption("Art-Net", DMXDevice::ARTNET)
 		->addOption("Eurolite USB-DMX512 Pro", DMXDevice::EUROLITE)
-		->addOption("sACN", DMXDevice::SACN);
+		->addOption("sACN", DMXDevice::SACN)
+        ->addOption("DMXKing", DMXDevice::DMXKING);
 	dmxType->setValueWithKey("Open DMX");
 
 	dmxConnected = addBoolParameter("Connected", "DMX is connected ?", false);
