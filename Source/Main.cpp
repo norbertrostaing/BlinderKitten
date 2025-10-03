@@ -15,7 +15,6 @@ BlinderKittenApplication::BlinderKittenApplication() :
 void BlinderKittenApplication::initialiseInternal(const String &)
 {
 	engine.reset(new BKEngine());
-	if(useWindow) mainComponent.reset(new MainContentComponent());
 
 	//Call after engine init
 	AppUpdater::getInstance()->setURLs("https://blinderkitten.lighting/update.json", "https://blinderkitten.lighting/installs/", "BlinderKitten");
@@ -27,6 +26,7 @@ void BlinderKittenApplication::initialiseInternal(const String &)
 	
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_blinderlayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("blinderlayout", "BlinderKitten/layouts");
+    if(useWindow) mainComponent.reset(new MainContentComponent());
 }
 
 
