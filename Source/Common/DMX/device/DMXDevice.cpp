@@ -136,6 +136,10 @@ DMXDevice* DMXDevice::create(Type type)
 		return new DMXSACNDevice();
 		break;
 
+	case DMXKING:
+		return new DMXKingDevice();
+		break;
+
 	default:
 		DBG("Not handled");
 		break;

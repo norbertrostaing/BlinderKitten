@@ -266,6 +266,7 @@
 		17A28BCED9670E9D92D58781 /* DMXArtNetDevice.cpp */ /* DMXArtNetDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXArtNetDevice.cpp; path = ../../Source/Common/DMX/device/DMXArtNetDevice.cpp; sourceTree = SOURCE_ROOT; };
 		17CD59F07AAF0B1D28008686 /* InterfaceAction.cpp */ /* InterfaceAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InterfaceAction.cpp; path = ../../Source/Definitions/Actions/InterfaceAction.cpp; sourceTree = SOURCE_ROOT; };
 		181A07662AAC881A0B6981AA /* FixtureGridView.cpp */ /* FixtureGridView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureGridView.cpp; path = ../../Source/UI/GridView/FixtureGridView.cpp; sourceTree = SOURCE_ROOT; };
+		1855D745B46C82FADB7C69A8 /* DMXKingManager.cpp */ /* DMXKingManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXKingManager.cpp; path = ../../Source/Common/DMX/device/DMXKingManager.cpp; sourceTree = SOURCE_ROOT; };
 		1865B24A35045C21873DF897 /* ChannelFamilyManager.h */ /* ChannelFamilyManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelFamilyManager.h; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManager.h; sourceTree = SOURCE_ROOT; };
 		197ECD317D224A16CC530D7B /* InputPanelAction.cpp */ /* InputPanelAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputPanelAction.cpp; path = ../../Source/Definitions/Actions/InputPanelAction.cpp; sourceTree = SOURCE_ROOT; };
 		19CD88406B5F91BA01EB2F7B /* MIDIMappingEditor.h */ /* MIDIMappingEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIMappingEditor.h; path = ../../Source/Definitions/Interface/interfaces/midi/ui/MIDIMappingEditor.h; sourceTree = SOURCE_ROOT; };
@@ -383,6 +384,7 @@
 		580A7738712B044BC5D57AED /* FixtureType.cpp */ /* FixtureType.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureType.cpp; path = ../../Source/Definitions/FixtureType/FixtureType.cpp; sourceTree = SOURCE_ROOT; };
 		5902880D8C6266E7A543E631 /* include_juce_organicui4.cpp */ /* include_juce_organicui4.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui4.cpp; path = ../../JuceLibraryCode/include_juce_organicui4.cpp; sourceTree = SOURCE_ROOT; };
 		5941FA6A90768BF9A5502B6B /* CommandSelectionManager.cpp */ /* CommandSelectionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandSelectionManager.cpp; path = ../../Source/Definitions/Command/CommandSelectionManager.cpp; sourceTree = SOURCE_ROOT; };
+		5980950E7C53438B39E1E3DC /* DMXKingDevice.cpp */ /* DMXKingDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXKingDevice.cpp; path = ../../Source/Common/DMX/device/DMXKingDevice.cpp; sourceTree = SOURCE_ROOT; };
 		5994718CBE5FBFFB7CE9D8ED /* BundleAction.h */ /* BundleAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BundleAction.h; path = ../../Source/Definitions/Actions/BundleAction.h; sourceTree = SOURCE_ROOT; };
 		5AAD17CFD29D80557F9F840E /* Programmer.h */ /* Programmer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Programmer.h; path = ../../Source/Definitions/Programmer/Programmer.h; sourceTree = SOURCE_ROOT; };
 		5ABAC0BB0FF1C7D8D4D668A6 /* MapperAction.h */ /* MapperAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapperAction.h; path = ../../Source/Definitions/Actions/MapperAction.h; sourceTree = SOURCE_ROOT; };
@@ -578,6 +580,7 @@
 		C2BCDF4037840E45BA3E7E08 /* VirtualFaderColManagerUI.h */ /* VirtualFaderColManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualFaderColManagerUI.h; path = ../../Source/UI/VirtualFaders/VirtualFaderColManagerUI.h; sourceTree = SOURCE_ROOT; };
 		C341F4837AA231F0D1F5AB62 /* colorpicker.png */ /* colorpicker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = colorpicker.png; path = ../../Ressources/colorpicker.png; sourceTree = SOURCE_ROOT; };
 		C367855733BE23EFCB64EA4E /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
+		C38E4152867860612D46197C /* DMXKingDevice.h */ /* DMXKingDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXKingDevice.h; path = ../../Source/Common/DMX/device/DMXKingDevice.h; sourceTree = SOURCE_ROOT; };
 		C3DEA777296931874600C0E8 /* FixtureMapping.h */ /* FixtureMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureMapping.h; path = ../../Source/Definitions/Fixture/FixtureMapping.h; sourceTree = SOURCE_ROOT; };
 		C3F4E0B7220A005B961C1F49 /* TrackerManager.cpp */ /* TrackerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrackerManager.cpp; path = ../../Source/Definitions/Tracker/TrackerManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6DEAF58E7E2C03A08D4EC20 /* VirtualFaderColManager.cpp */ /* VirtualFaderColManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderColManager.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderColManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -661,6 +664,7 @@
 		EA83A967D6F2B7C960B23AE6 /* TrackerManagerUI.h */ /* TrackerManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TrackerManagerUI.h; path = ../../Source/Definitions/Tracker/TrackerManagerUI.h; sourceTree = SOURCE_ROOT; };
 		EABF4249A8BE72CFCB047C98 /* BundleSelection.h */ /* BundleSelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BundleSelection.h; path = ../../Source/Definitions/Bundle/BundleSelection.h; sourceTree = SOURCE_ROOT; };
 		EAC12D832E2F8B97C382CCF9 /* OSCMapping.h */ /* OSCMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCMapping.h; path = ../../Source/Definitions/Interface/interfaces/osc/OSCMapping.h; sourceTree = SOURCE_ROOT; };
+		EBA9BEBCBB8CBB6285BC2F5C /* DMXKingManager.h */ /* DMXKingManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXKingManager.h; path = ../../Source/Common/DMX/device/DMXKingManager.h; sourceTree = SOURCE_ROOT; };
 		EBD6D22055646F12F15B281D /* InterfaceManagerUI.h */ /* InterfaceManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceManagerUI.h; path = ../../Source/Definitions/Interface/ui/InterfaceManagerUI.h; sourceTree = SOURCE_ROOT; };
 		ED6A0B82F8048D94BFA8D889 /* EffectAction.cpp */ /* EffectAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectAction.cpp; path = ../../Source/Definitions/Actions/EffectAction.cpp; sourceTree = SOURCE_ROOT; };
 		EDF255073E203504EC2B2D00 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1589,6 +1593,10 @@
 				4FE6612BB9154E6643987C60,
 				1F4A84A1AF9CDB48E3E47DEC,
 				0035ABB06ECA7EDCAB496C6A,
+				5980950E7C53438B39E1E3DC,
+				C38E4152867860612D46197C,
+				1855D745B46C82FADB7C69A8,
+				EBA9BEBCBB8CBB6285BC2F5C,
 				3CBA8F4337A7E507D8D40C07,
 				49482E859F6AF960EF1DEFB4,
 				014EDAA820EA34A7242D76BE,

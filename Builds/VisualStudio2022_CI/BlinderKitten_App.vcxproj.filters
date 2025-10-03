@@ -1273,6 +1273,12 @@
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.cpp">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\DMXKingDevice.cpp">
+      <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\DMXKingManager.cpp">
+      <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXEuroliteDevice.cpp">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClCompile>
@@ -5149,6 +5155,12 @@
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.h">
+      <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\device\DMXKingDevice.h">
+      <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\device\DMXKingManager.h">
       <Filter>BlinderKitten\Source\Common\DMX\device</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXEuroliteDevice.h">
