@@ -30,8 +30,10 @@ public:
     void askForDuplicateItem(BaseItem* item);
     void setItemIndex(Fixture* item, int newIndex, bool addToUndo = true);
 
-    void defaultValueChanged(FixtureTypeChannel* ftc);
+    void defaultValueChanged(FixtureTypeDMXChannel* ftc);
     void defaultValueChanged(FixtureTypeVirtualChannel* ftc);
+    void invertValueChanged(FixtureTypeChannel* ftc);
+
 
     void reorderItems() override;
 

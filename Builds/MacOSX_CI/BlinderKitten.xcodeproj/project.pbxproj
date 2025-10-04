@@ -104,6 +104,7 @@
 		73D158F699FEF8F0DA6C6E92 /* VirtualFaderCol.cpp */ = {isa = PBXBuildFile; fileRef = 00BBE1E1036E9CCD36A3CB65; };
 		766F1A35A6C6A03CB837EB11 /* Main.cpp */ = {isa = PBXBuildFile; fileRef = 0485A53B7923969BE8E62C07; };
 		77074B6B4BC78CC9957A6AC6 /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = E6100648C258327C6238CE1B; };
+		7768CC9FB1DB637CF1A7F211 /* FixtureDMXChannel.cpp */ = {isa = PBXBuildFile; fileRef = DAE352682E6993FCB36AB6AC; };
 		7A7EE8FA053F31344B7AD140 /* DMXChannelView.cpp */ = {isa = PBXBuildFile; fileRef = F15DC371671D5E328374C467; };
 		7CBDFE483263F001F652C198 /* include_juce_audio_devices.mm */ = {isa = PBXBuildFile; fileRef = E84CEE9F82D17306BBEFDD88; };
 		7D35265C8FFBE6B5D9600D68 /* AudioToolbox.framework */ = {isa = PBXBuildFile; fileRef = 8C03416DE516F7073FBE0D28; };
@@ -174,6 +175,7 @@
 		D2670406E7A2779AADAE9E39 /* MultiplicatorAction.cpp */ = {isa = PBXBuildFile; fileRef = 9FBA8625820E163A1C6B3E3A; };
 		D36B7F6E7ACD8652F5DDFF87 /* CommandSelectionManager.cpp */ = {isa = PBXBuildFile; fileRef = 5941FA6A90768BF9A5502B6B; };
 		D50BF2669952BA61BE3DD3CB /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = E7884757F9B8B7D885716D90; settings = { ATTRIBUTES = (Weak, ); }; };
+		D5C64095E8B3DD88FE9D7E56 /* FixtureTypeDMXChannelManager.cpp */ = {isa = PBXBuildFile; fileRef = CA8426F28D8D2DE460959DF1; };
 		D8C9CF95286978E6BA1BA7A5 /* SoloPoolAction.cpp */ = {isa = PBXBuildFile; fileRef = 479A8F52055483E8B1910A32; };
 		D9C9A54D6DEC72524EE616B3 /* CarouselManager.cpp */ = {isa = PBXBuildFile; fileRef = 50ED73539A7F5278007C908C; };
 		D9F94B11A324BD07501E5860 /* PresetValue.cpp */ = {isa = PBXBuildFile; fileRef = 7AFC413AC8C5156599197A0E; };
@@ -198,6 +200,7 @@
 		EE0F7B27E537893A4D3CFD30 /* MapperManager.cpp */ = {isa = PBXBuildFile; fileRef = A93E5EC3380046B22ACD1F49; };
 		EFA23DE128C35A6D56C06D84 /* CarouselManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = 04F53D6DC25FA5ACBA2F59AB; };
 		F094A6C65B0B4977C4A43355 /* SelectionMaster.cpp */ = {isa = PBXBuildFile; fileRef = 6BC2112EDFD3CAD8C41BA2E1; };
+		F1CE563C205590F405599F9A /* FixtureTypeDMXChannel.cpp */ = {isa = PBXBuildFile; fileRef = 4AFE363FD8454C052B3E80E5; };
 		F25828E330320D0E22704111 /* include_juce_organicui.cpp */ = {isa = PBXBuildFile; fileRef = 2CB931C3AB3641819A6E1109; };
 		F4742A1044C95A00D0AA664B /* SelectionMasterManager.cpp */ = {isa = PBXBuildFile; fileRef = 320672E91261967626FD0079; };
 		F60DC70F92C843C12612C071 /* PresetGridView.cpp */ = {isa = PBXBuildFile; fileRef = D3AA14AA86CAA26D18053914; };
@@ -227,6 +230,7 @@
 		035C9D3C03A8292843352022 /* CommandValueManager.h */ /* CommandValueManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandValueManager.h; path = ../../Source/Definitions/Command/CommandValueManager.h; sourceTree = SOURCE_ROOT; };
 		036291D23F3C544893FEC2A3 /* IOKit.framework */ /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		0405745EB114A8D194112FBD /* EncodersMultCmd.h */ /* EncodersMultCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EncodersMultCmd.h; path = ../../Source/UI/EncodersMult/EncodersMultCmd.h; sourceTree = SOURCE_ROOT; };
+		04520E75CDE046972D9B3B68 /* FixtureDMXChannel.h */ /* FixtureDMXChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureDMXChannel.h; path = ../../Source/Definitions/Fixture/FixtureDMXChannel.h; sourceTree = SOURCE_ROOT; };
 		0485A53B7923969BE8E62C07 /* Main.cpp */ /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		04F53D6DC25FA5ACBA2F59AB /* CarouselManagerUI.cpp */ /* CarouselManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CarouselManagerUI.cpp; path = ../../Source/Definitions/Carousel/CarouselManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		05267333C9F10D418ED6A1C3 /* OSCMappingEditor.cpp */ /* OSCMappingEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSCMappingEditor.cpp; path = ../../Source/Definitions/Interface/interfaces/osc/ui/OSCMappingEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -356,6 +360,7 @@
 		499845ABEE168A07449EC477 /* VirtualButton.h */ /* VirtualButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VirtualButton.h; path = ../../Source/UI/VirtualButtons/VirtualButton.h; sourceTree = SOURCE_ROOT; };
 		4A6CA0C393F81BC1392432D5 /* OSCInputEditor.h */ /* OSCInputEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCInputEditor.h; path = ../../Source/Definitions/Interface/interfaces/osc/ui/OSCInputEditor.h; sourceTree = SOURCE_ROOT; };
 		4AA08A6F8AD84AB20D7FD9A5 /* FixturePatchCorrection.cpp */ /* FixturePatchCorrection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixturePatchCorrection.cpp; path = ../../Source/Definitions/Fixture/FixturePatchCorrection.cpp; sourceTree = SOURCE_ROOT; };
+		4AFE363FD8454C052B3E80E5 /* FixtureTypeDMXChannel.cpp */ /* FixtureTypeDMXChannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeDMXChannel.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeDMXChannel.cpp; sourceTree = SOURCE_ROOT; };
 		4B74D5B746567488A8E58CB2 /* App */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlinderKitten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1D5EA031AD933BD9C85DCE /* Clock.cpp */ /* Clock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Clock.cpp; path = ../../Source/UI/Clock.cpp; sourceTree = SOURCE_ROOT; };
 		4CA1C6C62A961474826D94C2 /* DMXSerialDevice.h */ /* DMXSerialDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXSerialDevice.h; path = ../../Source/Common/DMX/device/DMXSerialDevice.h; sourceTree = SOURCE_ROOT; };
@@ -440,6 +445,7 @@
 		74526EB172026A49BD8ED506 /* ChannelFamilyManagerUI.h */ /* ChannelFamilyManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelFamilyManagerUI.h; path = ../../Source/Definitions/ChannelFamily/ChannelFamilyManagerUI.h; sourceTree = SOURCE_ROOT; };
 		74561BF666EF6F2EB6736700 /* OSCFeedbackManager.h */ /* OSCFeedbackManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCFeedbackManager.h; path = ../../Source/Definitions/Interface/interfaces/osc/OSCFeedbackManager.h; sourceTree = SOURCE_ROOT; };
 		74BE1046DD4EBC61E123D598 /* CuelistAction.h */ /* CuelistAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistAction.h; path = ../../Source/Definitions/Actions/CuelistAction.h; sourceTree = SOURCE_ROOT; };
+		7535E1BBC22D97F477BB3796 /* FixtureTypeDMXChannel.h */ /* FixtureTypeDMXChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureTypeDMXChannel.h; path = ../../Source/Definitions/FixtureType/FixtureTypeDMXChannel.h; sourceTree = SOURCE_ROOT; };
 		7603B86665CACE9B18169291 /* CurvePreset.cpp */ /* CurvePreset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CurvePreset.cpp; path = ../../Source/Definitions/CurvePreset/CurvePreset.cpp; sourceTree = SOURCE_ROOT; };
 		76452AA35AD3EBE3FCFC39DA /* MultiplicatorManagerUI.h */ /* MultiplicatorManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplicatorManagerUI.h; path = ../../Source/Definitions/Multiplicator/MultiplicatorManagerUI.h; sourceTree = SOURCE_ROOT; };
 		766A02F38CEC09F483081604 /* CommandValue.h */ /* CommandValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandValue.h; path = ../../Source/Definitions/Command/CommandValue.h; sourceTree = SOURCE_ROOT; };
@@ -593,6 +599,8 @@
 		C9825A9E6BEBB769088458CE /* MIDIDevice.h */ /* MIDIDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDevice.h; path = ../../Source/Common/MIDI/MIDIDevice.h; sourceTree = SOURCE_ROOT; };
 		C9ECA243B6F6C655D2E7E81B /* MapperManager.h */ /* MapperManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapperManager.h; path = ../../Source/Definitions/Mapper/MapperManager.h; sourceTree = SOURCE_ROOT; };
 		CA482DC389F05AEF6D8AD73B /* CommandSelectionManager.h */ /* CommandSelectionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandSelectionManager.h; path = ../../Source/Definitions/Command/CommandSelectionManager.h; sourceTree = SOURCE_ROOT; };
+		CA50AC110CDEE68E547C81E0 /* FixtureTypeDMXChannelManager.h */ /* FixtureTypeDMXChannelManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureTypeDMXChannelManager.h; path = ../../Source/Definitions/FixtureType/FixtureTypeDMXChannelManager.h; sourceTree = SOURCE_ROOT; };
+		CA8426F28D8D2DE460959DF1 /* FixtureTypeDMXChannelManager.cpp */ /* FixtureTypeDMXChannelManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureTypeDMXChannelManager.cpp; path = ../../Source/Definitions/FixtureType/FixtureTypeDMXChannelManager.cpp; sourceTree = SOURCE_ROOT; };
 		CAAD123A36BC9B26F80291D9 /* FixtureTypeChannel.h */ /* FixtureTypeChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureTypeChannel.h; path = ../../Source/Definitions/FixtureType/FixtureTypeChannel.h; sourceTree = SOURCE_ROOT; };
 		CB539B21BBC53775A5901576 /* EffectManager.cpp */ /* EffectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EffectManager.cpp; path = ../../Source/Definitions/Effect/EffectManager.cpp; sourceTree = SOURCE_ROOT; };
 		CBF8FCBD9E7EA8BA53158ED4 /* InterfaceManager.h */ /* InterfaceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InterfaceManager.h; path = ../../Source/Definitions/Interface/InterfaceManager.h; sourceTree = SOURCE_ROOT; };
@@ -622,6 +630,7 @@
 		DA24A46626C55851FE8A05EB /* ChannelType.h */ /* ChannelType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelType.h; path = ../../Source/Definitions/ChannelFamily/ChannelType/ChannelType.h; sourceTree = SOURCE_ROOT; };
 		DA37B70AA23687714382AB3D /* PresetManager.h */ /* PresetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PresetManager.h; path = ../../Source/Definitions/Preset/PresetManager.h; sourceTree = SOURCE_ROOT; };
 		DA6A0B39C20BC498A7A99E7C /* BKEngine.h */ /* BKEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BKEngine.h; path = ../../Source/BKEngine.h; sourceTree = SOURCE_ROOT; };
+		DAE352682E6993FCB36AB6AC /* FixtureDMXChannel.cpp */ /* FixtureDMXChannel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixtureDMXChannel.cpp; path = ../../Source/Definitions/Fixture/FixtureDMXChannel.cpp; sourceTree = SOURCE_ROOT; };
 		DAE40DF97CAB56EC4AF40369 /* SceneListener.h */ /* SceneListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SceneListener.h; path = ../../Source/Common/CommonClasses/SceneListener.h; sourceTree = SOURCE_ROOT; };
 		DB640204496F415C6B425E07 /* juce_opengl */ /* juce_opengl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_opengl; path = ../../JUCE/modules/juce_opengl; sourceTree = SOURCE_ROOT; };
 		DB9A0F86E957473ED860E49B /* VirtualFaderColGrid.cpp */ /* VirtualFaderColGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderColGrid.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderColGrid.cpp; sourceTree = SOURCE_ROOT; };
@@ -1038,6 +1047,8 @@
 				A557FCF8B0D1879568865B45,
 				4AA08A6F8AD84AB20D7FD9A5,
 				53A3585FA232B3A8596EC941,
+				DAE352682E6993FCB36AB6AC,
+				04520E75CDE046972D9B3B68,
 			);
 			name = Fixture;
 			sourceTree = "<group>";
@@ -1685,6 +1696,10 @@
 				4F3E7A015B2D27C557F078DB,
 				1E6C5C2886EA162DE5D58260,
 				90770EDF9B63A26DCFAF455C,
+				4AFE363FD8454C052B3E80E5,
+				7535E1BBC22D97F477BB3796,
+				CA8426F28D8D2DE460959DF1,
+				CA50AC110CDEE68E547C81E0,
 			);
 			name = FixtureType;
 			sourceTree = "<group>";
@@ -1993,6 +2008,7 @@
 				0D5D78BF4A33ACC578B2BD0A,
 				AC3A2538752AEED8F22BDCE4,
 				2050237122F52FD6F34E6450,
+				7768CC9FB1DB637CF1A7F211,
 				A58EB6D329016820661DB64A,
 				A73288A201F7FA8C713C9EF7,
 				702FC97CEC79C9BCC0F380C1,
@@ -2000,6 +2016,8 @@
 				A73F2517D1F2C52FAAEDCBA5,
 				4352E1880792564700E5DA92,
 				C7A7B7FAE1D2AD7FA023C565,
+				F1CE563C205590F405599F9A,
+				D5C64095E8B3DD88FE9D7E56,
 				B494AFEBA23369A7F6FDE81E,
 				3610C2BD9D7502D7DE01F0F8,
 				8B9E9980F61994ED3E865221,

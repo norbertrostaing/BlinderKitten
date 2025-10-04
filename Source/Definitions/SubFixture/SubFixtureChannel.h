@@ -24,6 +24,7 @@ class Mapper;
 class Tracker;
 class SelectionMaster;
 class Command;
+class FixtureDMXChannel;
 
 class SubFixtureChannel{
 public:
@@ -36,11 +37,11 @@ public:
     ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
     String resolution;
-    float defaultValue = 0;
     float defaultPresetValue = -1;
     float highlightValue = 0;
-    float currentValue = 0;
+    float currentValue = 0.0;
     float postCuelistValue = 0;
+    bool isActive = false;
     bool isHTP = false;
     bool swopKillable = false;
     bool snapOnly = false;
@@ -56,7 +57,13 @@ public:
     SubFixture* parentSubFixture = nullptr;
     int subFixtureId = 0;
 
-    void writeValue(float v);
+    FixtureDMXChannel* physicalChannel = nullptr;  // Shared DMX channel
+
+    void writeValue(float v);                      // DEPRECATED - use writeLogicalValue instead
+
+    // NEW: Logical channel methods
+    void writeLogicalValue(float v);               // Set logical value and notify physical channel
+    bool isContributing();                         // Check if this channel is contributing to output
 
     SpinLock cs;
     Array<SubFixtureChannel*> virtualChildren;

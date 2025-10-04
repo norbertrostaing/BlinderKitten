@@ -179,6 +179,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/FixtureMultiEditor_727ec0bb.o \
   $(JUCE_OBJDIR)/FixturePatch_f6b75bfd.o \
   $(JUCE_OBJDIR)/FixturePatchCorrection_dd7e6e7b.o \
+  $(JUCE_OBJDIR)/FixtureDMXChannel_7982d0a9.o \
   $(JUCE_OBJDIR)/FixtureType_5fe79449.o \
   $(JUCE_OBJDIR)/FixtureTypeChannel_f51bfe04.o \
   $(JUCE_OBJDIR)/FixtureTypeChannelManager_c4b6993.o \
@@ -186,6 +187,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/FixtureTypeManagerUI_d1c07202.o \
   $(JUCE_OBJDIR)/FixtureTypeVirtualChannel_8aa184e1.o \
   $(JUCE_OBJDIR)/FixtureTypeVirtualChannelManager_b206e016.o \
+  $(JUCE_OBJDIR)/FixtureTypeDMXChannel_187bf25d.o \
+  $(JUCE_OBJDIR)/FixtureTypeDMXChannelManager_ec198f1a.o \
   $(JUCE_OBJDIR)/Group_3d0e0901.o \
   $(JUCE_OBJDIR)/GroupManager_c56377f6.o \
   $(JUCE_OBJDIR)/GroupManagerUI_3b65cc4a.o \
@@ -805,6 +808,11 @@ $(JUCE_OBJDIR)/FixturePatchCorrection_dd7e6e7b.o: ../../Source/Definitions/Fixtu
 	@echo "Compiling FixturePatchCorrection.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/FixtureDMXChannel_7982d0a9.o: ../../Source/Definitions/Fixture/FixtureDMXChannel.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureDMXChannel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/FixtureType_5fe79449.o: ../../Source/Definitions/FixtureType/FixtureType.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling FixtureType.cpp"
@@ -838,6 +846,16 @@ $(JUCE_OBJDIR)/FixtureTypeVirtualChannel_8aa184e1.o: ../../Source/Definitions/Fi
 $(JUCE_OBJDIR)/FixtureTypeVirtualChannelManager_b206e016.o: ../../Source/Definitions/FixtureType/FixtureTypeVirtualChannelManager.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling FixtureTypeVirtualChannelManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FixtureTypeDMXChannel_187bf25d.o: ../../Source/Definitions/FixtureType/FixtureTypeDMXChannel.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureTypeDMXChannel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FixtureTypeDMXChannelManager_ec198f1a.o: ../../Source/Definitions/FixtureType/FixtureTypeDMXChannelManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureTypeDMXChannelManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Group_3d0e0901.o: ../../Source/Definitions/Group/Group.cpp

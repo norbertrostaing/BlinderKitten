@@ -12,36 +12,37 @@ FixtureTypeChannelManager::~FixtureTypeChannelManager()
 {
 }
 
+// TODO: change this to calculate/check ranges for collisions?
 void FixtureTypeChannelManager::calcDmxChannels() {
 	if (massiveImport) return;
-	int current = 1;
-	for (int i = 0; i < items.size(); i++) {
-		items[i]->setNiceName("temp "+String(i));
-	}
-	for (int i = 0; i < items.size(); i++) {
-		items[i]->dmxDelta->setValue(current);
-		String name = "Channel " + String(current);
-		if (items[i]->resolution->getValue() == "8bits") {
-			current += 1;
-		}
-		else if (items[i]->resolution->getValue() == "fine") {
-			current += 1;
-		}
-		else if (items[i]->resolution->getValue() == "16bits") {
-			name += " + "+String(current+1);
-			current += 2;
-		}
-		else {
-			LOG("no resolution !");
-		}
-
-		ChannelType* ct = dynamic_cast<ChannelType*>(items[i]->channelType->targetContainer.get());
-		if (ct != nullptr) {
-			name += " - "+ct->niceName;
-		}
-
-		items[i]->setNiceName(name);
-	}
+//	int current = 1;
+//	for (int i = 0; i < items.size(); i++) {
+//		items[i]->setNiceName("temp "+String(i));
+//	}
+//	for (int i = 0; i < items.size(); i++) {
+//		items[i]->dmxDelta->setValue(current);
+//		String name = "Channel " + String(current);
+//		if (items[i]->resolution->getValue() == "8bits") {
+//			current += 1;
+//		}
+//		else if (items[i]->resolution->getValue() == "fine") {
+//			current += 1;
+//		}
+//		else if (items[i]->resolution->getValue() == "16bits") {
+//			name += " + "+String(current+1);
+//			current += 2;
+//		}
+//		else {
+//			LOG("no resolution !");
+//		}
+//
+//		ChannelType* ct = dynamic_cast<ChannelType*>(items[i]->channelType->targetContainer.get());
+//		if (ct != nullptr) {
+//			name += " - "+ct->niceName;
+//		}
+//
+//		items[i]->setNiceName(name);
+//	}
 }
 
 
@@ -66,11 +67,6 @@ void FixtureTypeChannelManager::askForMoveAfter(BaseItem* c) {
 
 void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data) {
 	calcDmxChannels();
-	if (parentContainer != nullptr && !Brain::getInstance()->loadingIsRunning) {
-		FixtureType* ft = dynamic_cast<FixtureType* >(parentContainer.get());
-		ft->updateVirtualLists();
-	}
-
 }
 void FixtureTypeChannelManager::askForRemoveBaseItem(BaseItem* item) {
 	BaseManager::askForRemoveBaseItem(item);

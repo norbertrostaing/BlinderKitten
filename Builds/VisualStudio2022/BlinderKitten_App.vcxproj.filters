@@ -1552,6 +1552,9 @@
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixturePatchCorrection.cpp">
       <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureDMXChannel.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureType.cpp">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
@@ -1571,6 +1574,12 @@
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannelManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannel.cpp">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannelManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Group\Group.cpp">
@@ -5418,6 +5427,9 @@
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixturePatchCorrection.h">
       <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureDMXChannel.h">
+      <Filter>BlinderKitten\Source\Definitions\Fixture</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureType.h">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
@@ -5437,6 +5449,12 @@
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannelManager.h">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannel.h">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannelManager.h">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Group\Group.h">

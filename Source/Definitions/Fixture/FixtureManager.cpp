@@ -56,7 +56,7 @@ void FixtureManager::setItemIndex(Fixture* item, int newIndex, bool addToUndo)
     BaseManager::setItemIndex(item, newIndex, addToUndo);
 }
 
-void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)
+void FixtureManager::invertValueChanged(FixtureTypeChannel* ftc)
 {
     for (int i = 0; i < items.size(); i++) {
         Fixture* f = items[i];
@@ -66,8 +66,23 @@ void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)
             for (auto itSfc = sf->channelsMap.begin(); itSfc != sf->channelsMap.end(); itSfc.next()) {
                 SubFixtureChannel *sfc = itSfc.getValue();
                 if (sfc->parentFixtureTypeChannel == ftc) {
-                    sfc->defaultValue = ftc->defaultValue->floatValue();
                     sfc->invertOutput = ftc->invertOutput->boolValue();
+                    Brain::getInstance()->pleaseUpdate(sfc);
+                }
+            }
+        }
+    }
+}
+
+void FixtureManager::defaultValueChanged(FixtureTypeDMXChannel* ftc)
+{
+    for (int i = 0; i < items.size(); i++) {
+        Fixture* f = items[i];
+        for (int x = 0; x < f->fixtureDMXChannels.size(); x++){
+            FixtureDMXChannel* d = f->fixtureDMXChannels[x];
+            if (d->fixtureTypeDMXChannel == ftc) {
+                for (int s = 0; s < d->logicalChannels.size(); s++){
+                    SubFixtureChannel* sfc = d->logicalChannels[s];
                     Brain::getInstance()->pleaseUpdate(sfc);
                 }
             }
@@ -84,7 +99,6 @@ void FixtureManager::defaultValueChanged(FixtureTypeVirtualChannel* ftc)
             for (auto itSfc = sf->channelsMap.begin(); itSfc != sf->channelsMap.end(); itSfc.next()) {
                 SubFixtureChannel* sfc = itSfc.getValue();
                 if (sfc->parentFixtureTypeVirtualChannel == ftc) {
-                    sfc->defaultValue = ftc->defaultValue->floatValue();
                     Brain::getInstance()->pleaseUpdate(sfc);
                 }
             }

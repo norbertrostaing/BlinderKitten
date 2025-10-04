@@ -10,6 +10,8 @@
 
 #pragma once
 
+class DMXInterface;
+
 class DMXInterfaceUI :
     public InterfaceUI
 {
