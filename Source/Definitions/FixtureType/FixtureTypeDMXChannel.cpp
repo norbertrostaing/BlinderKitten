@@ -10,6 +10,7 @@
 
 #include "FixtureTypeDMXChannel.h"
 #include "FixtureTypeDMXChannelManager.h"
+#include "Fixture/FixtureManager.h"
 
 FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     BaseItem(params.getProperty("name", "DMX Channel")),
@@ -27,6 +28,9 @@ FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     resolution->addOption("16bits", "16bits");
     resolution->addOption("Fine channel only", "fine");
     
+    defaultValue = addFloatParameter("Default value", "Default value of the channel (0-255)", 0, 0, 1);
+    defaultValue->canBeDisabledByUser = false;
+
     chansManager.addItem();
     
     addChildControllableContainer(&chansManager);
@@ -44,4 +48,6 @@ void FixtureTypeDMXChannel::onContainerParameterChangedInternal(Parameter* p)
             manager->calcDmxChannels();
         }
     }
+
+    if (p == defaultValue) { FixtureManager::getInstance()->defaultValueChanged(this); }
 }

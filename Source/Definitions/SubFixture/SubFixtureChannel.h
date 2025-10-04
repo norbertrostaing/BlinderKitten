@@ -37,11 +37,11 @@ public:
     ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
     String resolution;
-    float defaultValue = 0;
     float defaultPresetValue = -1;
     float highlightValue = 0;
     float currentValue = 0.0;
     float postCuelistValue = 0;
+    bool isActive = false;
     bool isHTP = false;
     bool swopKillable = false;
     bool snapOnly = false;

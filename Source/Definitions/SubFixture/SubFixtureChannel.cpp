@@ -207,6 +207,8 @@ void SubFixtureChannel::writeValue(float v) {
 
 void SubFixtureChannel::writeLogicalValue(float v)
 {
+    isActive = v >= 0 ? true : false;
+
     v = jlimit(0.0f, 1.0f, v);
     
     if (virtualMaster != nullptr) {
@@ -232,12 +234,16 @@ void SubFixtureChannel::writeLogicalValue(float v)
 
 bool SubFixtureChannel::isContributing()
 {
-    return currentValue > 0.0f && physicalChannel != nullptr;
+    return isActive && physicalChannel != nullptr;
 }
 
-
 void SubFixtureChannel::updateVal(double now) {
-	float newValue = defaultValue;
+	float newValue = -1;
+
+    if (parentFixtureTypeVirtualChannel != nullptr) { // Virtual channels set the default at the logical channel level
+        newValue = parentFixtureTypeVirtualChannel->defaultValue->floatValue();
+    }
+
 	float noGMValue = 0;
 	if (defaultPresetValue >= 0) {
 		newValue = defaultPresetValue;
@@ -363,12 +369,14 @@ void SubFixtureChannel::updateVal(double now) {
 		if (InputPanel::getInstance()->paramBlackOut->boolValue()) {
 			newValue = 0;
 		}
-		if (isHTP) {
-			newValue = jmax(newValue * (float)gm, noGMValue);
-		}
-		else {
-			newValue = jmap((float)gm, 0.0f,1.0f,noGMValue, newValue);
-		}
+        if (newValue >= 0) {
+            if (isHTP) {
+                newValue = jmax(newValue * (float)gm, noGMValue);
+            }
+            else {
+                newValue = jmap((float)gm, 0.0f,1.0f,noGMValue, newValue);
+            }
+        }
 	}
 
 	cs.exit();

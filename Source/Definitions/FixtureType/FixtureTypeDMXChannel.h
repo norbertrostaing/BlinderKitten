@@ -23,6 +23,7 @@ public:
 
     IntParameter* dmxDelta;
     EnumParameter* resolution;
+    FloatParameter* defaultValue;
     
     FixtureTypeChannelManager chansManager;
 

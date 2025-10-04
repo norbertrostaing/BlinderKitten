@@ -50,7 +50,6 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     channelType->typesFilter.add("ChannelType");
 
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
-    defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
     highlightValue = addFloatParameter("Highlight value", "Value of the channel during highlight", 0, 0, 1);
     highlightValue->canBeDisabledByUser = true;
     highlightValue->setEnabled(false);
@@ -97,8 +96,8 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     if (p == physicalRange) {
         TrackerManager::getInstance()->recomputeAllTrackers();
     }
-    else if (p == defaultValue || p == invertOutput) {
-        FixtureManager::getInstance()->defaultValueChanged(this);
+    else if (p == invertOutput) {
+        FixtureManager::getInstance()->invertValueChanged(this);
     }
     else if (p == highlightValue) {
         if (!p->enabled) p->setEnabled(true);

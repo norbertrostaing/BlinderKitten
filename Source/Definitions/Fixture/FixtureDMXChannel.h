@@ -33,11 +33,12 @@ public:
     void onLogicalChannelChanged(SubFixtureChannel* sfc);
     void resolveAndOutput();
 
-    int getDMXAddress();                         // Get resolved DMX address
-
 private:
     void resolveActiveLogicalChannel();
     void outputToHardware();
+
+    float activeDMXRangeMin();
+    float activeDMXRangeMax();
 
     SpinLock outputLock;
 };

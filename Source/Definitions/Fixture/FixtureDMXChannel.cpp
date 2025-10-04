@@ -109,22 +109,20 @@ void FixtureDMXChannel::outputToHardware()
 {
     if (parentFixture != nullptr && fixtureTypeDMXChannel != nullptr) {
         float value = 0.f;
-        float dmxRangeMin = 0.f;
-        float dmxRangeMax = 0.f;
-        
+
         if (activeLogicalChannel != nullptr) {
             value = activeLogicalChannel->currentValue;
-            dmxRangeMin = activeLogicalChannel->parentFixtureTypeChannel->dmxRange->x;
-            dmxRangeMax = activeLogicalChannel->parentFixtureTypeChannel->dmxRange->y;
-            
+
             if (activeLogicalChannel->invertOutput) {
                 value = 1 - value;
             }
+        } else if (fixtureTypeDMXChannel->defaultValue->enabled) {
+            value = fixtureTypeDMXChannel->defaultValue->floatValue();
         }
-        
+
         int deltaAdress = fixtureTypeDMXChannel->dmxDelta->intValue();
         deltaAdress--;
-        String chanRes = fixtureTypeDMXChannel->resolution->stringValue();
+
         for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
             FixturePatch* p = parentFixture->patchs.items[i];
             if (p->enabled->boolValue()) {
@@ -135,23 +133,25 @@ void FixtureDMXChannel::outputToHardware()
                     int address = patch->address->getValue();
                     float localValue = value;
                     
-                    for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
-                        FixturePatchCorrection* c = patch->corrections.items[iCorr];
-                        if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == activeLogicalChannel->subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == activeLogicalChannel->channelType) {
-                            if (c->invertChannel->getValue()) { // TODO: can be
-                                localValue = 1 - localValue;
+                    if (activeLogicalChannel != nullptr) {
+                        for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
+                            FixturePatchCorrection* c = patch->corrections.items[iCorr];
+                            if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == activeLogicalChannel->subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == activeLogicalChannel->channelType) {
+                                if (c->invertChannel->getValue()) {
+                                    localValue = 1 - localValue;
+                                }
+                                localValue = localValue + (float)c->offsetValue->getValue();
+                                localValue = jmin((float)1, localValue);
+                                localValue = jmax((float)0, localValue);
+                                localValue = c->curve.getValueAtPosition(localValue);
                             }
-                            localValue = localValue + (float)c->offsetValue->getValue();
-                            localValue = jmin((float)1, localValue);
-                            localValue = jmax((float)0, localValue);
-                            localValue = c->curve.getValueAtPosition(localValue);
                         }
                     }
 
                     if (address > 0) {
                         address += (deltaAdress);
-                        if (chanRes == "8bits") {
-                            int val = round(jmap(localValue, 0.f, 1.f, dmxRangeMin, dmxRangeMax));
+                        if (fixtureTypeDMXChannel->resolution->stringValue() == "8bits") {
+                            int val = round(jmap(localValue, 0.f, 1.f, activeDMXRangeMin(), activeDMXRangeMax()));
                             //int val = localValue >= 1 ? 255 : round(255 * localValue);
                             val = jlimit(0, 255, val);
                             // NLOG("outputToHardware", "outputting 8bit: " + std::to_string(val));
@@ -174,4 +174,19 @@ void FixtureDMXChannel::outputToHardware()
         }
 
     }
+}
+
+float FixtureDMXChannel::activeDMXRangeMin(){
+    if (activeLogicalChannel == nullptr) { return 0.f; }
+
+    return activeLogicalChannel->parentFixtureTypeChannel->dmxRange->x;
+}
+
+float FixtureDMXChannel::activeDMXRangeMax(){
+    if (activeLogicalChannel == nullptr) {
+        if (fixtureTypeDMXChannel->resolution->stringValue() == "8bits") { return 256.f; }
+        return 65535.f;
+    }
+
+    return activeLogicalChannel->parentFixtureTypeChannel->dmxRange->y;
 }
