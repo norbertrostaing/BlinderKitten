@@ -120,11 +120,11 @@ public:
     CriticalSection usingTasksCollection;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);
-    void registerFixture(Fixture* f, int id, bool swap = false);
+    void registerFixture(Fixture* f, int id);
     void unregisterFixture(Fixture* f);
-    void registerGroup(Group* f, int id, bool swap = false);
+    void registerGroup(Group* f, int id);
     void unregisterGroup(Group* f);
-    void registerPreset(Preset* p, int id, bool swap = false);
+    void registerPreset(Preset* p, int id);
     void unregisterPreset(Preset* p);
     void registerCuelist(Cuelist* c, int id, bool swap = false);
     void unregisterCuelist(Cuelist* c);

@@ -57,7 +57,7 @@ void Group::updateName() {
 
 void Group::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerGroup(this, id->getValue(), true);
+		Brain::getInstance()->registerGroup(this, id->getValue());
 	}
 	if (p == userName || p == id) {
 		updateName();

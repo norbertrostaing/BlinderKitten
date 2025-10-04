@@ -367,16 +367,23 @@ void Brain::unregisterSubFixture(SubFixture* f) {
     }
 }
 
-void Brain::registerFixture(Fixture* target, int askedId, bool swap) {
+void Brain::registerFixture(Fixture* target, int askedId) {
     int currentId = target->registeredId;
     if (fixtures.getReference(askedId) == target) { return; }
     if (fixtures.containsValue(target)) {
         fixtures.removeValue(target);
     }
+
+    Fixture* toSwap = fixtures.contains(askedId) ? fixtures.getReference(askedId) : nullptr;
     bool idIsOk = false;
+    int newId = askedId;
+
+    if (target->isCurrentlyLoadingData && toSwap != nullptr) {
+        toSwap->id->setValue(currentId);
+        idIsOk = true;
+    }
 
     int delta = askedId < currentId ? -1 : 1;
-    int newId = askedId;
     while (!idIsOk && newId > 0) {
         idIsOk = fixtures.getReference(newId) == nullptr;
         if (!idIsOk) newId += delta;
@@ -399,16 +406,23 @@ void Brain::unregisterFixture(Fixture* d) {
     }
 }
 
-void Brain::registerGroup(Group* target, int askedId, bool swap) {
+void Brain::registerGroup(Group* target, int askedId) {
     int currentId = target->registeredId;
     if (groups.getReference(askedId) == target) { return; }
     if (groups.containsValue(target)) {
         groups.removeValue(target);
     }
+
+    Group* toSwap = groups.contains(askedId) ? groups.getReference(askedId) : nullptr;
     bool idIsOk = false;
+    int newId = askedId;
+
+    if (target->isCurrentlyLoadingData && toSwap != nullptr) {
+        toSwap->id->setValue(currentId);
+        idIsOk = true;
+    }
 
     int delta = askedId < currentId ? -1 : 1;
-    int newId = askedId;
     while (!idIsOk && newId > 0) {
         idIsOk = groups.getReference(newId) == nullptr;
         if (!idIsOk) newId += delta;
@@ -431,16 +445,23 @@ void Brain::unregisterGroup(Group* g) {
     }
 }
 
-void Brain::registerPreset(Preset* target, int askedId, bool swap) {
+void Brain::registerPreset(Preset* target, int askedId) {
     int currentId = target->registeredId;
     if (presets.getReference(askedId) == target) { return; }
     if (presets.containsValue(target)) {
         presets.removeValue(target);
     }
+
+    Preset* toSwap = presets.contains(askedId) ? presets.getReference(askedId) : nullptr;
     bool idIsOk = false;
+    int newId = askedId;
+
+    if (target->isCurrentlyLoadingData && toSwap != nullptr) {
+        toSwap->id->setValue(currentId);
+        idIsOk = true;
+    }
 
     int delta = askedId < currentId ? -1 : 1;
-    int newId = askedId;
     while (!idIsOk && newId > 0) {
         idIsOk = presets.getReference(newId) == nullptr;
         if (!idIsOk) newId += delta;
@@ -455,6 +476,7 @@ void Brain::registerPreset(Preset* target, int askedId, bool swap) {
     if (currentId != newId && currentId != 0) {
         replacePresetIdEverywhere(currentId, newId);
     }
+
 }
 
 void Brain::unregisterPreset(Preset* p) {

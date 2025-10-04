@@ -100,7 +100,7 @@ Preset::~Preset()
 
 void Preset::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == id) {
-		Brain::getInstance()->registerPreset(this, id->getValue(), true);
+		Brain::getInstance()->registerPreset(this, id->getValue());
 	}
 	if (p == userName || p == id) {
 		updateName();

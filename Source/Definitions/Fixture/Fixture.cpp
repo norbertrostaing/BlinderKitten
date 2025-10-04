@@ -118,7 +118,7 @@ void Fixture::onContainerParameterChangedInternal(Parameter* p)
 	}
 	else if(p == id) 
 	{
-		Brain::getInstance()->registerFixture(this, id->getValue(), true);
+		Brain::getInstance()->registerFixture(this, id->getValue());
 	}
 	else if (p == position || p == rotation) {
 		TrackerManager::getInstance()->recomputeAllTrackers();
