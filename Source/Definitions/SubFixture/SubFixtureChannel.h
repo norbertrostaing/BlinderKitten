@@ -58,10 +58,6 @@ public:
     int subFixtureId = 0;
 
     FixtureDMXChannel* physicalChannel = nullptr;  // Shared DMX channel
-
-    void writeValue(float v);                      // DEPRECATED - use writeLogicalValue instead
-
-    // NEW: Logical channel methods
     void writeLogicalValue(float v);               // Set logical value and notify physical channel
     bool isContributing();                         // Check if this channel is contributing to output
 
