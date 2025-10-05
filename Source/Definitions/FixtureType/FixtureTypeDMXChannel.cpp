@@ -31,6 +31,10 @@ FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     defaultValue = addFloatParameter("Default value", "Default value of the channel (0-255)", 0, 0, 1);
     defaultValue->canBeDisabledByUser = false;
 
+    highlightValue = addFloatParameter("Highlight value", "Value of the channel during highlight", 0, 0, 1);
+    highlightValue->canBeDisabledByUser = true;
+    highlightValue->setEnabled(false);
+
     chansManager.addItem();
     
     addChildControllableContainer(&chansManager);

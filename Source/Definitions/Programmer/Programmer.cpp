@@ -228,22 +228,30 @@ void Programmer::computeValues() {
 		cs[i]->isComputing.exit();
 	}
 
+	// Highlights
 	if (highlightCurrentCommand->boolValue() && currentUserCommand != nullptr) {
 		Array<SubFixture*> subFixtures = currentUserCommand->selection.computedSelectedSubFixtures;
 		for (int i = 0; i < subFixtures.size(); i++) {
-			for (auto it = subFixtures[i]->channelsMap.begin(); it != subFixtures[i]->channelsMap.end(); it.next()) {
-				SubFixtureChannel* sfc = it.getValue();
-				if (sfc != nullptr && sfc->highlightValue >= 0) {
-					std::shared_ptr<ChannelValue> cv = computedValues.getReference(sfc);
-					if (cv == nullptr) {
-						cv = std::make_shared<ChannelValue>();
-						computedValues.set(sfc, cv);
-					}
-					cv->values.set(1,sfc->highlightValue);
-				}
+			SubFixture* sf = subFixtures[i];
+            sf->isHighlighted = true;
+            if (sf->parentFixture != nullptr) {
+                sf->parentFixture->isHighlighted = true;
+            }
+            Brain::getInstance()->pleaseUpdate(sf);
+		}
+	}
+	else {
+		// Clear highlight state when highlight is disabled
+		Brain* brain = Brain::getInstance();
+		for (Fixture* fixture : brain->fixtures) {
+			fixture->isHighlighted = false;
+			for (SubFixture* sf : fixture->getAllSubFixtures()) {
+				sf->isHighlighted = false;
+                Brain::getInstance()->pleaseUpdate(sf);
 			}
 		}
 	}
+
 	computing.exit();
 	Brain::getInstance()->layoutViewerNeedRepaint = true;
 }

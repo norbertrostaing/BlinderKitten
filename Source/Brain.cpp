@@ -941,6 +941,25 @@ void Brain::pleaseUpdate(Cuelist* c) {
     }
 }
 
+void Brain::pleaseUpdate(Fixture* f){
+    if (f == nullptr) { return; }
+    for (auto it = f->subFixtures.begin(); it != f->subFixtures.end(); it.next()) {
+        SubFixture* sf = it.getValue();
+        Brain::getInstance()->pleaseUpdate(sf);
+    }
+}
+
+
+void Brain::pleaseUpdate(SubFixture* sf) {
+    if (sf == nullptr) { return; }
+    if (sf->channelsMap.size() > 0) {
+        for (auto it2 = sf->channelsMap.begin(); it2 != sf->channelsMap.end(); it2.next()) {
+            Brain::getInstance()->pleaseUpdate(it2.getValue());
+        }
+    }
+    return;
+}
+
 void Brain::pleaseUpdate(SubFixtureChannel* f) {
     if (f == nullptr || f->isDeleted || f->objectType != "SubFixtureChannel") { return; }
     if (f == nullptr) { return; };

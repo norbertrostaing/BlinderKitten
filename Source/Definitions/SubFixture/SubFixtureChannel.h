@@ -38,7 +38,6 @@ public:
     String objectType = "SubFixtureChannel";
     String resolution;
     float defaultPresetValue = -1;
-    float highlightValue = 0;
     float currentValue = 0.0;
     float postCuelistValue = 0;
     bool isActive = false;

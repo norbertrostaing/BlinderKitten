@@ -109,14 +109,28 @@ void FixtureDMXChannel::outputToHardware()
 {
     if (parentFixture != nullptr && fixtureTypeDMXChannel != nullptr) {
         float value = 0.f;
+        bool useHighlight = false;
 
-        if (activeLogicalChannel != nullptr) {
+        // Check if any contributing SubFixture is highlighted
+        for (SubFixtureChannel* sfc : logicalChannels) {
+            if (sfc != nullptr && sfc->parentSubFixture != nullptr && sfc->parentSubFixture->isHighlighted) {
+                useHighlight = true;
+                break;
+            }
+        }
+
+        // Use highlight value if fixture/subfixture is highlighted
+        if (useHighlight && fixtureTypeDMXChannel->highlightValue->enabled) {
+            value = fixtureTypeDMXChannel->highlightValue->floatValue();
+        }
+        else if (activeLogicalChannel != nullptr) {
             value = activeLogicalChannel->currentValue;
 
             if (activeLogicalChannel->invertOutput) {
                 value = 1 - value;
             }
-        } else if (fixtureTypeDMXChannel->defaultValue->enabled) {
+        }
+        else if (fixtureTypeDMXChannel->defaultValue->enabled) {
             value = fixtureTypeDMXChannel->defaultValue->floatValue();
         }
 

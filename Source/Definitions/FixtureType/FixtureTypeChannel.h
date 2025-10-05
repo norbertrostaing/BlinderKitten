@@ -25,7 +25,6 @@ class FixtureTypeChannel:
     // StringParameter* suffix;
     // StringParameter* idGroupName;
     IntParameter* subFixtureId;
-    FloatParameter* highlightValue;
     BoolParameter* killedBySWOP;
     BoolParameter* invertOutput;
     EnumParameter* fadeOrSnap;

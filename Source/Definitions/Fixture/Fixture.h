@@ -57,6 +57,9 @@ public:
     StringParameter* infos;
 
     IntParameter* useAnotherId;
+
+    bool isHighlighted = false;
+
     void applyPatchs();
     void checkChildrenSubFixtures();
 

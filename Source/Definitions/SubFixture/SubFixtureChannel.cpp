@@ -157,8 +157,15 @@ bool SubFixtureChannel::isContributing()
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = -1;
 
-    if (parentFixtureTypeVirtualChannel != nullptr) { // Virtual channels set the default at the logical channel level
-        newValue = parentFixtureTypeVirtualChannel->defaultValue->floatValue();
+    // Virtual channels set the default and highlight values at the logical channel level because there is no underlying DMXChannel
+    if (parentFixtureTypeVirtualChannel != nullptr) {
+        if(parentSubFixture->isHighlighted && parentFixtureTypeVirtualChannel->highlightValue->enabled) {
+            newValue = parentFixtureTypeVirtualChannel->highlightValue->floatValue();
+            writeLogicalValue(newValue);
+            return;
+        } else {
+            newValue = parentFixtureTypeVirtualChannel->defaultValue->floatValue();
+        }
     }
 
 	float noGMValue = 0;

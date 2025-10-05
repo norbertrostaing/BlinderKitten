@@ -152,6 +152,8 @@ public:
     void unregisterBundle(Bundle* p);
 
     void pleaseUpdate(Cuelist* c);
+    void pleaseUpdate(Fixture* f);
+    void pleaseUpdate(SubFixture* sf);
     void pleaseUpdate(SubFixtureChannel* f);
     void pleaseUpdate(Cue* c);
     void pleaseUpdate(Programmer* p);

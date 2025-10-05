@@ -26,6 +26,10 @@ public:
     Fixture* parentFixture;
     int subId;
     String displayName = "";
+
+    // Highlight state (set by Programmer)
+    bool isHighlighted = false;
+
     OwnedArray<SubFixtureChannel> channelsContainer;
     HashMap<ChannelType*, SubFixtureChannel*> channelsMap;
     Colour getOutputColor();

@@ -24,7 +24,8 @@ public:
     IntParameter* dmxDelta;
     EnumParameter* resolution;
     FloatParameter* defaultValue;
-    
+    FloatParameter* highlightValue;
+
     FixtureTypeChannelManager chansManager;
 
     String getTypeString() const override { return objectType; }
