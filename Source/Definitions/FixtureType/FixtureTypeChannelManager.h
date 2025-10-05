@@ -23,7 +23,11 @@ public:
     bool massiveImport = false;
 
     void calcDmxChannels();
-    void addItemInternal(FixtureTypeChannel* c, var data);
+
+    String parentDMXChannelResoltion();
+    void updateCanAddItems();
+
+    void addItemInternal(FixtureTypeChannel* c, var data) override;
     void askForRemoveBaseItem(BaseItem* item);
     void askForDuplicateItem(BaseItem* item);
     void askForPaste();

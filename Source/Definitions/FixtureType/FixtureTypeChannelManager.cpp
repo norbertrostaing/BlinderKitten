@@ -5,7 +5,8 @@ FixtureTypeChannelManager::FixtureTypeChannelManager() :
     BaseManager("Channels")
 {
     itemDataType = "FixtureTypeChannel";
-    selectItemWhenCreated = false;       
+    selectItemWhenCreated = false;
+    updateCanAddItems();
 }
 
 FixtureTypeChannelManager::~FixtureTypeChannelManager()
@@ -65,20 +66,54 @@ void FixtureTypeChannelManager::askForMoveAfter(BaseItem* c) {
 };
 */
 
-void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data) {
-	calcDmxChannels();
+String FixtureTypeChannelManager::parentDMXChannelResoltion(){
+    if (parentContainer != nullptr) {
+        FixtureTypeDMXChannel* parent = dynamic_cast<FixtureTypeDMXChannel*>(parentContainer.get());
+        if (parent != nullptr) {
+            return parent->resolution->getValue();
+        }
+    }
+    return "8bits";
 }
+
+void FixtureTypeChannelManager::updateCanAddItems() {
+    // Allow adding items if:
+    // 1. Parent DMX channel is 8-bit, OR
+    // 2. No items exist yet (first item can always be added)
+    String resolution = parentDMXChannelResoltion();
+    bool canAdd = (resolution == "8bits") || (items.size() == 0);
+    userCanAddItemsManually = canAdd;
+}
+
+void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data) {
+    if(!userCanAddItemsManually) {
+        juce::AlertWindow::showMessageBox (
+            juce::AlertWindow::WarningIcon,
+            "Cannot split channel",
+            "Only 8-bit channels can be split into multiple logical channels. Please remove extra logical channels.",
+            "Ok",
+            &ShapeShifterManager::getInstance()->mainContainer);
+        // Can't actually remove it directly because the object needs to still exist for steps further down the call stack
+        // askForRemoveBaseItem(c);
+    }
+    calcDmxChannels();
+    updateCanAddItems();
+}
+
 void FixtureTypeChannelManager::askForRemoveBaseItem(BaseItem* item) {
 	BaseManager::askForRemoveBaseItem(item);
 	calcDmxChannels();
+    updateCanAddItems();
 }
 void FixtureTypeChannelManager::askForDuplicateItem(BaseItem* item) {
 	BaseManager::askForDuplicateItem(item);
 	calcDmxChannels();
+    updateCanAddItems();
 }
 void FixtureTypeChannelManager::askForPaste() {
 	BaseManager::askForPaste();
 	calcDmxChannels();
+    updateCanAddItems();
 }
 void FixtureTypeChannelManager::askForMoveBefore(BaseItem* i) {
 	BaseManager::askForMoveBefore(i);

@@ -47,6 +47,19 @@ void FixtureTypeDMXChannel::onContainerParameterChangedInternal(Parameter* p)
         if (manager != nullptr) {
             manager->calcDmxChannels();
         }
+
+        chansManager.updateCanAddItems();
+
+        // Show warning if trying to set non-8bit resolution with multiple channels
+        if (chansManager.items.size() > 1 && p->getValue() != "8bits") {
+            juce::AlertWindow::showMessageBox (
+                juce::AlertWindow::WarningIcon,
+                "Cannot change resolution",
+                "Only 8-bit channels can be split into multiple logical channels. Please remove extra logical channels first.",
+                "Ok",
+                &ShapeShifterManager::getInstance()->mainContainer);
+            p->setValue("8bits");
+        }
     }
 
     if (p == defaultValue) { FixtureManager::getInstance()->defaultValueChanged(this); }
