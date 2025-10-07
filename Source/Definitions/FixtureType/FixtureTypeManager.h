@@ -19,7 +19,8 @@ public:
 
     FixtureTypeManager();
     ~FixtureTypeManager();
-
+    
+    juce::Array<FixtureType *> addItemsFromData(juce::var data, bool addToUndo = true) override;
     void addItemInternal(FixtureType* o, var data) override;
     void removeItemInternal(FixtureType* o) override;
 

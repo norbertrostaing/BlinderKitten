@@ -37,7 +37,6 @@ FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     highlightValue->setEnabled(false);
 
     chansManager.addItem();
-    
     addChildControllableContainer(&chansManager);
 }
 
