@@ -19,6 +19,7 @@ FixtureTypeDMXChannel::FixtureTypeDMXChannel(var params) :
     chansManager()
 {
     itemDataType = "FixtureTypeDMXChannel";
+    saveAndLoadRecursiveData = true;
 
     dmxDelta = addIntParameter("Channel", "DMX channel offset from base fixture address (1-512)", 1, 1, 512);
     dmxDelta -> setEnabled(false);

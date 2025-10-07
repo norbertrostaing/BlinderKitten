@@ -7,6 +7,7 @@ FixtureTypeChannelManager::FixtureTypeChannelManager() :
     itemDataType = "FixtureTypeChannel";
     selectItemWhenCreated = false;
     updateCanAddItems();
+    saveAndLoadRecursiveData = false;
 }
 
 FixtureTypeChannelManager::~FixtureTypeChannelManager()
