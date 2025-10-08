@@ -20,8 +20,6 @@ public:
     FixtureTypeChannelManager();
     ~FixtureTypeChannelManager();
 
-    bool massiveImport = false;
-
     void calcDmxChannels();
 
     String parentDMXChannelResoltion();
