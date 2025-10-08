@@ -344,6 +344,7 @@
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureMultiEditor.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixturePatch.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Fixture\FixturePatchCorrection.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Fixture\FixtureDMXChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureType.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.cpp"/>
@@ -351,6 +352,8 @@
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannelManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannel.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannelManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Group\Group.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Group\GroupManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Group\GroupManagerUI.cpp"/>
@@ -3611,6 +3614,7 @@
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureMultiEditor.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixturePatch.h"/>
     <ClInclude Include="..\..\Source\Definitions\Fixture\FixturePatchCorrection.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Fixture\FixtureDMXChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureType.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.h"/>
@@ -3618,6 +3622,8 @@
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannelManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannel.h"/>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeDMXChannelManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Group\Group.h"/>
     <ClInclude Include="..\..\Source\Definitions\Group\GroupManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Group\GroupManagerUI.h"/>

@@ -12,6 +12,7 @@
 #include "../ChannelFamily/ChannelFamilyManager.h"
 #include "FixtureTypeChannelManager.h"
 #include "FixtureTypeVirtualChannelManager.h"
+#include "FixtureTypeDMXChannel.h"
 #include "FixtureType.h"
 #include "Tracker/TrackerManager.h"
 #include "Fixture/FixtureManager.h"
@@ -48,16 +49,8 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
     channelType -> maxDefaultSearchLevel = 2;
     channelType->typesFilter.add("ChannelType");
 
-    resolution = addEnumParameter("Resolution", "");
-    resolution->addOption("8bits", "8bits");
-    resolution->addOption("16bits", "16bits");
-    resolution->addOption("Fine channel only", "fine");
-
     subFixtureId = addIntParameter("SubFixture ID", "0 means not in a subfixture",0,0);
-    defaultValue = addFloatParameter("Default value", "Default value of the channel", 0, 0, 1);
-    highlightValue = addFloatParameter("Highlight value", "Value of the channel during highlight", 0, 0, 1);
-    highlightValue->canBeDisabledByUser = true;
-    highlightValue->setEnabled(false);
+
     killedBySWOP = addBoolParameter("Killed By SWOP", "if checked, this parameter will be set to its default value when cuelists with no command for ot are called with SWOP", false);
 
     fadeOrSnap = addEnumParameter("Fade or snap", "Is ths channel allowed to fade or should it jump to his new value ?");
@@ -66,19 +59,18 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
 
     invertOutput = addBoolParameter("Invert output", "if checked, output will be inverted", false);
 
-    dmxDelta = addIntParameter("DMX Channel", "Number of the channel in the DMX chart", 1, 1);
-    dmxDelta -> setEnabled(false);
-
+    dmxRange = addPoint2DParameter("DMX Output Range", "The range to remap the value to.");
+    dmxRange->setBounds(0, 0, 256, 256); // TODO: based on resolution
+    dmxRange->setDefaultPoint(0, 256);
+    dmxRange->canShowExtendedEditor = false;
+    
     virtualMaster = addTargetParameter("Virtual Master", "Select a virtual master");
     virtualMaster->targetType = TargetParameter::CONTAINER;
     virtualMaster->maxDefaultSearchLevel = 2;
 
     physicalRange = addPoint2DParameter("Physical range", "Range output (degrees for pan, tilt, zoom etc...");
 
-
     addChildControllableContainer(&curve);
-
-
 };
 
 FixtureTypeChannel::~FixtureTypeChannel()
@@ -99,20 +91,11 @@ FixtureTypeChannel::~FixtureTypeChannel()
 };
 
 void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
-    if (p == resolution || p == channelType) {
-        FixtureTypeChannelManager* manager = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
-        if (manager != nullptr) {
-            manager->calcDmxChannels();
-        }
-    }
-    else if (p == physicalRange) {
+    if (p == physicalRange) {
         TrackerManager::getInstance()->recomputeAllTrackers();
     }
-    else if (p == defaultValue || p == invertOutput) {
-        FixtureManager::getInstance()->defaultValueChanged(this);
-    }
-    else if (p == highlightValue) {
-        if (!p->enabled) p->setEnabled(true);
+    else if (p == invertOutput) {
+        FixtureManager::getInstance()->invertValueChanged(this);
     }
 }
 
@@ -125,4 +108,10 @@ void FixtureTypeChannel::onControllableFeedbackUpdateInternal(ControllableContai
             }
         }
     }
+}
+
+FixtureTypeDMXChannel* FixtureTypeChannel::getParentDMXChannel()
+{
+    // Get parent from object hierarchy - should be a FixtureTypeDMXChannel
+    return dynamic_cast<FixtureTypeDMXChannel*>(parentContainer.get());
 }

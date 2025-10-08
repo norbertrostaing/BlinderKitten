@@ -16,7 +16,7 @@ FixtureType::FixtureType(var params) :
 	BaseItem(params.getProperty("name", "FixtureType")),
 	objectType(params.getProperty("type", "FixtureType").toString()),
 	objectData(params),
-	chansManager(),
+    dmxChannelsManager(),
 	virtualChansManager(),
 	helpContainer("Editor Help")
 {
@@ -35,7 +35,7 @@ FixtureType::FixtureType(var params) :
 	//chansManager = new BaseManager<FixtureTypeChannel>("Channels");
 	// ContainerAsyncListener* newListener = new ContainerAsyncListener();
 	// chansManager->addAsyncContainerListener();
-	addChildControllableContainer(&chansManager);
+	addChildControllableContainer(&dmxChannelsManager);
 	addChildControllableContainer(&virtualChansManager);
 	addChildControllableContainer(&helpContainer);
 	helpContainer.saveAndLoadRecursiveData = false;
@@ -50,12 +50,15 @@ void FixtureType::afterLoadJSONDataInternal() {
 }
 
 void FixtureType::updateVirtualLists() {
-	for (int i = 0; i < chansManager.items.size(); i++) {
-		String value = chansManager.items[i]->virtualMaster->getValue();
-		chansManager.items[i]->virtualMaster->setRootContainer(&virtualChansManager);
-		chansManager.items[i]->virtualMaster->setValue(value);
+    for (int x = 0; x < dmxChannelsManager.items.size(); x++) {
+        FixtureTypeDMXChannel* dmxChannel = dmxChannelsManager.items[x];
+        
+        for (int i=0; i < dmxChannel->chansManager.items.size(); i++) {
+            String value = dmxChannel->chansManager.items[i]->virtualMaster->getValue();
+            dmxChannel->chansManager.items[i]->virtualMaster->setRootContainer(&virtualChansManager);
+            dmxChannel->chansManager.items[i]->virtualMaster->setValue(value);
+        }
 	}
-
 }
 
 void FixtureType::onContainerParameterChangedInternal(Parameter* p)
@@ -116,21 +119,21 @@ void FixtureType::copyTemplate()
 {
 	int from = templateId->intValue();
 	int to = copyToId->intValue();
-	if (to <= from) 
+	if (to <= from)
 	{
 		LOG("Copy to must be higher than template ID");
 		return;
 	}
 
 	Array<FixtureTypeVirtualChannel*> ftvcToAdd;
-	Array<FixtureTypeChannel*> ftcToAdd;
+	Array<FixtureTypeDMXChannel*> ftdcToAdd;
 	HashMap<FixtureTypeChannel*, FixtureTypeVirtualChannel*> vDimmers;
-
-	int temp = 1;
 
 	for (int subId = from + 1; subId <= to; subId++) {
 		HashMap<FixtureTypeVirtualChannel*, FixtureTypeVirtualChannel*> virtualChans;
-		Array< FixtureTypeVirtualChannel*> virtToCopy;
+
+		// Copy virtual channels that belong to the 'from' subfixture
+		Array<FixtureTypeVirtualChannel*> virtToCopy;
 		for (FixtureTypeVirtualChannel* c : virtualChansManager.items) {
 			if (c->subFixtureId->intValue() == from) {
 				virtToCopy.add(c);
@@ -144,38 +147,64 @@ void FixtureType::copyTemplate()
 			newC->editorIsCollapsed = true;
 			virtualChans.set(c, newC);
 		}
-		Array< FixtureTypeChannel*> toCopy;
-		for (FixtureTypeChannel* c : chansManager.items) {
-			if (c->subFixtureId->intValue() == from) {
-				toCopy.add(c);
+
+		// Find DMX channels that contain logical channels belonging to the 'from' subfixture
+		Array<FixtureTypeDMXChannel*> dmxChannelsToCopy;
+		for (FixtureTypeDMXChannel* dmxChannel : dmxChannelsManager.items) {
+			bool hasCopyableChannels = false;
+			for (FixtureTypeChannel* logicalChannel : dmxChannel->chansManager.items) {
+				if (logicalChannel->subFixtureId->intValue() == from) {
+					hasCopyableChannels = true;
+					break;
+				}
+			}
+			if (hasCopyableChannels) {
+				dmxChannelsToCopy.add(dmxChannel);
 			}
 		}
-		for (FixtureTypeChannel* c : toCopy) {
-			FixtureTypeChannel* newC = new FixtureTypeChannel();
-			ftcToAdd.add(newC);
-			newC->loadJSONData(c->getJSONData());
-			newC->subFixtureId->setValue(subId);
-			newC->editorIsCollapsed = true;
-			newC->setNiceName("import "+String(temp));
-			temp++;
-			FixtureTypeVirtualChannel* v = dynamic_cast<FixtureTypeVirtualChannel*>(c->virtualMaster->targetContainer.get());
-			if (v != nullptr && virtualChans.contains(v)) {
-				vDimmers.set(newC, virtualChans.getReference(v));
+
+		// Copy each DMX channel and update the subfixture IDs
+		for (FixtureTypeDMXChannel* originalDMXChannel : dmxChannelsToCopy) {
+			FixtureTypeDMXChannel* newDMXChannel = new FixtureTypeDMXChannel();
+			ftdcToAdd.add(newDMXChannel);
+
+			// Load the DMX channel data (this will create all logical channels too)
+			newDMXChannel->loadJSONData(originalDMXChannel->getJSONData());
+			newDMXChannel->editorIsCollapsed = true;
+
+			// Update subfixture IDs on the logical channels
+			for (FixtureTypeChannel* logicalChannel : newDMXChannel->chansManager.items) {
+				if (logicalChannel->subFixtureId->intValue() == from) {
+					logicalChannel->subFixtureId->setValue(subId);
+				}
+
+				// Update virtual master mappings
+				FixtureTypeVirtualChannel* v = dynamic_cast<FixtureTypeVirtualChannel*>(logicalChannel->virtualMaster->targetContainer.get());
+				if (v != nullptr && virtualChans.contains(v)) {
+					vDimmers.set(logicalChannel, virtualChans.getReference(v));
+				}
 			}
 		}
 	}
+
+	// Add all the copied items
 	virtualChansManager.editorIsCollapsed = true;
 	virtualChansManager.addItems(ftvcToAdd, var(), false);
-	chansManager.massiveImport = true;
-	chansManager.editorIsCollapsed = true;
-	chansManager.addItems(ftcToAdd, var(), false);
-	chansManager.massiveImport = false;
-	chansManager.calcDmxChannels();
+
+	dmxChannelsManager.massiveImport = true;
+	dmxChannelsManager.editorIsCollapsed = true;
+	dmxChannelsManager.addItems(ftdcToAdd, var(), false);
+	dmxChannelsManager.massiveImport = false;
+	dmxChannelsManager.calcDmxChannels();
+
 	updateVirtualLists();
+
+	// Update virtual master references
 	for (auto it = vDimmers.begin(); it != vDimmers.end(); it.next()) {
 		it.getKey()->virtualMaster->setValueFromTarget(it.getValue());
 	}
+
 	virtualChansManager.editorIsCollapsed = false;
-	chansManager.editorIsCollapsed = false;
+	dmxChannelsManager.editorIsCollapsed = false;
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

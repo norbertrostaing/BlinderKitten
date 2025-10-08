@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#include "DMXInterfaceUI.h"
+#include "../DMXInterface.h"
+
 DMXInterfaceUI::DMXInterfaceUI(DMXInterface* i) :
     InterfaceUI(i),
     dmxInterface(i)

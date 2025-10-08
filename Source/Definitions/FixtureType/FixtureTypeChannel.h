@@ -25,13 +25,11 @@ class FixtureTypeChannel:
     // StringParameter* suffix;
     // StringParameter* idGroupName;
     IntParameter* subFixtureId;
-    FloatParameter* defaultValue;
-    FloatParameter* highlightValue;
     BoolParameter* killedBySWOP;
     BoolParameter* invertOutput;
-    EnumParameter* resolution;
     EnumParameter* fadeOrSnap;
-    IntParameter* dmxDelta;
+    Point2DParameter* dmxRange;
+    
     TargetParameter* virtualMaster;
 
     Point2DParameter* physicalRange;
@@ -39,6 +37,9 @@ class FixtureTypeChannel:
 
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+    // Get parent DMX channel from object hierarchy
+    class FixtureTypeDMXChannel* getParentDMXChannel();
 
 };
 

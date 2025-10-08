@@ -161,9 +161,10 @@ void FixtureMultiEditor::goAddPatch() {
                 p->address->setValue(address);
                 int delta = abs(interval);
 
-                for (int cn = 0; cn < ft->chansManager.items.size(); cn++) {
-                    int chanSize = ft->chansManager.items[cn]->resolution->getValue().toString()=="16bits" ? 1 : 0;
-                    delta = jmax(delta, (int)ft->chansManager.items[cn]->dmxDelta->getValue()+chanSize);
+                for (int cn = 0; cn < ft->dmxChannelsManager.items.size(); cn++) {
+                    // TODO:
+                    int chanSize = ft->dmxChannelsManager.items[cn]->resolution->getValue().toString()=="16bits" ? 1 : 0;
+                    delta = jmax(delta, (int)ft->dmxChannelsManager.items[cn]->dmxDelta->getValue()+chanSize);
                 }
                 if (interval >= 0) address += delta;
                 else address -= delta;

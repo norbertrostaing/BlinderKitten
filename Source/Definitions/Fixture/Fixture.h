@@ -13,6 +13,7 @@
 #include "FixturePatch.h"
 #include "FixtureMapping.h"
 #include "../SubFixture/SubFixture.h"
+#include "FixtureDMXChannel.h"
 
 class Fixture:
     public BaseItem
@@ -48,6 +49,7 @@ public:
 
     OwnedArray<SubFixture> subFixturesContainer;
     HashMap<int, SubFixture*> subFixtures;
+    OwnedArray<FixtureDMXChannel> fixtureDMXChannels;
     FixturePatchManager patchs;
     FixtureMappingManager mappings;
     String getTypeString() const override { return objectType; }
@@ -55,6 +57,9 @@ public:
     StringParameter* infos;
 
     IntParameter* useAnotherId;
+
+    bool isHighlighted = false;
+
     void applyPatchs();
     void checkChildrenSubFixtures();
 

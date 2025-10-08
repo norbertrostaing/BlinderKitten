@@ -18,6 +18,7 @@
 #include "../Interface/InterfaceIncludes.h"
 #include "../Cuelist/Cuelist.h"
 #include "../Programmer/Programmer.h"
+#include "../Fixture/FixtureDMXChannel.h"
 #include "../Effect/Effect.h"
 #include "../Tracker/Tracker.h"
 #include "../ChannelValue.h"
@@ -121,97 +122,59 @@ SubFixtureChannel::~SubFixtureChannel()
 
 }
 
-void SubFixtureChannel::writeValue(float v) {
-	v= jmin((float)1, v);
-	v= jmax((float)0, v);
+void SubFixtureChannel::writeLogicalValue(float v)
+{
+    isActive = v >= 0 ? true : false;
 
-	if (virtualMaster != nullptr) {
-		v *= virtualMaster->currentValue;
-	}
+    v = jlimit(0.0f, 1.0f, v);
+    
+    if (virtualMaster != nullptr) {
+        v *= virtualMaster->currentValue;
+    }
 
-	currentValue = v;
-	parentFixture->channelValueChanged(subFixtureId, channelType, v);
+    currentValue = v;
+    parentFixture->channelValueChanged(subFixtureId, channelType, v);
 
-	if (virtualChildren.size() > 0) {
-		for (int i = 0; i < virtualChildren.size(); i++) {
-			virtualChildren[i]->isDirty = true;
-			//Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
-		}
-		return;
-	}
-
-	if (invertOutput) {
-		v = 1-v;
-	}
-
-	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
-
-		if (parentFixtureTypeChannel->curve.enabled->boolValue()) {
-			v = parentFixtureTypeChannel->curve.getValueAtPosition(v);
-		}
-
-		int deltaAdress = parentFixtureTypeChannel->dmxDelta->intValue();
-		deltaAdress--;
-		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
-		for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
-			FixturePatch* p = parentFixture->patchs.items[i];
-			if (p->enabled->boolValue()) {
-				float localValue = v;
-
-				DMXInterface* out = static_cast<DMXInterface*>(p->targetInterface->targetContainer.get());
-				if (out != nullptr) {
-					FixturePatch* patch = p;
-					int address = patch->address->getValue();
-
-					for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
-						FixturePatchCorrection* c = patch->corrections.items[iCorr];
-						if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
-							if (c->invertChannel->getValue()) {
-								localValue = 1 - localValue;
-							}
-							localValue = localValue + (float)c->offsetValue->getValue();
-							localValue = jmin((float)1, localValue);
-							localValue = jmax((float)0, localValue);
-							localValue = c->curve.getValueAtPosition(localValue);
-						}
-					}
-
-
-					if (address > 0) {
-						address += (deltaAdress);
-						if (fineChannelDelta == 0) {
-							int val = localValue >= 1 ? 255 : round(255 * localValue);
-							//val = val > 255 ? 255 : val;
-							out->sendDMXValue(address, val);
-						}
-						else {
-							int val = localValue >= 1 ? 65535 : round(65535.0 * localValue);
-							//int val = floor(65535.0 * value);
-							//val = value > 65535 ? 65535 : val;
-							int valueA = val / 256;
-							int valueB = val % 256;
-							out->sendDMXValue(address, valueA);
-							out->sendDMXValue(address + fineChannelDelta, valueB);
-						}
-					}
-				}
-			}
-		}
-
-	}
-
+    if (virtualChildren.size() > 0) {
+        for (int i = 0; i < virtualChildren.size(); i++) {
+            virtualChildren[i]->isDirty = true;
+            //Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
+        }
+        return;
+    }
+    
+    // Notify physical channel of the change
+    if (physicalChannel != nullptr) {
+        physicalChannel->onLogicalChannelChanged(this);
+    }
 }
 
+bool SubFixtureChannel::isContributing()
+{
+    return isActive && physicalChannel != nullptr;
+}
 
 void SubFixtureChannel::updateVal(double now) {
-	float newValue = defaultValue;
+	float newValue = -1;
+
+    // Virtual channels set the default and highlight values at the logical channel level because there is no underlying DMXChannel
+    if (parentFixtureTypeVirtualChannel != nullptr) {
+        if(parentSubFixture->isHighlighted && parentFixtureTypeVirtualChannel->highlightValue->enabled) {
+            newValue = parentFixtureTypeVirtualChannel->highlightValue->floatValue();
+            writeLogicalValue(newValue);
+            return;
+        } else {
+            newValue = parentFixtureTypeVirtualChannel->defaultValue->floatValue();
+        }
+    }
+
 	float noGMValue = 0;
 	if (defaultPresetValue >= 0) {
 		newValue = defaultPresetValue;
 	}
 
 	postCuelistValue = newValue;
-
+    
 	cs.enter();
 	Array<int> layers;
 
@@ -330,16 +293,18 @@ void SubFixtureChannel::updateVal(double now) {
 		if (InputPanel::getInstance()->paramBlackOut->boolValue()) {
 			newValue = 0;
 		}
-		if (isHTP) {
-			newValue = jmax(newValue * (float)gm, noGMValue);
-		}
-		else {
-			newValue = jmap((float)gm, 0.0f,1.0f,noGMValue, newValue);
-		}
+        if (newValue >= 0) {
+            if (isHTP) {
+                newValue = jmax(newValue * (float)gm, noGMValue);
+            }
+            else {
+                newValue = jmap((float)gm, 0.0f,1.0f,noGMValue, newValue);
+            }
+        }
 	}
 
 	cs.exit();
-	writeValue(newValue);
+	writeLogicalValue(newValue);
 }
 
 void SubFixtureChannel::cuelistOnTopOfStack(Cuelist* c) {
@@ -445,4 +410,3 @@ void SubFixtureChannel::selectionMasterOutOfStack(SelectionMaster* f) {
 	}
 	cs.exit();
 }
-
