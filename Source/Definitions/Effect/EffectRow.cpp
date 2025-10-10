@@ -58,7 +58,6 @@ EffectRow::EffectRow(var params) :
     curveOrigin = curveContainer.addFloatParameter("Curve Origin", "Y Value of the curve to use as origin", 0, 0, 1);
 
     curveContainer.saveAndLoadRecursiveData = true;
-    paramContainer.saveAndLoadRecursiveData = true;
 
     addChildControllableContainer(&curveContainer);
     addChildControllableContainer(&selection);
