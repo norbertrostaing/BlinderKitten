@@ -11,6 +11,7 @@
 #include "JuceHeader.h"
 #include "FixtureType.h"
 #include "Brain.h"
+#include "Definitions/Preset/PresetManager.h"
 
 FixtureType::FixtureType(var params) :
 	BaseItem(params.getProperty("name", "FixtureType")),
@@ -18,7 +19,9 @@ FixtureType::FixtureType(var params) :
 	objectData(params),
 	chansManager(),
 	virtualChansManager(),
-	helpContainer("Editor Help")
+	helpContainer("Editor Help"),
+	presets("Presets"),
+	presetsCC("Presets")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
@@ -32,13 +35,19 @@ FixtureType::FixtureType(var params) :
 	templateId = helpContainer.addIntParameter("Template ID", "Use the subfixture with this id as template", 0, 0);
 	copyToId = helpContainer.addIntParameter("Copy until ID", "Duplicate the template until the copy has this ID", 0, 0);
 	copyTemplateButton = helpContainer.addTrigger("Copy template", "");
-	//chansManager = new BaseManager<FixtureTypeChannel>("Channels");
-	// ContainerAsyncListener* newListener = new ContainerAsyncListener();
-	// chansManager->addAsyncContainerListener();
 	addChildControllableContainer(&chansManager);
 	addChildControllableContainer(&virtualChansManager);
 	addChildControllableContainer(&helpContainer);
+	addChildControllableContainer(&presetsCC);
+	presetsCC.addChildControllableContainer(&presets);
+	presetsCC.saveAndLoadRecursiveData = true;
+	presets.selectItemWhenCreated = false;
 	helpContainer.saveAndLoadRecursiveData = false;
+
+	importFromGridBtn = presetsCC.addTrigger("Import data from grid", "");
+	exportInExistingBtn = presetsCC.addTrigger("Export in existing grid", "");
+	exportAllToGridBtn = presetsCC.addTrigger("Create missing in grid", "");
+
 }
 
 FixtureType::~FixtureType()
@@ -110,6 +119,9 @@ void FixtureType::onControllableFeedbackUpdateInternal(ControllableContainer* cc
 		copyTemplate();
 		copyToId->setValue(0);
 	}
+	else if (c == importFromGridBtn) { importFromGrid(); }
+	else if (c == exportAllToGridBtn) { exportToGrid(true); }
+	else if (c == exportInExistingBtn) { exportToGrid(false); }
 }
 
 void FixtureType::copyTemplate()
@@ -178,4 +190,53 @@ void FixtureType::copyTemplate()
 	virtualChansManager.editorIsCollapsed = false;
 	chansManager.editorIsCollapsed = false;
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
+void FixtureType::importFromGrid()
+{
+	Fixture* fixt = nullptr;
+	for (auto it = Brain::getInstance()->fixtures.begin(); it != Brain::getInstance()->fixtures.end() && fixt == nullptr; it.next()) {
+		Fixture* f = it.getValue();
+		FixtureType* ft = dynamic_cast<FixtureType*>(f->devTypeParam->targetContainer.get());
+		if (ft == this) {
+			fixt = f;
+		}
+	}
+	if (fixt == nullptr) return;
+	for (auto itPresets = Brain::getInstance()->presets.begin(); itPresets != Brain::getInstance()->presets.end(); itPresets.next()) {
+		Preset* p = itPresets.getValue();
+		p->computeValues();
+		bool valid = false;
+		for (auto itSF = fixt->subFixtures.begin(); !valid && itSF != fixt->subFixtures.end(); itSF.next()) {
+			SubFixture* sf = itSF.getValue();
+			auto vals = p->getSubFixtureValues(sf);
+			for (auto itCT = vals->begin(); !valid && itCT != vals->end(); itCT.next()) {
+				ChannelType* ct = itCT.getKey();
+				if (ct != nullptr && sf->channelsMap.contains(ct)) {
+					valid = true;
+				}
+			}
+		}
+		if (valid) {
+			FixtureTypePreset * ftp = nullptr;
+			for (int i = 0; ftp == nullptr && i < presets.items.size(); i++) {
+				if (p->userName->stringValue() == presets.items[i]->niceName) {
+					ftp = presets.items[i];
+				}
+			}
+			if (ftp == nullptr) {
+				ftp = presets.addItem();
+				ftp -> setNiceName(p->userName->stringValue());
+			}
+			ftp->importFromPresetGrid();
+		}
+	}
+}
+
+void FixtureType::exportToGrid(bool createIfNotHere)
+{
+	for (int i = 0; i < presets.items.size(); i++) {
+		FixtureTypePreset * ftp = presets.items[i];
+		ftp->exportInPresetGrid(createIfNotHere);
+	}
 }

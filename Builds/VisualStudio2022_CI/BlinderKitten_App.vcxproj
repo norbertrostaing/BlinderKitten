@@ -350,6 +350,9 @@
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePreset.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetValues.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannelManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Group\Group.cpp"/>
@@ -3617,6 +3620,9 @@
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePreset.h"/>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetValues.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannelManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\Group\Group.h"/>

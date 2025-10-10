@@ -80,18 +80,6 @@ Preset::Preset(var params) :
 Preset::~Preset()
 {
 	Brain::getInstance()->unregisterPreset(this);
-	for (auto it = computedSubFixtureValues.begin(); it != computedSubFixtureValues.end(); it.next()) {
-		//it.getValue()->~HashMap();
-	}
-	for (auto it = computedFixtureTypeValues.begin(); it != computedFixtureTypeValues.end(); it.next()) {
-		//it.getValue()->~HashMap();
-	}
-	for (auto it = computedSubFixtureTypeValues.begin(); it != computedSubFixtureTypeValues.end(); it.next()) {
-		for (auto it2 = it.getValue()->begin(); it2 != it.getValue()->end(); it2.next()) {
-			//it2.getValue()->~HashMap();
-		}
-		//it.getValue()->~HashMap();
-	}
 	int defaultPresetId = dynamic_cast<BKEngine*>(Engine::mainEngine)->defaultPresetId->intValue();
 	if (defaultPresetId == id->intValue()) {
 		Brain::getInstance()->defaultValuesNeedRefresh = true;

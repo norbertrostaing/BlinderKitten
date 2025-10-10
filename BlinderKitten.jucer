@@ -561,6 +561,18 @@
                 file="Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp"/>
           <FILE id="NzoqJA" name="FixtureTypeManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/FixtureType/FixtureTypeManagerUI.h"/>
+          <FILE id="vRXKu0" name="FixtureTypePreset.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypePreset.cpp"/>
+          <FILE id="lUHIKc" name="FixtureTypePreset.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypePreset.h"/>
+          <FILE id="IxrVop" name="FixtureTypePresetManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypePresetManager.cpp"/>
+          <FILE id="ZySobF" name="FixtureTypePresetManager.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypePresetManager.h"/>
+          <FILE id="H4DV1O" name="FixtureTypePresetValues.cpp" compile="1" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypePresetValues.cpp"/>
+          <FILE id="kvJFCE" name="FixtureTypePresetValues.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypePresetValues.h"/>
           <FILE id="JXp7CW" name="FixtureTypeVirtualChannel.cpp" compile="1"
                 resource="0" file="Source/Definitions/FixtureType/FixtureTypeVirtualChannel.cpp"/>
           <FILE id="YRt4Hn" name="FixtureTypeVirtualChannel.h" compile="0" resource="0"

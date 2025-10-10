@@ -12,6 +12,7 @@
 #include "JuceHeader.h"
 #include "FixtureTypeChannel.h"
 #include "FixtureTypeChannelManager.h"
+#include "FixtureTypePresetManager.h"
 #include "FixtureTypeVirtualChannelManager.h"
 
 class FixtureType:
@@ -28,6 +29,7 @@ public:
     ColorParameter* layoutFillColor;
     FileParameter* layoutIconParameter;
 
+
     bool useLayoutIcon = false;
     Image layoutIconImage;
     Image layoutBorderImage;
@@ -40,6 +42,12 @@ public:
     FixtureTypeChannelManager chansManager;
     FixtureTypeVirtualChannelManager virtualChansManager;
     ControllableContainer helpContainer;
+    ControllableContainer presetsCC;
+    BaseManager<FixtureTypePreset> presets;
+
+    Trigger* importFromGridBtn;
+    Trigger* exportAllToGridBtn;
+    Trigger* exportInExistingBtn;
 
     String getTypeString() const override { return objectType; }
 
@@ -50,5 +58,10 @@ public:
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
     void copyTemplate();
+
+    void importFromGrid();
+    void exportToGrid(bool createIfNotHere);
+
+
 };
 

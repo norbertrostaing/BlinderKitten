@@ -184,6 +184,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/FixtureTypeChannelManager_c4b6993.o \
   $(JUCE_OBJDIR)/FixtureTypeManager_e71c2bae.o \
   $(JUCE_OBJDIR)/FixtureTypeManagerUI_d1c07202.o \
+  $(JUCE_OBJDIR)/FixtureTypePreset_c32b4cc8.o \
+  $(JUCE_OBJDIR)/FixtureTypePresetManager_436eb64f.o \
+  $(JUCE_OBJDIR)/FixtureTypePresetValues_43104aca.o \
   $(JUCE_OBJDIR)/FixtureTypeVirtualChannel_8aa184e1.o \
   $(JUCE_OBJDIR)/FixtureTypeVirtualChannelManager_b206e016.o \
   $(JUCE_OBJDIR)/Group_3d0e0901.o \
@@ -828,6 +831,21 @@ $(JUCE_OBJDIR)/FixtureTypeManager_e71c2bae.o: ../../Source/Definitions/FixtureTy
 $(JUCE_OBJDIR)/FixtureTypeManagerUI_d1c07202.o: ../../Source/Definitions/FixtureType/FixtureTypeManagerUI.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling FixtureTypeManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FixtureTypePreset_c32b4cc8.o: ../../Source/Definitions/FixtureType/FixtureTypePreset.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureTypePreset.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FixtureTypePresetManager_436eb64f.o: ../../Source/Definitions/FixtureType/FixtureTypePresetManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureTypePresetManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FixtureTypePresetValues_43104aca.o: ../../Source/Definitions/FixtureType/FixtureTypePresetValues.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureTypePresetValues.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/FixtureTypeVirtualChannel_8aa184e1.o: ../../Source/Definitions/FixtureType/FixtureTypeVirtualChannel.cpp

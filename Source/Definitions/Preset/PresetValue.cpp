@@ -16,6 +16,7 @@ PresetValue::PresetValue(var params) :
     objectType(params.getProperty("type", "PresetValue").toString()),
     objectData(params)
 {
+    itemDataType = "PresetValue";
     param  = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());
     param ->targetType = TargetParameter::CONTAINER;
     param ->maxDefaultSearchLevel = 2;

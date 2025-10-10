@@ -1567,6 +1567,15 @@
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.cpp">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePreset.cpp">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetValues.cpp">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannel.cpp">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
@@ -5431,6 +5440,15 @@
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePreset.h">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetManager.h">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePresetValues.h">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeVirtualChannel.h">
