@@ -1780,7 +1780,7 @@ void Brain::soloPoolRandom(int poolId)
     int id = ids[i];
     String type = types[i];
 
-    if (type == "cuelist") { Brain::getCuelistById(id)->go(); }
+    if (type == "cuelist") { Brain::getCuelistById(id)->userGo(); }
     else if (type == "effect") { Brain::getEffectById(id)->start(); }
     else if (type == "carousel") { Brain::getCarouselById(id)->start(); }
 }
