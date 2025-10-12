@@ -1754,21 +1754,21 @@ void Brain::soloPoolRandom(int poolId)
     usingCollections.enter();
     for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
         Cuelist* c = it.getValue();
-        if (c->soloPool->intValue() == poolId) {
+        if (!c->isCuelistOn->boolValue() && c->soloPool->intValue() == poolId) {
             types.add("cuelist");
             ids.add(c->id->intValue());
         }
     }
     for (auto it = effects.begin(); it != effects.end(); it.next()) {
         Effect* c = it.getValue();
-        if (c->soloPool->intValue() == poolId) {
+        if (!c->isOn && c->soloPool->intValue() == poolId) {
             types.add("effect");
             ids.add(c->id->intValue());
         }
     }
     for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
         Carousel* c = it.getValue();
-        if (c->soloPool->intValue() == poolId) {
+        if (!c->isOn && c->soloPool->intValue() == poolId) {
             types.add("carousel");
             ids.add(c->id->intValue());
         }
