@@ -24,9 +24,6 @@ class FixtureTypePresetValues:
 
     IntParameter* subFixtureId;
 
-    Trigger* importFromPresetsBtn;
-    Trigger* cleanPresetsBtn;
-
     BaseManager<PresetValue> values;
     void onContainerParameterChangedInternal(Parameter* p);
 

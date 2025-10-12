@@ -20,7 +20,6 @@ FixtureType::FixtureType(var params) :
 	chansManager(),
 	virtualChansManager(),
 	helpContainer("Editor Help"),
-	presets("Presets"),
 	presetsCC("Presets")
 {
 	saveAndLoadRecursiveData = true;

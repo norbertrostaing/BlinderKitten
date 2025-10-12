@@ -125,7 +125,7 @@ void FixtureTypePreset::exportInPresetGrid(bool addIfNotThere)
             FixtureTypePresetValues* ftpv = values.items[i];
             PresetSubFixtureValues* psfv = targetPreset->subFixtureValues.addItem();
             psfv->values.clear();
-            //psfv->targetFixtureId->setValue(fixt->id->intValue());
+            psfv->targetFixtureId->setValue(fixt->id->intValue());
             psfv->targetSubFixtureId->setValue(ftpv->subFixtureId->intValue());
             for (int j = 0; j < ftpv->values.items.size(); j++) {
                 psfv->values.addItemFromData(ftpv->values.items[j]->getJSONData(), false);

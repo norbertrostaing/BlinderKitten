@@ -43,7 +43,7 @@ public:
     FixtureTypeVirtualChannelManager virtualChansManager;
     ControllableContainer helpContainer;
     ControllableContainer presetsCC;
-    BaseManager<FixtureTypePreset> presets;
+    FixtureTypePresetManager presets;
 
     Trigger* importFromGridBtn;
     Trigger* exportAllToGridBtn;
