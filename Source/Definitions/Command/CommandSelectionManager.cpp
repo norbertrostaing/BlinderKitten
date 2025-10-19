@@ -294,7 +294,6 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 
 				for (int chanIndex = 0; chanIndex < tempSelection.size(); chanIndex++) {
 					int realIndex = chanIndex / nBuddy;
-
 					int nWing = realIndex / wingSize;
 					if (nWing % 2 == 1) {
 						realIndex = realIndex % roundedWingSize;
@@ -310,7 +309,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 					SubFixture* sf = it.getKey();
 					int index = it.getValue();
 
-					float vWithGap = jmap((float)index, (float)0, (float)(maxIndex+1), 0.f, 1.f);
+					float vWithGap = jmap((float)index, (float)0, (float)(maxIndex+ nBlocks), 0.f, 1.f);
 					subFixtureToPosition.set(sf, vWithGap);
 					float vNoGap = jmap((float)index, (float)0, (float)(maxIndex), 0.f, 1.f);
 					subFixtureToPositionNoGap.set(sf, vNoGap);
