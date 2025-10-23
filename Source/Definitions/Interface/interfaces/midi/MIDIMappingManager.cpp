@@ -27,7 +27,7 @@ bool MIDIMappingManager::handleNote(int channel, int pitch, int velocity, String
     incrementIndex++;
     paramToIncrement.set(n, incrementIndex);
     bool used = false;
-    for (auto& i : items) used = used || i->handleNote(channel, pitch, velocity, origin, incrementIndex);
+    for (auto& i : items) used = i->handleNote(channel, pitch, velocity, origin, incrementIndex) || used;
     return used;
 }
 
@@ -39,7 +39,7 @@ bool MIDIMappingManager::handleCC(int channel, int number, int value, String ori
     incrementIndex++;
     paramToIncrement.set(n, incrementIndex);
     bool used = false;
-    for (auto& i : items) used = used || i->handleCC(channel, number, value, origin, incrementIndex);
+    for (auto& i : items) used = i->handleCC(channel, number, value, origin, incrementIndex) || used;
     return used;
 }
 
@@ -51,6 +51,6 @@ bool MIDIMappingManager::handlePitchWheel(int channel, int value, String origin)
     incrementIndex++;
     paramToIncrement.set(n, incrementIndex);
     bool used = false;
-    for (auto& i : items) used = used || i->handlePitchWheel(channel, value, origin, incrementIndex);
+    for (auto& i : items) used = i->handlePitchWheel(channel, value, origin, incrementIndex) || used;
     return used;
 }
