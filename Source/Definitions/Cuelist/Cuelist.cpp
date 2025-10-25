@@ -650,7 +650,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				std::shared_ptr<ChannelValue> temp = it.getValue();
 				if (newActiveValues.contains(it.getKey())) {
 					//ChannelValue* current = newActiveValues.getReference(it.getKey());
-					temp->values.set(0,it.getKey()->postCuelistValue);
+					double currentTiming = jmap(now, (double)temp->TSStart, (double)temp->TSEnd, 0.0, 1.0);
+					temp->values.set(0,temp->valueAt(currentTiming,0));
 				}
 				else {
 					temp->values.set(0, -1);
@@ -682,25 +683,19 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			std::shared_ptr<ChannelValue> temp = it.getValue();
 			if (activeValues.contains(it.getKey())) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
-				if (it.getKey()->isHTP && !temp->htpOverride) {
-					if (current != nullptr) {
-						double fader = HTPLevel->getValue();
-						double currentTiming = jmap(now, (double)current->TSStart, (double)current->TSEnd,0.0,1.0);
-						if (stopTransition) {
-							currentTiming = currentManualInTransition;
-						}
-						if (current->isEnded) {
-							currentTiming = 1;
-						}
-						currentTiming = jlimit(0.0,1.0,currentTiming);
-						temp->values.set(0, current->valueAt(currentTiming, 0)*fader);
+				if (current != nullptr) {
+					double currentTiming = jmap(now, (double)current->TSStart, (double)current->TSEnd, 0.0, 1.0);
+					if (stopTransition) {
+						currentTiming = currentManualInTransition;
 					}
-					else {
-						temp->values.set(0, 0);
+					if (current->isEnded) {
+						currentTiming = 1;
 					}
+					currentTiming = jlimit(0.0, 1.0, currentTiming);
+					temp->values.set(0, current->valueAt(currentTiming, 0));
 				}
 				else {
-					temp->values.set(0, it.getKey()->postCuelistValue);
+					temp->values.set(0, 0);
 				}
 			}
 			else {
@@ -1159,13 +1154,12 @@ void Cuelist::autoLoadCueB() {
 }
 
 float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool& isApplied, bool flashValues) {
-	float val = currentVal;
 	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
 	
 	bool keepUpdate = false;
 	isApplied = false;
 
-	float localValue = 0;
+	float newValue = 0;
 	std::shared_ptr<ChannelValue> cv;
 	float faderLevel = 0;
 	if (!activeValues.contains(fc)) {return currentVal;}
@@ -1180,6 +1174,9 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	}
 
 	faderLevel = (float)HTPLevel->getValue();
+	if (!fc->isHTP) {
+		faderLevel = (float)LTPLevel->getValue();
+	}
 
 	if (TSOffFlashEnd > now) {
 		double flashLvl = jmax(faderLevel, (float)flashLevel->getValue());
@@ -1195,9 +1192,12 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
+	float ratioBegin = 0;
+	float ratioEnd = 1;
 
 	if (cv->startValue() >= 0) {
-		valueFrom = cv->startValue(); 
+		valueFrom = cv->startValue();
+		ratioBegin = 1;
 	}
 	if (cv->endValue() >= 0) { 
 		valueTo = cv->endValue(); 
@@ -1211,66 +1211,66 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		cv->currentPosition = 1;
 	}
 
-	float fade = 0;
+	float transition = 0;
 	if (flashValues) {
-		localValue = valueTo;
-		fade = 1;
+		newValue = valueTo;
+		transition = 1;
 	}
 	else if (cv -> TSStart > now) {
-		fade = 0;
-		localValue = valueFrom; 
+		transition = 0;
+		newValue = valueFrom; 
 		keepUpdate = true;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	else if (cv -> TSEnd <= now) {
-		localValue = valueTo;
-		fade = 1;
+		newValue = valueTo;
+		transition = 1;
 		if (!cv->isEnded) {
 			cv->isEnded = true;
 			Brain::getInstance()->pleaseUpdate(this);
 		}
 	}
 	else {
-		fade = double(now - cv->TSStart) / double(cv->TSEnd - cv->TSStart);
-		if (cv->fadeCurve != nullptr) fade = cv->fadeCurve->getValueAtPosition(fade);
-		//localValue = jmap(fade, valueFrom, valueTo);
-		localValue = cv->valueAt(fade, currentVal);
+		transition = double(now - cv->TSStart) / double(cv->TSEnd - cv->TSStart);
+		if (cv->fadeCurve != nullptr) transition = cv->fadeCurve->getValueAtPosition(transition);
+		newValue = cv->valueAt(transition, currentVal);
 		keepUpdate = true;
 		Brain::getInstance()->pleaseUpdate(this);
 	}
-	cv->value = localValue;
+	cv->value = newValue;
+
+	float faderUse = jmap(transition, 0.0f, 1.0f, ratioBegin, ratioEnd);
+	faderLevel = jmap(faderUse, 0.f,1.f, 1.0f, faderLevel);
 
 	if (HTP) {
-		localValue *= faderLevel;
+		newValue *= faderLevel;
 	}
 	else {
 		if (!isFlashing || flashWithLtpLevel->boolValue()) {
-			float localValueNoFade = localValue;
 			if (absoluteLTPValue->boolValue()) {
-				localValue *= (double)LTPLevel->getValue();
+				newValue *= faderLevel;
 			}
 			else {
-				localValue = jmap(LTPLevel->floatValue(), currentVal, localValue);
+				newValue = jmap(faderLevel, currentVal, newValue);
 			}
-			localValue = jmap(fade,0.f,1.f,localValueNoFade, localValue);
+			//localValue = jmap(transition,0.f,1.f,localValueNoFade, localValue);
 		}
 	}
 
 
 
 	if (HTP && !cv->htpOverride) {
-		isApplied = localValue >= val;
-		val = jmax(val, localValue);
+		isApplied = newValue >= currentVal;
+		newValue = jmax(currentVal, newValue);
 	}
 	else {
 		isApplied = true;
-		val = localValue;
 	}
 
 	if (keepUpdate && !stopTransition) {
 		Brain::getInstance()->pleaseUpdate(fc);
 	}
-	return val;
+	return newValue;
 }
 
 void Cuelist::insertProgCueBefore()
