@@ -260,7 +260,7 @@ void Fixture::checkChildrenSubFixtures() {
 					subFixt->channelsContainer.add(chan);
 					subFixt->channelsMap.set(param, chan);
 					chan->defaultValue = c->defaultValue->getValue();
-					chan->highlightValue = c->highlightValue->getValue();
+					chan->highlightValue = c->highlightValue->enabled ? c->highlightValue->floatValue() : -1;
 					chan->isHTP = param->priority->getValue() == "HTP";
 					chan->resolution = c->resolution->getValue();
 					if (chan->resolution == "16bits") {
