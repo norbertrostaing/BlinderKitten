@@ -692,7 +692,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 						currentTiming = 1;
 					}
 					currentTiming = jlimit(0.0, 1.0, currentTiming);
-					temp->values.set(0, current->valueAt(currentTiming, 0));
+
+					float fromVal = current->startValue() != -1 ? current->startValue() : current->endValue(); // fix but not clean :/
+					temp->values.set(0, current->valueAt(currentTiming, fromVal));
 				}
 				else {
 					temp->values.set(0, 0);
