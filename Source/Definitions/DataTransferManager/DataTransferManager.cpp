@@ -213,7 +213,7 @@ void DataTransferManager::execute() {
                             pfv = target->subFixtureValues.items[i];
                         }
                     }
-                    if (pfv == nullptr && !updateOnly) {
+                    if (pfv == nullptr && !updateOnly && !remove) {
                         pfv = target->subFixtureValues.addItem();
                         pfv->targetFixtureId->setValue(fixtId);
                         pfv->targetSubFixtureId->setValue(subfixtId);
