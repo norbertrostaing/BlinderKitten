@@ -1238,6 +1238,16 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
         }
 
         if (valid) {
+            Array<RunningTask*> toRemove;
+            for (RunningTask* t : runningTasks) {
+                if (actionType == t->actionType && targetType == t->targetType && targetId == t->targetId) {
+                    toRemove.add (t);
+                }
+            }
+            for (RunningTask* rt : toRemove) {
+                runningTasks.removeObject(rt, true);
+            }
+
             RunningTask* rt = runningTasks.add(new RunningTask());
             rt->parentTask = t;
             rt->id = newTaskId();
