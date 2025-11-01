@@ -34,7 +34,7 @@ CommandSelection::CommandSelection(var params) :
     subThru = addBoolParameter("SubFixtures Thru", "select multiple subfixture ?",false);
     subTo = addIntParameter("SubFixtures To", "Last id of subFixture", 0, 0);
 
-    filter = addEnumParameter("Filter", "What kind of filter do yuo want to apply to selection ?");
+    filter = addEnumParameter("Filter", "What kind of filter do you want to apply to selection ?");
     filter->addOption("None", "none");
     filter->addOption("Reverse", "reverse");
     filter->addOption("Divide", "divide");
