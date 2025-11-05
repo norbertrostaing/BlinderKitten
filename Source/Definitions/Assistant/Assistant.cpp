@@ -1108,18 +1108,16 @@ void Assistant::importAscii()
                     }
                 }
                 else if (currentSecondary == "$$PARAM") {
-                    ChannelType* param = nullptr;
-                    if (idToChannelType.contains(words[1].getIntValue())) {
-                        param = idToChannelType.getReference(words[1].getIntValue());
-                    }
-                    if (param != nullptr) {
+                    Fixture* fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
+                    if (fixt != nullptr) {
                         for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
-                            int fixt = words[iChan].getIntValue();
+                            int paramId = words[iChan].getIntValue();
+                            ChannelType* param = idToChannelType.getReference(paramId);
                             float level = asciiLevelToFloat(words[iChan + 1]);
                             Array<String> starts = { "IP", "FP", "CP", "BP", "PR" };
                             String begin = words[iChan + 1].substring(0, 2);
                             Command* com = currentCue->commands.addItem();
-                            com->selection.items[0]->valueFrom->setValue(fixt);
+                            com->selection.items[0]->valueFrom->setValue(fixt->id->intValue());
                             if (starts.contains(begin)) {
                                 com->values.items[0]->presetOrValue->setValueWithData("preset");
                                 if (!idToPreset.contains(words[iChan + 1])) {
@@ -1249,6 +1247,43 @@ void Assistant::importAscii()
                         }
                     }
                 }
+                else if (currentSecondary == "$$PARAM") {
+                    Fixture* fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
+                    if (fixt != nullptr) {
+                        for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
+                            int paramId = words[iChan].getIntValue();
+                            float level = words[iChan + 1].getFloatValue();
+                            float div = level > 255 ? 65535 : 255;
+                            ChannelType* param = nullptr;
+                            if (idToChannelType.contains(paramId)) {
+                                param = idToChannelType.getReference(paramId);
+                            }
+                            if (div == 255 && fixt->subFixtures.contains(0)) {
+                                if (fixt->subFixtures.getReference(0)->channelsMap.contains(param)) {
+                                    auto c = fixt->subFixtures.getReference(0)->channelsMap.getReference(param);
+                                    if (c->resolution == "16bits") {
+                                        div = 65535;
+                                    }
+                                }
+                            }
+                            level = level / div;
+                            PresetSubFixtureValues* com = nullptr;
+                            for (PresetSubFixtureValues* psfv : currentPreset->subFixtureValues.items) {
+                                if (psfv->targetFixtureId->intValue() == fixt->id->intValue()) {
+                                    com = psfv;
+                                }
+                            }
+                            if (com == nullptr) {
+                                com = currentPreset->subFixtureValues.addItem();
+                                com->targetFixtureId->setValue(fixt->id->intValue());
+                                com->values.clear();
+                            }
+                            PresetValue* pv = com->values.addItem();
+                            pv->param->setValueFromTarget(param);
+                            pv->paramValue->setValue(level);
+                        }
+                    }
+                }
             }
             else if (currentPrimary == "$PERSONALITY") {
                 if (currentSecondary == "$$MODEL") {
@@ -1302,7 +1337,6 @@ void Assistant::importAscii()
                             if (idToChannelType.contains(paramId)) {
                                 param = idToChannelType.getReference(paramId);
                             }
-
                             if (div == 255 && fixt->subFixtures.contains(0)) {
                                 if (fixt->subFixtures.getReference(0)->channelsMap.contains(param)) {
                                     auto c = fixt->subFixtures.getReference(0)->channelsMap.getReference(param);
