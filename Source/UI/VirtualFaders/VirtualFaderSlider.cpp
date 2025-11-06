@@ -226,6 +226,14 @@ float VirtualFaderSlider::getTargetValue()
 }
 
 void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, bool isRelative) {
+	if (!MessageManager::existsAndIsCurrentThread()) {
+		MessageManager::callAsync([this, value, origin, incrementIndex, isRelative]
+			{
+				moved(value, origin, incrementIndex, isRelative);
+			});
+		return;
+	}
+
 	checkParentColumn();
 	if (parentColumn == nullptr) { LOG("this is strange"); return; }
 	String colTargetType = parentColumn->targetType->getValue();
@@ -248,7 +256,7 @@ void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, b
 	}
 
 	if (targId == 0) {return;}
-	const MessageManagerLock mmLock;
+	//const MessageManagerLock mmLock;
 
 	if (targType == "cuelist") {
 		Cuelist* targ = Brain::getInstance()->getCuelistById(targId);
