@@ -1109,6 +1109,7 @@ void Assistant::importAscii()
                 }
                 else if (currentSecondary == "$$PARAM") {
                     Fixture* fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
+                    Command* fixtCommand = nullptr;
                     if (fixt != nullptr) {
                         for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
                             int paramId = words[iChan].getIntValue();
@@ -1116,22 +1117,27 @@ void Assistant::importAscii()
                             float level = asciiLevelToFloat(words[iChan + 1]);
                             Array<String> starts = { "IP", "FP", "CP", "BP", "PR" };
                             String begin = words[iChan + 1].substring(0, 2);
-                            Command* com = currentCue->commands.addItem();
-                            com->selection.items[0]->valueFrom->setValue(fixt->id->intValue());
+                            if (fixtCommand == nullptr) {
+                                fixtCommand = currentCue->commands.addItem();
+                                fixtCommand->selection.items[0]->valueFrom->setValue(fixt->id->intValue());
+                                fixtCommand->values.clear();
+                                fixtCommand->editorIsCollapsed = true;
+                            }
+                            CommandValue* commandValue = fixtCommand->values.addItem();
                             if (starts.contains(begin)) {
-                                com->values.items[0]->presetOrValue->setValueWithData("preset");
+                                commandValue->presetOrValue->setValueWithData("preset");
                                 if (!idToPreset.contains(words[iChan + 1])) {
                                     Preset* p = PresetManager::getInstance()->addItem();
                                     p->userName->setValue(words[iChan + 1]);
                                     idToPreset.set(words[iChan + 1], p);
                                 }
                                 Preset* target = idToPreset.getReference(words[iChan + 1]);
-                                com->values.items[0]->channelType->setValueFromTarget(param);
-                                com->values.items[0]->presetIdFrom->setValue(target->id->intValue());
+                                commandValue->channelType->setValueFromTarget(param);
+                                commandValue->presetIdFrom->setValue(target->id->intValue());
                             }
                             else {
-                                com->values.items[0]->channelType->setValueFromTarget(param);
-                                com->values.items[0]->valueFrom->setValue(level);
+                                commandValue->channelType->setValueFromTarget(param);
+                                commandValue->valueFrom->setValue(level);
                             }
                         }
                     }
@@ -1249,6 +1255,7 @@ void Assistant::importAscii()
                 }
                 else if (currentSecondary == "$$PARAM") {
                     Fixture* fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
+
                     if (fixt != nullptr) {
                         for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
                             int paramId = words[iChan].getIntValue();
