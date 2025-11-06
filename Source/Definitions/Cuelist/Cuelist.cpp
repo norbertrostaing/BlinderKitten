@@ -684,20 +684,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			if (activeValues.contains(it.getKey())) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
 				if (current != nullptr) {
-					double currentTiming = jmap(now, (double)current->TSStart, (double)current->TSEnd, 0.0, 1.0);
-					if (stopTransition) {
-						currentTiming = currentManualInTransition;
-					}
-					if (current->isEnded) {
-						currentTiming = 1;
-					}
-					currentTiming = jlimit(0.0, 1.0, currentTiming);
-
-					float fromVal = current->startValue() != -1 ? current->startValue() : current->endValue(); // fix but not clean :/
-					temp->values.set(0, current->valueAt(currentTiming, fromVal));
+					temp->values.set(0, current->value);
 				}
 				else {
-					temp->values.set(0, 0);
+					temp->values.set(0, -1);
 				}
 			}
 			else {
