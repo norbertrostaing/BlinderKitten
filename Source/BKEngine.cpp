@@ -135,7 +135,7 @@ BKEngine::BKEngine() :
 	defaultPresetId = genericSettingsContainer.addIntParameter("Default preset ID", "ID of the preset to use as default value", 0, 0);
 	defaultPresetId->addParameterListener(this);
 
-	faderSelectionMode = virtualParamsContainer.addEnumParameter("Faders selection mode", "Single copies elements on only one leement, column assign target to all elements in selected column");
+	faderSelectionMode = virtualParamsContainer.addEnumParameter("Faders selection mode", "Single copies elements on only one element, column assign target to all elements in selected column");
 	faderSelectionMode->addOption("Single", "single")->addOption("Column", "column");
 
 	virtualButtonGridCols = virtualParamsContainer.addIntParameter("Button cols", "Number of cols in playback button grid", 5, 1);
