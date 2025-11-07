@@ -80,7 +80,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 						}
 						//if (groupHistory.indexOf(g->id->getValue()) == -1) {
 						if (count < 10) {
-							groupHistory.add(id);
+							groupHistory.add(groupId);
 							g->selection.computeSelection(groupHistory);
 							g->selection.computing.enter();
 							tempSelection.addArray(g->selection.computedSelectedSubFixtures);
