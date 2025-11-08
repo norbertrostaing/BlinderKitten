@@ -1134,7 +1134,7 @@ void Cuelist::autoLoadCueB() {
 		}
 		if (!valid) { // cueA is the last cue
 			String end = endAction->getValue();
-			if (end == "loop") {
+			if (end == "loop" && currentCues.size()>0) {
 				cueB = currentCues[0];
 			}
 			else {
@@ -1506,7 +1506,7 @@ Cue* Cuelist::getNextCue() {
 			}
 		}
 		String end = endAction->getValue();
-		if (end == "loop") {
+		if (end == "loop" && currentCues.size()>0) {
 			return currentCues[0];
 		}
 	}
