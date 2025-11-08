@@ -126,14 +126,14 @@ void InputPanelAction::setValueInternal(var value, String origin, int incrementI
     {
         const MessageManagerLock mmLock;
 
-        InputPanel::getInstance()->paramBlackOut->setValue(val == 1, juce::sendNotification);
+        InputPanel::getInstance()->paramBlackOut->setValue(val == 1);
         break;
     }
     case IP_BLACKOUTTOGGLE:
     {
         const MessageManagerLock mmLock;
 
-        if (val == 1) InputPanel::getInstance()->paramBlackOut->setValue(!InputPanel::getInstance()->paramBlackOut->boolValue(), juce::sendNotification);
+        if (val == 1) InputPanel::getInstance()->paramBlackOut->setValue(!InputPanel::getInstance()->paramBlackOut->boolValue());
         break;
     }
 
