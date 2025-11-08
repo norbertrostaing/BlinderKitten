@@ -387,7 +387,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 						finalValue->canBeTracked = !doNotTrack->boolValue();
 
 						float val = valueFrom;
-						if (cv->thru->getValue() && subFixtures.size() > 1) {
+						if (cv->thru->getValue() && (subFixtures.size() > 1 || randomizeValue)) {
 							float position = normalizedPosition;
 							if (symValues) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, subFixtures.size()); }
 							if (randomizeValue) {position = subfixtToRandom.getReference(sf);}
