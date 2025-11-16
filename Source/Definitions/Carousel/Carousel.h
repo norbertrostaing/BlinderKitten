@@ -71,7 +71,7 @@ public:
     double lastTapTempo;
     Array<double> tapTempoHistory;
     Trigger* tapTempoBtn;
-    IntParameter* beatPerCycle;
+    FloatParameter* beatPerCycle;
 
     MultiplicatorLinkManager speedMult;
     MultiplicatorLinkManager sizeMult;
