@@ -18,15 +18,29 @@ DMXChannelView::DMXChannelView() :
 	ShapeShifterContentComponent("DMX Tester"),
 	currentInterface(nullptr),
 	//testingUI(nullptr),
-	flashValue(nullptr)
+	flashValue(nullptr),
+	engine(nullptr)
 {
 	dmxList.setTextWhenNoChoicesAvailable("No DMX Interface");
 	dmxList.setTextWhenNothingSelected("Select a DMX interface");
 	dmxList.addListener(this);
 	addAndMakeVisible(&dmxList);
 
-	rebuildDMXList();
 	rebuildChannelItems();
+
+	BKEngine* testEngine = dynamic_cast<BKEngine*>(Engine::mainEngine);
+	if (testEngine != nullptr) {
+		this->engine = testEngine;
+	}
+
+	if (this->engine != nullptr) {
+		DMXInterface* i = engine->dmxTesterInterface->getTargetContainerAs<DMXInterface>();
+		if (i != nullptr && currentInterface != i) {
+			setCurrentInterface(i);
+		}
+	}
+
+	rebuildDMXList();
 
 	addAndMakeVisible(viewport);
 	viewport.setViewedComponent(&channelContainer);
