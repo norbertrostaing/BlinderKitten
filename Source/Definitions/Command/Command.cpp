@@ -380,6 +380,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 							auto tempCV = std::make_shared<ChannelValue>();
 							tempCV->values.remove(1);
 							computedValues.set(fchan, tempCV);
+							tempCV->targetSubFixtureChannel = fchan;
 						}
 						channelToCommandValue.set(fchan, cv);
 						std::shared_ptr<ChannelValue> finalValue = computedValues.getReference(fchan);

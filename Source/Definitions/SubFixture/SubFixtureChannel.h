@@ -24,6 +24,7 @@ class Mapper;
 class Tracker;
 class SelectionMaster;
 class Command;
+class ChannelValue;
 
 class SubFixtureChannel{
 public:
@@ -57,6 +58,8 @@ public:
     int subFixtureId = 0;
 
     void writeValue(float v);
+
+    std::shared_ptr<ChannelValue> liveCV = nullptr;
 
     SpinLock cs;
     Array<SubFixtureChannel*> virtualChildren;

@@ -23,6 +23,7 @@
 #include "../ChannelValue.h"
 #include "UI/InputPanel.h"
 #include "Command/Command.h"
+#include "ChannelValue.h"
 
 SubFixtureChannel::SubFixtureChannel():
 	virtualChildren()

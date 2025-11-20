@@ -684,7 +684,16 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			if (activeValues.contains(it.getKey())) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
 				if (current != nullptr) {
-					temp->values.set(0, current->value);
+					SubFixtureChannel* sfc = it.getKey();
+					if (sfc->liveCV == current) {
+						temp->values.set(0, current->value);
+					}
+					else if (sfc->liveCV != nullptr) {
+						temp->values.set(0, sfc->postCuelistValue);
+					}
+					else {
+						temp->values.set(0, -1);
+					}
 				}
 				else {
 					temp->values.set(0, -1);
@@ -1207,6 +1216,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	if (flashValues) {
 		newValue = valueTo;
 		transition = 1;
+		cv->targetSubFixtureChannel->liveCV = cv;
 	}
 	else if (cv -> TSStart > now) {
 		transition = 0;
@@ -1223,6 +1233,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		}
 	}
 	else {
+		cv->targetSubFixtureChannel->liveCV = cv;
 		transition = double(now - cv->TSStart) / double(cv->TSEnd - cv->TSStart);
 		if (cv->fadeCurve != nullptr) transition = cv->fadeCurve->getValueAtPosition(transition);
 		newValue = cv->valueAt(transition, currentVal);

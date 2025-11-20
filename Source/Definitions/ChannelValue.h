@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "Command/Command.h"
+#include "Definitions/SubFixture/SubFixtureChannel.h"
 
 class ChannelValue {
 public:
@@ -49,6 +50,7 @@ public:
     float moveInBlackDelay = 0;
 
     Command* parentCommand = nullptr;
+    SubFixtureChannel* targetSubFixtureChannel = nullptr;
 
     float pathLength = 0;
 };
