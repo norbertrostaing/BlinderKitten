@@ -642,6 +642,7 @@ var BKEngine::getJSONData(bool includeNonOverriden)
 
 void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 {
+	clearInternal();
 	Brain::getInstance()->loadingIsRunning = true;
 	Brain::getInstance()->stopThread(1);
 	//ProgressTask* moduleTask = loadingTask->addTask("Modules");
