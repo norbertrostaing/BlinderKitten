@@ -595,10 +595,16 @@ void DataTransferManager::execute() {
             Preset* trg = Brain::getInstance()->getPresetById(tId);
             if (trg == nullptr) {
                 trg = PresetManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(sId);
-                trg->id->setValue(tId);
                 trg->userName->setValue(src->userName->getValue());
-                trg->selectThis();
+                if (sId != 1) {
+                    // inversion trg et src pour garder les references (trg remplace src a la copie)
+                    src->id->setValue(tId);
+                    src->selectThis();
+                }
+                else {
+                    trg->id->setValue(tId);
+                    trg->selectThis();
+                }
             }
         }
         else if (trgType == "programmer") {
@@ -625,10 +631,16 @@ void DataTransferManager::execute() {
             Group* trg = Brain::getInstance()->getGroupById(tId);
             if (src != nullptr && trg == nullptr) {
                 trg = GroupManager::getInstance()->addItemFromData(src->getJSONData());
-                src->id->setValue(sId);
-                trg->id->setValue(tId);
                 trg->userName->setValue(src->userName->getValue());
-                trg->selectThis();
+                if (sId != 1) {
+                    // inversion trg et src pour garder les references (trg remplace src a la copie)
+                    src->id->setValue(tId);
+                    src->selectThis();
+                }
+                else {
+                    trg->id->setValue(tId);
+                    trg->selectThis();
+                }
             }
         }
 
