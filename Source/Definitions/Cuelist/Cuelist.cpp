@@ -688,9 +688,6 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					if (sfc->liveCV == current) {
 						temp->values.set(0, current->value);
 					}
-					else if (sfc->liveCV != nullptr) {
-						temp->values.set(0, sfc->postCuelistValue);
-					}
 					else {
 						temp->values.set(0, -1);
 					}
