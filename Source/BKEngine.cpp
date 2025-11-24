@@ -438,10 +438,12 @@ BKEngine::~BKEngine()
 
 void BKEngine::createNewGraphInternal()
 {
-	MessageManager::callAsync([this](){
-		importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi)); 
-		Brain::getInstance()->showWindow("Input Panel");
-	});
+	if (!Brain::getInstance()->loadingIsRunning) {
+		MessageManager::callAsync([this]() {
+			importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi));
+			Brain::getInstance()->showWindow("Input Panel");
+			});
+	}
 }
 
 void BKEngine::clearInternal()
@@ -642,7 +644,6 @@ var BKEngine::getJSONData(bool includeNonOverriden)
 
 void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 {
-	clearInternal();
 	Brain::getInstance()->loadingIsRunning = true;
 	Brain::getInstance()->stopThread(1);
 	//ProgressTask* moduleTask = loadingTask->addTask("Modules");
