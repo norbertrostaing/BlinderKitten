@@ -685,7 +685,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
 				if (current != nullptr) {
 					SubFixtureChannel* sfc = it.getKey();
-					if (sfc->liveCV == current) {
+					if (sfc->liveCV == current || sfc->isHTP) {
 						temp->values.set(0, current->value);
 					}
 					else {
