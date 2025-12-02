@@ -438,12 +438,11 @@ BKEngine::~BKEngine()
 
 void BKEngine::createNewGraphInternal()
 {
-	if (!Brain::getInstance()->loadingIsRunning) {
-		MessageManager::callAsync([this]() {
-			importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi));
-			Brain::getInstance()->showWindow("Input Panel");
-			});
-	}
+	
+	MessageManager::callAsync([this]() {
+		importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi));
+		Brain::getInstance()->showWindow("Input Panel");
+		});
 }
 
 void BKEngine::clearInternal()
