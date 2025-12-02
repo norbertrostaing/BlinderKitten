@@ -1222,6 +1222,9 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		Brain::getInstance()->pleaseUpdate(this);
 	}
 	else if (cv -> TSEnd <= now) {
+		if (cv->endValue() != -1) {
+			cv->targetSubFixtureChannel->liveCV = cv;
+		}
 		newValue = valueTo;
 		transition = 1;
 		if (!cv->isEnded) {
