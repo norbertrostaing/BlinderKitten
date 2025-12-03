@@ -96,7 +96,7 @@ Assistant::Assistant() :
     swapperBtn = fixtureSwapperCC.addTrigger("Change fixtures", "Replace all fixtures of first type with the second one");
     addChildControllableContainer(&fixtureSwapperCC);
 
-
+    userCanRemove = false;
     /*
     midiMapperTargetInterface = midiMapperCC.addTargetParameter("Midi interface", "Midi interface to connect your new mapping, let empty to create a new one", InterfaceManager::getInstance());
     midiMapperTargetInterface->maxDefaultSearchLevel = 0;
