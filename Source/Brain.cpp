@@ -15,6 +15,9 @@
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/Encoders.h"
 #include "UserInputManager.h"
+#include "UI/GridView/FixtureGridView.h"
+#include "UI/GridView/GroupGridView.h"
+#include "UI/GridView/PresetGridView.h"
 #include "UI/GridView/CuelistGridView.h"
 #include "UI/GridView/EffectGridView.h"
 #include "UI/GridView/CarouselGridView.h"
@@ -404,6 +407,7 @@ void Brain::unregisterFixture(Fixture* d) {
     if (fixtures.containsValue(d)) {
         fixtures.removeValue(d);
     }
+    if (!Brain::getInstance()->isClearing && FixtureGridView::getInstanceWithoutCreating() != nullptr) FixtureGridView::getInstance()->updateCells();
 }
 
 void Brain::registerGroup(Group* target, int askedId) {
@@ -443,6 +447,7 @@ void Brain::unregisterGroup(Group* g) {
     if (groups.containsValue(g)) {
         groups.removeValue(g);
     }
+    if (!Brain::getInstance()->isClearing && GroupGridView::getInstanceWithoutCreating() != nullptr) GroupGridView::getInstance()->updateCells();
 }
 
 void Brain::registerPreset(Preset* target, int askedId) {
@@ -483,6 +488,7 @@ void Brain::unregisterPreset(Preset* p) {
     if (presets.containsValue(p)) {
         presets.removeValue(p);
     }
+    if (!Brain::getInstance()->isClearing && PresetGridView::getInstanceWithoutCreating() != nullptr) PresetGridView::getInstance()->updateCells();
 }
 
 void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
@@ -540,6 +546,7 @@ void Brain::unregisterCuelist(Cuelist* c) {
     }
     reconstructVirtuals = true;
     TSBundles = Time::getMillisecondCounterHiRes();
+    if (!Brain::getInstance()->isClearing && CuelistGridView::getInstanceWithoutCreating() != nullptr) CuelistGridView::getInstance()->updateCells();
 }
 
 void Brain::registerProgrammer(Programmer* p, int id, bool swap) {
@@ -723,6 +730,7 @@ void Brain::unregisterEffect(Effect* c) {
     }
     reconstructVirtuals = true;
     TSBundles = Time::getMillisecondCounterHiRes();
+    if (!Brain::getInstance()->isClearing && EffectGridView::getInstanceWithoutCreating() != nullptr) EffectGridView::getInstance()->updateCells();
 }
 
 void Brain::registerCarousel(Carousel* p, int id, bool swap) {
@@ -762,6 +770,7 @@ void Brain::unregisterCarousel(Carousel* c) {
     }
     reconstructVirtuals = true;
     TSBundles = Time::getMillisecondCounterHiRes();
+    if (!Brain::getInstance()->isClearing && CarouselGridView::getInstanceWithoutCreating() != nullptr) CarouselGridView::getInstance()->updateCells();
 }
 
 void Brain::registerMapper(Mapper* p, int id, bool swap) {
@@ -801,6 +810,7 @@ void Brain::unregisterMapper(Mapper* c) {
     }
     reconstructVirtuals = true;
     TSBundles = Time::getMillisecondCounterHiRes();
+    if (!Brain::getInstance()->isClearing && MapperGridView::getInstanceWithoutCreating() != nullptr) MapperGridView::getInstance()->updateCells();
 }
 
 void Brain::registerLayout(Layout* p, int id, bool swap) {
