@@ -24,6 +24,7 @@ PatchSheetLine::PatchSheetLine(Fixture* f, FixturePatch* fp, PatchSheet* parent)
 	if (fp == nullptr || f->patchs.items.indexOf(fp) == 0) {
 		idControler = f->id->createLabelUI();
 		idControler->showLabel = false;
+		idControler->valueLabel.setEditable(false);
 		nameControler = f->userName->createStringParameterUI();
 		nameControler->showLabel = false;
 		typeControler = f->devTypeParam->createTargetUI();
