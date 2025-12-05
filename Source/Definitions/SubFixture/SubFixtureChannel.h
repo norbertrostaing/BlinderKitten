@@ -59,7 +59,7 @@ public:
 
     void writeValue(float v);
 
-    std::shared_ptr<ChannelValue> liveCV = nullptr;
+    Array<std::shared_ptr<ChannelValue>> liveCV;
 
     SpinLock cs;
     Array<SubFixtureChannel*> virtualChildren;

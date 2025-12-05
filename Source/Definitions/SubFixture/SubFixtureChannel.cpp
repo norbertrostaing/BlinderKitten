@@ -212,6 +212,7 @@ void SubFixtureChannel::updateVal(double now) {
 	}
 
 	postCuelistValue = newValue;
+	liveCV.clear();
 
 	cs.enter();
 	Array<int> layers;

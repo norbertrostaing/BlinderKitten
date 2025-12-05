@@ -685,8 +685,17 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
 				if (current != nullptr) {
 					SubFixtureChannel* sfc = it.getKey();
-					if (sfc->liveCV == current || sfc->isHTP) {
+					if (sfc->isHTP) {
 						temp->values.set(0, current->value);
+					}
+					else if (sfc->liveCV.contains(current)) {
+						bool last = sfc->liveCV[sfc->liveCV.size()] == current;
+						if (last) {
+							temp->values.set(0, current->value);
+						}
+						else {
+							temp->values.set(0, sfc->postCuelistValue);
+						}
 					}
 					else {
 						temp->values.set(0, -1);
@@ -1209,11 +1218,14 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		cv->currentPosition = 1;
 	}
 
+	bool addToLiveCV = false;
+	bool clearLiveCV = true;
+
 	float transition = 0;
 	if (flashValues) {
 		newValue = valueTo;
 		transition = 1;
-		cv->targetSubFixtureChannel->liveCV = cv;
+		addToLiveCV = true;
 	}
 	else if (cv -> TSStart > now) {
 		transition = 0;
@@ -1223,7 +1235,7 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	}
 	else if (cv -> TSEnd <= now) {
 		if (cv->endValue() != -1) {
-			cv->targetSubFixtureChannel->liveCV = cv;
+			addToLiveCV = true;
 		}
 		newValue = valueTo;
 		transition = 1;
@@ -1233,7 +1245,8 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		}
 	}
 	else {
-		cv->targetSubFixtureChannel->liveCV = cv;
+		addToLiveCV = true;
+		clearLiveCV = false;
 		transition = double(now - cv->TSStart) / double(cv->TSEnd - cv->TSStart);
 		if (cv->fadeCurve != nullptr) transition = cv->fadeCurve->getValueAtPosition(transition);
 		newValue = cv->valueAt(transition, currentVal);
@@ -1258,8 +1271,15 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 			}
 			//localValue = jmap(transition,0.f,1.f,localValueNoFade, localValue);
 		}
+		clearLiveCV = clearLiveCV || faderLevel < 1;
 	}
 
+	if (addToLiveCV) {
+		if (clearLiveCV) {
+			fc->liveCV.clear();
+		}
+		fc->liveCV.add(cv);
+	}
 
 
 	if (HTP && !cv->htpOverride) {
