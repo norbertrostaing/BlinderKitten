@@ -252,14 +252,14 @@ jobs:
         include:
         - arch: armhf
           cpu: arm1176 #suitable for all Pi versions
-          base_image: raspios_lite:2021-05-07 
+          base_image: raspios_lite:2023-05-03 
           cpu_info: raspberrypi_zero_w
           buildFolder: "Raspberry"
           buildConfig: "Release"
           
         - arch: aarch64
           cpu: cortex-a53
-          base_image: raspios_lite_arm64:2022-04-04
+          base_image: raspios_lite_arm64:2023-05-03
           cpu_info: raspberrypi_zero2_w_arm64_w
           buildFolder: "Raspberry64"
           buildConfig: "Release"
