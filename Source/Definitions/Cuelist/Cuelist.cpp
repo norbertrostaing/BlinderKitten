@@ -651,6 +651,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				if (newActiveValues.contains(it.getKey())) {
 					//ChannelValue* current = newActiveValues.getReference(it.getKey());
 					double currentTiming = jmap(now, (double)temp->TSStart, (double)temp->TSEnd, 0.0, 1.0);
+					currentTiming = jlimit(0.,1.,currentTiming);
 					temp->values.set(0,temp->valueAt(currentTiming,0));
 				}
 				else {
