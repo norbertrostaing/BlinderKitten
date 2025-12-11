@@ -99,9 +99,12 @@ void DMXSerialDevice::portAdded(SerialDeviceInfo * info)
 	}
 }
 
-void DMXSerialDevice::portRemoved(SerialDeviceInfo * /*info*/)
+void DMXSerialDevice::portRemoved(SerialDeviceInfo * i)
 {
-	setCurrentPort(nullptr);
+	if (dmxPort == nullptr) return;
+	if (i->deviceID == dmxPort->info->deviceID) {
+		setCurrentPort(nullptr);
+	}
 }
 
 void DMXSerialDevice::portOpened(SerialDevice *)
