@@ -83,6 +83,17 @@ Command::~Command()
 		}
 	}
 
+	Brain* b = Brain::getInstanceWithoutCreating();
+
+
+	if (b != nullptr && !b->isClearing) {
+		b->usingCollections.enter();
+		for (auto it = b->cuelists.begin(); it != b->cuelists.end(); it.next()) {
+			Cuelist* c = it.getValue();
+			c->commandHistory.removeAllInstancesOf(this);
+		}
+		b->usingCollections.exit();
+	}
 }
 
 void Command::updateDisplay() {
