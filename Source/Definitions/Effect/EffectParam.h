@@ -38,7 +38,6 @@ class EffectParam:
     EnumParameter* effectMode;
     TargetParameter* paramType;
     FloatParameter* curveSize;
-    BoolParameter* forceBaseValue;
     FloatParameter* baseValue;
 
     HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets;

@@ -25,5 +25,5 @@ ChannelType::ChannelType(var params) :
 
 ChannelType::~ChannelType()
 {
-};
+}
 

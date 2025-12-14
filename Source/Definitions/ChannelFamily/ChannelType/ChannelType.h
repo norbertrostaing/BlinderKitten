@@ -23,7 +23,6 @@ class ChannelType:
 
     EnumParameter* priority;
     BoolParameter* reactGM;
-    EnumParameter* snapOrFade;
 
     String getTypeString() const override { return "ChannelType"; }
 
