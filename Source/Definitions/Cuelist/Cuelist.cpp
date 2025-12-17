@@ -897,11 +897,13 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 		});
 	}
 
-	const MessageManagerLock mmLock;
-	nextCue->resetValue();
-	nextCueId->resetValue();
-	fillTexts();
-
+	//const MessageManagerLock mmLock;
+	MessageManager::callAsync([this](){
+		nextCue->resetValue();
+		nextCueId->resetValue();
+		fillTexts();
+	});
+	
 	return ;
 }
 

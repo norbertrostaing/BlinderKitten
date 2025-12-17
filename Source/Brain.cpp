@@ -249,10 +249,10 @@ void Brain::brainLoop() {
 
     if (runningTasks.size()>0) 
     {
+        ScopedLock lock(usingTasksCollection);
         for (int i = 0; i < runningTasks.size(); i++) {
             runningTasks[i]->update(now);
         }
-        ScopedLock lock(usingTasksCollection);
         for (int i = runningTasks.size() - 1; i >= 0; i--) {
             if (runningTasks[i]->isEnded) {
                 runningTasks.remove(i);
