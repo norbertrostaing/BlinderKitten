@@ -686,11 +686,12 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 				std::shared_ptr<ChannelValue> current = activeValues.getReference(it.getKey());
 				if (current != nullptr) {
 					SubFixtureChannel* sfc = it.getKey();
+					sfc->cs.enter();
 					if (sfc->isHTP) {
 						temp->values.set(0, current->value);
 					}
 					else if (sfc->liveCV.contains(current)) {
-						bool last = sfc->liveCV[sfc->liveCV.size()] == current;
+						bool last = sfc->liveCV[sfc->liveCV.size()-1] == current;
 						if (last) {
 							temp->values.set(0, current->value);
 						}
@@ -701,6 +702,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 					else {
 						temp->values.set(0, -1);
 					}
+					
+					sfc->cs.exit();
 				}
 				else {
 					temp->values.set(0, -1);
@@ -1170,14 +1173,15 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	isApplied = false;
 
 	float newValue = 0;
-	std::shared_ptr<ChannelValue> cv;
+	std::shared_ptr<ChannelValue> cv = nullptr;
 	float faderLevel = 0;
 	if (!activeValues.contains(fc)) {return currentVal;}
 	cv = activeValues.getReference(fc);
 	if (cv == nullptr) {
 		return currentVal;
 	}
-
+	
+	ScopedLock lock(cv->cs);
 	if (stopTransition) {
 		double ratio = cv->isTransitionOut ? currentManualOutTransition : currentManualInTransition;
 		now = TSTransitionStart + (TSTransitionDuration * ratio);
@@ -1278,10 +1282,12 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	}
 
 	if (addToLiveCV) {
+		fc->cs.enter();
 		if (clearLiveCV) {
 			fc->liveCV.clear();
 		}
 		fc->liveCV.add(cv);
+		fc->cs.exit();
 	}
 
 

@@ -61,7 +61,7 @@ public:
 
     Array<std::shared_ptr<ChannelValue>> liveCV;
 
-    SpinLock cs;
+    CriticalSection cs;
     Array<SubFixtureChannel*> virtualChildren;
     SubFixtureChannel* virtualMaster = nullptr;
 

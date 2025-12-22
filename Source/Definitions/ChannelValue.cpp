@@ -23,12 +23,14 @@ ChannelValue::~ChannelValue()
 
 float ChannelValue::startValue()
 {
-    return values[0];
+    if (values.size()>0) return values[0];
+    else return -1;
 }
 
 float ChannelValue::endValue()
 {
-    return values[values.size()-1];
+    if (values.size() > 0) return values[values.size() - 1];
+    else return -1;
 }
 
 float ChannelValue::valueAt(double ratio, double baseVal)
