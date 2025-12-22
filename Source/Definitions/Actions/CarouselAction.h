@@ -19,7 +19,7 @@ public:
     CarouselAction(var params = var());
     ~CarouselAction();
 
-    enum ActionType { CAR_START, CAR_STOP, CAR_SIZE, CAR_FLASH, CAR_SWOP, CAR_SPEED, CAR_DOUBLESPEED, CAR_HALFSPEED, CAR_TAPTEMPO, CAR_TOGGLE, CAR_BBW, CAR_STOP_INSTANT };
+    enum ActionType { CAR_START, CAR_STOP, CAR_SIZE, CAR_FLASH, CAR_SWOP, CAR_SPEED, CAR_DOUBLESPEED, CAR_HALFSPEED, CAR_TAPTEMPO, CAR_TOGGLE, CAR_BBW, CAR_STOP_INSTANT, CAR_SET_SEEK, CAR_ADD_SEEK };
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;
@@ -28,6 +28,8 @@ public:
     EnumParameter* setOrAdd;
     IntParameter* carRow;
     IntParameter* amount;
+
+    FloatParameter* seekValue;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;

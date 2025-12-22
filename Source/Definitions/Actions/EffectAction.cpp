@@ -32,6 +32,10 @@ EffectAction::EffectAction(var params) :
         fxParam = addIntParameter("Param", "the number of the parameter you want to change, 0 means all of them", 0, 0);
         amount = addIntParameter("Amount", "Your value to set or to add",1);
     }
+
+    if (actionType == FX_SET_SEEK || actionType == FX_ADD_SEEK) {
+        seekValue = addFloatParameter("Seek", "Desired seek value or seek delta",0);
+    }
 }
 
 EffectAction::~EffectAction()
@@ -164,6 +168,24 @@ void EffectAction::setValueInternal(var value, String origin, int incrementIndex
         }
 
         break;
+
+    case FX_SET_SEEK:
+        if (val == 1) {
+            double v = seekValue->floatValue();
+            v = jmax(0., v);
+            target->totalElapsed = v;
+        }
+        break;
+
+    case FX_ADD_SEEK:
+        if (val == 1) {
+            double v = target->totalElapsed + seekValue->floatValue();
+            v = jmax(0., v);
+            target->totalElapsed = v;
+        }
+        break;
+
+
     }
 }
 

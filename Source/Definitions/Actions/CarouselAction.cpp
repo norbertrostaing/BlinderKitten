@@ -31,6 +31,9 @@ CarouselAction::CarouselAction(var params) :
         carRow = addIntParameter("Row", "the number of the row you want to change, 0 means all of them", 0, 0);
         amount = addIntParameter("Amount", "Your value to set or to add", 1);
     }
+    if (actionType == CAR_SET_SEEK || actionType == CAR_ADD_SEEK) {
+        seekValue = addFloatParameter("Seek", "Desired seek value or seek delta", 0);
+    }
 
 }
 
@@ -158,6 +161,22 @@ void CarouselAction::setValueInternal(var value, String origin, int incrementInd
             //target->isComputing.exit();
         }
 
+        break;
+
+    case CAR_SET_SEEK:
+        if (val == 1) {
+            double v = seekValue->floatValue();
+            v = jmax(0.,v);
+            target->totalElapsed = v;
+        }
+        break;
+
+    case CAR_ADD_SEEK:
+        if (val == 1) {
+            double v = target->totalElapsed + seekValue->floatValue();
+            v = jmax(0., v);
+            target->totalElapsed += seekValue->floatValue();
+        }
         break;
 
     }

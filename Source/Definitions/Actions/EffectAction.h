@@ -19,7 +19,7 @@ public:
     EffectAction(var params = var());
     ~EffectAction();
 
-    enum ActionType { FX_START, FX_STOP, FX_SIZE, FX_FLASH, FX_SWOP, FX_SPEED, FX_DOUBLESPEED, FX_HALFSPEED, FX_TAPTEMPO, FX_TOGGLE, FX_BBW, FX_STOP_INSTANT };
+    enum ActionType { FX_START, FX_STOP, FX_SIZE, FX_FLASH, FX_SWOP, FX_SPEED, FX_DOUBLESPEED, FX_HALFSPEED, FX_TAPTEMPO, FX_TOGGLE, FX_BBW, FX_STOP_INSTANT, FX_SET_SEEK, FX_ADD_SEEK };
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;
@@ -30,6 +30,7 @@ public:
     IntParameter* fxParam;
     IntParameter* amount;
 
+    FloatParameter* seekValue;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
