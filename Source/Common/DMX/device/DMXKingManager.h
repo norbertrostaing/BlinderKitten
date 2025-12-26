@@ -80,6 +80,8 @@ public:
     void portClosed(SerialDevice *) override;
     void portRemoved(SerialDevice *) override;
 
+    void flushInputCustom(SharedHardware* hardware);
+
 private:
     void processDMXPacket(SharedHardware* hardware, Array<uint8> bytes);
     Array<uint8> getDMXPacket(Array<uint8> bytes, int &endIndex);

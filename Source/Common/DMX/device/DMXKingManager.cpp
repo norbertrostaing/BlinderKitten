@@ -131,7 +131,7 @@ void DMXKingManager::sendDMXData(const String& serialPortId, int outputPort, con
         hardware->serialDevice->port->write(headerData, 5);
         hardware->serialDevice->port->write(data, 512);
         hardware->serialDevice->port->write(footerData, 1);
-        hardware->serialDevice->port->flushInput();
+        flushInputCustom(hardware);
     }
     catch (serial::IOException e)
     {
@@ -155,12 +155,12 @@ void DMXKingManager::setSerialConfig(SharedHardware* hardware)
     hardware->serialDevice->port->setBytesize(serial::eightbits);
     hardware->serialDevice->port->setStopbits(serial::stopbits_one);
     hardware->serialDevice->port->setParity(serial::parity_none);
-    hardware->serialDevice->port->flushInput();
+    flushInputCustom(hardware);
 
    // Get serial number
     uint8 getSerial[5] = { DMXKING_START_MESSAGE, DMXKING_RECEIVE_SERIAL_NUMBER_LABEL, 0, 0, DMXKING_END_MESSAGE };
     hardware->serialDevice->port->write(getSerial, 5);
-    hardware->serialDevice->port->flushInput();
+    flushInputCustom(hardware);
 
     // Poll device capabilities to detect port count
     pollDeviceCapabilities(hardware);
@@ -177,7 +177,7 @@ void DMXKingManager::pollDeviceCapabilities(SharedHardware* hardware)
         // Request port count
         uint8 outputPortCountRequest[5] = { DMXKING_START_MESSAGE, DMXKING_DMX_PORT_COUNT_LABEL, 0, 0, DMXKING_END_MESSAGE };
         hardware->serialDevice->port->write(outputPortCountRequest, 5);
-        hardware->serialDevice->port->flushInput();
+        flushInputCustom(hardware);
 
         LOG("Polling port count for " + hardware->deviceID);
     }
@@ -287,6 +287,15 @@ void DMXKingManager::portClosed(SerialDevice* port)
 void DMXKingManager::portRemoved(SerialDevice* port)
 {
     portClosed(port);
+}
+
+void DMXKingManager::flushInputCustom(SharedHardware* hardware)
+{
+#ifdef _WIN32
+    // need flush input ?
+#else
+    hardware->serialDevice->port->flushInput(); 
+#endif
 }
 
 Array<uint8> DMXKingManager::getDMXPacket(Array<uint8> bytes, int& endIndex)
