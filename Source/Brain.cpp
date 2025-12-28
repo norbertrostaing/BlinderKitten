@@ -114,14 +114,6 @@ void Brain::brainLoop() {
     }
 
 
-    if (pleaseClearProgrammer) {
-        pleaseClearProgrammer = false;
-        if (Programmer* p = getProgrammerById(1)) {
-            MessageManager::callAsync([this,p]() {p->clearCurrent(); });
-        }
-    }
-
-
     now = Time::getMillisecondCounterHiRes();
     if (cuePoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);

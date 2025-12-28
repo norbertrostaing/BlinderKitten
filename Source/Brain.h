@@ -200,8 +200,6 @@ public:
     void startTask(Task* t, double startTime, int cuelistId, float forcedDelay = -1, float forceFade = -1);
     void stopTasks(int cuelistId, int taskId);
 
-    bool pleaseClearProgrammer = false;
-
     void goAllLoadedCuelists();
     void killAllCuelists();
     void offAllCuelists();

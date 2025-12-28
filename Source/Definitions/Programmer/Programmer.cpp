@@ -434,8 +434,13 @@ void Programmer::clearAll() {
 }
 
 void Programmer::clearCurrent() {
+
+	if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+		MessageManager::callAsync([this](){clearCurrent();});
+		return;
+	}
+
 	computing.enter();
-	const MessageManagerLock mmLock;
 
 	if (commands.items.size() > 0 && currentUserCommand != nullptr) {
 		commands.removeItem(currentUserCommand, false, true);
@@ -627,7 +632,7 @@ void Programmer::processUserInput(String s) {
 		clearAll();
 	}
 	else if (s == "clear") {
-		Brain::getInstance()->pleaseClearProgrammer = true;
+		clearCurrent();
 	}
 	else if (s == "+" || s == "-") {
 		if (currentUserCommand->userCanPressPlusOrMinus) {
