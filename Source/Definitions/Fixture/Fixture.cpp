@@ -191,6 +191,7 @@ void Fixture::checkChildrenSubFixtures() {
 			if (param != nullptr) {
 				if (subFixt->channelsMap.contains(param)) {
 					LOGERROR("You have multiple channels with the same type in the same subfixture !");
+					LOGERROR("Fixture Id : "<<id->stringValue()<<", Fixture name : "<< userName->stringValue() <<" , Fixture type : "<< t->niceName);
 				}
 				SubFixtureChannel* chan = new SubFixtureChannel();
 				subFixt->channelsContainer.add(chan);
@@ -254,6 +255,7 @@ void Fixture::checkChildrenSubFixtures() {
 				else {
 					if (subFixt->channelsMap.contains(param)) {
 						LOGERROR("You have multiple channels with the same type in the same subfixture ! (" + String(subId) + " - " + param->niceName + " )");
+						LOGERROR("Fixture Id : " << id->stringValue() << ", Fixture name : " << userName->stringValue() << " , Fixture type : " << t->niceName);
 						continue;
 					}
 					SubFixtureChannel* chan = new SubFixtureChannel();
