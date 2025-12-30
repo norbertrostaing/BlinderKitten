@@ -253,7 +253,9 @@ void DMXArtNetDevice::sendArtPoll()
 
 void DMXArtNetDevice::sendArtSync()
 {
+	ArtnetSocket::getInstance()->isSending.enter();
 	ArtnetSocket::getInstance()->socket->write(remoteHost->stringValue(), remotePort->intValue(), artnetSync, 14);
+	ArtnetSocket::getInstance()->isSending.exit();
 }
 
 void DMXArtNetDevice::endLoadFile()

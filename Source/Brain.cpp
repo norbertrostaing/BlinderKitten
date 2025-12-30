@@ -321,7 +321,7 @@ void Brain::brainLoop() {
     Array<String> sentSync;
     usingCollections.enter();
     for (DMXArtNetDevice* d : syncedArtnetDevices) {
-        if (d->shouldSendArtSync->boolValue()) {
+        if (d->enabled && d->shouldSendArtSync->boolValue()) {
             String s = d->remoteHost->stringValue()+":"+d->remotePort->stringValue();
             if (!sentSync.contains(s)) {
                 sentSync.add(s);
