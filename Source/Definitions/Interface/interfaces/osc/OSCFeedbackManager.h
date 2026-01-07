@@ -19,6 +19,7 @@ public:
 
     void controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
     void feedback(String address, var value, String origin, bool logOutput);
+    void removeItemInternal(OSCFeedback* o) override;
 
     HashMap<String, Array<OSCFeedback*>> feedbackLibrary;
     CriticalSection isComputing;

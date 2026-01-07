@@ -35,6 +35,11 @@ void OSCFeedbackManager::feedback(String address, var value, String origin, bool
     }
 }
 
+void OSCFeedbackManager::removeItemInternal(OSCFeedback* o)
+{
+    feedbackLibrary.removeValue(o);
+}
+
 void OSCFeedbackManager::rebuildLibrary()
 {
     isComputing.enter();
