@@ -88,6 +88,7 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 
 	for (int commandIndex = 0; commandIndex < commandValues.size(); commandIndex++) {
 		CommandValue* cv = commandValues[commandIndex];
+		if (!cv -> enabled->boolValue()) continue;
 		bool symValues = cv->symmetry->getValue();
 		Preset* pFrom = nullptr;
 		Preset* pTo = nullptr;
