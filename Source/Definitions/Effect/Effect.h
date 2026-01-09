@@ -105,10 +105,10 @@ public:
     MIDIInterface* currentMidiClockSyncInterface = nullptr;
     double lastMidiTick = 0;
 
-    void midiClockTick();
-    void midiClockStart();
-    void midiClockContinue();
-    void midiClockStop();
+    void midiClockTick() override;
+    void midiClockStart() override;
+    void midiClockContinue() override;
+    void midiClockStop() override;
 
     void flash(bool on, bool swop = false);
     bool userPressedGo = false;

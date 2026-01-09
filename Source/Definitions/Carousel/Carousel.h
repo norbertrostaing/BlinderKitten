@@ -14,11 +14,14 @@
 #include "../Command/CommandSelectionManager.h"
 #include "CarouselRow.h"
 #include "Definitions/Multiplicator/MultiplicatorLinkManager.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
+
 class CarouselStep;
 class SubFixtureChannel;
 
 class Carousel :
-    public BaseItem
+    public BaseItem,
+    public MIDIInterface::ClockListener
 {
 public:
     Carousel(var params = var());
@@ -91,6 +94,17 @@ public:
     void kill();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
+
+    void midiClockInterfaceChanged();
+    TargetParameter* midiClockSyncInterface;
+    MIDIInterface* currentMidiClockSyncInterface = nullptr;
+    double lastMidiTick = 0;
+
+    void midiClockTick() override;
+    void midiClockStart() override;
+    void midiClockContinue() override;
+    void midiClockStop() override;
+
 
     void flash(bool on, bool swop = false);
     bool userPressedGo = false;

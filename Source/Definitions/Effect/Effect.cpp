@@ -449,7 +449,6 @@ void Effect::midiClockInterfaceChanged()
 	}
 }
 
-
 void Effect::midiClockTick() {
 	if (!isOn) return;
 	if (!midiClockSyncInterface->enabled) return;
