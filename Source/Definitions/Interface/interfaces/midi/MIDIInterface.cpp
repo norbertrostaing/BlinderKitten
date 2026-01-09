@@ -10,6 +10,7 @@
 
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "UI/InputPanel.h"
+#include "MIDIInterface.h"
 
 MIDIInterface::MIDIInterface() :
     Interface(getTypeString()),
@@ -26,6 +27,10 @@ MIDIInterface::MIDIInterface() :
     autoAdd = addBoolParameter("Auto add", "Create mappings when receive notes, cc or pitchbends", false);
 
     numBytes = addIntParameter("Start sysex", "Sysex message to send at startup, F0 and F7 are automatically added at the begin and the end, so don't fill them :) .", 0, 0);
+
+    enableMidiClock = addBoolParameter("Midi clock", "If enabled, this interface can receive midi clock", true);
+    PPQN = addIntParameter("PPQN", "The number of pulses per quarter note.", 24,4);
+    tickDuration = 1.0/24.0;
 
     addChildControllableContainer(&dataContainer);
     updateBytesParams();
@@ -83,6 +88,9 @@ void MIDIInterface::onContainerParameterChangedInternal(Parameter* p)
     if (p == numBytes) 
     {
         updateBytesParams();
+    }
+    if (p == PPQN) {
+        tickDuration = 1/ PPQN->floatValue();   
     }
 }
 
@@ -161,6 +169,34 @@ void MIDIInterface::pitchWheelReceived(const int& channel, const int& value)
         m->channel->setValue(channel);
         m->setNiceName("Pitch wheel " + String(channel));
     }
+}
+
+void MIDIInterface::midiClockReceived()
+{
+    if (!enabled->boolValue()) { return; }
+    if (!enableMidiClock->boolValue()) {return; }
+    clockListeners.call(&ClockListener::midiClockTick);
+}
+
+void MIDIInterface::midiStartReceived()
+{
+    if (!enabled->boolValue()) { return; }
+    if (!enableMidiClock->boolValue()) { return; }
+    clockListeners.call(&ClockListener::midiClockStart);
+}
+
+void MIDIInterface::midiContinueReceived()
+{
+    if (!enabled->boolValue()) { return; }
+    if (!enableMidiClock->boolValue()) { return; }
+    clockListeners.call(&ClockListener::midiClockContinue);
+}
+
+void MIDIInterface::midiStopReceived()
+{
+    if (!enabled->boolValue()) { return; }
+    if (!enableMidiClock->boolValue()) { return; }
+    clockListeners.call(&ClockListener::midiClockStop);
 }
 
 void MIDIInterface::feedback(String address, var value, String origin = "")

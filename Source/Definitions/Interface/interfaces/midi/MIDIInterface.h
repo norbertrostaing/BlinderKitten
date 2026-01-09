@@ -30,6 +30,10 @@ public:
     IntParameter* numBytes;
     ControllableContainer dataContainer;
 
+    BoolParameter* enableMidiClock;
+    IntParameter* PPQN;
+    double tickDuration;
+
     StringParameter* infos;
     HashMap<String, juce::uint32> TSLastReceived;
     HashMap<String, int> delayedValue;
@@ -44,9 +48,31 @@ public:
     void noteOffReceived(const int &channel, const int &pitch, const int &velocity) override;
     void controlChangeReceived(const int& channel, const int& number, const int& value) override;
     void pitchWheelReceived(const int& channel, const int& value) override;
+    void midiClockReceived() override;
+    void midiStartReceived() override;
+    void midiStopReceived() override;
+    void midiContinueReceived() override;
 
     void feedback(String address, var value, String origin);
 
     String getTypeString() const override { return "MIDI"; }
     static MIDIInterface* create(var params) { return new MIDIInterface(); };
+
+    class ClockListener {
+    public:
+        /** Destructor. */
+        virtual ~ClockListener() {}
+        virtual void midiClockTick() {};
+        virtual void midiClockStart() {};
+        virtual void midiClockContinue() {};
+        virtual void midiClockStop() {};
+    };
+
+    ListenerList<ClockListener> clockListeners;
+
+    void addClockListener(ClockListener* newListener) { clockListeners.add(newListener); }
+    void removeClockListener(ClockListener* listener) { clockListeners.remove(listener); }
+
+
+
 };

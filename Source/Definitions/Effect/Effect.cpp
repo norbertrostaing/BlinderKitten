@@ -17,6 +17,7 @@
 #include "../CurvePreset/CurvePreset.h"
 #include "UI/GridView/EffectGridView.h"
 #include "BKEngine.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
 
 Effect::Effect(var params) :
 	BaseItem(params.getProperty("name", "Effect")),
@@ -62,6 +63,12 @@ Effect::Effect(var params) :
 	beatPerCycle = addFloatParameter("Beat by cycles", "Number of tap tempo beats by cycle", 1, 1);
 	tapTempoBtn = addTrigger("Tap tempo", "Hit me at least twice to se tempo");
 
+	midiClockSyncInterface = addTargetParameter("Clock interface", "select an interface you want to use as midi clock input", InterfaceManager::getInstance());
+	midiClockSyncInterface->targetType = TargetParameter::CONTAINER;
+	midiClockSyncInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<MIDIInterface>;
+	midiClockSyncInterface->maxDefaultSearchLevel = 0;
+	midiClockSyncInterface->canBeDisabledByUser = true;
+
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
 
 	values.selectItemWhenCreated = false;
@@ -99,6 +106,9 @@ Effect::~Effect()
 		}
 	}
 	isComputing.exit();
+	if (currentMidiClockSyncInterface != nullptr) {
+		currentMidiClockSyncInterface->removeClockListener(this);
+	}
 }
 
 void Effect::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
@@ -134,6 +144,9 @@ void Effect::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	if (p == speed) {
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
+	}
+	if (p == midiClockSyncInterface) {
+		midiClockInterfaceChanged();
 	}
 }
 
@@ -206,16 +219,21 @@ void Effect::update(double now) {
 	}
 	if (isOn) {
 		Brain::getInstance()->pleaseUpdate(this);
-		currentSizeMult = sizeMult.getValue();
-		double deltaTime = now - TSLastUpdate;
-		TSLastUpdate = now;
-		double currentSpeed = speed->getValue();
-		float speedMultVal = speedMult.getValue();
-		currentSpeed *= speedMultVal;
-		if (speed != 0) {
-			double duration = 60000. / currentSpeed;
-			double delta = deltaTime / duration;
-			totalElapsed += delta;
+		if (lastMidiTick + 100 < now) {
+			currentSizeMult = sizeMult.getValue();
+			double deltaTime = now - TSLastUpdate;
+			TSLastUpdate = now;
+			double currentSpeed = speed->getValue();
+			float speedMultVal = speedMult.getValue();
+			currentSpeed *= speedMultVal;
+			if (speed != 0) {
+				double duration = 60000. / currentSpeed;
+				double delta = deltaTime / duration;
+				totalElapsed += delta;
+				currentPosition->setValue(fmodf(totalElapsed, 1.0));
+			}
+		}
+		else {
 			currentPosition->setValue(fmodf(totalElapsed, 1.0));
 		}
 
@@ -417,6 +435,41 @@ void Effect::tapTempo() {
 		tapTempoHistory.clear();
 	}
 }
+
+void Effect::midiClockInterfaceChanged()
+{
+	MIDIInterface* i = dynamic_cast<MIDIInterface*>(midiClockSyncInterface->targetContainer.get());
+	if (currentMidiClockSyncInterface != nullptr && i != currentMidiClockSyncInterface) {
+		currentMidiClockSyncInterface->removeClockListener(this);
+		currentMidiClockSyncInterface = nullptr;
+	}
+	if (i != nullptr) {
+		i->addClockListener(this);
+		currentMidiClockSyncInterface = i;
+	}
+}
+
+
+void Effect::midiClockTick() {
+	if (!isOn) return;
+	if (!midiClockSyncInterface->enabled) return;
+	lastMidiTick = Time::getMillisecondCounterHiRes();
+	double delta = currentMidiClockSyncInterface->tickDuration;
+	delta /= beatPerCycle->floatValue();
+	totalElapsed += delta;
+}
+
+void Effect::midiClockStart() {
+}
+
+void Effect::midiClockContinue() {
+}
+
+void Effect::midiClockStop() {
+	lastMidiTick = false;
+}
+
+
 
 void Effect::flash(bool on, bool swop)
 {

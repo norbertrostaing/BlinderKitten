@@ -14,12 +14,14 @@
 #include "../Command/CommandSelectionManager.h"
 #include "EffectRow.h"
 #include "Definitions/Multiplicator/MultiplicatorLinkManager.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
 
 class EffectParam;
 class SubFixtureChannel;
 
 class Effect :
-    public BaseItem
+    public BaseItem,
+    public MIDIInterface::ClockListener
 {
 public:
     Effect(var params = var());
@@ -78,6 +80,8 @@ public:
     Trigger* tapTempoBtn;
     FloatParameter* beatPerCycle;
 
+    TargetParameter* midiClockSyncInterface;
+
     MultiplicatorLinkManager speedMult;
     MultiplicatorLinkManager sizeMult;
     float currentSizeMult = 1;
@@ -96,6 +100,15 @@ public:
     void kill();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
     void tapTempo();
+
+    void midiClockInterfaceChanged();
+    MIDIInterface* currentMidiClockSyncInterface = nullptr;
+    double lastMidiTick = 0;
+
+    void midiClockTick();
+    void midiClockStart();
+    void midiClockContinue();
+    void midiClockStop();
 
     void flash(bool on, bool swop = false);
     bool userPressedGo = false;
