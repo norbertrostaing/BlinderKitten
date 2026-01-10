@@ -1191,16 +1191,15 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 	if (!fc->isHTP) {
 		faderLevel = (float)LTPLevel->getValue();
 	}
-
-	if (TSOffFlashEnd > now) {
-		double flashLvl = jmax(faderLevel, (float)flashLevel->getValue());
-		faderLevel = jmap(now, TSOffFlash, TSOffFlashEnd, flashLvl, (double)faderLevel);
-		keepUpdate = true;
-	}
-	else if (isFlashing) {
-		faderLevel = jmax(faderLevel,(float)flashLevel->getValue());
-	}
 	else {
+		if (TSOffFlashEnd > now) {
+			double flashLvl = jmax(faderLevel, (float)flashLevel->getValue());
+			faderLevel = jmap(now, TSOffFlash, TSOffFlashEnd, flashLvl, (double)faderLevel);
+			keepUpdate = true;
+		}
+		else if (isFlashing) {
+			faderLevel = jmax(faderLevel,(float)flashLevel->getValue());
+		}
 	}
 
 
