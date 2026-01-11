@@ -1042,7 +1042,7 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 	changedNames.set("ColorSub_M", "Magenta");
 	changedNames.set("ColorSub_Y", "Yellow");
 
-	XmlDocument descriptionXml = stream->readString();
+	XmlDocument descriptionXml = stream->readEntireStreamAsString();
 	auto rootElmt = descriptionXml.getDocumentElement();
 	int nChildren = rootElmt->getNumChildElements();
 	HashMap<int, int> breakOffsets;
@@ -1276,7 +1276,7 @@ void BKEngine::importMVR(File f)
 		return;
 	}
 
-	XmlDocument descriptionXml = archive->createStreamForEntry(descIndex)->readString();
+	XmlDocument descriptionXml = archive->createStreamForEntry(descIndex)->readEntireStreamAsString();
 	auto rootElmt = descriptionXml.getDocumentElement();
 
 	int nLayers = rootElmt->getNumChildElements();
