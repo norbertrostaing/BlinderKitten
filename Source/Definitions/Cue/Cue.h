@@ -13,6 +13,8 @@
 #include "../Command/Command.h"
 #include "Task.h"
 #include "Command/MoveInBlackManager.h"
+#include "CueTimecode.h"
+#include "CueTimecodeManager.h"
 
 class Cuelist;
 
@@ -124,6 +126,10 @@ public:
 
     void checkId();
     void checkParentCuelist();
+
+    void timecodeUpdated();
+
+    CueTimecodeManager timecode;
 
 };
 

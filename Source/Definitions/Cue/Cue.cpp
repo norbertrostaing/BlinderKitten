@@ -26,7 +26,8 @@ Cue::Cue(var params) :
 	commands("Commands"),
 	tasks("Tasks"),
 	tasksOffCue("Tasks off"),
-	timingContainer("Timing")
+	timingContainer("Timing"),
+	timecode("Timecode")
 {
 	canBeDisabled = false;
 	saveAndLoadRecursiveData = true;
@@ -68,6 +69,7 @@ Cue::Cue(var params) :
 	createBeforeBtn = actionsContainer.addTrigger("Create Before", "Create a cue before this one with the content of the programmer");
 	createAfterBtn = actionsContainer.addTrigger("Create After", "Create a cue after this one with the content of the programmer");
 
+	timecode.selectItemWhenCreated = false;
 	commands.selectItemWhenCreated = false;
 	tasks.selectItemWhenCreated = false;
 	tasksOffCue.selectItemWhenCreated = false;
@@ -84,6 +86,7 @@ Cue::Cue(var params) :
 	addChildControllableContainer(&actionsContainer);
 	addChildControllableContainer(&timingContainer);
 	addChildControllableContainer(&moveInBlack);
+	addChildControllableContainer(&timecode);
 
 	addChildControllableContainer(&commands);
 	addChildControllableContainer(&tasks);
@@ -185,6 +188,10 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 	}
 	else if (c == htpInDelay || c == htpOutDelay || c == ltpDelay || c == htpInFade || c == htpOutFade || c == ltpFade) {
 		sendChangeMessage();
+	}
+	else if (cc == &timecode) {
+		checkParentCuelist();
+		parentCuelist->rebuildTimecode();
 	}
 }
 
@@ -634,5 +641,11 @@ void Cue::checkParentCuelist()
 	if (parentCuelist == nullptr) {
 		parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	}
+}
+
+void Cue::timecodeUpdated()
+{
+	checkParentCuelist();
+	parentCuelist->rebuildTimecode();
 }
 

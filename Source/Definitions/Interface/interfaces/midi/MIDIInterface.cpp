@@ -31,6 +31,7 @@ MIDIInterface::MIDIInterface() :
     enableMidiClock = addBoolParameter("Midi clock", "If enabled, this interface can receive midi clock", true);
     PPQN = addIntParameter("PPQN", "The number of pulses per quarter note.", 24,4);
     tickDuration = 1.0/24.0;
+    enableMidiTimecode = addBoolParameter("Midi timecode", "If enabled, this interface can receive midi timecode", true);
 
     addChildControllableContainer(&dataContainer);
     updateBytesParams();
@@ -191,6 +192,67 @@ void MIDIInterface::midiContinueReceived()
     if (!enableMidiClock->boolValue()) { return; }
     clockListeners.call(&ClockListener::midiClockContinue);
 }
+
+void MIDIInterface::fullFrameTimecodeReceived(const MidiMessage& m)
+{
+    if (!enabled->boolValue()) return;
+    if (!enableMidiTimecode->boolValue()) return;
+
+    if (!m.isSysEx()) return ;
+
+    const auto* data = m.getSysExData();
+    const int size = m.getSysExDataSize();
+
+    const int hours = data[4] & 0x1F; // ignore fps bits
+    const int minutes = data[5];
+    const int seconds = data[6];
+    const int frames = data[7];
+
+    // Conversion frame absolue à 30 fps
+    int outFrame =
+        frames +
+        30 * seconds +
+        30 * 60 * minutes +
+        30 * 60 * 60 * hours;
+
+    lastFrameSent = outFrame;
+    timecodeListeners.call(&TimecodeListener::midiTimecodeUpdated, outFrame);
+}
+
+
+void MIDIInterface::quarterFrameTimecodeReceived(const juce::MidiMessage& m)
+{
+    if (!enabled->boolValue()) return;
+    if (!enableMidiTimecode->boolValue()) return;
+    if (!m.isQuarterFrame()) return;
+
+    const uint8_t type = (uint8_t)m.getQuarterFrameSequenceNumber(); // 0..7
+    const uint8_t value = (uint8_t)m.getQuarterFrameValue();          // 0..15
+
+    qf[type] = value;
+    qfCycleMask |= (uint8_t)(1u << type);
+
+    // Attendre d’avoir reçu les 8 types (0..7) => état cohérent
+    if (qfCycleMask != 0xFF)
+        return;
+
+    qfCycleMask = 0; // prêt pour le cycle suivant
+
+    const int frames = (int)((qf[1] << 4) | qf[0]);
+    const int seconds = (int)((qf[3] << 4) | qf[2]);
+    const int minutes = (int)((qf[5] << 4) | qf[4]);
+    const int hours = (int)(((qf[7] & 0x01) << 4) | qf[6]);
+
+    const int tc = frames + 30 * seconds + 30 * 60 * minutes + 30 * 60 * 60 * hours;
+
+    if (tc == lastFrameSent)
+        return;
+
+    lastFrameSent = tc;
+    timecodeListeners.call(&TimecodeListener::midiTimecodeUpdated, tc);
+}
+
+
 
 void MIDIInterface::midiStopReceived()
 {

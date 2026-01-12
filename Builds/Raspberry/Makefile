@@ -159,6 +159,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/MoveInBlackManager_55053620.o \
   $(JUCE_OBJDIR)/Cue_a2480ce9.o \
   $(JUCE_OBJDIR)/CueManager_b280bf0e.o \
+  $(JUCE_OBJDIR)/CueTimecode_33e51243.o \
+  $(JUCE_OBJDIR)/CueTimecodeManager_714de074.o \
   $(JUCE_OBJDIR)/Task_85d81459.o \
   $(JUCE_OBJDIR)/Cuelist_6fc7e025.o \
   $(JUCE_OBJDIR)/CuelistManager_78e41052.o \
@@ -706,6 +708,16 @@ $(JUCE_OBJDIR)/Cue_a2480ce9.o: ../../Source/Definitions/Cue/Cue.cpp
 $(JUCE_OBJDIR)/CueManager_b280bf0e.o: ../../Source/Definitions/Cue/CueManager.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling CueManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CueTimecode_33e51243.o: ../../Source/Definitions/Cue/CueTimecode.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling CueTimecode.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CueTimecodeManager_714de074.o: ../../Source/Definitions/Cue/CueTimecodeManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling CueTimecodeManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Task_85d81459.o: ../../Source/Definitions/Cue/Task.cpp

@@ -75,6 +75,8 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Insert before", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_INSERTBEFORE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Insert after", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_INSERTAFTER));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Take selection", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_TAKESELECTION));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go and add timecode", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO_ADD_TIMECODE));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go and replace timecode", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO_REPLACE_TIMECODE));
 
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Start", &EffectAction::create)->addParam("actionType", EffectAction::FX_START));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Stop", &EffectAction::create)->addParam("actionType", EffectAction::FX_STOP));

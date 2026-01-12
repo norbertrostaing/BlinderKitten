@@ -1492,6 +1492,12 @@
     <ClCompile Include="..\..\Source\Definitions\Cue\CueManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Cue\CueTimecode.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Cue\CueTimecodeManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Cue\Task.cpp">
       <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
     </ClCompile>
@@ -5365,6 +5371,12 @@
       <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Cue\CueManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Cue\CueTimecode.h">
+      <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Cue\CueTimecodeManager.h">
       <Filter>BlinderKitten\Source\Definitions\Cue</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Cue\Task.h">

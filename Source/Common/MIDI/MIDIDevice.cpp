@@ -69,9 +69,9 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isNoteOff()) inputListeners.call(&MIDIInputListener::noteOffReceived, message.getChannel(), message.getNoteNumber(), 0); //force note off to velocity 0
 	else if (message.isController()) inputListeners.call(&MIDIInputListener::controlChangeReceived, message.getChannel(), message.getControllerNumber(), message.getControllerValue());
   else if (message.isProgramChange()) inputListeners.call(&MIDIInputListener::programChangeReceived, message.getChannel(), message.getProgramChangeNumber());
-	else if (message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
 	else if (message.isFullFrame()) inputListeners.call(&MIDIInputListener::fullFrameTimecodeReceived, message);
 	else if (message.isQuarterFrame()) inputListeners.call(&MIDIInputListener::quarterFrameTimecodeReceived, message);
+	else if (message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
 	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message.getChannel(), message.getPitchWheelValue());
 	else if (message.isChannelPressure()) inputListeners.call(&MIDIInputListener::channelPressureReceived, message.getChannel(), message.getChannelPressureValue());
 	else if (message.isAftertouch()) inputListeners.call(&MIDIInputListener::afterTouchReceived, message.getChannel(), message.getNoteNumber(), message.getAfterTouchValue());

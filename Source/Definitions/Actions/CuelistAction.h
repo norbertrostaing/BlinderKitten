@@ -27,7 +27,8 @@ public:
                         CL_CROSSFADE, CL_UPFADE, CL_DOWNFADE,
                         CL_OFF_INSTANT, 
                         CL_LOADCONTENT, CL_INSERTBEFORE, CL_INSERTAFTER,
-                        CL_TAKESELECTION
+                        CL_TAKESELECTION,
+                        CL_GO_ADD_TIMECODE, CL_GO_REPLACE_TIMECODE
     };
     ActionType actionType;
     BoolParameter* useMainConductor;

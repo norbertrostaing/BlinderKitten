@@ -195,6 +195,14 @@ Cuelist::Cuelist(var params) :
 
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
+
+	midiTimecodeSyncInterface = addTargetParameter("Timecode interface", "select an interface you want to use as midi timecode input", InterfaceManager::getInstance());
+	midiTimecodeSyncInterface->targetType = TargetParameter::CONTAINER;
+	midiTimecodeSyncInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<MIDIInterface>;
+	midiTimecodeSyncInterface->maxDefaultSearchLevel = 0;
+	midiTimecodeSyncInterface->canBeDisabledByUser = true;
+
+
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
 	moveInBlackDelay = addFloatParameter("MIB Delay", "Delay to wait after light goes off to trigger move in black", 0, 0);
 
@@ -261,6 +269,10 @@ Cuelist::~Cuelist()
 	if (CuelistLoadWindow::getInstanceWithoutCreating() != nullptr && CuelistLoadWindow::getInstance()->currentTarget == this) {
 		CuelistLoadWindow::getInstance()->currentTarget = nullptr;
 	}
+	if (currentMidiTimecodeSyncInterface != nullptr) {
+		currentMidiTimecodeSyncInterface->removeTimecodeListener(this);
+	}
+
 }
 
 void Cuelist::reorderCues() {
@@ -379,6 +391,9 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 			crossFadeCanMove = true;
 		}
 	}
+	if (p == midiTimecodeSyncInterface) {
+		midiTimecodeInterfaceChanged();
+	}
 }
 
 void Cuelist::triggerTriggered(Trigger* t) {
@@ -465,6 +480,11 @@ void Cuelist::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 		autoCreateChaser();
 	}
 
+}
+
+void Cuelist::afterLoadJSONDataInternal()
+{
+	rebuildTimecode();
 }
 
 
@@ -1917,6 +1937,52 @@ void Cuelist::takeSelection(Programmer* p)
 	if (target == nullptr && cues.items.size() > 0) target = cues.items[0];
 	if (target != nullptr) {
 		target->takeSelection(nullptr);
+	}
+}
+
+void Cuelist::rebuildTimecode()
+{
+	csTimecode.enter();
+	timecodeToCue.clear();
+	for (Cue* c : cues.items) {
+		for (CueTimecode* ct : c->timecode.items) {
+			if (ct->enabled->boolValue()) {
+				int index = ct->frame->intValue();
+				index += 30*ct->second->intValue();
+				index += (60*30)*ct->minute->intValue();
+				index += (60*60*30)*ct->hour->intValue();
+				timecodeToCue[index] = c;
+			}
+		}
+	}
+	csTimecode.exit();
+}
+
+void Cuelist::midiTimecodeInterfaceChanged()
+{
+	MIDIInterface* i = dynamic_cast<MIDIInterface*>(midiTimecodeSyncInterface->targetContainer.get());
+	if (currentMidiTimecodeSyncInterface != nullptr && i != currentMidiTimecodeSyncInterface) {
+		currentMidiTimecodeSyncInterface->removeTimecodeListener(this);
+		currentMidiTimecodeSyncInterface = nullptr;
+	}
+	if (i != nullptr) {
+		i->addTimecodeListener(this);
+		currentMidiTimecodeSyncInterface = i;
+	}
+
+}
+
+void Cuelist::midiTimecodeUpdated(int tc) {
+	ScopedLock lock(csTimecode);
+
+	if (timecodeToCue.empty()) return ;
+
+	auto it = timecodeToCue.upper_bound(tc); 
+	if (it == timecodeToCue.begin()) return; 
+	--it; 
+	Cue* toTrigger = it->second;
+	if (toTrigger != cueA) {
+		userGo(toTrigger);
 	}
 }
 

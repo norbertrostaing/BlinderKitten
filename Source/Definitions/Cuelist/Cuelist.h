@@ -14,10 +14,12 @@
 #include "../Cue/CueManager.h"
 #include "Definitions/Command/CommandValueManager.h"
 #include "Command/MoveInBlackManager.h"
+#include "Definitions/Interface/InterfaceIncludes.h"
 
 class Cuelist:
     public BaseItem,
-    public ChangeBroadcaster
+    public ChangeBroadcaster,
+    public MIDIInterface::TimecodeListener
 {
 public:
     Cuelist(var params = var());
@@ -217,6 +219,7 @@ public:
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void afterLoadJSONDataInternal() override;
 
     void insertProgCueBefore();
     void insertProgCueAfter();
@@ -265,6 +268,15 @@ public:
     void exportInTextFile();
 
     void takeSelection(Programmer* p);
+
+    std::map<int, Cue*> timecodeToCue;
+    CriticalSection csTimecode;
+    void rebuildTimecode();
+
+    void midiTimecodeInterfaceChanged();
+    TargetParameter* midiTimecodeSyncInterface;
+    MIDIInterface* currentMidiTimecodeSyncInterface = nullptr;
+    void midiTimecodeUpdated(int tc);
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

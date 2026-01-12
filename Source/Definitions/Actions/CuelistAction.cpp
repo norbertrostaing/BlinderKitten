@@ -307,6 +307,28 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
+    case CL_GO_ADD_TIMECODE:
+        if (val == 1) {
+            MessageManager::callAsync([target]() {
+                target->userGo();
+                if (target->cueA != nullptr) {
+                    target->cueA->timecode.addWithCurrent();
+                }
+                });
+        }
+        break;
+
+    case CL_GO_REPLACE_TIMECODE:
+        if (val == 1) {
+            MessageManager::callAsync([target]() {
+                target->userGo();
+                if (target->cueA != nullptr) {
+                    target->cueA->timecode.replaceWithCurrent();
+                }
+                });
+        }
+        break;
+
     }
 
 
