@@ -196,11 +196,11 @@ Cuelist::Cuelist(var params) :
 	offFade = addFloatParameter("Off time", "Default fade time used to off the cuelist", 0, 0);
 
 
-	midiTimecodeSyncInterface = addTargetParameter("Timecode interface", "select an interface you want to use as midi timecode input", InterfaceManager::getInstance());
-	midiTimecodeSyncInterface->targetType = TargetParameter::CONTAINER;
-	midiTimecodeSyncInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<MIDIInterface>;
-	midiTimecodeSyncInterface->maxDefaultSearchLevel = 0;
-	midiTimecodeSyncInterface->canBeDisabledByUser = true;
+	timecodeSyncInterface = addTargetParameter("Timecode interface", "select an interface you want to use as timecode input", InterfaceManager::getInstance());
+	timecodeSyncInterface->targetType = TargetParameter::CONTAINER;
+	//timecodeSyncInterface->customGetTargetContainerFunc = &InterfaceManager::showAndGetInterfaceOfType<MIDIInterface>;
+	timecodeSyncInterface->maxDefaultSearchLevel = 0;
+	timecodeSyncInterface->canBeDisabledByUser = true;
 
 
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
@@ -269,8 +269,8 @@ Cuelist::~Cuelist()
 	if (CuelistLoadWindow::getInstanceWithoutCreating() != nullptr && CuelistLoadWindow::getInstance()->currentTarget == this) {
 		CuelistLoadWindow::getInstance()->currentTarget = nullptr;
 	}
-	if (currentMidiTimecodeSyncInterface != nullptr) {
-		currentMidiTimecodeSyncInterface->removeTimecodeListener(this);
+	if (currentTimecodeSyncInterface != nullptr) {
+		currentTimecodeSyncInterface->removeTimecodeListener(this);
 	}
 
 }
@@ -391,8 +391,8 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 			crossFadeCanMove = true;
 		}
 	}
-	if (p == midiTimecodeSyncInterface) {
-		midiTimecodeInterfaceChanged();
+	if (p == timecodeSyncInterface) {
+		timecodeInterfaceChanged();
 	}
 }
 
@@ -1958,23 +1958,23 @@ void Cuelist::rebuildTimecode()
 	csTimecode.exit();
 }
 
-void Cuelist::midiTimecodeInterfaceChanged()
+void Cuelist::timecodeInterfaceChanged()
 {
-	MIDIInterface* i = dynamic_cast<MIDIInterface*>(midiTimecodeSyncInterface->targetContainer.get());
-	if (currentMidiTimecodeSyncInterface != nullptr && i != currentMidiTimecodeSyncInterface) {
-		currentMidiTimecodeSyncInterface->removeTimecodeListener(this);
-		currentMidiTimecodeSyncInterface = nullptr;
+	Interface* i = dynamic_cast<Interface*>(timecodeSyncInterface->targetContainer.get());
+	if (currentTimecodeSyncInterface != nullptr && i != currentTimecodeSyncInterface) {
+		currentTimecodeSyncInterface->removeTimecodeListener(this);
+		currentTimecodeSyncInterface = nullptr;
 	}
 	if (i != nullptr) {
 		i->addTimecodeListener(this);
-		currentMidiTimecodeSyncInterface = i;
+		currentTimecodeSyncInterface = i;
 	}
 
 }
 
-void Cuelist::midiTimecodeUpdated(int tc) {
+void Cuelist::timecodeUpdated(int tc) {
+	if (!timecodeSyncInterface->enabled) return;
 	ScopedLock lock(csTimecode);
-
 	if (timecodeToCue.empty()) return ;
 
 	auto it = timecodeToCue.upper_bound(tc); 

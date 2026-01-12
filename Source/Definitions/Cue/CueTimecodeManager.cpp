@@ -53,8 +53,8 @@ void CueTimecodeManager::addWithCurrent()
 	if(c == nullptr) return;
 	c->checkParentCuelist();
 	if(c->parentCuelist == nullptr) return;
-	if (c->parentCuelist->currentMidiTimecodeSyncInterface ==nullptr) return;
-	int currentTC = c->parentCuelist->currentMidiTimecodeSyncInterface->lastFrameSent;
+	if (c->parentCuelist->currentTimecodeSyncInterface ==nullptr) return;
+	int currentTC = c->parentCuelist->currentTimecodeSyncInterface->lastFrameSent;
 	int frame = currentTC%30;
 	int second = (currentTC / 30) % 60;
 	int minute = (currentTC / (30*60)) % 60;
@@ -80,6 +80,12 @@ void CueTimecodeManager::replaceWithCurrent()
 
 void CueTimecodeManager::addItemInternal(CueTimecode*, juce::var data)
 {
+	Cue* c = dynamic_cast<Cue*>(parentContainer.get());
+	if (c == nullptr) return;
+	c->checkParentCuelist();
+	if (c->parentCuelist == nullptr) return;
+	if (c->parentCuelist->currentTimecodeSyncInterface == nullptr) return;
+	c->parentCuelist->rebuildTimecode();
 }
 
 void CueTimecodeManager::addItemsInternal(juce::Array<CueTimecode*>, juce::var data)
@@ -88,6 +94,12 @@ void CueTimecodeManager::addItemsInternal(juce::Array<CueTimecode*>, juce::var d
 
 void CueTimecodeManager::removeItemInternal(CueTimecode*)
 {
+	Cue* c = dynamic_cast<Cue*>(parentContainer.get());
+	if (c == nullptr) return;
+	c->checkParentCuelist();
+	if (c->parentCuelist == nullptr) return;
+	if (c->parentCuelist->currentTimecodeSyncInterface == nullptr) return;
+	c->parentCuelist->rebuildTimecode();
 }
 
 void CueTimecodeManager::removeItemsInternal(juce::Array<CueTimecode*>)

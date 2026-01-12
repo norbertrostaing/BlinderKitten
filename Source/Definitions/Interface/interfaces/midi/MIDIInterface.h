@@ -79,21 +79,11 @@ public:
     void addClockListener(ClockListener* newListener) { clockListeners.add(newListener); }
     void removeClockListener(ClockListener* listener) { clockListeners.remove(listener); }
 
-    class TimecodeListener {
-    public:
-        /** Destructor. */
-        virtual ~TimecodeListener() {}
-        virtual void midiTimecodeUpdated(int tc) {};
-    };
-
     std::array<uint8_t, 8> qf = { 0,0,0,0,0,0,0,0 };
     uint8_t qfCycleMask = 0; // reset à chaque cycle complet
-    int lastFrameSent = -1;      // filtre doublons
+    
+    
 
-    ListenerList<TimecodeListener> timecodeListeners;
-
-    void addTimecodeListener(TimecodeListener* newListener) { timecodeListeners.add(newListener); }
-    void removeTimecodeListener(TimecodeListener* listener) { timecodeListeners.remove(listener); }
 
 
 

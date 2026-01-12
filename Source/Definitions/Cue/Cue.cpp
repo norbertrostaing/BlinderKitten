@@ -638,7 +638,7 @@ void Cue::checkId()
 
 void Cue::checkParentCuelist()
 {
-	if (parentCuelist == nullptr) {
+	if (parentCuelist == nullptr && parentContainer != nullptr && parentContainer->parentContainer != nullptr) {
 		parentCuelist = dynamic_cast<Cuelist*>(this->parentContainer->parentContainer.get());
 	}
 }

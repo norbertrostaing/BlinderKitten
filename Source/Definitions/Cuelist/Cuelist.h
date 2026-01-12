@@ -273,10 +273,10 @@ public:
     CriticalSection csTimecode;
     void rebuildTimecode();
 
-    void midiTimecodeInterfaceChanged();
-    TargetParameter* midiTimecodeSyncInterface;
-    MIDIInterface* currentMidiTimecodeSyncInterface = nullptr;
-    void midiTimecodeUpdated(int tc);
+    void timecodeInterfaceChanged();
+    TargetParameter* timecodeSyncInterface;
+    Interface* currentTimecodeSyncInterface = nullptr;
+    void timecodeUpdated(int tc);
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

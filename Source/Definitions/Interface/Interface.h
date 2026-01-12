@@ -34,4 +34,19 @@ public:
     virtual InterfaceUI* createUI();
 
     static bool isMidiInterface(Interface* i);
+
+    class TimecodeListener {
+    public:
+        /** Destructor. */
+        virtual ~TimecodeListener() {}
+        virtual void timecodeUpdated(int tc) {};
+    };
+
+    int lastFrameSent = -1;      // filtre doublons
+
+    ListenerList<TimecodeListener> timecodeListeners;
+
+    void addTimecodeListener(TimecodeListener* newListener) { timecodeListeners.add(newListener); }
+    void removeTimecodeListener(TimecodeListener* listener) { timecodeListeners.remove(listener); }
+
 };

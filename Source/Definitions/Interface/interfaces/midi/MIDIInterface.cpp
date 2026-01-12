@@ -216,7 +216,7 @@ void MIDIInterface::fullFrameTimecodeReceived(const MidiMessage& m)
         30 * 60 * 60 * hours;
 
     lastFrameSent = outFrame;
-    timecodeListeners.call(&TimecodeListener::midiTimecodeUpdated, outFrame);
+    timecodeListeners.call(&TimecodeListener::timecodeUpdated, outFrame);
 }
 
 
@@ -249,7 +249,7 @@ void MIDIInterface::quarterFrameTimecodeReceived(const juce::MidiMessage& m)
         return;
 
     lastFrameSent = tc;
-    timecodeListeners.call(&TimecodeListener::midiTimecodeUpdated, tc);
+    timecodeListeners.call(&TimecodeListener::timecodeUpdated, tc);
 }
 
 

@@ -325,6 +325,32 @@ void ArtnetSocket::run()
 						}
 					}
 				}
+				else if (opcode == OPTIMECODE)
+				{
+
+					int sec =receiveBuffer[15];
+					const int hours = receiveBuffer[17]; // ignore fps bits
+					const int minutes = receiveBuffer[16];
+					const int seconds = receiveBuffer[15];
+					const int frames = receiveBuffer[14];
+
+					// Conversion frame absolue à 30 fps
+					int outFrame =
+						frames +
+						30 * seconds +
+						30 * 60 * minutes +
+						30 * 60 * 60 * hours;
+
+					for (auto& i : InterfaceManager::getInstance()->items)
+					{
+						DMXInterface* inter = dynamic_cast<DMXInterface*>(i);
+						if (inter == nullptr) continue;
+						DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(inter->dmxDevice.get());
+						if (dev == nullptr) continue;
+						inter->lastFrameSent = outFrame;
+						inter->timecodeListeners.call(&Interface::TimecodeListener::timecodeUpdated, outFrame);
+					}
+				}
 				else if (opcode == OPPOLL)
 				{
 					//DBG("Received ArtPoll");
