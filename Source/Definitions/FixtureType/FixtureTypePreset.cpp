@@ -91,13 +91,13 @@ void FixtureTypePreset::exportInPresetGrid(bool addIfNotThere)
         }
     }
 
+    if (fixt == nullptr) return;
     Preset* targetPreset = nullptr;
-    if (fixt != nullptr) {
-        for (auto it = Brain::getInstance()->presets.begin(); targetPreset == nullptr && it != Brain::getInstance()->presets.end(); it.next()) {
-            Preset* p = it.getValue();
-            if (p->userName->stringValue() == niceName) {
-                targetPreset = p;
-            }
+
+    for (auto it = Brain::getInstance()->presets.begin(); targetPreset == nullptr && it != Brain::getInstance()->presets.end(); it.next()) {
+        Preset* p = it.getValue();
+        if (p->userName->stringValue() == niceName) {
+            targetPreset = p;
         }
     }
 
