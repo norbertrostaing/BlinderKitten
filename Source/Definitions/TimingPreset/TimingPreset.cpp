@@ -107,6 +107,9 @@ void TimingPreset::onContainerParameterChangedInternal(Parameter* p) {
 	if (p == thruDelay || p == thruFade) {
 		updateDisplay();
 	}
+	if (p == delayFrom || p == delayTo || p == fadeFrom || p == fadeTo) {
+		Brain::getInstance()->virtualFadersNeedUpdate = true;
+	}
 	
 }
 

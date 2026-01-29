@@ -86,5 +86,16 @@ void PresetAction::setValueInternal(var value, String origin, int indexIncrement
 var PresetAction::getValue()
 {
     var val = var();
+    if (actionType == TIMING_PRESET_SET) {
+        TimingPreset* target = Brain::getInstance()->getTimingPresetById(targetId->intValue());
+        String comp = component->getValueData().toString();
+        if (target == nullptr) { return val; }
+        if (comp == "dFrom") val = target->delayFrom->floatValue();
+        else if (comp == "dTo") val = target->delayTo->floatValue();
+        else if (comp == "fFrom") val = target->fadeFrom->floatValue();
+        else if (comp == "fTo") val = target->fadeTo->floatValue();
+        val = jmap((float)val, fromValue->floatValue(), toValue->floatValue(), 0.f, 1.f);
+    }
+
     return val;
 }
