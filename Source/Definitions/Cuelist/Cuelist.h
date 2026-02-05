@@ -218,8 +218,8 @@ public:
     void reorderCues();
 
     void triggerTriggered(Trigger* t) override;
-    void onContainerParameterChangedInternal(Parameter* p);
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void onContainerParameterChangedInternal(Parameter* p) override;
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void afterLoadJSONDataInternal() override;
 
     void insertProgCueBefore();
@@ -277,7 +277,7 @@ public:
     void timecodeInterfaceChanged();
     TargetParameter* timecodeSyncInterface;
     Interface* currentTimecodeSyncInterface = nullptr;
-    void timecodeUpdated(int tc);
+    void timecodeUpdated(int tc) override;
 
     static Cuelist* create(var params) { return new Cuelist(params); }
 

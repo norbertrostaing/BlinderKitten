@@ -82,7 +82,7 @@ class BKPath:
 
     void computeData();
 
-    void onContainerParameterChangedInternal(Parameter*);
+    void onContainerParameterChangedInternal(Parameter*) override;
     void updateDisplay();
 
     void clicked();

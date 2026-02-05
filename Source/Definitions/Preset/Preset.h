@@ -29,7 +29,7 @@ public:
     IntParameter* id;
     int registeredId = 0;
     StringParameter* userName;
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void updateName();
 
     IntParameter* useAnotherId;
@@ -63,7 +63,7 @@ public:
 
     void removeProgContent();
 
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void checkIfProgrammerNeedUpdate();
 
 };

@@ -79,11 +79,11 @@ public:
 
     void sizeChanged();
 
-    void itemAdded(BKPath*);
-    void itemsAdded(juce::Array<BKPath*>);
-    void itemRemoved(BKPath*);
-    void itemsRemoved(juce::Array<BKPath*>);
-    void itemsReordered();
+    void itemAdded(BKPath*) override;
+    void itemsAdded(juce::Array<BKPath*>) override;
+    void itemRemoved(BKPath*) override;
+    void itemsRemoved(juce::Array<BKPath*>) override;
+    void itemsReordered() override;
 
 
 };

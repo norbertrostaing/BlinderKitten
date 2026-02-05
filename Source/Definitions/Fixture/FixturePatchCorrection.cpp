@@ -16,8 +16,8 @@
 
 FixturePatchCorrection::FixturePatchCorrection(var params) :
 	BaseItem(params.getProperty("name", "Correction")),
-	objectType(params.getProperty("type", "FixturePatchCorrection").toString()),
-	objectData(params)
+    objectData(params),
+    objectType(params.getProperty("type", "FixturePatchCorrection").toString())
 {
 
 	subFixtureId = addIntParameter("SubFixture", "ID of the subfixture",0,0);

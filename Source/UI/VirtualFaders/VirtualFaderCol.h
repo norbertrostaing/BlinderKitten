@@ -58,7 +58,7 @@ public:
     VirtualFaderSlider fader;
     BaseManagerButton belowButtons;
 
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void updateName();
     void updateDisplay();
 

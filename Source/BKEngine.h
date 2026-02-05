@@ -145,7 +145,7 @@ public:
 
 	void getBreakOffset(XmlElement* tag, String geometryName, int dmxBreak, Array<geometryBreaks>* subs);
 
-	void parameterValueChanged(Parameter* p);
+	void parameterValueChanged(Parameter* p) override;
 
 	void autoFillDefaultChannels();
 

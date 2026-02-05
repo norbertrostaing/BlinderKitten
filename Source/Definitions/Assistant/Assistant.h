@@ -100,10 +100,10 @@ public:
 	bool pleaseCreateMidiMappings = false;
 	bool pleaseImportAscii = false;
 
-	void triggerTriggered(Trigger* t);
-	void onContainerParameterChangedInternal(Parameter* p);
+	void triggerTriggered(Trigger* t) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
 	void updateDisplay();
-	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void patchFixtures();
 	void createPalette();
