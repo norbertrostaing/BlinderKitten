@@ -208,7 +208,15 @@ void InputPanelAction::setValueInternal(var value, String origin, int incrementI
                 }
             );
         }
-    }
+    case IP_UPDATE:
+        break;
+
+    case IP_REPLACE:
+        break;
+
+    case IP_LOADCONTENT:
+        break;
+}
 
 
 }
@@ -354,7 +362,20 @@ var InputPanelAction::getValue()
     case IP_RANDOMSEED:
         break;
 
-    }
+    case IP_SELECTWINDOW:
+        break;
+
+    case IP_SAVE:
+    case IP_LOADALLCUELISTS:
+    case IP_BLACKOUTTEMP:
+    case IP_BLACKOUTTOGGLE:
+    case IP_UPDATE:
+    case IP_REPLACE:
+    case IP_LOADCONTENT:
+    case IP_USEANOTHER:
+    case IP_ORGANICLAYOUT:
+        break;
+}
 
     return val;
 }

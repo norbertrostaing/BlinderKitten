@@ -30,8 +30,8 @@ EncodersUI::~EncodersUI()
 juce_ImplementSingleton(Encoders);
 
 Encoders::Encoders():
-    channels(),
-    ControllableContainer("Encoders")
+    ControllableContainer("Encoders"),
+    channels()
 {
     //addAndMakeVisible(&uiCommandLine);
     paramCommandLine = addStringParameter("Command line", "current command line", ""); uiCommandLine = paramCommandLine->createStringParameterUI(); addAndMakeVisible(uiCommandLine);

@@ -40,7 +40,8 @@ Carousel::Carousel(var params) :
 	updateName();
 
 	isCarouselOn = addBoolParameter("is ON", "Enable or disable this Carousel",false);
-	isCarouselOn->isControllableFeedbackOnly;
+    // is this supposed to be setControllableFeedbackOnly?
+	// isCarouselOn->isControllableFeedbackOnly;
 	isCarouselOn->setEnabled(false);
 	isCarouselOn->isSavable = false;
 	isOn = false;

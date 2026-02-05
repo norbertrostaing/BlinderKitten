@@ -95,12 +95,12 @@ ControllableContainer* getAppSettings();
 
 BKEngine::BKEngine() :
 	Engine("BlinderKitten", ".olga"),
-	genericSettingsContainer("Generic Project Settings"),
-	conductorInfosContainer("Conductor infos Settings"),
-	colorPickerContainer("Color Picker Settings"),
-	trackerContainer("Tracker Settings"),
-	virtualParamsContainer("Virtual Playbacks Settings"),
-	uiParamsContainer("UI Settings"),
+    uiParamsContainer("UI Settings"),
+    virtualParamsContainer("Virtual Playbacks Settings"),
+    genericSettingsContainer("Generic Project Settings"),
+    conductorInfosContainer("Conductor infos Settings"),
+    colorPickerContainer("Color Picker Settings"),
+    trackerContainer("Tracker Settings"),
 	loadWindowContainer("Cuelist load window"),
 	dmxTesterWindowContainer("DMX Tester window"),
 	layoutViewerContainer("Layout Viewer")

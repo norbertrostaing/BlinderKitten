@@ -82,7 +82,7 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
     void sliderValueChanged(Slider* slider) override;
-    void buttonClicked (Button*);
+    void buttonClicked (Button*) override;
     void triggerTriggered(Trigger* t) override;
     void updateFilterBtns();
     void updateEncoders();
@@ -94,15 +94,15 @@ public:
     void updateRangeButton();
     void updateEncodersValues();
     void updateCommandLine();
-    void mouseDoubleClick(const MouseEvent &e);
-    void mouseUp(const MouseEvent &e);
+    void mouseDoubleClick(const MouseEvent &e) override;
+    void mouseUp(const MouseEvent &e) override;
     void clearFilters();
     void toggleFilter(ChannelFamily* cf, bool forceSolo = false);
 
     void offsetEncoders(int n);
-    void clear();
+    void clear() override;
 
-    void mouseDown(const MouseEvent& e);
+    void mouseDown(const MouseEvent& e) override;
 
     void parameterValueChanged(Parameter* p) override;
 

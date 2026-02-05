@@ -119,7 +119,7 @@ int e131_dest_str(char *str, const e131_addr_t *dest) {
     errno = EINVAL;
     return -1;
   }
-  sprintf(str, "%s:%d", inet_ntoa(dest->sin_addr), ntohs(dest->sin_port));
+  DBG(str << " " << inet_ntoa(dest->sin_addr) << ":" << ntohs(dest->sin_port));
   return 0;
 }
 

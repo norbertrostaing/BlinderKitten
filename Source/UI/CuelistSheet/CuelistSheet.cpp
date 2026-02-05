@@ -159,8 +159,8 @@ void CuelistSheet::resized()
 
 void CuelistSheet::updateStyle()
 {
-    Colour curr = engine->conductorCurrentCueColor->getColor();
-    Colour next = engine->conductorNextCueColor->getColor();
+    // Colour curr = engine->conductorCurrentCueColor->getColor();
+    // Colour next = engine->conductorNextCueColor->getColor();
 }
 
 

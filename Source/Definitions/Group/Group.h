@@ -26,9 +26,9 @@ public:
     int registeredId = 0;
     StringParameter* userName;
     IntParameter* useAnotherId;
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void updateName();
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
     CommandSelectionManager selection;
 

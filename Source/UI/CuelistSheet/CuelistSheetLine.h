@@ -54,7 +54,7 @@ public:
     void buttonClicked(Button* b) override;
 
     void changeListenerCallback(ChangeBroadcaster* source) override;
-    void labelTextChanged(Label* l);
+    void labelTextChanged(Label* l) override;
 
     void showCuePopup();
     void mouseEnter(const MouseEvent& event) override;

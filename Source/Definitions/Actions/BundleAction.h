@@ -37,7 +37,7 @@ public:
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
-    var getValue();
+    var getValue() override;
 
     static BundleAction* create(var params) { return new BundleAction(params); }
 

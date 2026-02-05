@@ -27,13 +27,13 @@ public:
     FloatParameter* toValue;
     FloatParameter* fixedValue;
 
-    void onContainerParameterChangedInternal(Parameter*);
+    void onContainerParameterChangedInternal(Parameter*) override;
     void updateDisplay();
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
-    var getValue();
+    var getValue() override;
 
     static PresetAction* create(var params) { return new PresetAction(params); }
 };
