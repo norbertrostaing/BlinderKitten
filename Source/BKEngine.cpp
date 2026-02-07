@@ -438,10 +438,13 @@ BKEngine::~BKEngine()
 
 void BKEngine::createNewGraphInternal()
 {
-	
+
 	MessageManager::callAsync([this]() {
-		importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi));
-		Brain::getInstance()->showWindow("Input Panel");
+		bool isNewDocument = !getFile().existsAsFile();
+		if (isNewDocument) {
+			importMochi(JSON::parse(BinaryData::newFileDefaultContent_mochi));
+			Brain::getInstance()->showWindow("Input Panel");
+			}
 		});
 }
 
