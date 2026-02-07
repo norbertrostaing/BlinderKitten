@@ -121,7 +121,9 @@ void OSCInterface::processMessage(const OSCMessage& msg)
 	processMessageInternal(msg);
 
 	if (internalMappings->boolValue()) {
-		UserInputManager::getInstance()->processMessage(msg, "");
+		MessageManager::callAsync([msg](){
+			UserInputManager::getInstance()->processMessage(msg, ""); 
+		});
 	}
 
 	/*
