@@ -39,7 +39,8 @@ Effect::Effect(var params) :
 	updateName();
 
 	isEffectOn = addBoolParameter("is ON", "Enable or disable this effect",false);
-	isEffectOn->isControllableFeedbackOnly;
+    // is this supposed to be setControllableFeedbackOnly ?
+	// isEffectOn->isControllableFeedbackOnly;
 	isEffectOn->setEnabled(false);
 	isEffectOn->isSavable = false;
 	isOn = false;

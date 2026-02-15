@@ -24,9 +24,9 @@ Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),
 	objectType(params.getProperty("type", "Command").toString()),
 	objectData(params),
-	values("Values"),
-	timing("Timing"),
-	moveInBlack()
+    moveInBlack(),
+    values("Values"),
+    timing("Timing")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = false;

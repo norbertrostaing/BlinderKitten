@@ -46,12 +46,12 @@ public:
     BoolParameter* linkInput;
 
     void updateDisplay();
-    void onContainerParameterChangedInternal(Parameter*);
+    void onContainerParameterChangedInternal(Parameter*) override;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
-    var getValue();
+    var getValue() override;
 
     static InterfaceAction* create(var params) { return new InterfaceAction(params); }
 

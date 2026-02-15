@@ -66,7 +66,6 @@ void DMXSACNDevice::sendDMXValuesInternal()
 {
     if (!isReady) return;
     const int universe = universeParam->intValue();
-    const int dmxLength = 512;
 
     juce::IPAddress targetIP("127.0.0.1");
     if (multicast->boolValue()) {
@@ -79,7 +78,6 @@ void DMXSACNDevice::sendDMXValuesInternal()
     //LOG("need to send to "+targetIP.toString());
 
     e131_packet_t* senderPacket = &packet;
-    int packetNumChannels = ntohs(senderPacket->dmp.prop_val_cnt) - 1;
 
     //String ip = remoteHost->stringValue();
 

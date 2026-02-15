@@ -93,6 +93,9 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
+    case CL_GOALLLOADED:
+        break;
+
     case CL_OFF:
         if (val == 1) {
             target->off();
@@ -356,30 +359,34 @@ var CuelistAction::getValue()
     switch (actionType)
     {
     case CL_GO:
-        break;
-
     case CL_GOBACK:
-        break;
-
     case CL_GOINSTANT:
-        break;
-
     case CL_GOBACKINSTANT:
-        break;
-
     case CL_GORANDOM:
+    case CL_GOALLLOADED:
+    case CL_GO_ADD_TIMECODE:
+    case CL_GO_REPLACE_TIMECODE:
         break;
 
     case CL_OFF:
+    case CL_OFF_INSTANT:
         break;
-
+    
     case CL_TOGGLE:
         break;
 
-    case CL_LOAD:
+    case CL_CROSSFADE:
+    case CL_UPFADE:
+    case CL_DOWNFADE:
+        break;
+            
+    case CL_INSERTBEFORE:
+    case CL_INSERTAFTER:
         break;
 
+    case CL_LOAD:
     case CL_LOADANDGO:
+    case CL_LOADCONTENT:
         break;
 
     case CL_HTPLEVEL:
@@ -395,9 +402,11 @@ var CuelistAction::getValue()
         break;
 
     case CL_FLASH:
+    case CL_FLASHTIMED:
         break;
 
     case CL_SWOP:
+    case CL_SWOPTIMED:
         break;
 
     case CL_FLASHLEVEL:
@@ -405,6 +414,9 @@ var CuelistAction::getValue()
         break;
 
     case CL_CHASERTAPTEMPO:
+        break;
+
+    case CL_TAKESELECTION:
         break;
     }
 

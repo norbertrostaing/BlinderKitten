@@ -109,7 +109,7 @@ public:
     bool isInterestedInDragSource(const SourceDetails& source) override;
     void itemDropped(const SourceDetails& source) override;
 
-    void timerCallback();
+    void timerCallback() override;
     static LayoutViewer* create(const String& name) {return new LayoutViewer(); }
 
 };

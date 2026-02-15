@@ -160,6 +160,7 @@ var BundleAction::getValue()
         break;
 
     case BUN_STOP:
+    case BUN_STOP_INSTANT:
         break;
 
     case BUN_TAPTEMPO:
@@ -171,17 +172,26 @@ var BundleAction::getValue()
         else if (useSize->boolValue()) val = target->lastSize;
         else if (useFlash->boolValue()) val = target->lastFlash;
         break;
+    case BUN_SET_SIZE:
+        break;
 
     case BUN_SPEED:
         val = target->lastSpeed/(jmax(maxSpeed->floatValue(),0.001f));
         break;
 
+    case BUN_SET_SPEED:
     case BUN_DOUBLESPEED:
-        break;
-
     case BUN_HALFSPEED:
         break;
-    }
+
+    case BUN_FLASH:
+    case BUN_TIMED_FLASH:
+        break;
+
+    case BUN_SWOP:
+    case BUN_TIMED_SWOP:
+        break;
+}
 
     return val;
 }

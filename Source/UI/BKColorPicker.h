@@ -48,8 +48,8 @@ public:
     void buttonClicked(juce::Button* button) override;
     void sliderValueChanged(Slider* slider) override;
 
-    void mouseDown(const MouseEvent& e);
-    void mouseDrag(const MouseEvent& e);
+    void mouseDown(const MouseEvent& e) override;
+    void mouseDrag(const MouseEvent& e) override;
     void mouseSetColor(double x, double y);
 
 

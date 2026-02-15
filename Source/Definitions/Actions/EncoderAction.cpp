@@ -226,6 +226,33 @@ var EncoderAction::getValue()
 
     case ENC_TOGGLEFILTERNUM:
         break;
+
+    case ENC_TOGGLEFILTERFAMILY:
+        break;
+
+    case ENC_CLEARFILTERS:
+        break;
+
+    case ENC_HL:
+        break;
+
+    case ENC_BLIND:
+        break;
+
+    case ENC_RANGE:
+        break;
+
+    case ENC_THRU:
+        break;
+
+    case ENC_EXPLODE:
+        break;
+
+    case ENC_TYPE:
+        break;
+
+    case ENC_RESET:
+        break;
     }
 
     return val;

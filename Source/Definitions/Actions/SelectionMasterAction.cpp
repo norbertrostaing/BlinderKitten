@@ -42,7 +42,6 @@ void SelectionMasterAction::setValueInternal(var value, String origin, int incre
     if (target == nullptr) return;
 
     float val = value;
-    bool incrementOk = incrementIndex == 0 || incrementIndex == validIncrementIndex;
 
     switch (actionType)
     {
@@ -112,6 +111,8 @@ var SelectionMasterAction::getValue()
         val = jmap(target->sizeValue->floatValue(), sizeRange->x, sizeRange->y, 0.f, 1.f);
         break;
 
+    case SELM_STATIC_SIZE:
+        break;
     }
 
     return val;

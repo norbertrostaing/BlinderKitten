@@ -557,7 +557,6 @@ void LayoutViewer::paint(Graphics& g)
 		return;
 	}
 
-	Rectangle<float> layoutZone;
 	float layoutRatio = abs(layoutWidth / layoutHeight);
 	float windowRatio = (float)getWidth() / ((float)getHeight()-20);
 	float originX = 0;
@@ -1357,9 +1356,13 @@ void LayoutViewer::drawSubFixture(Graphics& g, SubFixture* sf, float x, float y,
 
 void LayoutViewer::drawName(Graphics& g, String& name, float x, float y, float w, float h, Colour c, BKPath::LabelPosition pos)
 {
-	if (pos == BKPath::LabelPosition::HIDDEN) return;
-	juce::Justification j = juce::Justification::centred;
+    juce::Justification j = juce::Justification::centred;
+    
 	switch (pos) {
+    case BKPath::LabelPosition::HIDDEN:
+        return;
+    case BKPath::LabelPosition::CENTER:
+        break;
 	case BKPath::LabelPosition::LEFT:
 		j = juce::Justification::centredRight;
 		x -= w;

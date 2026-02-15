@@ -30,8 +30,8 @@ Fixture::Fixture(var params) :
 	objectType(params.getProperty("type", "Fixture").toString()),
 	objectData(params),
 	devTypeParam(),
-	patchs("Patch"),
-	subFixtures()
+    subFixtures(),
+    patchs("Patch")
 {
 	nameCanBeChangedByUser = false;
 	saveAndLoadRecursiveData = true;

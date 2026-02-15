@@ -28,13 +28,13 @@ Cuelist::Cuelist(var params) :
 	BaseItem(params.getProperty("name", "Cuelist")),
 	objectType(params.getProperty("type", "Cuelist").toString()),
 	objectData(params),
-	conductorInfos("Conductor infos"),
-	chaserOptions("Chaser options"),
-	chaserGenContainer("Regenerate Chaser"),
-	offFadeCurve(),
-	chaseGenValue("CommandValue"),
-	cues(),
-	speedMult("Speed multiplicators"),
+    cues(),
+    chaserOptions("Chaser options"),
+    speedMult("Speed multiplicators"),
+    chaserGenContainer("Regenerate Chaser"),
+    chaseGenValue("CommandValue"),
+    offFadeCurve(),
+    conductorInfos("Conductor infos"),
 	timing()
 {
 	saveAndLoadRecursiveData = true;
