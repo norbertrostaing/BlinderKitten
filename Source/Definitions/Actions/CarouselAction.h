@@ -29,6 +29,8 @@ public:
     IntParameter* carRow;
     IntParameter* amount;
 
+    FloatParameter* forcedFade;
+
     FloatParameter* seekValue;
 
     void triggerInternal() override;

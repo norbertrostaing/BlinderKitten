@@ -164,18 +164,19 @@ void Effect::triggerTriggered(Trigger* t) {
 }
 
 
-void Effect::userStart(bool useFadeIn) {
+void Effect::userStart(float forcedFade) {
 	userPressedGo = true;
-	start(useFadeIn);
+	start(forcedFade);
 }
 
-void Effect::start(bool useFadeIn) {
+void Effect::start(float forcedFade) {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
 	TSEndFadeOut = 0;
 	TSStartFadeOut = 0;
-	if (useFadeIn && fadeInTime->floatValue()>0) {
+	float fade = forcedFade != -1 ? forcedFade : fadeInTime->floatValue();
+	if (fade>0) {
 		TSStartFadeIn = TSLastUpdate;
-		TSEndFadeIn = TSLastUpdate+(fadeInTime->floatValue()*1000);
+		TSEndFadeIn = TSLastUpdate+(fade*1000);
 	}
 	else {
 		TSStartFadeIn = 0;

@@ -30,6 +30,8 @@ public:
     IntParameter* fxParam;
     IntParameter* amount;
 
+    FloatParameter* forcedFade;
+
     FloatParameter* seekValue;
 
     void triggerInternal() override;

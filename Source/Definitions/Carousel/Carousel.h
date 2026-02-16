@@ -88,8 +88,8 @@ public:
     bool computed = false;
     bool computing = false;
     void pleaseComputeIfRunning();
-    void userStart(bool useFadeIn = true);
-    void start(bool useFadeIn = true);
+    void userStart(float forcedFade = -1);
+    void start(float forcedFade = -1);
     void stop(float forcedFade = -1);
     void kill();
     float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);

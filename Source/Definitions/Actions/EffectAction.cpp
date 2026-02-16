@@ -36,6 +36,12 @@ EffectAction::EffectAction(var params) :
     if (actionType == FX_SET_SEEK || actionType == FX_ADD_SEEK) {
         seekValue = addFloatParameter("Seek", "Desired seek value or seek delta",0);
     }
+
+    if (actionType == FX_START || actionType == FX_STOP) {
+        forcedFade = addFloatParameter("Force fade", "Force a fade time", 0,0);
+        forcedFade->setEnabled(false);
+        forcedFade->canBeDisabledByUser = true;
+    }
 }
 
 EffectAction::~EffectAction()
@@ -57,13 +63,15 @@ void EffectAction::setValueInternal(var value, String origin, int incrementIndex
     {
     case FX_START:
         if (val == 1) {
-            target->userStart();
+            float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
+            target->userStart(fade);
         }
         break;
 
     case FX_STOP:
         if (val == 1) {
-            target->stop();
+            float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
+            target->stop(fade);
         }
         break;
 

@@ -35,6 +35,11 @@ CarouselAction::CarouselAction(var params) :
         seekValue = addFloatParameter("Seek", "Desired seek value or seek delta", 0);
     }
 
+    if (actionType == CAR_START || actionType == CAR_STOP) {
+        forcedFade = addFloatParameter("Force fade", "Force a fade time", 0, 0);
+        forcedFade->setEnabled(false);
+        forcedFade->canBeDisabledByUser = true;
+    }
 }
 
 CarouselAction::~CarouselAction()
@@ -56,13 +61,15 @@ void CarouselAction::setValueInternal(var value, String origin, int incrementInd
     {
     case CAR_START:
         if (val == 1) {
-            target->userStart();
+            float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
+            target->userStart(fade);
         }
         break;
 
     case CAR_STOP:
         if (val == 1) {
-            target->stop();
+            float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
+            target->stop(fade);
         }
         break;
 

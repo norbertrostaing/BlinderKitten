@@ -165,18 +165,19 @@ void Carousel::triggerTriggered(Trigger* t) {
 	else {}
 }
 
-void Carousel::userStart(bool useFadeIn) {
+void Carousel::userStart(float forcedFade) {
 	userPressedGo = true;
-	start(useFadeIn);
+	start(forcedFade);
 }
 
-void Carousel::start(bool useFadeIn) {
+void Carousel::start(float forcedFade) {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
 	TSStartFadeOut = 0;
 	TSEndFadeOut = 0;
-	if (useFadeIn && fadeInTime->floatValue() > 0) {
+	float fade = forcedFade != -1 ? forcedFade : fadeOutTime->floatValue();
+	if (fade > 0) {
 		TSStartFadeIn = TSLastUpdate;
-		TSEndFadeIn = TSLastUpdate + (fadeInTime->floatValue() * 1000);
+		TSEndFadeIn = TSLastUpdate + (fade * 1000);
 	}
 	else {
 		TSStartFadeIn = 0;
