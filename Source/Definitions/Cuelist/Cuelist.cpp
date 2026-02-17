@@ -1126,10 +1126,10 @@ void Cuelist::update() {
 		isUseFul = false;
 	}
 	if (!isUseFul && offIfOverwritten->getValue()) {
-		kill(false);
+		kill(true);
 	} 
 	if (isEnded && wannaOff) {
-		kill(false);
+		kill(true);
 	}
 	if (isEnded) {
 		upFadeCanMove = false;
