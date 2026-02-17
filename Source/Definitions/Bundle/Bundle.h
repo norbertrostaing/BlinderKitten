@@ -59,7 +59,7 @@ public:
     double TSLastUpdate = 0;
     void computeValues();
 
-    void start();
+    void start(float forcedFade = -1);
     void stop(float forcedFade = -1);
     void tapTempo();
     void setSize(float val, bool size, bool HTP, bool LTP, bool flash);

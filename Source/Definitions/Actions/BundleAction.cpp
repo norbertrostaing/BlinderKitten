@@ -40,6 +40,13 @@ BundleAction::BundleAction(var params) :
         }
     }
 
+    if (actionType == BUN_START || actionType == BUN_STOP) {
+        forcedFade = addFloatParameter("Force fade", "Force a fade time", 0, 0);
+        forcedFade->setEnabled(false);
+        forcedFade->canBeDisabledByUser = true;
+    }
+
+
 }
 
 BundleAction::~BundleAction()
@@ -60,12 +67,14 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
     {
     case BUN_START:
         if (val == 1) {
+            float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
             target->start();
         }
         break;
 
     case BUN_STOP:
         if (val == 1) {
+            float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
             target->stop();
         }
         break;

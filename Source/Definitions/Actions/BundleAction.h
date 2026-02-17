@@ -32,6 +32,8 @@ public:
     BoolParameter* useSize;
     BoolParameter* useFlash;
 
+    FloatParameter* forcedFade;
+
     float lastValue = 0;
 
     void triggerInternal() override;

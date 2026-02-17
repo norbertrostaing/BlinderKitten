@@ -136,13 +136,13 @@ void Bundle::computeValues() {
 	TSLastUpdate = Time::getMillisecondCounterHiRes();
 }
 
-void Bundle::start()
+void Bundle::start(float forcedFade)
 {
 	computeValues();
 	isComputing.enter();
-	for (Cuelist* c : computedCuelists) c->go();
-	for (Effect* c : computedEffects) c->start();
-	for (Carousel* c : computedCarousels) c->start();
+	for (Cuelist* c : computedCuelists) c->go(0, forcedFade);
+	for (Effect* c : computedEffects) c->start(forcedFade);
+	for (Carousel* c : computedCarousels) c->start(forcedFade);
 	for (Mapper* c : computedMappers) c->start();
 	for (Tracker* c : computedTrackers) c->start();
 	isComputing.exit();
@@ -152,7 +152,7 @@ void Bundle::stop(float forcedFade)
 {
 	computeValues();
 	isComputing.enter();
-	for (Cuelist* c : computedCuelists) c->off(forcedFade, forcedFade);
+	for (Cuelist* c : computedCuelists) c->off(0, forcedFade);
 	for (Effect* c : computedEffects) c->stop(forcedFade);
 	for (Carousel* c : computedCarousels) c->stop(forcedFade);
 	for (Mapper* c : computedMappers) c->stop();
