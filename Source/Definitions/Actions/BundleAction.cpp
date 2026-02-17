@@ -68,14 +68,14 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
     case BUN_START:
         if (val == 1) {
             float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
-            target->start();
+            target->start(fade);
         }
         break;
 
     case BUN_STOP:
         if (val == 1) {
             float fade = forcedFade->enabled ? forcedFade->floatValue() : -1;
-            target->stop();
+            target->stop(fade);
         }
         break;
 
