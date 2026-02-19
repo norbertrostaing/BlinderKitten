@@ -47,6 +47,8 @@ public:
     FloatParameter* delay;
     FloatParameter* fade;
 
+    FloatParameter* forcedFade;
+
     ActionManager actionManager;
 
     void onContainerParameterChangedInternal(Parameter* p) override;

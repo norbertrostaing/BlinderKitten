@@ -93,6 +93,10 @@ Task::Task(var params) :
 	delay = addFloatParameter("Delay", "delay of the first element (in seconds)", 0, 0);
 	fade = addFloatParameter("Fade", "fade of the first element (in seconds)", 0, 0);
 
+	forcedFade = addFloatParameter("Force fade", "Force a fade time", 0, 0);
+	forcedFade->setEnabled(false);
+	forcedFade->canBeDisabledByUser = true;
+
 	addChildControllableContainer(&actionManager);
 	updateDisplay();
 }
@@ -162,16 +166,25 @@ void Task::updateDisplay() {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
+			forcedFade->hideInEditor = true;
 		}
 		else if (effectAction->getValue() == "speed") {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, INT32_MAX);
+			forcedFade->hideInEditor = true;
+		}
+		else if (effectAction->getValue() == "start" || effectAction->getValue() == "stop") {
+			fade->hideInEditor = true;
+			fade->setValue(0);
+			targetValue->hideInEditor = true;
+			forcedFade->hideInEditor = false;
 		}
 		else {
 			fade->hideInEditor = true;
 			fade->setValue(0);
 			targetValue->hideInEditor = true;
+			forcedFade->hideInEditor = true;
 		}
 	}
 	else if (targType == "carousel") {
@@ -179,16 +192,25 @@ void Task::updateDisplay() {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, 1);
+			forcedFade->hideInEditor = true;
 		}
 		else if (carouselAction->getValue() == "speed") {
 			fade->hideInEditor = false;
 			targetValue->hideInEditor = false;
 			targetValue->setRange(0, INT32_MAX);
+			forcedFade->hideInEditor = true;
+		}
+		else if (carouselAction->getValue() == "start" || carouselAction->getValue() == "stop") {
+			fade->hideInEditor = true;
+			fade->setValue(0);
+			targetValue->hideInEditor = true;
+			forcedFade->hideInEditor = false;
 		}
 		else {
 			fade->hideInEditor = true;
 			fade->setValue(0);
 			targetValue->hideInEditor = true;
+			forcedFade->hideInEditor = true;
 		}
 	}
 	else if (targType == "mapper") {
@@ -300,10 +322,12 @@ void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, S
 		Effect* target = Brain::getInstance()->getEffectById(targetId);
 		if (target != nullptr) {
 			if (action == "start" && value == 1) {
-				target->userStart();
+				float fade = parentTask->forcedFade->enabled ? parentTask->forcedFade->floatValue() : -1;
+				target->userStart(fade);
 			}
 			else if (action == "stop" && value == 1) {
-				target->stop();
+				float fade = parentTask->forcedFade->enabled ? parentTask->forcedFade->floatValue() : -1;
+				target->stop(fade);
 			}
 			else if (action == "doublespeed" && value == 1) {
 				target->speed->setValue((double)target->speed->getValue() * 2);
@@ -323,10 +347,12 @@ void Task::triggerGivenTask(Task* parentTask, String targetType, int targetId, S
 		Carousel* target = Brain::getInstance()->getCarouselById(targetId);
 		if (target != nullptr) {
 			if (action == "start" && value == 1) {
-				target->userStart();
+				float fade = parentTask->forcedFade->enabled ? parentTask->forcedFade->floatValue() : -1;
+				target->userStart(fade);
 			}
 			else if (action == "stop" && value == 1) {
-				target->stop();
+				float fade = parentTask->forcedFade->enabled ? parentTask->forcedFade->floatValue() : -1;
+				target->stop(fade);
 			}
 			else if (action == "doublespeed" && value == 1) {
 				target->speed->setValue((double)target->speed->getValue() * 2);
