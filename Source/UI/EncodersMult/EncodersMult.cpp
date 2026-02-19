@@ -122,9 +122,8 @@ void EncodersMult::resized()
     btnMoveBalanced.setBounds(10 * btnWidth, 0, 1 * btnWidth, 20);
     btnMoveBalancedSym.setBounds(11 * btnWidth, 0, 1 * btnWidth, 20);
 
-
-
-	Rectangle<int> hr = r.removeFromTop(20);
+    r.removeFromTop(20);
+    
     float w = 57;
     float h = 57;
     sensitivity.setBounds(0, 40, w, h);

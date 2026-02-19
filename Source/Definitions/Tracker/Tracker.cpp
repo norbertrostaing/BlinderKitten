@@ -35,7 +35,8 @@ Tracker::Tracker(var params) :
 	updateName();
 
 	isTrackerOn = addBoolParameter("is ON", "Enable or disable this Tracker",false);
-	isTrackerOn->isControllableFeedbackOnly;
+    // is this supposed to be setControllableFeedbackOnly ?
+	// isTrackerOn->isControllableFeedbackOnly;
 	isTrackerOn->setEnabled(false);
 	isTrackerOn->isSavable = false;
 	isOn = false;

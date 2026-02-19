@@ -210,6 +210,7 @@ var EffectAction::getValue()
         break;
 
     case FX_STOP:
+    case FX_STOP_INSTANT:
         break;
 
     case FX_TOGGLE:
@@ -227,11 +228,22 @@ var EffectAction::getValue()
         break;
 
     case FX_DOUBLESPEED:
-        break;
-
     case FX_HALFSPEED:
         break;
-    }
+
+    case FX_FLASH:
+        break;
+
+    case FX_SWOP:
+        break;
+
+    case FX_BBW:
+        break;
+
+    case FX_SET_SEEK:
+    case FX_ADD_SEEK:
+        break;
+}
 
 
     return val;

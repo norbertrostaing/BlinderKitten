@@ -36,16 +36,16 @@ juce_ImplementSingleton(Assistant)
 
 Assistant::Assistant() :
 	BaseItem("Offline Lighting General Assistant"),
+    Thread("Assistant"),
     patcherCC("Patch Helper"),
     paletteMakerCC("Palette maker"),
-    masterMakerCC("Masters maker"),
     soloPaletteMakerCC("SoloPool palette maker"),
+    masterMakerCC("Masters maker"),
+    masterValue("CommandValue"),
     fixtureSwapperCC("Fixture Type Swapper"),
     midiMapperCC("Midi mappings"),
     asciiCC("ASCII import / export"),
-    controlsCC("Generic controls"),
-    Thread("Assistant"),
-    masterValue("CommandValue")
+    controlsCC("Generic controls")
 {
     updateDisplay(); 
 

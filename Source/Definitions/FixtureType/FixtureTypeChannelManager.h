@@ -23,12 +23,12 @@ public:
     bool massiveImport = false;
 
     void calcDmxChannels();
-    void addItemInternal(FixtureTypeChannel* c, var data);
-    void askForRemoveBaseItem(BaseItem* item);
-    void askForDuplicateItem(BaseItem* item);
-    void askForPaste();
-    void askForMoveBefore(BaseItem* i);
-    void askForMoveAfter(BaseItem* i);
+    void addItemInternal(FixtureTypeChannel* c, var data) override;
+    void askForRemoveBaseItem(BaseItem* item) override;
+    void askForDuplicateItem(BaseItem* item) override;
+    void askForPaste() override;
+    void askForMoveBefore(BaseItem* i) override;
+    void askForMoveAfter(BaseItem* i) override;
     void setItemIndex(FixtureTypeChannel* item, int newIndex, bool addToUndo = true) override;
 
 };

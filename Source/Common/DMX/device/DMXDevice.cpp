@@ -11,13 +11,13 @@
 
 DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	ControllableContainer(name),
+    Thread("DMX Interface"),
 	type(_type),
 	enabled(true),
 	isConnected(false),
 	canReceive(canReceive),
 	inputCC(nullptr),
-	outputCC(nullptr),
-	Thread("DMX Interface")
+	outputCC(nullptr)
 {
 	saveAndLoadRecursiveData = true;
 

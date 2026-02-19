@@ -38,9 +38,9 @@ public:
 
     void paint(juce::Graphics&) override;
 
-    void mouseDown(const MouseEvent& e);
-    void mouseUp(const MouseEvent& e);
-    void mouseDrag(const MouseEvent& e);
+    void mouseDown(const MouseEvent& e) override;
+    void mouseUp(const MouseEvent& e) override;
+    void mouseDrag(const MouseEvent& e) override;
 };
 
 class GridView  : 
@@ -68,8 +68,8 @@ public:
     String targetType;
     Array<int> validCells;
 
-    void scrollBarMoved(ScrollBar* scrollBarThatHasMoved, double newRangeStart );
-    void mouseWheelMove(const MouseEvent& event,const MouseWheelDetails& wheel);
+    void scrollBarMoved(ScrollBar* scrollBarThatHasMoved, double newRangeStart ) override;
+    void mouseWheelMove(const MouseEvent& event,const MouseWheelDetails& wheel) override;
     void buttonClicked(juce::Button* button) override;
 
     virtual void showContextMenu(int id);

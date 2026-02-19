@@ -30,10 +30,10 @@ public:
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
-    void onContainerParameterChangedInternal(Parameter*);
+    void onContainerParameterChangedInternal(Parameter*) override;
     void updateDisplay();
 
-    var getValue();
+    var getValue() override;
 
     static SoloPoolAction* create(var params) { return new SoloPoolAction(params); }
 

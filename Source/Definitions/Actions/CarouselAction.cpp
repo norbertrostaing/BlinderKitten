@@ -202,6 +202,7 @@ var CarouselAction::getValue()
         break;
 
     case CAR_STOP:
+    case CAR_STOP_INSTANT:
         break;
 
     case CAR_TOGGLE:
@@ -219,11 +220,21 @@ var CarouselAction::getValue()
         break;
 
     case CAR_DOUBLESPEED:
-        break;
-
     case CAR_HALFSPEED:
         break;
+            
+    case CAR_FLASH:
+        break;
+            
+    case CAR_SWOP:
+        break;
+            
+    case CAR_SET_SEEK:
+    case CAR_ADD_SEEK:
+        break;
 
+    case CAR_BBW:
+        break;
     }
     return val;
 }

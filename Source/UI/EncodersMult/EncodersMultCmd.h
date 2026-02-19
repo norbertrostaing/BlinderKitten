@@ -42,12 +42,12 @@ public:
     void resetCommand(Command* c);
     void commandContentChanged();
     void commandValueChanged();
-    void resized();
+    void resized() override;
     void calcSize();
 
     void sliderValueChanged(Slider* slider) override;
    
     void newMessage(const ContainerAsyncEvent& e) override;
-    void buttonClicked(Button* b);
+    void buttonClicked(Button* b) override;
 };
 

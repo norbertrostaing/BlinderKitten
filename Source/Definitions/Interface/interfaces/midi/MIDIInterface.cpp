@@ -201,7 +201,6 @@ void MIDIInterface::fullFrameTimecodeReceived(const MidiMessage& m)
     if (!m.isSysEx()) return ;
 
     const auto* data = m.getSysExData();
-    const int size = m.getSysExDataSize();
 
     const int hours = data[4] & 0x1F; // ignore fps bits
     const int minutes = data[5];

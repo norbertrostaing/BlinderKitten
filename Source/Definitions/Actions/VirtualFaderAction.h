@@ -29,7 +29,7 @@ public:
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;
 
-    var getValue();
+    var getValue() override;
 
     static VirtualFaderAction* create(var params) { return new VirtualFaderAction(params); }
 

@@ -61,7 +61,7 @@ public:
     TextEditor followTimingEdit;
 
     void showWindow(int element = 0);
-    void buttonClicked(Button*);
+    void buttonClicked(Button*) override;
 
     int posX = 0;
     int posY = 0;
