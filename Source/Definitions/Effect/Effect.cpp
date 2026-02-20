@@ -170,29 +170,57 @@ void Effect::userStart(float forcedFade) {
 }
 
 void Effect::start(float forcedFade) {
-	TSLastUpdate = Time::getMillisecondCounterHiRes();
+	double now = Time::getMillisecondCounterHiRes();
+	float current = isOn ? 1 : 0;
+	if (TSStartFadeIn < now && TSEndFadeIn > now)   {
+		current = jmap(now, TSStartFadeIn, TSEndFadeIn, 0.0, 1.0);	
+	}
+	if (TSStartFadeOut < now && TSEndFadeOut > now)  {
+		current = jmap(now, TSStartFadeOut, TSEndFadeOut, 1.0, 0.0);
+	}
+	TSLastUpdate = now;
 	TSEndFadeOut = 0;
 	TSStartFadeOut = 0;
 	float fade = forcedFade != -1 ? forcedFade : fadeInTime->floatValue();
+	float delta = (current*fade)*1000;
+
 	if (fade>0) {
-		TSStartFadeIn = TSLastUpdate;
-		TSEndFadeIn = TSLastUpdate+(fade*1000);
+		TSStartFadeIn = TSLastUpdate - delta;
+		TSEndFadeIn = TSLastUpdate+(fade*1000)-delta;
 	}
 	else {
 		TSStartFadeIn = 0;
 		TSEndFadeIn = 0;
 	}
-	isOn = true;
-	isEffectOn->setValue(true);
-	totalElapsed = 0;
-	computeData();
+	TSEndFadeOut = 0;
+	TSStartFadeOut = 0;
+	if (!isOn) {
+		isOn = true;
+		isEffectOn->setValue(true);
+		totalElapsed = 0;
+		computeData();
+
+	}
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolEffectStarted(soloPool->intValue(), this);
 }
 
 void Effect::stop(float forcedFade) {
+	double now = Time::getMillisecondCounterHiRes();
+	float current = isOn ? 1 : 0;
+	if (TSStartFadeIn < now && TSEndFadeIn > now) {
+		current = jmap(now, TSStartFadeIn, TSEndFadeIn, 0.0, 1.0);
+	}
+	if (TSStartFadeOut < now && TSEndFadeOut > now) {
+		current = jmap(now, TSStartFadeOut, TSEndFadeOut, 1.0, 0.0);
+	}
+	TSLastUpdate = now;
+	TSEndFadeIn = 0;
+	TSStartFadeIn = 0;
 	float fade = forcedFade != -1 ? forcedFade : fadeOutTime->floatValue();
+	float delta = ((1-current) * fade) * 1000;
+
 	if (fade > 0) {
-		TSStartFadeOut = Time::getMillisecondCounterHiRes();
+		TSStartFadeOut = now - delta;
 		TSEndFadeOut = TSStartFadeOut + (fade * 1000.0);
 	}
 	else {
