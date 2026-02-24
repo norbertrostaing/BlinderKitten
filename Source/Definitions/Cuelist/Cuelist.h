@@ -161,6 +161,7 @@ public:
 
     Cue* cueA = nullptr;
     Cue* cueB = nullptr;
+    CriticalSection CScuesAB;
 
     ControllableContainer conductorInfos;
     StringParameter* conductorCurrentCueName;

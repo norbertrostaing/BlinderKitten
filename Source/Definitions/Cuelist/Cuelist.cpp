@@ -491,9 +491,11 @@ void Cuelist::afterLoadJSONDataInternal()
 void Cuelist::userGo()
 {
 	userPressedGo = true;
+	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	CScuesAB.exit();
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(-1, -1);
 }
@@ -501,9 +503,11 @@ void Cuelist::userGo()
 void Cuelist::userGo(Cue* c)
 {
 	userPressedGo = true;
+	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	CScuesAB.exit();
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(c, -1, -1);
 }
@@ -511,9 +515,11 @@ void Cuelist::userGo(Cue* c)
 void Cuelist::userGo(float delay, float fade)
 {
 	userPressedGo = true;
+	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	CScuesAB.exit();
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(delay, fade);
 }
@@ -522,9 +528,11 @@ void Cuelist::userGo(float delay, float fade)
 void Cuelist::userGo(Cue* c, float delay, float fade)
 {
 	userPressedGo = true;
+	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	}
+	CScuesAB.exit();
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolCuelistStarted(soloPool->intValue(), this);
 	go(c, delay, fade);
 }
@@ -597,10 +605,10 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	if (speedMultVal < 0.00001) { speedMultVal = 0.00001; }
 	speedMultVal = 1/speedMultVal;
 
+	CScuesAB.enter();
 	if (cueA != nullptr) {
 		cueA->TSAutoFollowEnd = 0;
 	} 
-	
 
 	if (isChaser->boolValue() && (float)chaserRunXTimes->getValue() > 0) {
 		if (cueA == nullptr && isChaser->getValue()) {
@@ -646,6 +654,8 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 	cueA = c;
 	cueB = c;
+
+	CScuesAB.exit();
 
 	if (c != nullptr) {
 		isCuelistOn->setValue(true);
@@ -936,6 +946,7 @@ void Cuelist::goBack() {
 
 void Cuelist::goBack(float forcedDelay, float forcedFade)
 {
+	ScopedLock lock(CScuesAB);
 	if (cueA == nullptr) {
 		return;
 	}
@@ -950,6 +961,7 @@ void Cuelist::goBack(float forcedDelay, float forcedFade)
 
 void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 	if (!isComputing.tryEnter()) {return; }
+	ScopedLock lock(CScuesAB);
 	if (setOn) {
 		TSOffFlash = 0;
 		TSOffFlashEnd = 0;
@@ -1119,9 +1131,11 @@ void Cuelist::update() {
 	}
 	currentFade->setValue(tempPosition);
 	transitionRunning = !isEnded;
+	CScuesAB.enter();
 	if (tempPosition == 1 && cueA != nullptr) {
 		cueA->endTransition();
 	}
+	CScuesAB.exit();
 	if (isOverWritten) {
 		isUseFul = false;
 	}
@@ -1159,6 +1173,7 @@ void Cuelist::update() {
 
 void Cuelist::autoLoadCueB() {
 	bool valid = false;
+	ScopedLock lock(CScuesAB);
 	if (cueA == nullptr) {
 		if (cues.getItemsWithType<Cue>().size() > 0) {
 			cueB = cues.getItemsWithType<Cue>()[0];
@@ -1326,12 +1341,14 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 
 void Cuelist::insertProgCueBefore()
 {
+	ScopedLock lock(CScuesAB);
 	int index = cueA == nullptr ? 0 : cues.items.indexOf(cueA);
 	insertProgCueAtIndex(index);
 }
 
 void Cuelist::insertProgCueAfter()
 {
+	ScopedLock lock(CScuesAB);
 	int index = cueA == nullptr ? cues.items.size() : cues.items.indexOf(cueA)+1;
 	insertProgCueAtIndex(index);
 }
@@ -1415,6 +1432,7 @@ void Cuelist::kill(bool forceRefreshChannels) {
 		}
 	}
 	isComputing.enter();
+	ScopedLock lock(CScuesAB);
 	if (cueA != nullptr) {
 		cueA->computedValues.clear();
 	}
@@ -1501,6 +1519,7 @@ void Cuelist::loadRandom() {
 	Array<Cue*> childCues = cues.getItemsWithType<Cue>();
 	Array<Cue*> allowedCues;
 
+	ScopedLock lock(CScuesAB);
 	for (int i = 0; i < childCues.size(); i++) {
 		if (childCues.getReference(i) != cueA && childCues[i]->canBeRandomlyCalled->getValue()) {
 			allowedCues.add(childCues.getReference(i));
@@ -1517,6 +1536,7 @@ void Cuelist::loadRandom() {
 
 void Cuelist::fillTexts() {
 	if (isDeleting) {return;}
+	ScopedLock lock(CScuesAB);
 	conductorCurrentCueId->setValue(cueA == nullptr ? -1 : cueA->id->floatValue());
 	conductorCurrentCueName->setValue(cueA == nullptr ? "" : cueA->niceName);
 	conductorCurrentCueText->setValue(cueA == nullptr ? "" : cueA->cueText->getValue());
@@ -1552,6 +1572,7 @@ void Cuelist::fillTexts() {
 
 Cue* Cuelist::getNextCue() {
 	bool valid = false;
+	ScopedLock lock(CScuesAB);
 	if (cueA == nullptr) {
 		if (cues.getItemsWithType<Cue>().size() > 0) {
 			return cues.getItemsWithType<Cue>()[0];
@@ -1574,6 +1595,7 @@ Cue* Cuelist::getNextCue() {
 
 Cue* Cuelist::getNextChaserCue() {
 	bool valid = false;
+	ScopedLock lock(CScuesAB);
 	if (cues.getItemsWithType<Cue>().size() == 0) {
 		return nullptr;
 	}
@@ -1760,6 +1782,7 @@ void Cuelist::loadContent()
 
 void Cuelist::loadContent(Programmer *p)
 {
+	ScopedLock lock(CScuesAB);
 	if (cueA != nullptr) {
 		cueA->loadContent(p);
 	}
@@ -1808,6 +1831,7 @@ void Cuelist::selectAsMainConductor()
 
 void Cuelist::mergeWithProgrammer(Programmer* p)
 {
+	ScopedLock lock(CScuesAB);
 	Cue* targetCue = nullptr;
 	if (cueA != nullptr) targetCue = cueA;
 	else if (cues.items.size() > 0) targetCue = cues.items[0];
@@ -1817,6 +1841,7 @@ void Cuelist::mergeWithProgrammer(Programmer* p)
 
 void Cuelist::replaceWithProgrammer(Programmer* p)
 {
+	ScopedLock lock(CScuesAB);
 	Cue* targetCue = nullptr;
 	if (cueA != nullptr) targetCue = cueA;
 	else if (cues.items.size() > 0) targetCue = cues.items[0];
@@ -1933,6 +1958,7 @@ void Cuelist::exportInTextFile()
 
 void Cuelist::takeSelection(Programmer* p)
 {
+	ScopedLock lock(CScuesAB);
 	Cue* target = cueA;
 	if (target == nullptr && cues.items.size() > 0) target = cues.items[0];
 	if (target != nullptr) {
