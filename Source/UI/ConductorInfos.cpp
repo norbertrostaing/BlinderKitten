@@ -485,3 +485,18 @@ void ConductorInfos::updateClicked(updateAction wich)
         break;
     }
 }
+
+void ConductorInfos::requestRefresh()
+{
+    if (refreshPending.exchange(true)) return;
+
+    auto safe = juce::Component::SafePointer<ConductorInfos>(this);
+    juce::MessageManager::callAsync([safe] {
+        if (safe != nullptr)
+        {
+            safe->refreshPending = false;
+            safe->updateContent();
+            safe->repaint();
+        }
+    });
+}

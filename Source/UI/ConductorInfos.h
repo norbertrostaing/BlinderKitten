@@ -83,6 +83,9 @@ public:
     enum updateAction{MERGE, REPLACE, INSERTBEFORE, INSERTAFTER, TEMPTRACKED, TEMPNOTTRACKED};
     void updateClicked(updateAction wich);
 
+    std::atomic<bool> refreshPending{ false };
+    void requestRefresh();
+
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConductorInfos)
 };
