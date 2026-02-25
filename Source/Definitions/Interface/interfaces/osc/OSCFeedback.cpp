@@ -116,13 +116,17 @@ void OSCFeedback::processFeedback(String address, var varValue, String origin, b
     if (isText && feedbackType->getValueDataAsEnum<FeedbackType>() != TEXT) { return; }
     if (!isText && feedbackType->getValueDataAsEnum<FeedbackType>() == TEXT) { return; }
 
+    String outAd = outputAddress->stringValue();
+    if (outAd.trim() == "") return;
+
+
     if (isText) {
-        OSCMessage msg(outputAddress->stringValue());
+        OSCMessage msg(outAd);
         msg.addArgument(OSCHelpers::varToArgument(varValue.toString(), OSCHelpers::TF));
         inter->sendOSC(msg);
     }
     else {
-        OSCMessage msg(outputAddress->stringValue());
+        OSCMessage msg(outAd);
         float v = jmap((float)varValue, 0.0f,1.0f,outputRange->x, outputRange->y);
         msg.addArgument(OSCHelpers::varToArgument(v, OSCHelpers::TF));
         inter->sendOSC(msg);
