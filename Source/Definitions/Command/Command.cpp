@@ -91,6 +91,9 @@ Command::~Command()
 		for (auto it = b->cuelists.begin(); it != b->cuelists.end(); it.next()) {
 			Cuelist* c = it.getValue();
 			c->commandHistory.removeAllInstancesOf(this);
+			for (auto cue : c->cues.items) {
+				cue->commandHistory.removeAllInstancesOf(this);
+			}
 		}
 		b->usingCollections.exit();
 	}

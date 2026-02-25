@@ -353,7 +353,12 @@ void ConductorInfos::updateContent()
     nextCueName.setText(nextCue->niceName, juce::NotificationType::dontSendNotification);
     String text = "";
     for (int i = 0; i < target->commandHistory.size(); i++) {
-        text += target->commandHistory[i]->getCommandAsTexts(true).joinIntoString(" ")+" \n";
+
+        Command* command = target->commandHistory[i];
+        if (command != nullptr) {
+            text += command->getCommandAsTexts(true).joinIntoString(" ") + " \n";
+        }
+
     }
     currCommands.setText(text, juce::NotificationType::dontSendNotification);
     nextCommands.setText(nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
