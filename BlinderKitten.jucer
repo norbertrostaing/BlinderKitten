@@ -988,7 +988,7 @@
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;LINK_PLATFORM_MACOSX=1"
-               externalLibraries="Servus&#10;" smallIcon="qTJiMk" bigIcon="qTJiMk"
+               externalLibraries="Servus&#10;ndi" smallIcon="qTJiMk" bigIcon="qTJiMk"
                documentExtensions="olga" xcodeValidArchs="arm64,x86_64" microphonePermissionNeeded="0"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
@@ -1025,7 +1025,7 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;GDK_BACKEND=x11"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw"
+                externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;ndi"
                 smallIcon="qTJiMk" bigIcon="qTJiMk">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;"
