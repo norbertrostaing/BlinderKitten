@@ -309,6 +309,7 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\PresetAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\SelectionMasterAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\SoloPoolAction.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Actions\StampAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\TrackerAction.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\Actions\VirtualButtonAction.cpp"/>
@@ -3590,6 +3591,7 @@
     <ClInclude Include="..\..\Source\Definitions\Actions\PresetAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\SelectionMasterAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\SoloPoolAction.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Actions\StampAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\TrackerAction.h"/>
     <ClInclude Include="..\..\Source\Definitions\Actions\VirtualButtonAction.h"/>

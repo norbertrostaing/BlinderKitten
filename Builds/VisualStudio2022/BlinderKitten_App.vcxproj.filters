@@ -1417,6 +1417,9 @@
     <ClCompile Include="..\..\Source\Definitions\Actions\SoloPoolAction.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Actions\StampAction.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\Actions\TapTempoMultiple.cpp">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClCompile>
@@ -5323,6 +5326,9 @@
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\SoloPoolAction.h">
+      <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Actions\StampAction.h">
       <Filter>BlinderKitten\Source\Definitions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\Actions\TapTempoMultiple.h">

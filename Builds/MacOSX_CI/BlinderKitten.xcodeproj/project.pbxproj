@@ -117,6 +117,7 @@
 		83C02E94114223DFE008C569 /* FixtureTypePresetValues.cpp */ = {isa = PBXBuildFile; fileRef = C9D12B5D4F90CAEC620A0EAC; };
 		84C6842A22939D204BBD3024 /* include_juce_organicui2b.cpp */ = {isa = PBXBuildFile; fileRef = A71171115E9F935BE79A2D97; };
 		84E916033BDA383F7ABBBA62 /* RecentFilesMenuTemplate.nib */ = {isa = PBXBuildFile; fileRef = 23F305914C8C5AAE7CB00A14; };
+		85F4542FDF363C00A3A94D61 /* StampAction.cpp */ = {isa = PBXBuildFile; fileRef = CF86FE93FAF0EC1B8AAA19E5; };
 		8725D8372928BA384741E378 /* CarouselAction.cpp */ = {isa = PBXBuildFile; fileRef = CF831541A4F36F5D8B9AAFD6; };
 		8815FE42D8EF1F43F012089E /* TimingPresetManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = DEB09578F39DDBA089B7E0DA; };
 		884872156FD2A1A5D517A625 /* Effect.cpp */ = {isa = PBXBuildFile; fileRef = 16C9CE77D6B3D05ECD0585B4; };
@@ -314,6 +315,7 @@
 		2B0DF320C8619FF9CB956909 /* MIDIFeedback.h */ /* MIDIFeedback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIFeedback.h; path = ../../Source/Definitions/Interface/interfaces/midi/MIDIFeedback.h; sourceTree = SOURCE_ROOT; };
 		2B363C47719FBE2D11BDBFE3 /* CuelistGridView.h */ /* CuelistGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistGridView.h; path = ../../Source/UI/GridView/CuelistGridView.h; sourceTree = SOURCE_ROOT; };
 		2CB931C3AB3641819A6E1109 /* include_juce_organicui.cpp */ /* include_juce_organicui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui.cpp; path = ../../JuceLibraryCode/include_juce_organicui.cpp; sourceTree = SOURCE_ROOT; };
+		2D5AFBA65E68348CCF69E55F /* StampAction.h */ /* StampAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StampAction.h; path = ../../Source/Definitions/Actions/StampAction.h; sourceTree = SOURCE_ROOT; };
 		2DCDDF6261DE6F40FCE0E834 /* MoveInBlackManager.cpp */ /* MoveInBlackManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MoveInBlackManager.cpp; path = ../../Source/Definitions/Command/MoveInBlackManager.cpp; sourceTree = SOURCE_ROOT; };
 		2EB73025A0F8E8B6BE42F5B1 /* PatchSheetLine.h */ /* PatchSheetLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PatchSheetLine.h; path = ../../Source/UI/PatchSheet/PatchSheetLine.h; sourceTree = SOURCE_ROOT; };
 		2EC0136804299C7DA734EFE5 /* CurvePresetManager.cpp */ /* CurvePresetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CurvePresetManager.cpp; path = ../../Source/Definitions/CurvePreset/CurvePresetManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -636,6 +638,7 @@
 		CEEE948FF0EA411F291BA752 /* include_juce_organicui2.cpp */ /* include_juce_organicui2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui2.cpp; path = ../../JuceLibraryCode/include_juce_organicui2.cpp; sourceTree = SOURCE_ROOT; };
 		CF3609DA42C8D8B545494555 /* crash.png */ /* crash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crash.png; path = ../../Ressources/crash.png; sourceTree = SOURCE_ROOT; };
 		CF831541A4F36F5D8B9AAFD6 /* CarouselAction.cpp */ /* CarouselAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CarouselAction.cpp; path = ../../Source/Definitions/Actions/CarouselAction.cpp; sourceTree = SOURCE_ROOT; };
+		CF86FE93FAF0EC1B8AAA19E5 /* StampAction.cpp */ /* StampAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StampAction.cpp; path = ../../Source/Definitions/Actions/StampAction.cpp; sourceTree = SOURCE_ROOT; };
 		D041B6D8BEFB63967BA51B65 /* Cuelist.h */ /* Cuelist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Cuelist.h; path = ../../Source/Definitions/Cuelist/Cuelist.h; sourceTree = SOURCE_ROOT; };
 		D07A8494264D9453D3B908CE /* CuelistSheetLine.cpp */ /* CuelistSheetLine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CuelistSheetLine.cpp; path = ../../Source/UI/CuelistSheet/CuelistSheetLine.cpp; sourceTree = SOURCE_ROOT; };
 		D1E1F881485F0C75421795BF /* mainIncludes.h */ /* mainIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = mainIncludes.h; path = ../../Source/mainIncludes.h; sourceTree = SOURCE_ROOT; };
@@ -1043,6 +1046,8 @@
 				1EFDE2F415CB82A498131588,
 				479A8F52055483E8B1910A32,
 				1216673AEF7457F6165D7D77,
+				CF86FE93FAF0EC1B8AAA19E5,
+				2D5AFBA65E68348CCF69E55F,
 				BFC78652CA4EA1563B4F7100,
 				95844B8F9AEEF440460D9AC8,
 				C7B740747EF76E26953F01CB,
@@ -2029,6 +2034,7 @@
 				1967714E680572F05EE87BD6,
 				B567CA6B299966FCE8E25780,
 				D8C9CF95286978E6BA1BA7A5,
+				85F4542FDF363C00A3A94D61,
 				4D596A9BF29491C0F092F228,
 				41F15F1C7F291B2C37689D4C,
 				CBE33BFAAD53BF982A32FFBB,

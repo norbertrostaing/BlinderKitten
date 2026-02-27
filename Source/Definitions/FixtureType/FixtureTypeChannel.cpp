@@ -102,7 +102,7 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     if (p == resolution || p == channelType) {
         FixtureTypeChannelManager* manager = dynamic_cast<FixtureTypeChannelManager*>(parentContainer.get());
         if (manager != nullptr) {
-            manager->calcDmxChannels();
+            manager->queueCalcDmxChannels();
         }
     }
     else if (p == physicalRange) {

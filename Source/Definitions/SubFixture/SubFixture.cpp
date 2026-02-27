@@ -14,6 +14,8 @@
 #include "Fixture/Fixture.h"
 #include "UserInputManager.h"
 #include "BKEngine.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/Layout/Layout.h"
 
 SubFixture::SubFixture() :
 	channelsMap()

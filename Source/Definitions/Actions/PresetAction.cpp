@@ -11,6 +11,7 @@
 #include "PresetAction.h"
 #include "../Bundle/Bundle.h"
 #include "../../Brain.h"
+#include "Definitions/TimingPreset/TimingPreset.h"
 
 PresetAction::PresetAction(var params) :
     Action(params)

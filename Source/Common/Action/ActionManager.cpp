@@ -29,6 +29,7 @@ juce_ImplementSingleton(ActionFactory);
 #include "Definitions/Actions/InterfaceAction.h"
 #include "Definitions/Actions/PresetAction.h"
 #include "Definitions/Actions/SoloPoolAction.h"
+#include "Definitions/Actions/StampAction.h"
 #include "ActionManager.h"
 
 ActionFactory::ActionFactory()
@@ -116,6 +117,15 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Toggle", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_TOGGLE));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Size", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Tracker", "Tracker Axis", &TrackerAction::create)->addParam("actionType", TrackerAction::TRK_AXIS));
+
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Start", &StampAction::create)->addParam("actionType", StampAction::ST_START));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Stop", &StampAction::create)->addParam("actionType", StampAction::ST_STOP));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Stop Instant", &StampAction::create)->addParam("actionType", StampAction::ST_STOP_INSTANT));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Toggle", &StampAction::create)->addParam("actionType", StampAction::ST_TOGGLE));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Flash", &StampAction::create)->addParam("actionType", StampAction::ST_FLASH));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Swop", &StampAction::create)->addParam("actionType", StampAction::ST_SWOP));
+    defs.add(Factory<Action>::Definition::createDef("Stamp", "Stamp Size", &StampAction::create)->addParam("actionType", StampAction::ST_SIZE));
+
 
     defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Start", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_START));
     defs.add(Factory<Action>::Definition::createDef("Selection Master", "Selection Master Stop", &SelectionMasterAction::create)->addParam("actionType", SelectionMasterAction::SELM_STOP));

@@ -13,6 +13,11 @@
 #include "VirtualFaderColManager.h"
 #include "VirtualFaderColGrid.h"
 #include "../../Brain.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Effect/Effect.h"
+#include "Definitions/Carousel/Carousel.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/Tracker/Tracker.h"
 
 BaseManagerSlider::BaseManagerSlider(const String& name) : BaseManager(name) {}
 BaseManagerButton::BaseManagerButton(const String& name) : BaseManager(name) {}

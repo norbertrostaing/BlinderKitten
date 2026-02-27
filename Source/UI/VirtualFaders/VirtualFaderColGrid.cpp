@@ -16,6 +16,7 @@
 #include "VirtualFaderColManager.h"
 #include "VirtualFaderButton.h"
 #include "VirtualFaderSlider.h"
+#include "Definitions/Programmer/Programmer.h"
 
 //==============================================================================
 VirtualFaderColGridUI::VirtualFaderColGridUI(const String& contentName):

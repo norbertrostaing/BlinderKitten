@@ -14,7 +14,8 @@
 class SubFixture;
 
 class FixtureTypeChannelManager :
-    public BaseManager<FixtureTypeChannel>
+    public BaseManager<FixtureTypeChannel>,
+    private juce::AsyncUpdater
 {
 public:
     FixtureTypeChannelManager();
@@ -30,5 +31,7 @@ public:
     void askForMoveBefore(BaseItem* i);
     void askForMoveAfter(BaseItem* i);
     void setItemIndex(FixtureTypeChannel* item, int newIndex, bool addToUndo = true) override;
+    void handleAsyncUpdate() override;
+    void queueCalcDmxChannels();
 
 };

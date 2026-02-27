@@ -25,6 +25,7 @@ public:
 class PatchSheet  : 
     public juce::Component,
     public ChangeListener,
+    private juce::AsyncUpdater,
     public FixtureManager::AsyncListener,
     public FixturePatchManager::AsyncListener
 {
@@ -67,6 +68,10 @@ public:
 
     void newMessage(const FixtureManager::ManagerEvent& e) override;
     void newMessage(const FixturePatchManager::ManagerEvent& e) override;
+
+    void queueRebuildLines();
+    void handleAsyncUpdate() override;
+
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PatchSheet)

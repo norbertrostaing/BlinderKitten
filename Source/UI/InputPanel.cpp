@@ -15,6 +15,7 @@
 #include "Definitions/Assistant/Assistant.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
+#include "Definitions/Programmer/Programmer.h"
 
 //==============================================================================
 InputPanelUI::InputPanelUI(const String& contentName):

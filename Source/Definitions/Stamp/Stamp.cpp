@@ -41,7 +41,7 @@ Stamp::Stamp(var params) :
 
 	layoutId = addIntParameter("Layout ID", "Wich layout do you want to use for placing pixels ?", 0, 0);
 
-	videoPosition = addPoint2DParameter("Video position", "Position of the video (top left)");
+	videoPosition = addPoint2DParameter("Video position", "Position of the video (center point)");
 	videoSize = addPoint2DParameter("Video size", "Size of the video");
 	videoSize->setBounds(0,0,999,999);
 	videoSize->setDefaultPoint(1,1);
@@ -186,10 +186,12 @@ void Stamp::start(float forcedFade) {
 		//totalElapsed = 0;
 		computeData();
 	}
+	isComputing.enter();
 	for (auto it = sfcToStampMappings.begin(); it != sfcToStampMappings.end(); it.next()) {
 		it.getKey()->stampOnTopOfStack(this);
 		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
+	isComputing.exit();
 	Brain::getInstance()->pleaseUpdate(this);
 	if (soloPool->intValue() > 0) Brain::getInstance()->soloPoolStampStarted(soloPool->intValue(), this);
 }
@@ -222,10 +224,12 @@ void Stamp::kill() {
 	userPressedGo = false;
 	isOn = false;
 	isStampOn->setValue(false);
+	isComputing.enter();
 	for (auto it = sfcToStampMappings.begin(); it != sfcToStampMappings.end(); it.next()) {
 		it.getKey()->stampOutOfStack(this);
 		Brain::getInstance()->pleaseUpdate(it.getKey());
 	}
+	isComputing.exit();
 	TSStartFadeIn = 0;
 	TSStartFadeOut = 0;
 	TSEndFadeIn = 0;
@@ -263,9 +267,8 @@ void Stamp::computeData() {
 	subFixtureToPixelPosition.clear();
 	sfcToStampMappings.clear();
 
-	Point<float> min = videoPosition->getPoint();
-	Point<float> max = min + videoSize->getPoint();
-
+	Point<float> min = videoPosition->getPoint() - (videoSize->getPoint() / 2);
+	Point<float> max = videoPosition->getPoint() + (videoSize->getPoint() / 2);
 	Range<float> rangeX(min.x, max.x);
 	Range<float> rangeY(min.y, max.y);
 
@@ -298,12 +301,11 @@ void Stamp::computeData() {
 }
 
 float Stamp::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
-	ScopedLock lock(isComputing);
 	SubFixture* sf = fc->parentSubFixture;
 	if (sf == nullptr) return currentVal;
 	if (!subFixtureToPixelPosition.contains(sf)) return currentVal;
 	Point<double> pixelPos = subFixtureToPixelPosition.getReference(sf);
-	Colour pixel = bitmapData->getPixelColour(pixelPos.x*image.getWidth(), pixelPos.y * image.getHeight());
+	Colour pixel = bitmapData->getPixelColour(pixelPos.x*(image.getWidth()-1), pixelPos.y * (image.getHeight()-1));
 	float pixelVal = 0;
 
 	if (!sfcToStampMappings.contains(fc)) return currentVal;
@@ -315,7 +317,6 @@ float Stamp::applyToChannel(SubFixtureChannel* fc, float currentVal, double now)
 	fadeSize *= sizeValue->floatValue();
 
 	for (StampMapping* map : sfcToStampMappings.getReference(fc)) {
-		ChannelType* ct = dynamic_cast<ChannelType*>(map->paramType->targetContainer.get());
 		switch (map->pixelVal->getValueDataAsEnum<StampMapping::PixelVal>()) {
 			case StampMapping::PixelVal::R: pixelVal = pixel.getFloatRed(); break;
 			case StampMapping::PixelVal::G: pixelVal = pixel.getFloatGreen(); break;
@@ -423,6 +424,7 @@ void Stamp::updateDevice()
 
 void Stamp::videoFrameReceived(NDIlib_video_frame_v2_t* frame)
 {
+	ScopedLock lock(imageLock);
 	const uint8_t* frameData = frame->p_data;
 	int width = frame->xres;
 	int height = frame->yres;

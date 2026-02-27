@@ -33,7 +33,9 @@ public:
 	//std::unique_ptr<NDIInput> device;
 
 	NDIlib_recv_instance_t pNDI_recv;
-	NDIlib_source_t* p_source;
+	NDIlib_source_t stableSource{};
+	std::string stableNameStd;
+	std::string stableUrlStd;
 
 	// Inherited via NDIInputCallback
 	//virtual void handleIncomingNDIMessage(NDIInput * source, const NDIMessage & message) override;

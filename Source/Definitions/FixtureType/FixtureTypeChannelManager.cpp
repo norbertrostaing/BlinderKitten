@@ -12,6 +12,7 @@ FixtureTypeChannelManager::FixtureTypeChannelManager() :
 
 FixtureTypeChannelManager::~FixtureTypeChannelManager()
 {
+	cancelPendingUpdate();
 }
 
 void FixtureTypeChannelManager::calcDmxChannels() {
@@ -67,7 +68,7 @@ void FixtureTypeChannelManager::askForMoveAfter(BaseItem* c) {
 */
 
 void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data) {
-	calcDmxChannels();
+	queueCalcDmxChannels();
 	if (parentContainer != nullptr && !Brain::getInstance()->loadingIsRunning) {
 		FixtureType* ft = dynamic_cast<FixtureType* >(parentContainer.get());
 		ft->updateVirtualLists();
@@ -76,28 +77,37 @@ void FixtureTypeChannelManager::addItemInternal(FixtureTypeChannel* c, var data)
 }
 void FixtureTypeChannelManager::askForRemoveBaseItem(BaseItem* item) {
 	BaseManager::askForRemoveBaseItem(item);
-	calcDmxChannels();
+	queueCalcDmxChannels();
 }
 void FixtureTypeChannelManager::askForDuplicateItem(BaseItem* item) {
 	BaseManager::askForDuplicateItem(item);
-	calcDmxChannels();
+	queueCalcDmxChannels();
 }
 void FixtureTypeChannelManager::askForPaste() {
 	BaseManager::askForPaste();
-	calcDmxChannels();
+	queueCalcDmxChannels();
 }
 void FixtureTypeChannelManager::askForMoveBefore(BaseItem* i) {
 	BaseManager::askForMoveBefore(i);
-	calcDmxChannels();
+	queueCalcDmxChannels();
 }
 void FixtureTypeChannelManager::askForMoveAfter(BaseItem* i) {
 	BaseManager::askForMoveAfter(i);
-	calcDmxChannels();
+	queueCalcDmxChannels();
 }
 
 void FixtureTypeChannelManager::setItemIndex(FixtureTypeChannel* item, int newIndex, bool addToUndo)
 {
 	BaseManager::setItemIndex(item, newIndex, addToUndo);
-	calcDmxChannels();
+	queueCalcDmxChannels();
 }
 
+void FixtureTypeChannelManager::queueCalcDmxChannels()
+{
+	triggerAsyncUpdate();
+}
+
+void FixtureTypeChannelManager::handleAsyncUpdate()
+{
+	calcDmxChannels();
+}

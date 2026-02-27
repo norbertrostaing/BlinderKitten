@@ -74,6 +74,7 @@ void NDIDeviceChooser::updateInputComboBox()
 void NDIDeviceChooser::setSelectedInputDevice(NDIInputDevice* i)
 {
 	inputBox.setSelectedId(NDIManager::getInstance()->inputs.indexOf(i) + 1, dontSendNotification);
+	currentInputDevice = i;
 }
 
 void NDIDeviceChooser::setSelectedInputDevice(const String& deviceName)

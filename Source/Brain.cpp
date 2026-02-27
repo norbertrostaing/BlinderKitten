@@ -256,12 +256,20 @@ void Brain::brainLoop() {
 
     Array<SubFixtureChannel* > modifiedSF;
 
+    for (Stamp* s : stamps) {
+        s->imageLock.enter();
+    }
+
     for (SubFixtureChannel* sfc : allSubfixtureChannels) {
         if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty) {
             modifiedSF.add(sfc);
             sfc->isDirty = false;
             sfc->updateVal(now);
         }
+    }
+
+    for (Stamp* s : stamps) {
+        s->imageLock.exit();
     }
 
     if (modifiedSF.size() > 0) {

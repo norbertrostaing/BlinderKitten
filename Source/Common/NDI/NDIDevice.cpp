@@ -17,11 +17,16 @@ NDIDevice::NDIDevice(NDIlib_source_t& info, Type t) :
 
 
 
-NDIInputDevice::NDIInputDevice(NDIlib_source_t & info) :
-	NDIDevice(info, NDI_IN),
-	Thread("NDI Input")
+NDIInputDevice::NDIInputDevice(NDIlib_source_t& info)
+	: NDIDevice(info, NDI_IN), Thread("NDI Input")
 {
-	p_source = &info;
+	// On OWN la mémoire
+	stableNameStd = (info.p_ndi_name ? info.p_ndi_name : "");
+	stableUrlStd = (info.p_url_address ? info.p_url_address : "");
+
+	stableSource.p_ndi_name = stableNameStd.c_str();
+	stableSource.p_url_address = stableUrlStd.empty() ? nullptr : stableUrlStd.c_str();
+
 	startThread();
 }
 
@@ -37,18 +42,15 @@ void NDIInputDevice::addNDIInputListener(NDIInputListener* newListener)
 	inputListeners.add(newListener);
 	if (inputListeners.size() == 1)
 	{
-
-		NDIlib_recv_create_v3_t recv_create_desc{}; // <-- important
+		NDIlib_recv_create_v3_t recv_create_desc{};
 		recv_create_desc.color_format = NDIlib_recv_color_format_BGRX_BGRA;
-		//recv_create_desc.bandwidth = NDIlib_recv_bandwidth_highest;   // ou lowest pour tester
 		recv_create_desc.allow_video_fields = false;
 		recv_create_desc.p_ndi_recv_name = "BlinderKitten";
+
 		pNDI_recv = NDIlib_recv_create_v3(&recv_create_desc);
+		if (!pNDI_recv) return;
 
-		NDIlib_recv_connect(pNDI_recv, p_source);
-
-		// Destroy the NDI finder. We needed to have access to the pointers to p_sources[0]
-		
+		NDIlib_recv_connect(pNDI_recv, &stableSource);
 		shouldProcess = true;
 	}
 }

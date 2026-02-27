@@ -5,6 +5,8 @@
 #include "Fixture/FixtureManager.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "Definitions/Assistant/Assistant.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/FixtureType/FixtureType.h"
 
 //==============================================================================
 PatchSheetUI::PatchSheetUI(const String& contentName):
@@ -76,6 +78,7 @@ PatchSheet::PatchSheet()
 
 PatchSheet::~PatchSheet()
 {
+    cancelPendingUpdate();
     //if (targetCuelist != nullptr) targetCuelist->removeChangeListener(this);
     if (FixtureManager::getInstanceWithoutCreating() != nullptr) FixtureManager::getInstance()->removeAsyncManagerListener(this);
 }
@@ -183,7 +186,7 @@ void PatchSheet::updateSelection()
 
 void PatchSheet::changeListenerCallback(ChangeBroadcaster* source)
 {
-    rebuildLines();
+    queueRebuildLines();
 }
 
 void PatchSheet::exportToCSV()
@@ -246,11 +249,20 @@ void PatchSheet::exportToCSV()
 
 void PatchSheet::newMessage(const FixtureManager::ManagerEvent& e)
 {
-    rebuildLines();
+    queueRebuildLines();
 }
 
 void PatchSheet::newMessage(const FixturePatchManager::ManagerEvent& e)
 {
-    rebuildLines();
+    queueRebuildLines();
 }
 
+void PatchSheet::queueRebuildLines()
+{
+    triggerAsyncUpdate();
+}
+
+void PatchSheet::handleAsyncUpdate()
+{
+    rebuildLines();
+}
