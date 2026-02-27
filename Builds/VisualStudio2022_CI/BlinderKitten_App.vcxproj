@@ -52,7 +52,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">BlinderKitten</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/servus/lib/win/x64/release;../../External/dnssd/lib;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/NDI/lib/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -139,7 +139,7 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../External/servus/lib/win/x64/release;../../External/dnssd/lib;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/NDI/lib/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>Setupapi.lib;Servus.lib;dnssd.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -150,7 +150,7 @@
     </Bscmake>
     <Lib>
       <AdditionalDependencies>Setupapi.lib;Servus.lib;dnssd.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/servus/lib/win/x64/release;../../External/dnssd/lib;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/NDI/lib/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
