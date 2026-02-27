@@ -15,6 +15,9 @@
 #include "../../Brain.h"
 #include "UI/GridView/GroupGridView.h"
 #include "UserInputManager.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/Command/Command.h"
+
 
 Group::Group(var params) :
 	BaseItem(params.getProperty("name", "Group")),

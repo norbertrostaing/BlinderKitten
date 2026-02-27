@@ -17,6 +17,9 @@
 #include "../CurvePreset/CurvePreset.h"
 #include "../ChannelValue.h"
 #include "BKEngine.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/FixtureType/FixtureType.h"
+
 
 Tracker::Tracker(var params) :
 	BaseItem(params.getProperty("name", "Tracker")),

@@ -18,6 +18,9 @@
 #include "UI/ConductorInfos.h"
 #include "UserInputManager.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/Group/Group.h"
+#include "Definitions/Fixture/Fixture.h"
 
 int sortCues(Cue* A, Cue* B) {
 	String test = A->id->getValue() > B->id->getValue() ? "y" : "n";

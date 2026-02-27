@@ -2,6 +2,8 @@
 #include "CuelistSheet.h"
 #include "Brain.h"
 #include "UI/LabelAndTime.h"
+#include "Definitions/Cuelist/Cuelist.h"
+
 
 //==============================================================================
 CuelistSheetUI::CuelistSheetUI(const String& contentName):

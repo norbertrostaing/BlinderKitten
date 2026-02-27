@@ -30,6 +30,8 @@
 #include "Definitions/Actions/EffectAction.h"
 #include "Definitions/Actions/CarouselAction.h"
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "Definitions/Effect/Effect.h"
+#include "Definitions/Carousel/Carousel.h"
 #include "BKEngine.h"
 
 juce_ImplementSingleton(Assistant)

@@ -16,6 +16,12 @@
 #include "UserInputManager.h"
 #include "BundleManager.h"
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Effect/Effect.h"
+#include "Definitions/Carousel/Carousel.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/Tracker/Tracker.h"
+#include "Definitions/Stamp/Stamp.h"
 
 Bundle::Bundle(var params) :
 	BaseItem(params.getProperty("name", "Bundle")),

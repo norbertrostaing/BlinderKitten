@@ -17,6 +17,8 @@
 #include "UI/CuelistSheet/CuelistSheet.h"
 #include "Cuelist/CuelistManager.h"
 #include "ChannelValue.h"
+#include "Definitions/Group/Group.h"
+#include "Definitions/Programmer/Programmer.h"
 
 Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue 1")),

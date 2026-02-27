@@ -37,6 +37,7 @@
 #include "./Definitions/BKPathPreset/BKPathPresetManager.h"
 #include "./Definitions/CurvePreset/CurvePresetManager.h"
 #include "./Definitions/Effect/EffectManager.h"
+#include "./Definitions/Stamp/StampManager.h"
 #include "./Definitions/Carousel/CarouselManager.h"
 #include "./Definitions/Mapper/MapperManager.h"
 #include "./Definitions/Tracker/TrackerManager.h"
@@ -290,6 +291,7 @@ BKEngine::BKEngine() :
 	addChildControllableContainer(TimingPresetManager::getInstance());
 	addChildControllableContainer(BKPathPresetManager::getInstance());
 	addChildControllableContainer(EffectManager::getInstance());
+	addChildControllableContainer(StampManager::getInstance());
 	addChildControllableContainer(CarouselManager::getInstance());
 	addChildControllableContainer(MapperManager::getInstance());
 	addChildControllableContainer(TrackerManager::getInstance());
@@ -405,6 +407,7 @@ BKEngine::~BKEngine()
 	BundleManager::deleteInstance();
 	LayoutManager::deleteInstance();
 	MultiplicatorManager::deleteInstance();
+	StampManager::deleteInstance();
 	EffectManager::deleteInstance();
 	CarouselManager::deleteInstance();
 	SelectionMasterManager::deleteInstance();
@@ -431,6 +434,7 @@ BKEngine::~BKEngine()
 	DMXManager::deleteInstance();
 	SerialManager::deleteInstance();
 
+	NDIManager::deleteInstance();
 	ArtnetSocket::getInstance()->deleteInstance();
 	Brain::deleteInstance();
 }
@@ -473,6 +477,7 @@ void BKEngine::clearInternal()
 	MapperManager::getInstance()->clear();
 	MultiplicatorManager::getInstance()->clear();
 	EffectManager::getInstance()->clear();
+	StampManager::getInstance()->clear();
 	CarouselManager::getInstance()->clear();
 	EncodersMult::getInstance()->clear();
 	EncodersMult::getInstance()->targetCommandManager = nullptr;
@@ -605,6 +610,9 @@ var BKEngine::getJSONData(bool includeNonOverriden)
 	var fxData = EffectManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!fxData.isVoid() && fxData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, fxData);
 
+	var stData = StampManager::getInstance()->getJSONData(includeNonOverriden);
+	if (!stData.isVoid() && stData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(StampManager::getInstance()->shortName, stData);
+
 	var carData = CarouselManager::getInstance()->getJSONData(includeNonOverriden);
 	if (!carData.isVoid() && carData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CarouselManager::getInstance()->shortName, carData);
 
@@ -663,6 +671,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	ProgressTask* tpTask = loadingTask->addTask("Timing Presets");
 	ProgressTask* ptTask = loadingTask->addTask("Path Presets");
 	ProgressTask* fxTask = loadingTask->addTask("Effects");
+	ProgressTask* stTask = loadingTask->addTask("Stamps");
 	ProgressTask* carTask = loadingTask->addTask("Carousels");
 	ProgressTask* mapTask = loadingTask->addTask("Mappers");
 	ProgressTask* trackTask = loadingTask->addTask("Trackers");
@@ -745,6 +754,11 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	EffectManager::getInstance()->loadJSONData(data.getProperty(EffectManager::getInstance()->shortName, var()));
 	fxTask->setProgress(1);
 	fxTask->end();
+
+	stTask->start();
+	StampManager::getInstance()->loadJSONData(data.getProperty(StampManager::getInstance()->shortName, var()));
+	stTask->setProgress(1);
+	stTask->end();
 
 	carTask->start();
 	CarouselManager::getInstance()->loadJSONData(data.getProperty(CarouselManager::getInstance()->shortName, var()));
@@ -934,6 +948,7 @@ void BKEngine::importMochi(var data)
 	SelectionMasterManager::getInstance()->addItemsFromData(data.getProperty(SelectionMasterManager::getInstance()->shortName, var()));
 	MultiplicatorManager::getInstance()->addItemsFromData(data.getProperty(MultiplicatorManager::getInstance()->shortName, var()));
 	EffectManager::getInstance()->addItemsFromData(data.getProperty(EffectManager::getInstance()->shortName, var()));
+	StampManager::getInstance()->addItemsFromData(data.getProperty(StampManager::getInstance()->shortName, var()));
 	LayoutManager::getInstance()->addItemsFromData(data.getProperty(LayoutManager::getInstance()->shortName, var()));
 	VirtualButtonManager::getInstance()->addItemsFromData(data.getProperty(VirtualButtonManager::getInstance()->shortName, var()));
 	VirtualFaderColManager::getInstance()->addItemsFromData(data.getProperty(VirtualFaderColManager::getInstance()->shortName, var()));
@@ -992,6 +1007,7 @@ void BKEngine::exportSelection()
 	data.getDynamicObject()->setProperty(SelectionMasterManager::getInstance()->shortName, SelectionMasterManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(MultiplicatorManager::getInstance()->shortName, MultiplicatorManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(EffectManager::getInstance()->shortName, EffectManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(StampManager::getInstance()->shortName, StampManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(LayoutManager::getInstance()->shortName, LayoutManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualButtonManager::getInstance()->shortName, VirtualButtonManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(VirtualFaderColManager::getInstance()->shortName, VirtualFaderColManager::getInstance()->getExportSelectionData());

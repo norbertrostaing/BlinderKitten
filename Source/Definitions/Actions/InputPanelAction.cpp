@@ -14,6 +14,10 @@
 #include "UserInputManager.h"
 #include "UI/InputPanel.h"
 #include "UI/Encoders.h"
+#include "Definitions/Preset/Preset.h"
+#include "Definitions/TimingPreset/TimingPreset.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Group/Group.h"
 
 InputPanelAction::InputPanelAction(var params) :
     Action(params)

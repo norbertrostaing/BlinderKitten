@@ -39,7 +39,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_MODAL_LOOPS_PERMITTED=1" "-D_ITERATOR_DEBUG_LEVEL=1" "-DJUCE_DISABLE_ASSERTIONS=1" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1b93" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../Source/Definitions -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/libusb/include/libusb-1.0 $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_MODAL_LOOPS_PERMITTED=1" "-D_ITERATOR_DEBUG_LEVEL=1" "-DJUCE_DISABLE_ASSERTIONS=1" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1b93" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../Source/Definitions -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/libusb/include/libusb-1.0 -I../../External/NDI/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := BlinderKitten
 
@@ -60,7 +60,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_MODAL_LOOPS_PERMITTED=1" "-D_ITERATOR_DEBUG_LEVEL=1" "-DJUCE_DISABLE_ASSERTIONS=1" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1b93" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../Source/Definitions -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/libusb/include/libusb-1.0 $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_MODAL_LOOPS_PERMITTED=1" "-D_ITERATOR_DEBUG_LEVEL=1" "-DJUCE_DISABLE_ASSERTIONS=1" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1b93" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../Source/Definitions -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/libusb/include/libusb-1.0 -I../../External/NDI/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := BlinderKitten
 
@@ -220,6 +220,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SelectionMaster_68a389f.o \
   $(JUCE_OBJDIR)/SelectionMasterManager_c9e1a98.o \
   $(JUCE_OBJDIR)/SelectionMasterManagerUI_9e824e6c.o \
+  $(JUCE_OBJDIR)/Stamp_bf149c89.o \
+  $(JUCE_OBJDIR)/StampManager_8d015b6e.o \
+  $(JUCE_OBJDIR)/StampManagerUI_9318b1c2.o \
+  $(JUCE_OBJDIR)/StampMapping_4448ec0f.o \
   $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o \
   $(JUCE_OBJDIR)/SubFixtureChannel_8716636c.o \
   $(JUCE_OBJDIR)/TimingPreset_47a547e1.o \
@@ -1013,6 +1017,26 @@ $(JUCE_OBJDIR)/SelectionMasterManager_c9e1a98.o: ../../Source/Definitions/Select
 $(JUCE_OBJDIR)/SelectionMasterManagerUI_9e824e6c.o: ../../Source/Definitions/SelectionMaster/SelectionMasterManagerUI.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling SelectionMasterManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Stamp_bf149c89.o: ../../Source/Definitions/Stamp/Stamp.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling Stamp.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StampManager_8d015b6e.o: ../../Source/Definitions/Stamp/StampManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling StampManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StampManagerUI_9318b1c2.o: ../../Source/Definitions/Stamp/StampManagerUI.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling StampManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/StampMapping_4448ec0f.o: ../../Source/Definitions/Stamp/StampMapping.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling StampMapping.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o: ../../Source/Definitions/SubFixture/SubFixture.cpp

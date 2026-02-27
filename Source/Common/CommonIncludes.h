@@ -48,3 +48,20 @@
 #include "MIDI/ui/MIDIDeviceParameterUI.h"
 
 #include "Zeroconf/ZeroconfManager.h"
+
+//NDI Lib
+#include <Processing.NDI.Lib.h>
+#ifdef _WIN32
+#ifdef _WIN64
+#pragma comment(lib, "Processing.NDI.Lib.x64.lib")
+#else // _WIN64
+#pragma comment(lib, "Processing.NDI.Lib.x86.lib")
+#endif // _WIN64
+#endif // _WIN32
+
+#include "NDI/NDIDevice.h"
+#include "NDI/NDIManager.h"
+#include "NDI/NDIDeviceParameter.h"
+
+#include "NDI/ui/NDIDeviceChooser.h"
+#include "NDI/ui/NDIDeviceParameterUI.h"

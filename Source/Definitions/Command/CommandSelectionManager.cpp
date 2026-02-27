@@ -4,6 +4,9 @@
 #include "../../UserInputManager.h"
 #include "Command.h"
 #include "Definitions/Layout/Layout.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Group/Group.h"
+#include "Definitions/Programmer/Programmer.h"
 
 CommandSelectionManager::CommandSelectionManager() :
     BaseManager("Selections")

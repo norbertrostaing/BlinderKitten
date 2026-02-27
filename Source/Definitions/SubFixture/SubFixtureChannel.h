@@ -25,6 +25,7 @@ class Tracker;
 class SelectionMaster;
 class Command;
 class ChannelValue;
+class Stamp;
 
 class SubFixtureChannel{
 public:
@@ -68,6 +69,7 @@ public:
     Array<Cuelist*> cuelistStack;
     Array<Programmer*> programmerStack;
     Array<Effect*> effectStack;
+    Array<Stamp*> stampStack;
     Array<Carousel*> carouselStack;
     Array<Mapper*> mapperStack;
     Array<Tracker*> trackerStack;
@@ -86,6 +88,8 @@ public:
     void programmerOutOfStack(Programmer* p);
     void effectOnTopOfStack(Effect* f);
     void effectOutOfStack(Effect* f);
+    void stampOnTopOfStack(Stamp* f);
+    void stampOutOfStack(Stamp* f);
     void carouselOnTopOfStack(Carousel* f);
     void carouselOutOfStack(Carousel* f);
     void mapperOnTopOfStack(Mapper* f);

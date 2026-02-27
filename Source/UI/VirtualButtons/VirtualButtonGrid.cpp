@@ -14,6 +14,7 @@
 #include "BKEngine.h"
 #include "VirtualButton.h"
 #include "VirtualButtonManager.h"
+#include "Definitions/Programmer/Programmer.h"
 
 //==============================================================================
 VirtualButtonGridUI::VirtualButtonGridUI(const String& contentName):

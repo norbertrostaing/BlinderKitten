@@ -14,7 +14,7 @@
 #include "../FixtureType/FixtureTypeChannel.h"
 #include "../ChannelFamily/ChannelType/ChannelType.h"
 #include "Brain.h"
-#include "../Fixture/FixturePatch.h"
+#include "../Fixture/Fixture.h"
 #include "../Interface/InterfaceIncludes.h"
 #include "../Cuelist/Cuelist.h"
 #include "../Programmer/Programmer.h"
@@ -24,6 +24,11 @@
 #include "UI/InputPanel.h"
 #include "Command/Command.h"
 #include "ChannelValue.h"
+#include "Definitions/Carousel/Carousel.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/Stamp/Stamp.h"
+#include "Definitions/SelectionMaster/SelectionMaster.h"
+
 
 SubFixtureChannel::SubFixtureChannel():
 	virtualChildren()
@@ -31,6 +36,7 @@ SubFixtureChannel::SubFixtureChannel():
 	cs.enter();
 	cuelistStack.clear();
 	programmerStack.clear();
+	stampStack.clear();
 	effectStack.clear();
 	carouselStack.clear();
 	cuelistFlashStack.clear();
@@ -233,6 +239,9 @@ void SubFixtureChannel::updateVal(double now) {
 	for (int i = 0; i < trackerStack.size(); i++) {
 		layers.addIfNotAlreadyThere(trackerStack[i]->layerId->intValue());
 	}
+	for (int i = 0; i < stampStack.size(); i++) {
+		layers.addIfNotAlreadyThere(stampStack[i]->layerId->intValue());
+	}
 	for (int i = 0; i < effectStack.size(); i++) {
 		layers.addIfNotAlreadyThere(effectStack[i]->layerId->intValue());
 	}
@@ -307,6 +316,15 @@ void SubFixtureChannel::updateVal(double now) {
 				if (!checkSwop || carouselStack[i]->isSwopping) {
 					newValue = carouselStack[i]->applyToChannel(this, newValue, now);
 					isDirty = isDirty || carouselStack[i]->isOn;
+				}
+			}
+		}
+
+		for (int i = 0; i < stampStack.size(); i++) {
+			if (stampStack[i]->layerId->intValue() == currentLayer) {
+				if (!checkSwop || stampStack[i]->isSwopping) {
+					newValue = stampStack[i]->applyToChannel(this, newValue, now);
+					isDirty = isDirty || stampStack[i]->isOn;
 				}
 			}
 		}
@@ -393,6 +411,19 @@ void SubFixtureChannel::effectOutOfStack(Effect* f) {
 	cs.enter();
 	while (effectStack.indexOf(f) >= 0) {
 		effectStack.removeAllInstancesOf(f);
+	}
+	cs.exit();
+}
+
+void SubFixtureChannel::stampOnTopOfStack(Stamp* f) {
+	stampOutOfStack(f);
+	stampStack.add(f);
+}
+
+void SubFixtureChannel::stampOutOfStack(Stamp* f) {
+	cs.enter();
+	while (stampStack.indexOf(f) >= 0) {
+		stampStack.removeAllInstancesOf(f);
 	}
 	cs.exit();
 }

@@ -10,6 +10,29 @@
 
 
 #include "Brain.h"
+
+#include "Definitions/SubFixture/SubFixture.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Group/Group.h"
+#include "Definitions/Command/Command.h"
+#include "Definitions/Cue/Cue.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Preset/Preset.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/CurvePreset/CurvePreset.h"
+#include "Definitions/TimingPreset/TimingPreset.h"
+#include "Definitions/BKPathPreset/BKPathPreset.h"
+#include "Definitions/Effect/Effect.h"
+#include "Definitions/Stamp/Stamp.h"
+#include "Definitions/Carousel/Carousel.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/RunningTask.h"
+#include "Definitions/Cue/Task.h"
+#include "Definitions/Layout/Layout.h"
+#include "Definitions/Tracker/Tracker.h"
+#include "Definitions/SelectionMaster/SelectionMaster.h"
+#include "Definitions/Bundle/Bundle.h"
+
 #include "Definitions/ChannelValue.h"
 #include "UI/VirtualFaders/VirtualFaderColGrid.h"
 #include "UI/VirtualButtons/VirtualButtonGrid.h"
@@ -54,6 +77,7 @@ void Brain::clear()
     timingPresets.clear();
     bkPathPresets.clear();
     effects.clear();
+    stamps.clear();
     carousels.clear();
     mappers.clear();
     trackers.clear();
@@ -70,6 +94,8 @@ void Brain::clear()
     programmerPoolWaiting.clear();
     effectPoolUpdating.clear();
     effectPoolWaiting.clear();
+    stampPoolUpdating.clear();
+    stampPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
     mapperPoolUpdating.clear();
@@ -91,6 +117,8 @@ void Brain::clearUpdates()
     programmerPoolWaiting.clear();
     effectPoolUpdating.clear();
     effectPoolWaiting.clear();
+    stampPoolUpdating.clear();
+    stampPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
     mapperPoolUpdating.clear();
@@ -112,7 +140,6 @@ void Brain::brainLoop() {
     if (skipLoop) {
         return;
     }
-
 
     now = Time::getMillisecondCounterHiRes();
     if (cuePoolWaiting.size() > 0) {
@@ -150,6 +177,18 @@ void Brain::brainLoop() {
         effectPoolUpdating[i]->update(now);
     }
     effectPoolUpdating.clear();
+
+    if (stampPoolWaiting.size() > 0) {
+        ScopedLock lock(usingCollections);
+        for (int i = 0; i < stampPoolWaiting.size(); i++) {
+            stampPoolUpdating.add(stampPoolWaiting[i]);
+        }
+        stampPoolWaiting.clear();
+    }
+    for (int i = 0; i < stampPoolUpdating.size(); i++) {
+        stampPoolUpdating[i]->update(now);
+    }
+    stampPoolUpdating.clear();
 
     if (carouselPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
@@ -725,6 +764,45 @@ void Brain::unregisterEffect(Effect* c) {
     if (!Brain::getInstance()->isClearing && EffectGridView::getInstanceWithoutCreating() != nullptr) EffectGridView::getInstance()->updateCells();
 }
 
+void Brain::registerStamp(Stamp* p, int id, bool swap) {
+    int askedId = id;
+    if (stamps.getReference(id) == p) { return; }
+    if (stamps.containsValue(p)) {
+        stamps.removeValue(p);
+    }
+    bool idIsOk = false;
+    if (swap && p->registeredId != 0) {
+        if (stamps.contains(id) && stamps.getReference(id) != nullptr) {
+            Stamp* presentItem = stamps.getReference(id);
+            unregisterStamp(p);
+            registerStamp(presentItem, p->registeredId, false);
+        }
+    }
+    while (!idIsOk) {
+        if (stamps.contains(id) && stamps.getReference(id) != nullptr) {
+            id++;
+        }
+        else {
+            idIsOk = true;
+        }
+    }
+    stamps.set(id, p);
+    p->id->setValue(id);
+    p->registeredId = id;
+    if (id != askedId) {
+    }
+    TSBundles = Time::getMillisecondCounterHiRes();
+}
+
+
+void Brain::unregisterStamp(Stamp* c) {
+    if (stamps.containsValue(c)) {
+        stamps.removeValue(c);
+    }
+    reconstructVirtuals = true;
+    TSBundles = Time::getMillisecondCounterHiRes();
+}
+
 void Brain::registerCarousel(Carousel* p, int id, bool swap) {
     int askedId = id;
     if (carousels.getReference(id) == p) { return; }
@@ -993,6 +1071,14 @@ void Brain::pleaseUpdate(Effect* f) {
     ScopedLock lock(usingCollections);
     if (!effectPoolWaiting.contains(f)) {
         effectPoolWaiting.add(f);
+    }
+}
+
+void Brain::pleaseUpdate(Stamp* f) {
+    if (f == nullptr || f->objectType != "Stamp") { return; }
+    ScopedLock lock(usingCollections);
+    if (!stampPoolWaiting.contains(f)) {
+        stampPoolWaiting.add(f);
     }
 }
 
@@ -1401,6 +1487,15 @@ Effect* Brain::getEffectById(int id) {
     }
 }
 
+Stamp* Brain::getStampById(int id) {
+    if (stamps.contains(id)) {
+        return stamps.getReference(id);
+    }
+    else {
+        return nullptr;
+    }
+}
+
 Carousel* Brain::getCarouselById(int id) {
     if (carousels.contains(id)) {
         return carousels.getReference(id);
@@ -1480,6 +1575,18 @@ void Brain::swoppedEffect(Effect* c) {
     isSwopping = true;
 }
 
+void Brain::swoppedStamp(Stamp* c) {
+    usingCollections.enter();
+    if (!swoppedStamps.contains(c)) {
+        swoppedStamps.add(c);
+    }
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels.getReference(i));
+    }
+    usingCollections.exit();
+    isSwopping = true;
+}
+
 void Brain::swoppedCarousel(Carousel* c) {
     usingCollections.enter();
     if (!swoppedCarousels.contains(c)) {
@@ -1496,7 +1603,7 @@ void Brain::swoppedCarousel(Carousel* c) {
 void Brain::unswoppedCuelist(Cuelist* c) {
     usingCollections.enter();
     swoppedCuelists.removeAllInstancesOf(c);
-    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() > 0;
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size()> 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
@@ -1507,7 +1614,18 @@ void Brain::unswoppedCuelist(Cuelist* c) {
 void Brain::unswoppedEffect(Effect* c) {
     usingCollections.enter();
     swoppedEffects.removeAllInstancesOf(c);
-    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() > 0;
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size() > 0;
+    for (int i = 0; i < swoppableChannels.size(); i++) {
+        pleaseUpdate(swoppableChannels.getReference(i));
+    }
+    usingCollections.exit();
+
+}
+
+void Brain::unswoppedStamp(Stamp* c) {
+    usingCollections.enter();
+    swoppedStamps.removeAllInstancesOf(c);
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
@@ -1518,7 +1636,7 @@ void Brain::unswoppedEffect(Effect* c) {
 void Brain::unswoppedCarousel(Carousel* c) {
     usingCollections.enter();
     swoppedCarousels.removeAllInstancesOf(c);
-    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() > 0;
+    isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
@@ -1572,6 +1690,14 @@ void Brain::stopAllEffects()
 {
     for (auto it = effects.begin(); it != effects.end(); it.next()) {
         Effect* f = it.getValue();
+        f->stop();
+    }
+}
+
+void Brain::stopAllStamps()
+{
+    for (auto it = stamps.begin(); it != stamps.end(); it.next()) {
+        Stamp* f = it.getValue();
         f->stop();
     }
 }
@@ -1711,6 +1837,11 @@ void Brain::soloPoolEffectStarted(int poolId, Effect* c)
     soloPoolCheck(poolId, "Effect", c->id->intValue());
 }
 
+void Brain::soloPoolStampStarted(int poolId, Stamp* c)
+{
+    soloPoolCheck(poolId, "Stamp", c->id->intValue());
+}
+
 void Brain::soloPoolCarouselStarted(int poolId, Carousel* c)
 {
     soloPoolCheck(poolId, "Carousel", c->id->intValue());
@@ -1722,6 +1853,7 @@ void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
 
     Array<Cuelist*> offCuelists;
     Array<Effect*> offEffects;
+    Array<Stamp*> offStamps;
     Array<Carousel*> offCarousels;
 
     usingCollections.enter();
@@ -1741,6 +1873,14 @@ void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
             }
         }
     }
+    for (auto it = stamps.begin(); it != stamps.end(); it.next()) {
+        Stamp* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isStampOn->boolValue()) {
+            if (excludeType != "Stamp" || excludeId != c->id->intValue()) {
+                offStamps.add(c);
+            }
+        }
+    }
     for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
         Carousel* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isCarouselOn->boolValue()) {
@@ -1753,6 +1893,7 @@ void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
     usingCollections.exit();
     for (Cuelist* c : offCuelists) c->off();
     for (Effect* c : offEffects) c->stop();
+    for (Stamp* c : offStamps) c->stop();
     for (Carousel* c : offCarousels) c->stop();
 
 }
@@ -1779,6 +1920,13 @@ void Brain::soloPoolRandom(int poolId)
             ids.add(c->id->intValue());
         }
     }
+    for (auto it = stamps.begin(); it != stamps.end(); it.next()) {
+        Stamp* c = it.getValue();
+        if (!c->isOn && c->soloPool->intValue() == poolId) {
+            types.add("stamp");
+            ids.add(c->id->intValue());
+        }
+    }
     for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
         Carousel* c = it.getValue();
         if (!c->isOn && c->soloPool->intValue() == poolId) {
@@ -1795,6 +1943,7 @@ void Brain::soloPoolRandom(int poolId)
 
     if (type == "cuelist") { Brain::getCuelistById(id)->userGo(); }
     else if (type == "effect") { Brain::getEffectById(id)->start(); }
+    else if (type == "stamp") { Brain::getStampById(id)->start(); }
     else if (type == "carousel") { Brain::getCarouselById(id)->start(); }
 }
 
@@ -1804,6 +1953,7 @@ void Brain::soloPoolStop(int poolId)
 
     Array<Cuelist*> offCuelists;
     Array<Effect*> offEffects;
+    Array<Stamp*> offStamps;
     Array<Carousel*> offCarousels;
 
     usingCollections.enter();
@@ -1819,6 +1969,12 @@ void Brain::soloPoolStop(int poolId)
             offEffects.add(c);
         }
     }
+    for (auto it = stamps.begin(); it != stamps.end(); it.next()) {
+        Stamp* c = it.getValue();
+        if (c->soloPool->intValue() == poolId && c->isStampOn->boolValue()) {
+            offStamps.add(c);
+        }
+    }
     for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
         Carousel* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isCarouselOn->boolValue()) {
@@ -1829,6 +1985,7 @@ void Brain::soloPoolStop(int poolId)
     usingCollections.exit();
     for (Cuelist* c : offCuelists) c->off();
     for (Effect* c : offEffects) c->stop();
+    for (Stamp* c : offStamps) c->stop();
     for (Carousel* c : offCarousels) c->stop();
 
 

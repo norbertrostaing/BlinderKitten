@@ -65,7 +65,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;../../External/NDI/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_MODAL_LOOPS_PERMITTED=1;_ITERATOR_DEBUG_LEVEL=1;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=1.0.1b93;JUCE_APP_VERSION_HEX=0x10001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -79,7 +79,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;../../External/NDI/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_MODAL_LOOPS_PERMITTED=1;_ITERATOR_DEBUG_LEVEL=1;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=1.0.1b93;JUCE_APP_VERSION_HEX=0x10001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
@@ -113,7 +113,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../External/serial/include;../../External/asio;../../External/servus/include;../../External/dnssd/include;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../External/serial/include;../../External/asio;../../External/servus/include;../../External/dnssd/include;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;../../External/NDI/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_MODAL_LOOPS_PERMITTED=1;_ITERATOR_DEBUG_LEVEL=1;JUCE_DISABLE_ASSERTIONS=1;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=1.0.1b93;JUCE_APP_VERSION_HEX=0x10001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -127,7 +127,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../External/serial/include;../../External/asio;../../External/servus/include;../../External/dnssd/include;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../External/serial/include;../../External/asio;../../External/servus/include;../../External/dnssd/include;../../Source;../../Source/Definitions;../../External/serial/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/libusb/include/libusb-1.0;../../External/NDI/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_MODAL_LOOPS_PERMITTED=1;_ITERATOR_DEBUG_LEVEL=1;JUCE_DISABLE_ASSERTIONS=1;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=1.0.1b93;JUCE_APP_VERSION_HEX=0x10001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
@@ -255,6 +255,21 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\ui\NDIDeviceChooser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\ui\NDIDeviceParameterUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\NDIDevice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\NDIDeviceParameter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\NDIManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\lib\cobs\cobs.cpp">
@@ -458,6 +473,10 @@
     <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMaster.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\Stamp.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampMapping.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPreset.cpp"/>
@@ -3545,6 +3564,11 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MIDIManager.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCReceiver.h"/>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h"/>
+    <ClInclude Include="..\..\Source\Common\NDI\ui\NDIDeviceChooser.h"/>
+    <ClInclude Include="..\..\Source\Common\NDI\ui\NDIDeviceParameterUI.h"/>
+    <ClInclude Include="..\..\Source\Common\NDI\NDIDevice.h"/>
+    <ClInclude Include="..\..\Source\Common\NDI\NDIDeviceParameter.h"/>
+    <ClInclude Include="..\..\Source\Common\NDI\NDIManager.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDeviceParameter.h"/>
@@ -3682,6 +3706,10 @@
     <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMaster.h"/>
     <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\Stamp.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampMapping.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPreset.h"/>

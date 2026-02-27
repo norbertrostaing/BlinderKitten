@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="e7FbaJ" name="BlinderKitten" projectType="guiapp" useAppConfig="1"
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="0" jucerFormatVersion="1"
-              compilerFlagSchemes="NewScheme" headerPath="../../Source&#10;../../Source/Definitions&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/libusb/include/libusb-1.0"
+              compilerFlagSchemes="NewScheme" headerPath="../../Source&#10;../../Source/Definitions&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/NDI/include"
               defines="JUCE_MODAL_LOOPS_PERMITTED=1&#10;_ITERATOR_DEBUG_LEVEL=1&#10;"
               version="1.0.1b93" companyName="Norbert Rostaing" companyCopyright="Norbert Rostaing"
               companyWebsite="http://blinderkitten.lighting" companyEmail="blinderkitten@gmail.com"
@@ -250,6 +250,26 @@
           <FILE id="dSVNQz" name="MTCReceiver.h" compile="0" resource="0" file="Source/Common/MIDI/MTCReceiver.h"/>
           <FILE id="aoBZnf" name="MTCSender.cpp" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.cpp"/>
           <FILE id="rfodis" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
+        </GROUP>
+        <GROUP id="{1DC84598-75C9-DC94-40F6-034713AD727B}" name="NDI">
+          <GROUP id="{044A6F92-DE99-C340-B17B-08D2F741DC5C}" name="ui">
+            <FILE id="cx6Hd0" name="NDIDeviceChooser.cpp" compile="0" resource="0"
+                  file="Source/Common/NDI/ui/NDIDeviceChooser.cpp"/>
+            <FILE id="YlA5Qb" name="NDIDeviceChooser.h" compile="0" resource="0"
+                  file="Source/Common/NDI/ui/NDIDeviceChooser.h"/>
+            <FILE id="Nx0Gjh" name="NDIDeviceParameterUI.cpp" compile="0" resource="0"
+                  file="Source/Common/NDI/ui/NDIDeviceParameterUI.cpp"/>
+            <FILE id="VyCAxZ" name="NDIDeviceParameterUI.h" compile="0" resource="0"
+                  file="Source/Common/NDI/ui/NDIDeviceParameterUI.h"/>
+          </GROUP>
+          <FILE id="HSBsFA" name="NDIDevice.cpp" compile="0" resource="0" file="Source/Common/NDI/NDIDevice.cpp"/>
+          <FILE id="NFQ8aw" name="NDIDevice.h" compile="0" resource="0" file="Source/Common/NDI/NDIDevice.h"/>
+          <FILE id="fjhSxL" name="NDIDeviceParameter.cpp" compile="0" resource="0"
+                file="Source/Common/NDI/NDIDeviceParameter.cpp"/>
+          <FILE id="vCpk8Z" name="NDIDeviceParameter.h" compile="0" resource="0"
+                file="Source/Common/NDI/NDIDeviceParameter.h"/>
+          <FILE id="MFrKtL" name="NDIManager.cpp" compile="0" resource="0" file="Source/Common/NDI/NDIManager.cpp"/>
+          <FILE id="t0ZHI4" name="NDIManager.h" compile="0" resource="0" file="Source/Common/NDI/NDIManager.h"/>
         </GROUP>
         <GROUP id="{B7EBD988-3F5B-8835-C4DC-FCCC705B5FE9}" name="Serial">
           <GROUP id="{04877602-AF76-8BF8-2A8D-464620B8AC91}" name="lib">
@@ -799,6 +819,20 @@
           <FILE id="nKgJLB" name="SelectionMasterManagerUI.h" compile="0" resource="0"
                 file="Source/Definitions/SelectionMaster/SelectionMasterManagerUI.h"/>
         </GROUP>
+        <GROUP id="{AABAD27D-4184-BAB6-513D-2584474546AC}" name="Stamp">
+          <FILE id="K4owxV" name="Stamp.cpp" compile="1" resource="0" file="Source/Definitions/Stamp/Stamp.cpp"/>
+          <FILE id="gfOSw7" name="Stamp.h" compile="0" resource="0" file="Source/Definitions/Stamp/Stamp.h"/>
+          <FILE id="P04IyB" name="StampManager.cpp" compile="1" resource="0"
+                file="Source/Definitions/Stamp/StampManager.cpp"/>
+          <FILE id="iqShRI" name="StampManager.h" compile="0" resource="0" file="Source/Definitions/Stamp/StampManager.h"/>
+          <FILE id="v4QX9h" name="StampManagerUI.cpp" compile="1" resource="0"
+                file="Source/Definitions/Stamp/StampManagerUI.cpp"/>
+          <FILE id="Sgep3p" name="StampManagerUI.h" compile="0" resource="0"
+                file="Source/Definitions/Stamp/StampManagerUI.h"/>
+          <FILE id="jMEJgP" name="StampMapping.cpp" compile="1" resource="0"
+                file="Source/Definitions/Stamp/StampMapping.cpp"/>
+          <FILE id="yF8ppI" name="StampMapping.h" compile="0" resource="0" file="Source/Definitions/Stamp/StampMapping.h"/>
+        </GROUP>
         <GROUP id="{7FB4DF5D-8DCA-AC2D-DD2C-F67ECA24743D}" name="SubFixture">
           <FILE id="jbO0qH" name="SubFixture.cpp" compile="1" resource="0" file="Source/Definitions/SubFixture/SubFixture.cpp"/>
           <FILE id="pC6OfG" name="SubFixture.h" compile="0" resource="0" file="Source/Definitions/SubFixture/SubFixture.h"/>
@@ -896,11 +930,11 @@
             externalLibraries="Setupapi.lib&#10;Servus.lib&#10;dnssd.lib"
             extraCompilerFlags="/bigobj ">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       binaryPath="Binaries/Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib"
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;"
+                       binaryPath="Binaries/Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/NDI/lib/x64"
                        defines="JUCE_DISABLE_ASSERTIONS=1"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/asio&#10;../../External/servus/include&#10;../../External/dnssd/include"
-                       binaryPath="Binaries/" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib"
+                       binaryPath="Binaries/" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/NDI/lib/x64"
                        defines="JUCE_DISABLE_ASSERTIONS=1" alwaysGenerateDebugSymbols="1"
                        debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
@@ -959,13 +993,13 @@
                hardenedRuntime="0">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release"
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/NDI/lib/osx"
                        osxCompatibility="10.10 SDK" targetName="BlinderKitten" binaryPath="Release"
                        defines="JUCE_DISABLE_ASSERTIONS=1&#10;JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
                        macOSDeploymentTarget="10.10"/>
         <CONFIGURATION isDebug="0" name="ReleaseSilicon" targetName="BlinderKitten"
-                       libraryPath="../../External/servus/lib/silicon/release" optimisation="3"
-                       binaryPath="Release" defines="JUCE_DISABLE_ASSERTIONS=1&#10;JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
+                       libraryPath="../../External/servus/lib/silicon/release&#10;../../External/NDI/lib/osx"
+                       optimisation="3" binaryPath="Release" defines="JUCE_DISABLE_ASSERTIONS=1&#10;JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
                        osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

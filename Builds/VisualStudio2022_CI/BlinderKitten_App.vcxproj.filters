@@ -56,6 +56,12 @@
     <Filter Include="BlinderKitten\Source\Common\MIDI">
       <UniqueIdentifier>{ACB3CC19-50D0-170C-C59B-45EE95A8428E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BlinderKitten\Source\Common\NDI\ui">
+      <UniqueIdentifier>{A26B69EE-A6B7-3B52-67BC-EE7C009F4BAB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Common\NDI">
+      <UniqueIdentifier>{88F3971A-989E-E6F3-BD6D-17DDAEE1A696}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BlinderKitten\Source\Common\Serial\lib\cobs">
       <UniqueIdentifier>{9EFD7B39-5288-9272-E88A-C605A522BFC6}</UniqueIdentifier>
     </Filter>
@@ -181,6 +187,9 @@
     </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\SelectionMaster">
       <UniqueIdentifier>{CE95BC86-5208-4620-4343-CAC96BEF5704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlinderKitten\Source\Definitions\Stamp">
+      <UniqueIdentifier>{E1FD3B70-8001-4F10-81EA-FC4E5DB398FB}</UniqueIdentifier>
     </Filter>
     <Filter Include="BlinderKitten\Source\Definitions\SubFixture">
       <UniqueIdentifier>{31ABCE2F-E396-1009-4A33-7C970B554790}</UniqueIdentifier>
@@ -1318,6 +1327,21 @@
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
       <Filter>BlinderKitten\Source\Common\MIDI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\ui\NDIDeviceChooser.cpp">
+      <Filter>BlinderKitten\Source\Common\NDI\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\ui\NDIDeviceParameterUI.cpp">
+      <Filter>BlinderKitten\Source\Common\NDI\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\NDIDevice.cpp">
+      <Filter>BlinderKitten\Source\Common\NDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\NDIDeviceParameter.cpp">
+      <Filter>BlinderKitten\Source\Common\NDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\NDI\NDIManager.cpp">
+      <Filter>BlinderKitten\Source\Common\NDI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\lib\cobs\cobs.cpp">
       <Filter>BlinderKitten\Source\Common\Serial\lib\cobs</Filter>
     </ClCompile>
@@ -1746,6 +1770,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.cpp">
       <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\Stamp.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManager.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampManagerUI.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\Stamp\StampMapping.cpp">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
@@ -5217,6 +5253,21 @@
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h">
       <Filter>BlinderKitten\Source\Common\MIDI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\NDI\ui\NDIDeviceChooser.h">
+      <Filter>BlinderKitten\Source\Common\NDI\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\NDI\ui\NDIDeviceParameterUI.h">
+      <Filter>BlinderKitten\Source\Common\NDI\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\NDI\NDIDevice.h">
+      <Filter>BlinderKitten\Source\Common\NDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\NDI\NDIDeviceParameter.h">
+      <Filter>BlinderKitten\Source\Common\NDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\NDI\NDIManager.h">
+      <Filter>BlinderKitten\Source\Common\NDI</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h">
       <Filter>BlinderKitten\Source\Common\Serial\lib\cobs</Filter>
     </ClInclude>
@@ -5627,6 +5678,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\SelectionMaster\SelectionMasterManagerUI.h">
       <Filter>BlinderKitten\Source\Definitions\SelectionMaster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\Stamp.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManager.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampManagerUI.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\Stamp\StampMapping.h">
+      <Filter>BlinderKitten\Source\Definitions\Stamp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>

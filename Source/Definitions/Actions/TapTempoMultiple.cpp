@@ -9,8 +9,10 @@
 */
 
 #include "TapTempoMultiple.h"
-#include "../Carousel/Carousel.h"
 #include "../../Brain.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Effect/Effect.h"
+#include "Definitions/Carousel/Carousel.h"
 
 TapTempoMultiple::TapTempoMultiple(var params) :
     Action(params)

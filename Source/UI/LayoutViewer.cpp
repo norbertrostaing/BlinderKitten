@@ -12,6 +12,16 @@
 #include "Brain.h"
 #include "UserInputManager.h"
 #include "BKEngine.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Group/Group.h"
+#include "Definitions/Tracker/Tracker.h"
+#include "Definitions/BKPathPreset/BKPathPreset.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/FixtureType/FixtureType.h"
+
+
+
+
 
 LayoutViewer::LayoutViewer() :
 	ShapeShifterContentComponent("Layout Viewer")

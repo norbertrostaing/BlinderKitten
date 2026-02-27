@@ -12,6 +12,8 @@
 #include "BKEngine.h"
 #include "CuelistSheet.h"
 #include "UserInputManager.h"
+#include "Definitions/Cuelist/Cuelist.h"
+
 
 CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 {

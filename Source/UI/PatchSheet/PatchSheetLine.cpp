@@ -12,6 +12,7 @@
 #include "BKEngine.h"
 #include "PatchSheet.h"
 #include "UserInputManager.h"
+#include "Definitions/Cue/Cue.h"
 
 PatchSheetLine::PatchSheetLine(Fixture* f, FixturePatch* fp, PatchSheet* parent)
 {

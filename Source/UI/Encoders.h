@@ -12,6 +12,8 @@
 
 #include <JuceHeader.h>
 #include "BKEngine.h"
+#include "Definitions/ChannelFamily/ChannelFamily.h"
+
 
 class ChannelType;
 class Command;

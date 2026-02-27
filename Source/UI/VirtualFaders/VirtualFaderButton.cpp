@@ -15,6 +15,12 @@
 #include "../../Brain.h"
 #include "BKEngine.h"
 #include "UserInputManager.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Effect/Effect.h"
+#include "Definitions/Carousel/Carousel.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/Tracker/Tracker.h"
+
 
 VirtualFaderButton::VirtualFaderButton(var params) :
 	BaseItem(params.getProperty("name", "VirtualFaderButton")),

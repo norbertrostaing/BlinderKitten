@@ -15,6 +15,7 @@
 #include "UI/InputPanel.h"
 #include "UI/Encoders.h"
 #include "ChannelFamily/ChannelFamilyManager.h"
+#include "Definitions/Command/Command.h"
 
 EncoderAction::EncoderAction(var params) :
     Action(params)

@@ -29,6 +29,12 @@ il faudrait que le formulaire soit pré rempli genre
 #include "UI/Encoders.h"
 #include "UI/InputPanel.h"
 #include "UI/EncodersMult/EncodersMult.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Group/Group.h"
+#include "Definitions/Preset/Preset.h"
+#include "Definitions/Cuelist/Cuelist.h"
+
+
 
 Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),

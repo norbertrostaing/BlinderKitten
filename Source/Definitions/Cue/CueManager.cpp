@@ -1,5 +1,6 @@
 #include "CueManager.h"
 #include "../../Brain.h"
+#include "Definitions/Cuelist/Cuelist.h"
 
 CueManager::CueManager() :
     BaseManager("Cues")

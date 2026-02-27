@@ -1,5 +1,7 @@
 #include "FixtureTypeChannelManager.h"
 #include "../../Brain.h"
+#include "Definitions/ChannelFamily/ChannelType/ChannelType.h"
+#include "Definitions/FixtureType/FixtureType.h"
 
 FixtureTypeChannelManager::FixtureTypeChannelManager() :
     BaseManager("Channels")

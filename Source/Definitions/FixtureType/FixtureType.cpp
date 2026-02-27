@@ -12,6 +12,7 @@
 #include "FixtureType.h"
 #include "Brain.h"
 #include "Definitions/Preset/PresetManager.h"
+#include "Definitions/Fixture/Fixture.h"
 
 FixtureType::FixtureType(var params) :
 	BaseItem(params.getProperty("name", "FixtureType")),

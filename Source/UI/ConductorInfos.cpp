@@ -2,6 +2,11 @@
 #include "ConductorInfos.h"
 #include "Brain.h"
 #include "UserInputManager.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Command/Command.h"
+#include "Definitions/Cue/Cue.h"
+
+
 
 //==============================================================================
 ConductorInfosUI::ConductorInfosUI(const String& contentName):

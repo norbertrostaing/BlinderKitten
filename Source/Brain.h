@@ -10,26 +10,33 @@
 #pragma once
 
 #include "JuceHeader.h"
-#include "Definitions/SubFixture/SubFixture.h"
-#include "Definitions/Fixture/Fixture.h"
-#include "Definitions/Group/Group.h"
-#include "Definitions/Command/Command.h"
-#include "Definitions/Cue/Cue.h"
-#include "Definitions/Cuelist/Cuelist.h"
-#include "Definitions/Preset/Preset.h"
-#include "Definitions/Programmer/Programmer.h"
-#include "Definitions/CurvePreset/CurvePreset.h"
-#include "Definitions/TimingPreset/TimingPreset.h"
-#include "Definitions/BKPathPreset/BKPathPreset.h"
-#include "Definitions/Effect/Effect.h"
-#include "Definitions/Carousel/Carousel.h"
-#include "Definitions/Mapper/Mapper.h"
-#include "Definitions/RunningTask.h"
-#include "Definitions/Cue/Task.h"
-#include "Definitions/Layout/Layout.h"
-#include "Definitions/Tracker/Tracker.h"
-#include "Definitions/SelectionMaster/SelectionMaster.h"
-#include "Definitions/Bundle/Bundle.h"
+
+class SubFixture;
+class SubFixtureChannel;
+class FixtureType;
+class Fixture;
+class Group;
+class Command;
+class CommandSelection;
+class CommandValue;
+class Cue;
+class Cuelist;
+class Preset;
+class Programmer;
+class CurvePreset;
+class TimingPreset;
+class BKPathPreset;
+class Effect;
+class Stamp;
+class Carousel;
+class Mapper;
+class RunningTask;
+class Task;
+class Layout;
+class Tracker;
+class SelectionMaster;
+class Bundle;
+class DMXArtNetDevice;
 
 
 class Brain :
@@ -52,6 +59,7 @@ public:
     HashMap<int, TimingPreset*>timingPresets;
     HashMap<int, BKPathPreset*>bkPathPresets;
     HashMap<int, Effect*>effects;
+    HashMap<int, Stamp*>stamps;
     HashMap<int, Carousel*>carousels;
     HashMap<int, Mapper*>mappers;
     HashMap<int, Tracker*>trackers;
@@ -69,6 +77,8 @@ public:
     Array<Programmer*> programmerPoolWaiting;
     Array<Effect*> effectPoolUpdating;
     Array<Effect*> effectPoolWaiting;
+    Array<Stamp*> stampPoolUpdating;
+    Array<Stamp*> stampPoolWaiting;
     Array<Carousel*> carouselPoolUpdating;
     Array<Carousel*> carouselPoolWaiting;
     Array<Mapper*> mapperPoolUpdating;
@@ -82,6 +92,7 @@ public:
     Array<SubFixtureChannel*> grandMasterChannels;
     Array<Cuelist*> swoppedCuelists;
     Array<Effect*> swoppedEffects;
+    Array<Stamp*> swoppedStamps;
     Array<Carousel*> swoppedCarousels;
 
     Array<Command*> allCommands;
@@ -138,6 +149,8 @@ public:
     void unregisterBKPathPreset(BKPathPreset* p);
     void registerEffect(Effect* p, int id, bool swap = false);
     void unregisterEffect(Effect* p);
+    void registerStamp(Stamp* p, int id, bool swap = false);
+    void unregisterStamp(Stamp* p);
     void registerCarousel(Carousel* p, int id, bool swap = false);
     void unregisterCarousel(Carousel* p);
     void registerMapper(Mapper* p, int id, bool swap = false);
@@ -156,6 +169,7 @@ public:
     void pleaseUpdate(Cue* c);
     void pleaseUpdate(Programmer* p);
     void pleaseUpdate(Effect* f);
+    void pleaseUpdate(Stamp* s);
     void pleaseUpdate(Carousel* c);
     void pleaseUpdate(Mapper* c);
     void pleaseUpdate(Tracker* c);
@@ -177,6 +191,7 @@ public:
     TimingPreset* getTimingPresetById(int id, bool followIfAnother = false);
     BKPathPreset* getBKPathPresetById(int id, bool followIfAnother = false);
     Effect* getEffectById(int id);
+    Stamp* getStampById(int id);
     Carousel* getCarouselById(int id);
     Mapper* getMapperById(int id);
     Layout* getLayoutById(int id);
@@ -186,9 +201,11 @@ public:
 
     void swoppedCuelist(Cuelist* c);
     void swoppedEffect(Effect* c);
+    void swoppedStamp(Stamp* c);
     void swoppedCarousel(Carousel* c);
     void unswoppedCuelist(Cuelist* c);
     void unswoppedEffect(Effect* c);
+    void unswoppedStamp(Stamp* c);
     void unswoppedCarousel(Carousel* c);
     bool isSwopping = false;
 
@@ -204,6 +221,7 @@ public:
     void killAllCuelists();
     void offAllCuelists();
     void stopAllEffects();
+    void stopAllStamps();
     void stopAllCarousels();
 
     void resetRandomSeed(int seed);
@@ -215,6 +233,7 @@ public:
 
     void soloPoolCuelistStarted(int poolId, Cuelist* c);
     void soloPoolEffectStarted(int poolId, Effect* c);
+    void soloPoolStampStarted(int poolId, Stamp* c);
     void soloPoolCarouselStarted(int poolId, Carousel* c);
     void soloPoolCheck(int poolId, String excludeType, int excludeId);
     void soloPoolRandom(int poolId);

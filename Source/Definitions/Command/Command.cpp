@@ -19,6 +19,12 @@
 #include "UserInputManager.h"
 #include "CommandManager.h"
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "Definitions/Cuelist/Cuelist.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/TimingPreset/TimingPreset.h"
+#include "Definitions/Preset/Preset.h"
+#include "Definitions/Fixture/Fixture.h"
+#include "Definitions/Group/Group.h"
 
 Command::Command(var params) :
 	BaseItem(params.getProperty("name", "Command")),

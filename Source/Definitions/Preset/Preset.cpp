@@ -19,6 +19,12 @@
 #include "UserInputManager.h"
 #include "Definitions/DataTransferManager/DataTransferManager.h"
 #include "BKEngine.h"
+#include "Definitions/Programmer/Programmer.h"
+#include "Definitions/Command/Command.h"
+#include "Definitions/Command/CommandValue.h"
+#include "Definitions/Fixture/Fixture.h"
+
+
 
 int comparePresetContent(PresetSubFixtureValues* A, PresetSubFixtureValues* B) {
 	if (A->targetFixtureId->getValue() == B->targetFixtureId->getValue()) {

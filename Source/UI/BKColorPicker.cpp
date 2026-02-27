@@ -12,6 +12,7 @@
 #include "BKColorPicker.h"
 #include "UserInputManager.h"
 #include "BKEngine.h"
+#include "Definitions/Command/Command.h"
 //#include "Definitions/Command/Command.h"
 
 

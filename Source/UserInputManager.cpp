@@ -14,6 +14,9 @@
 #include "Definitions/Cuelist/Cuelist.h"
 #include "Definitions/Effect/Effect.h"
 #include "Definitions/Carousel/Carousel.h"
+#include "Definitions/Mapper/Mapper.h"
+#include "Definitions/Tracker/Tracker.h"
+#include "Definitions/Preset/Preset.h"
 #include "Definitions/Programmer/Programmer.h"
 #include "Definitions/Programmer/ProgrammerManager.h"
 #include "Definitions/Command/Command.h"
@@ -35,6 +38,8 @@
 #include "Definitions/Assistant/Assistant.h"
 #include "UI/BKColorPicker.h"
 #include "UI/LayoutViewer.h"
+#include "Definitions/Bundle/Bundle.h"
+
 
 juce_ImplementSingleton(UserInputManager);
 
