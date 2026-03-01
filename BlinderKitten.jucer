@@ -1024,13 +1024,13 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;GDK_BACKEND=x11"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,'$ORIGIN/../lib'&#10;-Wl,--as-needed"
                 externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;ndi"
                 smallIcon="qTJiMk" bigIcon="qTJiMk">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/linux&#10;../../External/NDI/lib/x86_64-linux-gnu&#10;/usr/lib/x86_64-linux-gnu/"
                        linuxArchitecture="-m64" defines="JUCE_DISABLE_ASSERTIONS=1"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="BlinderKitten" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;"
+        <CONFIGURATION isDebug="0" name="Release" targetName="BlinderKitten" libraryPath="../../External/servus/lib/linux&#10;../../External/NDI/lib/x86_64-linux-gnu&#10;/usr/lib/x86_64-linux-gnu/"
                        linuxArchitecture="-m64" defines="JUCE_DISABLE_ASSERTIONS=1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
