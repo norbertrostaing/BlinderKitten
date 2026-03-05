@@ -16,7 +16,9 @@ NDIManager::NDIManager() :
 {
 	// ndiRouterDefaultType = dynamic_cast<BKEngine *>(Engine::mainEngine)->defaultBehaviors.addEnumParameter("NDI Router Ouput Type","Choose the default type when choosing a NDI Module as Router output");
 	// ndiRouterDefaultType->addOption("Control Change", NDIManager::CONTROL_CHANGE)->addOption("Note On", NDIManager::NOTE_ON)->addOption("Note Off", NDIManager::NOTE_OFF);
+    #ifndef NDI_DISABLE
     pNDI_find = NDIlib_find_create_v2();
+    #endif
 
     startThread();
 }
@@ -30,6 +32,9 @@ void NDIManager::checkDevices()
 {
 	//INPUTS
 	//LOG("searching for devices");
+    #ifdef NDI_DISABLE
+    return;
+    #endif
     uint32_t no_sources = 0;
     const NDIlib_source_t* p_sources = NULL;
     NDIlib_find_wait_for_sources(pNDI_find, 1000);

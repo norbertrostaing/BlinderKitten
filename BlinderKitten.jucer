@@ -1052,7 +1052,7 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/Raspberry" extraDefs="LINK_PLATFORM_LINUX=1"
+    <LINUX_MAKE targetFolder="Builds/Raspberry" extraDefs="LINK_PLATFORM_LINUX=1&#10;NDI_DISABLE=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;atomic"
                 smallIcon="qTJiMk" bigIcon="qTJiMk">
@@ -1081,14 +1081,14 @@
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="LINK_PLATFORM_LINUX=1"
+    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="LINK_PLATFORM_LINUX=1&#10;NDI_DISABLE=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="Servus&#10;curl&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;atomic"
                 smallIcon="qTJiMk" bigIcon="qTJiMk" linuxExtraPkgConfig="freetype2">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry64&#10;"/>
+                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/NDI/lib/aarch64-rpi4-linux-gnueabi"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
