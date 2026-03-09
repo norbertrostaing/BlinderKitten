@@ -346,6 +346,61 @@ void LayoutViewer::mouseDrag(const MouseEvent& e)
 			}
 
 		}
+		else if (type == BKPath::PATH_BEZIER) {
+			if (currentMouseAction == CLIC_DRAG) {
+				float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
+				float lineY = (float)currentMousePath->lineEndPosition->getValue()[1] - (float)currentMousePath->position->getValue()[1];
+
+				float h1X = (float)currentMousePath->bezierFirstHandle->getValue()[0] - (float)currentMousePath->position->getValue()[0];
+				float h1Y = (float)currentMousePath->bezierFirstHandle->getValue()[1] - (float)currentMousePath->position->getValue()[1];
+
+				float h2X = (float)currentMousePath->bezierSecondHandle->getValue()[0] - (float)currentMousePath->position->getValue()[0];
+				float h2Y = (float)currentMousePath->bezierSecondHandle->getValue()[1] - (float)currentMousePath->position->getValue()[1];
+
+				var v;
+				v.append(layoutX + deltaMouseX);
+				v.append(layoutY + deltaMouseY);
+				currentMousePath->position->setValue(v);
+				var vEnd = v.clone();
+				vEnd[0] = (float)vEnd[0] + lineX;
+				vEnd[1] = (float)vEnd[1] + lineY;
+				currentMousePath->lineEndPosition->setValue(vEnd);
+				var vH1 = v.clone();
+				vH1[0] = (float)vH1[0] + h1X;
+				vH1[1] = (float)vH1[1] + h1Y;
+				currentMousePath->bezierFirstHandle->setValue(vH1);
+				var vH2 = v.clone();
+				vH2[0] = (float)vH2[0] + h2X;
+				vH2[1] = (float)vH2[1] + h2Y;
+				currentMousePath->bezierSecondHandle->setValue(vH2);
+
+			}
+			else if (currentMouseAction == CLIC_ORIGIN) {
+				var v;
+				v.append(layoutX);
+				v.append(layoutY);
+				currentMousePath->position->setValue(v);
+			}
+			else if (currentMouseAction == CLIC_END) {
+				var v;
+				v.append(layoutX);
+				v.append(layoutY);
+				currentMousePath->lineEndPosition->setValue(v);
+			}
+			else if (currentMouseAction == CLIC_HANDLE1) {
+				var v;
+				v.append(layoutX);
+				v.append(layoutY);
+				currentMousePath->bezierFirstHandle->setValue(v);
+			}
+			else if (currentMouseAction == CLIC_HANDLE2) {
+				var v;
+				v.append(layoutX);
+				v.append(layoutY);
+				currentMousePath->bezierSecondHandle->setValue(v);
+			}
+
+		}
 		else if (type == BKPath::PATH_ROD) {
 			if (currentMouseAction == CLIC_DRAG) {
 				//float lineX = (float)currentMousePath->lineEndPosition->getValue()[0] - (float)currentMousePath->position->getValue()[0];
@@ -809,7 +864,7 @@ void LayoutViewer::paint(Graphics& g)
 							drawColor = sf->parentFixture->getLayoutStrokeColor();
 						}
 						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
-						drawFixture(g, sf->parentFixture,p , X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);
+						drawFixture(g, sf->parentFixture, p, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);
 						if (!edit) {
 							clicg.setColour(getClickColour(sf->parentFixture));
 							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
@@ -824,6 +879,109 @@ void LayoutViewer::paint(Graphics& g)
 				g.setColour(handleColour);
 				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
 				g.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
+			}
+
+		}
+		if (type == BKPath::PATH_BEZIER) {
+
+			float fromX = jmap((float)p->position->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], 0.f, width);
+			float fromY = jmap((float)p->position->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], 0.f, height);
+
+			float toX = jmap((float)p->lineEndPosition->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], 0.f, width);
+			float toY = jmap((float)p->lineEndPosition->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], 0.f, height);
+
+			float h1X = jmap((float)p->bezierFirstHandle->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], 0.f, width);
+			float h1Y = jmap((float)p->bezierFirstHandle->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], 0.f, height);
+
+			float h2X = jmap((float)p->bezierSecondHandle->getValue()[0], (float)dimensionX[0], (float)dimensionX[1], 0.f, width);
+			float h2Y = jmap((float)p->bezierSecondHandle->getValue()[1], (float)dimensionY[1], (float)dimensionY[0], 0.f, height);
+
+			Path curve;
+			curve.startNewSubPath(fromX, fromY);
+			curve.cubicTo(h1X, h1Y, h2X, h2Y, toX, toY);
+
+			if (drawPaths) { // wanna draw lines ?
+				g.setColour(juce::Colours::lightgrey);
+				g.strokePath(curve, PathStrokeType(0.5f));
+			}
+
+			if (edit) {
+				clicg.setColour(getClickColour(p, CLIC_DRAG));
+				clicg.strokePath(curve, PathStrokeType(handleWidth));
+				clicg.setColour(getClickColour(p, CLIC_ORIGIN));
+				clicg.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_END));
+				clicg.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_HANDLE1));
+				clicg.fillEllipse(h1X - halfHandleWidth, h1Y - halfHandleWidth, handleWidth, handleWidth);
+				clicg.setColour(getClickColour(p, CLIC_HANDLE2));
+				clicg.fillEllipse(h2X - halfHandleWidth, h2Y - halfHandleWidth, handleWidth, handleWidth);
+			}
+			float currentArrowX = -1;
+			float currentArrowY = -1;
+			if (p->spreadSubFixtures->boolValue()) {
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
+					if (p->subFixtToPos.contains(sf)) {
+						std::shared_ptr<Point<float>> t = p->subFixtToPos.getReference(sf);
+						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
+							g.setColour(juce::Colours::lightgrey);
+							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
+						}
+						currentArrowX = X;
+						currentArrowY = Y;
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutStrokeColor();
+						}
+						drawSubFixture(g, sf, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, drawColor, labelPos);
+						if (!edit) {
+							clicg.setColour(getClickColour(sf));
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						}
+					}
+				}
+			}
+			if (!p->spreadSubFixtures->boolValue()) {
+				Array<Fixture*> drawedFixtures;
+				for (int iFixt = 0; iFixt < p->selection.computedSelectedSubFixtures.size(); iFixt++) {
+					SubFixture* sf = p->selection.computedSelectedSubFixtures[iFixt];
+					if (p->fixtToPos.contains(sf->parentFixture) && !drawedFixtures.contains(sf->parentFixture)) {
+						std::shared_ptr<Point<float>> t = p->fixtToPos.getReference(sf->parentFixture);
+						float X = jmap((float)t->x, (float)dimensionX[0], (float)dimensionX[1], (float)0, width);
+						float Y = jmap((float)t->y, (float)dimensionY[1], (float)dimensionY[0], (float)0, height);
+						if (drawPaths && (currentArrowX != -1 || currentArrowY != -1)) {
+							g.setColour(juce::Colours::lightgrey);
+							drawMidArrow(g, currentArrowX, currentArrowY, X, Y);
+						}
+						currentArrowX = X;
+						currentArrowY = Y;
+						Colour drawColor = juce::Colours::white;
+						if (overrideColor) { drawColor = overridenColor; }
+						else {
+							drawColor = sf->parentFixture->getLayoutStrokeColor();
+						}
+						float angle = jmap((float)iFixt, (float)0, (float)p->selection.computedSelectedSubFixtures.size(), p->fixturesAngleFrom->floatValue(), p->fixturesAngleTo->floatValue());
+						drawFixture(g, sf->parentFixture, p, X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight, angle, drawColor, labelPos);
+						if (!edit) {
+							clicg.setColour(getClickColour(sf->parentFixture));
+							clicg.fillRect(X - halfTileWidth, Y - halfTileHeight, tileWidth, tileHeight);
+						}
+					}
+				}
+			}
+
+			if (p == hoveredPath) {
+				g.setColour(hoverColour);
+				g.strokePath(curve, PathStrokeType(halfHandleWidth));
+				g.setColour(handleColour);
+				g.fillEllipse(fromX - halfHandleWidth, fromY - halfHandleWidth, handleWidth, handleWidth);
+				g.fillEllipse(toX - halfHandleWidth, toY - halfHandleWidth, handleWidth, handleWidth);
+				g.fillEllipse(h1X - halfHandleWidth, h1Y - halfHandleWidth, handleWidth, handleWidth);
+				g.fillEllipse(h2X - halfHandleWidth, h2Y - halfHandleWidth, handleWidth, handleWidth);
 			}
 
 		}

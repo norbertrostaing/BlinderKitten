@@ -26,8 +26,11 @@ BKPath::BKPath(var params) :
     saveAndLoadRecursiveData = true;
     var d; d.append(0); d.append(0);
     pathType = addEnumParameter("Type", "Type of path");
-    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Rod", PATH_ROD)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE)->addOption("Preset", PATH_PRESET);
+    pathType->addOption("Point", PATH_POINT)->addOption("Line", PATH_LINE)->addOption("Rod", PATH_ROD)->addOption("Grid", PATH_GRID)->addOption("Circle", PATH_CIRCLE)->addOption("Bezier", PATH_BEZIER)->addOption("Preset", PATH_PRESET);
     position = addPoint2DParameter("Position", "Position in your layout");
+
+    bezierFirstHandle = addPoint2DParameter("Bezier first handle", "position of the first control point");
+    bezierSecondHandle = addPoint2DParameter("Bezier second handle", "position of the second control point");
 
     lineEndPosition = addPoint2DParameter("End position", "");
 
@@ -145,6 +148,45 @@ void BKPath::computeData()
             }
         }
 
+    }
+    else if (type == BKPath::PATH_BEZIER) {
+        Point<float> temp;
+
+        Point<float> p0 = origin;
+        Point<float> p1 = bezierFirstHandle->getPoint();
+        Point<float> p2 = bezierSecondHandle->getPoint();
+        Point<float> p3 = lineEndPosition->getPoint();
+
+
+        for (int i = 0; i < subFixts.size(); i++) {
+            Fixture* f = subFixts[i]->parentFixture;
+
+            float ratio = subFixts.size() > 1 ? (float)i / ((float)subFixts.size() - 1) : 0.5f;
+            if (!spreadSubFixtures->boolValue()) {
+                ratio = fixts.size() > 1 ? (float)fixts.indexOf(f) / ((float)fixts.size() - 1) : 0.5f;
+            }
+
+            float t = ratio;
+            float u = 1.0f - t;
+
+            temp.x =
+                u * u * u * p0.x +
+                3.0f * u * u * t * p1.x +
+                3.0f * u * t * t * p2.x +
+                t * t * t * p3.x;
+
+            temp.y =
+                u * u * u * p0.y +
+                3.0f * u * u * t * p1.y +
+                3.0f * u * t * t * p2.y +
+                t * t * t * p3.y;
+
+            subFixtToPos.set(subFixts[i], std::make_shared<Point<float>>(temp.x, temp.y));
+
+            if (!fixtToPos.contains(f)) {
+                fixtToPos.set(f, std::make_shared<Point<float>>(temp.x, temp.y));
+            }
+        }
     }
     else if (type == BKPath::PATH_ROD) {
         Point<float> start;
@@ -372,31 +414,36 @@ void BKPath::onContainerParameterChangedInternal(Parameter* c) {
 
 void BKPath::updateDisplay() {
 
-    lineEndPosition->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_LINE;
+    PathType t = pathType->getValueDataAsEnum<PathType>();
 
-    rodSize->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_ROD;
-    rodAngle->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_ROD;
+    lineEndPosition->hideInEditor = t != PATH_LINE && t != PATH_BEZIER;
 
-    gridSize -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
-    gridAngle -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
-    gridNumberOfElements -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
-    gridOrientation -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
-    gridZigZag -> hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
-    gridInverseRows->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_GRID;
+    bezierFirstHandle->hideInEditor = t != PATH_BEZIER;
+    bezierSecondHandle->hideInEditor = t != PATH_BEZIER;
+
+    rodSize->hideInEditor = t != PATH_ROD;
+    rodAngle->hideInEditor = t != PATH_ROD;
+
+    gridSize -> hideInEditor = t != PATH_GRID;
+    gridAngle -> hideInEditor = t != PATH_GRID;
+    gridNumberOfElements -> hideInEditor = t != PATH_GRID;
+    gridOrientation -> hideInEditor = t != PATH_GRID;
+    gridZigZag -> hideInEditor = t != PATH_GRID;
+    gridInverseRows->hideInEditor = t != PATH_GRID;
     
-    circleRadius->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
-    circleFrom->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
-    circleTo->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_CIRCLE;
+    circleRadius->hideInEditor = t != PATH_CIRCLE;
+    circleFrom->hideInEditor = t != PATH_CIRCLE;
+    circleTo->hideInEditor = t != PATH_CIRCLE;
 
-    presetId->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_PRESET;
-    presetScale->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_PRESET;
-    presetAngle->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_PRESET;
+    presetId->hideInEditor = t != PATH_PRESET;
+    presetScale->hideInEditor = t != PATH_PRESET;
+    presetAngle->hideInEditor = t != PATH_PRESET;
 
     strokeColor->hideInEditor = !overrideStrokeColor->boolValue();
     fillColor->hideInEditor = !overrideFillColor->boolValue();
 
-    actionManager.hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
-    customText->hideInEditor = pathType->getValueDataAsEnum<PathType>() != PATH_POINT;
+    actionManager.hideInEditor = t != PATH_POINT;
+    customText->hideInEditor = t != PATH_POINT;
 
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

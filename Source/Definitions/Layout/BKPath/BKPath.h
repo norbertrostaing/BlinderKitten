@@ -23,7 +23,7 @@ class BKPath:
     String objectType;
     var objectData;
 
-    enum PathType { PATH_POINT, PATH_LINE, PATH_ROD, PATH_GRID, PATH_CIRCLE, PATH_PRESET};
+    enum PathType { PATH_POINT, PATH_LINE, PATH_ROD, PATH_GRID, PATH_CIRCLE, PATH_PRESET, PATH_BEZIER};
     enum GridOrentation { 
         GRID_LR, GRID_RL, GRID_TB, GRID_BT
     };
@@ -32,6 +32,9 @@ class BKPath:
     Point2DParameter* position;
 
     Point2DParameter* lineEndPosition;
+
+    Point2DParameter* bezierFirstHandle;
+    Point2DParameter* bezierSecondHandle;
 
     FloatParameter* rodSize;
     FloatParameter* rodAngle;

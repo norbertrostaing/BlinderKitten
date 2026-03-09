@@ -31,7 +31,7 @@ public:
 
     ComboBox layoutsList;
     Image clicZones;
-    enum ClicAction {CLIC_NOACTION, CLIC_DRAG, CLIC_ORIGIN, CLIC_END, CLIC_TL, CLIC_TR, CLIC_BL, CLIC_BR, CLIC_ROTATE, CLIC_SELECT};
+    enum ClicAction {CLIC_NOACTION, CLIC_DRAG, CLIC_ORIGIN, CLIC_END, CLIC_TL, CLIC_TR, CLIC_BL, CLIC_BR, CLIC_ROTATE, CLIC_SELECT, CLIC_HANDLE1, CLIC_HANDLE2};
     
     ToggleButton viewPaths;
     ToggleButton editMode;
