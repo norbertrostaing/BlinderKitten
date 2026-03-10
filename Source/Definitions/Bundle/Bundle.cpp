@@ -236,10 +236,10 @@ void Bundle::setSpeed(float val, bool tapTempoDivide)
 
 void Bundle::setSizeRel(float val, bool size, bool HTP, bool LTP, bool flash)
 {
-	if (HTP) lastHTP += val;
-	if (LTP) lastLTP += val;
-	if (size) lastSize += val;
-	if (flash) lastFlash += val;
+	if (HTP) {lastHTP += val; lastHTP = jlimit(0.f,1.f,lastHTP);}
+	if (LTP) {lastLTP += val; lastLTP = jlimit(0.f,1.f,lastLTP);}
+	if (size) {lastSize += val; lastSize = jlimit(0.f,1.f,lastSize);}
+	if (flash) {lastFlash += val; lastFlash = jlimit(0.f,1.f,lastFlash);}
 	Brain::getInstance()->virtualFadersNeedUpdate = true;
 
 	computeValues();
