@@ -42,6 +42,8 @@ void NDIInputDevice::addNDIInputListener(NDIInputListener* newListener)
 	inputListeners.add(newListener);
 	if (inputListeners.size() == 1)
 	{
+		#ifndef NDI_DISABLE
+
 		NDIlib_recv_create_v3_t recv_create_desc{};
 		recv_create_desc.color_format = NDIlib_recv_color_format_BGRX_BGRA;
 		recv_create_desc.allow_video_fields = false;
@@ -52,6 +54,8 @@ void NDIInputDevice::addNDIInputListener(NDIInputListener* newListener)
 
 		NDIlib_recv_connect(pNDI_recv, &stableSource);
 		shouldProcess = true;
+
+		#endif
 	}
 }
 
@@ -59,9 +63,13 @@ void NDIInputDevice::removeNDIInputListener(NDIInputListener* listener) {
 	inputListeners.remove(listener);
 	if (inputListeners.size() == 0)
 	{
+		#ifndef NDI_DISABLE
+
 		shouldProcess = false;
 		NDIlib_recv_destroy(pNDI_recv);
 		LOG("close connexion here");
+
+		#endif
 	}
 }
 
@@ -69,6 +77,9 @@ void NDIInputDevice::run()
 {
 	while (!threadShouldExit()) {
 		if (shouldProcess) {
+
+			#ifndef NDI_DISABLE
+			
 			NDIlib_video_frame_v2_t video_frame{};
 
 			switch (NDIlib_recv_capture_v2(pNDI_recv, &video_frame, nullptr, nullptr, 100)) {
@@ -91,6 +102,8 @@ void NDIInputDevice::run()
 				//NDIlib_recv_free_audio_v2(pNDI_recv, &audio_frame);
 				break;
 			}
+
+			#endif
 		}
 		else {
 			wait(1000);
