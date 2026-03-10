@@ -139,6 +139,7 @@ void Task::updateDisplay() {
 	useSize->hideInEditor = !(targType == "bundle" && bundleAction->getValue() == "size");
 	useFlash->hideInEditor = !(targType == "bundle" && bundleAction->getValue() == "size");
 
+	forcedFade->hideInEditor = !(targType == "bundle" && (bundleAction->getValue() == "start" || bundleAction->getValue() == "stop"));
 
 	if (targType == "cuelist") {
 		if (cuelistAction->getValue() == "htplevel") {
