@@ -119,7 +119,8 @@ bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
         }
     }
     else {
-        float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, velocity), inputRange7b->x, inputRange7b->y, 0, 1);
+        if (velocity< inputRange7b->x || velocity > inputRange7b->y) return false;
+        float relValue = jmap<float>(velocity, inputRange7b->x, inputRange7b->y, 0, 1);
         processValue(relValue, origin + " " + String(rcvChannel) + " note" + String(pitch), incrementIndex);
     }
     return true;
@@ -155,7 +156,8 @@ bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin,
         }
     }
     else {
-        float relValue = jmap<float>(jlimit<float>(inputRange7b->x, inputRange7b->y, value), inputRange7b->x, inputRange7b->y, 0, 1);
+        if (value< inputRange7b->x || value > inputRange7b->y) return false;
+        float relValue = jmap<float>(value, inputRange7b->x, inputRange7b->y, 0, 1);
         processValue(relValue, origin+" "+String(rcvChannel)+" cc"+String(number), incrementIndex );
     }
     return true;
@@ -188,6 +190,7 @@ bool MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin, int
         }
     }
     else {
+        if (value < inputRange14b->x || value > inputRange14b->y) return false;
         float relValue = jmap<float>(jlimit<float>(inputRange14b->x, inputRange14b->y, value), inputRange14b->x, inputRange14b->y, 0, 1);
         processValue(relValue, origin + " " + String(rcvChannel) + " pw", incrementIndex);
     }

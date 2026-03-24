@@ -493,6 +493,10 @@ void Cuelist::afterLoadJSONDataInternal()
 
 void Cuelist::userGo()
 {
+	if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+		MessageManager::callAsync([this](){userGo();});
+		return;
+	}
 	userPressedGo = true;
 	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
@@ -505,6 +509,10 @@ void Cuelist::userGo()
 
 void Cuelist::userGo(Cue* c)
 {
+	if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+		MessageManager::callAsync([this, c]() {userGo(c); });
+		return;
+	}
 	userPressedGo = true;
 	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
@@ -517,6 +525,10 @@ void Cuelist::userGo(Cue* c)
 
 void Cuelist::userGo(float delay, float fade)
 {
+	if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+		MessageManager::callAsync([this, delay, fade]() {userGo(delay, fade); });
+		return;
+	}
 	userPressedGo = true;
 	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
@@ -530,6 +542,10 @@ void Cuelist::userGo(float delay, float fade)
 
 void Cuelist::userGo(Cue* c, float delay, float fade)
 {
+	if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+		MessageManager::callAsync([this, c, delay, fade]() {userGo(c, delay, fade); });
+		return;
+	}
 	userPressedGo = true;
 	CScuesAB.enter();
 	if (isChaser->boolValue() && cueA != nullptr) {
@@ -574,6 +590,7 @@ void Cuelist::go(float forcedDelay, float forcedFade) {
 
 void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	//const MessageManagerLock mmLock;
+
 	double now = Time::getMillisecondCounterHiRes();
 	lastGoTS = now;
 	if (TSLateCompensation > 0) {
