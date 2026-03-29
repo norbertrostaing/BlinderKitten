@@ -1337,7 +1337,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             ScopedLock lock(usingTasksCollection);
             Array<RunningTask*> toRemove;
             for (RunningTask* t : runningTasks) {
-                if (actionType == t->actionType && targetType == t->targetType && targetId == t->targetId) {
+                if (targetType != "action" && actionType == t->actionType && targetType == t->targetType && targetId == t->targetId) {
                     toRemove.add (t);
                 }
             }
