@@ -129,6 +129,7 @@ void Layout::onContainerNiceNameChanged()
 
 void Layout::computeData()
 {
+	if (Brain::getInstance()->loadingIsRunning) return;
 	isComputing.enter();
 
 	subFixtToPos.clear();
@@ -139,8 +140,10 @@ void Layout::computeData()
 			p->computeData();
 			p->isComputing.enter();
 			for (auto it = p->subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
-				subFixtToPos.set(it.getKey(), it.getValue());
-				fixtToPos.set(it.getKey()->parentFixture, it.getValue());
+				if (it.getKey() != nullptr) {
+					subFixtToPos.set(it.getKey(), it.getValue());
+					fixtToPos.set(it.getKey()->parentFixture, it.getValue());
+				}
 			}
 			p->isComputing.exit();
 			p->clearFixtImages();
