@@ -29,7 +29,7 @@ class FixtureTypePreset:
     void exportInPresetGrid(bool addIfNotThere);
 
     BaseManager<FixtureTypePresetValues> values;
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void triggerTriggered(Trigger* t) override;
 
 };

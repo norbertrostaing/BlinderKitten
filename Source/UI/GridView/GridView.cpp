@@ -80,8 +80,8 @@ juce_ImplementSingleton(GridView);
 
 GridView::GridView():
     Component(),
-    scroll(true),
-    ScrollBar::Listener()
+    ScrollBar::Listener(),
+    scroll(true)
 {
     initArrays();
     addMouseListener(this, true);

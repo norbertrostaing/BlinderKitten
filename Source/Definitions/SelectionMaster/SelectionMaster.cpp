@@ -45,7 +45,8 @@ SelectionMaster::SelectionMaster(var params) :
 	masterType->addOption("Scale", SCALE)->addOption("Inhibit", INHIBIT)->addOption("Offset", OFFSET);
 
 	isSelectionMasterOn = addBoolParameter("is ON", "Enable or disable this SelectionMaster",false);
-	isSelectionMasterOn->isControllableFeedbackOnly;
+    // is this supposed to be setControllableFeedbackOnly ?
+	// isSelectionMasterOn->isControllableFeedbackOnly;
 	isSelectionMasterOn->setEnabled(false);
 	isSelectionMasterOn->isSavable = false;
 	isOn = false;

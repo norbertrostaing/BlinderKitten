@@ -40,9 +40,9 @@ Programmer::Programmer(var params) :
 	BaseItem(params.getProperty("name", "Programmer")),
 	objectType(params.getProperty("type", "Programmer").toString()),
 	objectData(params),
-	commands("Commands"),
-	cliContainer("Command Line"),
-	timing()
+    timing(),
+    commands("Commands"),
+    cliContainer("Command Line")
 {
 	saveAndLoadRecursiveData = true;
 	nameCanBeChangedByUser = false;
@@ -399,12 +399,7 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 	}
 	cv->value = localValue;
 
-	if (false) {
-		val = jmax(val, localValue);
-	}
-	else {
-		val = localValue;
-	}
+    val = localValue;
 
 	if (keepUpdate) {
 		Brain::getInstance()->pleaseUpdate(fc);

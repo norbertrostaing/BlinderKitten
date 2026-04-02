@@ -24,10 +24,10 @@ Cue::Cue(var params) :
 	BaseItem(params.getProperty("name", "Cue 1")),
 	objectType(params.getProperty("type", "Cue").toString()),
 	objectData(params),
-	actionsContainer("Actions"),
-	commands("Commands"),
-	tasks("Tasks"),
-	tasksOffCue("Tasks off"),
+    commands("Commands"),
+    tasks("Tasks"),
+    tasksOffCue("Tasks off"),
+    actionsContainer("Actions"),
 	timingContainer("Timing"),
 	timecode("Timecode")
 {
@@ -295,7 +295,6 @@ void Cue::update(double now) {
 		autoFollowCountDown->setValue(0);
 		checkParentCuelist();
 		if (!parentCuelist->wannaOff && parentCuelist->cueA == this) {
-			parentCuelist->TSLateCompensation;
 			parentCuelist->go();
 		}
 	}

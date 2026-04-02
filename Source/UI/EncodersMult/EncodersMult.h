@@ -62,7 +62,7 @@ public:
     void targetChanged();
     void reconstructSubComponents();
     void reconstructNames();
-    void mouseDown(const MouseEvent& event);
+    void mouseDown(const MouseEvent& event) override;
     void clear();
     static EncodersMult* create(const String& name) { return new EncodersMult(); }
     void sliderValueChanged(Slider* slider) override;

@@ -22,9 +22,9 @@
 Layout::Layout(var params) :
 	BaseItem(params.getProperty("name", "Layout")),
 	objectType(params.getProperty("type", "Layout").toString()),
-	paths("Paths"),
-	objectData(params),
-	subFixtToPos(4096, SubFixture::MyHashGenerator())
+    objectData(params),
+    subFixtToPos(4096, SubFixture::MyHashGenerator()),
+    paths("Paths")
 	// previousID(-1),
 	// slideManipParameter(nullptr)
 {

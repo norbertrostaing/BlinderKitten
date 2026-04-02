@@ -18,9 +18,9 @@
 FixturePatch::FixturePatch(var params) :
 	BaseItem(params.getProperty("name", "Patch")),
 	objectType(params.getProperty("type", "FixturePatch").toString()),
-	corrections("Corrections"),
-	objectData(params),
-	currentAdresses()
+    objectData(params),
+    currentAdresses(),
+    corrections("Corrections")
 {
     targetInterface = addTargetParameter("Interface", "output interface", InterfaceManager::getInstance());
     targetInterface->targetType = TargetParameter::CONTAINER;

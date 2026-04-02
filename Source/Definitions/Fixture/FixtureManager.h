@@ -27,8 +27,8 @@ public:
     void removeItemInternal(Fixture* o) override;
     void askForMoveBefore(BaseItem*) override;
     void askForMoveAfter(BaseItem*) override;
-    void askForDuplicateItem(BaseItem* item);
-    void setItemIndex(Fixture* item, int newIndex, bool addToUndo = true);
+    void askForDuplicateItem(BaseItem* item) override;
+    void setItemIndex(Fixture* item, int newIndex, bool addToUndo = true) override;
 
     void defaultValueChanged(FixtureTypeChannel* ftc);
     void defaultValueChanged(FixtureTypeVirtualChannel* ftc);

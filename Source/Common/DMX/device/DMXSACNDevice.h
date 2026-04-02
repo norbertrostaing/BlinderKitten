@@ -30,7 +30,7 @@ protected:
 
     void sendDMXValue(int channel, int value) override;
     void sendDMXRange(int startChannel, Array<int> values) override;
-    void sendDMXValuesInternal();
+    void sendDMXValuesInternal() override;
     void onContainerParameterChanged(Parameter* p) override;
     void paramPacket();
 
