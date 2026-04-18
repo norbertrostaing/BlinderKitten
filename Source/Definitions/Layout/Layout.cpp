@@ -118,7 +118,7 @@ void Layout::onContainerParameterChangedInternal(Parameter* p)
 
 void Layout::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	computeData();
+	computeData(false);
 	sendChangeMessage();
 }
 
@@ -127,7 +127,7 @@ void Layout::onContainerNiceNameChanged()
 	LayoutManager::getInstance()->managerNotifier.addMessage(new LayoutManager::ManagerEvent(LayoutManager::ManagerEvent::NEEDS_UI_UPDATE));
 }
 
-void Layout::computeData()
+void Layout::computeData(bool forceRefresh)
 {
 	if (Brain::getInstance()->loadingIsRunning) return;
 	isComputing.enter();
@@ -137,9 +137,9 @@ void Layout::computeData()
 	for (int iPath = 0; iPath < paths.items.size(); iPath++) {
 		BKPath* p = paths.items[iPath];
 		if (p->enabled->boolValue()) {
-			p->computeData();
+			p->computeData(forceRefresh);
 			p->isComputing.enter();
-			for (auto it = p->subFixtToPos.begin(); it != subFixtToPos.end(); it.next()) {
+			for (auto it = p->subFixtToPos.begin(); it != p->subFixtToPos.end(); it.next()) {
 				if (it.getKey() != nullptr) {
 					subFixtToPos.set(it.getKey(), it.getValue());
 					fixtToPos.set(it.getKey()->parentFixture, it.getValue());
@@ -159,12 +159,20 @@ void Layout::fitToContent()
 	float maxX = -INT16_MAX;
 	float minY = INT16_MAX;
 	float maxY = -INT16_MAX;
+	bool set = false;
 	for (int i = 0; i < paths.items.size(); i++) {
 		BKPath* p = paths.items[i];
 		minX = jmin((float)p->position->getValue()[0], minX);
 		minY = jmin((float)p->position->getValue()[1], minY);
 		maxX = jmax((float)p->position->getValue()[0], maxX);
 		maxY = jmax((float)p->position->getValue()[1], maxY);
+		set = true;
+	}
+	if (!set) {
+		minX = -5;
+		minY = -5;
+		maxX = 5;
+		maxY = 5;
 	}
 	var x = var();
 	x.append(minX - 1);
@@ -176,9 +184,9 @@ void Layout::fitToContent()
 	dimensionsY->setValue(y);
 }
 
-void Layout::createPathForFixture(Fixture* f, float x, float y)
+BKPath* Layout::createPathForFixture(Fixture* f, float x, float y)
 {
-	BKPath* p = paths.addItem();
+	BKPath* p = new BKPath();//paths.addItem();
 	p->setNiceName("Fixture "+f->id->stringValue());
 	CommandSelection* s = p->selection.addItem();
 	s->valueFrom->setValue(f->id->getValue());
@@ -186,6 +194,7 @@ void Layout::createPathForFixture(Fixture* f, float x, float y)
 	pos.append(x);
 	pos.append(y);
 	p->position->setValue(pos);
+	return p;
 }
 
 std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromDirection(float angle)
@@ -328,7 +337,7 @@ std::shared_ptr<HashMap<SubFixture*, float>> Layout::getSubfixturesRatioFromWake
 	// Vecteur unitaire de direction du scan
 	Point<float> dir(std::cos(angle), std::sin(angle));
 
-	// Vecteur orthogonal à l’axe de scan
+	// Vecteur orthogonal ï¿½ lï¿½axe de scan
 	Point<float> dirPerp(-dir.y, dir.x);
 
 	// Limites pour la normalisation
@@ -378,27 +387,27 @@ void Layout::sizeChanged()
 
 
 void Layout::itemAdded(BKPath* p) {
-	computeData();
+	computeData(false);
 	sendChangeMessage();
 }
 
 void Layout::itemsAdded(juce::Array<BKPath*> ps) {
-	computeData();
+	computeData(false);
 	sendChangeMessage();
 }
 
 void Layout::itemRemoved(BKPath* p) {
-	computeData();
+	computeData(false);
 	sendChangeMessage();
 }
 
 void Layout::itemsRemoved(juce::Array<BKPath*> ps) {
-	computeData();
+	computeData(false);
 	sendChangeMessage();
 }
 
 void Layout::itemsReordered() {
-	computeData();
+	computeData(false);
 	sendChangeMessage();
 }
 

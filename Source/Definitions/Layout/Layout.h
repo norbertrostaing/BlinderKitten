@@ -63,10 +63,10 @@ public:
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void onContainerNiceNameChanged() override;
 
-    void computeData();
+    void computeData(bool forceRefresh = true);
     void fitToContent();
 
-    void createPathForFixture(Fixture* f, float x, float y);
+    BKPath* createPathForFixture(Fixture* f, float x, float y);
 
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromDirection(float angle);
     std::shared_ptr<HashMap<SubFixture*, float>> getSubfixturesRatioFromOriginAndAngle(Point<float>* vect, float angle, bool normalize, bool clockwise);

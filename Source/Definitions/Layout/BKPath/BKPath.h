@@ -80,7 +80,8 @@ class BKPath:
     HashMap<Fixture*, Image> fixtImageContent;
     HashMap<Fixture*, Image> fixtImageSelected;
 
-    void computeData();
+    void computeData(bool forceRefresh = true);
+    bool needComputing = true;
 
     void onContainerParameterChangedInternal(Parameter*);
     void updateDisplay();

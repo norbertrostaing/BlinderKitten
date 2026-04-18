@@ -89,8 +89,9 @@ BKPath::~BKPath()
 {
 };
 
-void BKPath::computeData()
+void BKPath::computeData(bool forceRefresh)
 {
+    if (!needComputing && !forceRefresh) return;
     isComputing.enter();
     Array<Fixture*> fixts;
     Array<SubFixture*> subFixts;
@@ -403,13 +404,16 @@ void BKPath::computeData()
         }
     }
     isComputing.exit();
+    needComputing = false;
 }
 
 void BKPath::onContainerParameterChangedInternal(Parameter* c) {
+
     if (c == pathType || c == overrideStrokeColor || c == overrideFillColor ) {
         updateDisplay();
     }
     clearFixtImages();
+    needComputing = true;
 }
 
 void BKPath::updateDisplay() {
