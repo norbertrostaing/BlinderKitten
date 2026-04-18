@@ -13,6 +13,7 @@
 
 #include "JuceHeader.h"
 #include "Brain.h"
+#include "Definitions/Layout/BKPath/BKPath.h"
  // #include "Module/ModuleIncludes.h"
 
 class DMXChannelView;
@@ -121,6 +122,12 @@ public:
 	FixtureType* importGDTF(InputStream* stream, String modeName);
 	FixtureType* importGDTFContent(InputStream* stream, String modeName);
 	void importMVR(File f);
+
+	Array<Fixture*> fixturesToAdd;
+	Array<BKPath*> frontPathToAdd;
+	Array<BKPath*> topPathToAdd;
+	Array<BKPath*> leftPathToAdd;
+
 	void importFixtureFromMVR(XmlElement* child,
 		std::shared_ptr<ZipFile> archive,
 		int& maxAddress,

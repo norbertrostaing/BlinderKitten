@@ -49,6 +49,7 @@
 #include "./Definitions/DataTransferManager/DataTransferManager.h"
 #include "./Definitions/Fixture/FixtureMultiEditor.h"
 
+#include "./Common/CommonIncludes.h"
 #include "./Common/MIDI/MIDIDevice.h"
 #include "./Common/MIDI/MIDIManager.h"
 #include "./Common/DMX/DMXManager.h"
@@ -1300,6 +1301,9 @@ void BKEngine::importMVR(File f)
 		return;
 	}
 
+
+	fixturesToAdd.clear();
+	Brain::getInstance()->loadingIsRunning = true;
 	XmlDocument descriptionXml = archive->createStreamForEntry(descIndex)->readEntireStreamAsString();
 	auto rootElmt = descriptionXml.getDocumentElement();
 
@@ -1337,6 +1341,11 @@ void BKEngine::importMVR(File f)
 										else if(childType == "groupobject") {
 											importGroupObjectFromMVR(child, archive, maxAddress, fixtureTypesMap, fixturesMap, fixtureAddressesMap, frontLayout, topLayout, sideLayout);
 										}
+										if (fixturesToAdd.size() >= 20) {
+											FixtureManager::getInstance()->addItems(fixturesToAdd);
+											fixturesToAdd.clear();
+
+										}
 									}
 								}
 							}
@@ -1355,8 +1364,16 @@ void BKEngine::importMVR(File f)
 		InterfaceManager::getInstance()->addItem(u);
 		universes.add(u);
 		u->setNiceName("MVR universe "+String(currentUniverse));
+		u->dmxType->setValueWithData(DMXDevice::SACN);
+		DMXSACNDevice* dev = dynamic_cast<DMXSACNDevice*>(u->dmxDevice.get());
+		if (dev != nullptr) {
+			dev->universeParam->setValue(currentUniverse);
+		}
 		currentUniverse++;
 	}
+
+	FixtureManager::getInstance()->addItems(fixturesToAdd, juce::var(), false);
+	fixturesToAdd.clear();
 
 	for (auto it = fixturesMap.begin(); it != fixturesMap.end(); it.next()) {
 		int id = it.getKey();
@@ -1374,10 +1391,19 @@ void BKEngine::importMVR(File f)
 		}
 	}
 
+	topLayout->paths.addItems(topPathToAdd, juce::var(), false);
+	frontLayout->paths.addItems(frontPathToAdd, juce::var(), false);
+	sideLayout->paths.addItems(leftPathToAdd, juce::var(), false);
+
+	topPathToAdd.clear();
+	frontPathToAdd.clear();
+	leftPathToAdd.clear();
+
 	if (frontLayout != nullptr) { frontLayout->fitToContent(); }
 	if (topLayout != nullptr) { topLayout->fitToContent(); }
 	if (sideLayout != nullptr) { sideLayout->fitToContent(); }
 
+	Brain::getInstance()->loadingIsRunning = false;
 	LOG("Import done !");
 }
 
@@ -1427,7 +1453,9 @@ void BKEngine::importFixtureFromMVR(XmlElement* child, std::shared_ptr<ZipFile> 
 
 		Fixture* fixt;
 		if (!fixturesMap.contains(id)) {
-			fixt = FixtureManager::getInstance()->addItem();
+			//fixt = FixtureManager::getInstance()->addItem();
+			fixt = new Fixture();
+			fixturesToAdd.add(fixt);
 			fixturesMap.set(id, fixt);
 			fixtureAddressesMap.set(id, std::make_shared<Array<int>>());
 			fixt->id->setValue(id);
@@ -1483,9 +1511,9 @@ void BKEngine::importFixtureFromMVR(XmlElement* child, std::shared_ptr<ZipFile> 
 					fixt->rotation->setVector(radiansToDegrees(rX), radiansToDegrees(rY), radiansToDegrees(rZ));
 				}
 
-				frontLayout->createPathForFixture(fixt, x, z);
-				topLayout->createPathForFixture(fixt, x, y);
-				sideLayout->createPathForFixture(fixt, y, z);
+				frontPathToAdd.add(frontLayout->createPathForFixture(fixt, x, z));
+				topPathToAdd.add(topLayout->createPathForFixture(fixt, x, y));
+				leftPathToAdd.add(sideLayout->createPathForFixture(fixt, y, z));
 			}
 		}
 	}

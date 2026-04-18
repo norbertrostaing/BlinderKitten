@@ -18,7 +18,6 @@ public:
     juce::String getName() const;
     juce::String getDescription() const;
 
-protected:
     IntParameter* universeParam;
     BoolParameter* multicast;
     StringParameter* remoteHost;
