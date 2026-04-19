@@ -49,6 +49,8 @@ public:
     void clear();
     void clearUpdates();
 
+    juce::ThreadPool pool;
+
     HashMap<int, SubFixture*>subFixtures;
     HashMap<int, Group*>groups;
     HashMap<int, Fixture*>fixtures;

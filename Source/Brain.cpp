@@ -51,9 +51,10 @@
 juce_ImplementSingleton(Brain);
 
 Brain::Brain() :
-    Thread("BKBrain") 
+    Thread("BKBrain"),
+    pool(8,juce::Thread::osDefaultStackSize, juce::Thread::Priority::high)
 {
-    startThread(juce::Thread::Priority::highest);
+    startThread(juce::Thread::Priority::high);
 }
 
 Brain :: ~Brain() {
@@ -121,6 +122,8 @@ void Brain::clearUpdates()
     stampPoolWaiting.clear();
     carouselPoolUpdating.clear();
     carouselPoolWaiting.clear();
+    trackerPoolUpdating.clear();
+    trackerPoolWaiting.clear();
     mapperPoolUpdating.clear();
     mapperPoolWaiting.clear();
 }
@@ -144,9 +147,7 @@ void Brain::brainLoop() {
     now = Time::getMillisecondCounterHiRes();
     if (cuePoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < cuePoolWaiting.size(); i++) {
-            cuePoolUpdating.add(cuePoolWaiting[i]);
-        }
+        cuePoolUpdating.swapWith(cuePoolWaiting);
         cuePoolWaiting.clear();
     }
     for (int i = 0; i < cuePoolUpdating.size(); i++) {
@@ -156,9 +157,7 @@ void Brain::brainLoop() {
 
     if (cuelistPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < cuelistPoolWaiting.size(); i++) {
-            cuelistPoolUpdating.add(cuelistPoolWaiting[i]);
-        }
+        cuelistPoolUpdating.swapWith(cuelistPoolWaiting);
         cuelistPoolWaiting.clear();
     }
     for (int i = 0; i < cuelistPoolUpdating.size(); i++) {
@@ -168,9 +167,7 @@ void Brain::brainLoop() {
 
     if (effectPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < effectPoolWaiting.size(); i++) {
-            effectPoolUpdating.add(effectPoolWaiting[i]);
-        }
+        effectPoolUpdating.swapWith(effectPoolWaiting);
         effectPoolWaiting.clear();
     }
     for (int i = 0; i < effectPoolUpdating.size(); i++) {
@@ -180,9 +177,7 @@ void Brain::brainLoop() {
 
     if (stampPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < stampPoolWaiting.size(); i++) {
-            stampPoolUpdating.add(stampPoolWaiting[i]);
-        }
+        stampPoolUpdating.swapWith(stampPoolWaiting);
         stampPoolWaiting.clear();
     }
     for (int i = 0; i < stampPoolUpdating.size(); i++) {
@@ -192,9 +187,7 @@ void Brain::brainLoop() {
 
     if (carouselPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < carouselPoolWaiting.size(); i++) {
-            carouselPoolUpdating.add(carouselPoolWaiting[i]);
-        }
+        carouselPoolUpdating.swapWith(carouselPoolWaiting);
         carouselPoolWaiting.clear();
     }
     for (int i = 0; i < carouselPoolUpdating.size(); i++) {
@@ -204,9 +197,7 @@ void Brain::brainLoop() {
 
     if (mapperPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < mapperPoolWaiting.size(); i++) {
-            mapperPoolUpdating.add(mapperPoolWaiting[i]);
-        }
+        mapperPoolUpdating.swapWith(mapperPoolWaiting);
         mapperPoolWaiting.clear();
     }
     for (int i = 0; i < mapperPoolUpdating.size(); i++) {
@@ -216,9 +207,7 @@ void Brain::brainLoop() {
 
     if (trackerPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < trackerPoolWaiting.size(); i++) {
-            trackerPoolUpdating.add(trackerPoolWaiting[i]);
-        }
+        trackerPoolUpdating.swapWith(trackerPoolWaiting);
         trackerPoolWaiting.clear();
     }
     for (int i = 0; i < trackerPoolUpdating.size(); i++) {
@@ -228,9 +217,7 @@ void Brain::brainLoop() {
 
     if (programmerPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < programmerPoolWaiting.size(); i++) {
-            programmerPoolUpdating.add(programmerPoolWaiting[i]);
-        }
+        programmerPoolUpdating.swapWith(programmerPoolWaiting);
         programmerPoolWaiting.clear();
     }
     for (int i = 0; i < programmerPoolUpdating.size(); i++) {
@@ -242,9 +229,7 @@ void Brain::brainLoop() {
 
     if (selectionMasterPoolWaiting.size() > 0) {
         ScopedLock lock(usingCollections);
-        for (int i = 0; i < selectionMasterPoolWaiting.size(); i++) {
-            selectionMasterPoolUpdating.add(selectionMasterPoolWaiting[i]);
-        }
+        selectionMasterPoolUpdating.swapWith(selectionMasterPoolWaiting);
         selectionMasterPoolWaiting.clear();
     }
     for (int i = 0; i < selectionMasterPoolUpdating.size(); i++) {
@@ -252,21 +237,53 @@ void Brain::brainLoop() {
     }
     selectionMasterPoolUpdating.clear();
 
-
-
     Array<SubFixtureChannel* > modifiedSF;
 
     for (Stamp* s : stamps) {
         s->imageLock.enter();
     }
 
-    for (SubFixtureChannel* sfc : allSubfixtureChannels) {
-        if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty) {
-            modifiedSF.add(sfc);
-            sfc->isDirty = false;
-            sfc->updateVal(now);
+    juce::Array< SubFixtureChannel*> modifiedPerThread[8];
+    juce::WaitableEvent doneEvent;
+    std::atomic<int> remainingJobs = 8;
+
+    for (int iThread = 0; iThread < 8; iThread++) 
+        {
+        pool.addJob([this, iThread, &modifiedPerThread, &remainingJobs, &doneEvent]()
+            {
+                auto& localModified = modifiedPerThread[iThread];
+                for (int i = 0; i < allSubfixtureChannels.size(); i+= 8)
+                {
+                    int index = i+iThread;
+                    if (allSubfixtureChannels.size()>index) {
+                        SubFixtureChannel* sfc = allSubfixtureChannels[index];
+                        if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
+                        {
+                            sfc->isDirty = false;
+                            sfc->updateVal(now);
+                            localModified.add(sfc);
+                        }
+                    }
+
+                }
+                if (--remainingJobs == 0) doneEvent.signal();
+            });
         }
-    }
+
+    doneEvent.wait();
+    //pool.removeAllJobs(true, -1);
+
+    for (int i = 0; i < 8; i++) {
+        modifiedSF.addArray(modifiedPerThread[i]);
+    }   
+
+    //for (SubFixtureChannel* sfc : allSubfixtureChannels) {
+    //    if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty) {
+    //        modifiedSF.add(sfc);
+    //        sfc->isDirty = false;
+    //        sfc->updateVal(now);
+    //    }
+    //}
 
     for (Stamp* s : stamps) {
         s->imageLock.exit();
@@ -378,7 +395,7 @@ void Brain::brainLoop() {
     }
     usingCollections.exit();
     //double delta = Time::getMillisecondCounterHiRes() - now;
-    //LOG(delta);
+    //LOG("end of loop : "<< (Time::getMillisecondCounterHiRes() - now));
 
 }
 
