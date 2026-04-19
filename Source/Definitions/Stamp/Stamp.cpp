@@ -298,6 +298,7 @@ void Stamp::computeData() {
 			}
 		}
 	}
+	computed = true;
 }
 
 float Stamp::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
@@ -323,6 +324,8 @@ float Stamp::applyToChannel(SubFixtureChannel* fc, float currentVal, double now)
 			case StampMapping::PixelVal::B: pixelVal = pixel.getFloatBlue(); break;
 			case StampMapping::PixelVal::Luma: pixelVal = pixel.getBrightness(); break;
 		}
+		pixelVal = jmap(pixelVal, map->inRange->x, map->inRange->y, 0.f, 1.f);
+		pixelVal = jlimit(0.f,1.f, pixelVal);
 		pixelVal *= fadeSize;
 		pixelVal = jmap(pixelVal, 0.f, 1.f, map->outRange->x, map->outRange->y);
 

@@ -41,9 +41,13 @@ StampMapping::StampMapping(var params) :
 
     baseValue = addFloatParameter("Base Value", "Base value applied to channels", 0, 0, 1);
 
+    inRange = addPoint2DParameter("Input range", "Value to add or set");
+    inRange->setDefaultPoint(0, 1);
+    inRange->setBounds(0, 0, 1, 1);
+
     outRange = addPoint2DParameter("Output range", "Value to add or set");
-    outRange->setDefaultPoint(0,1);
-    outRange->setBounds(-2,-2,2,2);
+    outRange->setDefaultPoint(0, 1);
+    outRange->setBounds(-2, -2, 2, 2);
 
     updateDisplay();
 };

@@ -29,6 +29,7 @@ class StampMapping:
     TargetParameter* paramType;
     FloatParameter* baseValue;
 
+    Point2DParameter* inRange;
     Point2DParameter* outRange;
 
     void onContainerParameterChangedInternal(Parameter*);
