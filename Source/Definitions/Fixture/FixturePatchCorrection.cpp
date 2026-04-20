@@ -74,6 +74,7 @@ void FixturePatchCorrection::updateCorrection()
 	if (!sf->channelsMap.contains(ct)) { return; }
 	SubFixtureChannel* chan = sf->channelsMap.getReference(ct);
 	if (chan == nullptr) { return; }
+	chan->forceNextWrite = true;
 	Brain::getInstance()->pleaseUpdate(chan);
 }
 

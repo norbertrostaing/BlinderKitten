@@ -34,6 +34,7 @@ public:
     bool isDeleted = false;
 
     bool isDirty = false;
+    bool forceNextWrite = false;
 
     ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
