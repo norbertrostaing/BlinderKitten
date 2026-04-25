@@ -214,33 +214,46 @@ void SubFixtureChannel::updateVal(double now) {
 	postCuelistValue = newValue;
 
 	cs.enter();
+
+	cuelistStackSnapshot.addArray(cuelistStack);
+	programmerStackSnapshot.addArray(programmerStack);
+	effectStackSnapshot.addArray(effectStack);
+	stampStackSnapshot.addArray(stampStack);
+	carouselStackSnapshot.addArray(carouselStack);
+	mapperStackSnapshot.addArray(mapperStack);
+	trackerStackSnapshot.addArray(trackerStack);
+	selectionMasterStackSnapshot.addArray(selectionMasterStack);
+	cuelistFlashStackSnapshot.addArray(cuelistFlashStack);
+
+	cs.exit();
+
 	liveCV.clear();
 
 	Array<int> layers;
 
-	for (int i = 0; i < cuelistStack.size(); i++) {
-		layers.addIfNotAlreadyThere(cuelistStack[i]->layerId->intValue());
+	for (int i = 0; i < cuelistStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(cuelistStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < programmerStack.size(); i++) {
-		layers.addIfNotAlreadyThere(programmerStack[i]->layerId->intValue());
+	for (int i = 0; i < programmerStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(programmerStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < mapperStack.size(); i++) {
-		layers.addIfNotAlreadyThere(mapperStack[i]->layerId->intValue());
+	for (int i = 0; i < mapperStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(mapperStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < carouselStack.size(); i++) {
-		layers.addIfNotAlreadyThere(carouselStack[i]->layerId->intValue());
+	for (int i = 0; i < carouselStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(carouselStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < trackerStack.size(); i++) {
-		layers.addIfNotAlreadyThere(trackerStack[i]->layerId->intValue());
+	for (int i = 0; i < trackerStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(trackerStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < stampStack.size(); i++) {
-		layers.addIfNotAlreadyThere(stampStack[i]->layerId->intValue());
+	for (int i = 0; i < stampStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(stampStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < effectStack.size(); i++) {
-		layers.addIfNotAlreadyThere(effectStack[i]->layerId->intValue());
+	for (int i = 0; i < effectStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(effectStackSnapshot[i]->layerId->intValue());
 	}
-	for (int i = 0; i < selectionMasterStack.size(); i++) {
-		layers.addIfNotAlreadyThere(selectionMasterStack[i]->layerId->intValue());
+	for (int i = 0; i < selectionMasterStackSnapshot.size(); i++) {
+		layers.addIfNotAlreadyThere(selectionMasterStackSnapshot[i]->layerId->intValue());
 	}
 
 	layers.sort();
@@ -253,9 +266,9 @@ void SubFixtureChannel::updateVal(double now) {
 		int currentLayer = layers[l];
 
 		int overWritten = -1;
-		for (int i = 0; i < cuelistStack.size(); i++)
+		for (int i = 0; i < cuelistStackSnapshot.size(); i++)
 		{
-			Cuelist* c = cuelistStack[i];
+			Cuelist* c = cuelistStackSnapshot[i];
 			if (c->layerId->intValue() == currentLayer) {
 				if (!checkSwop || c->isSwopping || c->excludeFromSwop->boolValue()) {
 					bool isApplied;
@@ -276,69 +289,79 @@ void SubFixtureChannel::updateVal(double now) {
 		}
 
 		for (int i = 0; i <= overWritten; i++) {
-			if (cuelistStack[i]->layerId->intValue() == currentLayer) {
-				std::shared_ptr<ChannelValue> cv = cuelistStack[i]->activeValues.contains(this) ? cuelistStack[i]->activeValues.getReference(this) : nullptr;
+			if (cuelistStackSnapshot[i]->layerId->intValue() == currentLayer) {
+				std::shared_ptr<ChannelValue> cv = cuelistStackSnapshot[i]->activeValues.contains(this) ? cuelistStackSnapshot[i]->activeValues.getReference(this) : nullptr;
 				if (cv != nullptr && !cv->isOverWritten) {
 					cv->isOverWritten = true;
-					Brain::getInstance()->pleaseUpdate(cuelistStack[i]);
+					Brain::getInstance()->pleaseUpdate(cuelistStackSnapshot[i]);
 				}
 			}
 		}
 		if (!checkSwop) {
-			for (int i = 0; i < programmerStack.size(); i++) {
-				if (programmerStack[i]->layerId->intValue() == currentLayer) {
-					newValue = programmerStack[i]->applyToChannel(this, newValue, now);
+			for (int i = 0; i < programmerStackSnapshot.size(); i++) {
+				if (programmerStackSnapshot[i]->layerId->intValue() == currentLayer) {
+					newValue = programmerStackSnapshot[i]->applyToChannel(this, newValue, now);
 				}
 			}
 
-			for (int i = 0; i < mapperStack.size(); i++) {
-				if (mapperStack[i]->layerId->intValue() == currentLayer) {
-					newValue = mapperStack[i]->applyToChannel(this, newValue, now);
+			for (int i = 0; i < mapperStackSnapshot.size(); i++) {
+				if (mapperStackSnapshot[i]->layerId->intValue() == currentLayer) {
+					newValue = mapperStackSnapshot[i]->applyToChannel(this, newValue, now);
 				}
 			}
 
-			for (int i = 0; i < trackerStack.size(); i++) {
-				if (trackerStack[i]->layerId->intValue() == currentLayer) {
-					newValue = trackerStack[i]->applyToChannel(this, newValue, now);
+			for (int i = 0; i < trackerStackSnapshot.size(); i++) {
+				if (trackerStackSnapshot[i]->layerId->intValue() == currentLayer) {
+					newValue = trackerStackSnapshot[i]->applyToChannel(this, newValue, now);
 				}
 			}
 
 		}
 		postCuelistValue = newValue;
-		for (int i = 0; i < carouselStack.size(); i++) {
-			if (carouselStack[i]->layerId->intValue() == currentLayer) {
-				if (!checkSwop || carouselStack[i]->isSwopping) {
-					newValue = carouselStack[i]->applyToChannel(this, newValue, now);
-					isDirty = isDirty || carouselStack[i]->isOn;
+		for (int i = 0; i < carouselStackSnapshot.size(); i++) {
+			if (carouselStackSnapshot[i]->layerId->intValue() == currentLayer) {
+				if (!checkSwop || carouselStackSnapshot[i]->isSwopping) {
+					newValue = carouselStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isDirty = isDirty || carouselStackSnapshot[i]->isOn;
 				}
 			}
 		}
 
-		for (int i = 0; i < stampStack.size(); i++) {
-			if (stampStack[i]->layerId->intValue() == currentLayer) {
-				if (!checkSwop || stampStack[i]->isSwopping) {
-					newValue = stampStack[i]->applyToChannel(this, newValue, now);
-					isDirty = isDirty || stampStack[i]->isOn;
+		for (int i = 0; i < stampStackSnapshot.size(); i++) {
+			if (stampStackSnapshot[i]->layerId->intValue() == currentLayer) {
+				if (!checkSwop || stampStackSnapshot[i]->isSwopping) {
+					newValue = stampStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isDirty = isDirty || stampStackSnapshot[i]->isOn;
 				}
 			}
 		}
 
-		for (int i = 0; i < effectStack.size(); i++) {
-			if (effectStack[i]->layerId->intValue() == currentLayer) {
-				if (!checkSwop || effectStack[i]->isSwopping) {
-					newValue = effectStack[i]->applyToChannel(this, newValue, now);
-					isDirty = isDirty || effectStack[i]->isOn;
+		for (int i = 0; i < effectStackSnapshot.size(); i++) {
+			if (effectStackSnapshot[i]->layerId->intValue() == currentLayer) {
+				if (!checkSwop || effectStackSnapshot[i]->isSwopping) {
+					newValue = effectStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isDirty = isDirty || effectStackSnapshot[i]->isOn;
 				}
 			}
 		}
 
-		for (int i = 0; i < selectionMasterStack.size(); i++) {
-			if (selectionMasterStack[i]->layerId->intValue() == currentLayer) {
-				newValue = selectionMasterStack[i]->applyToChannel(this, newValue, now);
+		for (int i = 0; i < selectionMasterStackSnapshot.size(); i++) {
+			if (selectionMasterStackSnapshot[i]->layerId->intValue() == currentLayer) {
+				newValue = selectionMasterStackSnapshot[i]->applyToChannel(this, newValue, now);
 			}
 		}
 
 	}
+
+	cuelistStackSnapshot.clear();
+	programmerStackSnapshot.clear();
+	effectStackSnapshot.clear();
+	stampStackSnapshot.clear();
+	carouselStackSnapshot.clear();
+	mapperStackSnapshot.clear();
+	trackerStackSnapshot.clear();
+	selectionMasterStackSnapshot.clear();
+	cuelistFlashStackSnapshot.clear();
 
 	if (reactToGrandMaster) {
 		double gm = InputPanel::getInstance()->paramGrandMaster->floatValue();
@@ -353,7 +376,6 @@ void SubFixtureChannel::updateVal(double now) {
 		}
 	}
 
-	cs.exit();
 	writeValue(newValue);
 }
 

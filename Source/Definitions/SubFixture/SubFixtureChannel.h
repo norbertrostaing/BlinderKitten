@@ -77,6 +77,16 @@ public:
     Array<SelectionMaster*> selectionMasterStack;
     Array<Cuelist*> cuelistFlashStack;
 
+    Array<Cuelist*> cuelistStackSnapshot;
+    Array<Programmer*> programmerStackSnapshot;
+    Array<Effect*> effectStackSnapshot;
+    Array<Stamp*> stampStackSnapshot;
+    Array<Carousel*> carouselStackSnapshot;
+    Array<Mapper*> mapperStackSnapshot;
+    Array<Tracker*> trackerStackSnapshot;
+    Array<SelectionMaster*> selectionMasterStackSnapshot;
+    Array<Cuelist*> cuelistFlashStackSnapshot;
+
     Command* activeCommand = nullptr;
 
     void updateVal(double now);
