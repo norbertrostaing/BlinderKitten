@@ -7,6 +7,7 @@
 #include "Definitions/Fixture/Fixture.h"
 #include "Definitions/Group/Group.h"
 #include "Definitions/Programmer/Programmer.h"
+#include <algorithm>
 
 CommandSelectionManager::CommandSelectionManager() :
     BaseManager("Selections")
@@ -358,46 +359,41 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				Layout* l = Brain::getInstance()->getLayoutById(selections[selId]->layoutId->intValue());
 				if (l != nullptr) {
 					auto sfToPos = l->getSubfixturesRatioFromDirection(selections[selId]->layoutDirection->floatValue());
-					float min = 0;
-					float max = 1;
-					min = 1; max = 0;
+					std::vector<std::pair<SubFixture*, float>> values;
+					values.reserve((size_t)tempSelection.size());
+					Array<float> sortedValues;
+
+					float minValue = 1.0f;
+					float maxValue = 0.0f;
 					for (int i = 0; i < tempSelection.size(); i++) {
-						if (sfToPos->contains(tempSelection[i])) {
-							min = jmin(min, sfToPos->getReference(tempSelection[i]));
-							max = jmax(max, sfToPos->getReference(tempSelection[i]));
+						SubFixture* sf = tempSelection[i];
+						if (sfToPos->contains(sf)) {
+							float v = sfToPos->getReference(sf);
+							values.emplace_back(sf, v);
+							sortedValues.add(v);
+							minValue = jmin(minValue, v);
+							maxValue = jmax(maxValue, v);
 						}
 					}
-					float maxGap = 0;
-					float currentOffset = 0;
-					float currentNextOffset = 1;
-					bool search = true;
-					while (search) {
-						for (int i = 0; i < tempSelection.size(); i++) {
-							if (sfToPos->contains(tempSelection[i])) {
-								float thisVal = sfToPos->getReference(tempSelection[i]);
-								if (thisVal > currentOffset && thisVal < currentNextOffset) {
-									currentNextOffset = thisVal;
-								}
-							}
+
+					if (!values.empty()) {
+						std::sort(sortedValues.begin(), sortedValues.end());
+						float maxGap = sortedValues[0];
+						for (int i = 1; i < sortedValues.size(); i++) {
+							maxGap = jmax(maxGap, sortedValues[i] - sortedValues[i - 1]);
 						}
-						maxGap = jmax(maxGap, currentNextOffset-currentOffset);
-						if (currentOffset == currentNextOffset) {
-							search = false;
-						}
-						else {
-							currentOffset = currentNextOffset;
-							currentNextOffset = max;
-						}
-					}
-					float maxNoGap = max;
-					max += maxGap;
-					for (int i = 0; i < tempSelection.size(); i++) {
-						if (sfToPos->contains(tempSelection[i])) {
-							float v = sfToPos->getReference(tempSelection[i]);
-							float vWithGap = jmap(v, min, max, 0.f, 1.f);
-							subFixtureToPosition.set(tempSelection[i], vWithGap);
-							float vNoGap = jmap(v, min, maxNoGap, 0.f, 1.f);
-							subFixtureToPositionNoGap.set(tempSelection[i], vNoGap);
+						maxGap = jmax(maxGap, maxValue - sortedValues.getLast());
+
+						float maxValueWithGap = maxValue + maxGap;
+						bool hasRange = minValue != maxValue;
+						bool hasRangeWithGap = minValue != maxValueWithGap;
+
+						for (const auto& value : values) {
+							float v = value.second;
+							float vWithGap = hasRangeWithGap ? jmap(v, minValue, maxValueWithGap, 0.0f, 1.0f) : 0.0f;
+							float vNoGap = hasRange ? jmap(v, minValue, maxValue, 0.0f, 1.0f) : 0.0f;
+							subFixtureToPosition.set(value.first, vWithGap);
+							subFixtureToPositionNoGap.set(value.first, vNoGap);
 						}
 					}
 				}
@@ -445,48 +441,44 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				if (l != nullptr) {
 					Point<float> origin((float)selections[selId]->layoutWakeAnchor->getValue()[0], (float)selections[selId]->layoutWakeAnchor->getValue()[1]);
 					auto sfToPos = l->getSubfixturesRatioFromWake(&origin, selections[selId]->layoutDirection->floatValue(), selections[selId]->layoutWakeAngle->floatValue(), true);
-					float min = 0;
-					float max = 1;
-					min = 1; max = 0;
+					std::vector<std::pair<SubFixture*, float>> values;
+					values.reserve((size_t)tempSelection.size());
+					Array<float> sortedValues;
+
+					float minValue = 1.0f;
+					float maxValue = 0.0f;
 					for (int i = 0; i < tempSelection.size(); i++) {
-						if (sfToPos->contains(tempSelection[i])) {
-							min = jmin(min, sfToPos->getReference(tempSelection[i]));
-							max = jmax(max, sfToPos->getReference(tempSelection[i]));
+						SubFixture* sf = tempSelection[i];
+						if (sfToPos->contains(sf)) {
+							float v = sfToPos->getReference(sf);
+							values.emplace_back(sf, v);
+							sortedValues.add(v);
+							minValue = jmin(minValue, v);
+							maxValue = jmax(maxValue, v);
 						}
 					}
-					float maxGap = 0;
-					float currentOffset = 0;
-					float currentNextOffset = 1;
-					bool search = true;
-					while (search) {
-						for (int i = 0; i < tempSelection.size(); i++) {
-							if (sfToPos->contains(tempSelection[i])) {
-								float thisVal = sfToPos->getReference(tempSelection[i]);
-								if (thisVal > currentOffset && thisVal < currentNextOffset) {
-									currentNextOffset = thisVal;
-								}
-							}
+
+					if (!values.empty()) {
+						std::sort(sortedValues.begin(), sortedValues.end());
+						float maxGap = sortedValues[0];
+						for (int i = 1; i < sortedValues.size(); i++) {
+							maxGap = jmax(maxGap, sortedValues[i] - sortedValues[i - 1]);
 						}
-						maxGap = jmax(maxGap, currentNextOffset - currentOffset);
-						if (currentOffset == currentNextOffset) {
-							search = false;
-						}
-						else {
-							currentOffset = currentNextOffset;
-							currentNextOffset = max;
-						}
-					}
-					float maxNoGap = max;
-					max += maxGap;
-					for (int i = 0; i < tempSelection.size(); i++) {
-						if (sfToPos->contains(tempSelection[i])) {
-							float v = sfToPos->getReference(tempSelection[i]);
-							float vWithGap = jmap(v, min, max, 0.f, 1.f);
-							subFixtureToPosition.set(tempSelection[i], vWithGap);
-							float vNoGap = jmap(v, min, maxNoGap, 0.f, 1.f);
-							subFixtureToPositionNoGap.set(tempSelection[i], vNoGap);
+						maxGap = jmax(maxGap, maxValue - sortedValues.getLast());
+
+						float maxValueWithGap = maxValue + maxGap;
+						bool hasRange = minValue != maxValue;
+						bool hasRangeWithGap = minValue != maxValueWithGap;
+
+						for (const auto& value : values) {
+							float v = value.second;
+							float vWithGap = hasRangeWithGap ? jmap(v, minValue, maxValueWithGap, 0.0f, 1.0f) : 0.0f;
+							float vNoGap = hasRange ? jmap(v, minValue, maxValue, 0.0f, 1.0f) : 0.0f;
+							subFixtureToPosition.set(value.first, vWithGap);
+							subFixtureToPositionNoGap.set(value.first, vNoGap);
 						}
 					}
+
 				}
 			}
 
