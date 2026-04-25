@@ -30,18 +30,7 @@
 #include "Definitions/SelectionMaster/SelectionMaster.h"
 
 
-SubFixtureChannel::SubFixtureChannel():
-	virtualChildren()
-{
-	cs.enter();
-	cuelistStack.clear();
-	programmerStack.clear();
-	stampStack.clear();
-	effectStack.clear();
-	carouselStack.clear();
-	cuelistFlashStack.clear();
-	virtualChildren.clear();
-	cs.exit();
+SubFixtureChannel::SubFixtureChannel(){
 	Brain::getInstance()->allSubfixtureChannels.add(this);
 }
 
