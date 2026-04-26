@@ -69,31 +69,40 @@ CarouselRow::~CarouselRow()
 };
 
 void CarouselRow::computeData() {
+    double now = Time::getMillisecondCounterHiRes();
+    //LOG("start computing");
     checkParentCarousel();
-    isComputing.enter();
+
+    HashMap<SubFixture*, double> computedPositions_temp;
+    HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets_temp;
+
     computedPositions.clear();
     subFixtureChannelOffsets.clear();
     if (!enabled->boolValue()) {
-        isComputing.exit();
         return;
     }
 
+    //LOG("step 1 " << (Time::getMillisecondCounterHiRes() - now));
     selection.computeSelection();
+    //LOG("step 2 " << (Time::getMillisecondCounterHiRes() - now));
 
-    if (parentCarousel == nullptr) {return;}
+    if (parentCarousel == nullptr) { return;}
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         //double deltaPos = 0;
-        computedPositions.set(selection.computedSelectedSubFixtures[i], 0);
+        computedPositions_temp.set(selection.computedSelectedSubFixtures[i], 0);
     }
 
+    //LOG("step 3 " << (Time::getMillisecondCounterHiRes() - now));
     float totalDuration = 0;
     float currentPosition = 0;
 
+    //LOG("step 4 " << (Time::getMillisecondCounterHiRes() - now));
     for (int i = 0; i < paramContainer.items.size(); i++) {
         totalDuration += (float)paramContainer.items[i]->stepDuration->getValue();
     }
-    if (totalDuration == 0) {return; }
+    if (totalDuration == 0) { return; }
 
+    //LOG("step 5 " << (Time::getMillisecondCounterHiRes() - now));
     for (int i = 0; i < paramContainer.items.size(); i++) {
         CarouselStep * step = paramContainer.items[i];
         step->relativeDuration = (float)paramContainer.items[i]->stepDuration->getValue() / totalDuration;
@@ -110,6 +119,7 @@ void CarouselRow::computeData() {
         }
     }
 
+    //LOG("step 6 " << (Time::getMillisecondCounterHiRes() - now));
     int nWings = wings->getValue();
     int nBlocks = blocks->getValue();
     int nBuddying = buddying->getValue();
@@ -120,21 +130,25 @@ void CarouselRow::computeData() {
     roundedWingSize = jmax(1, roundedWingSize);
     // int flooredWingSize = floor(wingSize);
 
-    Array<SubFixtureChannel*> targetChannels;
+    //Array<SubFixtureChannel*> targetChannels;
+    HashMap<SubFixtureChannel*, bool> targetChannels;
 
     for (int i = 1; i <= paramContainer.items.size(); i++) {
         //CarouselStep* currentStep = paramContainer.items[i%paramContainer.items.size()];
         CarouselStep* previousStep = paramContainer.items[i-1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();
-            if (!targetChannels.contains(chan)) {targetChannels.add(chan);}
+            if (!targetChannels.contains(chan)) {targetChannels.set(chan, true);}
         }
     }
 
+    //LOG("step 7 " << (Time::getMillisecondCounterHiRes() - now));
     for (int i = 0; i < paramContainer.items.size(); i++) {
         CarouselStep* currentStep = paramContainer.items[i];
-        for (int ci = 0; ci < targetChannels.size(); ci++) {
-            SubFixtureChannel* chan = targetChannels[ci];
+        for (auto it = targetChannels.begin(); it!=targetChannels.end(); it.next()) {
+        //for (int ci = 0; ci < targetChannels.size(); ci++) {
+            //SubFixtureChannel* chan = targetChannels[ci];
+            SubFixtureChannel* chan = it.getKey();
             if (!currentStep->computedValues.contains(chan)) {
                 std::shared_ptr<ChannelValue> newVal = std::make_shared<ChannelValue>();
                 newVal->values.set(1,-1);
@@ -143,14 +157,26 @@ void CarouselRow::computeData() {
         }
     }
 
+
+    HashMap<SubFixture*, int> subFixtureToIndex;
+    for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
+        SubFixture* sf = selection.computedSelectedSubFixtures[i];
+        computedPositions_temp.set(sf, 0);
+        subFixtureToIndex.set(sf, i);
+    }
+
+    //LOG("step 8 " << (Time::getMillisecondCounterHiRes() - now));
     for (int i = 1; i <= paramContainer.items.size(); i++) {
         CarouselStep* currentStep = paramContainer.items[i % paramContainer.items.size()];
         CarouselStep* previousStep = paramContainer.items[i - 1];
         for (auto it = previousStep->computedValues.begin(); it != previousStep->computedValues.end(); it.next()) {
             SubFixtureChannel* chan = it.getKey();
             std::shared_ptr<ChannelValue> cValue = it.getValue();
-            if (!subFixtureChannelOffsets.contains(chan)) {
-                int chanIndex = selection.computedSelectedSubFixtures.indexOf(chan->parentSubFixture);
+            if (!subFixtureChannelOffsets_temp.contains(chan)) {
+                if (!subFixtureToIndex.contains(chan->parentSubFixture))
+                    continue;
+
+                int chanIndex = subFixtureToIndex.getReference(chan->parentSubFixture);
                 int realIndex = chanIndex / nBuddying;
 
                 int nWing = realIndex / wingSize;
@@ -178,28 +204,33 @@ void CarouselRow::computeData() {
 
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
-                // LOG(offset);
-                subFixtureChannelOffsets.set(chan, -offset);
+                // //LOG(offset);
+                subFixtureChannelOffsets_temp.set(chan, -offset);
             }
             currentStep->computedValues.getReference(chan)->values.set(0,cValue->endValue());
         }
 
     }
 
+    //LOG("step 9 " << (Time::getMillisecondCounterHiRes() - now));
     if (wingsInvertSelections->boolValue()) {
         double offsetMin = 1;
         double offsetMax = 0;
 
-        for (auto it = subFixtureChannelOffsets.begin(); it != subFixtureChannelOffsets.end(); it.next()) {
+        for (auto it = subFixtureChannelOffsets_temp.begin(); it != subFixtureChannelOffsets_temp.end(); it.next()) {
             offsetMin = jmin(offsetMin, it.getValue());
             offsetMax = jmax(offsetMax, it.getValue());
         }
-        for (auto it = subFixtureChannelOffsets.begin(); it != subFixtureChannelOffsets.end(); it.next()) {
-            subFixtureChannelOffsets.set(it.getKey(), jmap(it.getValue(), offsetMin, offsetMax, offsetMax, offsetMin));
+        for (auto it = subFixtureChannelOffsets_temp.begin(); it != subFixtureChannelOffsets_temp.end(); it.next()) {
+            subFixtureChannelOffsets_temp.set(it.getKey(), jmap(it.getValue(), offsetMin, offsetMax, offsetMax, offsetMin));
         }
 
     }
 
+
+    isComputing.enter();
+    computedPositions_temp.swapWith(computedPositions);
+    subFixtureChannelOffsets_temp.swapWith(subFixtureChannelOffsets);
     isComputing.exit();
 }
 

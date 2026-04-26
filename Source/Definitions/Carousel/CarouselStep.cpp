@@ -77,7 +77,9 @@ void CarouselStep::updateDisplay() {
 }
 
 
-void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
+void CarouselStep::computeValues(Array<SubFixture*> &SubFixtures) {
+	double now = Time::getMillisecondCounterHiRes();
+	//LOG("compute carouselStep");
 	isComputing.enter();
 	computedValues.clear();
 	if (!enabled->boolValue()) {
@@ -102,10 +104,13 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 				pTo->computeValues();
 			}
 		}
-
+		//LOG("sub step 1 " << Time::getMillisecondCounterHiRes() - now);
 		ChannelType* rawChan = dynamic_cast<ChannelType*>(cv->channelType->targetContainer.get());
 		for (int indexFixt = 0; indexFixt < SubFixtures.size(); indexFixt++) {
 
+			if (indexFixt <2) {
+				//LOG("sub step 2 " << Time::getMillisecondCounterHiRes() - now);
+			}
 			std::shared_ptr < HashMap<ChannelType*, float>> valuesFrom = std::make_shared<HashMap<ChannelType*, float>>();
 			std::shared_ptr < HashMap<ChannelType*, float>> valuesTo = std::make_shared<HashMap<ChannelType*, float>>();
 			String test = cv->presetOrValue->getValue();
@@ -133,6 +138,9 @@ void CarouselStep::computeValues(Array<SubFixture*> SubFixtures) {
 				valuesTo->set(rawChan, cv->valueTo->getValue());
 			}
 
+			if (indexFixt <2) {
+				//LOG("sub step 3 " << Time::getMillisecondCounterHiRes() - now);
+			}
 			for (auto it = valuesFrom->begin(); it != valuesFrom->end(); it.next()) {
 				SubFixtureChannel* fchan = SubFixtures[indexFixt]->channelsMap.contains(it.getKey()) ? SubFixtures[indexFixt]->channelsMap.getReference(it.getKey()) : nullptr;
 
