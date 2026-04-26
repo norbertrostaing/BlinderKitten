@@ -182,7 +182,7 @@ void Mapper::computeData() {
 float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
 	if (!chanToMapperRow.contains(fc)) {return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
-	isComputing.enter();
+	//isComputing.enter();
 	float calcValue = currentVal;
 	std::shared_ptr<Array<MapperRow*>> activeRows = chanToMapperRow.getReference(fc);
 	for (int rId = 0; rId < activeRows->size(); rId++) {
@@ -202,7 +202,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 				}
 
 				if (toApply == nullptr) {
-					isComputing.exit();
+					//isComputing.exit();
 					return currentVal;
 				}
 				std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
@@ -235,7 +235,7 @@ float Mapper::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 	else {
 		currentVal = jmap(s, currentVal, calcValue);
 	}
-	isComputing.exit();
+	//isComputing.exit();
 	return currentVal;
 }
 

@@ -351,7 +351,7 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 	bool keepUpdate = false;
 
 	float localValue = 0;
-	ScopedLock lock(computing);
+	//ScopedLock lock(computing);
 	if (!activeValues.contains(fc)) { return currentVal; }
 	std::shared_ptr<ChannelValue> cv = activeValues.getReference(fc);
 

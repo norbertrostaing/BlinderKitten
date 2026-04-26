@@ -312,13 +312,13 @@ void Effect::computeData() {
 }
 
 float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
-	isComputing.enter();
+	//isComputing.enter();
 
 	float fadeSize = 1;
 	if (TSStartFadeIn < now && TSEndFadeIn > now) fadeSize = jmap(now, TSStartFadeIn, TSEndFadeIn, 0.0, 1.0);
 	if (TSStartFadeOut < now && TSEndFadeOut > now) fadeSize = jmap(now, TSStartFadeOut, TSEndFadeOut, 1.0, 0.0);
 
-	if (!chanToFxParam.contains(fc)) { isComputing.exit(); return currentVal; }
+	if (!chanToFxParam.contains(fc)) { /*isComputing.exit(); */ return currentVal; }
 	if (isOn) {Brain::getInstance()->pleaseUpdate(fc); }
 	std::shared_ptr<Array<EffectParam*>> params = chanToFxParam.getReference(fc);
 	for (int i = 0; i < params->size(); i++) {
@@ -429,7 +429,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 
 
 	}
-	isComputing.exit();
+	//isComputing.exit();
 	return currentVal;
 }
 

@@ -317,7 +317,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	if (TSStartFadeIn < now && TSEndFadeIn > now) fadeSize = jmap(now, TSStartFadeIn, TSEndFadeIn, 0.0, 1.0);
 	if (TSStartFadeOut < now && TSEndFadeOut > now) fadeSize = jmap(now, TSStartFadeOut, TSEndFadeOut, 1.0, 0.0);
 
-	isComputing.enter();
+	//isComputing.enter();
 	float calcValue = currentVal;
 	bool htpOver = false;
 	std::shared_ptr<Array<CarouselRow*>> activeRows = chanToCarouselRow.getReference(fc);
@@ -342,7 +342,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		}
 
 		if (toApply == nullptr) {
-			isComputing.exit();
+			//isComputing.exit();
 			return currentVal;
 		}
 		std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
@@ -383,7 +383,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 		currentVal = jmap(s, currentVal, calcValue);
 	}
 
-	isComputing.exit();
+	//isComputing.exit();
 
 	return currentVal;
 }

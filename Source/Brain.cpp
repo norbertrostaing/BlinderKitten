@@ -243,9 +243,14 @@ void Brain::brainLoop() {
 
     Array<SubFixtureChannel* > modifiedSF;
 
-    for (Stamp* s : stamps) {
-        s->imageLock.enter();
-    }
+    for (Stamp* s : stamps) { s->imageLock.enter(); }
+    for (Cuelist* e : cuelists) { e->isComputing.enter(); }
+    for (Programmer* e : programmers) { e->computing.enter(); }
+    for (Effect* e : effects) { e->isComputing.enter(); }
+    for (Carousel* e : carousels) { e->isComputing.enter(); }
+    for (Mapper* e : mappers) { e->isComputing.enter(); }
+    for (Tracker* e : trackers) { e->isComputing.enter(); }
+    for (SelectionMaster* e : selectionMasters) { e->isComputing.enter(); }
 
     juce::Array< SubFixtureChannel*> modifiedPerThread[8];
     juce::WaitableEvent doneEvent;
@@ -289,9 +294,15 @@ void Brain::brainLoop() {
     //    }
     //}
 
-    for (Stamp* s : stamps) {
-        s->imageLock.exit();
-    }
+    for (Stamp* s : stamps) { s->imageLock.exit(); }
+    for (Cuelist* e : cuelists) { e->isComputing.exit(); }
+    for (Programmer* e : programmers) { e->computing.exit(); }
+    for (Effect* e : effects) { e->isComputing.exit(); }
+    for (Carousel* e : carousels) { e->isComputing.exit(); }
+    for (Mapper* e : mappers) { e->isComputing.exit(); }
+    for (Tracker* e : trackers) { e->isComputing.exit(); }
+    for (SelectionMaster* e : selectionMasters) { e->isComputing.exit(); }
+
 
     if (modifiedSF.size() > 0) {
         if (!loadingIsRunning && UserInputManager::getInstance()->currentProgrammer != nullptr) {
