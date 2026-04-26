@@ -130,12 +130,16 @@ void Brain::clearUpdates()
 
 void Brain::run() {
     while(!threadShouldExit()) {
-        //double begin = Time::getMillisecondCounterHiRes();
+        double begin = Time::getMillisecondCounterHiRes();
         brainLoop();
-        //double end = Time::getMillisecondCounterHiRes();
-        //double delta = end-begin;
-
-        wait(10);
+        double end = Time::getMillisecondCounterHiRes();
+        double delta = end-begin;
+        if (delta < 20) {
+            wait(20-delta);
+        }
+        else {
+            wait(5);
+        }
     }
 }
 
