@@ -11,6 +11,7 @@
 #include "Common/CommonIncludes.h"
 
 NDIDeviceChooser::NDIDeviceChooser() :
+	showInputs(true),
 	currentInputDevice(nullptr)
 {
 	addAndMakeVisible(&inputBox);
