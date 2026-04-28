@@ -192,6 +192,7 @@ void FixturePatch::tryToEnablePatch()
 	for (SubFixture* sf : parentFixture->subFixturesContainer) {
 		for (SubFixtureChannel* sfc : sf->channelsContainer) {
 			if (sfc->parentFixtureTypeChannel != nullptr) {
+				sfc->forceNextWrite = true;
 				int sfcAddress = a + sfc->parentFixtureTypeChannel->dmxDelta->intValue() - 1;
 				inter->channelToSubFixtureChannel.set(sfcAddress, sfc);
 				if (sfc->resolution == "16bits") {
