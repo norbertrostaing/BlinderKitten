@@ -46,6 +46,8 @@ MIDIMapping::MIDIMapping() :
     encoderValueRange->setBounds(0, 0, 1, 1);
     encoderValueRange->setPoint(0, 0.1);
 
+    strictMode = addBoolParameter("Strict mode", "if checked, the mapping will ignore input that are out of range, if not, values will be constrained to input range.", true);
+
     learnMode = addBoolParameter("Learn", "When active, this will automatically set the channel and pitch/number to the next incoming message", false);
     learnMode->isSavable = false;
     learnMode->hideInEditor = true;
@@ -119,8 +121,9 @@ bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
         }
     }
     else {
-        if (velocity< inputRange7b->x || velocity > inputRange7b->y) return false;
+        if (strictMode->boolValue() && (velocity< inputRange7b->x || velocity > inputRange7b->y)) return false;
         float relValue = jmap<float>(velocity, inputRange7b->x, inputRange7b->y, 0, 1);
+        relValue = jlimit(relValue,0.f,1.f);
         processValue(relValue, origin + " " + String(rcvChannel) + " note" + String(pitch), incrementIndex);
     }
     return true;
@@ -156,9 +159,10 @@ bool MIDIMapping::handleCC(int rcvChannel, int number, int value, String origin,
         }
     }
     else {
-        if (value< inputRange7b->x || value > inputRange7b->y) return false;
+        if (strictMode->boolValue() && (value< inputRange7b->x || value > inputRange7b->y)) return false;
         float relValue = jmap<float>(value, inputRange7b->x, inputRange7b->y, 0, 1);
-        processValue(relValue, origin+" "+String(rcvChannel)+" cc"+String(number), incrementIndex );
+        relValue = jlimit(0.f, 1.f, relValue);
+        processValue(relValue, origin + " " + String(rcvChannel) + " cc" + String(number), incrementIndex);
     }
     return true;
 }
@@ -190,8 +194,9 @@ bool MIDIMapping::handlePitchWheel(int rcvChannel, int value, String origin, int
         }
     }
     else {
-        if (value < inputRange14b->x || value > inputRange14b->y) return false;
+        if (strictMode->boolValue() && (value< inputRange14b->x || value > inputRange14b->y)) return false;
         float relValue = jmap<float>(jlimit<float>(inputRange14b->x, inputRange14b->y, value), inputRange14b->x, inputRange14b->y, 0, 1);
+        relValue = jlimit(0.f, 1.f, relValue);
         processValue(relValue, origin + " " + String(rcvChannel) + " pw", incrementIndex);
     }
     return true;

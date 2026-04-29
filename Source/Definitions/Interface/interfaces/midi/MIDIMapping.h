@@ -35,6 +35,7 @@ public:
 
     BoolParameter* learnMode;
     BoolParameter* learnRange;
+    BoolParameter* strictMode;
 
     bool nextInputReinitRange = false;
 
