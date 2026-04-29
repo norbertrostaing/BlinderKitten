@@ -325,6 +325,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 		EffectParam* p = params->getReference(i);
 		p->checkParentEffect();
 		EffectRow* row = p->parentEffectRow;
+		if (row == nullptr) return currentVal;
 		row->checkParentEffect();
 
 		bool isPerlin = row->curvePresetOrValue->getValue().toString() == "perlin";
