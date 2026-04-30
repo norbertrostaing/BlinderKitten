@@ -123,7 +123,7 @@ bool MIDIMapping::handleNote(int rcvChannel, int pitch, int velocity, String ori
     else {
         if (strictMode->boolValue() && (velocity< inputRange7b->x || velocity > inputRange7b->y)) return false;
         float relValue = jmap<float>(velocity, inputRange7b->x, inputRange7b->y, 0, 1);
-        relValue = jlimit(relValue,0.f,1.f);
+        relValue = jlimit(0.f,1.f, relValue);
         processValue(relValue, origin + " " + String(rcvChannel) + " note" + String(pitch), incrementIndex);
     }
     return true;
