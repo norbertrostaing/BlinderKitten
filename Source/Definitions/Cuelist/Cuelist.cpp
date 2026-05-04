@@ -1157,6 +1157,7 @@ void Cuelist::update() {
 			isOverWritten = isOverWritten && cv->isOverWritten;
 		}
 	}
+	isComputing.exit();
 	currentFade->setValue(tempPosition);
 	transitionRunning = !isEnded;
 	CScuesAB.enter();
@@ -1178,7 +1179,7 @@ void Cuelist::update() {
 		downFadeCanMove = false;
 		crossFadeCanMove = false;
 	}
-
+	isComputing.enter();
 	if (wannaOffFlash) {
 		bool canStopFlash = true;
 		for (auto it = flashingValues.begin(); it != flashingValues.end(); it.next()) {
