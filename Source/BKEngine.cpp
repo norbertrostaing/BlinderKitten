@@ -1063,9 +1063,22 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 	changedNames.set("ColorAdd_A", "Amber");
     changedNames.set("ColorAdd_RY", "Amber");
     changedNames.set("ColorAdd_UV", "UV");
+	changedNames.set("ColorAdd_C", "Cyan");
+	changedNames.set("ColorAdd_M", "Magenta");
+	changedNames.set("ColorAdd_Y", "Yellow");
+	changedNames.set("ColorAdd_GY", "Lime");
+	changedNames.set("ColorAdd_GC", "Blue-Green");
+	changedNames.set("ColorAdd_BC", "Light-Blue");
+	changedNames.set("ColorAdd_BM", "Purple");
+	changedNames.set("ColorAdd_RM", "Pink");
+	changedNames.set("ColorAdd_WW", "Warm-White");
+	changedNames.set("ColorAdd_CW", "Cool-White");
 	changedNames.set("ColorSub_C", "Cyan");
 	changedNames.set("ColorSub_M", "Magenta");
 	changedNames.set("ColorSub_Y", "Yellow");
+	changedNames.set("ColorSub_R", "Red");
+	changedNames.set("ColorSub_G", "Green");
+	changedNames.set("ColorSub_B", "Blue");
 
 	XmlDocument descriptionXml = stream->readEntireStreamAsString();
 	auto rootElmt = descriptionXml.getDocumentElement();
