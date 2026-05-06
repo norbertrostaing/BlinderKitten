@@ -897,7 +897,9 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 
 							if (activeValues.contains(sfc)) {
 								std::shared_ptr<ChannelValue> currentCV = activeValues.getReference(sfc);
-								cv->values.set(0,currentCV->endValue());
+								if (currentCV.get() != nullptr) {
+									cv->values.set(0, currentCV->endValue());
+								}
 							}
 							newActiveValues.set(sfc, cv);
 							sfc->cuelistOnTopOfStack(this);
