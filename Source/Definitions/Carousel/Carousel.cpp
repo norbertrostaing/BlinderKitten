@@ -345,7 +345,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 			//isComputing.exit();
 			return currentVal;
 		}
-		std::shared_ptr<ChannelValue> cVal = toApply->computedValues.getReference(fc);
+		std::shared_ptr<ChannelValue> cVal = toApply->computedValues.contains(fc) ? toApply->computedValues.getReference(fc) : nullptr;
 		if (cVal != nullptr) {
 			float fadeValue = 1;
 			if (cVal->htpOverride) {

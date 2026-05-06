@@ -439,7 +439,10 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 								if (delayLTP != -1) delay = delayLTP*1000. ;
 							}
 							else {
-								std::shared_ptr<ChannelValue> currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								std::shared_ptr<ChannelValue> currentCuelistVal = nullptr;
+								if (callingCuelist->activeValues.contains(fchan)) {
+									currentCuelistVal = callingCuelist->activeValues.getReference(fchan);
+								}
 								if (currentCuelistVal == nullptr || currentCuelistVal->endValue() < val) {
 									if (delayHTPIn != -1) delay = delayHTPIn * 1000.;
 								}
