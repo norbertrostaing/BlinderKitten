@@ -130,6 +130,7 @@ void Layout::onContainerNiceNameChanged()
 void Layout::computeData(bool forceRefresh)
 {
 	if (Brain::getInstance()->loadingIsRunning) return;
+	if (Brain::getInstance()->isClearing) return;
 	isComputing.enter();
 
 	subFixtToPos.clear();
