@@ -240,14 +240,12 @@ void Programmer::computeValues() {
 			for (auto it = subFixtures[i]->channelsMap.begin(); it != subFixtures[i]->channelsMap.end(); it.next()) {
 				SubFixtureChannel* sfc = it.getValue();
 				if (sfc != nullptr && sfc->highlightValue >= 0) {
-					if (computedValues.contains(sfc)) {
-						std::shared_ptr<ChannelValue> cv = computedValues.getReference(sfc);
-						if (cv == nullptr) {
-							cv = std::make_shared<ChannelValue>();
-							computedValues.set(sfc, cv);
-						}
-						cv->values.set(1,sfc->highlightValue);
+					std::shared_ptr<ChannelValue> cv = computedValues.contains(sfc) ? computedValues.getReference(sfc) : nullptr;
+					if (cv == nullptr) {
+						cv = std::make_shared<ChannelValue>();
+						computedValues.set(sfc, cv);
 					}
+					cv->values.set(1,sfc->highlightValue);
 				}
 			}
 		}
