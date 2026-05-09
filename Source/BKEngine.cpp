@@ -121,6 +121,8 @@ BKEngine::BKEngine() :
 	Desktop::setScreenSaverEnabled(false);
 
 	GlobalSettings::getInstance()->altScaleFactor->setDefaultValue(0.002);
+	GlobalSettings::getInstance()->updateChannel->removeOption("Stable");
+	GlobalSettings::getInstance()->updateChannel->setValueWithKey("Beta");
 
 	ProjectSettings::getInstance()->addChildControllableContainer(&genericSettingsContainer);
 	ProjectSettings::getInstance()->addChildControllableContainer(&conductorInfosContainer);
