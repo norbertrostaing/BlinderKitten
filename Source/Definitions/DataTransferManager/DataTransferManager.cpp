@@ -134,7 +134,10 @@ void DataTransferManager::triggerTriggered(Trigger* t) {
 
 
 void DataTransferManager::execute() {
-    const MessageManagerLock mmLock;
+    if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+        MessageManager::getInstance()->callAsync([this](){execute();});
+        return;
+    }
     String srcType = sourceType->getValue();
     String trgType = targetType->getValue();
     bool valid = false;
@@ -705,7 +708,11 @@ void DataTransferManager::execute() {
 
 
 void DataTransferManager::editObject(String type, int id) {
-    const MessageManagerLock mmLock;
+    if (!MessageManager::getInstance()->isThisTheMessageThread()) {
+        MessageManager::getInstance()->callAsync([this, type, id]() {editObject(type, id); });
+        return;
+    }
+
     if (type == "fixture") {
         Fixture* f = Brain::getInstance()->getFixtureById(id);
         //if (f == nullptr) { f = new Fixture(); f->id->setValue(id); }
