@@ -990,7 +990,6 @@ void Cuelist::goBack(float forcedDelay, float forcedFade)
 }
 
 void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
-	if (!isComputing.tryEnter()) {return; }
 	ScopedLock lock(CScuesAB);
 	if (setOn) {
 		TSOffFlash = 0;
@@ -1041,7 +1040,6 @@ void Cuelist::flash(bool setOn, bool withTiming, bool swop) {
 			}
 		}
 	}
-	isComputing.exit();
 	/*
 	
 	if (setOn) {
