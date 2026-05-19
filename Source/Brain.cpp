@@ -67,7 +67,7 @@ Brain :: ~Brain() {
 void Brain::clear()
 {
     isClearing = true;
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingLibraries);
     subFixtures.clear();
     groups.clear();
     fixtures.clear();
@@ -85,6 +85,7 @@ void Brain::clear()
     selectionMasters.clear();
     bundles.clear();
     layouts.clear();
+    ScopedLock lock2(usingPools);
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
     subFixtureChannelPoolUpdating.clear();
@@ -107,7 +108,7 @@ void Brain::clear()
 
 void Brain::clearUpdates()
 {
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     cuelistPoolUpdating.clear();
     cuelistPoolWaiting.clear();
     subFixtureChannelPoolUpdating.clear();
@@ -150,7 +151,7 @@ void Brain::brainLoop() {
 
     now = Time::getMillisecondCounterHiRes();
     if (cuePoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         cuePoolUpdating.swapWith(cuePoolWaiting);
         cuePoolWaiting.clear();
     }
@@ -160,7 +161,7 @@ void Brain::brainLoop() {
     cuePoolUpdating.clear();
 
     if (cuelistPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         cuelistPoolUpdating.swapWith(cuelistPoolWaiting);
         cuelistPoolWaiting.clear();
     }
@@ -170,7 +171,7 @@ void Brain::brainLoop() {
     cuelistPoolUpdating.clear();
 
     if (effectPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         effectPoolUpdating.swapWith(effectPoolWaiting);
         effectPoolWaiting.clear();
     }
@@ -180,7 +181,7 @@ void Brain::brainLoop() {
     effectPoolUpdating.clear();
 
     if (stampPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         stampPoolUpdating.swapWith(stampPoolWaiting);
         stampPoolWaiting.clear();
     }
@@ -190,7 +191,7 @@ void Brain::brainLoop() {
     stampPoolUpdating.clear();
 
     if (carouselPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         carouselPoolUpdating.swapWith(carouselPoolWaiting);
         carouselPoolWaiting.clear();
     }
@@ -200,7 +201,7 @@ void Brain::brainLoop() {
     carouselPoolUpdating.clear();
 
     if (mapperPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         mapperPoolUpdating.swapWith(mapperPoolWaiting);
         mapperPoolWaiting.clear();
     }
@@ -210,7 +211,7 @@ void Brain::brainLoop() {
     mapperPoolUpdating.clear();
 
     if (trackerPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         trackerPoolUpdating.swapWith(trackerPoolWaiting);
         trackerPoolWaiting.clear();
     }
@@ -220,7 +221,7 @@ void Brain::brainLoop() {
     trackerPoolUpdating.clear();
 
     if (programmerPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         programmerPoolUpdating.swapWith(programmerPoolWaiting);
         programmerPoolWaiting.clear();
     }
@@ -232,7 +233,7 @@ void Brain::brainLoop() {
     programmerPoolUpdating.clear();
 
     if (selectionMasterPoolWaiting.size() > 0) {
-        ScopedLock lock(usingCollections);
+        ScopedLock lock(usingPools);
         selectionMasterPoolUpdating.swapWith(selectionMasterPoolWaiting);
         selectionMasterPoolWaiting.clear();
     }
@@ -243,6 +244,7 @@ void Brain::brainLoop() {
 
     Array<SubFixtureChannel* > modifiedSF;
 
+    usingLibraries.enter();
     for (Stamp* s : stamps) { s->imageLock.enter(); }
     for (Cuelist* e : cuelists) { e->isComputing.enter(); }
     for (Programmer* e : programmers) { e->computing.enter(); }
@@ -251,21 +253,22 @@ void Brain::brainLoop() {
     for (Mapper* e : mappers) { e->isComputing.enter(); }
     for (Tracker* e : trackers) { e->isComputing.enter(); }
     for (SelectionMaster* e : selectionMasters) { e->isComputing.enter(); }
+    usingLibraries.exit();
 
     juce::Array< SubFixtureChannel*> modifiedPerThread[8];
     juce::WaitableEvent doneEvent;
     std::atomic<int> remainingJobs = 8;
 
-    for (int iThread = 0; iThread < 8; iThread++) 
-        {
+    for (int iThread = 0; iThread < 8; iThread++)
+    {
         pool.addJob([this, iThread, &modifiedPerThread, &remainingJobs, &doneEvent]()
             {
                 auto& localModified = modifiedPerThread[iThread];
-                for (int i = 0; i < allSubfixtureChannels.size(); i+= 8)
+                for (int i = 0; i < allVirtualSubfixtureChannels.size(); i += 8)
                 {
-                    int index = i+iThread;
-                    if (allSubfixtureChannels.size()>index) {
-                        SubFixtureChannel* sfc = allSubfixtureChannels[index];
+                    int index = i + iThread;
+                    if (allVirtualSubfixtureChannels.size() > index) {
+                        SubFixtureChannel* sfc = allVirtualSubfixtureChannels[index];
                         if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
                         {
                             sfc->isDirty = false;
@@ -277,9 +280,37 @@ void Brain::brainLoop() {
                 }
                 if (--remainingJobs == 0) doneEvent.signal();
             });
-        }
+    }
 
     doneEvent.wait();
+    doneEvent.reset();
+    remainingJobs = 8;
+
+    for (int iThread = 0; iThread < 8; iThread++)
+    {
+        pool.addJob([this, iThread, &modifiedPerThread, &remainingJobs, &doneEvent]()
+            {
+                auto& localModified = modifiedPerThread[iThread];
+                for (int i = 0; i < allDMXSubfixtureChannels.size(); i += 8)
+                {
+                    int index = i + iThread;
+                    if (allDMXSubfixtureChannels.size() > index) {
+                        SubFixtureChannel* sfc = allDMXSubfixtureChannels[index];
+                        if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
+                        {
+                            sfc->isDirty = false;
+                            sfc->updateVal(now);
+                            localModified.add(sfc);
+                        }
+                    }
+
+                }
+                if (--remainingJobs == 0) doneEvent.signal();
+            });
+    }
+
+    doneEvent.wait();
+
     //pool.removeAllJobs(true, -1);
 
     for (int i = 0; i < 8; i++) {
@@ -294,6 +325,7 @@ void Brain::brainLoop() {
     //    }
     //}
 
+    usingLibraries.enter();
     for (Stamp* s : stamps) { s->imageLock.exit(); }
     for (Cuelist* e : cuelists) { e->isComputing.exit(); }
     for (Programmer* e : programmers) { e->computing.exit(); }
@@ -302,6 +334,7 @@ void Brain::brainLoop() {
     for (Mapper* e : mappers) { e->isComputing.exit(); }
     for (Tracker* e : trackers) { e->isComputing.exit(); }
     for (SelectionMaster* e : selectionMasters) { e->isComputing.exit(); }
+    usingLibraries.exit();
 
 
     if (modifiedSF.size() > 0) {
@@ -398,7 +431,7 @@ void Brain::brainLoop() {
     }
 
     Array<String> sentSync;
-    usingCollections.enter();
+    usingLibraries.enter();
     for (DMXArtNetDevice* d : syncedArtnetDevices) {
         if (d->enabled && d->shouldSendArtSync->boolValue()) {
             String s = d->remoteHost->stringValue()+":"+d->remotePort->stringValue();
@@ -408,13 +441,14 @@ void Brain::brainLoop() {
             }
         }
     }
-    usingCollections.exit();
+    usingLibraries.exit();
     //double delta = Time::getMillisecondCounterHiRes() - now;
     //LOG("end of loop : "<< (Time::getMillisecondCounterHiRes() - now));
 
 }
 
 void Brain::registerSubFixture(SubFixture* f, int id) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (subFixtures.getReference(id) == f) { return; }
     if (subFixtures.containsValue(f)) {
@@ -436,12 +470,14 @@ void Brain::registerSubFixture(SubFixture* f, int id) {
 }
 
 void Brain::unregisterSubFixture(SubFixture* f) {
+    ScopedLock lock(usingLibraries);
     if (subFixtures.containsValue(f)) {
         subFixtures.removeValue(f);
     }
 }
 
 void Brain::registerFixture(Fixture* target, int askedId) {
+    ScopedLock lock(usingLibraries);
     int currentId = target->registeredId;
     if (fixtures.getReference(askedId) == target) { return; }
     if (fixtures.containsValue(target)) {
@@ -475,6 +511,7 @@ void Brain::registerFixture(Fixture* target, int askedId) {
 }
 
 void Brain::unregisterFixture(Fixture* d) {
+    ScopedLock lock(usingLibraries);
     if (fixtures.containsValue(d)) {
         fixtures.removeValue(d);
     }
@@ -482,6 +519,7 @@ void Brain::unregisterFixture(Fixture* d) {
 }
 
 void Brain::registerGroup(Group* target, int askedId) {
+    ScopedLock lock(usingLibraries);
     int currentId = target->registeredId;
     if (groups.getReference(askedId) == target) { return; }
     if (groups.containsValue(target)) {
@@ -515,6 +553,7 @@ void Brain::registerGroup(Group* target, int askedId) {
 }
 
 void Brain::unregisterGroup(Group* g) {
+    ScopedLock lock(usingLibraries);
     if (groups.containsValue(g)) {
         groups.removeValue(g);
     }
@@ -522,6 +561,7 @@ void Brain::unregisterGroup(Group* g) {
 }
 
 void Brain::registerPreset(Preset* target, int askedId) {
+    ScopedLock lock(usingLibraries);
     int currentId = target->registeredId;
     if (presets.getReference(askedId) == target) { return; }
     if (presets.containsValue(target)) {
@@ -556,6 +596,7 @@ void Brain::registerPreset(Preset* target, int askedId) {
 }
 
 void Brain::unregisterPreset(Preset* p) {
+    ScopedLock lock(usingLibraries);
     if (presets.containsValue(p)) {
         presets.removeValue(p);
     }
@@ -563,6 +604,7 @@ void Brain::unregisterPreset(Preset* p) {
 }
 
 void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int conductorId = dynamic_cast<BKEngine*>(Engine::mainEngine)->conductorCuelistId->intValue();
     bool relinkConductor = false;
 
@@ -612,6 +654,7 @@ void Brain::registerCuelist(Cuelist* p, int id, bool swap) {
 }
 
 void Brain::unregisterCuelist(Cuelist* c) {
+    ScopedLock lock(usingLibraries);
     if (cuelists.containsValue(c)) {
         cuelists.removeValue(c);
     }
@@ -621,6 +664,7 @@ void Brain::unregisterCuelist(Cuelist* c) {
 }
 
 void Brain::registerProgrammer(Programmer* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (programmers.getReference(id) == p) { return; }
     if (programmers.containsValue(p)) {
@@ -651,12 +695,14 @@ void Brain::registerProgrammer(Programmer* p, int id, bool swap) {
 
 
 void Brain::unregisterProgrammer(Programmer* c) {
+    ScopedLock lock(usingLibraries);
     if (programmers.containsValue(c)) {
         programmers.removeValue(c);
     }
 }
 
 void Brain::registerCurvePreset(CurvePreset* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (curvePresets.getReference(id) == p) { return; }
     if (curvePresets.containsValue(p)) {
@@ -687,12 +733,14 @@ void Brain::registerCurvePreset(CurvePreset* p, int id, bool swap) {
 
 
 void Brain::unregisterCurvePreset(CurvePreset* c) {
+    ScopedLock lock(usingLibraries);
     if (curvePresets.containsValue(c)) {
         curvePresets.removeValue(c);
     }
 }
 
 void Brain::registerTimingPreset(TimingPreset* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (timingPresets.getReference(id) == p) { return; }
     if (timingPresets.containsValue(p)) {
@@ -723,12 +771,14 @@ void Brain::registerTimingPreset(TimingPreset* p, int id, bool swap) {
 
 
 void Brain::unregisterTimingPreset(TimingPreset* c) {
+    ScopedLock lock(usingLibraries);
     if (timingPresets.containsValue(c)) {
         timingPresets.removeValue(c);
     }
 }
 
 void Brain::registerBKPathPreset(BKPathPreset* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (bkPathPresets.getReference(id) == p) { return; }
     if (bkPathPresets.containsValue(p)) {
@@ -759,12 +809,14 @@ void Brain::registerBKPathPreset(BKPathPreset* p, int id, bool swap) {
 
 
 void Brain::unregisterBKPathPreset(BKPathPreset* c) {
+    ScopedLock lock(usingLibraries);
     if (bkPathPresets.containsValue(c)) {
         bkPathPresets.removeValue(c);
     }
 }
 
 void Brain::registerEffect(Effect* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (effects.getReference(id) == p) { return; }
     if (effects.containsValue(p)) {
@@ -796,6 +848,7 @@ void Brain::registerEffect(Effect* p, int id, bool swap) {
 
 
 void Brain::unregisterEffect(Effect* c) {
+    ScopedLock lock(usingLibraries);
     if (effects.containsValue(c)) {
         effects.removeValue(c);
     }
@@ -805,6 +858,7 @@ void Brain::unregisterEffect(Effect* c) {
 }
 
 void Brain::registerStamp(Stamp* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (stamps.getReference(id) == p) { return; }
     if (stamps.containsValue(p)) {
@@ -836,6 +890,7 @@ void Brain::registerStamp(Stamp* p, int id, bool swap) {
 
 
 void Brain::unregisterStamp(Stamp* c) {
+    ScopedLock lock(usingLibraries);
     if (stamps.containsValue(c)) {
         stamps.removeValue(c);
     }
@@ -844,6 +899,7 @@ void Brain::unregisterStamp(Stamp* c) {
 }
 
 void Brain::registerCarousel(Carousel* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (carousels.getReference(id) == p) { return; }
     if (carousels.containsValue(p)) {
@@ -875,6 +931,7 @@ void Brain::registerCarousel(Carousel* p, int id, bool swap) {
 
 
 void Brain::unregisterCarousel(Carousel* c) {
+    ScopedLock lock(usingLibraries);
     if (carousels.containsValue(c)) {
         carousels.removeValue(c);
     }
@@ -884,6 +941,7 @@ void Brain::unregisterCarousel(Carousel* c) {
 }
 
 void Brain::registerMapper(Mapper* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (mappers.getReference(id) == p) { return; }
     if (mappers.containsValue(p)) {
@@ -915,6 +973,7 @@ void Brain::registerMapper(Mapper* p, int id, bool swap) {
 
 
 void Brain::unregisterMapper(Mapper* c) {
+    ScopedLock lock(usingLibraries);
     if (mappers.containsValue(c)) {
         mappers.removeValue(c);
     }
@@ -924,6 +983,7 @@ void Brain::unregisterMapper(Mapper* c) {
 }
 
 void Brain::registerLayout(Layout* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (layouts.getReference(id) == p) { return; }
     if (layouts.containsValue(p)) {
@@ -954,12 +1014,14 @@ void Brain::registerLayout(Layout* p, int id, bool swap) {
 
 
 void Brain::unregisterLayout(Layout* c) {
+    ScopedLock lock(usingLibraries);
     if (layouts.containsValue(c)) {
         layouts.removeValue(c);
     }
 }
 
 void Brain::registerTracker(Tracker* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (trackers.getReference(id) == p) { return; }
     if (trackers.containsValue(p)) {
@@ -991,6 +1053,7 @@ void Brain::registerTracker(Tracker* p, int id, bool swap) {
 
 
 void Brain::unregisterTracker(Tracker* c) {
+    ScopedLock lock(usingLibraries);
     if (trackers.containsValue(c)) {
         trackers.removeValue(c);
     }
@@ -999,6 +1062,7 @@ void Brain::unregisterTracker(Tracker* c) {
 
 
 void Brain::registerSelectionMaster(SelectionMaster* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (selectionMasters.getReference(id) == p) { return; }
     if (selectionMasters.containsValue(p)) {
@@ -1030,6 +1094,7 @@ void Brain::registerSelectionMaster(SelectionMaster* p, int id, bool swap) {
 
 
 void Brain::unregisterSelectionMaster(SelectionMaster* c) {
+    ScopedLock lock(usingLibraries);
     if (selectionMasters.containsValue(c)) {
         selectionMasters.removeValue(c);
     }
@@ -1038,6 +1103,7 @@ void Brain::unregisterSelectionMaster(SelectionMaster* c) {
 
 
 void Brain::registerBundle(Bundle* p, int id, bool swap) {
+    ScopedLock lock(usingLibraries);
     int askedId = id;
     if (bundles.getReference(id) == p) { return; }
     if (bundles.containsValue(p)) {
@@ -1068,6 +1134,7 @@ void Brain::registerBundle(Bundle* p, int id, bool swap) {
 
 
 void Brain::unregisterBundle(Bundle* c) {
+    ScopedLock lock(usingLibraries);
     if (bundles.containsValue(c)) {
         bundles.removeValue(c);
     }
@@ -1077,7 +1144,7 @@ void Brain::unregisterBundle(Bundle* c) {
 
 void Brain::pleaseUpdate(Cuelist* c) {
     if (c == nullptr) {return;}
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!cuelistPoolWaiting.contains(c)) {
         cuelistPoolWaiting.add(c);
     }
@@ -1092,7 +1159,7 @@ void Brain::pleaseUpdate(SubFixtureChannel* f) {
 
 void Brain::pleaseUpdate(Cue* c) {
     if (c == nullptr || c->objectType != "Cue") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!cuePoolWaiting.contains(c)) {
         cuePoolWaiting.add(c);
     }
@@ -1100,7 +1167,7 @@ void Brain::pleaseUpdate(Cue* c) {
 
 void Brain::pleaseUpdate(Programmer* c) {
     if (c == nullptr || c->objectType != "Programmer") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!programmerPoolWaiting.contains(c)) {
         programmerPoolWaiting.add(c);
     }
@@ -1108,7 +1175,7 @@ void Brain::pleaseUpdate(Programmer* c) {
 
 void Brain::pleaseUpdate(Effect* f) {
     if (f == nullptr || f->objectType != "Effect") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!effectPoolWaiting.contains(f)) {
         effectPoolWaiting.add(f);
     }
@@ -1116,7 +1183,7 @@ void Brain::pleaseUpdate(Effect* f) {
 
 void Brain::pleaseUpdate(Stamp* f) {
     if (f == nullptr || f->objectType != "Stamp") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!stampPoolWaiting.contains(f)) {
         stampPoolWaiting.add(f);
     }
@@ -1124,7 +1191,7 @@ void Brain::pleaseUpdate(Stamp* f) {
 
 void Brain::pleaseUpdate(Carousel* f) {
     if (f == nullptr || f->objectType != "Carousel") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!carouselPoolWaiting.contains(f)) {
         carouselPoolWaiting.add(f);
     }
@@ -1132,7 +1199,7 @@ void Brain::pleaseUpdate(Carousel* f) {
 
 void Brain::pleaseUpdate(Mapper* f) {
     if (f == nullptr || f->objectType != "Mapper") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!mapperPoolWaiting.contains(f)) {
         mapperPoolWaiting.add(f);
     }
@@ -1140,7 +1207,7 @@ void Brain::pleaseUpdate(Mapper* f) {
 
 void Brain::pleaseUpdate(Tracker* f) {
     if (f == nullptr || f->objectType != "Tracker") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!trackerPoolWaiting.contains(f)) {
         trackerPoolWaiting.add(f);
     }
@@ -1148,7 +1215,7 @@ void Brain::pleaseUpdate(Tracker* f) {
 
 void Brain::pleaseUpdate(SelectionMaster* f) {
     if (f == nullptr || f->objectType != "SelectionMaster") { return; }
-    ScopedLock lock(usingCollections);
+    ScopedLock lock(usingPools);
     if (!selectionMasterPoolWaiting.contains(f)) {
         selectionMasterPoolWaiting.add(f);
     }
@@ -1592,95 +1659,95 @@ Bundle* Brain::getBundleById(int id) {
 
 
 void Brain::swoppedCuelist(Cuelist* c) {
-    usingCollections.enter();
+    usingPools.enter();
     if (!swoppedCuelists.contains(c)) {
         swoppedCuelists.add(c);
     }
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
     isSwopping = true;
 }
 
 void Brain::swoppedEffect(Effect* c) {
-    usingCollections.enter();
+    usingPools.enter();
     if (!swoppedEffects.contains(c)) {
         swoppedEffects.add(c);
     }
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
     isSwopping = true;
 }
 
 void Brain::swoppedStamp(Stamp* c) {
-    usingCollections.enter();
+    usingPools.enter();
     if (!swoppedStamps.contains(c)) {
         swoppedStamps.add(c);
     }
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
     isSwopping = true;
 }
 
 void Brain::swoppedCarousel(Carousel* c) {
-    usingCollections.enter();
+    usingPools.enter();
     if (!swoppedCarousels.contains(c)) {
         swoppedCarousels.add(c);
     }
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
     isSwopping = true;
 }
 
 
 void Brain::unswoppedCuelist(Cuelist* c) {
-    usingCollections.enter();
+    usingPools.enter();
     swoppedCuelists.removeAllInstancesOf(c);
     isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size()> 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
 
 }
 
 void Brain::unswoppedEffect(Effect* c) {
-    usingCollections.enter();
+    usingPools.enter();
     swoppedEffects.removeAllInstancesOf(c);
     isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
 
 }
 
 void Brain::unswoppedStamp(Stamp* c) {
-    usingCollections.enter();
+    usingPools.enter();
     swoppedStamps.removeAllInstancesOf(c);
     isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
 
 }
 
 void Brain::unswoppedCarousel(Carousel* c) {
-    usingCollections.enter();
+    usingPools.enter();
     swoppedCarousels.removeAllInstancesOf(c);
     isSwopping = swoppedCuelists.size() + swoppedEffects.size() + swoppedCarousels.size() + swoppedStamps.size() > 0;
     for (int i = 0; i < swoppableChannels.size(); i++) {
         pleaseUpdate(swoppableChannels.getReference(i));
     }
-    usingCollections.exit();
+    usingPools.exit();
 
 }
 
@@ -1896,7 +1963,7 @@ void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
     Array<Stamp*> offStamps;
     Array<Carousel*> offCarousels;
 
-    usingCollections.enter();
+    usingLibraries.enter();
     for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
         Cuelist* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isCuelistOn->boolValue()) {
@@ -1930,7 +1997,7 @@ void Brain::soloPoolCheck(int poolId, String excludeType, int excludeId)
         }
     }
 
-    usingCollections.exit();
+    usingLibraries.exit();
     for (Cuelist* c : offCuelists) c->off();
     for (Effect* c : offEffects) c->stop();
     for (Stamp* c : offStamps) c->stop();
@@ -1945,7 +2012,7 @@ void Brain::soloPoolRandom(int poolId)
     Array<String> types;
     Array<int>ids;
 
-    usingCollections.enter();
+    usingLibraries.enter();
     for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
         Cuelist* c = it.getValue();
         if (!c->isCuelistOn->boolValue() && c->soloPool->intValue() == poolId) {
@@ -1975,7 +2042,7 @@ void Brain::soloPoolRandom(int poolId)
         }
     }
 
-    usingCollections.exit();
+    usingLibraries.exit();
 
     int i = mainRandom.nextInt(ids.size());
     int id = ids[i];
@@ -1996,7 +2063,7 @@ void Brain::soloPoolStop(int poolId)
     Array<Stamp*> offStamps;
     Array<Carousel*> offCarousels;
 
-    usingCollections.enter();
+    usingLibraries.enter();
     for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
         Cuelist* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isCuelistOn->boolValue()) {
@@ -2022,7 +2089,7 @@ void Brain::soloPoolStop(int poolId)
         }
     }
 
-    usingCollections.exit();
+    usingLibraries.exit();
     for (Cuelist* c : offCuelists) c->off();
     for (Effect* c : offEffects) c->stop();
     for (Stamp* c : offStamps) c->stop();
@@ -2034,36 +2101,36 @@ void Brain::soloPoolStop(int poolId)
 
 void Brain::replaceFixtureIdEverywhere(int from, int to)
 {
-    usingCollections.enter();
+    usingLibraries.enter();
     for (int i = 0; i < allCommandSelections.size(); i++) {
         CommandSelection* sel = allCommandSelections[i];
         if (sel->targetType->getValueData() == "fixture" && sel->valueFrom->intValue() == from && !sel->thru->boolValue()) {
             sel->valueFrom->setValue(to);
         }
     }
-    usingCollections.exit();
+    usingLibraries.exit();
 }
 
 void Brain::replaceGroupIdEverywhere(int from, int to)
 {
-    usingCollections.enter();
+    usingLibraries.enter();
     for (int i = 0; i < allCommandSelections.size(); i++) {
         CommandSelection* sel = allCommandSelections[i];
         if (sel->targetType->getValueData() == "group" && sel->valueFrom->intValue() == from && !sel->thru->boolValue()) {
             sel->valueFrom->setValue(to);
         }
     }
-    usingCollections.exit();
+    usingLibraries.exit();
 }
 
 void Brain::replacePresetIdEverywhere(int from, int to)
 {
-    usingCollections.enter();
+    usingLibraries.enter();
     for (int i = 0; i < allCommandValues.size(); i++) {
         CommandValue* sel = allCommandValues[i];
         if (sel->presetOrValue->getValueData() == "preset" && sel->presetIdFrom->intValue() == from && !sel->thru->boolValue()) {
             sel->presetIdFrom->setValue(to);
         }
     }
-    usingCollections.exit();
+    usingLibraries.exit();
 }

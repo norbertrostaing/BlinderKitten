@@ -60,10 +60,10 @@ Mapper::Mapper(var params) :
 Mapper::~Mapper()
 {
 	Brain::getInstance()->unregisterMapper(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->mapperPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->mapperPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	isComputing.enter();
 	for (auto it = chanToMapperRow.begin(); it != chanToMapperRow.end(); it.next()) {
 		SubFixtureChannel* sfc = it.getKey();

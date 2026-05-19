@@ -60,10 +60,10 @@ Tracker::Tracker(var params) :
 Tracker::~Tracker()
 {
 	Brain::getInstance()->unregisterTracker(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->trackerPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->trackerPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	isComputing.enter();
 	for (auto it = chanToVal.begin(); it != chanToVal.end(); it.next()) {
 		SubFixtureChannel* sfc = it.getKey();

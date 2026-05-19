@@ -103,10 +103,10 @@ Cue::Cue(var params) :
 Cue::~Cue()
 {
 //	LOG("delete cue");
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->cuePoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->cuePoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	dynamic_cast<BKEngine*>(BKEngine::mainEngine)->selectedCues.removeAllInstancesOf(this);
 	if (CuelistSheet::getInstanceWithoutCreating()) {
 		CuelistSheet::getInstance()->cueDeleted(this);

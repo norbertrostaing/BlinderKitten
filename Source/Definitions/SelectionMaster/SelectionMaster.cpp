@@ -65,10 +65,10 @@ SelectionMaster::SelectionMaster(var params) :
 SelectionMaster::~SelectionMaster()
 {
 	Brain::getInstance()->unregisterSelectionMaster(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->selectionMasterPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->selectionMasterPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	isComputing.enter();
 	for (SubFixtureChannel* sfc : channels) {
 		sfc->selectionMasterOutOfStack(this);

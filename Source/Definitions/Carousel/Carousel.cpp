@@ -91,7 +91,7 @@ Carousel::~Carousel()
 	rows.clear();
 	isOn = false;
 	Brain::getInstance()->unregisterCarousel(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->carouselPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->carouselPoolUpdating.removeAllInstancesOf(this);
 	for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
@@ -100,7 +100,7 @@ Carousel::~Carousel()
 			Brain::getInstance()->pleaseUpdate(sfc);
 		}
 	}
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	for (int i = 0; i < rows.items.size(); i++) {
 		rows.items[i]->parentCarousel = nullptr;
 		for (int j = 0; j < rows.items[i]->paramContainer.items.size(); j++) {

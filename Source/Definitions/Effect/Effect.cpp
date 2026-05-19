@@ -87,10 +87,10 @@ Effect::~Effect()
 {
 	isComputing.enter();
 	Brain::getInstance()->unregisterEffect(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->effectPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->effectPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	
 	for (auto sfc : Brain::getInstance()->allSubfixtureChannels) {
 		if (sfc->effectStack.contains(this)) {

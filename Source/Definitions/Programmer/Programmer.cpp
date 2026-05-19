@@ -133,10 +133,10 @@ Programmer::Programmer(var params) :
 Programmer::~Programmer()
 {
 	Brain::getInstance()->unregisterProgrammer(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->programmerPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->programmerPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 
 	for (auto it = activeValues.begin(); it != activeValues.end(); it.next()) {
 		SubFixtureChannel* sfc = it.getKey();

@@ -217,6 +217,7 @@ void Fixture::checkChildrenSubFixtures() {
 					chan->swopKillable = true;
 					Brain::getInstance()->swoppableChannels.add(chan);
 				}
+				Brain::getInstance()->allVirtualSubfixtureChannels.add(chan);
 				Brain::getInstance()->pleaseUpdate(chan);
 			}
 		}
@@ -299,7 +300,7 @@ void Fixture::checkChildrenSubFixtures() {
 							chan->virtualMaster = master;
 						}
 					}
-
+					Brain::getInstance()->allDMXSubfixtureChannels.add(chan);
 					Brain::getInstance()->pleaseUpdate(chan);
 				}
 

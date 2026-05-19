@@ -38,13 +38,15 @@ SubFixtureChannel::~SubFixtureChannel()
 {
 	//isDeleted = true;
 	Brain::getInstance()->allSubfixtureChannels.removeAllInstancesOf(this);
+	Brain::getInstance()->allVirtualSubfixtureChannels.removeAllInstancesOf(this);
+	Brain::getInstance()->allDMXSubfixtureChannels.removeAllInstancesOf(this);
 	cs.enter();
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->grandMasterChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->swoppableChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->subFixtureChannelPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->subFixtureChannelPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 
 	for (auto it = Brain::getInstance()->cuelists.begin(); it != Brain::getInstance()->cuelists.end(); it.next()) {
 		Cuelist* c = it.getValue();

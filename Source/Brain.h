@@ -102,6 +102,8 @@ public:
     Array<CommandValue*> allCommandValues;
     Array<SubFixture*> allSubfixtures;
     Array<SubFixtureChannel*> allSubfixtureChannels;
+    Array<SubFixtureChannel*> allVirtualSubfixtureChannels;
+    Array<SubFixtureChannel*> allDMXSubfixtureChannels;
 
     Array<DMXArtNetDevice*> syncedArtnetDevices;
 
@@ -129,7 +131,8 @@ public:
     bool skipLoop = false;
 
     double TSBundles = 0;
-    CriticalSection usingCollections;
+    CriticalSection usingLibraries;
+    CriticalSection usingPools;
     CriticalSection usingTasksCollection;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);

@@ -81,10 +81,10 @@ Stamp::~Stamp()
 
 	isComputing.enter();
 	Brain::getInstance()->unregisterStamp(this);
-	Brain::getInstance()->usingCollections.enter();
+	Brain::getInstance()->usingPools.enter();
 	Brain::getInstance()->stampPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->stampPoolUpdating.removeAllInstancesOf(this);
-	Brain::getInstance()->usingCollections.exit();
+	Brain::getInstance()->usingPools.exit();
 	
 	//for (auto sfc : Brain::getInstance()->allSubfixtureChannels) {
 	//	if (sfc->stampStack.contains(this)) {

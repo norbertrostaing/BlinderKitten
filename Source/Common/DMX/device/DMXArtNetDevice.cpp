@@ -269,14 +269,14 @@ void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Co
 	DMXDevice::onControllableFeedbackUpdate(cc, c);
 	if (c == inputCC->enabled || c == forceSrcPort) setupReceiver();
 	if (c == shouldSendArtSync) {
-		Brain::getInstance()->usingCollections.enter();
+		Brain::getInstance()->usingLibraries.enter();
 		if (shouldSendArtSync->boolValue()) {
 			Brain::getInstance()->syncedArtnetDevices.addIfNotAlreadyThere(this);
 		}
 		else {
 			Brain::getInstance()->syncedArtnetDevices.removeAllInstancesOf(this);
 		}
-		Brain::getInstance()->usingCollections.exit();
+		Brain::getInstance()->usingLibraries.exit();
 	}
 	sendDataAtStartup();
 }

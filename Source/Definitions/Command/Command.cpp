@@ -93,7 +93,7 @@ Command::~Command()
 
 
 	if (b != nullptr && !b->isClearing) {
-		b->usingCollections.enter();
+		b->usingLibraries.enter();
 		for (auto it = b->cuelists.begin(); it != b->cuelists.end(); it.next()) {
 			Cuelist* c = it.getValue();
 			c->commandHistory.removeAllInstancesOf(this);
@@ -101,7 +101,7 @@ Command::~Command()
 				cue->commandHistory.removeAllInstancesOf(this);
 			}
 		}
-		b->usingCollections.exit();
+		b->usingLibraries.exit();
 	}
 }
 

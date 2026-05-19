@@ -302,7 +302,6 @@ void Assistant::patchFixtures()
 
 
     LOG("Patching your fixtures, please wait");
-    Brain::getInstance()->usingCollections.enter();
     int currentAdress = firstAddress;
 
     Array<Fixture*> newFixts;
@@ -348,7 +347,6 @@ void Assistant::patchFixtures()
             g->selection.items[0]->valueTo->setValue(firstId + amount - 1);
         }
     }
-    Brain::getInstance()->usingCollections.exit();
 }
 
 void Assistant::createPalette()
@@ -642,7 +640,6 @@ void Assistant::createSoloPalette()
     cl->cues.clear();
     cl->deselectThis();
     // supprimer premier cue
-    Brain::getInstance()->usingCollections.enter();
     int id = 1;
     bool nextIsNewLine = false;
     Array<Cue*> cuesToAdd;
@@ -725,8 +722,6 @@ void Assistant::createSoloPalette()
     }
 
     cl->cues.addItems(cuesToAdd);
-
-    Brain::getInstance()->usingCollections.exit();
 
     cl->selectThis();
     LOG("Palette created :)");
