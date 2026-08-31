@@ -96,6 +96,11 @@ void VirtualFaderAction::setValueInternal(var value, String origin, int incremen
         case VF_BELOWBUTTON:
             VirtualFaderColManager::getInstance()->setBelowButtonValue(page, col, number, val, origin);
             break;
+
+        case VF_PAGEUP:
+        case VF_PAGEDOWN:
+        case VF_GOTOPAGE:
+            break;
     }
 
 
@@ -157,6 +162,11 @@ var VirtualFaderAction::getValue()
         break;
     }
     case VF_BELOWBUTTON:
+        break;
+    
+    case VF_PAGEUP:
+    case VF_PAGEDOWN:
+    case VF_GOTOPAGE:
         break;
     }
 

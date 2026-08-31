@@ -29,8 +29,8 @@ public:
     IntParameter* layerId;
     int registeredId = 0;
     StringParameter* userName;
-    void onContainerParameterChangedInternal(Parameter* p);
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void onContainerParameterChangedInternal(Parameter* p) override;
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void updateName();
 
     enum MasterType{SCALE, INHIBIT, OFFSET};
@@ -54,7 +54,7 @@ public:
 
     String getTypeString() const override { return objectType; }
 
-    void triggerTriggered(Trigger* t);
+    void triggerTriggered(Trigger* t) override;
     void update(double now);
     void computeData();
     void updateSelection(bool restart = false);

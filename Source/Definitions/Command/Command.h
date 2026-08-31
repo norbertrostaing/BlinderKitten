@@ -52,8 +52,8 @@ public:
     bool toDelete = false;
 
     String getTypeString() const override { return objectType; }
-    void parameterValueChanged(Parameter* p);
-    void afterLoadJSONDataInternal();
+    void parameterValueChanged(Parameter* p) override;
+    void afterLoadJSONDataInternal() override;
     void updateDisplay();
 
     double maxTiming;
@@ -61,7 +61,7 @@ public:
     void computeValues(Cuelist* cl, Cue* c, Programmer* p = nullptr);
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
-    void triggerTriggered(Trigger* t);
+    void triggerTriggered(Trigger* t) override;
     static Command* create(var params) { return new Command(params); }
 
     StringArray getCommandAsTexts(bool useNames = false);

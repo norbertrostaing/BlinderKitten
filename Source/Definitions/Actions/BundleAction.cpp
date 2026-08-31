@@ -196,6 +196,7 @@ var BundleAction::getValue()
         break;
 
     case BUN_STOP:
+    case BUN_STOP_INSTANT:
         break;
 
     case BUN_TAPTEMPO:
@@ -207,18 +208,19 @@ var BundleAction::getValue()
         else if (useSize->boolValue()) val = target->lastSize;
         else if (useFlash->boolValue()) val = target->lastFlash;
         break;
+    case BUN_SET_SIZE:
+        break;
 
     case BUN_SPEED:
         val = target->lastSpeed/(jmax(maxSpeed->floatValue(),0.001f));
         break;
 
+    case BUN_SET_SPEED:
     case BUN_DOUBLESPEED:
-        break;
-
     case BUN_HALFSPEED:
         break;
 
-    case BUN_FADE: 
+    case BUN_FADE:
         {
         float v = 0;
         int n = 0;
@@ -227,7 +229,15 @@ var BundleAction::getValue()
         if (n>0) v /= (float)n;
         val = jmap(v, fadeDurationFrom->floatValue(), fadeDurationTo->floatValue(), 0.f, 1.f);
         }
+        break;
 
+    case BUN_FLASH:
+    case BUN_TIMED_FLASH:
+        break;
+
+    case BUN_SWOP:
+    case BUN_TIMED_SWOP:
+        break;
     }
 
     return val;

@@ -100,6 +100,9 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
+    case CL_GOALLLOADED:
+        break;
+
     case CL_OFF:
         if (val == 1) {
             target->off();
@@ -337,7 +340,7 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         break;
 
 
-    case CL_OFFTIME: 
+    case CL_OFFTIME:
         {
         float offTime = jmap(val, 0.f, 1.f, offTimeFrom->floatValue(), offTimeTo->floatValue());
         target->offFade->setValue(offTime);
@@ -359,7 +362,7 @@ void CuelistAction::onContainerParameterChangedInternal(Parameter* p)
 void CuelistAction::updateDisplay()
 {
     if (cuelistId != nullptr) cuelistId->hideInEditor = useMainConductor->boolValue();
-    
+
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }
 
@@ -373,30 +376,34 @@ var CuelistAction::getValue()
     switch (actionType)
     {
     case CL_GO:
-        break;
-
     case CL_GOBACK:
-        break;
-
     case CL_GOINSTANT:
-        break;
-
     case CL_GOBACKINSTANT:
-        break;
-
     case CL_GORANDOM:
+    case CL_GOALLLOADED:
+    case CL_GO_ADD_TIMECODE:
+    case CL_GO_REPLACE_TIMECODE:
         break;
 
     case CL_OFF:
+    case CL_OFF_INSTANT:
         break;
 
     case CL_TOGGLE:
         break;
 
-    case CL_LOAD:
+    case CL_CROSSFADE:
+    case CL_UPFADE:
+    case CL_DOWNFADE:
         break;
 
+    case CL_INSERTBEFORE:
+    case CL_INSERTAFTER:
+        break;
+
+    case CL_LOAD:
     case CL_LOADANDGO:
+    case CL_LOADCONTENT:
         break;
 
     case CL_HTPLEVEL:
@@ -412,9 +419,11 @@ var CuelistAction::getValue()
         break;
 
     case CL_FLASH:
+    case CL_FLASHTIMED:
         break;
 
     case CL_SWOP:
+    case CL_SWOPTIMED:
         break;
 
     case CL_FLASHLEVEL:
@@ -423,12 +432,13 @@ var CuelistAction::getValue()
 
     case CL_CHASERTAPTEMPO:
         break;
-    
-    case CL_OFFTIME: 
+
+    case CL_OFFTIME:
         val = jmap(target->offFade->floatValue(), offTimeFrom->floatValue(), offTimeTo->floatValue(), 0.f, 1.f);
         break;
-    
+
     case CL_OFFTIME_FIXED:
+    case CL_TAKESELECTION:
         break;
     }
 

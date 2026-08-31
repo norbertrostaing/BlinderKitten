@@ -24,7 +24,7 @@ public:
     Trigger* addCurrentBtn;
     Trigger* replaceCurrentBtn;
 
-    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables);
+    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables) override;
 
     void triggerTriggered(Trigger* t) override;
     void addWithCurrent();

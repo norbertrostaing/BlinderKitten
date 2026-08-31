@@ -57,7 +57,7 @@ public:
     bool toDelete = false;
 
     String getTypeString() const override { return objectType; }
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void afterLoadJSONDataInternal() override;
     void updateDisplay();
 
@@ -77,7 +77,7 @@ public:
     void setFadeOut(float val);
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
-    void triggerTriggered(Trigger* t);
+    void triggerTriggered(Trigger* t) override;
     static Bundle* create(var params) { return new Bundle(params); }
 
     void flash(bool on, bool timing, bool swop = false);

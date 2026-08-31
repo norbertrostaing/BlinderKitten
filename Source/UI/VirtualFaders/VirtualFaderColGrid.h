@@ -85,7 +85,7 @@ public:
     void buttonClicked(juce::Button* button) override;
     void buttonStateChanged(juce::Button* button) override;
     void sliderValueChanged(Slider* slider) override;
-    void mouseDown(const MouseEvent& m);
+    void mouseDown(const MouseEvent& m) override;
 
     void buttonPressedDown(juce::TextButton* button);
     void buttonPressedUp(juce::TextButton* button);

@@ -83,7 +83,7 @@ class BKPath:
     void computeData(bool forceRefresh = true);
     bool needComputing = true;
 
-    void onContainerParameterChangedInternal(Parameter*);
+    void onContainerParameterChangedInternal(Parameter*) override;
     void updateDisplay();
 
     void clicked();

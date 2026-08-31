@@ -52,8 +52,8 @@ public:
 
     void askForMoveBefore(BaseItem*) override;
     void askForMoveAfter(BaseItem*) override;
-    void addItemInternal(FixturePatch* c, var data);
-    void askForDuplicateItem(BaseItem* item);
-    void setItemIndex(FixturePatch* item, int newIndex, bool addToUndo = true);
+    void addItemInternal(FixturePatch* c, var data) override;
+    void askForDuplicateItem(BaseItem* item) override;
+    void setItemIndex(FixturePatch* item, int newIndex, bool addToUndo = true) override;
 
 };

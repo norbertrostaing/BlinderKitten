@@ -30,8 +30,8 @@ public:
     IntParameter* id;
     int registeredId = 0;
     StringParameter* userName;
-    void onContainerParameterChangedInternal(Parameter* p);
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void onContainerParameterChangedInternal(Parameter* p) override;
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void updateName();
     void updateSubFixtureNames();
     void updateDisplay();
@@ -65,7 +65,7 @@ public:
     Colour getLayoutStrokeColor();
     Colour getLayoutFillColor();
 
-    void selectThis(bool addToSelection=false, bool notify = true);
+    void selectThis(bool addToSelection=false, bool notify = true) override;
     void autoName();
 
     void channelValueChanged(int subId, ChannelType* type, double val);

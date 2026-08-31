@@ -37,7 +37,7 @@ class FixtureTypeChannel:
     Point2DParameter* physicalRange;
     Automation curve;
 
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 };

@@ -15,8 +15,8 @@
 ChannelFamily::ChannelFamily(var params) :
 	BaseItem(params.getProperty("name", "Channel Family")),
 	objectType(params.getProperty("type", "ChannelFamily").toString()),
-	definitions("Channel Types"),
-	objectData(params)
+    objectData(params),
+    definitions("Channel Types")
 {
 	saveAndLoadRecursiveData = true;
 	

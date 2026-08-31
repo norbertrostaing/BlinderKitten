@@ -43,7 +43,7 @@ public:
     void showWindow();
     void fillButtons(Cuelist * c);
     void loadCuelist(Cuelist * c, bool triggerGoWhenSelected = false);
-    void buttonClicked(Button*);
+    void buttonClicked(Button*) override;
     bool triggerGo = false;
 
     int posX = 0;

@@ -32,7 +32,7 @@ public:
     Trigger* getProgButton;
     Trigger* setProgButton;
 
-    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables);
+    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables) override;
 
     void triggerTriggered(Trigger* t) override;
 

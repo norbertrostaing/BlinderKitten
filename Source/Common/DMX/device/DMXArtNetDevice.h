@@ -72,7 +72,7 @@ public:
 	uint8 artnetSync[14]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x52,  0, PROTOCOL_VERSION, 0, 0 };
 	uint8 sequenceNumber;
 
-	void triggerTriggered(Trigger* t);
+	void triggerTriggered(Trigger* t) override;
 
 	void setupReceiver();
 

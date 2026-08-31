@@ -16,10 +16,10 @@
 
 DMXChannelView::DMXChannelView() :
 	ShapeShifterContentComponent("DMX Tester"),
-	currentInterface(nullptr),
-	//testingUI(nullptr),
-	flashValue(nullptr),
-	engine(nullptr)
+    flashValue(nullptr),
+    //testingUI(nullptr),
+    engine(nullptr),
+    currentInterface(nullptr)
 {
 	dmxList.setTextWhenNoChoicesAvailable("No DMX Interface");
 	dmxList.setTextWhenNothingSelected("Select a DMX interface");

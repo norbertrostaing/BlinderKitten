@@ -52,11 +52,11 @@ public:
     String getTypeString() const override { return objectType; }
 
     static FixtureType* create(var params) { return new FixtureType(params); }
-    void afterLoadJSONDataInternal();
+    void afterLoadJSONDataInternal() override;
     void updateVirtualLists();
 
-    void onContainerParameterChangedInternal(Parameter* p);
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
+    void onContainerParameterChangedInternal(Parameter* p) override;
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void copyTemplate();
 
     void importFromGrid();

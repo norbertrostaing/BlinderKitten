@@ -24,5 +24,5 @@ public:
     CriticalSection isComputing;
     void rebuildLibrary();
 
-    void afterLoadJSONDataInternal();
+    void afterLoadJSONDataInternal() override;
 };

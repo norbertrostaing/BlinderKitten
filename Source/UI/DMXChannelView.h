@@ -92,7 +92,7 @@ public:
     virtual void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override;
 
     float getFlashValue();
-    bool keyPressed(const KeyPress& key, Component* originatingComponent);
+    bool keyPressed(const KeyPress& key, Component* originatingComponent) override;
 
     void inspectableDestroyed(Inspectable* i) override;
     void parameterValueChanged(Parameter* p) override;

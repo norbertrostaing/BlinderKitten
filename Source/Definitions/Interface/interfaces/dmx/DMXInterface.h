@@ -76,7 +76,7 @@ public:
     void dmxChannelInChanged(int num, uint8 val) override;
 
     void inputToProgrammer();
-    void triggerTriggered(Trigger* t);
+    void triggerTriggered(Trigger* t) override;
 
     class DMXParams : public ControllableContainer
     {

@@ -58,8 +58,8 @@ public:
 
     void askForMoveBefore(BaseItem*) override;
     void askForMoveAfter(BaseItem*) override;
-    void addItemInternal(FixtureMapping* c, var data);
-    void askForDuplicateItem(BaseItem* item);
-    void setItemIndex(FixtureMapping* item, int newIndex, bool addToUndo = true);
+    void addItemInternal(FixtureMapping* c, var data) override;
+    void askForDuplicateItem(BaseItem* item) override;
+    void setItemIndex(FixtureMapping* item, int newIndex, bool addToUndo = true) override;
 
 };

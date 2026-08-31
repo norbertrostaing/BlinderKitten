@@ -35,7 +35,8 @@ Mapper::Mapper(var params) :
 	updateName();
 
 	isMapperOn = addBoolParameter("is ON", "Enable or disable this Mapper",false);
-	isMapperOn->isControllableFeedbackOnly;
+    // is this supposed to be setControllableFeedbackOnly ?
+	// isMapperOn->isControllableFeedbackOnly;
 	isMapperOn->setEnabled(false);
 	isMapperOn->isSavable = false;
 	isOn = false;

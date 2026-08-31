@@ -41,7 +41,7 @@ public:
     ActionManager actionManager;
     VirtualFaderCol* parentColumn = nullptr;
 
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void updateName();
     void updateDisplay();
 

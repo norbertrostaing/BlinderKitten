@@ -328,13 +328,13 @@ void ArtnetSocket::run()
 				else if (opcode == OPTIMECODE)
 				{
 
-					int sec =receiveBuffer[15];
+					// int sec = receiveBuffer[15];
 					const int hours = receiveBuffer[17]; // ignore fps bits
 					const int minutes = receiveBuffer[16];
 					const int seconds = receiveBuffer[15];
 					const int frames = receiveBuffer[14];
 
-					// Conversion frame absolue à 30 fps
+					// Conversion frame absolue Ã  30 fps
 					int outFrame =
 						frames +
 						30 * seconds +

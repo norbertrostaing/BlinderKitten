@@ -29,7 +29,7 @@ public:
     IntParameter* layerId;
     int registeredId = 0;
     StringParameter* userName;
-    void onContainerParameterChangedInternal(Parameter* p);
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void updateName();
     bool isDeleted = false;
 
