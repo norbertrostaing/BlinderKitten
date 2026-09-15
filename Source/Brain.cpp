@@ -1283,7 +1283,7 @@ void Brain::startTask(Task* t, double startTime, int cuelistId, float forcedDela
             trackerActions.add("start");
         }
         else if (t->bundleAction->getValue() == "stop") {
-            cuelistActions.add("stop");
+            cuelistActions.add("off");
             effectActions.add("stop");
             carouselActions.add("stop");
             mapperActions.add("stop");
