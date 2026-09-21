@@ -384,7 +384,7 @@ void Encoders::updateFilterBtns()
     resized();
 }
 
-static void setEncoderName(FloatParameter* p, String newName) {
+static void setEncoderName(FloatParameter* p, String newName, int index) {
     p->setNiceName(newName);
     for (Controllable::ControllableListener* e : p->controllableListeners.getListeners()) {
         DashboardControllableItem* i = dynamic_cast<DashboardControllableItem*>(e);
@@ -393,6 +393,7 @@ static void setEncoderName(FloatParameter* p, String newName) {
             i->customLabel->setValue(newName);
         }
     }
+    UserInputManager::getInstance()->feedback("/encoder/" + String(index + 1), newName, "");
 }
 
 void Encoders::updateEncoders() {
@@ -407,7 +408,7 @@ void Encoders::updateEncoders() {
     transmitOrganicToEncoder = false;
 
     for (int i = 0; i < nEncoders; i++) {
-        setEncoderName(encodersParam[i], "e" + String(i + 1));
+        setEncoderName(encodersParam[i], "e" + String(i + 1), i);
     }
 
     for (int i = 0; i < nEncoders; i++) {
@@ -422,7 +423,7 @@ void Encoders::updateEncoders() {
         }
         else if (channels.size() > channelId) {
             labels[i]->setText(String(channels[channelId]->niceName), juce::sendNotification);
-            setEncoderName(encodersParam[i], String(channels[channelId]->niceName));
+            setEncoderName(encodersParam[i], String(channels[channelId]->niceName),i);
             encodersParam[i]->notifyStateChanged();
             UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), String(channels[channelId]->niceName), "");
             encoders[i]->setEnabled(true);
@@ -445,7 +446,7 @@ void Encoders::updateEncoders() {
         }
         else {
             labels[i]->setText("", juce::dontSendNotification);
-            setEncoderName(encodersParam[i], "e" + String(i + 1));
+            setEncoderName(encodersParam[i], "e" + String(i + 1),i);
             encodersParam[i]->notifyStateChanged();
             UserInputManager::getInstance()->feedback("/encoder/" + String(i + 1), "", "");
             encoders[i]->setEnabled(false);

@@ -285,7 +285,13 @@ void MIDIFeedback::processFeedback(String address, var varValue, String origin, 
         }
     }
     else if (source == ENCODER && !sameDevice) {
-        valid = true;
+        if (isText) {
+            sendText(varValue);
+        }
+        else
+        {
+            valid = true;
+        }
     }
     else if (source == GRANDMASTER && !sameDevice) {
         valid = true;
