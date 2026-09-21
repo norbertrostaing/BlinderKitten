@@ -6,6 +6,9 @@
 DMXSACNDevice::DMXSACNDevice()
     : DMXDevice("sACN", SACN, false)
 {
+
+    networkInterface = new NetworkInterfaceParameter();
+    addParameter(networkInterface);    
     universeParam = addIntParameter("Universe", "universe", 1, 0, 63999);
     nodeName = addStringParameter("Node Name", "Name to advertise", "BlinderKitten");
     multicast = addBoolParameter("Multicast", "check to send this as multicast", true);
@@ -17,17 +20,13 @@ DMXSACNDevice::DMXSACNDevice()
     e131_pkt_init(&packet, 1, 512);
     
     cid = juce::Uuid();
-    socket.setEnablePortReuse(true);
-    socket.setMulticastLoopbackEnabled(false);
-    socket.bindToPort(0);
-    int ttl = 1;
-    setsockopt(socket.getRawSocketHandle(), IPPROTO_IP, IP_MULTICAST_TTL, (const char*)&ttl, sizeof(ttl));
+    setupSender();
     isReady = true;
 }
 
 DMXSACNDevice::~DMXSACNDevice()
 {
-    socket.shutdown();
+    socket->shutdown();
 }
 
 juce::String DMXSACNDevice::getName() const
@@ -38,6 +37,42 @@ juce::String DMXSACNDevice::getName() const
 juce::String DMXSACNDevice::getDescription() const
 {
     return "Streaming ACN (E1.31) DMX Output";
+}
+
+void DMXSACNDevice::setupSender() {
+    socket = std::make_unique<juce::DatagramSocket>();
+
+    socket->setEnablePortReuse(true);
+    socket->setMulticastLoopbackEnabled(false);
+
+    const auto localIP = networkInterface->getIP();
+
+    if (!socket->bindToPort(0, localIP))
+    {
+        LOGERROR("Unable to bind sACN socket to " << localIP);
+        return;
+    }
+
+    // Force outgoing multicast through selected interface
+    in_addr multicastInterface;
+    multicastInterface.s_addr = inet_addr(localIP.toRawUTF8());
+
+    setsockopt(socket->getRawSocketHandle(),
+        IPPROTO_IP,
+        IP_MULTICAST_IF,
+        reinterpret_cast<const char*>(&multicastInterface),
+        sizeof(multicastInterface));
+
+    int ttl = 1;
+
+    setsockopt(socket->getRawSocketHandle(),
+        IPPROTO_IP,
+        IP_MULTICAST_TTL,
+        reinterpret_cast<const char*>(&ttl),
+        sizeof(ttl));
+
+    LOG("sACN sender bound to " << localIP
+        << ":" << socket->getBoundPort());
 }
 
 void DMXSACNDevice::sendDMXValue(int channel, int value)
@@ -87,7 +122,7 @@ void DMXSACNDevice::sendDMXValuesInternal()
     e131_error_t e = e131_pkt_validate(senderPacket);
     if (e != E131_ERR_NONE) LOGWARNING("Packet validation error : " << e131_strerror(e));
 
-    int sent = socket.write(targetIP.toString(), remotePort->intValue(), senderPacket, sizeof(e131_packet_t));
+    int sent = socket->write(targetIP.toString(), remotePort->intValue(), senderPacket, sizeof(e131_packet_t));
 
     if (sent <= 0)
     {
@@ -107,6 +142,9 @@ void DMXSACNDevice::onContainerParameterChanged(Parameter* p)
 {
     if (p == universeParam) {
         paramPacket();
+    }
+    if (p == networkInterface) {
+        setupSender();
     }
 }
 

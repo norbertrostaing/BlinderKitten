@@ -18,6 +18,8 @@ public:
     juce::String getName() const;
     juce::String getDescription() const;
 
+    NetworkInterfaceParameter* networkInterface;
+
     IntParameter* universeParam;
     BoolParameter* multicast;
     StringParameter* remoteHost;
@@ -27,6 +29,7 @@ public:
     uint8 dmxBuffer[512];
     e131_packet_t packet;
 
+    void setupSender();
     void sendDMXValue(int channel, int value) override;
     void sendDMXRange(int startChannel, Array<int> values) override;
     void sendDMXValuesInternal();
@@ -34,7 +37,7 @@ public:
     void paramPacket();
 
 private:
-    juce::DatagramSocket socket;
+    std::unique_ptr<juce::DatagramSocket> socket;
     juce::Uuid cid;
     uint8_t sequenceNumber = 0;
 
