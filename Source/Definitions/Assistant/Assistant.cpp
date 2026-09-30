@@ -127,6 +127,7 @@ Assistant::Assistant() :
     asciiSubs = asciiCC.addBoolParameter("Subs", "Do you want to import or export subs ?", true);
     asciiRespectCueNumbers = asciiCC.addBoolParameter("Respect cue number", "If checked, the cues will be ordered by cue ID, if not, they will be ordered by step number", true);
     asciiEraseCuelist = asciiCC.addBoolParameter("Erase main cuelist", "If not checked, the current cuelist will be updated with ascii values", false);
+    asciiTracking = asciiCC.addBoolParameter("Tracking", "if checked, I'll import as if ascii was exported with tracking", false);
     asciiChannelFixtureType = asciiCC.addTargetParameter("Channel Fixture type", "Fixture used for ascii import/export", FixtureTypeManager::getInstance());
     asciiChannelFixtureType->targetType = TargetParameter::CONTAINER;
     asciiChannelFixtureType->maxDefaultSearchLevel = 0;
@@ -767,6 +768,8 @@ void Assistant::importAscii()
     int mainCuelistId = asciiCuelistId->getValue();
     LOG("importing your ascii... please wait :)");
 
+    bool useTracking = asciiTracking->boolValue();
+
     Array<DMXInterface*> universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
     Cuelist* cuelist = nullptr;
     if (asciiCues) {
@@ -779,6 +782,9 @@ void Assistant::importAscii()
         cuelist->kill();
         if (asciiEraseCuelist->boolValue()) {
             cuelist->cues.clear();
+        }
+        if (useTracking) {
+            cuelist->tracking->setValue("cuelist");
         }
     }
 
@@ -820,6 +826,8 @@ void Assistant::importAscii()
     HashMap<int, FixtureType*> idToFixtureType;
 
     HashMap<String, Preset*> idToPreset;
+    HashMap<int, float> fixtureToCurrentValue;
+
 
     FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
     for (int i = 0; i < lines.size(); i++) {
@@ -849,10 +857,15 @@ void Assistant::importAscii()
                 currentSecondary = words[0];
                 // ajouter ici une verif si l'objet d'avant est clean (subs, groupes)
             }
-            else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB") 
+            else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB")
             {
                 currentPrimary = words[0];
                 currentSecondary = words[0];
+            }
+            else if (words[0] == "$CUE")
+            {
+                currentPrimary = "CUE";
+                currentSecondary = "CUE";
             }
             else if (words[0] == "CHAN" || words[0] == "DOWN" || words[0] == "FOLLOWON" || words[0] == "LINK" || words[0] == "PART" || words[0] == "TEXT" || words[0] == "UP" || words[0] == "$$WAIT")
             {
@@ -1096,11 +1109,14 @@ void Assistant::importAscii()
                     for (int iChan = 1; iChan < words.size() - 1; iChan += 2) {
                         int fixt = words[iChan].getIntValue();
                         float level = asciiLevelToFloat(words[iChan + 1]);
-                        if (level > 0) {
+                        float currentLevel = fixtureToCurrentValue.contains(fixt) ? fixtureToCurrentValue.getReference(fixt) : 0;
+
+                        if ((!useTracking && level > 0) || (useTracking && currentLevel != level)) {
                             Command* com = currentCue->commands.addItem();
                             com->selection.items[0]->valueFrom->setValue(fixt);
                             com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                             com->values.items[0]->valueFrom->setValue(level);
+                            fixtureToCurrentValue.set(fixt, level);
                         }
                     }
                 }

@@ -81,6 +81,7 @@ public:
 	IntParameter* asciiCuelistId;
 	TargetParameter* asciiChannelFixtureType;
 	TargetParameter* asciiDimmerChannel;
+	BoolParameter* asciiTracking;
 	Trigger* importAsciiBtn;
 	Trigger* exportAsciiBtn;
 
