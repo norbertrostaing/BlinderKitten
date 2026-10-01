@@ -1131,6 +1131,7 @@ void Assistant::importAscii()
                         int fixt = words[iChan].getIntValue();
                         float level = asciiLevelToFloat(words[iChan + 1]);
                         Array<String> starts = { "IP", "FP", "CP", "BP", "PR" };
+                        float currentLevel = fixtureToCurrentValue.contains(fixt) ? fixtureToCurrentValue.getReference(fixt) : 0;
                         String begin = words[iChan + 1].substring(0, 2);
                         if (starts.contains(begin)) {
                             Command* com = currentCue->commands.addItem();
@@ -1139,16 +1140,18 @@ void Assistant::importAscii()
                             if (!idToPreset.contains(words[iChan + 1])) {
                                 Preset* p = PresetManager::getInstance()->addItem();
                                 p->userName->setValue(words[iChan + 1]);
+                                idToPreset.set(words[iChan + 1], p);
                             }
                             Preset* target = idToPreset.getReference(words[iChan + 1]);
                             com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                             com->values.items[0]->presetIdFrom->setValue(target->id->intValue());
                         }
-                        else if (level >0) {
+                        else if ((!useTracking && level > 0) || (useTracking && currentLevel != level)) {
                             Command* com = currentCue->commands.addItem();
                             com->selection.items[0]->valueFrom->setValue(fixt);
                             com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                             com->values.items[0]->valueFrom->setValue(level);
+                            fixtureToCurrentValue.set(fixt, level);
                         }
                     }
                 }
@@ -1159,9 +1162,11 @@ void Assistant::importAscii()
                         for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
                             int paramId = words[iChan].getIntValue();
                             ChannelType* param = idToChannelType.getReference(paramId);
-                            float level = asciiLevelToFloat(words[iChan + 1]);
+
                             Array<String> starts = { "IP", "FP", "CP", "BP", "PR" };
-                            String begin = words[iChan + 1].substring(0, 2);
+                            String valueString = words[iChan + 1];
+                            String begin = valueString.substring(0, 2);
+
                             if (fixtCommand == nullptr) {
                                 fixtCommand = currentCue->commands.addItem();
                                 fixtCommand->selection.items[0]->valueFrom->setValue(fixt->id->intValue());
@@ -1181,6 +1186,24 @@ void Assistant::importAscii()
                                 commandValue->presetIdFrom->setValue(target->id->intValue());
                             }
                             else {
+                                float level = valueString.getFloatValue();
+                                float div = 255.0f;
+
+                                if (fixt->subFixtures.contains(0))
+                                {
+                                    SubFixture* sf = fixt->subFixtures.getReference(0);
+
+                                    if (sf != nullptr && sf->channelsMap.contains(param))
+                                    {
+                                        SubFixtureChannel* chan = sf->channelsMap.getReference(param);
+
+                                        if (chan != nullptr && chan->resolution == "16bits")
+                                            div = 65535.0f;
+                                    }
+                                }
+
+                                level /= div;
+
                                 commandValue->channelType->setValueFromTarget(param);
                                 commandValue->valueFrom->setValue(level);
                             }
@@ -1349,6 +1372,15 @@ void Assistant::importAscii()
                     if (words[2] == "2") {
                         ftc->resolution->setValueWithData("16bits");
                     }
+                    if (words.size() > 6 && words[6].contains("S")) {
+                        ftc->fadeOrSnap->setValueWithData("snap");
+                    }
+                    float home = words[5].getFloatValue();
+                    bool is16Bits = words[2] == "2";
+
+                    ftc->defaultValue->setValue(
+                        home / (is16Bits ? 65535.0f : 255.0f)
+                    );
                 }
             }
             else if (currentPrimary == "$PATCH") {
@@ -1425,11 +1457,12 @@ void Assistant::importAscii()
         }
     }
 
-    cuelist->cues.addItems(cuesToAdd, juce::var(), false);
+    cuelist->cues.addItems(cuesToAdd, juce::var(), false);    
     CuelistManager::getInstance()->addItems(cuelistsToAdd, juce::var(), false);
     GroupManager::getInstance()->addItems(groupsToAdd, juce::var(), false);
     PresetManager::getInstance()->addItems(presetsToAdd, juce::var(), false);
     FixtureManager::getInstance()->addItems(fixturesToAdd, juce::var(), false);
+    cuelist->selectAsMainConductor();
 }
 
 float Assistant::asciiLevelToFloat(String asciiLevel) {
