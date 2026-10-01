@@ -784,7 +784,7 @@ void Assistant::importAscii()
             cuelist->cues.clear();
         }
         if (useTracking) {
-            cuelist->tracking->setValue("cuelist");
+            cuelist->tracking->setValue("Cuelist order");
         }
     }
 
@@ -1062,7 +1062,13 @@ void Assistant::importAscii()
                     if (cuesToAdd.contains(currentCue)) {
                         String text = originalLine.trim().substring(11);
                         currentCue->cueText->setValue(text);
-                        currentCue->setNiceName(text);
+                     }
+                }
+                else if (currentSecondary == "$$SCENETEXT") {
+                    if (cuesToAdd.contains(currentCue)) {
+                        String text = originalLine.trim().substring(11);
+                        currentCue->chapterText->setValue(text);
+                        currentCue->chapterText->setEnabled(true);
                     }
                 }
                 else if (currentSecondary == "FOLLOWON") {

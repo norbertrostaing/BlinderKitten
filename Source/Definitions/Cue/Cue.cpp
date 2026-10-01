@@ -41,6 +41,9 @@ Cue::Cue(var params) :
 	goText = addStringParameter("Go text", "Fill here the action on stage needed for the cue", "");
 	cueText = addStringParameter("Cue text", "What's happening during this cue ?", "");
 	cueText->multiline = true;
+	chapterText = addStringParameter("Chapter name", "A new chapter in history of your show", "");
+	chapterText->enabled = false;
+	chapterText->canBeDisabledByUser = true;
 	lastTriggeredTS = addStringParameter("Last triggered", "When did this cue was triggered for the last time ?", "");
 	lastTriggeredTS->enabled = false;
 
@@ -117,7 +120,6 @@ Cue::~Cue()
 			parentCuelist->kill();
 		}
 	}
-
 }
 
 
@@ -142,6 +144,13 @@ void Cue::onContainerParameterChangedInternal(Parameter* p) {
 	}
 	else if (p == releaseCurrentTracking && parentCuelist!= nullptr && parentCuelist->cueA != nullptr) {
 		parentCuelist->go(parentCuelist->cueA, 0,0);
+	}
+	else if (p == chapterText) {
+		MessageManager::getInstance()->callAsync([this](){
+				checkParentCuelist();
+				parentCuelist->sendChangeMessage();
+				sendChangeMessage();
+			});
 	}
 }
 
@@ -194,6 +203,17 @@ void Cue::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* 
 	else if (cc == &timecode) {
 		checkParentCuelist();
 		parentCuelist->rebuildTimecode();
+	}
+}
+
+void Cue::controllableStateChanged(Controllable* c)
+{
+	if (c == chapterText) {
+		MessageManager::getInstance()->callAsync([this]() {
+			checkParentCuelist();
+			parentCuelist->sendChangeMessage();
+			sendChangeMessage();
+			});
 	}
 }
 

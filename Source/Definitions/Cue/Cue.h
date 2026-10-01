@@ -38,6 +38,7 @@ public:
 
     StringParameter* cueText;
     StringParameter* goText;
+    StringParameter* chapterText;
 
     EnumParameter* autoFollow = nullptr;
     FloatParameter* autoFollowTiming;
@@ -75,6 +76,7 @@ public:
     void triggerTriggered(Trigger* t) override;
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c);
+    void controllableStateChanged(Controllable* c) override;
 
     void computeValues();
     void computeValues(Array<Cue*> history, Cue* callingCue);

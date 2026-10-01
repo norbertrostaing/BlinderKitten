@@ -43,6 +43,8 @@ public:
     Label htpDownFadeLabel;
     Label ltpFadeLabel;
 
+    Label chapterTextLabel;
+
     ToggleButton releaseTrackingButton;
 
     ToggleButton isSelected;

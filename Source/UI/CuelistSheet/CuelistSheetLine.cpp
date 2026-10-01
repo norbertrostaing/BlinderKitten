@@ -24,6 +24,8 @@ CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 
 	addMouseListener(this, true);
 
+	addAndMakeVisible(chapterTextLabel);
+
 	addAndMakeVisible(cueIdLabel);
 	addAndMakeVisible(cueNameLabel);
 	addAndMakeVisible(releaseTrackingButton);
@@ -45,6 +47,8 @@ CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 	};
 
 
+	chapterTextLabel.setEditable(false, true, false);
+	chapterTextLabel.addListener(this);
 	cueIdLabel.setEditable(false, true, false);
 	cueIdLabel.addListener(this);
 	cueNameLabel.setEditable(false, true, false);
@@ -63,6 +67,7 @@ CuelistSheetLine::CuelistSheetLine(Cue* c, CuelistSheet* parent)
 	ltpFadeLabel.addListener(this);
 	releaseTrackingButton.addListener(this);
 
+	chapterTextLabel.setJustificationType(Justification::centred);
 	cueIdLabel.setJustificationType(Justification::right);
 	cueNameLabel.setJustificationType(Justification::left);
 	htpUpDelayLabel.setJustificationType(Justification::centred);
@@ -112,19 +117,31 @@ void CuelistSheetLine::resized()
 
 	Font f (textSize);
 
-	isSelected.setBounds(0,0,0.5*w,h); 
-	cueIdLabel.setBounds(0.5 * w, 0, w, h);
-	cueNameLabel.setBounds(1.5 * w, 0, nameWidth, h);
+	int origin = 0;
 
-	htpUpDelayLabel.setBounds(width - (7.5 * w), 0, w, h);
-	htpDownDelayLabel.setBounds(width - (6.5 * w), 0, w, h);
-	ltpDelayLabel.setBounds(width - (5.5 * w), 0, w, h);
-	htpUpFadeLabel.setBounds(width - (4.5 * w), 0, w, h);
-	htpDownFadeLabel.setBounds(width - (3.5 * w), 0, w, h);
-	ltpFadeLabel.setBounds(width - (2.5 * w), 0, w, h);
-	releaseTrackingButton.setBounds(width - (1.5 * w), 0, w/2, h);
+	chapterTextLabel.setBounds(0, 0, width, h);
+	if (targetCue != nullptr && targetCue->chapterText->enabled && targetCue->chapterText->stringValue() != "") {
+		origin = h;
+		chapterTextLabel.setVisible(true);
+	}
+	else {
+		origin = 0;
+		chapterTextLabel.setVisible(false);
+	}
 
-	actionsBtn.setBounds(width - (1 * w), 0, 1 * w, h);
+	isSelected.setBounds(0,origin,0.5*w,h); 
+	cueIdLabel.setBounds(0.5 * w, origin, w, h);
+	cueNameLabel.setBounds(1.5 * w, origin, nameWidth, h);
+
+	htpUpDelayLabel.setBounds(width - (7.5 * w), origin, w, h);
+	htpDownDelayLabel.setBounds(width - (6.5 * w), origin, w, h);
+	ltpDelayLabel.setBounds(width - (5.5 * w), origin, w, h);
+	htpUpFadeLabel.setBounds(width - (4.5 * w), origin, w, h);
+	htpDownFadeLabel.setBounds(width - (3.5 * w), origin, w, h);
+	ltpFadeLabel.setBounds(width - (2.5 * w), origin, w, h);
+	releaseTrackingButton.setBounds(width - (1.5 * w), origin, w/2, h);
+
+	actionsBtn.setBounds(width - (1 * w), origin, 1 * w, h);
 
 	cueIdLabel.setFont(f);
 	cueNameLabel.setFont(f);
@@ -136,11 +153,12 @@ void CuelistSheetLine::resized()
 	htpDownFadeLabel.setFont(f);
 	ltpFadeLabel.setFont(f);
 
-	finalHeight = h;
+	finalHeight = h+origin;
 }
 
 void CuelistSheetLine::updateContent()
 {
+	chapterTextLabel.setText(String(targetCue->chapterText->stringValue()), juce::dontSendNotification);
 	cueIdLabel.setText(String(targetCue->id->floatValue()), juce::dontSendNotification);
 	cueNameLabel.setText(targetCue->niceName, juce::dontSendNotification);
 
@@ -186,9 +204,10 @@ void CuelistSheetLine::changeListenerCallback(ChangeBroadcaster* source)
 void CuelistSheetLine::labelTextChanged(Label* l)
 {
 	if (targetCue == nullptr) return;
+	if (l == &chapterTextLabel) { targetCue->chapterText->setValue(l->getText()); }
 	if (l == &cueIdLabel) { targetCue->id->setValue(l->getText().getFloatValue()); }
 	if (l == &cueNameLabel) { targetCue->setNiceName(l->getText()); }
-	if (l == &htpUpDelayLabel) 
+	if (l == &htpUpDelayLabel)
 	{ 
 		float val = l->getText().trim() == "" ? -1 : l->getText().getFloatValue();
 		targetCue->htpInDelay->setValue(val);
