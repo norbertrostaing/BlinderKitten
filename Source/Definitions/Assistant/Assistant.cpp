@@ -1186,6 +1186,9 @@ void Assistant::importAscii()
                                 commandValue->presetIdFrom->setValue(target->id->intValue());
                             }
                             else {
+                                if (valueString.contains("#"))
+                                    valueString = valueString.fromLastOccurrenceOf("#", false, false);
+
                                 float level = valueString.getFloatValue();
                                 float div = 255.0f;
 
