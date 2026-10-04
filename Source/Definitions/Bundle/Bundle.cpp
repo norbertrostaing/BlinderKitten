@@ -56,6 +56,7 @@ Bundle::Bundle(var params) :
 
 Bundle::~Bundle()
 {
+	Brain::getInstance()->unregisterBundle(this);
 }
 
 void Bundle::updateDisplay() {
@@ -74,7 +75,7 @@ void Bundle::updateName()
 void Bundle::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == id) {
-		Brain::getInstance()->registerBundle(this, id->getValue());
+		Brain::getInstance()->registerBundle(this, id->getValue(), true);
 	}
 	if (p == userName || p == id) {
 		updateName();
