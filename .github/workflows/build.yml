@@ -243,41 +243,101 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   raspberrypi:
-    #if: false # tmp disable
-
-    name: Raspberry Pi
+    name: Raspberry Pi (Cross-Compile)
     runs-on: ubuntu-22.04
+
     strategy:
+      fail-fast: false
       matrix:
         include:
-        - arch: armhf
-          cpu: arm1176 #suitable for all Pi versions
-          base_image: raspios_lite:2023-05-03 
-          cpu_info: raspberrypi_zero_w
-          buildFolder: "Raspberry"
-          buildConfig: "Release"
-          
-        - arch: aarch64
-          cpu: cortex-a72
-          base_image: raspi_4_bookworm:20231109
-          cpu_info: raspberrypi_zero2_w_arm64_w
-          buildFolder: "Raspberry64"
-          buildConfig: "Release"
 
-      fail-fast: false
+          # Raspberry Pi 64 bits
+          - arch: aarch64
+            deb_arch: arm64
+            gnu_type: aarch64-linux-gnu
+            buildFolder: "Raspberry64"
+            buildConfig: "Release"
+            arch_flags: "-march=armv8-a"
+
+          # Raspberry Pi 32 bits
+          - arch: armhf
+            deb_arch: armhf
+            gnu_type: arm-linux-gnueabihf
+            buildFolder: "Raspberry"
+            buildConfig: "Release"
+            arch_flags: "-march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard"
 
     steps:
+
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: 'recursive'
 
       - name: Checkout JUCE
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: norbertrostaing/JUCE
           ref: develop-local
           path: JUCE
+
+      # -------------------------------------------------------
+      # Configure Ubuntu to install ARM libraries
+      # -------------------------------------------------------
+
+      - name: Setup Multi-Arch Apt
+        run: |
+          sudo dpkg --add-architecture ${{ matrix.deb_arch }}
+
+          sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+
+          # x86_64 packages used by the GitHub runner
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+
+          # ARM packages used to build BlinderKitten
+          echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+
+          sudo apt-get update
+
+      # -------------------------------------------------------
+      # Cross compiler + JUCE dependencies
+      # -------------------------------------------------------
+
+      - name: Install Cross-Compiler and ARM libraries
+        run: |
+          sudo apt-get install -y \
+            crossbuild-essential-${{ matrix.deb_arch }} \
+            pkg-config \
+            libasound2-dev:${{ matrix.deb_arch }} \
+            libjack-jackd2-dev:${{ matrix.deb_arch }} \
+            ladspa-sdk:${{ matrix.deb_arch }} \
+            libfreetype6-dev:${{ matrix.deb_arch }} \
+            libx11-dev:${{ matrix.deb_arch }} \
+            libxcomposite-dev:${{ matrix.deb_arch }} \
+            libxcursor-dev:${{ matrix.deb_arch }} \
+            libxinerama-dev:${{ matrix.deb_arch }} \
+            libxext-dev:${{ matrix.deb_arch }} \
+            libxrandr-dev:${{ matrix.deb_arch }} \
+            libxrender-dev:${{ matrix.deb_arch }} \
+            libgl1-mesa-dev:${{ matrix.deb_arch }} \
+            libglu1-mesa-dev:${{ matrix.deb_arch }} \
+            mesa-common-dev:${{ matrix.deb_arch }} \
+            libgtk-3-dev:${{ matrix.deb_arch }} \
+            libwebkit2gtk-4.0-dev:${{ matrix.deb_arch }} \
+            libcurl4-openssl-dev:${{ matrix.deb_arch }} \
+            libssl-dev:${{ matrix.deb_arch }} \
+            libbluetooth-dev:${{ matrix.deb_arch }} \
+            libusb-1.0-0-dev:${{ matrix.deb_arch }} \
+            libhidapi-dev:${{ matrix.deb_arch }} \
+            libsdl2-dev:${{ matrix.deb_arch }}
+
+      # -------------------------------------------------------
+      # Package suffix
+      # -------------------------------------------------------
 
       - name: Set Suffix
         id: set_variables
@@ -285,39 +345,62 @@ jobs:
         with:
           os: ${{ matrix.arch }}
 
+      # -------------------------------------------------------
+      # Compile
+      # -------------------------------------------------------
+
+      - name: Build
+        run: |
+          cd Builds/${{ matrix.buildFolder }}
+
+          export PKG_CONFIG_PATH=/usr/lib/${{ matrix.gnu_type }}/pkgconfig
+
+          make -j$(nproc) \
+            CONFIG=${{ matrix.buildConfig }} \
+            CC=${{ matrix.gnu_type }}-gcc \
+            CXX=${{ matrix.gnu_type }}-g++ \
+            AR=${{ matrix.gnu_type }}-ar \
+            STRIP=${{ matrix.gnu_type }}-strip \
+            TARGET_ARCH="${{ matrix.arch_flags }}"
+
+      # -------------------------------------------------------
+      # Prepare AppImage
+      # -------------------------------------------------------
+
       - name: Download and prepare AppImage
         run: |
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
           mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
-        working-directory: ${{ github.workspace }}
 
-      - name: Install dependencies and build
-        id: build
-        uses: pguyot/arm-runner-action@v2
-        with:
-          image_additional_mb: 2048
-          base_image: ${{ matrix.base_image }}
-          cpu: ${{ matrix.cpu }}
-          copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
-          copy_artifact_dest: Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
-          commands: |
-            apt-get update
-            echo "Installing JUCE lib dependencies and extra tools"
-            apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
-            apt-get install -qy curl
+          cp \
+            ./Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} \
+            ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/${{ env.ProjectName }}
 
-            cd Builds/${{ matrix.buildFolder }}
-            make -j2 CONFIG=${{ matrix.buildConfig }}
+      # -------------------------------------------------------
+      # Create AppImage
+      # -------------------------------------------------------
 
       - name: Create AppImage
         id: create_package
         run: |
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
+
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          ARCH=${{ matrix.arch }} ${{ github.workspace }}/appimagetool-x86_64.AppImage --appimage-extract-and-run ${{ env.ProjectName }}.AppDir $PKGNAME
+
+          ARCH=${{ matrix.arch }} \
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage \
+            --appimage-extract-and-run \
+            --no-appstream \
+            ${{ env.ProjectName }}.AppDir \
+            $PKGNAME
+
         working-directory: ./Builds/${{ matrix.buildFolder }}
+
+      # -------------------------------------------------------
+      # Upload
+      # -------------------------------------------------------
 
       - name: Upload
         uses: ./.github/actions/upload
