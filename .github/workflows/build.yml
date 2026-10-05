@@ -258,8 +258,8 @@ jobs:
           buildConfig: "Release"
           
         - arch: aarch64
-          cpu: cortex-a53
-          base_image: raspios_lite_arm64:2023-05-03
+          cpu: cortex-a72
+          base_image: raspios_lite_arm64:2023-10-10
           cpu_info: raspberrypi_zero2_w_arm64_w
           buildFolder: "Raspberry64"
           buildConfig: "Release"
