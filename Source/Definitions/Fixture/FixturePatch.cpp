@@ -207,6 +207,16 @@ void FixturePatch::tryToEnablePatch()
 		enabled->setValue(true, false);
 	}
 	patchingInProgess = false;
+
+	for (SubFixture* sf : parentFixture->subFixturesContainer) {
+		for (SubFixtureChannel* sfc : sf->channelsContainer) {
+			if (sfc->parentFixtureTypeChannel != nullptr) {
+				sfc->forceNextWrite = true;
+				Brain::getInstance()->pleaseUpdate(sfc);
+			}
+		}
+	}
+
 	LOG("Patched at address "+String(a));
 
 

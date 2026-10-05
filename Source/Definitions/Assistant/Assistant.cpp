@@ -1466,6 +1466,31 @@ void Assistant::importAscii()
     PresetManager::getInstance()->addItems(presetsToAdd, juce::var(), false);
     FixtureManager::getInstance()->addItems(fixturesToAdd, juce::var(), false);
     cuelist->selectAsMainConductor();
+
+    for (FixtureType* fixtureType : FixtureTypeManager::getInstance()->items)
+    {
+        fixtureType->chansManager.calcDmxChannels();
+    }
+
+    for (Fixture* fixture : FixtureManager::getInstance()->items)
+    {
+        fixture->checkChildrenSubFixtures();
+
+        for (FixturePatch* patch : fixture->patchs.items)
+        {
+            patch->tryToEnablePatch();
+        }
+
+        for (SubFixture* sf : fixture->subFixturesContainer)
+        {
+            for (SubFixtureChannel* channel : sf->channelsContainer)
+            {
+                channel->forceNextWrite = true;
+                Brain::getInstance()->pleaseUpdate(channel);
+            }
+        }
+    }
+
 }
 
 float Assistant::asciiLevelToFloat(String asciiLevel) {

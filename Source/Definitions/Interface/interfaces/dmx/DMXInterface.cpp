@@ -109,6 +109,12 @@ void DMXInterface::setCurrentDMXDevice(DMXDevice* d)
 {
 	if (dmxDevice.get() == d) return;
 
+	uint8 currentOutput[512] = {};
+	if (dmxDevice != nullptr)
+	{
+		memcpy(currentOutput, dmxDevice->dmxDataOut, sizeof(currentOutput));
+	}
+
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->removeDMXDeviceListener(this);
@@ -123,6 +129,7 @@ void DMXInterface::setCurrentDMXDevice(DMXDevice* d)
 
 	if (dmxDevice != nullptr)
 	{
+		memcpy(dmxDevice->dmxDataOut, currentOutput, sizeof(currentOutput));
 		dmxDevice->enabled = enabled->boolValue();
 		dmxDevice->addDMXDeviceListener(this);
 		addChildControllableContainer(dmxDevice.get());
