@@ -34,6 +34,8 @@
 #include "Definitions/Carousel/Carousel.h"
 #include "BKEngine.h"
 #include "Definitions/Actions/InputPanelAction.h"
+#include "Definitions/Effect/EffectManager.h"
+#include "Definitions/Carousel/CarouselManager.h"
 
 juce_ImplementSingleton(Assistant)
 
@@ -791,7 +793,7 @@ void Assistant::importAscii()
     HashMap<int, Cue*> idToCue;
     if (!asciiEraseCuelist->boolValue()) {
         for (Cue* c : cuelist->cues.items) {
-            idToCue.set(c->id->floatValue()*100000, c);
+            idToCue.set(c->id->floatValue() * 100000, c);
         }
     }
 
@@ -809,7 +811,7 @@ void Assistant::importAscii()
     Array<Group*> groupsToAdd;
     Array<Preset*> presetsToAdd;
     Array<Fixture*> fixturesToAdd;
-    
+
     HashMap<int, String> intToChannelFam;
     intToChannelFam.set(1, "Dimmer");
     intToChannelFam.set(2, "Position");
@@ -828,6 +830,491 @@ void Assistant::importAscii()
     HashMap<String, Preset*> idToPreset;
     HashMap<int, float> fixtureToCurrentValue;
 
+    class eosEffect {
+    public:
+        int eosID = 0;
+        int eosType = 0;
+        Array<int> selection;
+        Array<int> parameters;
+        Array<Cue*> callingCues;
+        Effect* bkEffect = nullptr;
+        Carousel* bkCarousel = nullptr;
+        Cuelist* bkCuelist = nullptr;
+
+        String getAsString() {
+            String s = "";
+            s += eosID;
+            s += "/";
+            String delim = "";
+            for (int id : selection) {
+                s += delim + String(id);
+                delim = "-";
+            }
+            return s;
+        }
+    };
+
+    class eosEffectAction {
+    public:
+        int index = 0;
+        float time = 0;
+        float dwell = 0;
+        String level = "";
+    };
+
+    class eosEffectStep {
+    public:
+        int index = 0;
+        float stepTime = 0;
+        float inTime = 0;
+        float dwell = 0;
+        float decay = 0;
+        String onLevel = "";
+        String offLevel = "";
+        Array<int> channels;
+        Array<int> parameters;
+    };
+
+
+    HashMap<String, eosEffect> effects;
+    HashMap<int, eosEffect> currentEffects;
+    int currentEosEffectId = 0;
+    int currentEosEffectType = 0;
+    String currentEosEffectName = "";
+    float currentEosEffectScale = 25;
+    int currentEosEffectDimensions = 0;
+    Array<int> currentEosEffectParams;
+    Array<float> currentEosEffectStepTimes;
+    Array<Array<float>> currentEosEffectData;
+    Array<eosEffectAction> currentEosEffectActions;
+    Array<eosEffectStep> currentEosEffectSteps;
+    int currentEosEffectStep = -1;
+
+    auto storeCurrentEffects = [&]() {
+        if (currentCue == nullptr) {
+            currentEffects.clear();
+            return;
+        }
+
+        for (HashMap<int, eosEffect>::Iterator it(currentEffects); it.next();) {
+            eosEffect effect = it.getValue();
+            effect.callingCues.addIfNotAlreadyThere(currentCue);
+            String key = effect.getAsString();
+
+            if (effects.contains(key)) {
+                eosEffect& storedEffect = effects.getReference(key);
+                storedEffect.callingCues.addIfNotAlreadyThere(currentCue);
+                for (int param : effect.parameters) storedEffect.parameters.addIfNotAlreadyThere(param);
+            }
+            else {
+                effects.set(key, effect);
+            }
+        }
+
+        currentEffects.clear();
+        };
+
+    auto finalizeCurrentEosEffect = [&]() {
+        if (currentEosEffectId == 0 || currentEosEffectType == 0) return;
+
+        for (HashMap<String, eosEffect>::Iterator it(effects); it.next();) {
+            eosEffect& effect = effects.getReference(it.getKey());
+            if (effect.eosID != currentEosEffectId) continue;
+
+            Array<int> params = currentEosEffectParams;
+            if (params.size() == 0) params = effect.parameters;
+
+            if ((currentEosEffectType == 1 || currentEosEffectType == 2) && effect.bkEffect != nullptr) {
+                int dimensions = currentEosEffectDimensions;
+                if (dimensions <= 0 && currentEosEffectData.size() > 0) dimensions = currentEosEffectData[0].size();
+                if (dimensions <= 0) dimensions = 1;
+
+                while (effect.bkEffect->values.items.size() < dimensions) effect.bkEffect->values.addItem();
+                while (effect.bkEffect->values.items.size() > dimensions) effect.bkEffect->values.removeItem(effect.bkEffect->values.items.getLast());
+
+                float totalTime = 0;
+                for (float time : currentEosEffectStepTimes) totalTime += time;
+                if (totalTime > 0) effect.bkEffect->speed->setValue(60000.0f / totalTime);
+
+                for (int rowId = 0; rowId < dimensions; rowId++) {
+                    EffectRow* row = effect.bkEffect->values.items[rowId];
+                    row->selection.clear();
+                    for (int fixtureId : effect.selection) {
+                        CommandSelection* selection = row->selection.addItem();
+                        selection->valueFrom->setValue(fixtureId);
+                    }
+
+                    row->paramContainer.clear();
+                    for (int paramId = 0; paramId < params.size(); paramId++) {
+                        if (paramId % dimensions != rowId) continue;
+                        if (!idToChannelType.contains(params[paramId])) continue;
+                        EffectParam* param = row->paramContainer.addItem();
+                        param->paramType->setValueFromTarget(idToChannelType.getReference(params[paramId]));
+                        param->effectMode->setValueWithData("relative");
+                        param->curveSize->setValue(currentEosEffectScale / 100.0f);
+                    }
+
+                    row->curvePresetOrValue->setValueWithData("drawed");
+                    row->curveOrigin->setValue(0);
+                    row->curve.clear();
+                    row->curve.valueRange->setPoint(-1, 1);
+                    row->curve.viewValueRange->setPoint(-1, 1);
+                    row->curve.length->setValue(1);
+
+                    if (currentEosEffectData.size() > 0) {
+                        float position = 0;
+                        if (totalTime > 0 && currentEosEffectStepTimes.size() > 0 && currentEosEffectStepTimes[0] > 0) {
+                            Array<float>& lastData = currentEosEffectData.getReference(currentEosEffectData.size() - 1);
+                            if (rowId < lastData.size()) {
+                                AutomationKey* key = row->curve.addKey(0, lastData[rowId], false);
+                                if (key != nullptr) key->easingType->setValueWithData(Easing::LINEAR);
+                            }
+                        }
+
+                        for (int dataId = 0; dataId < currentEosEffectData.size(); dataId++) {
+                            Array<float>& data = currentEosEffectData.getReference(dataId);
+                            if (rowId >= data.size()) continue;
+
+                            if (totalTime > 0) {
+                                if (dataId < currentEosEffectStepTimes.size()) position += currentEosEffectStepTimes[dataId] / totalTime;
+                                position = jlimit(0.0f, 1.0f, position);
+                            }
+                            else {
+                                position = currentEosEffectData.size() > 1 ? dataId / (float)(currentEosEffectData.size() - 1) : 0;
+                            }
+
+                            AutomationKey* key = row->curve.addKey(position, data[rowId], false);
+                            if (key != nullptr) key->easingType->setValueWithData(Easing::LINEAR);
+                        }
+                    }
+                }
+            }
+            else if (currentEosEffectType == 3 && effect.bkCarousel != nullptr) {
+                int dimensions = currentEosEffectDimensions;
+                if (dimensions <= 0 && currentEosEffectData.size() > 0) dimensions = currentEosEffectData[0].size();
+                if (dimensions <= 0) dimensions = 1;
+
+                while (effect.bkCarousel->rows.items.size() < 1) effect.bkCarousel->rows.addItem();
+                while (effect.bkCarousel->rows.items.size() > 1) effect.bkCarousel->rows.removeItem(effect.bkCarousel->rows.items.getLast());
+
+                float totalTime = 0;
+                for (float time : currentEosEffectStepTimes) totalTime += time;
+                if (totalTime > 0) effect.bkCarousel->speed->setValue(60000.0f / totalTime);
+
+                CarouselRow* row = effect.bkCarousel->rows.items[0];
+                row->selection.clear();
+                for (int fixtureId : effect.selection) {
+                    CommandSelection* selection = row->selection.addItem();
+                    selection->valueFrom->setValue(fixtureId);
+                }
+                row->paramContainer.clear();
+
+                for (int dataId = 0; dataId < currentEosEffectData.size(); dataId++) {
+                    Array<float>& data = currentEosEffectData.getReference(dataId);
+                    CarouselStep* step = row->paramContainer.addItem();
+                    float duration = 1;
+                    if (currentEosEffectStepTimes.size() > 0) {
+                        int nextTimeId = (dataId + 1) % currentEosEffectStepTimes.size();
+                        duration = currentEosEffectStepTimes[nextTimeId];
+                        if (duration <= 0) duration = 0.001f;
+                    }
+                    step->stepDuration->setValue(duration);
+                    step->fadeRatio->setValue(1);
+                    step->values.clear();
+
+                    for (int paramId = 0; paramId < params.size(); paramId++) {
+                        if (!idToChannelType.contains(params[paramId])) continue;
+                        int dimension = paramId % dimensions;
+                        if (dimension >= data.size()) continue;
+                        CommandValue* value = step->values.addItem();
+                        value->channelType->setValueFromTarget(idToChannelType.getReference(params[paramId]));
+                        value->valueFrom->setValue(jlimit(0.0f, 1.0f, (data[dimension] + 1.0f) / 2.0f));
+                    }
+                }
+            }
+            else if (currentEosEffectType == 4 && effect.bkCarousel != nullptr) {
+                while (effect.bkCarousel->rows.items.size() < 1) effect.bkCarousel->rows.addItem();
+                while (effect.bkCarousel->rows.items.size() > 1) effect.bkCarousel->rows.removeItem(effect.bkCarousel->rows.items.getLast());
+
+                CarouselRow* row = effect.bkCarousel->rows.items[0];
+                row->selection.clear();
+                for (int fixtureId : effect.selection) {
+                    CommandSelection* selection = row->selection.addItem();
+                    selection->valueFrom->setValue(fixtureId);
+                }
+                row->paramContainer.clear();
+
+                float totalTime = 0;
+                for (eosEffectAction action : currentEosEffectActions) totalTime += action.time + action.dwell;
+                if (totalTime > 0) effect.bkCarousel->speed->setValue(60.0f / totalTime);
+
+                Array<CarouselStep*> carouselSteps;
+                Array<String> presetStarts = { "IP", "FP", "CP", "BP", "PR" };
+
+                for (eosEffectAction action : currentEosEffectActions) {
+                    CarouselStep* step = row->paramContainer.addItem();
+                    carouselSteps.add(step);
+                    step->values.clear();
+
+                    String valueString = action.level;
+                    if (valueString.contains("#")) valueString = valueString.fromLastOccurrenceOf("#", false, false);
+                    String begin = valueString.substring(0, 2);
+
+                    if (params.size() == 0) {
+                        CommandValue* value = step->values.addItem();
+                        if (presetStarts.contains(begin)) {
+                            value->presetOrValue->setValueWithData("preset");
+                            if (!idToPreset.contains(valueString)) {
+                                Preset* p = PresetManager::getInstance()->addItem();
+                                p->userName->setValue(valueString);
+                                idToPreset.set(valueString, p);
+                            }
+                            Preset* target = idToPreset.getReference(valueString);
+                            value->channelType->setValue(asciiDimmerChannel->getValue());
+                            value->presetIdFrom->setValue(target->id->intValue());
+                        }
+                        else if (valueString == "BKGRD") {
+                            value->presetOrValue->setValueWithData("release");
+                            value->channelType->setValue(asciiDimmerChannel->getValue());
+                        }
+                        else {
+                            value->channelType->setValue(asciiDimmerChannel->getValue());
+                            value->valueFrom->setValue(jlimit(0.0f, 1.0f, valueString.getFloatValue() / 100.0f));
+                        }
+                    }
+                    else {
+                        for (int paramId : params) {
+                            if (!idToChannelType.contains(paramId)) continue;
+                            CommandValue* value = step->values.addItem();
+                            value->channelType->setValueFromTarget(idToChannelType.getReference(paramId));
+                            if (presetStarts.contains(begin)) {
+                                value->presetOrValue->setValueWithData("preset");
+                                if (!idToPreset.contains(valueString)) {
+                                    Preset* p = PresetManager::getInstance()->addItem();
+                                    p->userName->setValue(valueString);
+                                    idToPreset.set(valueString, p);
+                                }
+                                Preset* target = idToPreset.getReference(valueString);
+                                value->presetIdFrom->setValue(target->id->intValue());
+                            }
+                            else if (valueString == "BKGRD") {
+                                value->presetOrValue->setValueWithData("release");
+                            }
+                            else {
+                                value->valueFrom->setValue(jlimit(0.0f, 1.0f, valueString.getFloatValue() / 100.0f));
+                            }
+                        }
+                    }
+                }
+
+                for (int actionId = 0; actionId < currentEosEffectActions.size(); actionId++) {
+                    eosEffectAction action = currentEosEffectActions[actionId];
+                    if (actionId >= carouselSteps.size()) continue;
+                    int previousId = actionId == 0 ? carouselSteps.size() - 1 : actionId - 1;
+                    float duration = action.time + action.dwell;
+                    if (duration <= 0) duration = 0.001f;
+                    carouselSteps[previousId]->stepDuration->setValue(duration);
+                    carouselSteps[actionId]->fadeRatio->setValue(jlimit(0.0f, 1.0f, action.time / duration));
+                }
+            }
+            else if (currentEosEffectType == 5 && effect.bkCuelist != nullptr) {
+                effect.bkCuelist->kill();
+                effect.bkCuelist->cues.clear();
+                effect.bkCuelist->tracking->setValueWithData("none");
+
+                float averageStepTime = 0;
+                float averageIn = 0;
+                float averageDecay = 0;
+                int timedSteps = 0;
+                bool hasEmbeddedChannels = false;
+                bool differentTimings = false;
+                bool hasReferenceTiming = false;
+                float referenceStepTime = 0;
+                float referenceInTime = 0;
+                float referenceDwell = 0;
+                float referenceDecay = 0;
+                for (eosEffectStep step : currentEosEffectSteps) {
+                    if (step.index <= 0) continue;
+                    if (step.channels.size() > 0) hasEmbeddedChannels = true;
+                    if (!hasReferenceTiming) {
+                        referenceStepTime = step.stepTime;
+                        referenceInTime = step.inTime;
+                        referenceDwell = step.dwell;
+                        referenceDecay = step.decay;
+                        hasReferenceTiming = true;
+                    }
+                    else if (std::abs(step.stepTime - referenceStepTime) > 0.0001f || std::abs(step.inTime - referenceInTime) > 0.0001f || std::abs(step.dwell - referenceDwell) > 0.0001f || std::abs(step.decay - referenceDecay) > 0.0001f) {
+                        differentTimings = true;
+                    }
+                    if (step.stepTime <= 0) continue;
+                    averageStepTime += step.stepTime;
+                    averageIn += step.inTime / step.stepTime;
+                    averageDecay += step.decay / step.stepTime;
+                    timedSteps++;
+                }
+
+                effect.bkCuelist->isChaser->setValue(!differentTimings);
+                if (differentTimings) {
+                    effect.bkCuelist->endAction->setValueWithData("loop");
+                }
+                else if (timedSteps > 0) {
+                    averageStepTime /= timedSteps;
+                    averageIn /= timedSteps;
+                    averageDecay /= timedSteps;
+                    effect.bkCuelist->chaserSpeed->setValue(60.0f / averageStepTime);
+                    effect.bkCuelist->chaserInFade->setValue(jlimit(0.0f, 1.0f, averageIn));
+                    effect.bkCuelist->chaserOutFade->setValue(jlimit(0.0f, 1.0f, averageDecay));
+                }
+
+                for (int stepId = 0; stepId < currentEosEffectSteps.size(); stepId++) {
+                    eosEffectStep step = currentEosEffectSteps[stepId];
+                    if (step.index <= 0) continue;
+                    Cue* cue = effect.bkCuelist->cues.addItem();
+                    cue->id->setValue(step.index);
+                    cue->commands.clear();
+
+                    if (differentTimings) {
+                        float followTime = step.stepTime;
+                        if (followTime <= 0) followTime = step.inTime + step.dwell + step.decay;
+                        cue->autoFollow->setValueWithData("immediate");
+                        cue->autoFollowTiming->setValue(jmax(0.0f, followTime));
+                        cue->htpInFade->setValue(jmax(0.0f, step.inTime));
+                        cue->ltpFade->setValue(jmax(0.0f, step.inTime));
+                        cue->htpOutFade->setValue(jmax(0.0f, step.decay));
+                    }
+
+                    int firstStep = hasEmbeddedChannels ? 0 : stepId;
+                    int lastStep = hasEmbeddedChannels ? currentEosEffectSteps.size() - 1 : firstStep;
+                    for (int sourceStepId = firstStep; sourceStepId <= lastStep; sourceStepId++) {
+                        eosEffectStep sourceStep = currentEosEffectSteps[sourceStepId];
+                        if (sourceStep.index <= 0) continue;
+
+                        Array<int> channels = sourceStep.channels;
+                        if (!hasEmbeddedChannels) channels = effect.selection;
+                        if (channels.size() == 0) continue;
+
+                        String valueString = sourceStep.index == step.index ? sourceStep.onLevel : sourceStep.offLevel;
+                        if (valueString.contains("#")) valueString = valueString.fromLastOccurrenceOf("#", false, false);
+                        Array<String> presetStarts = { "IP", "FP", "CP", "BP", "PR" };
+                        String begin = valueString.substring(0, 2);
+
+                        Command* command = cue->commands.addItem();
+                        command->selection.clear();
+                        for (int fixtureId : channels) {
+                            CommandSelection* selection = command->selection.addItem();
+                            selection->valueFrom->setValue(fixtureId);
+                        }
+                        command->values.clear();
+
+                        Array<int> stepParams = sourceStep.parameters;
+                        if (stepParams.size() == 0) stepParams = params;
+
+                        if (stepParams.size() == 0) {
+                            CommandValue* value = command->values.addItem();
+                            if (presetStarts.contains(begin)) {
+                                value->presetOrValue->setValueWithData("preset");
+                                if (!idToPreset.contains(valueString)) {
+                                    Preset* p = PresetManager::getInstance()->addItem();
+                                    p->userName->setValue(valueString);
+                                    idToPreset.set(valueString, p);
+                                }
+                                Preset* target = idToPreset.getReference(valueString);
+                                value->channelType->setValue(asciiDimmerChannel->getValue());
+                                value->presetIdFrom->setValue(target->id->intValue());
+                            }
+                            else if (valueString == "BKGRD") {
+                                value->presetOrValue->setValueWithData("release");
+                                value->channelType->setValue(asciiDimmerChannel->getValue());
+                            }
+                            else {
+                                value->channelType->setValue(asciiDimmerChannel->getValue());
+                                value->valueFrom->setValue(jlimit(0.0f, 1.0f, valueString.getFloatValue() / 100.0f));
+                            }
+                        }
+                        else {
+                            for (int paramId : stepParams) {
+                                if (!idToChannelType.contains(paramId)) continue;
+                                CommandValue* value = command->values.addItem();
+                                value->channelType->setValueFromTarget(idToChannelType.getReference(paramId));
+                                if (presetStarts.contains(begin)) {
+                                    value->presetOrValue->setValueWithData("preset");
+                                    if (!idToPreset.contains(valueString)) {
+                                        Preset* p = PresetManager::getInstance()->addItem();
+                                        p->userName->setValue(valueString);
+                                        idToPreset.set(valueString, p);
+                                    }
+                                    Preset* target = idToPreset.getReference(valueString);
+                                    value->presetIdFrom->setValue(target->id->intValue());
+                                }
+                                else if (valueString == "BKGRD") {
+                                    value->presetOrValue->setValueWithData("release");
+                                }
+                                else {
+                                    value->valueFrom->setValue(jlimit(0.0f, 1.0f, valueString.getFloatValue() / 100.0f));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (Cue* callingCue : effect.callingCues) {
+                if (callingCue == nullptr) continue;
+
+                if (effect.bkEffect != nullptr) {
+                    Task* task = callingCue->tasks.addItem();
+                    task->targetType->setValueWithData("effect");
+                    task->targetId->setValue(effect.bkEffect->id->intValue());
+                    task->effectAction->setValueWithData("size");
+                    task->targetValue->setValue(1);
+
+                    Task* taskOff = callingCue->tasksOffCue.addItem();
+                    taskOff->targetType->setValueWithData("effect");
+                    taskOff->targetId->setValue(effect.bkEffect->id->intValue());
+                    taskOff->effectAction->setValueWithData("size");
+                    taskOff->targetValue->setValue(0);
+                }
+                else if (effect.bkCarousel != nullptr) {
+                    Task* task = callingCue->tasks.addItem();
+                    task->targetType->setValueWithData("carousel");
+                    task->targetId->setValue(effect.bkCarousel->id->intValue());
+                    task->carouselAction->setValueWithData("size");
+                    task->targetValue->setValue(1);
+
+                    Task* taskOff = callingCue->tasksOffCue.addItem();
+                    taskOff->targetType->setValueWithData("carousel");
+                    taskOff->targetId->setValue(effect.bkCarousel->id->intValue());
+                    taskOff->carouselAction->setValueWithData("size");
+                    taskOff->targetValue->setValue(0);
+                }
+                else if (effect.bkCuelist != nullptr) {
+                    Task* taskHTP = callingCue->tasks.addItem();
+                    taskHTP->targetType->setValueWithData("cuelist");
+                    taskHTP->targetId->setValue(effect.bkCuelist->id->intValue());
+                    taskHTP->cuelistAction->setValueWithData("htplevel");
+                    taskHTP->targetValue->setValue(1);
+
+                    Task* taskLTP = callingCue->tasks.addItem();
+                    taskLTP->targetType->setValueWithData("cuelist");
+                    taskLTP->targetId->setValue(effect.bkCuelist->id->intValue());
+                    taskLTP->cuelistAction->setValueWithData("ltplevel");
+                    taskLTP->targetValue->setValue(1);
+
+                    Task* taskOffHTP = callingCue->tasksOffCue.addItem();
+                    taskOffHTP->targetType->setValueWithData("cuelist");
+                    taskOffHTP->targetId->setValue(effect.bkCuelist->id->intValue());
+                    taskOffHTP->cuelistAction->setValueWithData("htplevel");
+                    taskOffHTP->targetValue->setValue(0);
+
+                    Task* taskOffLTP = callingCue->tasksOffCue.addItem();
+                    taskOffLTP->targetType->setValueWithData("cuelist");
+                    taskOffLTP->targetId->setValue(effect.bkCuelist->id->intValue());
+                    taskOffLTP->cuelistAction->setValueWithData("ltplevel");
+                    taskOffLTP->targetValue->setValue(0);
+                }
+            }
+        }
+        };
 
     FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
     for (int i = 0; i < lines.size(); i++) {
@@ -913,7 +1400,7 @@ void Assistant::importAscii()
                 int address = words[3].getIntValue();
                 int universe = address / 512;
                 address = address % 512;
-                Fixture * f = Brain::getInstance()->getFixtureById(id);
+                Fixture* f = Brain::getInstance()->getFixtureById(id);
                 if (f == nullptr) {
                     f = FixtureManager::getInstance()->addItem();
                     f->id->setValue(id);
@@ -983,6 +1470,23 @@ void Assistant::importAscii()
                 currentPrimary = "$PALETTE";
                 currentSecondary = "$PALETTE";
             }
+            else if (words[0] == "$EFFECT") {
+                storeCurrentEffects();
+                finalizeCurrentEosEffect();
+                currentEosEffectId = words[1].getIntValue();
+                currentEosEffectType = 0;
+                currentEosEffectName = "";
+                currentEosEffectScale = 25;
+                currentEosEffectDimensions = 0;
+                currentEosEffectParams.clear();
+                currentEosEffectStepTimes.clear();
+                currentEosEffectData.clear();
+                currentEosEffectActions.clear();
+                currentEosEffectSteps.clear();
+                currentEosEffectStep = -1;
+                currentPrimary = words[0];
+                currentSecondary = words[0];
+            }
 
             else if (words[0].startsWith("$$"))
             {
@@ -996,13 +1500,13 @@ void Assistant::importAscii()
             else {
                 currentSecondary = "";
             }
-            
+
             if (currentPrimary == "PATCH" && currentSecondary == "PATCH" && asciiPatch->boolValue()) {
-                for (int iWord = 2; iWord < words.size()-2; iWord+=3) {
+                for (int iWord = 2; iWord < words.size() - 2; iWord += 3) {
                     int channel = words[iWord].getIntValue();
                     int address = words[iWord + 1].getIntValue();
-                    int universe = address/512;
-                    address = address%512;
+                    int universe = address / 512;
+                    address = address % 512;
                     //float level = asciiLevelToFloat(words[iWord + 2]);
                     if (channel > 0) {
                         Fixture* fixt = Brain::getInstance()->getFixtureById(channel);
@@ -1031,13 +1535,15 @@ void Assistant::importAscii()
                     if (words.size() == 1) {
                         LOGERROR("invalid file, CUE word must have an id in parameter");
                     }
+                    storeCurrentEffects();
                     previousCue = currentCue;
                     int cueId = words[1].getFloatValue() * 100000;
 
                     if (!asciiEraseCuelist->boolValue() && idToCue.contains(cueId)) {
                         currentCue = idToCue.getReference(cueId);
                         currentCue->commands.clear();
-                    } else {
+                    }
+                    else {
                         currentCue = new Cue();
                         cuesToAdd.add(currentCue);
                         currentCue->editorIsCollapsed = true;
@@ -1062,7 +1568,7 @@ void Assistant::importAscii()
                     if (cuesToAdd.contains(currentCue)) {
                         String text = originalLine.trim().substring(11);
                         currentCue->cueText->setValue(text);
-                     }
+                    }
                 }
                 else if (currentSecondary == "$$SCENETEXT") {
                     if (cuesToAdd.contains(currentCue)) {
@@ -1082,7 +1588,7 @@ void Assistant::importAscii()
                     if (words.size() == 1) {
                         LOGERROR("invalid file, WAIT word must have at least one parameter");
                     }
-                    if (previousCue != nullptr && words[1].getFloatValue()>0) {
+                    if (previousCue != nullptr && words[1].getFloatValue() > 0) {
                         previousCue->autoFollow->setValueWithKey("End of transitions");
                         previousCue->autoFollowTiming->setValue(words[1].getFloatValue());
                     }
@@ -1152,6 +1658,25 @@ void Assistant::importAscii()
                             com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                             com->values.items[0]->valueFrom->setValue(level);
                             fixtureToCurrentValue.set(fixt, level);
+                        }
+                    }
+                }
+                else if (currentSecondary == "$$EFFECTCHAN") {
+                    if (words.size() >= 3) {
+                        int effectId = words[1].getIntValue();
+                        int fixtureId = words[2].getIntValue();
+
+                        if (!currentEffects.contains(effectId)) {
+                            eosEffect effect;
+                            effect.eosID = effectId;
+                            currentEffects.set(effectId, effect);
+                        }
+
+                        eosEffect& effect = currentEffects.getReference(effectId);
+                        effect.selection.addIfNotAlreadyThere(fixtureId);
+                        for (int iParam = 3; iParam < words.size(); iParam++) {
+                            int paramId = words[iParam].getIntValue();
+                            if (paramId > 0) effect.parameters.addIfNotAlreadyThere(paramId);
                         }
                     }
                 }
@@ -1316,8 +1841,8 @@ void Assistant::importAscii()
                             CommandSelection* s = currentGroup->selection.addItem();
                             s->valueFrom->setValue(fixt);
                         }
-                        if (currentPreset != nullptr){
-                            PresetSubFixtureValues * v = currentPreset->subFixtureValues.addItem();
+                        if (currentPreset != nullptr) {
+                            PresetSubFixtureValues* v = currentPreset->subFixtureValues.addItem();
                             v->targetFixtureId->setValue(fixt);
                             v->values.items[0]->param->setValue(asciiDimmerChannel->getValue());
                             v->values.items[0]->paramValue->setValue(level);
@@ -1359,6 +1884,132 @@ void Assistant::importAscii()
                             PresetValue* pv = com->values.addItem();
                             pv->param->setValueFromTarget(param);
                             pv->paramValue->setValue(level);
+                        }
+                    }
+                }
+            }
+            else if (currentPrimary == "$EFFECT") {
+                if (currentSecondary == "TEXT") {
+                    currentEosEffectName = originalLine.trim().substring(5);
+
+                    for (HashMap<String, eosEffect>::Iterator it(effects); it.next();) {
+                        eosEffect& effect = effects.getReference(it.getKey());
+                        if (effect.eosID != currentEosEffectId) continue;
+
+                        String name = "FX" + String(currentEosEffectId);
+                        if (currentEosEffectName != "") name += " - " + currentEosEffectName;
+
+                        if (effect.bkEffect != nullptr) effect.bkEffect->userName->setValue(name);
+                        if (effect.bkCarousel != nullptr) effect.bkCarousel->userName->setValue(name);
+                        if (effect.bkCuelist != nullptr) effect.bkCuelist->userName->setValue(name);
+                    }
+                }
+                else if (currentSecondary == "$$TYPE") {
+                    int eosType = words[1].getIntValue();
+                    currentEosEffectType = eosType;
+
+                    for (HashMap<String, eosEffect>::Iterator it(effects); it.next();) {
+                        eosEffect& effect = effects.getReference(it.getKey());
+                        if (effect.eosID != currentEosEffectId) continue;
+
+                        effect.eosType = eosType;
+                        String name = "FX" + String(currentEosEffectId);
+                        if (currentEosEffectName != "") name += " - " + currentEosEffectName;
+
+                        if (eosType == 1 || eosType == 2) {
+                            effect.bkEffect = EffectManager::getInstance()->addItem();
+                            effect.bkEffect->userName->setValue(name);
+                            effect.bkEffect->sizeValue->setValue(0);
+                        }
+                        else if (eosType == 3 || eosType == 4) {
+                            effect.bkCarousel = CarouselManager::getInstance()->addItem();
+                            effect.bkCarousel->userName->setValue(name);
+                            effect.bkCarousel->sizeValue->setValue(0);
+                        }
+                        else if (eosType == 5) {
+                            effect.bkCuelist = CuelistManager::getInstance()->addItem();
+                            effect.bkCuelist->userName->setValue(name);
+                            effect.bkCuelist->isChaser->setValue(true);
+                            effect.bkCuelist->HTPLevel->setValue(0);
+                            effect.bkCuelist->LTPLevel->setValue(0);
+                        }
+                    }
+                }
+                else if (currentSecondary == "$$SCALE") {
+                    if (words.size() > 1) currentEosEffectScale = words[1].getFloatValue();
+                }
+                else if (currentSecondary == "$$STEPTIMES") {
+                    if (words.size() > 2) {
+                        int index = words[1].getIntValue();
+                        while (currentEosEffectStepTimes.size() < index) currentEosEffectStepTimes.add(0);
+                        currentEosEffectStepTimes.set(index - 1, words[2].getFloatValue());
+                    }
+                }
+                else if (currentSecondary == "$$DIMENSIONS") {
+                    if (words.size() > 1) currentEosEffectDimensions = words[1].getIntValue();
+                }
+                else if (currentSecondary == "$$DATA") {
+                    if (words.size() > 2) {
+                        int index = words[1].getIntValue();
+                        Array<float> data;
+                        for (int iData = 2; iData < words.size(); iData++) data.add(words[iData].getFloatValue());
+                        while (currentEosEffectData.size() < index) currentEosEffectData.add(Array<float>());
+                        currentEosEffectData.set(index - 1, data);
+                    }
+                }
+                else if (currentSecondary == "$$ACTION") {
+                    if (words.size() > 4) {
+                        int index = words[1].getIntValue();
+                        eosEffectAction action;
+                        action.index = index;
+                        action.time = words[2].getFloatValue();
+                        action.dwell = words[3].getFloatValue();
+                        action.level = words[4];
+                        if (words.size() > 5 && (action.level == "IP" || action.level == "FP" || action.level == "CP" || action.level == "BP" || action.level == "PR")) action.level += words[5];
+                        while (currentEosEffectActions.size() < index) currentEosEffectActions.add(eosEffectAction());
+                        currentEosEffectActions.set(index - 1, action);
+                    }
+                }
+                else if (currentSecondary == "$$STEP") {
+                    if (words.size() > 7) {
+                        int index = words[1].getIntValue();
+                        eosEffectStep step;
+                        step.index = index;
+                        step.stepTime = words[2].getFloatValue();
+                        step.inTime = words[3].getFloatValue();
+                        step.dwell = words[4].getFloatValue();
+                        step.decay = words[5].getFloatValue();
+                        step.onLevel = words[6];
+                        step.offLevel = words[7];
+                        while (currentEosEffectSteps.size() < index) currentEosEffectSteps.add(eosEffectStep());
+                        currentEosEffectSteps.set(index - 1, step);
+                        currentEosEffectStep = index - 1;
+                    }
+                }
+                else if (currentSecondary == "$$CHANLIST") {
+                    if (currentEosEffectType == 5 && currentEosEffectStep >= 0 && currentEosEffectStep < currentEosEffectSteps.size()) {
+                        eosEffectStep& step = currentEosEffectSteps.getReference(currentEosEffectStep);
+                        step.channels.clear();
+                        for (int iChan = 1; iChan < words.size(); iChan++) {
+                            int channel = words[iChan].getIntValue();
+                            if (channel > 0) step.channels.add(channel);
+                        }
+                    }
+                }
+                else if (currentSecondary == "$$PARAMLIST") {
+                    if (currentEosEffectType == 5 && currentEosEffectStep >= 0 && currentEosEffectStep < currentEosEffectSteps.size()) {
+                        eosEffectStep& step = currentEosEffectSteps.getReference(currentEosEffectStep);
+                        step.parameters.clear();
+                        for (int iParam = 1; iParam < words.size(); iParam++) {
+                            int paramId = words[iParam].getIntValue();
+                            if (paramId > 0) step.parameters.add(paramId);
+                        }
+                    }
+                    else {
+                        currentEosEffectParams.clear();
+                        for (int iParam = 1; iParam < words.size(); iParam++) {
+                            int paramId = words[iParam].getIntValue();
+                            if (paramId > 0) currentEosEffectParams.add(paramId);
                         }
                     }
                 }
@@ -1414,7 +2065,7 @@ void Assistant::importAscii()
                     currentPreset->userName->setValue(text);
                 }
                 else if (currentSecondary == "$$PARAM") {
-                    Fixture * fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
+                    Fixture* fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
                     if (fixt != nullptr) {
                         for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
                             int paramId = words[iChan].getIntValue();
@@ -1432,7 +2083,7 @@ void Assistant::importAscii()
                                     }
                                 }
                             }
-                            level = level/div;
+                            level = level / div;
                             PresetSubFixtureValues* com = nullptr;
                             for (PresetSubFixtureValues* psfv : currentPreset->subFixtureValues.items) {
                                 if (psfv->targetFixtureId->intValue() == fixt->id->intValue()) {
@@ -1460,7 +2111,10 @@ void Assistant::importAscii()
         }
     }
 
-    cuelist->cues.addItems(cuesToAdd, juce::var(), false);    
+    finalizeCurrentEosEffect();
+    storeCurrentEffects();
+
+    cuelist->cues.addItems(cuesToAdd, juce::var(), false);
     CuelistManager::getInstance()->addItems(cuelistsToAdd, juce::var(), false);
     GroupManager::getInstance()->addItems(groupsToAdd, juce::var(), false);
     PresetManager::getInstance()->addItems(presetsToAdd, juce::var(), false);
@@ -1492,6 +2146,7 @@ void Assistant::importAscii()
     }
 
 }
+
 
 float Assistant::asciiLevelToFloat(String asciiLevel) {
     float level = 0;
