@@ -55,6 +55,8 @@ SelectionMaster::SelectionMaster(var params) :
 
 	autoStartAndStop = addBoolParameter("Auto Start / Stop", "Start and stop the SelectionMaster when size is modified", true);
 	sizeValue = addFloatParameter("Size", "Master of this SelectionMaster", 1);
+	sizeValue->canHaveRange = true;
+	sizeValue->isCustomizableByUser = true;
 
 	addChildControllableContainer(&selection);
 
