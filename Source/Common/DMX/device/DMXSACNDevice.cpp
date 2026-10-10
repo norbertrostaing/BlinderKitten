@@ -87,7 +87,7 @@ void DMXSACNDevice::sendDMXRange(int startChannel, Array<int> values)
     for (int i = 0; i < numValues; ++i)
     {
         int channel = startChannel + i;
-        if (channel < 0) continue;
+        if (channel < 1) continue;
         if (channel > 512) break;
 
         dmxBuffer[channel - 1] = (uint8)(values[i]);

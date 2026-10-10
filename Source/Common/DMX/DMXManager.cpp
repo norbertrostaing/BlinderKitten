@@ -15,7 +15,7 @@ DMXManager::DMXManager() :
 {
 	artNetUDP.bindToPort(3333);
 	//startTimer(1000);
-	startThread();
+	//startThread();
 }
 
 DMXManager::~DMXManager()
@@ -45,7 +45,7 @@ void DMXManager::timerCallback()
 void DMXManager::run()
 {
 	uint8 buffer[600];
-	while (threadShouldExit())
+	while (!threadShouldExit())
 	{
 		String remoteIP;
 		int remotePort;

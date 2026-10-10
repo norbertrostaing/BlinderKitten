@@ -107,7 +107,10 @@ void EffectRow::computeData() {
         return;
     }
     checkParentEffect();
-    if (parentEffect == nullptr) {return;}
+    if (parentEffect == nullptr) {
+        isComputing.exit();
+        return;
+    }
 
     maxOffset = 0;
 

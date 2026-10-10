@@ -63,7 +63,10 @@ void MapperRow::computeData() {
     selection.computeSelection();
 
     Mapper* parentMapper = dynamic_cast<Mapper*>(parentContainer->parentContainer.get());
-    if (parentMapper == nullptr) {return;}
+    if (parentMapper == nullptr) {
+        isComputing.exit();
+        return;
+    }
     for (int i = 0; i < selection.computedSelectedSubFixtures.size(); i++) {
         //double deltaPos = 0;
         computedPositions.set(selection.computedSelectedSubFixtures[i], 0);

@@ -241,19 +241,19 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 				}
 				float delayMult = t->delayMult.getValue();
 				float fadeMult = t->fadeMult.getValue();
-				defaultTiming.delayThru = t->thruDelay->getValue();
-				defaultTiming.delaySym = t->symmetryDelay->getValue();
-				defaultTiming.delayFrom = (float)t->delayFrom->getValue() * 1000 * delayMult;
-				defaultTiming.delayTo = (float)t->delayTo->getValue() * 1000 * delayMult;
-				defaultTiming.fadeThru = t->thruFade->getValue();
-				defaultTiming.fadeSym = t->symmetryFade->getValue();
-				defaultTiming.fadeFrom = (float)t->fadeFrom->getValue() * 1000 * fadeMult;
-				defaultTiming.fadeTo = (float)t->fadeTo->getValue() * 1000 * fadeMult;
-				defaultTiming.fadeCurve = &t->curveFade;
-				defaultTiming.fadeRepartCurve = &t->curveFadeRepart;
-				defaultTiming.delayRepartCurve = &t->curveDelayRepart;
-				defaultTiming.delayRandom = defaultTiming.delayThru && t->randomizeDelay->boolValue();
-				defaultTiming.fadeRandom = defaultTiming.fadeThru && t->randomizeFade->boolValue();
+				params->delayThru = t->thruDelay->getValue();
+				params->delaySym = t->symmetryDelay->getValue();
+				params->delayFrom = (float)t->delayFrom->getValue() * 1000 * delayMult;
+				params->delayTo = (float)t->delayTo->getValue() * 1000 * delayMult;
+				params->fadeThru = t->thruFade->getValue();
+				params->fadeSym = t->symmetryFade->getValue();
+				params->fadeFrom = (float)t->fadeFrom->getValue() * 1000 * fadeMult;
+				params->fadeTo = (float)t->fadeTo->getValue() * 1000 * fadeMult;
+				params->fadeCurve = &t->curveFade;
+				params->fadeRepartCurve = &t->curveFadeRepart;
+				params->delayRepartCurve = &t->curveDelayRepart;
+				params->delayRandom = params->delayThru && t->randomizeDelay->boolValue();
+				params->fadeRandom = params->fadeThru && t->randomizeFade->boolValue();
 			}
 		}
 	}
@@ -576,7 +576,6 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 							if (timingParameters->fadeThru && subFixtures.size() > 1) {
 								float position = normalizedPosition;
 								if (timingParameters->fadeSym) { position = useNormalized ? normalizedPositionSym : Brain::symPosition(indexFixt, subFixtures.size()); }
-								position = timing.curveFadeRepart.getValueAtPosition(position);
 								position = timingParameters->fadeRepartCurve->getValueAtPosition(position);
 								if (timingParameters->fadeRandom) {
 									position = Brain::getInstance()->mainRandom.nextFloat();

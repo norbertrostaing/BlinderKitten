@@ -98,10 +98,15 @@ void Bundle::computeValues() {
 		bool add = s->plusOrMinus->getValueData() == "add";
 		int from = s->valueFrom->intValue();
 		int to = s->thru->boolValue() ? s->valueTo->intValue() : s->valueFrom->intValue();
-		int delta = to >= from ? 1 : -1;
+		if (from > to) {
+			int temp = from; 
+			from = to;
+			to = temp;
+		}
+
 		String type = s->targetType->getValueData();
 
-		for (int i = from; i <= to; i += delta) {
+		for (int i = from; i <= to; i += 1) {
 			if (type == "cuelist") {
 				Cuelist* elmt = Brain::getInstance()->getCuelistById(i);
 				if (elmt != nullptr) {

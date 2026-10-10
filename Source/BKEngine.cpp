@@ -469,7 +469,7 @@ void BKEngine::clearInternal()
 	}
 
 	Brain::getInstance()->skipLoop = true;
-	Brain::getInstance()->stopThread(1);
+	Brain::getInstance()->stopThread(40);
 	Brain::getInstance()->clear();
 
 	Brain::getInstance()->isClearing = true;
@@ -658,7 +658,7 @@ var BKEngine::getJSONData(bool includeNonOverriden)
 void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 {
 	Brain::getInstance()->loadingIsRunning = true;
-	Brain::getInstance()->stopThread(1);
+	Brain::getInstance()->stopThread(40);
 	//ProgressTask* moduleTask = loadingTask->addTask("Modules");
 	ProgressTask* iTask = loadingTask->addTask("Interfaces");
 	ProgressTask* fptTask = loadingTask->addTask("SubFixture Param Types");

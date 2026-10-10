@@ -85,7 +85,8 @@ Stamp::~Stamp()
 	Brain::getInstance()->stampPoolWaiting.removeAllInstancesOf(this);
 	Brain::getInstance()->stampPoolUpdating.removeAllInstancesOf(this);
 	Brain::getInstance()->usingPools.exit();
-	
+	isComputing.exit();
+
 	//for (auto sfc : Brain::getInstance()->allSubfixtureChannels) {
 	//	if (sfc->stampStack.contains(this)) {
 	//		sfc->stampOutOfStack(this);
