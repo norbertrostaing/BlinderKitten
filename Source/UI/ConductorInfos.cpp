@@ -356,12 +356,6 @@ void ConductorInfos::updateContent()
         currentCueText.setText(currentCue->cueText->stringValue(), juce::NotificationType::dontSendNotification);
     } 
 
-    if (nextCue == nullptr) { 
-        return;
-    }
-
-    nextCueGo.setText(nextCue->goText->stringValue(), juce::NotificationType::dontSendNotification);
-    nextCueName.setText(nextCue->niceName, juce::NotificationType::dontSendNotification);
     String text = "";
     for (int i = 0; i < target->commandHistory.size(); i++) {
 
@@ -372,6 +366,14 @@ void ConductorInfos::updateContent()
 
     }
     currCommands.setText(text, juce::NotificationType::dontSendNotification);
+
+    if (nextCue == nullptr) { 
+        resized();
+        return;
+    }
+
+    nextCueGo.setText(nextCue->goText->stringValue(), juce::NotificationType::dontSendNotification);
+    nextCueName.setText(nextCue->niceName, juce::NotificationType::dontSendNotification);
     nextCommands.setText(nextCue->getCommandsText(true), juce::NotificationType::dontSendNotification);
 
     nextHTPInDelay = nextCue->htpInDelay->createSlider();
