@@ -175,6 +175,7 @@ void CommandSelectionManager::computeSelection(Array<int> groupHistory) {
 				}
 				else {
 					r->setSeed((int)selections[selId]->randomSeed->getValue());
+					r->nextInt();
 				}
 			
 				while (tempSelection.size() > 0) {
