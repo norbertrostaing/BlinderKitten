@@ -106,9 +106,9 @@ void CarouselRow::computeData() {
     //LOG("step 5 " << (Time::getMillisecondCounterHiRes() - now));
     for (int i = 0; i < paramContainer.items.size(); i++) {
         CarouselStep * step = paramContainer.items[i];
-        step->relativeDuration = (float)paramContainer.items[i]->stepDuration->getValue() / totalDuration;
-        step->relativeStartPosition = currentPosition;
+        step->relativeDuration = step->stepDuration->floatValue() / totalDuration;
         currentPosition += step->relativeDuration;
+        step->relativeStartPosition = currentPosition;
 
         step->computeValues(selection.computedSelectedSubFixtures);
 

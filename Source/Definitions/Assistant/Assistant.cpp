@@ -1014,8 +1014,8 @@ void Assistant::importAscii()
                     CarouselStep* step = row->paramContainer.addItem();
                     float duration = 1;
                     if (currentEosEffectStepTimes.size() > 0) {
-                        int nextTimeId = (dataId + 1) % currentEosEffectStepTimes.size();
-                        duration = currentEosEffectStepTimes[nextTimeId];
+                        int timeId = dataId % currentEosEffectStepTimes.size();
+                        duration = currentEosEffectStepTimes[timeId];
                         if (duration <= 0) duration = 0.001f;
                     }
                     step->stepDuration->setValue(duration);
@@ -1113,7 +1113,7 @@ void Assistant::importAscii()
                     int previousId = actionId == 0 ? carouselSteps.size() - 1 : actionId - 1;
                     float duration = action.time + action.dwell;
                     if (duration <= 0) duration = 0.001f;
-                    carouselSteps[previousId]->stepDuration->setValue(duration);
+                    carouselSteps[actionId]->stepDuration->setValue(duration);
                     carouselSteps[actionId]->fadeRatio->setValue(jlimit(0.0f, 1.0f, action.time / duration));
                 }
             }
