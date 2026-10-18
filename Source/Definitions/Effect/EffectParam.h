@@ -39,10 +39,14 @@ class EffectParam:
     TargetParameter* paramType;
     FloatParameter* curveSize;
     FloatParameter* baseValue;
+    FloatParameter* speedShift;
+    BoolParameter* randomizeSpeedShift;
+    BoolParameter* randomizeOffset;
 
     HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets;
     HashMap<SubFixtureChannel*, bool> subFixtureChannelAreWinged;
     HashMap<SubFixtureChannel*, bool> subFixtureChannelAreCentered;
+    HashMap<SubFixtureChannel*, double> subFixtureSpeeds;
 
     Effect* parentEffect = nullptr;
     EffectRow* parentEffectRow = nullptr;

@@ -14,6 +14,7 @@
 #include "../SubFixture/SubFixture.h"
 #include "../SubFixture/SubFixtureChannel.h"
 #include "Effect.h"
+#include "Brain.h"
 
 EffectRow::EffectRow(var params) :
     BaseItem(params.getProperty("name", "EffectRow")),
@@ -124,6 +125,7 @@ void EffectRow::computeData() {
             p->subFixtureChannelOffsets.clear();
             p->subFixtureChannelAreWinged.clear();
             p->subFixtureChannelAreCentered.clear();
+            p->subFixtureSpeeds.clear();
             ChannelType* chanType = dynamic_cast<ChannelType*>(p->paramType->targetContainer.get());
             if (chanType != nullptr) {
                 Array<SubFixtureChannel*> chans;
@@ -143,7 +145,9 @@ void EffectRow::computeData() {
                 int roundedWingSize = round(wingSize);
                 roundedWingSize = jmax(1, roundedWingSize);
                 int flooredWingSize = floor(wingSize);
-
+                float masSpeed = 1+p->speedShift->floatValue();
+                bool randomizeSpeedShift = p->randomizeSpeedShift->boolValue();
+                bool randomizeOffset = p->randomizeOffset->boolValue();
 
                 for (int chanIndex = 0; chanIndex < chans.size(); chanIndex++) {
                     int realIndex = chanIndex/nBuddying;
@@ -189,14 +193,27 @@ void EffectRow::computeData() {
 
                     offset *= (double)p->elementsSpread->getValue();
                     offset += (double)p->elementsStart->getValue();
+
                     if (p->wingsInvertSelections->boolValue()) {
                         offset = 1 - offset;
+                    }
+
+                    if (randomizeOffset) {
+                        double x = sin(offset * 127.1) * 43758.5453;
+                        offset = x - floor(x);
+                    }
+
+                    double speedOffset = offset;
+                    if (randomizeSpeedShift) {
+                        double x = sin(offset * 789.4) * 16845.1675;
+                        speedOffset = x - floor(x);
                     }
 
                     maxOffset = jmax(maxOffset, offset);
                     p->subFixtureChannelOffsets.set(chans[chanIndex], -offset);
                     p->subFixtureChannelAreWinged.set(chans[chanIndex], isWinged);
                     p->subFixtureChannelAreCentered.set(chans[chanIndex], isCentered);
+                    p->subFixtureSpeeds.set(chans[chanIndex], jmap(speedOffset, 0., 1., 1., (double)masSpeed));
                     if (!parentEffect->chanToFxParam.contains(chans[chanIndex])) {
                         parentEffect->chanToFxParam.set(chans[chanIndex], std::make_shared<Array<EffectParam*>>());
                     }

@@ -324,7 +324,7 @@ float Carousel::applyToChannel(SubFixtureChannel* fc, float currentVal, double n
 	for (int rId = 0; rId < activeRows->size(); rId++) {
 		CarouselRow * r = activeRows->getReference(rId);
 		r->checkParentCarousel();
-		double offset = totalElapsed;
+		double offset = totalElapsed * r->subFixtureSpeeds.getReference(fc);
 		offset += r->subFixtureChannelOffsets.getReference(fc);
 		while (offset < 0) {
 			offset += 1;

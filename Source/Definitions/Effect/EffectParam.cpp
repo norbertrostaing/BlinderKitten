@@ -34,6 +34,9 @@ EffectParam::EffectParam(var params) :
     effectMode->addOption("Absolute", "absolute");
     effectMode->addOption("Attracted", "attracted");
 
+    curveSize = addFloatParameter("Size", "Size of the effect applied to outputs", 1, -2, 2);
+    baseValue = addFloatParameter("Base Value", "Base value applied to channels", 0, 0, 1);
+
     elementsStart = addFloatParameter("First Element position", "Position of the first element, relative to the curve", 0, 0, 1);
     elementsSpread = addFloatParameter("Elements Spread", "Size of distribution", 1, 0);
 
@@ -44,8 +47,9 @@ EffectParam::EffectParam(var params) :
     wingsInvertValues = addBoolParameter("Invert wings value", "Values on wings are inverted", false);
     wingsSoloCenterDisable = addBoolParameter("Disable wings centered solo value", "Disable value for fixtures on the symetry axis", false);
 
-    curveSize = addFloatParameter("Size", "Size of the effect applied to outputs",1,-2,2);
-    baseValue = addFloatParameter("Base Value","Base value applied to channels",0,0,1);
+    speedShift = addFloatParameter("Speed shift", "Speed difference of last item, interpolated value",0);
+    randomizeSpeedShift = addBoolParameter("Randomize speed shift", "randomize the speed difference of items", false);
+    randomizeOffset = addBoolParameter("Randomize offsets", "Randomize start position of fixtures", false);
     updateDisplay();
 };
 

@@ -330,7 +330,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 
 		bool isPerlin = row->curvePresetOrValue->getValue().toString() == "perlin";
 
-		double offset = totalElapsed*(double)row->speed->getValue();
+		double offset = totalElapsed*(double)row->speed->getValue()*p->subFixtureSpeeds.getReference(fc);
 		double deltaOffset = p->subFixtureChannelOffsets.getReference(fc);
 		if (!noLoop->boolValue() || row->direction->getValueData() == "bounce") {
 			while (offset < 0) {

@@ -15,6 +15,7 @@
 #include "../SubFixture/SubFixtureChannel.h"
 #include "../ChannelValue.h"
 #include "Carousel.h"
+#include "Brain.h"
 
 CarouselRow::CarouselRow(var params) :
     BaseItem(params.getProperty("name", "CarouselRow")),
@@ -35,6 +36,9 @@ CarouselRow::CarouselRow(var params) :
     wings = addIntParameter("Wings", "A wing repeat the effect but inversed", 1, 1);
     wingsInvertSelections = addBoolParameter("Invert wings selection", "Selection are reversed in wings", false);
 
+    speedShift = addFloatParameter("Speed shift", "Speed difference of last item, interpolated value", 0);
+    randomizeSpeedShift = addBoolParameter("Randomize speed shift", "randomize the speed difference of items", false);
+    randomizeOffset = addBoolParameter("Randomize offsets", "Randomize start position of fixtures", false);
 
     addChildControllableContainer(&selection);
     addChildControllableContainer(&paramContainer);
@@ -75,9 +79,12 @@ void CarouselRow::computeData() {
 
     HashMap<SubFixture*, double> computedPositions_temp;
     HashMap<SubFixtureChannel*, double> subFixtureChannelOffsets_temp;
+    HashMap<SubFixtureChannel*, double> subFixtureSpeeds_temp;
+
 
     computedPositions.clear();
     subFixtureChannelOffsets.clear();
+    subFixtureSpeeds.clear();
     if (!enabled->boolValue()) {
         return;
     }
@@ -130,6 +137,10 @@ void CarouselRow::computeData() {
     int roundedWingSize = round(wingSize);
     roundedWingSize = jmax(1, roundedWingSize);
     // int flooredWingSize = floor(wingSize);
+
+    float masSpeed = 1 + speedShift->floatValue();
+    bool rndSpeedShift = randomizeSpeedShift->boolValue();
+    bool rndOffset = randomizeOffset->boolValue();
 
     //Array<SubFixtureChannel*> targetChannels;
     HashMap<SubFixtureChannel*, bool> targetChannels;
@@ -221,10 +232,22 @@ void CarouselRow::computeData() {
                     }
                 }
 
+                if (rndOffset) {
+                    double x = sin(offset * 127.1) * 43758.5453;
+                    offset = x - floor(x);
+                }
+
+                double speedOffset = offset;
+                if (rndSpeedShift) {
+                    double x = sin(offset * 789.4) * 16845.1675;
+                    speedOffset = x - floor(x);
+                }
+
                 offset *= (double)elementsSpread->getValue();
                 offset += (double)elementsStart->getValue();
                 // //LOG(offset);
                 subFixtureChannelOffsets_temp.set(chan, -offset);
+                subFixtureSpeeds_temp.set(chan, jmap(speedOffset, 0., 1., 1., (double)masSpeed));
             }
             
         }
@@ -250,6 +273,7 @@ void CarouselRow::computeData() {
     isComputing.enter();
     computedPositions_temp.swapWith(computedPositions);
     subFixtureChannelOffsets_temp.swapWith(subFixtureChannelOffsets);
+    subFixtureSpeeds_temp.swapWith(subFixtureSpeeds);
     isComputing.exit();
 }
 

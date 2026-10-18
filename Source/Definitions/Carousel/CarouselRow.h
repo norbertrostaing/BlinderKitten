@@ -32,19 +32,17 @@ class CarouselRow:
     IntParameter* blocks;
     IntParameter* buddying;
     BoolParameter* wingsInvertSelections;
-    // EnumParameter* curvePresetOrValue;
-    // Automation curve;
-    // FloatParameter* curveOrigin;
-    // IntParameter* presetId;
-    // FloatParameter* chaserFade;
-    // IntParameter* chaserBuddying;
-    // FloatParameter* speed;
+
+    FloatParameter* speedShift;
+    BoolParameter* randomizeSpeedShift;
+    BoolParameter* randomizeOffset;
 
     CommandSelectionManager selection;
 
     CriticalSection isComputing;
     HashMap<SubFixture*, double> computedPositions;
     HashMap<SubFixtureChannel*,double> subFixtureChannelOffsets;
+    HashMap<SubFixtureChannel*, double> subFixtureSpeeds;
     float totalDuration = 0;
 
     Carousel* parentCarousel = nullptr;
