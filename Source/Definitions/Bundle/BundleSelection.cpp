@@ -26,6 +26,7 @@ BundleSelection::BundleSelection(var params) :
     targetType->addOption("Carousel", "carousel");
     targetType->addOption("Mapper", "mapper");
     targetType->addOption("Tracker", "tracker");
+    targetType->addOption("Solo pool", "solopool");
 
     valueFrom = addIntParameter("ID", "ID of the first element",0,0);
     thru = addBoolParameter("Thru", "Do you want to add multiple elements ?", false);

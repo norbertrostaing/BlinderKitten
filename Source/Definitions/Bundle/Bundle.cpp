@@ -105,7 +105,26 @@ void Bundle::computeValues() {
 		}
 
 		String type = s->targetType->getValueData();
-
+		if (type == "solopool") {
+			for (Cuelist* elmt : Brain::getInstance()->cuelists) {
+				if (elmt->soloPool->intValue() >= from && elmt->soloPool->intValue() <= to) {
+					if (add) computedCuelists.addIfNotAlreadyThere(elmt);
+					else computedCuelists.removeAllInstancesOf(elmt);
+				}
+			}
+			for (Effect* elmt : Brain::getInstance()->effects) {
+				if (elmt->soloPool->intValue() >= from && elmt->soloPool->intValue() <= to) {
+					if (add) computedEffects.addIfNotAlreadyThere(elmt);
+					else computedEffects.removeAllInstancesOf(elmt);
+				}
+			}
+			for (Carousel* elmt : Brain::getInstance()->carousels) {
+				if (elmt->soloPool->intValue() >= from && elmt->soloPool->intValue() <= to) {
+					if (add) computedCarousels.addIfNotAlreadyThere(elmt);
+					else computedCarousels.removeAllInstancesOf(elmt);
+				}
+			}
+		}
 		for (int i = from; i <= to; i += 1) {
 			if (type == "cuelist") {
 				Cuelist* elmt = Brain::getInstance()->getCuelistById(i);
