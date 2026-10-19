@@ -157,8 +157,24 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Fade", &BundleAction::create)->addParam("actionType", BundleAction::BUN_FADE));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Fade Fixed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_FADE_FIXED));
 
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Start", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_START));
     defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Stop", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_STOP));
     defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Random", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_RANDOM));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Stop Instant", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_STOP_INSTANT));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Size", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Set Size", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_SET_SIZE));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Tap Tempo", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_TAPTEMPO));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Speed", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Set Speed", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_SET_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Double Speed", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_DOUBLESPEED));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Half Speed", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_HALFSPEED));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Flash", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_FLASH));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Swop", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_SWOP));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Timed Flash", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_TIMED_FLASH));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Timed Swop", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_TIMED_SWOP));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Set Fade", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_FADE));
+    defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Set Fade Fixed", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_FADE_FIXED));
+
 
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SET));
     defs.add(Factory<Action>::Definition::createDef("Multiplicator", "Set Mult Static Value", &MultiplicatorAction::create)->addParam("actionType", MultiplicatorAction::MULT_SETAT));

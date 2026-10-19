@@ -235,6 +235,8 @@ public:
 
     void loadRunningCuelistsInProgrammer();
     void loadRunningCuelistsInProgrammer(Programmer* p);
+    
+    void getSoloPoolItems(int poolId, Array<Cuelist*>& cuelists, Array<Effect*>& effects, Array<Carousel*> &carousels, Array<Stamp*> &stamps);
 
     void soloPoolCuelistStarted(int poolId, Cuelist* c);
     void soloPoolEffectStarted(int poolId, Effect* c);
@@ -242,7 +244,25 @@ public:
     void soloPoolCarouselStarted(int poolId, Carousel* c);
     void soloPoolCheck(int poolId, String excludeType, int excludeId);
     void soloPoolRandom(int poolId);
-    void soloPoolStop(int poolId);
+    void soloPoolStart(int poolId, float forcedFade = -1);
+    void soloPoolStop(int poolId, float forcedFade = -1);
+
+    HashMap<int, String> lastSoloPoolItemType;
+    HashMap<int, int> lastSoloPoolItemId;
+
+    void soloPoolTapTempo(int poolId);
+    void soloPoolSetSize(int poolId, float val, bool size, bool HTP, bool LTP, bool flash);
+    void soloPoolSetSpeed(int poolId, float val, bool tapTempoDivide = false);
+    void soloPoolSetSizeRel(int poolId, float val, bool size, bool HTP, bool LTP, bool flash);
+    void soloPoolSetSpeedRel(int poolId, float val, bool tapTempoDivide = false);
+    void soloPoolSpeedMult(int poolId, float mult);
+
+    void soloPoolSetFadeIn(int poolId, float val);
+    void soloPoolSetFadeOut(int poolId, float val);
+
+    void soloPoolFlash(int poolId, bool on, bool timing, bool swop = false);
+
+
 
     void replaceFixtureIdEverywhere(int from, int to);
     void replaceGroupIdEverywhere(int from, int to);

@@ -1936,21 +1936,29 @@ void Brain::loadRunningCuelistsInProgrammer(Programmer* p)
 
 void Brain::soloPoolCuelistStarted(int poolId, Cuelist* c)
 {
+    lastSoloPoolItemId.set(poolId, c->id->intValue());
+    lastSoloPoolItemType.set(poolId, "Cuelist");
     soloPoolCheck(poolId, "Cuelist", c->id->intValue());
 }
 
 void Brain::soloPoolEffectStarted(int poolId, Effect* c)
 {
+    lastSoloPoolItemId.set(poolId, c->id->intValue());
+    lastSoloPoolItemType.set(poolId, "Effect");
     soloPoolCheck(poolId, "Effect", c->id->intValue());
 }
 
 void Brain::soloPoolStampStarted(int poolId, Stamp* c)
 {
+    lastSoloPoolItemId.set(poolId, c->id->intValue());
+    lastSoloPoolItemType.set(poolId, "Stamp");
     soloPoolCheck(poolId, "Stamp", c->id->intValue());
 }
 
 void Brain::soloPoolCarouselStarted(int poolId, Carousel* c)
 {
+    lastSoloPoolItemId.set(poolId, c->id->intValue());
+    lastSoloPoolItemType.set(poolId, "Carousel");
     soloPoolCheck(poolId, "Carousel", c->id->intValue());
 }
 
@@ -2054,47 +2062,291 @@ void Brain::soloPoolRandom(int poolId)
     else if (type == "carousel") { Brain::getCarouselById(id)->start(); }
 }
 
-void Brain::soloPoolStop(int poolId)
+void Brain::soloPoolStart(int poolId, float forcedFade)
 {
     if (poolId == 0) return;
+    if (!lastSoloPoolItemType.contains(poolId)) return;
+    String type = lastSoloPoolItemType.getReference(poolId);
+    int id = lastSoloPoolItemId.getReference(poolId);
+    if (type == "Cuelist") {
+        Cuelist* item = getCuelistById(id);
+        if (item != nullptr) item->go(-1, forcedFade);
+    }
+    else if (type == "Effect") {
+        Effect* item = getEffectById(id);
+        if (item != nullptr) item->start(forcedFade);
+    }
+    else if (type == "Carousel") {
+        Carousel* item = getCarouselById(id);
+        if (item != nullptr) item->start(forcedFade);
+    }
+    else if (type == "Stamp") {
+        Stamp* item = getStampById(id);
+        if (item != nullptr) item->start(forcedFade);
+    }
 
-    Array<Cuelist*> offCuelists;
-    Array<Effect*> offEffects;
-    Array<Stamp*> offStamps;
-    Array<Carousel*> offCarousels;
+}
 
+void Brain::getSoloPoolItems(int poolId, Array<Cuelist*> &spCuelists, Array<Effect*> &spEffects, Array<Carousel*> &spCarousels, Array<Stamp*> &spStamps) {
     usingLibraries.enter();
     for (auto it = cuelists.begin(); it != cuelists.end(); it.next()) {
         Cuelist* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isCuelistOn->boolValue()) {
-            offCuelists.add(c);
+            spCuelists.add(c);
         }
     }
     for (auto it = effects.begin(); it != effects.end(); it.next()) {
         Effect* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isEffectOn->boolValue()) {
-            offEffects.add(c);
+            spEffects.add(c);
         }
     }
     for (auto it = stamps.begin(); it != stamps.end(); it.next()) {
         Stamp* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isStampOn->boolValue()) {
-            offStamps.add(c);
+            spStamps.add(c);
         }
     }
     for (auto it = carousels.begin(); it != carousels.end(); it.next()) {
         Carousel* c = it.getValue();
         if (c->soloPool->intValue() == poolId && c->isCarouselOn->boolValue()) {
-            offCarousels.add(c);
+            spCarousels.add(c);
         }
     }
 
     usingLibraries.exit();
-    for (Cuelist* c : offCuelists) c->off();
-    for (Effect* c : offEffects) c->stop();
-    for (Stamp* c : offStamps) c->stop();
-    for (Carousel* c : offCarousels) c->stop();
 
+}
+
+void Brain::soloPoolStop(int poolId, float forcedFade)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) c->off();
+    for (Effect* c : spEffects) c->stop();
+    for (Stamp* c : spStamps) c->stop();
+    for (Carousel* c : spCarousels) c->stop();
+
+
+}
+
+void Brain::soloPoolTapTempo(int poolId)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) c->tapTempo();
+    for (Effect* c : spEffects) c->tapTempo();
+    for (Carousel* c : spCarousels) c->tapTempo();
+
+}
+
+void Brain::soloPoolSetSize(int poolId, float val, bool size, bool HTP, bool LTP, bool flash)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) {
+        if (HTP) c->HTPLevel->setValue(val);
+        if (LTP) c->LTPLevel->setValue(val);
+        if (flash) c->flashLevel->setValue(val);
+    }
+    for (Effect* c : spEffects) {
+        if (size) c->sizeValue->setValue(val);
+        if (flash) c->flashValue->setValue(val);
+    }
+    for (Carousel* c : spCarousels) {
+        if (size) c->sizeValue->setValue(val);
+        if (flash) c->flashValue->setValue(val);
+    }
+    for (Stamp* c : spStamps) {
+        if (size) c->sizeValue->setValue(val);
+    }
+
+    virtualFadersNeedUpdate = true;
+}
+
+void Brain::soloPoolSetSpeed(int poolId, float val, bool tapTempoDivide)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) {
+        double mult = 1;
+        if (tapTempoDivide) mult = c->chaserStepPerTap->floatValue();
+        c->chaserSpeed->setValue(val * mult);
+    }
+    for (Effect* c : spEffects) {
+        double mult = 1;
+        if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+        c->speed->setValue(val * mult);
+    }
+    for (Carousel* c : spCarousels) {
+        double mult = 1;
+        if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+        c->speed->setValue(val * mult);
+    }
+
+    virtualFadersNeedUpdate = true;
+
+}
+
+void Brain::soloPoolSetSizeRel(int poolId, float val, bool size, bool HTP, bool LTP, bool flash)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) {
+        if (HTP) c->HTPLevel->setValue(c->HTPLevel->floatValue() + val);
+        if (LTP) c->LTPLevel->setValue(c->LTPLevel->floatValue() + val);
+        if (flash) c->flashLevel->setValue(c->flashLevel->floatValue() + val);
+    }
+    for (Effect* c : spEffects) {
+        if (size) c->sizeValue->setValue(c->sizeValue->floatValue() + val);
+        if (flash) c->flashValue->setValue(c->flashValue->floatValue() + val);
+    }
+    for (Carousel* c : spCarousels) {
+        if (size) c->sizeValue->setValue(c->sizeValue->floatValue() + val);
+        if (flash) c->flashValue->setValue(c->flashValue->floatValue() + val);
+    }
+    for (Stamp* c : spStamps) {
+        if (size) c->sizeValue->setValue(c->sizeValue->floatValue() + val);
+    }
+}
+
+void Brain::soloPoolSetSpeedRel(int poolId, float val, bool tapTempoDivide)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) {
+        double mult = 1;
+        if (tapTempoDivide) mult = c->chaserStepPerTap->floatValue();
+        c->chaserSpeed->setValue(c->chaserSpeed->floatValue() + (val * mult));
+    }
+    for (Effect* c : spEffects) {
+        double mult = 1;
+        if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+        c->speed->setValue(c->speed->floatValue() + (val * mult));
+    }
+    for (Carousel* c : spCarousels) {
+        double mult = 1;
+        if (tapTempoDivide) mult = 1.0 / c->beatPerCycle->floatValue();
+        c->speed->setValue(c->speed->floatValue() + (val * mult));
+    }
+
+
+}
+
+void Brain::soloPoolSpeedMult(int poolId, float mult)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) c->chaserSpeed->setValue(c->chaserSpeed->floatValue() * mult);
+    for (Effect* c : spEffects) c->speed->setValue(c->speed->floatValue() * mult);
+    for (Carousel* c : spCarousels) c->speed->setValue(c->speed->floatValue() * mult);
+
+}
+
+void Brain::soloPoolSetFadeIn(int poolId, float val)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Effect* c : spEffects) c->fadeInTime->setValue(val);
+    for (Carousel* c : spCarousels) c->fadeInTime->setValue(val);
+
+}
+
+void Brain::soloPoolSetFadeOut(int poolId, float val)
+{
+    if (poolId == 0) return;
+
+    Array<Cuelist*> spCuelists;
+    Array<Effect*> spEffects;
+    Array<Stamp*> spStamps;
+    Array<Carousel*> spCarousels;
+
+    getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
+
+    for (Cuelist* c : spCuelists) c->offFade->setValue(val);
+    for (Effect* c : spEffects) c->fadeOutTime->setValue(val);
+    for (Carousel* c : spCarousels) c->fadeOutTime->setValue(val);
+
+}
+
+void Brain::soloPoolFlash(int poolId, bool on, bool timing, bool swop)
+{
+    if (poolId == 0) return;
+    if (!lastSoloPoolItemType.contains(poolId)) return;
+    String type = lastSoloPoolItemType.getReference(poolId);
+    int id = lastSoloPoolItemId.getReference(poolId);
+    if (type == "Cuelist") {
+        Cuelist* item = getCuelistById(id);
+        if (item != nullptr) item->flash(on, timing, swop);
+    }
+    else if (type == "Effect") {
+        Effect* item = getEffectById(id);
+        if (item != nullptr) item->flash(on, timing);
+    }
+    else if (type == "Carousel") {
+        Carousel* item = getCarouselById(id);
+        if (item != nullptr) item->flash(on, timing);
+    }
+    else if (type == "Stamp") {
+        Stamp* item = getStampById(id);
+        if (item != nullptr) item->flash(on, timing);
+    }
 
 }
 
