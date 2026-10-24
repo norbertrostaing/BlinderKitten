@@ -15,7 +15,7 @@ namespace BinaryData
     const int            crash_pngSize = 144198;
 
     extern const char*   default_blinderlayout;
-    const int            default_blinderlayoutSize = 5903;
+    const int            default_blinderlayoutSize = 5694;
 
     extern const char*   icon_png;
     const int            icon_pngSize = 90807;
@@ -24,7 +24,7 @@ namespace BinaryData
     const int            newFileContent_olgaSize = 42162;
 
     extern const char*   newFileDefaultContent_mochi;
-    const int            newFileDefaultContent_mochiSize = 103278;
+    const int            newFileDefaultContent_mochiSize = 99513;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 6;

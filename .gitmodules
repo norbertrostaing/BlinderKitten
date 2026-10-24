@@ -4,3 +4,6 @@
 [submodule "Modules/juce_simpleweb"]
 	path = Modules/juce_simpleweb
 	url = http://github.com/benkuper/juce_simpleweb
+[submodule "JUCE"]
+	path = JUCE
+	url = https://github.com/benkuper/JUCE
