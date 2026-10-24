@@ -36,6 +36,8 @@
 #include "Definitions/Actions/InputPanelAction.h"
 #include "Definitions/Effect/EffectManager.h"
 #include "Definitions/Carousel/CarouselManager.h"
+#include "UI/VirtualFaders/VirtualFaderColManager.h"
+#include "UI/VirtualFaders/VirtualFaderColGrid.h"
 
 juce_ImplementSingleton(Assistant)
 
@@ -771,6 +773,22 @@ void Assistant::importAscii()
     LOG("importing your ascii... please wait :)");
 
     bool useTracking = asciiTracking->boolValue();
+    const bool isDLightAscii = content.containsIgnoreCase("CONSOLE DLIGHT");
+
+    int asciiSequenceId = 0;
+    bool asciiSequenceCue = false;
+    HashMap<int, Cuelist*> asciiSequenceCuelists;
+
+    struct DLightMasterLink {
+        Cue* cue = nullptr;
+        int sequenceId = 0;
+        int subId = 0;
+        int loop = 0;
+        float target = 0;
+        float timeIn = 0;
+        float timeOut = 0;
+    };
+    Array<DLightMasterLink> pendingMasterLinks;
 
     Array<DMXInterface*> universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
     Cuelist* cuelist = nullptr;
@@ -803,6 +821,45 @@ void Assistant::importAscii()
     Preset* currentPreset = nullptr;
     Cuelist* currentSub = nullptr;
     Cue* currentSubCue = nullptr;
+    int currentEosSubId = 0;
+    String currentEosSubName;
+    HashMap<int, Command*> eosSubParamCommands;
+    Array<int> eosSubIntensityFixtures;
+    Array<int> eosSubCategoryFilter;
+    Array<int> eosSubParameterFilter;
+    bool eosSubHasCategoryFilter = false;
+    bool eosSubHasParameterFilter = false;
+    int importedEosSubs = 0;
+    HashMap<int, Cuelist*> subCuelistsForFaders;
+    HashMap<int, Cuelist*> dlightGroupCuelists;
+    Array<int> dlightMasterGroupIds;
+    int currentDLightGroupId = 0;
+    Cue* currentDLightGroupCue = nullptr;
+
+    struct DLightMasterPageItem {
+        int subId = 0;
+        int type = 0;
+        int contentId = 0;
+    };
+    Array<DLightMasterPageItem> dlightMasterPageItems;
+
+    if (isDLightAscii && asciiSubs->boolValue()) {
+        for (String itemLine : lines) {
+            StringArray itemWords = StringArray::fromTokens(itemLine.trim().toUpperCase(), " \t", "");
+            if (itemWords.size() < 5 || itemWords[0] != "$MASTPAGEITEM") continue;
+
+            DLightMasterPageItem item;
+            item.subId = itemWords[2].getIntValue();
+            item.type = itemWords[3].getIntValue();
+            item.contentId = itemWords[4].getIntValue();
+            if (item.subId <= 0 || item.contentId <= 0) continue;
+
+            dlightMasterPageItems.add(item);
+            if (item.type == 2) dlightMasterGroupIds.addIfNotAlreadyThere(item.contentId);
+        }
+    }
+
+    HashMap<int, int> eosParamCategories;
     FixtureType* currentFixtureType = nullptr;
     Fixture* currentFixture = nullptr;
 
@@ -1344,13 +1401,34 @@ void Assistant::importAscii()
                 currentSecondary = words[0];
                 // ajouter ici une verif si l'objet d'avant est clean (subs, groupes)
             }
-            else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB")
+            else if (isDLightAscii && words[0] == "$SEQUENCE" && words.size() > 1)
             {
-                currentPrimary = words[0];
-                currentSecondary = words[0];
+                storeCurrentEffects();
+                asciiSequenceId = words[1].getIntValue();
+                asciiSequenceCue = false;
+                currentCue = nullptr;
+                previousCue = nullptr;
+                currentPrimary = "$SEQUENCE";
+                currentSecondary = "$SEQUENCE";
+            }
+            else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB" || words[0] == "$SUB")
+            {
+                currentPrimary = (words[0] == "$SUB") ? "SUB" : words[0];
+                currentSecondary = currentPrimary;
+                if (words[0] == "CUE")
+                    asciiSequenceCue = asciiSequenceId > 0;
+                else {
+                    asciiSequenceCue = false;
+                    asciiSequenceId = 0;
+                }
             }
             else if (words[0] == "$CUE")
             {
+                // Unlike CUE, the first argument of $CUE is the sequence ID.
+                if (isDLightAscii && words.size() > 2) {
+                    asciiSequenceId = words[1].getIntValue();
+                }
+                asciiSequenceCue = isDLightAscii && asciiSequenceId > 0 && words.size() > 2;
                 currentPrimary = "CUE";
                 currentSecondary = "CUE";
             }
@@ -1392,6 +1470,7 @@ void Assistant::importAscii()
                     channelType->setNiceName(ctName);
                 }
                 idToChannelType.set(words[1].getIntValue(), channelType);
+                eosParamCategories.set(words[1].getIntValue(), words[2].getIntValue());
 
             }
             else if (words[0] == "$PATCH") {
@@ -1492,16 +1571,174 @@ void Assistant::importAscii()
             {
                 currentSecondary = words[0];
             }
+            else if (isDLightAscii && words[0] == "$MASTERLINK" && currentPrimary == "CUE")
+            {
+                currentSecondary = "$MASTERLINK";
+            }
             else if (words[0].startsWith("$"))
             {
                 currentPrimary = words[0];
                 currentSecondary = words[0];
+                asciiSequenceId = 0;
+                asciiSequenceCue = false;
             }
             else {
                 currentSecondary = "";
             }
 
-            if (currentPrimary == "PATCH" && currentSecondary == "PATCH" && asciiPatch->boolValue()) {
+            // D::Light chasers are separate cuelists, created at their header.
+            if (isDLightAscii && asciiCues->boolValue() && asciiSequenceId > 0 &&
+                (words[0] == "$SEQUENCE" || words[0] == "$CUE" || words[0] == "CUE") &&
+                !asciiSequenceCuelists.contains(asciiSequenceId)) {
+                Cuelist* sequence = CuelistManager::getInstance()->addItem();
+                sequence->userName->setValue("ASCII Sequence " + String(asciiSequenceId));
+                sequence->kill();
+                sequence->cues.clear();
+                sequence->isChaser->setValue(true);
+                sequence->tracking->setValueWithData("none");
+                sequence->endAction->setValueWithData("loop");
+                sequence->HTPLevel->setValue(0);
+                sequence->LTPLevel->setValue(0);
+                sequence->autoStart->setValue(true);
+                sequence->autoStop->setValue(true);
+                asciiSequenceCuelists.set(asciiSequenceId, sequence);
+            }
+
+            Cue* valueCue = nullptr;
+            bool isEosSub = currentPrimary == "SUB" && asciiSubs->boolValue();
+            bool isDLightGroup = isDLightAscii && currentPrimary == "GROUP" && currentDLightGroupCue != nullptr;
+            if (isEosSub) {
+                valueCue = currentSubCue;
+            }
+            else if (isDLightGroup) {
+                valueCue = currentDLightGroupCue;
+            }
+            else if (currentPrimary == "CUE" && asciiCues->boolValue()) {
+                valueCue = currentCue;
+            }
+
+            if (valueCue != nullptr && (currentSecondary == "UP" || currentSecondary == "DOWN")) {
+                if (words.size() > 1) {
+                    bool isUp = currentSecondary == "UP";
+                    float fade = words[1].getFloatValue();
+                    if (isEosSub) fade = jmax(0.0f, fade);
+                    if (isUp) {
+                        valueCue->htpInFade->setValue(fade);
+                        valueCue->ltpFade->setValue(fade);
+                    }
+                    else {
+                        valueCue->htpOutFade->setValue(fade);
+                    }
+                    if (words.size() > 2) {
+                        float delay = words[2].getFloatValue();
+                        if (isEosSub) delay = jmax(0.0f, delay);
+                        if (isUp) {
+                            valueCue->htpInDelay->setValue(delay);
+                            valueCue->ltpDelay->setValue(delay);
+                        }
+                        else {
+                            valueCue->htpOutDelay->setValue(delay);
+                        }
+                    }
+                }
+            }
+            else if (valueCue != nullptr && currentSecondary == "CHAN") {
+                bool allowed = true;
+                if (isEosSub) {
+                    if (eosSubHasParameterFilter && !eosSubParameterFilter.contains(1)) allowed = false;
+                    if (eosSubHasCategoryFilter &&
+                        (!eosParamCategories.contains(1) ||
+                            !eosSubCategoryFilter.contains(eosParamCategories.getReference(1)))) allowed = false;
+                }
+                if (allowed) {
+                    for (int j = 1; j + 1 < words.size(); j += 2) {
+                        int fixtureId = words[j].getIntValue();
+                        float level = asciiLevelToFloat(words[j + 1]);
+                        float previous = fixtureToCurrentValue.contains(fixtureId)
+                            ? fixtureToCurrentValue.getReference(fixtureId) : 0.0f;
+                        if (!isEosSub && !isDLightGroup && !asciiSequenceCue &&
+                            !((!useTracking && level > 0) || (useTracking && previous != level))) continue;
+
+                        Command* command = valueCue->commands.addItem();
+                        command->selection.items[0]->valueFrom->setValue(fixtureId);
+                        command->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
+                        command->values.items[0]->valueFrom->setValue(level);
+                        if (isEosSub) {
+                            eosSubIntensityFixtures.addIfNotAlreadyThere(fixtureId);
+                        }
+                        else if (!isDLightGroup && !asciiSequenceCue) {
+                            fixtureToCurrentValue.set(fixtureId, level);
+                        }
+                    }
+                }
+            }
+            else if (valueCue != nullptr && currentSecondary == "$$PARAM" && words.size() >= 4) {
+                int fixtureId = words[1].getIntValue();
+                Fixture* fixture = Brain::getInstance()->getFixtureById(fixtureId);
+                if (fixture != nullptr || isEosSub) {
+                    Command* command = nullptr;
+                    if (isEosSub && eosSubParamCommands.contains(fixtureId)) {
+                        command = eosSubParamCommands.getReference(fixtureId);
+                    }
+                    for (int j = 2; j + 1 < words.size(); j += 2) {
+                        int paramId = words[j].getIntValue();
+                        if (isEosSub) {
+                            if (eosSubHasParameterFilter && !eosSubParameterFilter.contains(paramId)) continue;
+                            if (eosSubHasCategoryFilter &&
+                                (!eosParamCategories.contains(paramId) ||
+                                    !eosSubCategoryFilter.contains(eosParamCategories.getReference(paramId)))) continue;
+                            if (paramId == 1 && eosSubIntensityFixtures.contains(fixtureId)) continue;
+                        }
+                        if (!idToChannelType.contains(paramId)) {
+                            LOG("ASCII: unknown Eos parameter " << paramId);
+                            continue;
+                        }
+                        if (command == nullptr) {
+                            command = valueCue->commands.addItem();
+                            command->selection.items[0]->valueFrom->setValue(fixtureId);
+                            command->values.clear();
+                            command->editorIsCollapsed = true;
+                            if (isEosSub) eosSubParamCommands.set(fixtureId, command);
+                        }
+                        CommandValue* value = command->values.addItem();
+                        ChannelType* param = idToChannelType.getReference(paramId);
+                        value->channelType->setValueFromTarget(param);
+                        String rawValue = words[j + 1];
+                        String prefix = rawValue.substring(0, 2);
+                        if (prefix == "IP" || prefix == "FP" || prefix == "CP" ||
+                            prefix == "BP" || prefix == "PR") {
+                            value->presetOrValue->setValueWithData("preset");
+                            if (!idToPreset.contains(rawValue)) {
+                                Preset* preset = PresetManager::getInstance()->addItem();
+                                preset->userName->setValue(rawValue);
+                                idToPreset.set(rawValue, preset);
+                            }
+                            value->presetIdFrom->setValue(idToPreset.getReference(rawValue)->id->intValue());
+                        }
+                        else {
+                            if (rawValue.contains("#")) {
+                                rawValue = rawValue.fromLastOccurrenceOf("#", false, false);
+                            }
+                            float divisor = 255.0f;
+                            if (fixture != nullptr && fixture->subFixtures.contains(0)) {
+                                SubFixture* sf = fixture->subFixtures.getReference(0);
+                                if (sf != nullptr && sf->channelsMap.contains(param)) {
+                                    SubFixtureChannel* channel = sf->channelsMap.getReference(param);
+                                    if (channel != nullptr && channel->resolution == "16bits") divisor = 65535.0f;
+                                }
+                            }
+                            float numeric = rawValue.getFloatValue();
+                            if (rawValue.startsWith("H")) {
+                                numeric = (float)rawValue.substring(1).getHexValue32();
+                                divisor = rawValue.length() > 3 ? 65535.0f : 255.0f;
+                            }
+                            float level = numeric / divisor;
+                            value->valueFrom->setValue(isEosSub ? jlimit(0.0f, 1.0f, level) : level);
+                        }
+                    }
+                }
+            }
+            else if (currentPrimary == "PATCH" && currentSecondary == "PATCH" && asciiPatch->boolValue()) {
                 for (int iWord = 2; iWord < words.size() - 2; iWord += 3) {
                     int channel = words[iWord].getIntValue();
                     int address = words[iWord + 1].getIntValue();
@@ -1530,16 +1767,64 @@ void Assistant::importAscii()
                     }
                 }
             }
+            else if (currentPrimary == "$SEQUENCE" && currentSecondary == "TEXT" && asciiCues->boolValue()) {
+                String description = originalLine.trim().substring(5).trim();
+                if (asciiSequenceId == 0 && cuelist != nullptr) {
+                    if (description.isNotEmpty()) cuelist->userName->setValue(description);
+                }
+                else if (asciiSequenceId > 0 && asciiSequenceCuelists.contains(asciiSequenceId)) {
+                    Cuelist* sequence = asciiSequenceCuelists.getReference(asciiSequenceId);
+                    if (description.isNotEmpty())
+                        sequence->userName->setValue("ASCII Sequence " + String(asciiSequenceId) + " - " + description);
+                }
+            }
             else if (currentPrimary == "CUE" && asciiCues->boolValue()) {
-                if (currentSecondary == "CUE") {
-                    if (words.size() == 1) {
-                        LOGERROR("invalid file, CUE word must have an id in parameter");
+                if (isDLightAscii && currentSecondary == "$MASTERLINK") {
+                    // D::Light type 3 = chaser, "content" = $SEQUENCE number.
+                    if (currentCue != nullptr && !asciiSequenceCue && words.size() >= 14) {
+                        const int masterType = words[4].getIntValue();
+                        if (masterType == 3 && words[5].getIntValue() > 0) {
+                            DLightMasterLink link;
+                            link.cue = currentCue;
+                            link.sequenceId = words[5].getIntValue();
+                            link.subId = words[3].getIntValue();
+                            link.loop = words[12].getIntValue();
+                            link.timeIn = jmax(0.0f, words[6].getFloatValue());
+                            link.timeOut = jmax(0.0f, words[8].getFloatValue());
+                            link.target = jlimit(0.0f, 1.0f, words[13].getFloatValue() / 100.0f);
+                            pendingMasterLinks.add(link);
+                        }
+                        else {
+                            LOG("ASCII: unsupported D::Light MasterLink type "
+                                << masterType << " for sub " << words[3]);
+                        }
+                    }
+                    else {
+                        LOGERROR("ASCII: incomplete $MASTERLINK or missing current cue");
+                    }
+                }
+                else if (currentSecondary == "CUE") {
+                    const bool isDollarCue = words[0] == "$CUE";
+                    const int numberIndex = (isDollarCue && isDLightAscii && words.size() > 2) ? 2 : 1;
+                    if (words.size() <= numberIndex) {
+                        LOGERROR("invalid ASCII CUE: missing cue number");
+                        currentCue = nullptr;
+                        continue;
                     }
                     storeCurrentEffects();
                     previousCue = currentCue;
-                    int cueId = words[1].getFloatValue() * 100000;
+                    const float cueNumber = words[numberIndex].getFloatValue();
+                    const int cueId = cueNumber * 100000;
 
-                    if (!asciiEraseCuelist->boolValue() && idToCue.contains(cueId)) {
+                    if (asciiSequenceCue) {
+                        Cuelist* sequence = asciiSequenceCuelists.getReference(asciiSequenceId);
+                        currentCue = sequence->cues.addItem();
+                        currentCue->id->setValue(cueNumber);
+                        currentCue->setNiceName("Cue " + words[numberIndex]);
+                        currentCue->commands.clear();
+                        currentCue->editorIsCollapsed = true;
+                    }
+                    else if (!asciiEraseCuelist->boolValue() && idToCue.contains(cueId)) {
                         currentCue = idToCue.getReference(cueId);
                         currentCue->commands.clear();
                     }
@@ -1547,21 +1832,27 @@ void Assistant::importAscii()
                         currentCue = new Cue();
                         cuesToAdd.add(currentCue);
                         currentCue->editorIsCollapsed = true;
-                        String cueName = "Cue " + words[1];
+                        String cueName = "Cue " + words[numberIndex];
                         currentCue->setNiceName(cueName);
                         currentCue->commands.clear();
                         if (asciiRespectCueNumbers->boolValue()) {
-                            currentCue->id->setValue(words[1].getFloatValue());
+                            currentCue->id->setValue(cueNumber);
                         }
                         idToCue.set(currentCue->id->floatValue() * 100000, currentCue);
                     }
                 }
                 else if (currentSecondary == "TEXT") {
-                    if (cuesToAdd.contains(currentCue)) {
+                    if (currentCue != nullptr && (asciiSequenceCue || cuesToAdd.contains(currentCue))) {
                         String text = currentCue->cueText->stringValue() + originalLine.trim().substring(5);
                         currentCue->cueText->setValue(text);
                         currentCue->goText->setValue(text);
                         currentCue->setNiceName(text);
+                    }
+                }
+                else if (currentSecondary == "$$HOLD") {
+                    // No autoFollow here: the chaser already schedules the next step.
+                    if (asciiSequenceCue && currentCue != nullptr && words.size() > 1 && words[1] != ".") {
+                        currentCue->autoFollowTiming->setValue(jmax(0.0f, words[1].getFloatValue()));
                     }
                 }
                 else if (currentSecondary == "$$CUENOTES") {
@@ -1588,48 +1879,9 @@ void Assistant::importAscii()
                     if (words.size() == 1) {
                         LOGERROR("invalid file, WAIT word must have at least one parameter");
                     }
-                    if (previousCue != nullptr && words[1].getFloatValue() > 0) {
+                    if (!asciiSequenceCue && previousCue != nullptr && words[1].getFloatValue() > 0) {
                         previousCue->autoFollow->setValueWithKey("End of transitions");
                         previousCue->autoFollowTiming->setValue(words[1].getFloatValue());
-                    }
-                }
-                else if (currentSecondary == "UP") {
-                    if (words.size() == 1) {
-                        LOGERROR("invalid file, UP word must have at least one parameter");
-                    }
-                    float fade = words[1].getFloatValue();
-                    currentCue->htpInFade->setValue(fade);
-                    currentCue->ltpFade->setValue(fade);
-                    if (words.size() > 2) {
-                        float delay = words[2].getFloatValue();
-                        currentCue->htpInDelay->setValue(delay);
-                        currentCue->ltpDelay->setValue(delay);
-                    }
-                }
-                else if (currentSecondary == "DOWN") {
-                    if (words.size() == 1) {
-                        LOGERROR("invalid file, DOWN word must have at least one parameter");
-                    }
-                    float fade = words[1].getFloatValue();
-                    currentCue->htpOutFade->setValue(fade);
-                    if (words.size() > 2) {
-                        float delay = words[2].getFloatValue();
-                        currentCue->htpOutDelay->setValue(delay);
-                    }
-                }
-                else if (currentSecondary == "CHAN") {
-                    for (int iChan = 1; iChan < words.size() - 1; iChan += 2) {
-                        int fixt = words[iChan].getIntValue();
-                        float level = asciiLevelToFloat(words[iChan + 1]);
-                        float currentLevel = fixtureToCurrentValue.contains(fixt) ? fixtureToCurrentValue.getReference(fixt) : 0;
-
-                        if ((!useTracking && level > 0) || (useTracking && currentLevel != level)) {
-                            Command* com = currentCue->commands.addItem();
-                            com->selection.items[0]->valueFrom->setValue(fixt);
-                            com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
-                            com->values.items[0]->valueFrom->setValue(level);
-                            fixtureToCurrentValue.set(fixt, level);
-                        }
                     }
                 }
                 else if (currentSecondary == "$$CHANMOVE") {
@@ -1652,12 +1904,12 @@ void Assistant::importAscii()
                             com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                             com->values.items[0]->presetIdFrom->setValue(target->id->intValue());
                         }
-                        else if ((!useTracking && level > 0) || (useTracking && currentLevel != level)) {
+                        else if (asciiSequenceCue || (!useTracking && level > 0) || (useTracking && currentLevel != level)) {
                             Command* com = currentCue->commands.addItem();
                             com->selection.items[0]->valueFrom->setValue(fixt);
                             com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
                             com->values.items[0]->valueFrom->setValue(level);
-                            fixtureToCurrentValue.set(fixt, level);
+                            if (!asciiSequenceCue) fixtureToCurrentValue.set(fixt, level);
                         }
                     }
                 }
@@ -1680,124 +1932,114 @@ void Assistant::importAscii()
                         }
                     }
                 }
-                else if (currentSecondary == "$$PARAM") {
-                    Fixture* fixt = Brain::getInstance()->getFixtureById(words[1].getIntValue());
-                    Command* fixtCommand = nullptr;
-                    if (fixt != nullptr) {
-                        for (int iChan = 2; iChan < words.size() - 1; iChan += 2) {
-                            int paramId = words[iChan].getIntValue();
-                            ChannelType* param = idToChannelType.getReference(paramId);
-
-                            Array<String> starts = { "IP", "FP", "CP", "BP", "PR" };
-                            String valueString = words[iChan + 1];
-                            String begin = valueString.substring(0, 2);
-
-                            if (fixtCommand == nullptr) {
-                                fixtCommand = currentCue->commands.addItem();
-                                fixtCommand->selection.items[0]->valueFrom->setValue(fixt->id->intValue());
-                                fixtCommand->values.clear();
-                                fixtCommand->editorIsCollapsed = true;
-                            }
-                            CommandValue* commandValue = fixtCommand->values.addItem();
-                            if (starts.contains(begin)) {
-                                commandValue->presetOrValue->setValueWithData("preset");
-                                if (!idToPreset.contains(words[iChan + 1])) {
-                                    Preset* p = PresetManager::getInstance()->addItem();
-                                    p->userName->setValue(words[iChan + 1]);
-                                    idToPreset.set(words[iChan + 1], p);
-                                }
-                                Preset* target = idToPreset.getReference(words[iChan + 1]);
-                                commandValue->channelType->setValueFromTarget(param);
-                                commandValue->presetIdFrom->setValue(target->id->intValue());
-                            }
-                            else {
-                                if (valueString.contains("#"))
-                                    valueString = valueString.fromLastOccurrenceOf("#", false, false);
-
-                                float level = valueString.getFloatValue();
-                                float div = 255.0f;
-
-                                if (fixt->subFixtures.contains(0))
-                                {
-                                    SubFixture* sf = fixt->subFixtures.getReference(0);
-
-                                    if (sf != nullptr && sf->channelsMap.contains(param))
-                                    {
-                                        SubFixtureChannel* chan = sf->channelsMap.getReference(param);
-
-                                        if (chan != nullptr && chan->resolution == "16bits")
-                                            div = 65535.0f;
-                                    }
-                                }
-
-                                level /= div;
-
-                                commandValue->channelType->setValueFromTarget(param);
-                                commandValue->valueFrom->setValue(level);
-                            }
-                        }
-                    }
-                }
 
             }
             else if (currentPrimary == "SUB" && asciiSubs->boolValue()) {
                 if (currentSecondary == "SUB") {
-                    if (words.size() == 1) {
-                        LOGERROR("invalid file, SUB word must have an id in parameter");
-                    }
-                    int subId = words[1].getIntValue();
-                    if (subId == mainCuelistId) {
-                        mainCuelistId++;
-                        while (Brain::getInstance()->getCuelistById(mainCuelistId) != nullptr) {
-                            mainCuelistId++;
-                        }
-                        cuelist->id->setValue(mainCuelistId);
+                    if (words.size() < 2 || words[1].getIntValue() < 1) {
+                        LOGERROR("ASCII: invalid Eos Sub number: " << originalLine);
+                        currentSub = nullptr;
+                        currentSubCue = nullptr;
+                        continue;
                     }
 
-                    currentSub = Brain::getInstance()->getCuelistById(subId);
-                    if (currentSub == nullptr) {
-                        currentSub = new Cuelist();
-                        cuelistsToAdd.add(currentSub);
-                        currentSub->id->setValue(subId);
+                    currentEosSubId = words[1].getIntValue();
+                    String suffix = " - sub " + String(currentEosSubId);
+                    currentEosSubName = "Sans nom";
+                    currentSub = nullptr;
+
+                    // Do not overwrite a cuelist not created for this Eos sub.
+                    for (Cuelist* candidate : CuelistManager::getInstance()->items) {
+                        if (candidate->userName->stringValue().endsWith(suffix)) {
+                            currentSub = candidate;
+                            break;
+                        }
                     }
+                    if (currentSub == nullptr) {
+                        currentSub = CuelistManager::getInstance()->addItem();
+                        Cuelist* occupyingId = Brain::getInstance()->getCuelistById(currentEosSubId);
+                        if (occupyingId == nullptr) {
+                            currentSub->id->setValue(currentEosSubId);
+                        }
+                        else if (occupyingId != currentSub) {
+                            LOG("ASCII: Eos Sub " << currentEosSubId
+                                << " imported as BK cuelist " << currentSub->id->intValue()
+                                << " (ID already occupied)");
+                        }
+                    }
+                    currentSub->kill();
+                    currentSub->userName->setValue(currentEosSubName + suffix);
                     currentSub->cues.clear();
                     currentSubCue = currentSub->cues.addItem();
                     currentSubCue->commands.clear();
-                    String subName = "Sub " + words[1];
-                    currentSub->userName->setValue(subName);
+                    currentSubCue->id->setValue(1);
+                    currentSub->tracking->setValueWithData("none");
+                    subCuelistsForFaders.set(currentEosSubId, currentSub);
+
+                    eosSubParamCommands.clear();
+                    eosSubIntensityFixtures.clear();
+                    eosSubCategoryFilter.clear();
+                    eosSubParameterFilter.clear();
+                    eosSubHasCategoryFilter = false;
+                    eosSubHasParameterFilter = false;
+                    ++importedEosSubs;
                 }
-                else if (currentSecondary == "TEXT") {
-                    String text = originalLine.trim().substring(5);
-                    currentSub->userName->setValue(text);
-                }
-                else if (currentSecondary == "DOWN") {
-                    if (words.size() == 1) {
-                        LOGERROR("invalid file, DOWN word must have at least one parameter");
+                else if (currentSub != nullptr && currentSubCue != nullptr) {
+                    if (currentSecondary == "TEXT") {
+                        currentEosSubName = originalLine.trim().substring(5).trim();
+                        currentSub->userName->setValue(currentEosSubName + " - sub " + String(currentEosSubId));
                     }
-                    float fade = words[1].getFloatValue();
-                    currentSubCue->htpOutFade->setValue(fade);
-                    if (words.size() > 2) {
-                        float delay = words[2].getFloatValue();
-                        currentSubCue->htpOutDelay->setValue(delay);
+                    else if (currentSecondary == "$$CATFILTER") {
+                        eosSubHasCategoryFilter = true;
+                        eosSubCategoryFilter.clear();
+                        for (int j = 1; j < words.size(); ++j)
+                            eosSubCategoryFilter.addIfNotAlreadyThere(words[j].getIntValue());
                     }
-                }
-                else if (currentSecondary == "CHAN") {
-                    for (int iChan = 1; iChan < words.size() - 1; iChan += 2) {
-                        int fixt = words[iChan].getIntValue();
-                        float level = asciiLevelToFloat(words[iChan + 1]);
-                        Command* com = currentSubCue->commands.addItem();
-                        com->selection.items[0]->valueFrom->setValue(fixt);
-                        com->values.items[0]->channelType->setValue(asciiDimmerChannel->getValue());
-                        com->values.items[0]->valueFrom->setValue(level);
+                    else if (currentSecondary == "$$PARAMFILTER") {
+                        eosSubHasParameterFilter = true;
+                        eosSubParameterFilter.clear();
+                        for (int j = 1; j < words.size(); ++j)
+                            eosSubParameterFilter.addIfNotAlreadyThere(words[j].getIntValue());
                     }
+                    // $$Exclusive, $$Exclude and $$Dwell have no direct BK equivalent.
                 }
             }
-            else if (currentPrimary == "GROUP" && (asciiGroups->boolValue() || asciiGroupValuesAsPreset->boolValue())) {
+            else if (currentPrimary == "GROUP" && (asciiGroups->boolValue() || asciiGroupValuesAsPreset->boolValue() || (isDLightAscii && asciiSubs->boolValue()))) {
                 if (currentSecondary == "GROUP") {
                     if (words.size() == 1) {
                         LOGERROR("invalid file, GROUP word must have an id in parameter");
                     }
                     int groupId = words[1].getIntValue();
+                    currentDLightGroupId = groupId;
+                    currentDLightGroupCue = nullptr;
+                    if (isDLightAscii && asciiSubs->boolValue() && dlightMasterGroupIds.contains(groupId)) {
+                        Cuelist* groupCuelist = nullptr;
+                        if (dlightGroupCuelists.contains(groupId))
+                            groupCuelist = dlightGroupCuelists.getReference(groupId);
+                        if (groupCuelist == nullptr) {
+                            String prefix = "DLight Group " + String(groupId) + " - ";
+                            for (Cuelist* candidate : CuelistManager::getInstance()->items) {
+                                if (candidate->userName->stringValue().startsWith(prefix)) {
+                                    groupCuelist = candidate;
+                                    break;
+                                }
+                            }
+                        }
+                        if (groupCuelist == nullptr)
+                            groupCuelist = CuelistManager::getInstance()->addItem();
+
+                        groupCuelist->kill();
+                        groupCuelist->userName->setValue("DLight Group " + String(groupId) + " - Group " + String(groupId));
+                        groupCuelist->cues.clear();
+                        currentDLightGroupCue = groupCuelist->cues.addItem();
+                        currentDLightGroupCue->commands.clear();
+                        groupCuelist->tracking->setValueWithData("none");
+                        groupCuelist->HTPLevel->setValue(0);
+                        groupCuelist->LTPLevel->setValue(0);
+                        groupCuelist->autoStart->setValue(true);
+                        groupCuelist->autoStop->setValue(true);
+                        dlightGroupCuelists.set(groupId, groupCuelist);
+                    }
                     if (asciiGroups->boolValue()) {
                         if (asciiGroupValuesAsPreset->boolValue()) {
                             currentPreset = Brain::getInstance()->getPresetById(groupId);
@@ -1825,6 +2067,10 @@ void Assistant::importAscii()
                 }
                 else if (currentSecondary == "TEXT") {
                     String text = originalLine.trim().substring(5);
+                    if (currentDLightGroupCue != nullptr && dlightGroupCuelists.contains(currentDLightGroupId)) {
+                        Cuelist* groupCuelist = dlightGroupCuelists.getReference(currentDLightGroupId);
+                        groupCuelist->userName->setValue("DLight Group " + String(currentDLightGroupId) + " - " + text);
+                    }
                     if (currentGroup != nullptr) {
                         currentGroup->userName->setValue(text);
                     }
@@ -2115,7 +2361,114 @@ void Assistant::importAscii()
     storeCurrentEffects();
 
     cuelist->cues.addItems(cuesToAdd, juce::var(), false);
+
+    HashMap<int, int> dlightLoopBySequence;
+    for (const DLightMasterLink& link : pendingMasterLinks) {
+        if (!asciiSequenceCuelists.contains(link.sequenceId)) {
+            LOGERROR("ASCII: $MASTERLINK refers to missing D::Light sequence "
+                << link.sequenceId << " (sub " << link.subId << ")");
+            continue;
+        }
+        Cuelist* chase = asciiSequenceCuelists.getReference(link.sequenceId);
+        if (chase == nullptr || link.cue == nullptr) continue;
+
+        if (!dlightLoopBySequence.contains(link.sequenceId)) {
+            dlightLoopBySequence.set(link.sequenceId, link.loop);
+            chase->chaserRunXTimes->setValue((float)jmax(0, link.loop));
+        }
+        else if (dlightLoopBySequence.getReference(link.sequenceId) != link.loop) {
+            LOGERROR("ASCII: changing MasterLink loop flag for D::Light sequence "
+                << link.sequenceId << " is not supported by BK Tasks");
+        }
+
+        // MasterLink levels persist until another MasterLink changes them.
+        const float fadeTime = link.target > 0.0f ? link.timeIn : link.timeOut;
+
+        // A finite chaser needs GO on each new positive MasterLink.
+        if (link.target > 0.0f && link.loop > 0) {
+            Task* goTask = link.cue->tasks.addItem();
+            goTask->targetType->setValueWithData("cuelist");
+            goTask->targetId->setValue(chase->id->intValue());
+            goTask->cuelistAction->setValueWithData("go");
+        }
+        for (const String& action : { String("htplevel"), String("ltplevel") }) {
+            Task* task = link.cue->tasks.addItem();
+            task->targetType->setValueWithData("cuelist");
+            task->targetId->setValue(chase->id->intValue());
+            task->cuelistAction->setValueWithData(action);
+            task->targetValue->setValue(link.target);
+            task->fade->setValue(fadeTime);
+        }
+    }
+
     CuelistManager::getInstance()->addItems(cuelistsToAdd, juce::var(), false);
+    if (!isDLightAscii)
+        LOG("ASCII: imported " << importedEosSubs << " Eos subs as BK cuelists");
+
+    if (isDLightAscii && asciiSubs->boolValue()) {
+        for (const DLightMasterPageItem& item : dlightMasterPageItems) {
+            Cuelist* sub = nullptr;
+            if (item.type == 3 && asciiSequenceCuelists.contains(item.contentId))
+                sub = asciiSequenceCuelists.getReference(item.contentId);
+            else if (item.type == 2 && dlightGroupCuelists.contains(item.contentId))
+                sub = dlightGroupCuelists.getReference(item.contentId);
+
+            if (sub != nullptr)
+                subCuelistsForFaders.set(item.subId, sub);
+            else
+                LOG("ASCII: DLight sub " << item.subId << " type " << item.type << " not imported");
+        }
+    }
+
+    if (asciiSubs->boolValue() && subCuelistsForFaders.size() > 0) {
+        const MessageManagerLock mmlock;
+        BKEngine* engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
+        if (engine != nullptr) {
+            engine->virtualFaderCols->setValue(10);
+            if (engine->virtualFaderBelow->intValue() < 1)
+                engine->virtualFaderBelow->setValue(1);
+
+            VirtualFaderColManager* manager = VirtualFaderColManager::getInstance();
+            for (HashMap<int, Cuelist*>::Iterator it(subCuelistsForFaders); it.next();) {
+                const int subId = it.getKey();
+                Cuelist* sub = it.getValue();
+                if (subId < 1 || sub == nullptr) continue;
+
+                const int page = (subId - 1) / 10 + 1;
+                const int column = (subId - 1) % 10 + 1;
+
+                // Reuse existing virtual fader columns when importing again.
+                VirtualFaderCol* col = nullptr;
+                for (VirtualFaderCol* candidate : manager->items) {
+                    if (candidate->pageNumber->intValue() == page &&
+                        candidate->colNumber->intValue() == column) {
+                        col = candidate;
+                        break;
+                    }
+                }
+                if (col == nullptr) {
+                    col = manager->addItem();
+                    col->pageNumber->setValue(page);
+                    col->colNumber->setValue(column);
+                }
+
+                col->targetId->setValue(0);
+                col->fader.targetType->setValueWithData("cuelist");
+                col->fader.targetId->setValue(sub->id->intValue());
+                col->fader.cuelistAction->setValueWithData("htpltplevel");
+
+                if (col->belowButtons.items.isEmpty())
+                    col->belowButtons.addItem();
+                VirtualFaderButton* button = col->belowButtons.items[0];
+                button->targetType->setValueWithData("cuelist");
+                button->targetId->setValue(sub->id->intValue());
+                button->cuelistAction->setValueWithData("flash");
+            }
+            manager->reconstructLibraries();
+            VirtualFaderColGrid::getInstance()->fillCells();
+        }
+    }
+
     GroupManager::getInstance()->addItems(groupsToAdd, juce::var(), false);
     PresetManager::getInstance()->addItems(presetsToAdd, juce::var(), false);
     FixtureManager::getInstance()->addItems(fixturesToAdd, juce::var(), false);
