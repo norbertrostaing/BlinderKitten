@@ -21,9 +21,11 @@
 FixtureTypeChannel::FixtureTypeChannel(var params) :
     BaseItem(params.getProperty("name", "Channel")),
     objectType(params.getProperty("type", "FixtureTypeChannel").toString()),
-    objectData(params)
-
+    objectData(params),
+    logicalChannels("Logical channels")
 {
+
+    multiLogicalMode = addBoolParameter("Multiple attributes channel", "check this if you have multiple channel type in one physical channel", false);
 
     curve.editorIsCollapsed = true;
     curve.setNiceName("Out curve");
@@ -75,8 +77,12 @@ FixtureTypeChannel::FixtureTypeChannel(var params) :
 
     physicalRange = addPoint2DParameter("Physical range", "Range output (degrees for pan, tilt, zoom etc...");
 
-
+    logicalChannels.selectItemWhenCreated = false;
+    
     addChildControllableContainer(&curve);
+    addChildControllableContainer(&logicalChannels);
+
+    updateDisplay();
 
 
 };
@@ -114,6 +120,10 @@ void FixtureTypeChannel::onContainerParameterChangedInternal(Parameter* p) {
     else if (p == highlightValue) {
         if (!p->enabled) p->setEnabled(true);
     }
+    else if (p == multiLogicalMode) {
+        updateDisplay();
+
+    }
 }
 
 void FixtureTypeChannel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -125,4 +135,26 @@ void FixtureTypeChannel::onControllableFeedbackUpdateInternal(ControllableContai
             }
         }
     }
+}
+
+
+void FixtureTypeChannel::updateDisplay() {
+
+    bool multiple = multiLogicalMode->boolValue();
+
+    logicalChannels.hideInEditor = !multiple;
+
+    channelType->hideInEditor = multiple;
+    defaultValue->hideInEditor = multiple;
+    highlightValue->hideInEditor = multiple;
+    killedBySWOP->hideInEditor = multiple;
+    invertOutput->hideInEditor = multiple;
+    fadeOrSnap->hideInEditor = multiple;
+    virtualMaster->hideInEditor = multiple;
+    physicalRange->hideInEditor = multiple;
+    curve.hideInEditor = multiple;
+
+
+
+    queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 }

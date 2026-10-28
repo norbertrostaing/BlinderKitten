@@ -815,6 +815,9 @@
     <Filter Include="JUCE Modules\juce_organicui\app">
       <UniqueIdentifier>{713F9F29-C2A1-3D8F-4394-6A948FA0175D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\assistant">
+      <UniqueIdentifier>{8DD35572-B7B3-6647-631B-9B2CD7EA1F95}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\automation\common\fitting\intern">
       <UniqueIdentifier>{129F2071-932D-39D0-7756-2F0D13FA6835}</UniqueIdentifier>
     </Filter>
@@ -958,6 +961,9 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\manager">
       <UniqueIdentifier>{D49E0848-0015-8A56-24E0-5F6D7323BCE1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\mcp">
+      <UniqueIdentifier>{83168FCD-AC90-E3C7-9CDD-EA719DC84EC3}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\outliner">
       <UniqueIdentifier>{B17F69BA-D688-9888-1C58-CAEC6EC7496B}</UniqueIdentifier>
@@ -1603,6 +1609,9 @@
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeLogicalChannel.cpp">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManager.cpp">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClCompile>
@@ -1799,6 +1808,9 @@
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.cpp">
+      <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixturePhysicalChannel.cpp">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPreset.cpp">
@@ -4339,6 +4351,21 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantController.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantCore.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\ClaudeProvider.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
       <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
     </ClCompile>
@@ -4743,6 +4770,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.cpp">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpCore.cpp">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpServer.cpp">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\OrganicMcpProvider.cpp">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
       <Filter>JUCE Modules\juce_organicui\outliner</Filter>
@@ -5526,6 +5568,9 @@
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.h">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeLogicalChannel.h">
+      <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManager.h">
       <Filter>BlinderKitten\Source\Definitions\FixtureType</Filter>
     </ClInclude>
@@ -5722,6 +5767,9 @@
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.h">
+      <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixturePhysicalChannel.h">
       <Filter>BlinderKitten\Source\Definitions\SubFixture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPreset.h">
@@ -8721,6 +8769,21 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantController.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantCore.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\ClaudeProvider.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h">
       <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
     </ClInclude>
@@ -8763,6 +8826,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\Easing.h">
       <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\EasingMath.h">
+      <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h">
       <Filter>JUCE Modules\juce_organicui\automation\parameter\ui</Filter>
     </ClInclude>
@@ -8791,6 +8857,9 @@
       <Filter>JUCE Modules\juce_organicui\automation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\AutomationKey.h">
+      <Filter>JUCE Modules\juce_organicui\automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\AutomationKeySearch.h">
       <Filter>JUCE Modules\juce_organicui\automation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\comment\ui\CommentManagerViewUI.h">
@@ -9185,6 +9254,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpCore.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpManagerAdapter.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpServer.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\OrganicMcpProvider.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h">
       <Filter>JUCE Modules\juce_organicui\outliner</Filter>

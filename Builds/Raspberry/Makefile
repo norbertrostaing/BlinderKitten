@@ -188,6 +188,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/FixtureType_5fe79449.o \
   $(JUCE_OBJDIR)/FixtureTypeChannel_f51bfe04.o \
   $(JUCE_OBJDIR)/FixtureTypeChannelManager_c4b6993.o \
+  $(JUCE_OBJDIR)/FixtureTypeLogicalChannel_519f9d23.o \
   $(JUCE_OBJDIR)/FixtureTypeManager_e71c2bae.o \
   $(JUCE_OBJDIR)/FixtureTypeManagerUI_d1c07202.o \
   $(JUCE_OBJDIR)/FixtureTypePreset_c32b4cc8.o \
@@ -230,6 +231,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/StampMapping_4448ec0f.o \
   $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o \
   $(JUCE_OBJDIR)/SubFixtureChannel_8716636c.o \
+  $(JUCE_OBJDIR)/SubFixturePhysicalChannel_b7db9a15.o \
   $(JUCE_OBJDIR)/TimingPreset_47a547e1.o \
   $(JUCE_OBJDIR)/TimingPresetManager_60d1bd16.o \
   $(JUCE_OBJDIR)/TimingPresetManagerUI_b457496a.o \
@@ -863,6 +865,11 @@ $(JUCE_OBJDIR)/FixtureTypeChannelManager_c4b6993.o: ../../Source/Definitions/Fix
 	@echo "Compiling FixtureTypeChannelManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/FixtureTypeLogicalChannel_519f9d23.o: ../../Source/Definitions/FixtureType/FixtureTypeLogicalChannel.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling FixtureTypeLogicalChannel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/FixtureTypeManager_e71c2bae.o: ../../Source/Definitions/FixtureType/FixtureTypeManager.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling FixtureTypeManager.cpp"
@@ -1071,6 +1078,11 @@ $(JUCE_OBJDIR)/SubFixture_8e66f3e1.o: ../../Source/Definitions/SubFixture/SubFix
 $(JUCE_OBJDIR)/SubFixtureChannel_8716636c.o: ../../Source/Definitions/SubFixture/SubFixtureChannel.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling SubFixtureChannel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SubFixturePhysicalChannel_b7db9a15.o: ../../Source/Definitions/SubFixture/SubFixturePhysicalChannel.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling SubFixturePhysicalChannel.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TimingPreset_47a547e1.o: ../../Source/Definitions/TimingPreset/TimingPreset.cpp

@@ -1237,7 +1237,7 @@ void Cuelist::autoLoadCueB() {
 }
 
 float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool& isApplied, bool flashValues) {
-	bool HTP = fc->parentParamDefinition->priority->getValue() == "HTP";
+	bool HTP = fc->channelType->priority->getValue() == "HTP";
 	
 	bool keepUpdate = false;
 	isApplied = false;

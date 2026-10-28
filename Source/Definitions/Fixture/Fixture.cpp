@@ -17,6 +17,7 @@
 #include "../FixtureType/FixtureType.h"
 #include "../SubFixture/SubFixture.h"
 #include "../SubFixture/SubFixtureChannel.h"
+#include "../SubFixture/SubFixturePhysicalChannel.h"
 #include "../ChannelFamily/ChannelFamily.h"
 #include "FixtureMultiEditor.h"
 #include "UI/GridView/FixtureGridView.h"
@@ -157,6 +158,7 @@ void Fixture::checkChildrenSubFixtures() {
 
 	const MessageManagerLock mmLock;
 
+	physicalChannels.clear();
 	subFixturesContainer.clear();
 	subFixtures.clear();
 
@@ -200,7 +202,7 @@ void Fixture::checkChildrenSubFixtures() {
 				chan->highlightValue = c->highlightValue->enabled ? c->highlightValue->floatValue() : -1;
 				chan->isHTP = param->priority->getValue() == "HTP";
 				chan->channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
-				chan->parentParamDefinition = param;
+				chan->channelType = param;
 				chan->snapOnly = c->fadeOrSnap->getValue().toString() == "snap";
 				chan->parentFixtureTypeChannel = nullptr;
 				chan->parentFixtureTypeVirtualChannel = c;
@@ -225,8 +227,8 @@ void Fixture::checkChildrenSubFixtures() {
 
 	// DMX Channels
 	for (int i = 0; i < t->chansManager.items.size(); i++) {
-		FixtureTypeChannel* c = t->chansManager.items[i];
-		int subId = c->subFixtureId->getValue();
+		FixtureTypeChannel* ftc = t->chansManager.items[i];
+		int subId = ftc->subFixtureId->getValue();
 		SubFixture* subFixt = subFixtures.contains(subId) ? subFixtures.getReference(subId) : nullptr;
 		if (subFixt == nullptr) {
 			subFixt = new SubFixture();
@@ -239,56 +241,114 @@ void Fixture::checkChildrenSubFixtures() {
 			subFixt->parentFixture = this;
 		}
 
-		if (subFixt != nullptr && c != nullptr) {
-			ChannelType* param = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
-			if (param != nullptr) {
-				String res = c->resolution->getValue();
-				if (res == "fine") {
-					if (!subFixt->channelsMap.contains(param)) {
-						LOGERROR("fine parameter must be after coarse parameter -_- (" + String(subId) + " - " + param->niceName + " )");
-						continue;
-					}
-					SubFixtureChannel* chan = subFixt->channelsMap.getReference(param);
-					int indexCoarse = chan->parentFixtureTypeChannel->dmxDelta->intValue();
-					int indexFine = c->dmxDelta->intValue();
-					chan->fineChannelDelta = indexFine-indexCoarse;
+		if (subFixt != nullptr && ftc != nullptr) {
+			SubFixturePhysicalChannel* sfpc = new SubFixturePhysicalChannel();
+			physicalChannels.add(sfpc);
+
+			String res = ftc->resolution->getValue();
+			ChannelType* param = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
+			if (res == "fine" && param != nullptr) {
+				if (!subFixt->channelsMap.contains(param)) {
+					LOGERROR("fine parameter must be after coarse parameter -_- (" + String(subId) + " - " + param->niceName + " )");
+					continue;
 				}
-				else {
+				SubFixtureChannel* chan = subFixt->channelsMap.getReference(param);
+				int indexCoarse = chan->parentFixtureTypeChannel->dmxDelta->intValue();
+				int indexFine = ftc->dmxDelta->intValue();
+				chan->physicalChannel->fineChannelDelta = indexFine - indexCoarse;
+			}
+			else if (ftc->multiLogicalMode->boolValue()) {
+				for (FixtureTypeLogicalChannel* ftlc : ftc->logicalChannels.items) {
+					ChannelType* param = dynamic_cast<ChannelType*>(ftlc->channelType->targetContainer.get());
+					if (param != nullptr) {
+						if (subFixt->channelsMap.contains(param)) {
+							LOGERROR("You have multiple channels with the same type in the same subfixture ! (" + String(subId) + " - " + param->niceName + " )");
+							LOGERROR("Fixture Id : " << id->stringValue() << ", Fixture name : " << userName->stringValue() << " , Fixture type : " << t->niceName);
+							continue;
+						}
+						SubFixtureChannel* chan = new SubFixtureChannel();
+						chan->lowPhysicalValue = (double)ftlc->dmxOutputRange->value[0] / 255.0;
+						chan->highPhysicalValue = (double)ftlc->dmxOutputRange->value[1] / 255.0;
+						chan->logicalPriority = ftlc->logicalPriority->intValue();
+						chan->physicalChannel = sfpc;
+						subFixt->channelsContainer.add(chan);
+						subFixt->channelsMap.set(param, chan);
+						chan->defaultValue = ftlc->defaultValue->getValue();
+						chan->highlightValue = ftlc->highlightValue->enabled ? ftlc->highlightValue->floatValue() : -1;
+						chan->isHTP = param->priority->getValue() == "HTP";
+						chan->channelType = param;
+						chan->snapOnly = ftlc->fadeOrSnap->getValue().toString() == "snap";
+						chan->parentFixtureTypeChannel = ftc;
+						chan->parentFixture = this;
+						chan->parentSubFixture = subFixt;
+						chan->subFixtureId = subId;
+
+						if (param->reactGM->getValue()) {
+							chan->reactToGrandMaster = true;
+							Brain::getInstance()->grandMasterChannels.add(chan);
+						}
+
+						if (ftlc->killedBySWOP->getValue()) {
+							chan->swopKillable = true;
+							Brain::getInstance()->swoppableChannels.add(chan);
+						}
+
+						FixtureTypeVirtualChannel* virtualMaster = dynamic_cast<FixtureTypeVirtualChannel*>(ftc->virtualMaster->targetContainer.get());
+
+						if (virtualMaster != nullptr) {
+							int masterSubFixtureId = virtualMaster->subFixtureId->getValue();
+							ChannelType* masterType = dynamic_cast<ChannelType*>(virtualMaster->channelType->targetContainer.get());
+							SubFixtureChannel* master = subFixtures.getReference(masterSubFixtureId)->channelsMap.getReference(masterType);
+							if (master != nullptr) {
+								master->virtualChildren.add(chan);
+
+								chan->virtualMaster = master;
+							}
+						}
+						Brain::getInstance()->allDMXSubfixtureChannels.add(chan);
+						Brain::getInstance()->pleaseUpdate(chan);
+					}
+				}
+			}
+			else {
+				ChannelType* param = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
+				if (param != nullptr) {
+					String res = ftc->resolution->getValue();
 					if (subFixt->channelsMap.contains(param)) {
 						LOGERROR("You have multiple channels with the same type in the same subfixture ! (" + String(subId) + " - " + param->niceName + " )");
 						LOGERROR("Fixture Id : " << id->stringValue() << ", Fixture name : " << userName->stringValue() << " , Fixture type : " << t->niceName);
 						continue;
 					}
 					SubFixtureChannel* chan = new SubFixtureChannel();
+					chan->physicalChannel = sfpc;
 					subFixt->channelsContainer.add(chan);
 					subFixt->channelsMap.set(param, chan);
-					chan->defaultValue = c->defaultValue->getValue();
-					chan->highlightValue = c->highlightValue->enabled ? c->highlightValue->floatValue() : -1;
+					chan->defaultValue = ftc->defaultValue->getValue();
+					chan->highlightValue = ftc->highlightValue->enabled ? ftc->highlightValue->floatValue() : -1;
 					chan->isHTP = param->priority->getValue() == "HTP";
-					chan->resolution = c->resolution->getValue();
+					chan->resolution = ftc->resolution->getValue();
 					if (chan->resolution == "16bits") {
-						chan->fineChannelDelta = 1;
+						sfpc->fineChannelDelta = 1;
 					}
-					chan->channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
-					chan->parentParamDefinition = param;
-					chan->snapOnly = c->fadeOrSnap->getValue().toString() == "snap";
-					chan->parentFixtureTypeChannel = c;
+					chan->channelType = param;
+					chan->snapOnly = ftc->fadeOrSnap->getValue().toString() == "snap";
+					chan->parentFixtureTypeChannel = ftc;
 					chan->parentFixture = this;
 					chan->parentSubFixture = subFixt;
 					chan->subFixtureId = subId;
-					chan->invertOutput = c->invertOutput->boolValue();
+					chan->invertOutput = ftc->invertOutput->boolValue();
 
 					if (param->reactGM->getValue()) {
 						chan->reactToGrandMaster = true;
 						Brain::getInstance()->grandMasterChannels.add(chan);
 					}
 
-					if (c->killedBySWOP->getValue()) {
+					if (ftc->killedBySWOP->getValue()) {
 						chan->swopKillable = true;
 						Brain::getInstance()->swoppableChannels.add(chan);
 					}
 
-					FixtureTypeVirtualChannel* virtualMaster = dynamic_cast<FixtureTypeVirtualChannel*>(c->virtualMaster->targetContainer.get());
+					FixtureTypeVirtualChannel* virtualMaster = dynamic_cast<FixtureTypeVirtualChannel*>(ftc->virtualMaster->targetContainer.get());
 
 					if (virtualMaster != nullptr) {
 						int masterSubFixtureId = virtualMaster->subFixtureId->getValue();
@@ -304,7 +364,13 @@ void Fixture::checkChildrenSubFixtures() {
 					Brain::getInstance()->pleaseUpdate(chan);
 				}
 
+
+
+
+
+
 			}
+
 		}
 	}
 	updateSubFixtureNames();

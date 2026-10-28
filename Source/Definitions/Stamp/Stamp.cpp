@@ -433,7 +433,7 @@ void Stamp::videoFrameReceived(NDIlib_video_frame_v2_t* frame)
 	int width = frame->xres;
 	int height = frame->yres;
 
-	// Créer une image JUCE et copier les données
+	// CrÃ©er une image JUCE et copier les donnÃ©es
 
 	if (image.getWidth() != width || image.getHeight() != height) {
 		initImage(width, height);

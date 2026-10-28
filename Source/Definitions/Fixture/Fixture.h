@@ -47,6 +47,7 @@ public:
     Point3DParameter* rotation;
 
     OwnedArray<SubFixture> subFixturesContainer;
+    OwnedArray<SubFixturePhysicalChannel> physicalChannels;
     HashMap<int, SubFixture*> subFixtures;
     FixturePatchManager patchs;
     FixtureMappingManager mappings;

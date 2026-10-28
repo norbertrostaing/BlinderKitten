@@ -28,6 +28,7 @@
 #include "Definitions/Mapper/Mapper.h"
 #include "Definitions/Stamp/Stamp.h"
 #include "Definitions/SelectionMaster/SelectionMaster.h"
+#include "SubFixturePhysicalChannel.h"
 
 
 SubFixtureChannel::SubFixtureChannel(){
@@ -37,6 +38,11 @@ SubFixtureChannel::SubFixtureChannel(){
 SubFixtureChannel::~SubFixtureChannel()
 {
 	//isDeleted = true;
+	if (physicalChannel != nullptr) {
+		physicalChannel->usingPool.enter();
+		physicalChannel->writingPool.removeAllInstancesOf(this);
+		physicalChannel->usingPool.exit();
+	}
 	Brain::getInstance()->allSubfixtureChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->allVirtualSubfixtureChannels.removeAllInstancesOf(this);
 	Brain::getInstance()->allDMXSubfixtureChannels.removeAllInstancesOf(this);
@@ -128,7 +134,7 @@ void SubFixtureChannel::writeValue(float v) {
 	}
 
 	if (v == currentValue && !forceNextWrite) {
-		return;
+		//return;
 	}
 	forceNextWrite = false;
 
@@ -147,61 +153,10 @@ void SubFixtureChannel::writeValue(float v) {
 		v = 1-v;
 	}
 
-	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr && parentParamDefinition != nullptr) {
+	if (physicalChannel == nullptr) return;
 
-		if (parentFixtureTypeChannel->curve.enabled->boolValue()) {
-			v = parentFixtureTypeChannel->curve.getValueAtPosition(v);
-		}
-
-		int deltaAdress = parentFixtureTypeChannel->dmxDelta->intValue();
-		deltaAdress--;
-		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
-		for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
-			FixturePatch* p = parentFixture->patchs.items[i];
-			if (p->enabled->boolValue()) {
-				float localValue = v;
-
-				DMXInterface* out = static_cast<DMXInterface*>(p->targetInterface->targetContainer.get());
-				if (out != nullptr) {
-					FixturePatch* patch = p;
-					int address = patch->address->getValue();
-
-					for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
-						FixturePatchCorrection* c = patch->corrections.items[iCorr];
-						if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == channelType) {
-							if (c->invertChannel->getValue()) {
-								localValue = 1 - localValue;
-							}
-							localValue = localValue + (float)c->offsetValue->getValue();
-							localValue = jmin((float)1, localValue);
-							localValue = jmax((float)0, localValue);
-							localValue = c->curve.getValueAtPosition(localValue);
-						}
-					}
-
-
-					if (address > 0) {
-						address += (deltaAdress);
-						if (fineChannelDelta == 0) {
-							int val = localValue >= 1 ? 255 : round(255 * localValue);
-							//val = val > 255 ? 255 : val;
-							out->sendDMXValue(address, val);
-						}
-						else {
-							int val = localValue >= 1 ? 65535 : round(65535.0 * localValue);
-							//int val = floor(65535.0 * value);
-							//val = value > 65535 ? 65535 : val;
-							int valueA = val / 256;
-							int valueB = val % 256;
-							out->sendDMXValue(address, valueA);
-							out->sendDMXValue(address + fineChannelDelta, valueB);
-						}
-					}
-				}
-			}
-		}
-
-	}
+	physicalChannel->addSubFixtureChannelToStack(this);
+	physicalChannel->setDirty();
 
 }
 
@@ -209,6 +164,9 @@ void SubFixtureChannel::writeValue(float v) {
 void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
 	float noGMValue = 0;
+
+	isActive = false;
+
 	if (defaultPresetValue >= 0) {
 		newValue = defaultPresetValue;
 	}
@@ -275,6 +233,7 @@ void SubFixtureChannel::updateVal(double now) {
 				if (!checkSwop || c->isSwopping || c->excludeFromSwop->boolValue()) {
 					bool isApplied;
 					newValue = c->applyToChannel(this, newValue, now, isApplied);
+					isActive = true;
 					if (c->excludeFromGrandMaster->boolValue()) {
 						bool temp;
 						noGMValue = c->applyToChannel(this, noGMValue, now, temp);
@@ -303,18 +262,21 @@ void SubFixtureChannel::updateVal(double now) {
 			for (int i = 0; i < programmerStackSnapshot.size(); i++) {
 				if (programmerStackSnapshot[i]->layerId->intValue() == currentLayer) {
 					newValue = programmerStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isActive = true;
 				}
 			}
 
 			for (int i = 0; i < mapperStackSnapshot.size(); i++) {
 				if (mapperStackSnapshot[i]->layerId->intValue() == currentLayer) {
 					newValue = mapperStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isActive = true;
 				}
 			}
 
 			for (int i = 0; i < trackerStackSnapshot.size(); i++) {
 				if (trackerStackSnapshot[i]->layerId->intValue() == currentLayer) {
 					newValue = trackerStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isActive = true;
 				}
 			}
 
@@ -324,6 +286,7 @@ void SubFixtureChannel::updateVal(double now) {
 			if (carouselStackSnapshot[i]->layerId->intValue() == currentLayer) {
 				if (!checkSwop || carouselStackSnapshot[i]->isSwopping) {
 					newValue = carouselStackSnapshot[i]->applyToChannel(this, newValue, now);
+					isActive = true;
 					isDirty = isDirty || carouselStackSnapshot[i]->isOn;
 				}
 			}
@@ -332,6 +295,7 @@ void SubFixtureChannel::updateVal(double now) {
 		for (int i = 0; i < stampStackSnapshot.size(); i++) {
 			if (stampStackSnapshot[i]->layerId->intValue() == currentLayer) {
 				if (!checkSwop || stampStackSnapshot[i]->isSwopping) {
+					isActive = true;
 					newValue = stampStackSnapshot[i]->applyToChannel(this, newValue, now);
 					isDirty = isDirty || stampStackSnapshot[i]->isOn;
 				}
@@ -341,6 +305,7 @@ void SubFixtureChannel::updateVal(double now) {
 		for (int i = 0; i < effectStackSnapshot.size(); i++) {
 			if (effectStackSnapshot[i]->layerId->intValue() == currentLayer) {
 				if (!checkSwop || effectStackSnapshot[i]->isSwopping) {
+					isActive = true;
 					newValue = effectStackSnapshot[i]->applyToChannel(this, newValue, now);
 					isDirty = isDirty || effectStackSnapshot[i]->isOn;
 				}
@@ -349,6 +314,7 @@ void SubFixtureChannel::updateVal(double now) {
 
 		for (int i = 0; i < selectionMasterStackSnapshot.size(); i++) {
 			if (selectionMasterStackSnapshot[i]->layerId->intValue() == currentLayer) {
+				isActive = true;
 				newValue = selectionMasterStackSnapshot[i]->applyToChannel(this, newValue, now);
 			}
 		}

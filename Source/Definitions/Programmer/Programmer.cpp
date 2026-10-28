@@ -352,7 +352,9 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 
 	float localValue = 0;
 	//ScopedLock lock(computing);
-	if (!activeValues.contains(fc)) { return currentVal; }
+	if (!activeValues.contains(fc)) { 
+		return currentVal; 
+	}
 	std::shared_ptr<ChannelValue> cv = activeValues.getReference(fc);
 
 	float valueFrom = currentVal;
@@ -378,6 +380,12 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 		cv->currentPosition = 1;
 		if (!cv->isEnded) {
 			cv->isEnded = true;
+			if (cv->endValue() == -1) {
+				keepUpdate = true;
+				activeValues.remove(fc);
+				fc->programmerOutOfStack(this);
+
+			}
 			// Brain::getInstance()->pleaseUpdate(this);
 		}
 	}

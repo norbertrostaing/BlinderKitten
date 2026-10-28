@@ -37,6 +37,7 @@ class Tracker;
 class SelectionMaster;
 class Bundle;
 class DMXArtNetDevice;
+class SubFixturePhysicalChannel;
 
 
 class Brain :
@@ -105,6 +106,8 @@ public:
     Array<SubFixtureChannel*> allVirtualSubfixtureChannels;
     Array<SubFixtureChannel*> allDMXSubfixtureChannels;
 
+    Array<SubFixturePhysicalChannel*> dirtyPhysicalChannels;
+
     Array<DMXArtNetDevice*> syncedArtnetDevices;
 
     Random mainRandom;
@@ -133,6 +136,7 @@ public:
     double TSBundles = 0;
     CriticalSection usingLibraries;
     CriticalSection usingPools;
+    CriticalSection usingPhysicalChannels;
     CriticalSection usingTasksCollection;
     void registerSubFixture(SubFixture* f, int id);
     void unregisterSubFixture(SubFixture* f);
@@ -179,6 +183,8 @@ public:
     void pleaseUpdate(Mapper* c);
     void pleaseUpdate(Tracker* c);
     void pleaseUpdate(SelectionMaster* c);
+
+    void setPhysicaChannelDirty(SubFixturePhysicalChannel* sfpc);
 
     void updateAllChannels();
 

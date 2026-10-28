@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+#include "FixtureTypeLogicalChannel.h"
 
 class FixtureTypeChannel:
     public BaseItem
@@ -21,6 +22,7 @@ class FixtureTypeChannel:
     String objectType;
     var objectData;
 
+    BoolParameter* multiLogicalMode;
     TargetParameter* channelType;
     // StringParameter* suffix;
     // StringParameter* idGroupName;
@@ -37,8 +39,13 @@ class FixtureTypeChannel:
     Point2DParameter* physicalRange;
     Automation curve;
 
+    BaseManager<FixtureTypeLogicalChannel> logicalChannels;
+
     void onContainerParameterChangedInternal(Parameter* p);
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+    void updateDisplay();
+
 
 };
 

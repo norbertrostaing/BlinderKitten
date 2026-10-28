@@ -621,7 +621,7 @@ void Command::computeValues(Cuelist* callingCuelist, Cue* callingCue, Programmer
 
 						finalValue->htpOverride = cv -> HTPOverride->boolValue();
 						
-						ChannelType* ct = dynamic_cast<ChannelType*>(fchan->parentParamDefinition);
+						ChannelType* ct = dynamic_cast<ChannelType*>(fchan->channelType);
 						ChannelFamily* cf = dynamic_cast<ChannelFamily*>(ct->parentContainer->parentContainer.get());
 						finalValue->moveInBlack = moveInBlackFamilies.contains(cf);
 						finalValue->moveInBlackDelay = mibDelay;

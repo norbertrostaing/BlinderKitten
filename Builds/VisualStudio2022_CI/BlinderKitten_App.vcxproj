@@ -369,6 +369,7 @@
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureType.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeLogicalChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\FixtureType\FixtureTypePreset.cpp"/>
@@ -483,6 +484,7 @@
     <ClCompile Include="..\..\Source\Definitions\Stamp\StampMapping.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixture.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.cpp"/>
+    <ClCompile Include="..\..\Source\Definitions\SubFixture\SubFixturePhysicalChannel.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPreset.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPresetManager.cpp"/>
     <ClCompile Include="..\..\Source\Definitions\TimingPreset\TimingPresetManagerUI.cpp"/>
@@ -2841,6 +2843,21 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantController.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantCore.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\ClaudeProvider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3244,6 +3261,21 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpCore.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpServer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\OrganicMcpProvider.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
@@ -3657,6 +3689,7 @@
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureType.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeChannelManager.h"/>
+    <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeLogicalChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypeManagerUI.h"/>
     <ClInclude Include="..\..\Source\Definitions\FixtureType\FixtureTypePreset.h"/>
@@ -3723,6 +3756,7 @@
     <ClInclude Include="..\..\Source\Definitions\Stamp\StampMapping.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixture.h"/>
     <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixtureChannel.h"/>
+    <ClInclude Include="..\..\Source\Definitions\SubFixture\SubFixturePhysicalChannel.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPreset.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPresetManager.h"/>
     <ClInclude Include="..\..\Source\Definitions\TimingPreset\TimingPresetManagerUI.h"/>
@@ -4722,6 +4756,11 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantController.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantCore.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\ClaudeProvider.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_alloc_impl.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.h"/>
@@ -4736,6 +4775,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\Easing.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\EasingMath.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\parameter\ParameterAutomation.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.h"/>
@@ -4746,6 +4786,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\automation\ui\AutomationUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\Automation.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\AutomationKey.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\AutomationKeySearch.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\comment\ui\CommentManagerViewUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\comment\ui\CommentUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\comment\Comment.h"/>
@@ -4877,6 +4918,12 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpCore.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpManagerAdapter.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpServer.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\OrganicMcpProvider.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.h"/>

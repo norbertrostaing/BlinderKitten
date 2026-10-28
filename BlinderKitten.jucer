@@ -592,6 +592,10 @@
                 resource="0" file="Source/Definitions/FixtureType/FixtureTypeChannelManager.cpp"/>
           <FILE id="ygJcrh" name="FixtureTypeChannelManager.h" compile="0" resource="0"
                 file="Source/Definitions/FixtureType/FixtureTypeChannelManager.h"/>
+          <FILE id="pnHcoS" name="FixtureTypeLogicalChannel.cpp" compile="1"
+                resource="0" file="Source/Definitions/FixtureType/FixtureTypeLogicalChannel.cpp"/>
+          <FILE id="qgUeHV" name="FixtureTypeLogicalChannel.h" compile="0" resource="0"
+                file="Source/Definitions/FixtureType/FixtureTypeLogicalChannel.h"/>
           <FILE id="WxTMFH" name="FixtureTypeManager.cpp" compile="1" resource="0"
                 file="Source/Definitions/FixtureType/FixtureTypeManager.cpp"/>
           <FILE id="gBqTvH" name="FixtureTypeManager.h" compile="0" resource="0"
@@ -853,6 +857,10 @@
                 file="Source/Definitions/SubFixture/SubFixtureChannel.cpp"/>
           <FILE id="IfeqQk" name="SubFixtureChannel.h" compile="0" resource="0"
                 file="Source/Definitions/SubFixture/SubFixtureChannel.h"/>
+          <FILE id="tG6tbL" name="SubFixturePhysicalChannel.cpp" compile="1"
+                resource="0" file="Source/Definitions/SubFixture/SubFixturePhysicalChannel.cpp"/>
+          <FILE id="vRPD2t" name="SubFixturePhysicalChannel.h" compile="0" resource="0"
+                file="Source/Definitions/SubFixture/SubFixturePhysicalChannel.h"/>
         </GROUP>
         <GROUP id="{72A0E523-B0DE-0D5F-1DFB-E56DCE7C036C}" name="TimingPreset">
           <FILE id="IQtRwi" name="TimingPreset.cpp" compile="1" resource="0"

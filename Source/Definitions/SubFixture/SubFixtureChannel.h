@@ -26,6 +26,7 @@ class SelectionMaster;
 class Command;
 class ChannelValue;
 class Stamp;
+class SubFixturePhysicalChannel;
 
 class SubFixtureChannel{
 public:
@@ -36,22 +37,28 @@ public:
     bool isDirty = false;
     bool forceNextWrite = false;
 
+    bool isActive = false;
+
+    double lowPhysicalValue = 0;
+    double highPhysicalValue = 1;
+
+    SubFixturePhysicalChannel* physicalChannel = nullptr;
     ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
     String resolution;
-    float defaultValue = 0;
+    float defaultValue = -1;
     float defaultPresetValue = -1;
     float highlightValue = 0;
-    float currentValue = 0;
+    float currentValue = -1;
     float postCuelistValue = 0;
     bool isHTP = false;
     bool swopKillable = false;
     bool snapOnly = false;
     bool invertOutput = false;
     bool reactToGrandMaster = false;
-    int fineChannelDelta = 0;
+    int logicalPriority = 0;
 
-    ChannelType* parentParamDefinition = nullptr;
+    SubFixturePhysicalChannel* parentPhysicalChannel = nullptr;
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
     FixtureTypeVirtualChannel* parentFixtureTypeVirtualChannel = nullptr;
     Fixture* parentFixture = nullptr;

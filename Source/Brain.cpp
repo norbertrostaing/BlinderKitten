@@ -47,6 +47,7 @@
 #include "UI/GridView/MapperGridView.h"
 #include "UI/ConductorInfos.h"
 #include "UI/CuelistSheet/CuelistSheet.h"
+#include "Definitions/SubFixture/SubFixturePhysicalChannel.h"
 
 juce_ImplementSingleton(Brain);
 
@@ -316,6 +317,15 @@ void Brain::brainLoop() {
     for (int i = 0; i < 8; i++) {
         modifiedSF.addArray(modifiedPerThread[i]);
     }   
+
+    usingPhysicalChannels.enter();
+    for (SubFixturePhysicalChannel* sfpc : dirtyPhysicalChannels) {
+        if (sfpc->isDirty) {
+            sfpc->writeValue();
+            sfpc->isDirty = false;
+        }
+    }
+    usingPhysicalChannels.exit();
 
     //for (SubFixtureChannel* sfc : allSubfixtureChannels) {
     //    if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty) {
@@ -1219,6 +1229,14 @@ void Brain::pleaseUpdate(SelectionMaster* f) {
     if (!selectionMasterPoolWaiting.contains(f)) {
         selectionMasterPoolWaiting.add(f);
     }
+}
+
+void Brain::setPhysicaChannelDirty(SubFixturePhysicalChannel* sfpc)
+{
+    usingPhysicalChannels.enter();
+    sfpc->isDirty = true;
+    dirtyPhysicalChannels.add(sfpc);
+    usingPhysicalChannels.exit();
 }
 
 void Brain::grandMasterChanged()
