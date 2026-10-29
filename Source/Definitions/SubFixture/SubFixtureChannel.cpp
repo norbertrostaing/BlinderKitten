@@ -134,12 +134,13 @@ void SubFixtureChannel::writeValue(float v) {
 	}
 
 	if (v == currentValue && !forceNextWrite) {
-		//return;
+		return;
 	}
 	forceNextWrite = false;
 
 	currentValue = v;
 	parentFixture->channelValueChanged(subFixtureId, channelType, v);
+
 
 	if (virtualChildren.size() > 0) {
 		for (int i = 0; i < virtualChildren.size(); i++) {
@@ -150,8 +151,9 @@ void SubFixtureChannel::writeValue(float v) {
 	}
 
 	if (invertOutput) {
-		v = 1-v;
+		v = 1 - v;
 	}
+
 
 	if (physicalChannel == nullptr) return;
 
@@ -165,10 +167,11 @@ void SubFixtureChannel::updateVal(double now) {
 	float newValue = defaultValue;
 	float noGMValue = 0;
 
-	isActive = false;
+	isActive = userDefinedDefaultValue;
 
 	if (defaultPresetValue >= 0) {
 		newValue = defaultPresetValue;
+		isActive = true;
 	}
 
 	postCuelistValue = newValue;
@@ -233,7 +236,7 @@ void SubFixtureChannel::updateVal(double now) {
 				if (!checkSwop || c->isSwopping || c->excludeFromSwop->boolValue()) {
 					bool isApplied;
 					newValue = c->applyToChannel(this, newValue, now, isApplied);
-					isActive = true;
+					isActive = isActive || isApplied;
 					if (c->excludeFromGrandMaster->boolValue()) {
 						bool temp;
 						noGMValue = c->applyToChannel(this, noGMValue, now, temp);

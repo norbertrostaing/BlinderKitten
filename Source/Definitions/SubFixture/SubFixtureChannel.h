@@ -46,6 +46,7 @@ public:
     ChannelType* channelType = nullptr;
     String objectType = "SubFixtureChannel";
     String resolution;
+    bool userDefinedDefaultValue = false;
     float defaultValue = -1;
     float defaultPresetValue = -1;
     float highlightValue = 0;
@@ -58,7 +59,8 @@ public:
     bool reactToGrandMaster = false;
     int logicalPriority = 0;
 
-    SubFixturePhysicalChannel* parentPhysicalChannel = nullptr;
+    Automation* outputCurve;
+
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
     FixtureTypeVirtualChannel* parentFixtureTypeVirtualChannel = nullptr;
     Fixture* parentFixture = nullptr;

@@ -158,9 +158,9 @@ void Fixture::checkChildrenSubFixtures() {
 
 	const MessageManagerLock mmLock;
 
-	physicalChannels.clear();
 	subFixturesContainer.clear();
 	subFixtures.clear();
+	physicalChannels.clear();
 
 	FixtureType* t = dynamic_cast<FixtureType*>(devTypeParam->targetContainer.get());
 	if (t== nullptr) {
@@ -199,6 +199,7 @@ void Fixture::checkChildrenSubFixtures() {
 				subFixt->channelsContainer.add(chan);
 				subFixt->channelsMap.set(param, chan);
 				chan->defaultValue = c->defaultValue->getValue();
+				chan->userDefinedDefaultValue = true;
 				chan->highlightValue = c->highlightValue->enabled ? c->highlightValue->floatValue() : -1;
 				chan->isHTP = param->priority->getValue() == "HTP";
 				chan->channelType = dynamic_cast<ChannelType*>(c->channelType->targetContainer.get());
@@ -271,9 +272,13 @@ void Fixture::checkChildrenSubFixtures() {
 						chan->highPhysicalValue = (double)ftlc->dmxOutputRange->value[1] / 255.0;
 						chan->logicalPriority = ftlc->logicalPriority->intValue();
 						chan->physicalChannel = sfpc;
+						chan->outputCurve = &ftlc->curve;
 						subFixt->channelsContainer.add(chan);
 						subFixt->channelsMap.set(param, chan);
-						chan->defaultValue = ftlc->defaultValue->getValue();
+						if (ftlc->defaultValue->enabled) {
+							chan->defaultValue = ftlc->defaultValue->getValue();
+							chan->userDefinedDefaultValue = true;
+						}
 						chan->highlightValue = ftlc->highlightValue->enabled ? ftlc->highlightValue->floatValue() : -1;
 						chan->isHTP = param->priority->getValue() == "HTP";
 						chan->channelType = param;
@@ -293,7 +298,7 @@ void Fixture::checkChildrenSubFixtures() {
 							Brain::getInstance()->swoppableChannels.add(chan);
 						}
 
-						FixtureTypeVirtualChannel* virtualMaster = dynamic_cast<FixtureTypeVirtualChannel*>(ftc->virtualMaster->targetContainer.get());
+						FixtureTypeVirtualChannel* virtualMaster = dynamic_cast<FixtureTypeVirtualChannel*>(ftlc->virtualMaster->targetContainer.get());
 
 						if (virtualMaster != nullptr) {
 							int masterSubFixtureId = virtualMaster->subFixtureId->getValue();
@@ -324,12 +329,14 @@ void Fixture::checkChildrenSubFixtures() {
 					subFixt->channelsContainer.add(chan);
 					subFixt->channelsMap.set(param, chan);
 					chan->defaultValue = ftc->defaultValue->getValue();
+					chan->userDefinedDefaultValue = true;
 					chan->highlightValue = ftc->highlightValue->enabled ? ftc->highlightValue->floatValue() : -1;
 					chan->isHTP = param->priority->getValue() == "HTP";
 					chan->resolution = ftc->resolution->getValue();
 					if (chan->resolution == "16bits") {
 						sfpc->fineChannelDelta = 1;
 					}
+					chan->outputCurve = &ftc->curve;
 					chan->channelType = param;
 					chan->snapOnly = ftc->fadeOrSnap->getValue().toString() == "snap";
 					chan->parentFixtureTypeChannel = ftc;

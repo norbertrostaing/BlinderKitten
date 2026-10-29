@@ -325,6 +325,7 @@ void Brain::brainLoop() {
             sfpc->isDirty = false;
         }
     }
+    dirtyPhysicalChannels.clear();
     usingPhysicalChannels.exit();
 
     //for (SubFixtureChannel* sfc : allSubfixtureChannels) {

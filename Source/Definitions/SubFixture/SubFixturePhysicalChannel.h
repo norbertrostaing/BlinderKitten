@@ -20,7 +20,6 @@ public:
 
     Array<SubFixtureChannel*> writingPool;
     CriticalSection usingPool;
-    HashMap<ChannelType*, SubFixtureChannel*> channelsMap;
 
     bool isDirty = false;
     void setDirty();

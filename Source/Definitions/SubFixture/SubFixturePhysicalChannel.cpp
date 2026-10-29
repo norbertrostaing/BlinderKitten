@@ -21,6 +21,9 @@ SubFixturePhysicalChannel::SubFixturePhysicalChannel()
 
 SubFixturePhysicalChannel::~SubFixturePhysicalChannel()
 {
+	Brain::getInstance()->usingPhysicalChannels.enter();
+	Brain::getInstance()->dirtyPhysicalChannels.removeAllInstancesOf(this);
+	Brain::getInstance()->usingPhysicalChannels.exit();
 }
 
 void SubFixturePhysicalChannel::setDirty()
@@ -46,8 +49,8 @@ void SubFixturePhysicalChannel::writeValue()
 	
 	if (winner->parentFixture != nullptr && winner->parentFixtureTypeChannel != nullptr && winner->channelType != nullptr) {
 
-		if (winner->parentFixtureTypeChannel->curve.enabled->boolValue()) {
-			v = winner->parentFixtureTypeChannel->curve.getValueAtPosition(v);
+		if (winner->outputCurve->enabled->boolValue()) {
+			v = winner->outputCurve->getValueAtPosition(v);
 		}
 
 		int deltaAdress = winner->parentFixtureTypeChannel->dmxDelta->intValue();
