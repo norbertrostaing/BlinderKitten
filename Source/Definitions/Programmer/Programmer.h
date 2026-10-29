@@ -84,7 +84,7 @@ public:
     void selectPrevCommand();
     void selectCommand(Command* c);
 
-    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now);
+    float applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool& isApplied);
 
     String getTypeString() const override { return objectType; }
     static Programmer* create(var params) { return new Programmer(params); }

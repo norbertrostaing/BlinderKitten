@@ -344,8 +344,7 @@ void Programmer::release(double now) {
 	}
 }
 
-
-float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double now) {
+float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double now, bool &isApplied) {
 	float val = currentVal;
 
 	bool keepUpdate = false;
@@ -353,10 +352,11 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 	float localValue = 0;
 	//ScopedLock lock(computing);
 	if (!activeValues.contains(fc)) { 
+		isApplied = false;
 		return currentVal; 
 	}
 	std::shared_ptr<ChannelValue> cv = activeValues.getReference(fc);
-
+	isApplied = true;
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
 	float outIsOff = false;
@@ -384,7 +384,7 @@ float Programmer::applyToChannel(SubFixtureChannel* fc, float currentVal, double
 				keepUpdate = true;
 				activeValues.remove(fc);
 				fc->programmerOutOfStack(this);
-
+				isApplied = false;
 			}
 			// Brain::getInstance()->pleaseUpdate(this);
 		}

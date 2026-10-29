@@ -243,8 +243,6 @@ void Fixture::checkChildrenSubFixtures() {
 		}
 
 		if (subFixt != nullptr && ftc != nullptr) {
-			SubFixturePhysicalChannel* sfpc = new SubFixturePhysicalChannel();
-			physicalChannels.add(sfpc);
 
 			String res = ftc->resolution->getValue();
 			ChannelType* param = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
@@ -259,6 +257,11 @@ void Fixture::checkChildrenSubFixtures() {
 				chan->physicalChannel->fineChannelDelta = indexFine - indexCoarse;
 			}
 			else if (ftc->multiLogicalMode->boolValue()) {
+				SubFixturePhysicalChannel* sfpc = new SubFixturePhysicalChannel();
+				physicalChannels.add(sfpc);
+				sfpc->parentFixtureTypeChannel = ftc;
+				sfpc->parentFixture = this;
+
 				for (FixtureTypeLogicalChannel* ftlc : ftc->logicalChannels.items) {
 					ChannelType* param = dynamic_cast<ChannelType*>(ftlc->channelType->targetContainer.get());
 					if (param != nullptr) {
@@ -268,8 +271,16 @@ void Fixture::checkChildrenSubFixtures() {
 							continue;
 						}
 						SubFixtureChannel* chan = new SubFixtureChannel();
-						chan->lowPhysicalValue = (double)ftlc->dmxOutputRange->value[0] / 255.0;
-						chan->highPhysicalValue = (double)ftlc->dmxOutputRange->value[1] / 255.0;
+						chan->resolution = ftc->resolution->getValue();
+						if (chan->resolution == "16bits") {
+							sfpc->fineChannelDelta = 1;
+							chan->lowPhysicalValue = (double)ftlc->dmxOutputRange->value[0] / 65535.0;
+							chan->highPhysicalValue = (double)ftlc->dmxOutputRange->value[1] / 65535.0;
+						}
+						else {
+							chan->lowPhysicalValue = (double)ftlc->dmxOutputRange->value[0] / 255.0;
+							chan->highPhysicalValue = (double)ftlc->dmxOutputRange->value[1] / 255.0;
+						}
 						chan->logicalPriority = ftlc->logicalPriority->intValue();
 						chan->physicalChannel = sfpc;
 						chan->outputCurve = &ftlc->curve;
@@ -316,6 +327,11 @@ void Fixture::checkChildrenSubFixtures() {
 				}
 			}
 			else {
+				SubFixturePhysicalChannel* sfpc = new SubFixturePhysicalChannel();
+				physicalChannels.add(sfpc);
+				sfpc->parentFixtureTypeChannel = ftc;
+				sfpc->parentFixture = this;
+
 				ChannelType* param = dynamic_cast<ChannelType*>(ftc->channelType->targetContainer.get());
 				if (param != nullptr) {
 					String res = ftc->resolution->getValue();

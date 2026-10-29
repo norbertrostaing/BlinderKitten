@@ -45,19 +45,22 @@ void SubFixturePhysicalChannel::writeValue()
 	usingPool.exit();
 
     float v = winner != nullptr && winner->currentValue >=0 ? winner->currentValue : 0;
-	if (winner == nullptr) return;
 	
-	if (winner->parentFixture != nullptr && winner->parentFixtureTypeChannel != nullptr && winner->channelType != nullptr) {
+	if (parentFixture != nullptr && parentFixtureTypeChannel != nullptr) {
 
-		if (winner->outputCurve->enabled->boolValue()) {
+		if (winner != nullptr && winner->invertOutput) {
+			v = 1-v;
+		}
+
+		if (winner != nullptr && winner->outputCurve->enabled->boolValue()) {
 			v = winner->outputCurve->getValueAtPosition(v);
 		}
 
-		int deltaAdress = winner->parentFixtureTypeChannel->dmxDelta->intValue();
+		int deltaAdress = parentFixtureTypeChannel->dmxDelta->intValue();
 		deltaAdress--;
-		String chanRes = winner->parentFixtureTypeChannel->resolution->stringValue();
-		for (int i = 0; i < winner->parentFixture->patchs.items.size(); i++) {
-			FixturePatch* p = winner->parentFixture->patchs.items[i];
+		String chanRes = parentFixtureTypeChannel->resolution->stringValue();
+		for (int i = 0; i < parentFixture->patchs.items.size(); i++) {
+			FixturePatch* p = parentFixture->patchs.items[i];
 			if (p->enabled->boolValue()) {
 				float localValue = v;
 
@@ -68,7 +71,7 @@ void SubFixturePhysicalChannel::writeValue()
 
 					for (int iCorr = 0; iCorr < patch->corrections.items.size(); iCorr++) {
 						FixturePatchCorrection* c = patch->corrections.items[iCorr];
-						if (c->isOn && c->enabled->boolValue() && (int)c->subFixtureId->getValue() == winner->subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == winner->channelType) {
+						if (c->isOn && c->enabled->boolValue() && winner != nullptr && (int)c->subFixtureId->getValue() == winner->subFixtureId && static_cast<ChannelType*>(c->channelType->targetContainer.get()) == winner->channelType) {
 							if (c->invertChannel->getValue()) {
 								localValue = 1 - localValue;
 							}
@@ -80,7 +83,12 @@ void SubFixturePhysicalChannel::writeValue()
 					}
 
 					if (address > 0) {
-						localValue = jmap((double)localValue, winner->lowPhysicalValue, winner->highPhysicalValue);
+						if (winner != nullptr) {
+							localValue = jmap((double)localValue, winner->lowPhysicalValue, winner->highPhysicalValue);
+						}
+						else {
+							localValue = 0;
+						}
 						address += (deltaAdress);
 						if (fineChannelDelta == 0) {
 							

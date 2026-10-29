@@ -59,7 +59,7 @@ public:
     bool reactToGrandMaster = false;
     int logicalPriority = 0;
 
-    Automation* outputCurve;
+    Automation* outputCurve = nullptr;
 
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
     FixtureTypeVirtualChannel* parentFixtureTypeVirtualChannel = nullptr;

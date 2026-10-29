@@ -12,11 +12,17 @@
 
 #pragma once
 class SubFixtureChannel;
+class FixtureTypeChannel;
+class Fixture;
+
 
 class SubFixturePhysicalChannel {
 public:
     SubFixturePhysicalChannel();
     virtual ~SubFixturePhysicalChannel();
+
+    FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
+    Fixture* parentFixture = nullptr;
 
     Array<SubFixtureChannel*> writingPool;
     CriticalSection usingPool;

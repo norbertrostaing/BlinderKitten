@@ -134,7 +134,7 @@ void SubFixtureChannel::writeValue(float v) {
 	}
 
 	if (v == currentValue && !forceNextWrite) {
-		return;
+		//return;
 	}
 	forceNextWrite = false;
 
@@ -148,10 +148,6 @@ void SubFixtureChannel::writeValue(float v) {
 			//Brain::getInstance()->pleaseUpdate(virtualChildren[i]);
 		}
 		return;
-	}
-
-	if (invertOutput) {
-		v = 1 - v;
 	}
 
 
@@ -177,6 +173,7 @@ void SubFixtureChannel::updateVal(double now) {
 	postCuelistValue = newValue;
 
 	cs.enter();
+
 
 	cuelistStackSnapshot.addArray(cuelistStack);
 	programmerStackSnapshot.addArray(programmerStack);
@@ -264,8 +261,9 @@ void SubFixtureChannel::updateVal(double now) {
 		if (!checkSwop) {
 			for (int i = 0; i < programmerStackSnapshot.size(); i++) {
 				if (programmerStackSnapshot[i]->layerId->intValue() == currentLayer) {
-					newValue = programmerStackSnapshot[i]->applyToChannel(this, newValue, now);
-					isActive = true;
+					bool isApplied = false;
+					newValue = programmerStackSnapshot[i]->applyToChannel(this, newValue, now, isApplied);
+					isActive = isActive || isApplied;
 				}
 			}
 
