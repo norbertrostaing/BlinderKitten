@@ -1219,6 +1219,14 @@ static bool gdtfDMXValueToNormalized(String dmxValue, int targetBytes, float* re
 	return true;
 }
 
+static int gdtfDMXValueToInt(String value, int resolution)
+{
+	float normalized = 0;
+	if (!gdtfDMXValueToNormalized(value, resolution, &normalized)) {
+		return 0;
+	}
+	return round(normalized * (resolution == 2 ? 65535.0f : 255.0f));
+}
 
 FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeName)
 {
@@ -1238,10 +1246,26 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 	changedNames.set("ColorSub_M", "Magenta");
 	changedNames.set("ColorSub_Y", "Yellow");
 
+	struct GDTFLogicalChannel
+	{
+		String attribute;
+		String originalAttribute;
+		int dmxFrom = 0;
+		int dmxTo = 255;
+		float physicalFrom = 0;
+		float physicalTo = 0;
+		bool snap = false;
+	};
+
 	XmlDocument descriptionXml = stream->readEntireStreamAsString();
-	auto rootElmt = descriptionXml.getDocumentElement();
+	std::unique_ptr<XmlElement> rootElmt = descriptionXml.getDocumentElement();
+
+	if (rootElmt == nullptr) {
+		LOGERROR("Invalid GDTF XML");
+		return nullptr;
+	}
+
 	int nChildren = rootElmt->getNumChildElements();
-	HashMap<int, int> breakOffsets;
 	HashMap<String, ChannelType*> nameToChannelType;
 
 	FixtureType* ret = nullptr;
@@ -1254,30 +1278,43 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 	}
 
 	for (int indexChild = 0; indexChild < nChildren; indexChild++) {
-		auto fixtureTypeNode = rootElmt->getChildElement(indexChild);
+		XmlElement* fixtureTypeNode = rootElmt->getChildElement(indexChild);
+
 		if (fixtureTypeNode->getTagName().toLowerCase() == "fixturetype") {
-			String fixtureName = "";
-			String manufacturer = "";
-			fixtureName += fixtureTypeNode->getStringAttribute("Name");
-			manufacturer += fixtureTypeNode->getStringAttribute("Manufacturer");
+			String fixtureName = fixtureTypeNode->getStringAttribute("Name");
+			String manufacturer = fixtureTypeNode->getStringAttribute("Manufacturer");
 
 			XmlElement* attributesNode = fixtureTypeNode->getChildByName("AttributeDefinitions");
-			if (attributesNode == nullptr) { LOGERROR("import not finished, the fixture has no attributes tag"); }
-			auto attributes = attributesNode->getChildByName("Attributes");
+			if (attributesNode == nullptr) {
+				LOGERROR("import not finished, the fixture has no attributes tag");
+				continue;
+			}
+
+			XmlElement* attributes = attributesNode->getChildByName("Attributes");
+			if (attributes == nullptr) {
+				LOGERROR("import not finished, the fixture has no attributes list");
+				continue;
+			}
+
 			for (int i = 0; i < attributes->getNumChildElements(); i++) {
-				auto attr = attributes->getChildElement(i);
+				XmlElement* attr = attributes->getChildElement(i);
 				String attrName = attr->getStringAttribute("Name");
-				if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
+				if (changedNames.contains(attrName)) {
+					attrName = changedNames.getReference(attrName);
+				}
+
 				String attrFamilyName = StringArray::fromTokens(attr->getStringAttribute("Feature"), ".", "")[0];
 
 				if (!nameToChannelType.contains(attrName)) {
 					ChannelFamily* cf = nullptr;
 					ChannelType* ct = nullptr;
+
 					for (int iFam = 0; iFam < ChannelFamilyManager::getInstance()->items.size(); iFam++) {
 						if (ChannelFamilyManager::getInstance()->items[iFam]->niceName.toLowerCase() == attrFamilyName.toLowerCase()) {
 							cf = ChannelFamilyManager::getInstance()->items[iFam];
 						}
 					}
+
 					if (cf == nullptr) {
 						cf = ChannelFamilyManager::getInstance()->addItem();
 						cf->setNiceName(attrFamilyName);
@@ -1288,33 +1325,36 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 							ct = cf->definitions.items[iChan];
 						}
 					}
+
 					if (ct == nullptr) {
 						ct = cf->definitions.addItem();
 						ct->setNiceName(attrName);
 					}
 
-					// FIX : même si le ChannelType existait déjà avec une casse différente,
-					// il faut l'ajouter à la map avec le nom GDTF.
 					nameToChannelType.set(attrName, ct);
 				}
 			}
 
 			XmlElement* geometriesNode = fixtureTypeNode->getChildByName("Geometries");
-			if (geometriesNode == nullptr) { LOGERROR("import not finished, the fixture has no geometries tag"); }
-			HashMap<String, XmlElement* > mainGeometries;
-			for (int i = 0; i < geometriesNode->getNumChildElements(); i++) {
-				auto mainGeo = geometriesNode->getChildElement(i);
-				String geoName = mainGeo->getStringAttribute("Name");
-				mainGeometries.set(geoName, mainGeo);
+			XmlElement* dmxModesNode = fixtureTypeNode->getChildByName("DMXModes");
+
+			if (geometriesNode == nullptr || dmxModesNode == nullptr) {
+				LOGERROR("import not finished, the fixture has no geometries or DMX modes");
+				continue;
 			}
 
-			XmlElement* dmxModesNode = fixtureTypeNode->getChildByName("DMXModes");
-			if (dmxModesNode == nullptr) { LOGERROR("import not finished, the fixture has no DMXModes tag"); }
-			for (int iMode = 0; iMode < dmxModesNode->getNumChildElements(); iMode++) {
-				auto modeNode = dmxModesNode->getChildElement(iMode);
-				String modeName = modeNode->getStringAttribute("Name");
-				if (importModeName == "" || importModeName == modeName) {
+			HashMap<String, XmlElement*> mainGeometries;
 
+			for (int i = 0; i < geometriesNode->getNumChildElements(); i++) {
+				XmlElement* mainGeo = geometriesNode->getChildElement(i);
+				mainGeometries.set(mainGeo->getStringAttribute("Name"), mainGeo);
+			}
+
+			for (int iMode = 0; iMode < dmxModesNode->getNumChildElements(); iMode++) {
+				XmlElement* modeNode = dmxModesNode->getChildElement(iMode);
+				String modeName = modeNode->getStringAttribute("Name");
+
+				if (importModeName == "" || importModeName == modeName) {
 					FixtureType* ft = FixtureTypeManager::getInstance()->addItem();
 					ret = ft;
 					ft->setNiceName(fixtureName + " - " + modeName);
@@ -1322,17 +1362,20 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					Array<tempChannel> tempChannels;
 					HashMap<int, float> tempDefaultValues;
 					HashMap<int, float> tempHighlightValues;
+					HashMap<int, XmlElement*> tempDMXChannelNodes;
+
 					Array<String> getMasterDimmer;
 					HashMap<int, FixtureTypeVirtualChannel*> subIdToVirtDimmer;
-					auto modeRelations = modeNode->getChildByName("Relations");
+
+					XmlElement* modeRelations = modeNode->getChildByName("Relations");
 					if (modeRelations != nullptr) {
 						for (int iRel = 0; iRel < modeRelations->getNumChildElements(); iRel++) {
 							getMasterDimmer.add(modeRelations->getChildElement(iRel)->getStringAttribute("Follower"));
 						}
 					}
 
-					XmlElement* modeGeometry = mainGeometries.getReference(modeNode->getStringAttribute("Geometry"));
-					auto modeChannels = modeNode->getChildByName("DMXChannels");
+					XmlElement* modeGeometry = mainGeometries[modeNode->getStringAttribute("Geometry")];
+					XmlElement* modeChannels = modeNode->getChildByName("DMXChannels");
 
 					HashMap<String, int> geometrySubFixtureIds;
 					HashMap<String, int> referenceSubFixtureIds;
@@ -1344,47 +1387,14 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 					if (modeChannels != nullptr) {
 						for (int iChan = 0; iChan < modeChannels->getNumChildElements(); iChan++) {
-							auto dmxChannelNode = modeChannels->getChildElement(iChan);
+							XmlElement* dmxChannelNode = modeChannels->getChildElement(iChan);
+
 							String DMXOffset = dmxChannelNode->getStringAttribute("Offset");
 							String geometry = dmxChannelNode->getStringAttribute("Geometry");
 							String initialFunction = dmxChannelNode->getStringAttribute("InitialFunction");
 							int dmxBreak = dmxChannelNode->getIntAttribute("DMXBreak");
 							int dmxAdress = 0;
 							int resolution = 0;
-
-							auto logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
-							float physicalFrom = 0;
-							float physicalTo = 0;
-							String attribute = "###dummy###";
-							if (logicalChannelNode != nullptr) {
-								attribute = logicalChannelNode->getStringAttribute("Attribute");
-
-								if (logicalChannelNode->getNumChildElements() == 1) {
-									auto chanFunctionTag = logicalChannelNode->getFirstChildElement();
-									if (chanFunctionTag->hasTagName("ChannelFunction")) {
-										physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
-										physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
-
-										if (attribute == "") {
-											attribute = chanFunctionTag->getStringAttribute("Attribute");
-										}
-									}
-								}
-							}
-
-								// FIX : conserver quand même le canal si aucun attribut n'est défini.
-							if (attribute == "") { attribute = "###dummy###"; }
-
-							if (initialFunction == "" && attribute != "###dummy###") {
-								String followerPrefix = geometry + "_" + attribute + "." + attribute + ".";
-
-								for (int iRel = 0; iRel < getMasterDimmer.size(); iRel++) {
-									if (getMasterDimmer[iRel].startsWith(followerPrefix)) {
-										initialFunction = getMasterDimmer[iRel];
-										break;
-									}
-								}
-							}
 
 							if (DMXOffset == "") {
 								// virtual
@@ -1398,10 +1408,52 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 								resolution = 1;
 							}
 
+							String attribute = "###dummy###";
+							float physicalFrom = 0;
+							float physicalTo = 0;
+
+							XmlElement* logicalChannelNode = dmxChannelNode->getChildByName("LogicalChannel");
+
+							if (logicalChannelNode != nullptr) {
+								attribute = logicalChannelNode->getStringAttribute("Attribute");
+
+								if (logicalChannelNode->getNumChildElements() == 1) {
+									XmlElement* chanFunctionTag = logicalChannelNode->getFirstChildElement();
+
+									if (chanFunctionTag->hasTagName("ChannelFunction")) {
+										physicalFrom = chanFunctionTag->getStringAttribute("PhysicalFrom").getFloatValue();
+										physicalTo = chanFunctionTag->getStringAttribute("PhysicalTo").getFloatValue();
+
+										if (attribute == "") {
+											attribute = chanFunctionTag->getStringAttribute("Attribute");
+										}
+									}
+								}
+							}
+
+							if (attribute == "") {
+								attribute = "###dummy###";
+							}
+
+							if (initialFunction == "" && attribute != "###dummy###") {
+								String followerPrefix = geometry + "_" + attribute + "." + attribute + ".";
+
+								for (int iRel = 0; iRel < getMasterDimmer.size(); iRel++) {
+									if (getMasterDimmer[iRel].startsWith(followerPrefix)) {
+										initialFunction = getMasterDimmer[iRel];
+										break;
+									}
+								}
+							}
+
 							float defaultValue = 0;
 							float highlightValue = 0;
-							bool hasDefaultValue = gdtfDMXValueToNormalized(getGDTFDefaultDMXValue(dmxChannelNode), resolution, &defaultValue);
-							bool hasHighlightValue = gdtfDMXValueToNormalized(dmxChannelNode->getStringAttribute("Highlight"), resolution, &highlightValue);
+
+							bool hasDefaultValue = gdtfDMXValueToNormalized(
+								getGDTFDefaultDMXValue(dmxChannelNode), resolution, &defaultValue);
+
+							bool hasHighlightValue = gdtfDMXValueToNormalized(
+								dmxChannelNode->getStringAttribute("Highlight"), resolution, &highlightValue);
 
 							// fallback for badly defined pixel GDTFs
 							if (attribute == "NoFeature") {
@@ -1422,7 +1474,10 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 							Array<geometryBreaks> breaks;
 
-							getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
+							if (modeGeometry != nullptr) {
+								getBreakOffset(modeGeometry, geometry, dmxBreak, &breaks);
+							}
+
 							if (dmxAdress > 0) {
 								if (breaks.size() > 0) {
 									for (int i = 0; i < breaks.size(); i++) {
@@ -1434,18 +1489,28 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 											referenceSubFixtureIds.set(breaks[i].name, nextSubFixtureId);
 											nextSubFixtureId++;
 										}
-										tc.subFixtId = referenceSubFixtureIds.getReference(breaks[i].name);
 
+										tc.subFixtId = referenceSubFixtureIds.getReference(breaks[i].name);
 										tc.initialFunction = initialFunction;
 										tc.physicalFrom = physicalFrom;
 										tc.physicalTo = physicalTo;
-										int index = dmxAdress;
-										index += breaks[i].offset;
-										index -= 2;
-										while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+
+										int index = dmxAdress + breaks[i].offset - 2;
+										if (index < 0) { continue; }
+
+										while (tempChannels.size() <= index) {
+											tempChannels.add(tempChannel());
+										}
+
 										tempChannels.set(index, tc);
-										if (hasDefaultValue) { tempDefaultValues.set(index, defaultValue); }
-										if (hasHighlightValue) { tempHighlightValues.set(index, highlightValue); }
+										tempDMXChannelNodes.set(index, dmxChannelNode);
+
+										if (hasDefaultValue) {
+											tempDefaultValues.set(index, defaultValue);
+										}
+										if (hasHighlightValue) {
+											tempHighlightValues.set(index, highlightValue);
+										}
 									}
 								}
 								else {
@@ -1460,13 +1525,23 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 										geometrySubFixtureIds.set(geometry, nextSubFixtureId);
 										nextSubFixtureId++;
 									}
+
 									tc.subFixtId = geometrySubFixtureIds.getReference(geometry);
 
 									int index = dmxAdress - 1;
-									while (tempChannels.size() < index) { tempChannels.add(tempChannel()); }
+									while (tempChannels.size() <= index) {
+										tempChannels.add(tempChannel());
+									}
+
 									tempChannels.set(index, tc);
-									if (hasDefaultValue) { tempDefaultValues.set(index, defaultValue); }
-									if (hasHighlightValue) { tempHighlightValues.set(index, highlightValue); }
+									tempDMXChannelNodes.set(index, dmxChannelNode);
+
+									if (hasDefaultValue) {
+										tempDefaultValues.set(index, defaultValue);
+									}
+									if (hasHighlightValue) {
+										tempHighlightValues.set(index, highlightValue);
+									}
 								}
 							}
 						}
@@ -1474,54 +1549,295 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 					// got all channels
 					for (int i = 0; i < tempChannels.size(); i++) {
-						if (tempChannels[i].attribute != "") {
-							FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
-							ftc->subFixtureId->setValue(1);
+						if (tempChannels[i].attribute == "") {
+							continue;
+						}
+
+						FixtureTypeChannel* ftc = ft->chansManager.addItem(nullptr, var(), false, false);
+						ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
+
+						int resolution = tempChannels[i].resolution;
+						int maxDMX = resolution == 2 ? 65535 : 255;
+
+						if (resolution == 2) {
+							ftc->resolution->setValue("16bits");
+						}
+
+						Array<GDTFLogicalChannel> logicalChannels;
+						XmlElement* dmxChannelNode = tempDMXChannelNodes[i];
+
+						if (dmxChannelNode != nullptr) {
+							for (int iLogical = 0; iLogical < dmxChannelNode->getNumChildElements(); iLogical++) {
+								XmlElement* logicalNode = dmxChannelNode->getChildElement(iLogical);
+								if (!logicalNode->hasTagName("LogicalChannel")) {
+									continue;
+								}
+
+								GDTFLogicalChannel logical;
+								logical.originalAttribute = logicalNode->getStringAttribute("Attribute");
+								logical.attribute = logical.originalAttribute;
+								logical.dmxTo = maxDMX;
+
+								String snap = logicalNode->getStringAttribute("Snap");
+								logical.snap = snap.equalsIgnoreCase("Yes") || snap.equalsIgnoreCase("On");
+
+								bool hasRange = false;
+
+								for (int iFunction = 0; iFunction < logicalNode->getNumChildElements(); iFunction++) {
+									XmlElement* functionNode = logicalNode->getChildElement(iFunction);
+									if (!functionNode->hasTagName("ChannelFunction")) {
+										continue;
+									}
+
+									String functionAttribute = functionNode->getStringAttribute("Attribute");
+
+									if (logical.attribute == "" || logical.attribute == "NoFeature") {
+										if (functionAttribute != "" && functionAttribute != "NoFeature") {
+											logical.attribute = functionAttribute;
+										}
+									}
+
+									int dmxFrom = gdtfDMXValueToInt(
+										functionNode->getStringAttribute("DMXFrom", "0/1"), resolution);
+
+									int dmxTo = maxDMX;
+
+									for (int iNext = iFunction + 1; iNext < logicalNode->getNumChildElements(); iNext++) {
+										XmlElement* nextFunction = logicalNode->getChildElement(iNext);
+										if (nextFunction->hasTagName("ChannelFunction")) {
+											dmxTo = gdtfDMXValueToInt(
+												nextFunction->getStringAttribute("DMXFrom", "0/1"), resolution) - 1;
+											break;
+										}
+									}
+
+									if (dmxTo < dmxFrom) {
+										continue;
+									}
+
+									// NoFeature does not represent an active logical DMX range.
+									if (functionAttribute.equalsIgnoreCase("NoFeature")) {
+										continue;
+									}
+
+									float physicalFrom = (float)functionNode->getDoubleAttribute("PhysicalFrom", 0);
+									float physicalTo = (float)functionNode->getDoubleAttribute("PhysicalTo", 1);
+
+									if (!hasRange) {
+										logical.dmxFrom = dmxFrom;
+										logical.dmxTo = dmxTo;
+										logical.physicalFrom = physicalFrom;
+										logical.physicalTo = physicalTo;
+										hasRange = true;
+									}
+									else if (dmxFrom <= logical.dmxTo + 1) {
+										logical.dmxTo = jmax(logical.dmxTo, dmxTo);
+										logical.physicalTo = physicalTo;
+									}
+									else {
+										LOG("GDTF: non-contiguous DMX ranges for " + logical.attribute
+											+ ", only the first contiguous range is imported.");
+									}
+								}
+
+								if (!hasRange) {
+									continue;
+								}
+
+								if (logical.attribute == "" || logical.attribute == "NoFeature") {
+									continue;
+								}
+
+								if (changedNames.contains(logical.attribute)) {
+									logical.attribute = changedNames.getReference(logical.attribute);
+								}
+
+								bool alreadyThere = false;
+								for (GDTFLogicalChannel existing : logicalChannels) {
+									if (existing.attribute == logical.attribute) {
+										alreadyThere = true;
+										break;
+									}
+								}
+
+								if (!alreadyThere) {
+									logicalChannels.add(logical);
+								}
+							}
+						}
+
+						bool multiLogical = logicalChannels.size() > 1;
+
+						if (logicalChannels.size() == 1) {
+							if (logicalChannels[0].dmxFrom != 0 || logicalChannels[0].dmxTo != maxDMX) {
+								multiLogical = true;
+							}
+						}
+
+						if (multiLogical) {
+							ftc->multiLogicalMode->setValue(true);
+
+							for (GDTFLogicalChannel logical : logicalChannels) {
+								if (!nameToChannelType.contains(logical.attribute)) {
+									LOG("GDTF: unknown logical attribute " + logical.attribute);
+									continue;
+								}
+
+								FixtureTypeLogicalChannel* ftlc =
+									ftc->logicalChannels.addItem(nullptr, var(), false, false);
+
+								ftlc->channelType->setValueFromTarget(
+									nameToChannelType.getReference(logical.attribute));
+
+								ftlc->dmxOutputRange->setBounds(0, 0, maxDMX, maxDMX);
+								ftlc->dmxOutputRange->setPoint(logical.dmxFrom, logical.dmxTo);
+
+								var phys;
+								phys.append(logical.physicalFrom);
+								phys.append(logical.physicalTo);
+								ftlc->physicalRange->setValue(phys);
+
+								if (logical.snap) {
+									ftlc->fadeOrSnap->setValue("snap");
+								}
+
+								if (logical.attribute == "Intensity") {
+									ftlc->killedBySWOP->setValue(true);
+								}
+
+								if (tempDefaultValues.contains(i)) {
+									float dmxValue = tempDefaultValues.getReference(i) * maxDMX;
+
+									if (dmxValue >= logical.dmxFrom && dmxValue <= logical.dmxTo) {
+										float value = logical.dmxTo > logical.dmxFrom
+											? (dmxValue - logical.dmxFrom) / (logical.dmxTo - logical.dmxFrom)
+											: 0;
+
+										ftlc->defaultValue->setValue(jlimit(0.0f, 1.0f, value));
+										ftlc->defaultValue->setEnabled(true);
+									}
+								}
+
+								if (tempHighlightValues.contains(i)) {
+									float dmxValue = tempHighlightValues.getReference(i) * maxDMX;
+
+									if (dmxValue >= logical.dmxFrom && dmxValue <= logical.dmxTo) {
+										float value = logical.dmxTo > logical.dmxFrom
+											? (dmxValue - logical.dmxFrom) / (logical.dmxTo - logical.dmxFrom)
+											: 0;
+
+										ftlc->highlightValue->setValue(jlimit(0.0f, 1.0f, value));
+										ftlc->highlightValue->setEnabled(true);
+									}
+								}
+
+								String follower = "";
+								String geometry = dmxChannelNode->getStringAttribute("Geometry");
+								String followerPrefix = geometry + "_" + logical.originalAttribute
+									+ "." + logical.originalAttribute + ".";
+
+								for (int iRel = 0; iRel < getMasterDimmer.size(); iRel++) {
+									if (getMasterDimmer[iRel].startsWith(followerPrefix)) {
+										follower = getMasterDimmer[iRel];
+										break;
+									}
+								}
+
+								if (follower != "") {
+									int subId = tempChannels[i].subFixtId;
+
+									if (!subIdToVirtDimmer.contains(subId)) {
+										FixtureTypeVirtualChannel* virtDim =
+											ft->virtualChansManager.addItem(nullptr, var(), false, false);
+
+										subIdToVirtDimmer.set(subId, virtDim);
+										virtDim->channelType->setValueFromTarget(
+											nameToChannelType.getReference("Intensity"));
+										virtDim->killedBySWOP->setValue(true);
+										virtDim->subFixtureId->setValue(subId);
+										virtDim->setNiceName("Dimmer " + String(subId));
+									}
+
+									ftlc->virtualMaster->setRootContainer(&ft->virtualChansManager);
+									ftlc->virtualMaster->setValueFromTarget(
+										subIdToVirtDimmer.getReference(subId));
+								}
+							}
+						}
+						else {
 							if (tempDefaultValues.contains(i)) {
 								ftc->defaultValue->setValue(tempDefaultValues.getReference(i));
 							}
+
 							if (tempHighlightValues.contains(i)) {
 								ftc->highlightValue->setEnabled(true);
 								ftc->highlightValue->setValue(tempHighlightValues.getReference(i));
 							}
-							if (tempChannels[i].attribute != "###dummy###") {
-								String attrName = tempChannels[i].attribute;
-								if (changedNames.contains(attrName)) { attrName = changedNames.getReference(attrName); }
-								if (attrName == "Intensity") ftc->killedBySWOP->setValue(true);
 
-								ftc->channelType->setValueFromTarget(nameToChannelType.getReference(attrName));
-								ftc->subFixtureId->setValue(tempChannels[i].subFixtId);
-								var phys;
-								phys.append(tempChannels[i].physicalFrom);
-								phys.append(tempChannels[i].physicalTo);
-								ftc->physicalRange->setValue(phys);
-								if (tempChannels[i].resolution == 2)
-								{
-									ftc->resolution->setValue("16bits");
+							String attrName = tempChannels[i].attribute;
+							float physicalFrom = tempChannels[i].physicalFrom;
+							float physicalTo = tempChannels[i].physicalTo;
+
+							if (logicalChannels.size() == 1) {
+								attrName = logicalChannels[0].attribute;
+								physicalFrom = logicalChannels[0].physicalFrom;
+								physicalTo = logicalChannels[0].physicalTo;
+
+								if (logicalChannels[0].snap) {
+									ftc->fadeOrSnap->setValue("snap");
 								}
+							}
+
+							if (attrName != "###dummy###") {
+								if (changedNames.contains(attrName)) {
+									attrName = changedNames.getReference(attrName);
+								}
+
+								if (attrName == "Intensity") {
+									ftc->killedBySWOP->setValue(true);
+								}
+
+								ftc->channelType->setValueFromTarget(
+									nameToChannelType[attrName]);
+
+								var phys;
+								phys.append(physicalFrom);
+								phys.append(physicalTo);
+								ftc->physicalRange->setValue(phys);
+
 								if (getMasterDimmer.contains(tempChannels[i].initialFunction)) {
-									if (!subIdToVirtDimmer.contains(tempChannels[i].subFixtId)) {
-										FixtureTypeVirtualChannel* virtDim = ft->virtualChansManager.addItem(nullptr, var(), false, false);
-										subIdToVirtDimmer.set(tempChannels[i].subFixtId, virtDim);
-										virtDim->channelType->setValueFromTarget(nameToChannelType.getReference("Intensity"));
+									int subId = tempChannels[i].subFixtId;
+
+									if (!subIdToVirtDimmer.contains(subId)) {
+										FixtureTypeVirtualChannel* virtDim =
+											ft->virtualChansManager.addItem(nullptr, var(), false, false);
+
+										subIdToVirtDimmer.set(subId, virtDim);
+										virtDim->channelType->setValueFromTarget(
+											nameToChannelType.getReference("Intensity"));
 										virtDim->killedBySWOP->setValue(true);
-										virtDim->subFixtureId->setValue(tempChannels[i].subFixtId);
-										virtDim->setNiceName("Dimmer " + String(tempChannels[i].subFixtId));
+										virtDim->subFixtureId->setValue(subId);
+										virtDim->setNiceName("Dimmer " + String(subId));
 									}
-									ftc->virtualMaster->setValueFromTarget(subIdToVirtDimmer.getReference(tempChannels[i].subFixtId));
+
+									ftc->virtualMaster->setValueFromTarget(
+										subIdToVirtDimmer.getReference(subId));
 								}
 							}
 						}
 					}
+
+					ft->updateVirtualLists();
 				}
 			}
+
 			LOG("ok");
 		}
 	}
+
 	LOG("Import done !");
 	return ret;
 }
-
 
 void BKEngine::getBreakOffset(XmlElement* tag, String geometryName, int dmxBreak, Array<geometryBreaks>* breaks)
 {
