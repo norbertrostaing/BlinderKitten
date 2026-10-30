@@ -217,6 +217,15 @@ void Tracker::computeData() {
 				float dist = (sqrt((rotated.x * rotated.x) + (rotated.y * rotated.y)));
 				float panAngle  = -(90+radiansToDegrees( std::atan2(rotated.y, rotated.x)));
 				float tiltAngle = -(90+radiansToDegrees(std::atan2(rotated.z, dist)));
+
+				Point2DParameter* panRange = sfcPan->parentFixtureTypeLogicalChannel != nullptr
+					? sfcPan->parentFixtureTypeLogicalChannel->physicalRange
+					: sfcPan->parentFixtureTypeChannel->physicalRange;
+
+				Point2DParameter* tiltRange = sfcTilt->parentFixtureTypeLogicalChannel != nullptr
+					? sfcTilt->parentFixtureTypeLogicalChannel->physicalRange
+					: sfcTilt->parentFixtureTypeChannel->physicalRange;
+
 				float minPan =  sfcPan->parentFixtureTypeChannel->physicalRange->x;
 				float maxPan =  sfcPan->parentFixtureTypeChannel->physicalRange->y;
 				float minTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->x;

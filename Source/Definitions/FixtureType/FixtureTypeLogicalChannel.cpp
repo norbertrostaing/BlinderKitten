@@ -38,6 +38,8 @@ FixtureTypeLogicalChannel::FixtureTypeLogicalChannel(var params) :
     canBeDisabled = false;
 
     dmxOutputRange = addPoint2DParameter("DMX Range", "Ouput values in DMX for this logical channel");
+    dmxOutputRange->setDefaultPoint(0, 255);
+
     logicalPriority = addIntParameter("Logical priority", "Acts as a priority when multipls logical channels try to write on the physical channel, highest priority wins, if same priority, last arrived wins !", 1,1);
 
     channelType = addTargetParameter("Channel type", "Type of data of this channel", ChannelFamilyManager::getInstance());

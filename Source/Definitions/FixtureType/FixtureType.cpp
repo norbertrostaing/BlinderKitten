@@ -59,14 +59,18 @@ void FixtureType::afterLoadJSONDataInternal() {
 }
 
 void FixtureType::updateVirtualLists() {
-	for (int i = 0; i < chansManager.items.size(); i++) {
-		String value = chansManager.items[i]->virtualMaster->getValue();
-		chansManager.items[i]->virtualMaster->setRootContainer(&virtualChansManager);
-		chansManager.items[i]->virtualMaster->setValue(value);
+	for (FixtureTypeChannel* ftc : chansManager.items) {
+		String value = ftc->virtualMaster->getValue();
+		ftc->virtualMaster->setRootContainer(&virtualChansManager);
+		ftc->virtualMaster->setValue(value);
+
+		for (FixtureTypeLogicalChannel* ftlc : ftc->logicalChannels.items) {
+			String value = ftlc->virtualMaster->getValue();
+			ftlc->virtualMaster->setRootContainer(&virtualChansManager);
+			ftlc->virtualMaster->setValue(value);
+		}
 	}
-
 }
-
 void FixtureType::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == layoutIconParameter) {

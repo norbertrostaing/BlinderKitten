@@ -27,6 +27,7 @@ class Command;
 class ChannelValue;
 class Stamp;
 class SubFixturePhysicalChannel;
+class FixtureTypeLogicalChannel;
 
 class SubFixtureChannel{
 public:
@@ -62,6 +63,7 @@ public:
     Automation* outputCurve = nullptr;
 
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
+    FixtureTypeLogicalChannel* parentFixtureTypeLogicalChannel = nullptr;
     FixtureTypeVirtualChannel* parentFixtureTypeVirtualChannel = nullptr;
     Fixture* parentFixture = nullptr;
     SubFixture* parentSubFixture = nullptr;

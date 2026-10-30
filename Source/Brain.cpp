@@ -1235,8 +1235,10 @@ void Brain::pleaseUpdate(SelectionMaster* f) {
 void Brain::setPhysicaChannelDirty(SubFixturePhysicalChannel* sfpc)
 {
     usingPhysicalChannels.enter();
-    sfpc->isDirty = true;
-    dirtyPhysicalChannels.add(sfpc);
+    if (!sfpc->isDirty) {
+        sfpc->isDirty = true;
+        dirtyPhysicalChannels.add(sfpc);
+    } 
     usingPhysicalChannels.exit();
 }
 

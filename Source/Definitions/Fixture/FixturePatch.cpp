@@ -122,14 +122,24 @@ void FixturePatch::tryToEnablePatch()
 	Array<ChannelType *> channelTypes;
 	int n = 0;
 	for (int i = 0; i < ft->chansManager.items.size(); i++) {
+
 		FixtureTypeChannel* chan = ft->chansManager.items[i];
 		int c = chan->dmxDelta->intValue();
-		channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
-		if (chan->resolution->getValue() == "16bits") {
-			c+=1;
-			channelTypes.add(dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get()));
+		ChannelType* ct = nullptr;
+		if (chan->multiLogicalMode->boolValue() && chan->logicalChannels.items.size() > 0) {
+			ct = dynamic_cast<ChannelType*>(chan->logicalChannels.items[0]->channelType->targetContainer.get());
 		}
-		n = jmax(n,c);
+		else {
+			ct = dynamic_cast<ChannelType*>(chan->channelType->targetContainer.get());
+		}
+
+		channelTypes.add(ct);
+		if (chan->resolution->getValue() == "16bits") {
+			c += 1;
+			channelTypes.add(ct);
+		}
+
+ 		n = jmax(n,c);
 	}
 
 	bool valid = true;
