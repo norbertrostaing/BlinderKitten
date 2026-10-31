@@ -81,6 +81,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Go and replace timecode", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_GO_REPLACE_TIMECODE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off time", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFFTIME));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Off time fixed", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_OFFTIME_FIXED));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Press", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Release", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH_RELEASE));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop Press", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop Release", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP_RELEASE ));
 
 
 
@@ -98,6 +102,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Set Seek", &EffectAction::create)->addParam("actionType", EffectAction::FX_SET_SEEK));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Add Seek", &EffectAction::create)->addParam("actionType", EffectAction::FX_ADD_SEEK));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Seek", &EffectAction::create)->addParam("actionType", EffectAction::FX_SEEK));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Flash Press", &EffectAction::create)->addParam("actionType", EffectAction::FX_FLASH_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Flash Release", &EffectAction::create)->addParam("actionType", EffectAction::FX_FLASH_RELEASE));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Swop Press", &EffectAction::create)->addParam("actionType", EffectAction::FX_SWOP_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Swop Release", &EffectAction::create)->addParam("actionType", EffectAction::FX_SWOP_RELEASE));
 
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
@@ -113,6 +121,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Set Seek", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SET_SEEK));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Add Seek", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_ADD_SEEK));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Seek", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SEEK));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Flash Press", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_FLASH_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Flash Release", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_FLASH_RELEASE));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Swop Press", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SWOP_PRESS));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Swop Release", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SWOP_RELEASE));
 
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Start", &MapperAction::create)->addParam("actionType", MapperAction::TRK_START));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Stop", &MapperAction::create)->addParam("actionType", MapperAction::TRK_STOP));

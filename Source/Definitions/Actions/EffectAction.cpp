@@ -205,6 +205,30 @@ void EffectAction::setValueInternal(var value, String origin, int incrementIndex
         }
         break;
 
+    case FX_FLASH_PRESS:
+        if (val == 1) {
+            target->flash(true, false);
+        }
+        break;
+
+    case FX_FLASH_RELEASE:
+        if (val == 1) {
+            target->flash(false, false);
+        }
+        break;
+
+    case FX_SWOP_PRESS:
+        if (val == 1) {
+            target->flash(true, true);
+        }
+        break;
+
+    case FX_SWOP_RELEASE:
+        if (val == 1) {
+            target->flash(false, true);
+        }
+        break;
+
 
     }
 }

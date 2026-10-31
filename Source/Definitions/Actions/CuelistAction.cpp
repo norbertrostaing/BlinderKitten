@@ -354,6 +354,32 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         target->offFade->setValue(offTimeFixed->floatValue());
         break;
 
+    case CL_FLASH_PRESS:
+        if (val == 1) {
+            target->flash(true, false);
+        }
+        break;
+
+    case CL_FLASH_RELEASE:
+        if (val == 1) {
+            target->flash(false, false);
+        }
+        break;
+
+    case CL_SWOP_PRESS:
+        if (val == 1) {
+            target->flash(true, false, true);
+        }
+        break;
+
+    case CL_SWOP_RELEASE:
+        if (val == 1) {
+            target->flash(false, false, true);
+        }
+        break;
+
+
+
     }
 }
 

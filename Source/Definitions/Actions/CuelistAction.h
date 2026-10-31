@@ -30,7 +30,8 @@ public:
                         CL_TAKESELECTION,
                         CL_GO_ADD_TIMECODE, CL_GO_REPLACE_TIMECODE,
                         CL_OFFTIME, CL_OFFTIME_FIXED,
-                        CL_LOADCONTENTWITHTRACKING
+                        CL_LOADCONTENTWITHTRACKING,
+                        CL_FLASH_PRESS, CL_FLASH_RELEASE, CL_SWOP_PRESS, CL_SWOP_RELEASE
     };
     ActionType actionType;
     BoolParameter* useMainConductor;

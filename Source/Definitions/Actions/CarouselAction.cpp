@@ -197,6 +197,32 @@ void CarouselAction::setValueInternal(var value, String origin, int incrementInd
         }
         break;
 
+    case CAR_FLASH_PRESS:
+        if (val == 1) {
+            target->flash(true, false);
+        }
+        break;
+
+    case CAR_FLASH_RELEASE:
+        if (val == 1) {
+            target->flash(false, false);
+        }
+        break;
+
+    case CAR_SWOP_PRESS:
+        if (val == 1) {
+            target->flash(true, true);
+        }
+        break;
+
+    case CAR_SWOP_RELEASE:
+        if (val == 1) {
+            target->flash(false, true);
+        }
+        break;
+
+
+
     }
 }
 
