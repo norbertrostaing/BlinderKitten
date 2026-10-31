@@ -1243,9 +1243,6 @@
     <ClCompile Include="..\..\Source\UI\Clock.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\UI\TimecodeView.cpp">
-      <Filter>BlinderKitten\Source\UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\UI\ConductorInfos.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
@@ -1265,6 +1262,12 @@
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\LayoutViewer.cpp">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\RDMManager.cpp">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\TimecodeView.cpp">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Action\Action.cpp">
@@ -5214,9 +5217,6 @@
     <ClInclude Include="..\..\Source\UI\Clock.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\UI\TimecodeView.h">
-      <Filter>BlinderKitten\Source\UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\UI\ConductorInfos.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
@@ -5236,6 +5236,12 @@
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\LayoutViewer.h">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\RDMManager.h">
+      <Filter>BlinderKitten\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\TimecodeView.h">
       <Filter>BlinderKitten\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Action\Action.h">

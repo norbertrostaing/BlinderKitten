@@ -132,9 +132,6 @@
         <FILE id="wbgqAn" name="BKColorPicker.h" compile="0" resource="0" file="Source/UI/BKColorPicker.h"/>
         <FILE id="AAvC3T" name="Clock.cpp" compile="1" resource="0" file="Source/UI/Clock.cpp"/>
         <FILE id="NIOemw" name="Clock.h" compile="0" resource="0" file="Source/UI/Clock.h"/>
-        <FILE id="Tcv001" name="TimecodeView.cpp" compile="1" resource="0"
-              file="Source/UI/TimecodeView.cpp"/>
-        <FILE id="Tcv002" name="TimecodeView.h" compile="0" resource="0" file="Source/UI/TimecodeView.h"/>
         <FILE id="datAZp" name="ConductorInfos.cpp" compile="1" resource="0"
               file="Source/UI/ConductorInfos.cpp"/>
         <FILE id="mbq0lK" name="ConductorInfos.h" compile="0" resource="0"
@@ -157,6 +154,11 @@
         <FILE id="U9IfWo" name="LayoutViewer.cpp" compile="1" resource="0"
               file="Source/UI/LayoutViewer.cpp"/>
         <FILE id="j7853L" name="LayoutViewer.h" compile="0" resource="0" file="Source/UI/LayoutViewer.h"/>
+        <FILE id="UXcZhN" name="RDMManager.cpp" compile="1" resource="0" file="Source/UI/RDMManager.cpp"/>
+        <FILE id="WLIuWK" name="RDMManager.h" compile="0" resource="0" file="Source/UI/RDMManager.h"/>
+        <FILE id="Tcv001" name="TimecodeView.cpp" compile="1" resource="0"
+              file="Source/UI/TimecodeView.cpp"/>
+        <FILE id="Tcv002" name="TimecodeView.h" compile="0" resource="0" file="Source/UI/TimecodeView.h"/>
       </GROUP>
       <GROUP id="{45FB759F-EFE9-4473-37EC-722C12285C7E}" name="Common">
         <GROUP id="{FFFFEE64-A9BA-CAEB-F127-B70753B6745E}" name="Action">

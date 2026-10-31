@@ -11,6 +11,7 @@
 #include "../../CommonIncludes.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "Brain.h"
+#include "UI/RDMManager.h"
 
 juce_ImplementSingleton(ArtnetSocket);
 
@@ -294,6 +295,7 @@ void ArtnetSocket::run()
 			int bytesRead = socket->read(receiveBuffer, MAX_PACKET_LENGTH, false, rAddress, rPort);
 			if (bytesRead > 0)
 			{
+				RDMManager::receiveArtNet(receiveBuffer, bytesRead, rAddress);
 				for (uint8 i = 0; i < 8; ++i)
 				{
 					if (receiveBuffer[i] != artnetPacket[i])
@@ -372,6 +374,10 @@ void ArtnetSocket::run()
 						else { shortName += c; }
 					}
 					LOG("node replied ! "+ip+ " : "+shortName);
+				}
+				else if (opcode == 0x8100 || opcode == 0x8300)
+				{
+					// RDM Manager handles these packets
 				}
 				else
 				{

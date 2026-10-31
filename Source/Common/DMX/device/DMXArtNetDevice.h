@@ -17,7 +17,7 @@
 #define PROTOCOL_VERSION 14
 #define NUM_CHANNELS 512
 #define DMX_HEADER_LENGTH 18
-#define MAX_PACKET_LENGTH DMX_HEADER_LENGTH+NUM_CHANNELS
+#define MAX_PACKET_LENGTH 1500
 
 class ArtnetSocket :
 	public Thread 

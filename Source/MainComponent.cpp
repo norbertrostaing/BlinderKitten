@@ -49,6 +49,8 @@
 #include "UI/Clock.h"
 #include "UI/TimecodeView.h"
 
+#include "UI/RDMManager.h"
+
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
@@ -161,6 +163,7 @@ void MainContentComponent::init()
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Patch sheet", &PatchSheetUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Clock", &ClockUI::create));
     ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timecode", &TimecodeViewUI::create));
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("RDM Manager", &RDMManager::create));
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Interfaces", "Lists");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Channels config", "Lists");
@@ -205,6 +208,7 @@ void MainContentComponent::init()
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Patch sheet", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Clock", "Panels");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Timecode", "Panels");
+    ShapeShifterManager::getInstance()->isInViewSubMenu.set("RDM Manager", "Panels");
 
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Outliner", "");
     ShapeShifterManager::getInstance()->isInViewSubMenu.set("Dashboard", "Organic Tools");

@@ -180,7 +180,6 @@
     <ClCompile Include="..\..\Source\UI\VirtualFaders\VirtualFaderSlider.cpp"/>
     <ClCompile Include="..\..\Source\UI\BKColorPicker.cpp"/>
     <ClCompile Include="..\..\Source\UI\Clock.cpp"/>
-    <ClCompile Include="..\..\Source\UI\TimecodeView.cpp"/>
     <ClCompile Include="..\..\Source\UI\ConductorInfos.cpp"/>
     <ClCompile Include="..\..\Source\UI\CuelistLoadWindow.cpp"/>
     <ClCompile Include="..\..\Source\UI\DMXChannelView.cpp"/>
@@ -188,6 +187,8 @@
     <ClCompile Include="..\..\Source\UI\InputPanel.cpp"/>
     <ClCompile Include="..\..\Source\UI\LabelAndTime.cpp"/>
     <ClCompile Include="..\..\Source\UI\LayoutViewer.cpp"/>
+    <ClCompile Include="..\..\Source\UI\RDMManager.cpp"/>
+    <ClCompile Include="..\..\Source\UI\TimecodeView.cpp"/>
     <ClCompile Include="..\..\Source\Common\Action\Action.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3570,7 +3571,6 @@
     <ClInclude Include="..\..\Source\UI\VirtualFaders\VirtualFaderSlider.h"/>
     <ClInclude Include="..\..\Source\UI\BKColorPicker.h"/>
     <ClInclude Include="..\..\Source\UI\Clock.h"/>
-    <ClInclude Include="..\..\Source\UI\TimecodeView.h"/>
     <ClInclude Include="..\..\Source\UI\ConductorInfos.h"/>
     <ClInclude Include="..\..\Source\UI\CuelistLoadWindow.h"/>
     <ClInclude Include="..\..\Source\UI\DMXChannelView.h"/>
@@ -3578,6 +3578,8 @@
     <ClInclude Include="..\..\Source\UI\InputPanel.h"/>
     <ClInclude Include="..\..\Source\UI\LabelAndTime.h"/>
     <ClInclude Include="..\..\Source\UI\LayoutViewer.h"/>
+    <ClInclude Include="..\..\Source\UI\RDMManager.h"/>
+    <ClInclude Include="..\..\Source\UI\TimecodeView.h"/>
     <ClInclude Include="..\..\Source\Common\Action\Action.h"/>
     <ClInclude Include="..\..\Source\Common\Action\ActionManager.h"/>
     <ClInclude Include="..\..\Source\Common\CommonClasses\ComponentType.h"/>

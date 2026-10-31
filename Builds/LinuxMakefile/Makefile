@@ -99,7 +99,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/VirtualFaderSlider_540aaa8f.o \
   $(JUCE_OBJDIR)/BKColorPicker_26a4f576.o \
   $(JUCE_OBJDIR)/Clock_9b1dd19c.o \
-  $(JUCE_OBJDIR)/TimecodeView_41edcf3b.o \
   $(JUCE_OBJDIR)/ConductorInfos_9dff399a.o \
   $(JUCE_OBJDIR)/CuelistLoadWindow_9733d835.o \
   $(JUCE_OBJDIR)/DMXChannelView_4a36d235.o \
@@ -107,6 +106,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/InputPanel_276fbbd6.o \
   $(JUCE_OBJDIR)/LabelAndTime_69a3566c.o \
   $(JUCE_OBJDIR)/LayoutViewer_b08c5698.o \
+  $(JUCE_OBJDIR)/RDMManager_7251c22e.o \
+  $(JUCE_OBJDIR)/TimecodeView_41edcf3b.o \
   $(JUCE_OBJDIR)/list_ports_linux_203b2613.o \
   $(JUCE_OBJDIR)/list_ports_osx_d93ade33.o \
   $(JUCE_OBJDIR)/list_ports_win_e6502c6b.o \
@@ -420,11 +421,6 @@ $(JUCE_OBJDIR)/Clock_9b1dd19c.o: ../../Source/UI/Clock.cpp
 	@echo "Compiling Clock.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimecodeView_41edcf3b.o: ../../Source/UI/TimecodeView.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling TimecodeView.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/ConductorInfos_9dff399a.o: ../../Source/UI/ConductorInfos.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling ConductorInfos.cpp"
@@ -458,6 +454,16 @@ $(JUCE_OBJDIR)/LabelAndTime_69a3566c.o: ../../Source/UI/LabelAndTime.cpp
 $(JUCE_OBJDIR)/LayoutViewer_b08c5698.o: ../../Source/UI/LayoutViewer.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling LayoutViewer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/RDMManager_7251c22e.o: ../../Source/UI/RDMManager.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling RDMManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/TimecodeView_41edcf3b.o: ../../Source/UI/TimecodeView.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling TimecodeView.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/list_ports_linux_203b2613.o: ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc

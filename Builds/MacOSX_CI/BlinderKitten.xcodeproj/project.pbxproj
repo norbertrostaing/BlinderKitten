@@ -215,6 +215,7 @@
 		F094A6C65B0B4977C4A43355 /* SelectionMaster.cpp */ = {isa = PBXBuildFile; fileRef = 6BC2112EDFD3CAD8C41BA2E1; };
 		F25828E330320D0E22704111 /* include_juce_organicui.cpp */ = {isa = PBXBuildFile; fileRef = 2CB931C3AB3641819A6E1109; };
 		F4742A1044C95A00D0AA664B /* SelectionMasterManager.cpp */ = {isa = PBXBuildFile; fileRef = 320672E91261967626FD0079; };
+		F4A3AA479732B58F45F23A6B /* RDMManager.cpp */ = {isa = PBXBuildFile; fileRef = C5A8904A8084AFA4E79838F2; };
 		F60DC70F92C843C12612C071 /* PresetGridView.cpp */ = {isa = PBXBuildFile; fileRef = D3AA14AA86CAA26D18053914; };
 		F68D8D775EB90CD922D85F44 /* TrackerManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = 0733EE974DE7B3083B6D2BE9; };
 		F690C5C3468F4044B23DF714 /* BKPathPresetManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = 6C5622C8CC647020CD773F91; };
@@ -345,6 +346,7 @@
 		384A922962F4E9E06AA17278 /* ProgrammerManagerUI.h */ /* ProgrammerManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProgrammerManagerUI.h; path = ../../Source/Definitions/Programmer/ProgrammerManagerUI.h; sourceTree = SOURCE_ROOT; };
 		38932A380E1BB6186445C4AF /* CoreMIDI.framework */ /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		3B7CA73F066A8AF9A8DFC410 /* kittenLayout.layout */ /* kittenLayout.layout */ = {isa = PBXFileReference; lastKnownFileType = file.layout; name = kittenLayout.layout; path = ../../Ressources/kittenLayout.layout; sourceTree = SOURCE_ROOT; };
+		3BF8BCC77C46757DC43D3785 /* RDMManager.h */ /* RDMManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RDMManager.h; path = ../../Source/UI/RDMManager.h; sourceTree = SOURCE_ROOT; };
 		3C6349112B0C6D567503E82B /* list_ports_win.cc */ /* list_ports_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = list_ports_win.cc; path = ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc; sourceTree = SOURCE_ROOT; };
 		3CBA8F4337A7E507D8D40C07 /* DMXEuroliteDevice.cpp */ /* DMXEuroliteDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXEuroliteDevice.cpp; path = ../../Source/Common/DMX/device/DMXEuroliteDevice.cpp; sourceTree = SOURCE_ROOT; };
 		3D2E478A25C065FD01187888 /* CuelistManagerUI.h */ /* CuelistManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CuelistManagerUI.h; path = ../../Source/Definitions/Cuelist/CuelistManagerUI.h; sourceTree = SOURCE_ROOT; };
@@ -628,6 +630,7 @@
 		C3D1582040638D7CCCD5A3EB /* NDIManager.cpp */ /* NDIManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NDIManager.cpp; path = ../../Source/Common/NDI/NDIManager.cpp; sourceTree = SOURCE_ROOT; };
 		C3DEA777296931874600C0E8 /* FixtureMapping.h */ /* FixtureMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FixtureMapping.h; path = ../../Source/Definitions/Fixture/FixtureMapping.h; sourceTree = SOURCE_ROOT; };
 		C3F4E0B7220A005B961C1F49 /* TrackerManager.cpp */ /* TrackerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrackerManager.cpp; path = ../../Source/Definitions/Tracker/TrackerManager.cpp; sourceTree = SOURCE_ROOT; };
+		C5A8904A8084AFA4E79838F2 /* RDMManager.cpp */ /* RDMManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RDMManager.cpp; path = ../../Source/UI/RDMManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6DEAF58E7E2C03A08D4EC20 /* VirtualFaderColManager.cpp */ /* VirtualFaderColManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFaderColManager.cpp; path = ../../Source/UI/VirtualFaders/VirtualFaderColManager.cpp; sourceTree = SOURCE_ROOT; };
 		C6E8B1EF1AE52D6DE06C84F5 /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		C7B740747EF76E26953F01CB /* TrackerAction.cpp */ /* TrackerAction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TrackerAction.cpp; path = ../../Source/Definitions/Actions/TrackerAction.cpp; sourceTree = SOURCE_ROOT; };
@@ -1898,8 +1901,6 @@
 				7F7564CB0DFC546FC52CA876,
 				4C1D5EA031AD933BD9C85DCE,
 				3FFCAB34C24E1CD17F2072C8,
-				9799861052527A922B6ACC89,
-				752A9C325295A2DDF3D237EB,
 				10BBD342C81F48FCAC8DF9CC,
 				40941D83FBAA1BA3CB3BAA81,
 				223BE605D53E575AB33CE081,
@@ -1914,6 +1915,10 @@
 				E1D11321A7ACF990B9160F6E,
 				66A99752EE9116904075A593,
 				FCAD6499A587B5F6D7B1FCD0,
+				C5A8904A8084AFA4E79838F2,
+				3BF8BCC77C46757DC43D3785,
+				9799861052527A922B6ACC89,
+				752A9C325295A2DDF3D237EB,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -2047,7 +2052,6 @@
 				0FF77981EF088504A1B86EDF,
 				4439D46ACE708C6603C3BE2B,
 				4E4AA7B241B1314B63ED0E0A,
-				2640A0896D38E20E953CB32D,
 				178E8BFA4CD4C9E0B052185F,
 				23B15BC6316C3D19490DCE06,
 				7A7EE8FA053F31344B7AD140,
@@ -2055,6 +2059,8 @@
 				C4CB15121D17654C6E091FA7,
 				A2463FB3BF5DFDBD5FF69435,
 				0E3AF8AF0B0F9924A362F52A,
+				F4A3AA479732B58F45F23A6B,
+				2640A0896D38E20E953CB32D,
 				6F79BE3F94B03AA855A176F3,
 				EA7F96E3F55C9548B94EB629,
 				D174FA18D7670C20B1BFAC90,
