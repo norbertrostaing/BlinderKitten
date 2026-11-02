@@ -470,6 +470,7 @@ void BKEngine::clearInternal()
 
 	Brain::getInstance()->skipLoop = true;
 	Brain::getInstance()->stopThread(40);
+	UserInputManager::getInstance()->currentProgrammer = nullptr;
 	Brain::getInstance()->clear();
 
 	Brain::getInstance()->isClearing = true;
@@ -849,6 +850,7 @@ void BKEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask)
 	autoFillDefaultChannels();
 	Encoders::getInstance()->updateChannels();
 	EncodersMult::getInstance()->targetChanged();
+	Encoders::getInstance()->updateBlindButton();
 
 	ConductorInfos::getInstance()->linkFadeSlider();
 	ConductorInfos::getInstance()->updateStyle();
