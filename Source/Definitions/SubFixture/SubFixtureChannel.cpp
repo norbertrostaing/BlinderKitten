@@ -134,7 +134,11 @@ void SubFixtureChannel::writeValue(float v) {
 	}
 
 	if (v == currentValue && !forceNextWrite) {
-		//return;
+		if (physicalChannel == nullptr) return;
+		ScopedLock l(physicalChannel->usingPool);
+		if (physicalChannel->writingPool.size() < 2) {
+			return;
+		}
 	}
 	forceNextWrite = false;
 
