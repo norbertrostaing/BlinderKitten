@@ -174,6 +174,11 @@ void SubFixtureChannel::updateVal(double now) {
 		isActive = true;
 	}
 
+	if (directInputEnabled) {
+		newValue = directInputValue;
+		isActive = true;
+	}
+
 	postCuelistValue = newValue;
 
 	cs.enter();
@@ -467,5 +472,19 @@ void SubFixtureChannel::selectionMasterOutOfStack(SelectionMaster* f) {
 		selectionMasterStack.removeAllInstancesOf(f);
 	}
 	cs.exit();
+}
+
+void SubFixtureChannel::disableDirectInput() {
+	directInputEnabled = false;
+	directInputValue = 0;
+	isDirty = true;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+}
+
+void SubFixtureChannel::setDirectinput(double val) {
+	directInputEnabled = true;
+	directInputValue = val;
+	isDirty = true;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
 }
 

@@ -19,7 +19,7 @@ public:
     InputPanelAction(var params);
     ~InputPanelAction();
 
-    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE, IP_UPDATE, IP_REPLACE, IP_LOADCONTENT, IP_USEANOTHER, IP_ORGANICLAYOUT};
+    enum ActionType { IP_PRESS, IP_GM, IP_KILLCL, IP_OFFCL, IP_STOPFX, IP_STOPCAR, IP_RANDOMSEED, IP_SELECTWINDOW, IP_SAVE, IP_LOADALLCUELISTS, IP_BLACKOUTTEMP, IP_BLACKOUTTOGGLE, IP_UPDATE, IP_REPLACE, IP_LOADCONTENT, IP_USEANOTHER, IP_ORGANICLAYOUT, IP_FIXTURE_DIRECT_SET, IP_FIXTURE_DIRECT_DISABLE };
     ActionType actionType;
     EnumParameter* targetButton;
     IntParameter* randomSeed;
@@ -36,6 +36,13 @@ public:
 
     IntParameter* organicLayoutId;
 
+    IntParameter* directFixtureFrom;
+    BoolParameter* directFixtureThru;
+    IntParameter* directFixtureTo;
+    IntParameter* directSubFixtureFrom;
+    BoolParameter* directSubFixtureThru;
+    IntParameter* directSubFixtureTo;
+    TargetParameter* directChanneltype;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;

@@ -18,6 +18,7 @@
 #include "Definitions/TimingPreset/TimingPreset.h"
 #include "Definitions/Fixture/Fixture.h"
 #include "Definitions/Group/Group.h"
+#include "Definitions/ChannelFamily/ChannelFamilyManager.h"
 
 InputPanelAction::InputPanelAction(var params) :
     Action(params)
@@ -85,6 +86,30 @@ InputPanelAction::InputPanelAction(var params) :
         useAnotherOtherId = addIntParameter("Other ID", "", 0,0);
         useAnotherFromId = addIntParameter("Other from", "", 0,0);
         useAnotherToId = addIntParameter("Other to", "", 0,0);
+    }
+    else if (actionType == IP_FIXTURE_DIRECT_SET) {
+        directFixtureFrom = addIntParameter("Fixture ID", "Id of target fixture", 0, 0);
+        directSubFixtureFrom = addIntParameter("SubFixtureId", "subFixtureId of the target", 0, 0);
+        directChanneltype = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
+        directChanneltype->maxDefaultSearchLevel = 2;
+        directChanneltype->targetType = TargetParameter::CONTAINER;
+        directChanneltype->typesFilter.add("ChannelType");
+    }
+    else if (actionType == IP_FIXTURE_DIRECT_DISABLE) {
+        directFixtureFrom = addIntParameter("Fixture ID From", "Id of first fixture", 0);
+        directFixtureThru = addBoolParameter("Thru", "Need multiple fixtures ?", false);
+        directFixtureTo = addIntParameter("Fixture ID to", "Id of last fixture", 0);
+
+        directSubFixtureFrom = addIntParameter("Subfixture ID From", "Id of first fixture", 0);
+        directSubFixtureThru = addBoolParameter("Subfixture Thru", "Need multiple fixtures ?", false);
+        directSubFixtureTo = addIntParameter("Subfixture ID to", "Id of last fixture", 0);
+
+        directChanneltype = addTargetParameter("Channel type", "Type of Channel", ChannelFamilyManager::getInstance());
+        directChanneltype->maxDefaultSearchLevel = 2;
+        directChanneltype->targetType = TargetParameter::CONTAINER;
+        directChanneltype->typesFilter.add("ChannelType");
+
+
     }
 
     updateDisplay();
@@ -212,6 +237,52 @@ void InputPanelAction::setValueInternal(var value, String origin, int incrementI
                 }
             );
         }
+        break;
+
+    case IP_FIXTURE_DIRECT_SET:
+        {
+            int fid = directFixtureFrom->intValue();
+            int sfid = directSubFixtureFrom->intValue();
+            Fixture* f = Brain::getInstance()->getFixtureById(fid);
+            ChannelType* ct = dynamic_cast<ChannelType*>(directChanneltype->targetContainer.get());
+            if (f != nullptr && ct != nullptr) {
+                SubFixture* sf = f->subFixtures.contains(sfid) ? f->subFixtures.getReference(sfid) : nullptr;
+                if (sf != nullptr && sf->channelsMap.contains(ct)) {
+                    sf->channelsMap.getReference(ct)->setDirectinput(val);
+                }
+            }
+        }
+    break;
+    case IP_FIXTURE_DIRECT_DISABLE:
+        {
+            int fMin = directFixtureFrom->intValue();
+            int fMax = directFixtureThru->boolValue() ? directFixtureTo->intValue() : fMin;
+            int sfMin = directSubFixtureFrom->intValue();
+            int sfMax = directSubFixtureThru->boolValue() ? directSubFixtureTo->intValue() : sfMin;
+            ChannelType* ct = dynamic_cast<ChannelType*>(directChanneltype->targetContainer.get());
+
+            if (ct != nullptr) {
+                if (fMin > fMax) { int tmp = fMin; fMin = fMax; fMax = tmp; }
+                if (sfMin > sfMax) { int tmp = sfMin; sfMin = sfMax; sfMax = tmp; }
+
+                for (int nf = fMin; nf <= fMax; nf++) {
+                    Fixture* f = Brain::getInstance()->getFixtureById(nf);
+                    if (f != nullptr) {
+                        for (int nsf = sfMin; nsf <= sfMax; nsf++) {
+                            SubFixture* sf = f->subFixtures.contains(nsf) ? f->subFixtures.getReference(nsf) : nullptr;
+                            if (sf != nullptr) {
+                                if (sf->channelsMap.contains(ct)) {
+                                    sf->channelsMap.getReference(ct)->disableDirectInput();
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+    break;
     }
 
 
@@ -313,7 +384,7 @@ void InputPanelAction::setAnother()
 
 void InputPanelAction::onContainerParameterChangedInternal(Parameter* p)
 {
-    if (p == useAnotherRandomize) {
+    if (p == useAnotherRandomize || p == directFixtureThru || p == directSubFixtureThru) {
         updateDisplay();
     }
 }
@@ -325,6 +396,11 @@ void InputPanelAction::updateDisplay()
         useAnotherOtherId->hideInEditor = rand;
         useAnotherFromId->hideInEditor = !rand;
         useAnotherToId->hideInEditor = !rand;
+    }
+
+    if (actionType == IP_FIXTURE_DIRECT_DISABLE) {
+        directFixtureTo->hideInEditor = !directFixtureThru->boolValue();
+        directSubFixtureTo->hideInEditor = !directSubFixtureThru->boolValue();
     }
     queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 
@@ -357,6 +433,24 @@ var InputPanelAction::getValue()
 
     case IP_RANDOMSEED:
         break;
+
+    case IP_FIXTURE_DIRECT_SET:
+    {
+        int fid = directFixtureFrom->intValue();
+        int sfid = directSubFixtureFrom->intValue();
+        Fixture* f = Brain::getInstance()->getFixtureById(fid);
+        ChannelType* ct = dynamic_cast<ChannelType*>(directChanneltype->targetContainer.get());
+        if (f != nullptr && ct != nullptr) {
+            SubFixture* sf = f->subFixtures.contains(sfid) ? f->subFixtures.getReference(sfid) : nullptr;
+            if (sf != nullptr && sf->channelsMap.contains(ct)) {
+                val = sf->channelsMap.getReference(ct)->directInputValue;
+            }
+        }
+    }
+    break;
+    case IP_FIXTURE_DIRECT_DISABLE:
+    break;
+
 
     }
 

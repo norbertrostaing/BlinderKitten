@@ -60,6 +60,9 @@ public:
     bool reactToGrandMaster = false;
     int logicalPriority = 0;
 
+    bool directInputEnabled = false;
+    double directInputValue = 0;
+
     Automation* outputCurve = nullptr;
 
     FixtureTypeChannel* parentFixtureTypeChannel = nullptr;
@@ -119,5 +122,8 @@ public:
     void trackerOutOfStack(Tracker* f);
     void selectionMasterOnTopOfStack(SelectionMaster* f);
     void selectionMasterOutOfStack(SelectionMaster* f);
+
+    void disableDirectInput();
+    void setDirectinput(double val);
 
 };
