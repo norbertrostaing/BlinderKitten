@@ -444,9 +444,7 @@ void Assistant::createPalette()
             if (uap != nullptr) {
                 Task* t = c->tasks.addItem();
                 t->targetType->setValue("Generic actions");
-                juce::var params(new juce::DynamicObject());
-                params.getDynamicObject()->setProperty("actionType",InputPanelAction::ActionType::IP_USEANOTHER);
-                InputPanelAction* a = new InputPanelAction(params);
+                InputPanelAction* a = static_cast<InputPanelAction*>(ActionFactory::getInstance()->create("Use another"));
                 a->useAnotherTargetType->setValue("Preset");
                 a->useAnotherTargetId->setValue(useAnotherId);
                 a->useAnotherOtherId->setValue(p->id->intValue());
