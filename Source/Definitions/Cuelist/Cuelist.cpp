@@ -352,6 +352,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		fillTexts();
 	}
 	if (p == upFadeController) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
 		currentUpFadeController = nextUpFadeController;
 		nextUpFadeController = "";
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
@@ -366,6 +367,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		}
 	}
 	if (p == downFadeController) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
 		currentDownFadeController = nextDownFadeController;
 		nextDownFadeController = "";
 		Brain::getInstance()->virtualFadersNeedUpdate = true;
@@ -380,6 +382,7 @@ void Cuelist::onContainerParameterChangedInternal(Parameter* p) {
 		}
 	}
 	if (p == crossFadeController) {
+		Brain::getInstance()->virtualButtonsNeedUpdate = true;
 		currentCrossFadeController = nextCrossFadeController;
 		nextCrossFadeController = "";
 		Brain::getInstance()->virtualFadersNeedUpdate = true;

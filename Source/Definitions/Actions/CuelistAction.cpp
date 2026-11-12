@@ -399,7 +399,12 @@ var CuelistAction::getValue()
 {
     float val = var();
 
-    Cuelist* target = Brain::getInstance()->getCuelistById(cuelistId->getValue());
+    int id = cuelistId->intValue();
+    if (useMainConductor->boolValue()) {
+        BKEngine* engine = (BKEngine*)Engine::mainEngine;
+        id = engine->conductorCuelistId->intValue();
+    }
+    Cuelist* target = Brain::getInstance()->getCuelistById(id);
     if (target == nullptr) return val;
 
     switch (actionType)
@@ -466,6 +471,19 @@ var CuelistAction::getValue()
     
     case CL_OFFTIME_FIXED:
         break;
+
+    case CL_CROSSFADE:
+        val = target->crossFadeController->floatValue();
+        break;
+
+    case CL_UPFADE:
+        val = target->upFadeController->floatValue();
+        break;
+
+    case CL_DOWNFADE:
+        val = target->downFadeController->floatValue();
+        break;
+    
     }
 
 

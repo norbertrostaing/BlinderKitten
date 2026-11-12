@@ -288,8 +288,19 @@ void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, b
 				targ->chaserSpeed->setValue(value * maxSpeed->floatValue());
 			}
 			if (action == "crossfade") {
+				targ->nextCrossFadeController = origin;
 				value = isRelative ? targ->crossFadeController->floatValue() + value : value;
 				targ->crossFadeController->setValue(value);
+			}
+			if (action == "upfade") {
+				targ->nextUpFadeController = origin;
+				value = isRelative ? targ->upFadeController->floatValue() + value : value;
+				targ->upFadeController->setValue(value);
+			}
+			if (action == "downfade") {
+				targ->nextDownFadeController = origin;
+				value = isRelative ? targ->downFadeController->floatValue() + value : value;
+				targ->downFadeController->setValue(value);
 			}
 			if (action == "upfade") {
 				value = isRelative ? targ->upFadeController->floatValue() + value : value;
