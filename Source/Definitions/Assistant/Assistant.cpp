@@ -125,6 +125,7 @@ Assistant::Assistant() :
 
     addChildControllableContainer(&asciiCC);
     asciiPatch = asciiCC.addBoolParameter("Patchs", "Do you want to import or export patch ?", true);
+    asciiCleanUnusedFixtures = asciiCC.addBoolParameter("Clean unused fixtures", "Remove imported fixtures not used in cues, groups, presets or other selections", false);
     asciiGroups = asciiCC.addBoolParameter("Groups", "Do you want to import or export groups ?", true);
     asciiGroupValuesAsPreset = asciiCC.addBoolParameter("Groups as presets", "If checked, the values stored in GROUP commands will be saved as new presets", true);
     asciiCues = asciiCC.addBoolParameter("Cues", "Do you want to import or export cues ?", true);
@@ -758,10 +759,8 @@ void Assistant::importAscii()
     FileChooser fc("Import an ASCII file", File::getCurrentWorkingDirectory(), "*.asc");
     if (!fc.browseForFileToOpen()) return;
 
-
     File f = fc.getResult();
     String content = f.loadFileAsString();
-
     StringArray lines = StringArray::fromLines(content);
 
     String currentPrimary = "";
@@ -773,9 +772,8 @@ void Assistant::importAscii()
     bool useTracking = asciiTracking->boolValue();
     const bool isDLightAscii = content.containsIgnoreCase("CONSOLE DLIGHT");
 
-    int asciiSequenceId = 0;
     bool asciiSequenceCue = false;
-    HashMap<int, Cuelist*> asciiSequenceCuelists;
+    bool mainAsciiCuelistAssigned = false;
 
     struct DLightMasterLink {
         Cue* cue = nullptr;
@@ -790,11 +788,12 @@ void Assistant::importAscii()
 
     Array<DMXInterface*> universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
     Cuelist* cuelist = nullptr;
-    if (asciiCues) {
+    if (asciiCues->boolValue()) {
         const MessageManagerLock mmlock;
         cuelist = Brain::getInstance()->getCuelistById(mainCuelistId);
         if (cuelist == nullptr) {
             cuelist = CuelistManager::getInstance()->addItem();
+            cuelist->id->setValue(mainCuelistId);
             cuelist->userName->setValue("ASCII Cuelist");
         }
         cuelist->kill();
@@ -806,8 +805,15 @@ void Assistant::importAscii()
         }
     }
 
+    Cuelist* currentCuelist = cuelist;
+    HashMap<String, Cuelist*> asciiCuelists;
+    if (cuelist != nullptr) {
+        asciiCuelists.set("$CUELIST:1", cuelist);
+    }
     HashMap<int, Cue*> idToCue;
-    if (!asciiEraseCuelist->boolValue()) {
+    HashMap<int, Cue*> lastCueByCuelist;
+
+    if (cuelist != nullptr && !asciiEraseCuelist->boolValue()) {
         for (Cue* c : cuelist->cues.items) {
             idToCue.set(c->id->floatValue() * 100000, c);
         }
@@ -866,6 +872,7 @@ void Assistant::importAscii()
     Array<Group*> groupsToAdd;
     Array<Preset*> presetsToAdd;
     Array<Fixture*> fixturesToAdd;
+    HashMap<int, Fixture*> importedFixtures;
 
     HashMap<int, String> intToChannelFam;
     intToChannelFam.set(1, "Dimmer");
@@ -929,7 +936,6 @@ void Assistant::importAscii()
         Array<int> channels;
         Array<int> parameters;
     };
-
 
     HashMap<String, eosEffect> effects;
     HashMap<int, eosEffect> currentEffects;
@@ -1370,7 +1376,6 @@ void Assistant::importAscii()
             }
         }
         };
-
     FixtureType* ft = dynamic_cast<FixtureType*>(asciiChannelFixtureType->targetContainer.get());
     for (int i = 0; i < lines.size(); i++) {
         String line = lines[i];
@@ -1399,34 +1404,71 @@ void Assistant::importAscii()
                 currentSecondary = words[0];
                 // ajouter ici une verif si l'objet d'avant est clean (subs, groupes)
             }
-            else if (isDLightAscii && words[0] == "$SEQUENCE" && words.size() > 1)
+            else if ((words[0] == "$SEQUENCE" || words[0] == "$CUELIST") && words.size() > 1)
             {
                 storeCurrentEffects();
-                asciiSequenceId = words[1].getIntValue();
-                asciiSequenceCue = false;
+                int sourceId = words[1].getIntValue();
+                String key = words[0] + ":" + String(sourceId);
+
+                if (sourceId > 0 && asciiCues->boolValue()) {
+                    if (!asciiCuelists.contains(key)) {
+                        Cuelist* newCuelist = CuelistManager::getInstance()->addItem();
+                        newCuelist->userName->setValue((words[0] == "$SEQUENCE" ? "ASCII Sequence " : "ASCII Cuelist ") + String(sourceId));
+
+                        if (words[0] == "$CUELIST") {
+                            int sourceId = words[1].getIntValue();
+                            String key = "$CUELIST:" + String(sourceId);
+
+                            if (!asciiCuelists.contains(key)) {
+                                Cuelist* target = nullptr;
+
+                                if (!mainAsciiCuelistAssigned) {
+                                    target = cuelist;
+                                    mainAsciiCuelistAssigned = true;
+                                }
+                                else {
+                                    target = CuelistManager::getInstance()->addItem();
+                                }
+
+                                asciiCuelists.set(key, target);
+                            }
+
+                            currentCuelist = asciiCuelists.getReference(key);
+                        }
+
+                        if (words[0] == "$SEQUENCE") {
+                            newCuelist->isChaser->setValue(true);
+                            newCuelist->tracking->setValueWithData("none");
+                            newCuelist->endAction->setValueWithData("loop");
+                            newCuelist->HTPLevel->setValue(0);
+                            newCuelist->LTPLevel->setValue(0);
+                            newCuelist->autoStart->setValue(true);
+                            newCuelist->autoStop->setValue(true);
+                        }
+                        else if (useTracking) {
+                            newCuelist->tracking->setValue("Cuelist order");
+                        }
+                        asciiCuelists.set(key, newCuelist);
+                    }
+                    currentCuelist = asciiCuelists.getReference(key);
+                }
+                else {
+                    currentCuelist = cuelist;
+                }
+
                 currentCue = nullptr;
                 previousCue = nullptr;
-                currentPrimary = "$SEQUENCE";
-                currentSecondary = "$SEQUENCE";
+                asciiSequenceCue = false;
+                currentPrimary = words[0];
+                currentSecondary = words[0];
             }
             else if (words[0] == "CUE" || words[0] == "GROUP" || words[0] == "SUB" || words[0] == "$SUB")
             {
                 currentPrimary = (words[0] == "$SUB") ? "SUB" : words[0];
                 currentSecondary = currentPrimary;
-                if (words[0] == "CUE")
-                    asciiSequenceCue = asciiSequenceId > 0;
-                else {
-                    asciiSequenceCue = false;
-                    asciiSequenceId = 0;
-                }
             }
             else if (words[0] == "$CUE")
             {
-                // Unlike CUE, the first argument of $CUE is the sequence ID.
-                if (isDLightAscii && words.size() > 2) {
-                    asciiSequenceId = words[1].getIntValue();
-                }
-                asciiSequenceCue = isDLightAscii && asciiSequenceId > 0 && words.size() > 2;
                 currentPrimary = "CUE";
                 currentSecondary = "CUE";
             }
@@ -1472,29 +1514,45 @@ void Assistant::importAscii()
 
             }
             else if (words[0] == "$PATCH") {
-                int id = words[1].getIntValue();
-                int ftid = words[2].getIntValue();
-                int address = words[3].getIntValue();
-                int universe = address / 512;
-                address = address % 512;
-                Fixture* f = Brain::getInstance()->getFixtureById(id);
-                if (f == nullptr) {
-                    f = FixtureManager::getInstance()->addItem();
-                    f->id->setValue(id);
-                    if (idToFixtureType.contains(ftid)) {
-                        f->devTypeParam->setValueFromTarget(idToFixtureType.getReference(ftid));
+                currentFixture = nullptr;
+                if (asciiPatch->boolValue() && words.size() >= 4) {
+                    int id = words[1].getIntValue();
+                    int ftid = words[2].getIntValue();
+                    int address = words[3].getIntValue();
+                    if (id > 0) {
+                        Fixture* f = importedFixtures.contains(id) ? importedFixtures.getReference(id) : Brain::getInstance()->getFixtureById(id);
+                        if (f == nullptr) {
+                            f = new Fixture();
+                            fixturesToAdd.add(f);
+                            f->id->setValue(id);
+                        }
+                        importedFixtures.set(id, f);
+                        currentFixture = f;
+
+                        if (idToFixtureType.contains(ftid)) {
+                            FixtureType* lastType = idToFixtureType.getReference(ftid);
+                            if (f->devTypeParam->targetContainer.get() != lastType) {
+                                f->devTypeParam->setValueFromTarget(lastType);
+                            }
+                        }
+
+                        if (address > 0) {
+                            int universe = address / 512;
+                            address = address % 512;
+                            while (universes.size() <= universe) {
+                                InterfaceManager::getInstance()->addItem(new DMXInterface());
+                                universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
+                            }
+                            DMXInterface* targetInterface = universes[universe];
+                            FixturePatch* patch = f->patchs.items.isEmpty() ? f->patchs.addItem() : f->patchs.items[0];
+                            if (patch->targetInterface->targetContainer.get() != targetInterface) {
+                                patch->targetInterface->setTarget(targetInterface);
+                            }
+                            if (patch->address->intValue() != address) {
+                                patch->address->setValue(address);
+                            }
+                        }
                     }
-                }
-                currentFixture = f;
-                while (universes.size() <= universe) {
-                    InterfaceManager::getInstance()->addItem(new DMXInterface());
-                    universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
-                }
-                DMXInterface* targetInterface = universes[universe];
-                if (targetInterface->channelToFixturePatch[address] == nullptr) {
-                    FixturePatch* p = f->patchs.addItem();
-                    p->targetInterface->setTarget(targetInterface);
-                    p->address->setValue(address);
                 }
                 currentPrimary = words[0];
                 currentSecondary = words[0];
@@ -1577,29 +1635,9 @@ void Assistant::importAscii()
             {
                 currentPrimary = words[0];
                 currentSecondary = words[0];
-                asciiSequenceId = 0;
-                asciiSequenceCue = false;
             }
             else {
                 currentSecondary = "";
-            }
-
-            // D::Light chasers are separate cuelists, created at their header.
-            if (isDLightAscii && asciiCues->boolValue() && asciiSequenceId > 0 &&
-                (words[0] == "$SEQUENCE" || words[0] == "$CUE" || words[0] == "CUE") &&
-                !asciiSequenceCuelists.contains(asciiSequenceId)) {
-                Cuelist* sequence = CuelistManager::getInstance()->addItem();
-                sequence->userName->setValue("ASCII Sequence " + String(asciiSequenceId));
-                sequence->kill();
-                sequence->cues.clear();
-                sequence->isChaser->setValue(true);
-                sequence->tracking->setValueWithData("none");
-                sequence->endAction->setValueWithData("loop");
-                sequence->HTPLevel->setValue(0);
-                sequence->LTPLevel->setValue(0);
-                sequence->autoStart->setValue(true);
-                sequence->autoStop->setValue(true);
-                asciiSequenceCuelists.set(asciiSequenceId, sequence);
             }
 
             Cue* valueCue = nullptr;
@@ -1740,40 +1778,39 @@ void Assistant::importAscii()
                 for (int iWord = 2; iWord < words.size() - 2; iWord += 3) {
                     int channel = words[iWord].getIntValue();
                     int address = words[iWord + 1].getIntValue();
-                    int universe = address / 512;
-                    address = address % 512;
                     //float level = asciiLevelToFloat(words[iWord + 2]);
                     if (channel > 0) {
-                        Fixture* fixt = Brain::getInstance()->getFixtureById(channel);
+                        Fixture* fixt = importedFixtures.contains(channel) ? importedFixtures.getReference(channel) : Brain::getInstance()->getFixtureById(channel);
                         if (fixt == nullptr) {
                             fixt = new Fixture();
                             fixturesToAdd.add(fixt);
-                            if (ft != nullptr) {
-                                fixt->devTypeParam->setValueFromTarget(ft);
-                            }
                             fixt->id->setValue(channel);
                         }
-
-                        while (universes.size() <= universe) {
-                            InterfaceManager::getInstance()->addItem(new DMXInterface());
-                            universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
+                        importedFixtures.set(channel, fixt);
+                        if (ft != nullptr && fixt->devTypeParam->targetContainer.get() == nullptr) {
+                            fixt->devTypeParam->setValueFromTarget(ft);
                         }
-                        DMXInterface* targetInterface = universes[universe];
-                        FixturePatch* p = fixt->patchs.addItem();
-                        p->targetInterface->setTarget(targetInterface);
-                        p->address->setValue(address);
+
+                        if (address > 0 && fixt->patchs.items.isEmpty()) {
+                            int universe = address / 512;
+                            address = address % 512;
+                            while (universes.size() <= universe) {
+                                InterfaceManager::getInstance()->addItem(new DMXInterface());
+                                universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
+                            }
+                            DMXInterface* targetInterface = universes[universe];
+                            FixturePatch* patch = fixt->patchs.addItem();
+                            patch->targetInterface->setTarget(targetInterface);
+                            patch->address->setValue(address);
+                        }
                     }
                 }
             }
-            else if (currentPrimary == "$SEQUENCE" && currentSecondary == "TEXT" && asciiCues->boolValue()) {
+            else if ((currentPrimary == "$SEQUENCE" || currentPrimary == "$CUELIST") &&
+                currentSecondary == "TEXT" && asciiCues->boolValue()) {
                 String description = originalLine.trim().substring(5).trim();
-                if (asciiSequenceId == 0 && cuelist != nullptr) {
-                    if (description.isNotEmpty()) cuelist->userName->setValue(description);
-                }
-                else if (asciiSequenceId > 0 && asciiSequenceCuelists.contains(asciiSequenceId)) {
-                    Cuelist* sequence = asciiSequenceCuelists.getReference(asciiSequenceId);
-                    if (description.isNotEmpty())
-                        sequence->userName->setValue("ASCII Sequence " + String(asciiSequenceId) + " - " + description);
+                if (currentCuelist != nullptr && currentCuelist != cuelist && description.isNotEmpty()) {
+                    currentCuelist->userName->setValue(description);
                 }
             }
             else if (currentPrimary == "CUE" && asciiCues->boolValue()) {
@@ -1802,45 +1839,83 @@ void Assistant::importAscii()
                     }
                 }
                 else if (currentSecondary == "CUE") {
-                    const bool isDollarCue = words[0] == "$CUE";
-                    const int numberIndex = (isDollarCue && isDLightAscii && words.size() > 2) ? 2 : 1;
+                    const int numberIndex = words[0] == "$CUE" ? 2 : 1;
                     if (words.size() <= numberIndex) {
                         LOGERROR("invalid ASCII CUE: missing cue number");
                         currentCue = nullptr;
                         continue;
                     }
+
                     storeCurrentEffects();
-                    previousCue = currentCue;
+
                     const float cueNumber = words[numberIndex].getFloatValue();
                     const int cueId = cueNumber * 100000;
+                    Cuelist* targetCuelist = currentCuelist;
 
-                    if (asciiSequenceCue) {
-                        Cuelist* sequence = asciiSequenceCuelists.getReference(asciiSequenceId);
-                        currentCue = sequence->cues.addItem();
-                        currentCue->id->setValue(cueNumber);
-                        currentCue->setNiceName("Cue " + words[numberIndex]);
-                        currentCue->commands.clear();
-                        currentCue->editorIsCollapsed = true;
+                    if (words[0] == "$CUE" || words.size() > 2) {
+                        int sourceId = words[words[0] == "$CUE" ? 1 : 2].getIntValue();
+                        String key = (words[0] == "$CUE" ? "$SEQUENCE:" : "$CUELIST:") + String(sourceId);
+
+                        if (asciiCuelists.contains(key)) {
+                            targetCuelist = asciiCuelists.getReference(key);
+                        }
+                        else if (sourceId <= 0 || (words[0] == "CUE" && sourceId == 1)) {
+                            targetCuelist = cuelist;
+                        }
+                        else {
+                            targetCuelist = CuelistManager::getInstance()->addItem();
+                            targetCuelist->userName->setValue((words[0] == "$CUE" ? "ASCII Sequence " : "ASCII Cuelist ") + String(sourceId));
+
+                            if (words[0] == "$CUE") {
+                                targetCuelist->isChaser->setValue(true);
+                                targetCuelist->tracking->setValueWithData("none");
+                                targetCuelist->endAction->setValueWithData("loop");
+                                targetCuelist->HTPLevel->setValue(0);
+                                targetCuelist->LTPLevel->setValue(0);
+                                targetCuelist->autoStart->setValue(true);
+                                targetCuelist->autoStop->setValue(true);
+                            }
+                            else if (useTracking) {
+                                targetCuelist->tracking->setValue("Cuelist order");
+                            }
+                            asciiCuelists.set(key, targetCuelist);
+                        }
                     }
-                    else if (!asciiEraseCuelist->boolValue() && idToCue.contains(cueId)) {
+
+                    if (targetCuelist == nullptr) {
+                        currentCue = nullptr;
+                        continue;
+                    }
+
+                    asciiSequenceCue = targetCuelist != cuelist && targetCuelist->isChaser->boolValue();
+
+                    int targetId = targetCuelist->id->intValue();
+                    previousCue = lastCueByCuelist.contains(targetId)
+                        ? lastCueByCuelist.getReference(targetId) : nullptr;
+
+                    if (targetCuelist == cuelist && !asciiEraseCuelist->boolValue() && idToCue.contains(cueId)) {
                         currentCue = idToCue.getReference(cueId);
                         currentCue->commands.clear();
+                        currentCue->cueText->setValue("");
                     }
                     else {
-                        currentCue = new Cue();
+                        currentCue = targetCuelist->cues.addItem();
                         cuesToAdd.add(currentCue);
                         currentCue->editorIsCollapsed = true;
-                        String cueName = "Cue " + words[numberIndex];
-                        currentCue->setNiceName(cueName);
+                        currentCue->setNiceName("Cue " + words[numberIndex]);
                         currentCue->commands.clear();
-                        if (asciiRespectCueNumbers->boolValue()) {
+                        if (asciiSequenceCue || asciiRespectCueNumbers->boolValue()) {
                             currentCue->id->setValue(cueNumber);
                         }
-                        idToCue.set(currentCue->id->floatValue() * 100000, currentCue);
+                        if (targetCuelist == cuelist) {
+                            idToCue.set(cueId, currentCue);
+                        }
                     }
+
+                    lastCueByCuelist.set(targetId, currentCue);
                 }
                 else if (currentSecondary == "TEXT") {
-                    if (currentCue != nullptr && (asciiSequenceCue || cuesToAdd.contains(currentCue))) {
+                    if (currentCue != nullptr) {
                         String text = currentCue->cueText->stringValue() + originalLine.trim().substring(5);
                         currentCue->cueText->setValue(text);
                         currentCue->goText->setValue(text);
@@ -2281,12 +2356,12 @@ void Assistant::importAscii()
                     );
                 }
             }
-            else if (currentPrimary == "$PATCH") {
+            else if (currentPrimary == "$PATCH" && currentFixture != nullptr) {
                 if (currentSecondary == "TEXT") {
                     String text = originalLine.trim().substring(5);
                     currentFixture->userName->setValue(text);
                 }
-                else if (currentSecondary == "$$OPTIONS") {
+                else if (currentSecondary == "$$OPTIONS" && !currentFixture->patchs.items.isEmpty() && words.size() > 1) {
                     if (words[1].contains("P")) {
                         auto c = currentFixture->patchs.items[0]->corrections.addItem();
                         BKEngine* engine = dynamic_cast<BKEngine*>(BKEngine::mainEngine);
@@ -2358,16 +2433,15 @@ void Assistant::importAscii()
     finalizeCurrentEosEffect();
     storeCurrentEffects();
 
-    cuelist->cues.addItems(cuesToAdd, juce::var(), false);
-
     HashMap<int, int> dlightLoopBySequence;
     for (const DLightMasterLink& link : pendingMasterLinks) {
-        if (!asciiSequenceCuelists.contains(link.sequenceId)) {
+        String key = "$SEQUENCE:" + String(link.sequenceId);
+        if (!asciiCuelists.contains(key)) {
             LOGERROR("ASCII: $MASTERLINK refers to missing D::Light sequence "
                 << link.sequenceId << " (sub " << link.subId << ")");
             continue;
         }
-        Cuelist* chase = asciiSequenceCuelists.getReference(link.sequenceId);
+        Cuelist* chase = asciiCuelists.getReference(key);
         if (chase == nullptr || link.cue == nullptr) continue;
 
         if (!dlightLoopBySequence.contains(link.sequenceId)) {
@@ -2406,8 +2480,8 @@ void Assistant::importAscii()
     if (isDLightAscii && asciiSubs->boolValue()) {
         for (const DLightMasterPageItem& item : dlightMasterPageItems) {
             Cuelist* sub = nullptr;
-            if (item.type == 3 && asciiSequenceCuelists.contains(item.contentId))
-                sub = asciiSequenceCuelists.getReference(item.contentId);
+            if (item.type == 3 && asciiCuelists.contains("$SEQUENCE:" + String(item.contentId)))
+                sub = asciiCuelists.getReference("$SEQUENCE:" + String(item.contentId));
             else if (item.type == 2 && dlightGroupCuelists.contains(item.contentId))
                 sub = dlightGroupCuelists.getReference(item.contentId);
 
@@ -2470,7 +2544,45 @@ void Assistant::importAscii()
     GroupManager::getInstance()->addItems(groupsToAdd, juce::var(), false);
     PresetManager::getInstance()->addItems(presetsToAdd, juce::var(), false);
     FixtureManager::getInstance()->addItems(fixturesToAdd, juce::var(), false);
-    cuelist->selectAsMainConductor();
+
+    if (asciiCleanUnusedFixtures->boolValue() && asciiPatch->boolValue()) {
+        Array<int> usedFixtureIds;
+        for (CommandSelection* selection : Brain::getInstance()->allCommandSelections) {
+            if (selection == nullptr || !selection->enabled->boolValue()) continue;
+            if (selection->targetType->stringValue() != "fixture") continue;
+            int first = selection->valueFrom->intValue();
+            int last = selection->thru->boolValue() ? selection->valueTo->intValue() : first;
+            for (HashMap<int, Fixture*>::Iterator it(importedFixtures); it.next();) {
+                int fixtureId = it.getKey();
+                if (fixtureId >= jmin(first, last) && fixtureId <= jmax(first, last)) {
+                    usedFixtureIds.addIfNotAlreadyThere(fixtureId);
+                }
+            }
+        }
+        for (Preset* preset : PresetManager::getInstance()->items) {
+            for (PresetSubFixtureValues* values : preset->subFixtureValues.items) {
+                usedFixtureIds.addIfNotAlreadyThere(values->targetFixtureId->intValue());
+            }
+        }
+        for (Fixture* fixture : FixtureManager::getInstance()->items) {
+            if (fixture->useAnotherId->intValue() > 0) {
+                usedFixtureIds.addIfNotAlreadyThere(fixture->useAnotherId->intValue());
+            }
+        }
+
+        Array<Fixture*> unusedFixtures;
+        for (HashMap<int, Fixture*>::Iterator it(importedFixtures); it.next();) {
+            if (!usedFixtureIds.contains(it.getKey())) {
+                unusedFixtures.addIfNotAlreadyThere(it.getValue());
+            }
+        }
+        for (Fixture* fixture : unusedFixtures) {
+            FixtureManager::getInstance()->removeItem(fixture);
+        }
+        LOG("ASCII: removed " << unusedFixtures.size() << " unused imported fixtures");
+    }
+
+    if (cuelist != nullptr) cuelist->selectAsMainConductor();
 
     for (FixtureType* fixtureType : FixtureTypeManager::getInstance()->items)
     {
@@ -2497,8 +2609,6 @@ void Assistant::importAscii()
     }
 
 }
-
-
 float Assistant::asciiLevelToFloat(String asciiLevel) {
     float level = 0;
     if (asciiLevel.startsWith("H") && asciiLevel.length() == 3) {

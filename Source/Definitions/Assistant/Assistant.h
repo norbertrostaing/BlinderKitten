@@ -72,6 +72,7 @@ public:
 
 	ControllableContainer asciiCC;
 	BoolParameter* asciiPatch;
+	BoolParameter* asciiCleanUnusedFixtures;
 	BoolParameter* asciiGroups;
 	BoolParameter* asciiGroupValuesAsPreset;
 	BoolParameter* asciiCues;
