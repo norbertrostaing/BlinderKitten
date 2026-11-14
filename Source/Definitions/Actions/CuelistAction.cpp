@@ -276,7 +276,7 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         else {
             if ((incrementOk && target->currentDownFadeController == origin) || abs(target->downFadeController->floatValue() - val) < 0.05) {
-                target->nextCrossFadeController = origin;
+                target->nextDownFadeController = origin;
                 target->downFadeController->setValue(val);
                 validIncrementIndex = incrementIndex + 1;
             }
