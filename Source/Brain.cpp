@@ -2150,10 +2150,10 @@ void Brain::soloPoolStop(int poolId, float forcedFade)
 
     getSoloPoolItems(poolId, spCuelists, spEffects, spCarousels, spStamps);
 
-    for (Cuelist* c : spCuelists) c->off();
-    for (Effect* c : spEffects) c->stop();
-    for (Stamp* c : spStamps) c->stop();
-    for (Carousel* c : spCarousels) c->stop();
+    for (Cuelist* c : spCuelists) c->off(-1, forcedFade);
+    for (Effect* c : spEffects) c->stop(forcedFade);
+    for (Stamp* c : spStamps) c->stop(forcedFade);
+    for (Carousel* c : spCarousels) c->stop(forcedFade);
 
 
 }
