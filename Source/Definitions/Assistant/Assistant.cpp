@@ -2572,7 +2572,7 @@ void Assistant::importAscii()
 
         Array<Fixture*> unusedFixtures;
         for (HashMap<int, Fixture*>::Iterator it(importedFixtures); it.next();) {
-            if (!usedFixtureIds.contains(it.getKey())) {
+            if (!usedFixtureIds.contains(it.getKey()) && fixturesToAdd.contains(it.getValue())) {
                 unusedFixtures.addIfNotAlreadyThere(it.getValue());
             }
         }
