@@ -302,14 +302,6 @@ void VirtualFaderSlider::moved(float value, String origin, int incrementIndex, b
 				value = isRelative ? targ->downFadeController->floatValue() + value : value;
 				targ->downFadeController->setValue(value);
 			}
-			if (action == "upfade") {
-				value = isRelative ? targ->upFadeController->floatValue() + value : value;
-				targ->upFadeController->setValue(value);
-			}
-			if (action == "downfade") {
-				value = isRelative ? targ->downFadeController->floatValue() + value : value;
-				targ->downFadeController->setValue(value);
-			}
 		}
 	}
 	else if (targType == "effect") {
