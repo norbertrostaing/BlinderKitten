@@ -2073,6 +2073,7 @@ void Brain::soloPoolRandom(int poolId)
 
     usingLibraries.exit();
 
+    if (ids.isEmpty()) return;
     int i = mainRandom.nextInt(ids.size());
     int id = ids[i];
     String type = types[i];
