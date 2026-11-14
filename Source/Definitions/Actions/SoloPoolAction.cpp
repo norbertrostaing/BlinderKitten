@@ -100,7 +100,7 @@ void SoloPoolAction::setValueInternal(var value, String origin, int indexIncreme
        
        case SOLP_START:
             if (val == 1) {
-                Brain::getInstance()->soloPoolStart(i, forcedFade->enabled ? forcedFade->floatValue() : -1);
+                Brain::getInstance()->soloPoolStart(i);
             }
             break;
 
