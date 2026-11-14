@@ -35,5 +35,6 @@ public BaseItem
     Automation curve;
 
     void onContainerParameterChangedInternal(Parameter* p);
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c);
 
 };

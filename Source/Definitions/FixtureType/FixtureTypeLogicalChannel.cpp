@@ -10,6 +10,8 @@
 
 #include "FixtureTypeLogicalChannel.h"
 #include "Definitions/ChannelFamily/ChannelFamilyManager.h"
+#include "Definitions/SubFixture/SubFixtureChannel.h"
+#include "Brain.h"
 
 FixtureTypeLogicalChannel::FixtureTypeLogicalChannel(var params) :
     BaseItem(params.getProperty("name", "Channel")),
@@ -77,5 +79,16 @@ FixtureTypeLogicalChannel::~FixtureTypeLogicalChannel()
 
 void FixtureTypeLogicalChannel::onContainerParameterChangedInternal(Parameter* p) {
 
+}
+
+void FixtureTypeLogicalChannel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
+    if (cc == &curve) {
+        for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
+            if (sfc->parentFixtureTypeLogicalChannel == this) {
+                sfc->forceNextWrite = true;
+                Brain::getInstance()->pleaseUpdate(sfc);
+            }
+        }
+    }
 }
 

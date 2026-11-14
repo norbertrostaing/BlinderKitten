@@ -131,6 +131,7 @@ void FixtureTypeChannel::onControllableFeedbackUpdateInternal(ControllableContai
     if (cc == &curve) {
         for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
             if (sfc->parentFixtureTypeChannel == this) {
+                sfc->forceNextWrite = true;
                 Brain::getInstance()->pleaseUpdate(sfc);
             }
         }

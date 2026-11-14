@@ -68,6 +68,7 @@ void FixtureManager::defaultValueChanged(FixtureTypeChannel* ftc)
                 if (sfc->parentFixtureTypeChannel == ftc) {
                     sfc->defaultValue = ftc->defaultValue->floatValue();
                     sfc->invertOutput = ftc->invertOutput->boolValue();
+                    sfc->forceNextWrite = true;
                     Brain::getInstance()->pleaseUpdate(sfc);
                 }
             }
