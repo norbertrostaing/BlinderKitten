@@ -124,6 +124,7 @@ RDMManager::RDMManager() : ShapeShifterContentComponent("RDM Manager")
 RDMManager::~RDMManager()
 {
     stopTimer();
+    restoreSourcePort();
     {
         const juce::ScopedLock lock(receiverListLock);
         if (currentRDMWindow == this) currentRDMWindow = nullptr;
@@ -171,8 +172,20 @@ void RDMManager::refreshOutputs()
     resetScan();
 }
 
+void RDMManager::restoreSourcePort()
+{
+    if (forcedSourceOutput != nullptr && InterfaceManager::getInstanceWithoutCreating() != nullptr &&
+        InterfaceManager::getInstance()->items.contains(forcedSourceOutput))
+    {
+        DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(forcedSourceOutput->dmxDevice.get());
+        if (dev != nullptr) dev->forceSrcPort->setValue(false);
+    }
+    forcedSourceOutput = nullptr;
+}
+
 void RDMManager::resetScan()
 {
+    restoreSourcePort();
     devices.clear();
     { const juce::ScopedLock lock(receiveLock); receivedPackets.clear(); }
     requests.clear();
@@ -210,7 +223,10 @@ void RDMManager::startScan()
     // Set this only once; the existing DMXArtNetDevice code rebinds to 6454.
     DMXArtNetDevice* first = dynamic_cast<DMXArtNetDevice*>(outputs[0]->dmxDevice.get());
     if (first != nullptr && !first->forceSrcPort->boolValue())
+    {
+        forcedSourceOutput = outputs[0];
         first->forceSrcPort->setValue(true);
+    }
 
     scanActive = true;
     scanEverStarted = true;
@@ -326,7 +342,15 @@ void RDMManager::timerCallback()
         }
     }
 
-    if (hasActiveRequest && now - activeRequest.sentAt > 700)
+    if (hasActiveRequest && activeRequest.notBefore > 0 && now >= activeRequest.notBefore)
+    {
+        activeRequest.notBefore = 0;
+        activeRequest.transaction = ++transactionNumber;
+        activeRequest.retries = 0;
+        sendRdm(activeRequest);
+    }
+
+    if (hasActiveRequest && activeRequest.notBefore == 0 && now - activeRequest.sentAt > 700)
     {
         if (activeRequest.retries < 1)
         {
@@ -352,6 +376,8 @@ void RDMManager::timerCallback()
         hasActiveRequest = true;
         sendRdm(activeRequest);
     }
+    if (!scanActive && !hasActiveRequest && requests.empty()) restoreSourcePort();
+
     if (devices.size() > 0)
         statusLabel.setText(juce::String(devices.size()) + " devices / " + juce::String(outputs.size()) +
             " Art-Net outputs | " + juce::String(requests.size() + (hasActiveRequest ? 1 : 0)) +
@@ -435,8 +461,9 @@ void RDMManager::processRdm(const uint8* p, int size, const juce::String& sender
     if (rdm[0] != 0x01 || rdm[1] < 24 || length < int(rdm[1]) + 1) return;
     int pdl = rdm[22];
     if (rdm[1] != 24 + pdl || length < 25 + pdl) return;
-    if (rdm[14] != activeRequest.transaction || read16(rdm + 20) != activeRequest.pid) return;
-    if (rdm[19] != (activeRequest.set ? 0x31 : 0x21)) return;
+    if (rdm[14] != activeRequest.transaction) return;
+    if (activeRequest.pid != 0x0020 && read16(rdm + 20) != activeRequest.pid) return;
+    if (activeRequest.pid != 0x0020 && rdm[19] != (activeRequest.set ? 0x31 : 0x21)) return;
     if (std::memcmp(rdm + 8, activeRequest.uid.data(), 6) != 0) return;
     if (std::memcmp(rdm + 2, controllerUID.data(), 6) != 0) return;
     uint16 checksum = 0xcc;
@@ -446,16 +473,52 @@ void RDMManager::processRdm(const uint8* p, int size, const juce::String& sender
     int index = findDevice(activeRequest.uidText, senderIP, p[21], p[23]);
     if (index < 0) return;
     Device& device = devices.getReference(index);
-    int pid = activeRequest.pid;
-    bool wasSet = activeRequest.set;
-    hasActiveRequest = false;
+    const bool queued = activeRequest.pid == 0x0020;
+    int pid = queued ? activeRequest.originalPid : activeRequest.pid;
+    bool wasSet = queued ? activeRequest.originalSet : activeRequest.set;
 
     if (rdm[15] == 0x01) // ACK_TIMER
     {
-        if (!wasSet) device.values[pid] = "ACK_TIMER";
-        table.repaint();
+        if (pdl < 2 || activeRequest.queuedPolls >= 8)
+        {
+            if (!wasSet) device.values[pid] = "ACK_TIMER timeout";
+            hasActiveRequest = false;
+            table.repaint();
+            return;
+        }
+        if (!queued)
+        {
+            activeRequest.originalPid = pid;
+            activeRequest.originalSet = wasSet;
+            activeRequest.originalPayload = activeRequest.payload;
+            activeRequest.pid = 0x0020; // QUEUED_MESSAGE
+            activeRequest.set = false;
+            uint8 statusType = 0x01; // Status advisory and above
+            activeRequest.payload = juce::MemoryBlock(&statusType, 1);
+        }
+        ++activeRequest.queuedPolls;
+        activeRequest.notBefore = juce::Time::getMillisecondCounterHiRes() + juce::jmax(100, (int)read16(rdm + 23) * 100);
+        activeRequest.sentAt = juce::Time::getMillisecondCounterHiRes();
         return;
     }
+
+    if (queued && (read16(rdm + 20) != pid || rdm[19] != (wasSet ? 0x31 : 0x21)))
+    {
+        if (++activeRequest.queuedPolls >= 8)
+        {
+            if (!wasSet) device.values[pid] = "Queued response timeout";
+            hasActiveRequest = false;
+            table.repaint();
+        }
+        else
+        {
+            activeRequest.notBefore = juce::Time::getMillisecondCounterHiRes() + 200;
+            activeRequest.sentAt = juce::Time::getMillisecondCounterHiRes();
+        }
+        return;
+    }
+
+    hasActiveRequest = false;
     if (rdm[15] == 0x02) // NACK_REASON
     {
         if (!wasSet) device.values[pid] = "NACK 0x" + juce::String::toHexString(pdl >= 2 ? read16(rdm + 23) : 0);
@@ -467,8 +530,9 @@ void RDMManager::processRdm(const uint8* p, int size, const juce::String& sender
     const uint8* data = rdm + 23;
     if (wasSet)
     {
-        if (pid == 0x1000 && activeRequest.payload.getSize() == 1)
-            device.identify = *(const uint8*)activeRequest.payload.getData() != 0;
+        const juce::MemoryBlock& payload = queued ? activeRequest.originalPayload : activeRequest.payload;
+        if (pid == 0x1000 && payload.getSize() == 1)
+            device.identify = *(const uint8*)payload.getData() != 0;
         device.requested.erase(pid);
         queueRdm(index, pid); // confirm SET by reading back
         return;

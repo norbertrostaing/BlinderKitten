@@ -60,6 +60,11 @@ private:
         juce::MemoryBlock payload;
         uint8 transaction = 0;
         int retries = 0;
+        int queuedPolls = 0;
+        int originalPid = 0;
+        bool originalSet = false;
+        juce::MemoryBlock originalPayload;
+        double notBefore = 0;
         double sentAt = 0;
     };
 
@@ -77,6 +82,7 @@ private:
     bool hasActiveRequest = false;
     bool scanActive = false;
     bool scanEverStarted = false;
+    DMXInterface* forcedSourceOutput = nullptr;
     double scanStarted = 0;
     double lastTodRequest = 0;
     uint8 transactionNumber = 0;
@@ -84,6 +90,7 @@ private:
 
     void refreshOutputs();
     void resetScan();
+    void restoreSourcePort();
     void startScan();
     bool sendArtNet(DMXInterface* output, const juce::String& ip, const uint8* data, int size);
     void sendTodControl(DMXInterface* output);
