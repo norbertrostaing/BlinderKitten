@@ -1537,8 +1537,8 @@ void Assistant::importAscii()
                         }
 
                         if (address > 0) {
-                            int universe = address / 512;
-                            address = address % 512;
+                            int universe = (address - 1) / 512;
+                            address = (address - 1) % 512 + 1;
                             while (universes.size() <= universe) {
                                 InterfaceManager::getInstance()->addItem(new DMXInterface());
                                 universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
@@ -1792,8 +1792,8 @@ void Assistant::importAscii()
                         }
 
                         if (address > 0 && fixt->patchs.items.isEmpty()) {
-                            int universe = address / 512;
-                            address = address % 512;
+                            int universe = (address - 1) / 512;
+                            address = (address - 1) % 512 + 1;
                             while (universes.size() <= universe) {
                                 InterfaceManager::getInstance()->addItem(new DMXInterface());
                                 universes = InterfaceManager::getInstance()->getItemsWithType<DMXInterface>();
