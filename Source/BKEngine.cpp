@@ -1230,6 +1230,8 @@ static int gdtfDMXValueToInt(String value, int resolution)
 	return round(normalized * (resolution == 2 ? 65535.0f : 255.0f));
 }
 
+
+
 FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeName)
 {
 	HashMap<String, String> changedNames;
@@ -1568,6 +1570,17 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 						Array<GDTFLogicalChannel> logicalChannels;
 						XmlElement* dmxChannelNode = tempDMXChannelNodes[i];
 
+						int logicalCount = 0;
+						if (dmxChannelNode != nullptr) {
+							for (int iLogical = 0; iLogical < dmxChannelNode->getNumChildElements(); iLogical++) {
+								if (dmxChannelNode->getChildElement(iLogical)->hasTagName("LogicalChannel")) {
+									logicalCount++;
+								}
+							}
+						}
+
+						bool multiLogical = logicalCount > 1;
+
 						if (dmxChannelNode != nullptr) {
 							for (int iLogical = 0; iLogical < dmxChannelNode->getNumChildElements(); iLogical++) {
 								XmlElement* logicalNode = dmxChannelNode->getChildElement(iLogical);
@@ -1583,67 +1596,70 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 								String snap = logicalNode->getStringAttribute("Snap");
 								logical.snap = snap.equalsIgnoreCase("Yes") || snap.equalsIgnoreCase("On");
 
-								bool hasRange = false;
+								if (multiLogical) {
+									bool hasRange = false;
 
-								for (int iFunction = 0; iFunction < logicalNode->getNumChildElements(); iFunction++) {
-									XmlElement* functionNode = logicalNode->getChildElement(iFunction);
-									if (!functionNode->hasTagName("ChannelFunction")) {
-										continue;
-									}
-
-									String functionAttribute = functionNode->getStringAttribute("Attribute");
-
-									if (logical.attribute == "" || logical.attribute == "NoFeature") {
-										if (functionAttribute != "" && functionAttribute != "NoFeature") {
-											logical.attribute = functionAttribute;
+									for (int iFunction = 0; iFunction < logicalNode->getNumChildElements(); iFunction++) {
+										XmlElement* functionNode = logicalNode->getChildElement(iFunction);
+										if (!functionNode->hasTagName("ChannelFunction")) {
+											continue;
 										}
-									}
 
-									int dmxFrom = gdtfDMXValueToInt(
-										functionNode->getStringAttribute("DMXFrom", "0/1"), resolution);
-
-									int dmxTo = maxDMX;
-
-									for (int iNext = iFunction + 1; iNext < logicalNode->getNumChildElements(); iNext++) {
-										XmlElement* nextFunction = logicalNode->getChildElement(iNext);
-										if (nextFunction->hasTagName("ChannelFunction")) {
-											dmxTo = gdtfDMXValueToInt(
-												nextFunction->getStringAttribute("DMXFrom", "0/1"), resolution) - 1;
-											break;
+										String functionAttribute = functionNode->getStringAttribute("Attribute");
+										if (functionAttribute.equalsIgnoreCase("NoFeature")) {
+											continue;
 										}
-									}
 
-									if (dmxTo < dmxFrom) {
-										continue;
-									}
+										int dmxFrom = gdtfDMXValueToInt(
+											functionNode->getStringAttribute("DMXFrom", "0/1"), resolution);
 
-									// NoFeature does not represent an active logical DMX range.
-									if (functionAttribute.equalsIgnoreCase("NoFeature")) {
-										continue;
-									}
+										int dmxTo = maxDMX;
 
-									float physicalFrom = (float)functionNode->getDoubleAttribute("PhysicalFrom", 0);
-									float physicalTo = (float)functionNode->getDoubleAttribute("PhysicalTo", 1);
+										for (int iNext = iFunction + 1; iNext < logicalNode->getNumChildElements(); iNext++) {
+											XmlElement* nextFunction = logicalNode->getChildElement(iNext);
+											if (nextFunction->hasTagName("ChannelFunction")) {
+												int nextFrom = gdtfDMXValueToInt(
+													nextFunction->getStringAttribute("DMXFrom", "0/1"), resolution);
 
-									if (!hasRange) {
-										logical.dmxFrom = dmxFrom;
-										logical.dmxTo = dmxTo;
-										logical.physicalFrom = physicalFrom;
-										logical.physicalTo = physicalTo;
+												if (nextFrom > dmxFrom) {
+													dmxTo = nextFrom - 1;
+													break;
+												}
+											}
+										}
+
+										if (dmxTo < dmxFrom) {
+											continue;
+										}
+
+										float physicalFrom = (float)functionNode->getDoubleAttribute("PhysicalFrom", 0);
+										float physicalTo = (float)functionNode->getDoubleAttribute("PhysicalTo", 1);
+
+										if (!hasRange || dmxFrom < logical.dmxFrom) {
+											logical.dmxFrom = dmxFrom;
+											logical.physicalFrom = physicalFrom;
+										}
+										if (!hasRange || dmxTo > logical.dmxTo) {
+											logical.dmxTo = dmxTo;
+											logical.physicalTo = physicalTo;
+										}
 										hasRange = true;
 									}
-									else if (dmxFrom <= logical.dmxTo + 1) {
-										logical.dmxTo = jmax(logical.dmxTo, dmxTo);
-										logical.physicalTo = physicalTo;
-									}
-									else {
-										LOG("GDTF: non-contiguous DMX ranges for " + logical.attribute
-											+ ", only the first contiguous range is imported.");
+
+									if (!hasRange) {
+										continue;
 									}
 								}
+								else {
+									// Single logical channel: normal BK channel, no DMX range calculation.
+									logical.physicalFrom = tempChannels[i].physicalFrom;
+									logical.physicalTo = tempChannels[i].physicalTo;
+								}
 
-								if (!hasRange) {
-									continue;
+								if (logical.attribute == "" || logical.attribute == "NoFeature") {
+									if (!multiLogical && tempChannels[i].attribute != "###dummy###") {
+										logical.attribute = tempChannels[i].attribute;
+									}
 								}
 
 								if (logical.attribute == "" || logical.attribute == "NoFeature") {
@@ -1654,25 +1670,8 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 									logical.attribute = changedNames.getReference(logical.attribute);
 								}
 
-								bool alreadyThere = false;
-								for (GDTFLogicalChannel existing : logicalChannels) {
-									if (existing.attribute == logical.attribute) {
-										alreadyThere = true;
-										break;
-									}
-								}
-
-								if (!alreadyThere) {
-									logicalChannels.add(logical);
-								}
-							}
-						}
-
-						bool multiLogical = logicalChannels.size() > 1;
-
-						if (logicalChannels.size() == 1) {
-							if (logicalChannels[0].dmxFrom != 0 || logicalChannels[0].dmxTo != maxDMX) {
-								multiLogical = true;
+								// One entry per GDTF LogicalChannel, not per ChannelFunction.
+								logicalChannels.add(logical);
 							}
 						}
 
