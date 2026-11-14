@@ -807,9 +807,6 @@ void Assistant::importAscii()
 
     Cuelist* currentCuelist = cuelist;
     HashMap<String, Cuelist*> asciiCuelists;
-    if (cuelist != nullptr) {
-        asciiCuelists.set("$CUELIST:1", cuelist);
-    }
     HashMap<int, Cue*> idToCue;
     HashMap<int, Cue*> lastCueByCuelist;
 
@@ -1412,28 +1409,14 @@ void Assistant::importAscii()
 
                 if (sourceId > 0 && asciiCues->boolValue()) {
                     if (!asciiCuelists.contains(key)) {
-                        Cuelist* newCuelist = CuelistManager::getInstance()->addItem();
-                        newCuelist->userName->setValue((words[0] == "$SEQUENCE" ? "ASCII Sequence " : "ASCII Cuelist ") + String(sourceId));
-
-                        if (words[0] == "$CUELIST") {
-                            int sourceId = words[1].getIntValue();
-                            String key = "$CUELIST:" + String(sourceId);
-
-                            if (!asciiCuelists.contains(key)) {
-                                Cuelist* target = nullptr;
-
-                                if (!mainAsciiCuelistAssigned) {
-                                    target = cuelist;
-                                    mainAsciiCuelistAssigned = true;
-                                }
-                                else {
-                                    target = CuelistManager::getInstance()->addItem();
-                                }
-
-                                asciiCuelists.set(key, target);
-                            }
-
-                            currentCuelist = asciiCuelists.getReference(key);
+                        Cuelist* newCuelist = nullptr;
+                        if (words[0] == "$CUELIST" && !mainAsciiCuelistAssigned) {
+                            newCuelist = cuelist;
+                            mainAsciiCuelistAssigned = true;
+                        }
+                        else {
+                            newCuelist = CuelistManager::getInstance()->addItem();
+                            newCuelist->userName->setValue((words[0] == "$SEQUENCE" ? "ASCII Sequence " : "ASCII Cuelist ") + String(sourceId));
                         }
 
                         if (words[0] == "$SEQUENCE") {
@@ -1859,8 +1842,12 @@ void Assistant::importAscii()
                         if (asciiCuelists.contains(key)) {
                             targetCuelist = asciiCuelists.getReference(key);
                         }
-                        else if (sourceId <= 0 || (words[0] == "CUE" && sourceId == 1)) {
+                        else if (sourceId <= 0 || (words[0] == "CUE" && !mainAsciiCuelistAssigned)) {
                             targetCuelist = cuelist;
+                            if (sourceId > 0) {
+                                asciiCuelists.set(key, cuelist);
+                                mainAsciiCuelistAssigned = true;
+                            }
                         }
                         else {
                             targetCuelist = CuelistManager::getInstance()->addItem();
