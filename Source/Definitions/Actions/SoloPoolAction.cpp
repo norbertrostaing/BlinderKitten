@@ -133,12 +133,10 @@ void SoloPoolAction::setValueInternal(var value, String origin, int indexIncreme
 
         case SOLP_SPEED:
             if (isRelative) {
-                val *= (float)maxSpeed->getValue();
-                Brain::getInstance()->soloPoolSetSpeedRel(i,val, adaptSpeedTapTempo->boolValue());
+                Brain::getInstance()->soloPoolSetSpeedRel(i, val * maxSpeed->floatValue(), adaptSpeedTapTempo->boolValue());
             }
             else {
-                val *= (float)maxSpeed->getValue();
-                Brain::getInstance()->soloPoolSetSpeed(i,val, adaptSpeedTapTempo->boolValue());
+                Brain::getInstance()->soloPoolSetSpeed(i, val * maxSpeed->floatValue(), adaptSpeedTapTempo->boolValue());
             }
             break;
 
