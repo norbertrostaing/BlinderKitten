@@ -226,10 +226,10 @@ void Tracker::computeData() {
 					? sfcTilt->parentFixtureTypeLogicalChannel->physicalRange
 					: sfcTilt->parentFixtureTypeChannel->physicalRange;
 
-				float minPan =  sfcPan->parentFixtureTypeChannel->physicalRange->x;
-				float maxPan =  sfcPan->parentFixtureTypeChannel->physicalRange->y;
-				float minTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->x;
-				float maxTilt = sfcTilt->parentFixtureTypeChannel->physicalRange->y;
+				float minPan = panRange->x;
+				float maxPan = panRange->y;
+				float minTilt = tiltRange->x;
+				float maxTilt = tiltRange->y;
 
 				if (invertPan) {
 					float temp = minPan; minPan = maxPan; maxPan = temp;
