@@ -256,85 +256,146 @@ void Brain::brainLoop() {
     for (SelectionMaster* e : selectionMasters) { e->isComputing.enter(); }
     usingLibraries.exit();
 
-    juce::Array< SubFixtureChannel*> modifiedPerThread[8];
-    juce::WaitableEvent doneEvent;
-    std::atomic<int> remainingJobs = 8;
+    BKEngine* e = (BKEngine*)Engine::mainEngine;
+    if (e->multiThreadBrain->enabled) {
+        // multiThread
+        int numThreads = e->multiThreadBrain->intValue();
 
-    for (int iThread = 0; iThread < 8; iThread++)
-    {
-        pool.addJob([this, iThread, &modifiedPerThread, &remainingJobs, &doneEvent]()
-            {
-                auto& localModified = modifiedPerThread[iThread];
-                for (int i = 0; i < allVirtualSubfixtureChannels.size(); i += 8)
+        juce::Array< SubFixtureChannel*> modifiedPerThread[8];
+        juce::WaitableEvent doneEvent;
+        std::atomic<int> remainingJobs = numThreads;
+        int arraySize = 0;
+
+        arraySize = allVirtualSubfixtureChannels.size();
+
+        for (int iThread = 0; iThread < numThreads; iThread++)
+        {
+            pool.addJob([this, iThread, arraySize, numThreads, &modifiedPerThread, &remainingJobs, &doneEvent]()
                 {
-                    int index = i + iThread;
-                    if (allVirtualSubfixtureChannels.size() > index) {
-                        SubFixtureChannel* sfc = allVirtualSubfixtureChannels[index];
-                        if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
-                        {
-                            sfc->isDirty = false;
-                            sfc->updateVal(now);
-                            localModified.add(sfc);
+                    auto& localModified = modifiedPerThread[iThread];
+                    for (int i = 0; i < arraySize; i += numThreads)
+                    {
+                        int index = i + iThread;
+                        if (arraySize > index) {
+                            SubFixtureChannel* sfc = allVirtualSubfixtureChannels[index];
+                            if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
+                            {
+                                sfc->isDirty = false;
+                                sfc->updateVal(now);
+                                localModified.add(sfc);
+                            }
                         }
+
                     }
-
-                }
-                if (--remainingJobs == 0) doneEvent.signal();
-            });
-    }
-
-    doneEvent.wait();
-    doneEvent.reset();
-    remainingJobs = 8;
-
-    for (int iThread = 0; iThread < 8; iThread++)
-    {
-        pool.addJob([this, iThread, &modifiedPerThread, &remainingJobs, &doneEvent]()
-            {
-                auto& localModified = modifiedPerThread[iThread];
-                for (int i = 0; i < allDMXSubfixtureChannels.size(); i += 8)
-                {
-                    int index = i + iThread;
-                    if (allDMXSubfixtureChannels.size() > index) {
-                        SubFixtureChannel* sfc = allDMXSubfixtureChannels[index];
-                        if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
-                        {
-                            sfc->isDirty = false;
-                            sfc->updateVal(now);
-                            localModified.add(sfc);
-                        }
-                    }
-
-                }
-                if (--remainingJobs == 0) doneEvent.signal();
-            });
-    }
-
-    doneEvent.wait();
-
-    //pool.removeAllJobs(true, -1);
-
-    for (int i = 0; i < 8; i++) {
-        modifiedSF.addArray(modifiedPerThread[i]);
-    }   
-
-    usingPhysicalChannels.enter();
-    for (SubFixturePhysicalChannel* sfpc : dirtyPhysicalChannels) {
-        if (sfpc->isDirty) {
-            sfpc->writeValue();
-            sfpc->isDirty = false;
+                    if (--remainingJobs == 0) doneEvent.signal();
+                });
         }
-    }
-    dirtyPhysicalChannels.clear();
-    usingPhysicalChannels.exit();
 
-    //for (SubFixtureChannel* sfc : allSubfixtureChannels) {
-    //    if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty) {
-    //        modifiedSF.add(sfc);
-    //        sfc->isDirty = false;
-    //        sfc->updateVal(now);
-    //    }
-    //}
+        doneEvent.wait();
+        doneEvent.reset();
+        remainingJobs = numThreads;
+
+        arraySize = allDMXSubfixtureChannels.size();
+        for (int iThread = 0; iThread < numThreads; iThread++)
+        {
+            pool.addJob([this, iThread, arraySize, numThreads, &modifiedPerThread, &remainingJobs, &doneEvent]()
+                {
+                    auto& localModified = modifiedPerThread[iThread];
+                    for (int i = 0; i < arraySize; i += numThreads)
+                    {
+                        int index = i + iThread;
+                        if (arraySize > index) {
+                            SubFixtureChannel* sfc = allDMXSubfixtureChannels[index];
+                            if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
+                            {
+                                sfc->isDirty = false;
+                                sfc->updateVal(now);
+                                localModified.add(sfc);
+                            }
+                        }
+
+                    }
+                    if (--remainingJobs == 0) doneEvent.signal();
+                });
+        }
+
+        doneEvent.wait();
+        doneEvent.reset();
+
+        //pool.removeAllJobs(true, -1);
+
+        for (int i = 0; i < numThreads; i++) {
+            modifiedSF.addArray(modifiedPerThread[i]);
+        }
+
+
+        usingPhysicalChannels.enter();
+        remainingJobs = numThreads;
+        arraySize = dirtyPhysicalChannels.size();
+        for (int iThread = 0; iThread < numThreads; iThread++)
+        {
+            pool.addJob([this, iThread, arraySize, numThreads, &modifiedPerThread, &remainingJobs, &doneEvent]()
+                {
+                    auto& localModified = modifiedPerThread[iThread];
+                    for (int i = 0; i < arraySize; i += numThreads)
+                    {
+                        int id = i + iThread;
+                        if (id < arraySize) {
+                            SubFixturePhysicalChannel* sfpc = dirtyPhysicalChannels[id];
+                            if (sfpc->isDirty) {
+                                sfpc->writeValue();
+                                sfpc->isDirty = false;
+                            }
+                        }
+                    }
+                    if (--remainingJobs == 0) doneEvent.signal();
+                });
+        }
+
+        doneEvent.wait();
+        dirtyPhysicalChannels.clear();
+        usingPhysicalChannels.exit();
+
+
+    }
+    else {
+        // mono Thread
+
+        for (int i = 0; i < allVirtualSubfixtureChannels.size(); i ++)
+        {
+            SubFixtureChannel* sfc = allVirtualSubfixtureChannels[i];
+            if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
+            {
+                sfc->isDirty = false;
+                sfc->updateVal(now);
+                modifiedSF.add(sfc);
+            }
+        }
+
+        for (int i = 0; i < allDMXSubfixtureChannels.size(); i ++)
+        {
+            SubFixtureChannel* sfc = allDMXSubfixtureChannels[i];
+            if (sfc != nullptr && !sfc->isDeleted && sfc->isDirty)
+            {
+                sfc->isDirty = false;
+                sfc->updateVal(now);
+                modifiedSF.add(sfc);
+            }
+        }
+
+        usingPhysicalChannels.enter();
+        for (int i = 0; i < dirtyPhysicalChannels.size(); i++)
+        {
+            SubFixturePhysicalChannel* sfpc = dirtyPhysicalChannels[i];
+            if (sfpc->isDirty) {
+                sfpc->writeValue();
+                sfpc->isDirty = false;
+            }
+        }
+        dirtyPhysicalChannels.clear();
+        usingPhysicalChannels.exit();
+    }
+
 
     usingLibraries.enter();
     for (Stamp* s : stamps) { s->imageLock.exit(); }

@@ -60,6 +60,7 @@ public:
 	ControllableContainer genericSettingsContainer;
 	IntParameter* tapTempoHistory;
 	IntParameter* defaultPresetId;
+	IntParameter* multiThreadBrain;
 
 
 	ControllableContainer conductorInfosContainer;

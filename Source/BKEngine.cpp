@@ -138,6 +138,9 @@ BKEngine::BKEngine() :
 	tapTempoHistory->addParameterListener(this);
 	defaultPresetId = genericSettingsContainer.addIntParameter("Default preset ID", "ID of the preset to use as default value", 0, 0);
 	defaultPresetId->addParameterListener(this);
+	multiThreadBrain = genericSettingsContainer.addIntParameter("MultiThread", "If enabled, creates the entered number of threads to process fixture channels",2,2,8);
+	multiThreadBrain->canBeDisabledByUser = true;
+	multiThreadBrain->setEnabled(false);
 
 	faderSelectionMode = virtualParamsContainer.addEnumParameter("Faders selection mode", "Single copies elements on only one element, column assign target to all elements in selected column");
 	faderSelectionMode->addOption("Single", "single")->addOption("Column", "column");
