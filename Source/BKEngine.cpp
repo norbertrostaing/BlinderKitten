@@ -1232,6 +1232,7 @@ static int gdtfDMXValueToInt(String value, int resolution)
 
 
 
+
 FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeName)
 {
 	HashMap<String, String> changedNames;
@@ -1441,7 +1442,6 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 							if (initialFunction == "" && attribute != "###dummy###") {
 								String followerPrefix = geometry + "_" + attribute + "." + attribute + ".";
-
 								for (int iRel = 0; iRel < getMasterDimmer.size(); iRel++) {
 									if (getMasterDimmer[iRel].startsWith(followerPrefix)) {
 										initialFunction = getMasterDimmer[iRel];
@@ -1581,6 +1581,29 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 						bool multiLogical = logicalCount > 1;
 
+						Array<int> allFunctionStarts;
+
+						if (multiLogical && dmxChannelNode != nullptr) {
+							for (int iLogical = 0; iLogical < dmxChannelNode->getNumChildElements(); iLogical++) {
+								XmlElement* logicalNode = dmxChannelNode->getChildElement(iLogical);
+								if (!logicalNode->hasTagName("LogicalChannel")) {
+									continue;
+								}
+
+								for (int iFunction = 0; iFunction < logicalNode->getNumChildElements(); iFunction++) {
+									XmlElement* functionNode = logicalNode->getChildElement(iFunction);
+									if (!functionNode->hasTagName("ChannelFunction")) {
+										continue;
+									}
+
+									int dmxFrom = gdtfDMXValueToInt(
+										functionNode->getStringAttribute("DMXFrom", "0/1"), resolution);
+
+									allFunctionStarts.addIfNotAlreadyThere(dmxFrom);
+								}
+							}
+						}
+
 						if (dmxChannelNode != nullptr) {
 							for (int iLogical = 0; iLogical < dmxChannelNode->getNumChildElements(); iLogical++) {
 								XmlElement* logicalNode = dmxChannelNode->getChildElement(iLogical);
@@ -1615,16 +1638,9 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 
 										int dmxTo = maxDMX;
 
-										for (int iNext = iFunction + 1; iNext < logicalNode->getNumChildElements(); iNext++) {
-											XmlElement* nextFunction = logicalNode->getChildElement(iNext);
-											if (nextFunction->hasTagName("ChannelFunction")) {
-												int nextFrom = gdtfDMXValueToInt(
-													nextFunction->getStringAttribute("DMXFrom", "0/1"), resolution);
-
-												if (nextFrom > dmxFrom) {
-													dmxTo = nextFrom - 1;
-													break;
-												}
+										for (int nextFrom : allFunctionStarts) {
+											if (nextFrom > dmxFrom && nextFrom - 1 < dmxTo) {
+												dmxTo = nextFrom - 1;
 											}
 										}
 
