@@ -76,9 +76,30 @@ FixtureTypeLogicalChannel::~FixtureTypeLogicalChannel()
 {
 }
 
-
 void FixtureTypeLogicalChannel::onContainerParameterChangedInternal(Parameter* p) {
+    if (p == defaultValue) {
+        for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
+            if (sfc->parentFixtureTypeLogicalChannel == this) {
+                sfc->userDefinedDefaultValue = defaultValue->enabled;
+                sfc->defaultValue = defaultValue->enabled ? defaultValue->floatValue() : 0;
+                sfc->forceNextWrite = true;
+                Brain::getInstance()->pleaseUpdate(sfc);
+            }
+        }
+    }
+    else if (p == dmxOutputRange) {
+        for (SubFixtureChannel* sfc : Brain::getInstance()->allSubfixtureChannels) {
+            if (sfc->parentFixtureTypeLogicalChannel == this) {
+                double maxDMX = sfc->resolution == "16bits" ? 65535.0 : 255.0;
 
+                sfc->lowPhysicalValue = (double)dmxOutputRange->value[0] / maxDMX;
+                sfc->highPhysicalValue = (double)dmxOutputRange->value[1] / maxDMX;
+
+                sfc->forceNextWrite = true;
+                Brain::getInstance()->pleaseUpdate(sfc);
+            }
+        }
+    }
 }
 
 void FixtureTypeLogicalChannel::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) {
