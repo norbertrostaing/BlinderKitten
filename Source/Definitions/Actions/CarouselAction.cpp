@@ -44,6 +44,10 @@ CarouselAction::CarouselAction(var params) :
         forcedFade->setEnabled(false);
         forcedFade->canBeDisabledByUser = true;
     }
+
+    if (actionType == CAR_SPEED_FIXED) {
+        fixedSpeed = addFloatParameter("Fixed speed", "Set at THIS speed !", 120,0);
+    }
 }
 
 CarouselAction::~CarouselAction()
@@ -129,6 +133,12 @@ void CarouselAction::setValueInternal(var value, String origin, int incrementInd
         }
         else {
             target->speed->setValue(val);
+        }
+        break;
+
+    case CAR_SPEED_FIXED:
+        if (val == 1) {
+            target->speed->setValue(fixedSpeed->floatValue());
         }
         break;
 

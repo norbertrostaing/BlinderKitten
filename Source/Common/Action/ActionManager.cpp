@@ -68,6 +68,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASHLEVEL));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "LTP Level", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_LTPLEVEL));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Chaser Speed", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_CHASERSPEED));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Chaser Fixed Speed", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SPEED_FIXED ));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Chaser Tap tempo", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_CHASERTAPTEMPO));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Cross fade", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_CROSSFADE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Up fade", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_UPFADE));
@@ -96,6 +97,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Swop", &EffectAction::create)->addParam("actionType", EffectAction::FX_SWOP));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Size", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Fixed Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED_FIXED));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Double Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_DOUBLESPEED));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Half Speed", &EffectAction::create)->addParam("actionType", EffectAction::FX_HALFSPEED));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Buddy Block Wing", &EffectAction::create)->addParam("actionType", EffectAction::FX_BBW));
@@ -115,6 +117,7 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Swop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SWOP));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Size", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Fixed Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED_FIXED));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Double Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_DOUBLESPEED));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Half Speed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_HALFSPEED));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Buddy Block Wing", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_BBW));

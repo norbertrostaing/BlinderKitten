@@ -35,6 +35,10 @@ CuelistAction::CuelistAction(var params) :
     if (actionType == CL_OFFTIME_FIXED) {
         offTimeFixed = addFloatParameter("Off time", "", 0,0);
     }
+    if (actionType == CL_SPEED_FIXED) {
+        fixedSpeed = addFloatParameter("Fixed speed", "Set at THIS speed !", 120, 0);
+    }
+
 }
 
 CuelistAction::~CuelistAction()
@@ -182,6 +186,12 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         else {
             target->chaserSpeed->setValue(val* maxSpeed->floatValue());
+        }
+        break;
+
+    case CL_SPEED_FIXED:
+        if (val == 1) {
+            target->chaserSpeed->setValue(fixedSpeed->floatValue());
         }
         break;
 

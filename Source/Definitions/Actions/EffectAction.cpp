@@ -47,6 +47,9 @@ EffectAction::EffectAction(var params) :
         forcedFade->setEnabled(false);
         forcedFade->canBeDisabledByUser = true;
     }
+    if (actionType == FX_SPEED_FIXED) {
+        fixedSpeed = addFloatParameter("Fixed speed", "Set at THIS speed !", 120, 0);
+    }
 }
 
 EffectAction::~EffectAction()
@@ -132,6 +135,12 @@ void EffectAction::setValueInternal(var value, String origin, int incrementIndex
         }
         else {
             target->speed->setValue(val);
+        }
+        break;
+
+    case FX_SPEED_FIXED:
+        if (val == 1) {
+            target->speed->setValue(fixedSpeed->floatValue());
         }
         break;
 
