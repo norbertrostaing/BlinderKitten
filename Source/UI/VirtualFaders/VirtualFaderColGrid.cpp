@@ -640,6 +640,7 @@ void VirtualFaderColGrid::deleteElmt(int id)
             VirtualFaderButton* vfb = buttonToVFB.getReference(b);
             if (vfb != nullptr) {
                 vfb->targetType->setValueWithData("disabled");
+                vfb->customText->setValue("");
             }
         }
     }
@@ -649,6 +650,7 @@ void VirtualFaderColGrid::deleteElmt(int id)
             VirtualFaderSlider* vfs = sliderToVFS.getReference(s);
             if (vfs != nullptr) {
                 vfs->targetType->setValueWithData("disabled");
+                vfs->customText->setValue("");
             }
         }
     }
