@@ -76,6 +76,9 @@ public:
     Trigger* tapTempoBtn;
     FloatParameter* beatPerCycle;
 
+    FloatParameter* sizeMultiplier;
+    FloatParameter* speedMultiplier;
+
     MultiplicatorLinkManager speedMult;
     MultiplicatorLinkManager sizeMult;
     float currentSizeMult = 1;

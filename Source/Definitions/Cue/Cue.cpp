@@ -321,7 +321,8 @@ void Cue::update(double now) {
 	}
 
 	if (parentCuelist->isChaser->boolValue() && parentCuelist->isCuelistOn->boolValue()) {
-		if (parentCuelist->lastGoTS + parentCuelist->chaserStepDuration + 500 < now) {
+		float speedMult = parentCuelist->getSpeedMult();
+		if (parentCuelist->lastGoTS + (speedMult*parentCuelist->chaserStepDuration) + 500 < now) {
 			parentCuelist->go();
 		}
 	}

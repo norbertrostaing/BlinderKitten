@@ -207,6 +207,10 @@ Cuelist::Cuelist(var params) :
 
 
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
+	sizeMultiplier = addFloatParameter("Size multiplier", "The size will be multiplied by this value during process", 1, 0);
+	speedMultiplier = addFloatParameter("Speed multiplier", "The speed will be multiplied by this value during process (be careful, a multiplier of 2 accelerates everything, including your transitions, the speed is multiplied, so the timings are divided)", 1, 0);
+
+
 	moveInBlackDelay = addFloatParameter("MIB Delay", "Delay to wait after light goes off to trigger move in black", 0, 0);
 
 	// offFadeCurve = new Automation();
@@ -627,9 +631,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 	downFadeCanMove = false;
 	crossFadeCanMove = false;
 
-	float speedMultVal = speedMult.getValue();
-	if (speedMultVal < 0.00001) { speedMultVal = 0.00001; }
-	speedMultVal = 1/speedMultVal;
+	double speedMultVal = getSpeedMult();
 
 	CScuesAB.enter();
 	if (cueA != nullptr) {
@@ -776,7 +778,7 @@ void Cuelist::go(Cue* c, float forcedDelay, float forcedFade) {
 			else {
 				temp->values.set(0, -1);
 			}
-			if (isChaser->getValue()) {
+			if (isChaser->boolValue()) {
 				temp->TSInit = now;
 				temp->TSStart = now;
 				temp->TSEnd = temp->TSStart + (chaserFadeInDuration * speedMultVal);
@@ -1260,9 +1262,9 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 		now = TSTransitionStart + (TSTransitionDuration * ratio);
 	}
 
-	faderLevel = (float)HTPLevel->getValue();
+	faderLevel = HTPLevel->floatValue() * sizeMultiplier->floatValue();
 	if (!fc->isHTP) {
-		faderLevel = (float)LTPLevel->getValue();
+		faderLevel = (float)LTPLevel->getValue() * sizeMultiplier->floatValue();
 	}
 	else {
 		if (TSOffFlashEnd > now) {
@@ -1274,7 +1276,6 @@ float Cuelist::applyToChannel(SubFixtureChannel* fc, float currentVal, double no
 			faderLevel = jmax(faderLevel,(float)flashLevel->getValue());
 		}
 	}
-
 
 	float valueFrom = currentVal;
 	float valueTo = currentVal;
@@ -2037,6 +2038,15 @@ void Cuelist::rebuildTimecode()
 		}
 	}
 	csTimecode.exit();
+}
+
+double Cuelist::getSpeedMult()
+{
+	double speedMultVal = speedMult.getValue();
+	speedMultVal *= speedMultiplier->floatValue();
+	if (speedMultVal < 0.00000001) { speedMultVal = 0.00000001; }
+	speedMultVal = 1 / speedMultVal;
+	return speedMultVal;
 }
 
 void Cuelist::timecodeInterfaceChanged()
