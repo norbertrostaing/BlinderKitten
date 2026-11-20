@@ -61,6 +61,15 @@ BundleAction::BundleAction(var params) :
         fadeDurationFixed = addFloatParameter("Fade duration", "", 0, 0);
     }
 
+    if (actionType == BUN_SPEED_MULT || actionType == BUN_SIZE_MULT) {
+        multFrom = addFloatParameter("From", "Mult from value", 0, 0);
+        multTo = addFloatParameter("To", "Mult from value", 1, 0);
+    }
+
+    if (actionType == BUN_SPEED_MULT_FIXED || actionType == BUN_SIZE_MULT_FIXED) {
+        multFixed = addFloatParameter("Fixed value", "Set the multiplicator to this value", 1, 0);
+    }
+
 }
 
 BundleAction::~BundleAction()
@@ -177,7 +186,27 @@ void BundleAction::setValueInternal(var value, String origin, int indexIncrement
     case BUN_FADE_FIXED:
         if (inFade->boolValue()) target->setFadeIn(fadeDurationFixed->floatValue());
         if (outFade->boolValue()) target->setFadeOut(fadeDurationFixed->floatValue());
-        break;        
+        break;       
+        
+    case BUN_SPEED_MULT:
+        target->setSpeedMultiplier(jmap(val, 0.0f, 1.0f, multFrom->floatValue(), multTo->floatValue()));
+        break;
+
+    case BUN_SIZE_MULT:
+        target->setSizeMultiplier(jmap(val, 0.0f, 1.0f, multFrom->floatValue(), multTo->floatValue()));
+        break;
+
+    case BUN_SPEED_MULT_FIXED:
+        if (val == 1) {
+            target->setSpeedMultiplier(multFixed->floatValue());
+        }
+        break;
+
+    case BUN_SIZE_MULT_FIXED:
+        if (val == 1) {
+            target->setSizeMultiplier(multFixed->floatValue());
+        }
+        break;
 
     }
 
@@ -230,6 +259,16 @@ var BundleAction::getValue()
         val = fadeFrom == fadeTo ? 0.0f : jmap(v, fadeFrom, fadeTo, 0.f, 1.f);
 
         }
+
+    case BUN_SIZE_MULT:
+        val = jmap(target->lastSizeMult, multFrom->floatValue(), multTo->floatValue(), 0.f, 1.f);
+        break;
+
+    case BUN_SPEED_MULT:
+        val = jmap(target->lastSpeedMult, multFrom->floatValue(), multTo->floatValue(), 0.f, 1.f);
+        break;
+
+
 
     }
 

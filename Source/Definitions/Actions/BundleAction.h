@@ -19,7 +19,10 @@ public:
     BundleAction(var params = var());
     ~BundleAction();
 
-    enum ActionType { BUN_START, BUN_STOP, BUN_SIZE, BUN_SET_SIZE, BUN_SPEED, BUN_DOUBLESPEED, BUN_HALFSPEED, BUN_TAPTEMPO, BUN_FLASH, BUN_SWOP, BUN_TIMED_FLASH, BUN_TIMED_SWOP, BUN_STOP_INSTANT, BUN_SET_SPEED, BUN_FADE, BUN_FADE_FIXED};
+    enum ActionType { BUN_START, BUN_STOP, BUN_SIZE, BUN_SET_SIZE, BUN_SPEED, BUN_DOUBLESPEED, BUN_HALFSPEED, BUN_TAPTEMPO, BUN_FLASH, BUN_SWOP, BUN_TIMED_FLASH, BUN_TIMED_SWOP, BUN_STOP_INSTANT, BUN_SET_SPEED, BUN_FADE, BUN_FADE_FIXED,
+        BUN_SPEED_MULT, BUN_SIZE_MULT, BUN_SPEED_MULT_FIXED, BUN_SIZE_MULT_FIXED
+
+    };
     ActionType actionType;
     IntParameter* targetId;
     FloatParameter* maxSpeed;
@@ -41,6 +44,10 @@ public:
     FloatParameter* fadeDurationFrom;
     FloatParameter* fadeDurationTo;
 
+    FloatParameter* multFrom;
+    FloatParameter* multTo;
+    FloatParameter* multFixed;
+    
     float lastValue = 0;
 
     void triggerInternal() override;

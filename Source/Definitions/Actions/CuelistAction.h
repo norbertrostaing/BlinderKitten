@@ -32,7 +32,8 @@ public:
                         CL_OFFTIME, CL_OFFTIME_FIXED,
                         CL_LOADCONTENTWITHTRACKING,
                         CL_FLASH_PRESS, CL_FLASH_RELEASE, CL_SWOP_PRESS, CL_SWOP_RELEASE,
-                        CL_SPEED_FIXED
+                        CL_SPEED_FIXED,
+                        CL_SPEED_MULT, CL_SIZE_MULT, CL_SPEED_MULT_FIXED, CL_SIZE_MULT_FIXED
     };
     ActionType actionType;
     BoolParameter* useMainConductor;
@@ -44,6 +45,10 @@ public:
     FloatParameter* offTimeFrom;
     FloatParameter* offTimeTo;
     FloatParameter* offTimeFixed;
+
+    FloatParameter* multFrom;
+    FloatParameter* multTo;
+    FloatParameter* multFixed;
 
     void triggerInternal() override;
     void setValueInternal(var value, String origin, int incrementIndex, bool isRelative) override;

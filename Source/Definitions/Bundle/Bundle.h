@@ -54,6 +54,9 @@ public:
     float lastInFade = 0;
     float lastOutFade = 0;
 
+    float lastSpeedMult = 1;
+    float lastSizeMult = 1;
+
     bool toDelete = false;
 
     String getTypeString() const override { return objectType; }
@@ -75,6 +78,10 @@ public:
 
     void setFadeIn(float val);
     void setFadeOut(float val);
+
+    void setSpeedMultiplier(float val);
+    void setSizeMultiplier(float val);
+
 
     void onControllableFeedbackUpdate(ControllableContainer*, Controllable*) override;
     void triggerTriggered(Trigger* t);

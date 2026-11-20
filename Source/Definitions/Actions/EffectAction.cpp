@@ -50,6 +50,16 @@ EffectAction::EffectAction(var params) :
     if (actionType == FX_SPEED_FIXED) {
         fixedSpeed = addFloatParameter("Fixed speed", "Set at THIS speed !", 120, 0);
     }
+
+    if (actionType == FX_SPEED_MULT || actionType == FX_SIZE_MULT) {
+        multFrom = addFloatParameter("From", "Mult from value", 0, 0);
+        multTo = addFloatParameter("To", "Mult from value", 1, 0);
+    }
+
+    if (actionType == FX_SPEED_MULT_FIXED || actionType == FX_SIZE_MULT_FIXED) {
+        multFixed = addFloatParameter("Fixed value", "Set the multiplicator to this value", 1,0);
+    }
+
 }
 
 EffectAction::~EffectAction()
@@ -238,6 +248,25 @@ void EffectAction::setValueInternal(var value, String origin, int incrementIndex
         }
         break;
 
+    case FX_SPEED_MULT:
+        target->speedMultiplier->setValue(jmap(val, 0.0f, 1.0f, multFrom->floatValue(), multTo->floatValue()));
+        break;
+
+    case FX_SIZE_MULT:
+        target->sizeMultiplier->setValue(jmap(val, 0.0f, 1.0f, multFrom->floatValue(), multTo->floatValue()));
+        break;
+
+    case FX_SPEED_MULT_FIXED:
+        if (val == 1) {
+            target->speedMultiplier->setValue(multFixed->floatValue());
+        }
+        break;
+
+    case FX_SIZE_MULT_FIXED:
+        if (val == 1) {
+            target->sizeMultiplier->setValue(multFixed->floatValue());
+        }
+        break;
 
     }
 }
@@ -276,8 +305,16 @@ var EffectAction::getValue()
 
     case FX_HALFSPEED:
         break;
-    }
 
+    case FX_SIZE_MULT:
+        val = jmap(target->sizeMultiplier->floatValue(), multFrom->floatValue(), multTo->floatValue(), 0.f, 1.f);
+        break;
+
+    case FX_SPEED_MULT:
+        val = jmap(target->speedMultiplier->floatValue(), multFrom->floatValue(), multTo->floatValue(), 0.f, 1.f);
+        break;
+
+    }
 
     return val;
 }
