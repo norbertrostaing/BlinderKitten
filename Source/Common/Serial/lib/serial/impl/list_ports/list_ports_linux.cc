@@ -34,14 +34,15 @@ using std::cout;
 using std::endl;
 
 static vector<string> glob(const vector<string>& patterns);
+static string suffix(const string& path);
 static string basename(const string& path);
 static string dirname(const string& path);
 static bool path_exists(const string& path);
 static string realpath(const string& path);
-static string usb_sysfs_friendly_name(const string& sys_usb_path);
+static string usb_sysfs_friendly_name(const string& sys_usb_itf_path);
 static vector<string> get_sysfs_info(const string& device_path);
 static string read_line(const string& file);
-static string usb_sysfs_hw_string(const string& sysfs_path);
+static string usb_sysfs_hw_string(const string& sysfs_itf_path);
 static string format(const char* format, ...);
 
 vector<string>
@@ -71,6 +72,17 @@ glob(const vector<string>& patterns)
     globfree(&glob_results);
 
     return paths_found;
+}
+
+string
+suffix(const string& path)
+{
+    size_t pos = path.rfind(".");
+
+    if(pos == std::string::npos)
+        return "";
+
+    return string(path, pos+1, string::npos);
 }
 
 string
@@ -126,9 +138,11 @@ realpath(const string& path)
 }
 
 string
-usb_sysfs_friendly_name(const string& sys_usb_path)
+usb_sysfs_friendly_name(const string& sys_usb_itf_path)
 {
     unsigned int device_number = 0;
+
+    string sys_usb_path = dirname(sys_usb_itf_path);
 
     istringstream( read_line(sys_usb_path + "/devnum") ) >> device_number;
 
@@ -138,10 +152,12 @@ usb_sysfs_friendly_name(const string& sys_usb_path)
 
     string serial = read_line( sys_usb_path + "/serial" );
 
+    string interface = suffix( sys_usb_itf_path );
+
     if( manufacturer.empty() && product.empty() && serial.empty() )
         return "";
 
-    return format("%s %s %s", manufacturer.c_str(), product.c_str(), serial.c_str() );
+    return format("%s %s %s %s", manufacturer.c_str(), product.c_str(), serial.c_str(), interface.c_str() );
 }
 
 vector<string>
@@ -157,7 +173,7 @@ get_sysfs_info(const string& device_path)
 
     if( device_name.compare(0,6,"ttyUSB") == 0 )
     {
-        sys_device_path = dirname( dirname( realpath( sys_device_path ) ) );
+        sys_device_path = dirname( realpath( sys_device_path ) );
 
         if( path_exists( sys_device_path ) )
         {
@@ -168,7 +184,7 @@ get_sysfs_info(const string& device_path)
     }
     else if( device_name.compare(0,6,"ttyACM") == 0 )
     {
-        sys_device_path = dirname( realpath( sys_device_path ) );
+        sys_device_path =  realpath( sys_device_path );
 
         if( path_exists( sys_device_path ) )
         {
@@ -278,8 +294,10 @@ format(const char* format, ...)
 }
 
 string
-usb_sysfs_hw_string(const string& sysfs_path)
+usb_sysfs_hw_string(const string& sysfs_itf_path)
 {
+    string sysfs_path = dirname(sysfs_itf_path);
+
     string serial_number = read_line( sysfs_path + "/serial" );
 
     if( serial_number.length() > 0 )
@@ -291,7 +309,9 @@ usb_sysfs_hw_string(const string& sysfs_path)
 
     string pid = read_line( sysfs_path + "/idProduct" );
 
-    return format("USB VID:PID=%s:%s %s", vid.c_str(), pid.c_str(), serial_number.c_str() );
+    string interface = suffix( sysfs_itf_path );
+
+    return format("USB VID:PID=%s:%s %s %s", vid.c_str(), pid.c_str(), serial_number.c_str(), interface.c_str() );
 }
 
 vector<PortInfo>
