@@ -41,7 +41,11 @@ public:
     void updateName();
 
     IntParameter* soloPool;
-    
+
+    FloatParameter* sizeMultiplier;
+    FloatParameter* speedMultiplier;
+
+
     ControllableContainer chaserOptions;
     BoolParameter* isChaser;
     EnumParameter* chaserDirection;
@@ -275,6 +279,8 @@ public:
     std::map<int, Cue*> timecodeToCue;
     CriticalSection csTimecode;
     void rebuildTimecode();
+
+    double getSpeedMult();
 
     void timecodeInterfaceChanged();
     TargetParameter* timecodeSyncInterface;

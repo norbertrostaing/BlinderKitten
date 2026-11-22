@@ -71,6 +71,9 @@ Effect::Effect(var params) :
 
 	soloPool = addIntParameter("Solo pool", "If greater than zero, only one element can be activated at a time with this number", 0, 0);
 
+	sizeMultiplier = addFloatParameter("Size multiplier", "The size will be multiplied by this value during process", 1, 0);
+	speedMultiplier = addFloatParameter("Speed multiplier", "The speed will be multiplied by this value during process", 1, 0);
+
 	values.selectItemWhenCreated = false;
 	addChildControllableContainer(&speedMult);
 	addChildControllableContainer(&sizeMult);
@@ -253,6 +256,7 @@ void Effect::update(double now) {
 			double deltaTime = now - TSLastUpdate;
 			TSLastUpdate = now;
 			double currentSpeed = speed->getValue();
+			currentSpeed *= speedMultiplier->floatValue();
 			float speedMultVal = speedMult.getValue();
 			currentSpeed *= speedMultVal;
 			if (speed != 0) {
@@ -408,6 +412,7 @@ float Effect::applyToChannel(SubFixtureChannel* fc, float currentVal, double now
 
 		float size = sizeValue->getValue();
 		size *= currentSizeMult;
+		size *= sizeMultiplier->floatValue();
 		if (isFlashing) { size = flashValue->floatValue(); }
 
 		size *= fadeSize;

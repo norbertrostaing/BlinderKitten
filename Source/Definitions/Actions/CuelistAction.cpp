@@ -39,6 +39,14 @@ CuelistAction::CuelistAction(var params) :
         fixedSpeed = addFloatParameter("Fixed speed", "Set at THIS speed !", 120, 0);
     }
 
+    if (actionType == CL_SPEED_MULT || actionType == CL_SIZE_MULT) {
+        multFrom = addFloatParameter("From", "Mult from value", 0, 0);
+        multTo = addFloatParameter("To", "Mult from value", 1, 0);
+    }
+
+    if (actionType == CL_SPEED_MULT_FIXED || actionType == CL_SIZE_MULT_FIXED) {
+        multFixed = addFloatParameter("Fixed value", "Set the multiplicator to this value", 1, 0);
+    }
 }
 
 CuelistAction::~CuelistAction()
@@ -388,7 +396,25 @@ void CuelistAction::setValueInternal(var value, String origin, int incrementInde
         }
         break;
 
+    case CL_SPEED_MULT:
+        target->speedMultiplier->setValue(jmap(val, 0.0f, 1.0f, multFrom->floatValue(), multTo->floatValue()));
+        break;
 
+    case CL_SIZE_MULT:
+        target->sizeMultiplier->setValue(jmap(val, 0.0f, 1.0f, multFrom->floatValue(), multTo->floatValue()));
+        break;
+
+    case CL_SPEED_MULT_FIXED:
+        if (val == 1) {
+            target->speedMultiplier->setValue(multFixed->floatValue());
+        }
+        break;
+
+    case CL_SIZE_MULT_FIXED:
+        if (val == 1) {
+            target->sizeMultiplier->setValue(multFixed->floatValue());
+        }
+        break;
 
     }
 }
@@ -493,7 +519,16 @@ var CuelistAction::getValue()
     case CL_DOWNFADE:
         val = target->downFadeController->floatValue();
         break;
-    
+
+    case CL_SIZE_MULT:
+        val = jmap(target->sizeMultiplier->floatValue(), multFrom->floatValue(), multTo->floatValue(), 0.f, 1.f);
+        break;
+
+    case CL_SPEED_MULT:
+        val = jmap(target->speedMultiplier->floatValue(), multFrom->floatValue(), multTo->floatValue(), 0.f, 1.f);
+        break;
+
+
     }
 
 

@@ -376,6 +376,32 @@ void Bundle::setFadeOut(float val)
 	isComputing.exit();
 }
 
+void Bundle::setSpeedMultiplier(float val)
+{
+	lastSpeedMult = val;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
+	computeValues();
+	isComputing.enter();
+	for (Cuelist* c : computedCuelists) c->speedMultiplier->setValue(val);
+	for (Effect* c : computedEffects) c->speedMultiplier->setValue(val);
+	for (Carousel* c : computedCarousels) c->speedMultiplier->setValue(val);
+	isComputing.exit();
+}
+
+void Bundle::setSizeMultiplier(float val)
+{
+	lastSizeMult = val;
+	Brain::getInstance()->virtualFadersNeedUpdate = true;
+
+	computeValues();
+	isComputing.enter();
+	for (Cuelist* c : computedCuelists) c->sizeMultiplier->setValue(val);
+	for (Effect* c : computedEffects) c->sizeMultiplier->setValue(val);
+	for (Carousel* c : computedCarousels) c->sizeMultiplier->setValue(val);
+	isComputing.exit();
+}
+
 void Bundle::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) {
 	TSLastUpdate = 0;
 	computeValues();

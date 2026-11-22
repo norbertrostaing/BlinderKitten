@@ -86,6 +86,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Flash Release", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_FLASH_RELEASE));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop Press", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP_PRESS));
     defs.add(Factory<Action>::Definition::createDef("Cuelist", "Swop Release", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SWOP_RELEASE ));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Cuelist speed multiplier", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SPEED_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Cuelist size multiplier", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SIZE_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Cuelist speed multiplier fixed", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SPEED_MULT_FIXED));
+    defs.add(Factory<Action>::Definition::createDef("Cuelist", "Cuelist size multiplier fixed", &CuelistAction::create)->addParam("actionType", CuelistAction::CL_SIZE_MULT_FIXED));
 
 
 
@@ -108,6 +112,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Flash Release", &EffectAction::create)->addParam("actionType", EffectAction::FX_FLASH_RELEASE));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Swop Press", &EffectAction::create)->addParam("actionType", EffectAction::FX_SWOP_PRESS));
     defs.add(Factory<Action>::Definition::createDef("Effect", "Effect Swop Release", &EffectAction::create)->addParam("actionType", EffectAction::FX_SWOP_RELEASE));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect speed multiplier", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect size multiplier", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect speed multiplier fixed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SPEED_MULT_FIXED));
+    defs.add(Factory<Action>::Definition::createDef("Effect", "Effect size multiplier fixed", &EffectAction::create)->addParam("actionType", EffectAction::FX_SIZE_MULT_FIXED));
 
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Start", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_START));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Stop", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_STOP));
@@ -128,6 +136,10 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Flash Release", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_FLASH_RELEASE));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Swop Press", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SWOP_PRESS));
     defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel Swop Release", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SWOP_RELEASE));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel speed multiplier", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel size multiplier", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel speed multiplier fixed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SPEED_MULT_FIXED));
+    defs.add(Factory<Action>::Definition::createDef("Carousel", "Carousel size multiplier fixed", &CarouselAction::create)->addParam("actionType", CarouselAction::CAR_SIZE_MULT_FIXED));
 
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Start", &MapperAction::create)->addParam("actionType", MapperAction::TRK_START));
     defs.add(Factory<Action>::Definition::createDef("Mapper", "Mapper Stop", &MapperAction::create)->addParam("actionType", MapperAction::TRK_STOP));
@@ -171,6 +183,12 @@ ActionFactory::ActionFactory()
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Timed Swop", &BundleAction::create)->addParam("actionType", BundleAction::BUN_TIMED_SWOP));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Fade", &BundleAction::create)->addParam("actionType", BundleAction::BUN_FADE));
     defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle Set Fade Fixed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_FADE_FIXED));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle speed multiplier", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SPEED_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle size multiplier", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SIZE_MULT));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle speed multiplier fixed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SPEED_MULT_FIXED));
+    defs.add(Factory<Action>::Definition::createDef("Bundle", "Bundle size multiplier fixed", &BundleAction::create)->addParam("actionType", BundleAction::BUN_SIZE_MULT_FIXED));
+
+
 
     defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Start", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_START));
     defs.add(Factory<Action>::Definition::createDef("SoloPool", "SoloPool Stop", &SoloPoolAction::create)->addParam("actionType", SoloPoolAction::SOLP_STOP));
