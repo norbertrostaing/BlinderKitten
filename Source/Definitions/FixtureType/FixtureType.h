@@ -49,6 +49,11 @@ public:
     Trigger* exportAllToGridBtn;
     Trigger* exportInExistingBtn;
 
+    ControllableContainer rdmCC;
+    IntParameter* rdmManufacturerId;
+    IntParameter* rdmModelId;
+    IntParameter* rdmPersonality;
+
     String getTypeString() const override { return objectType; }
 
     static FixtureType* create(var params) { return new FixtureType(params); }

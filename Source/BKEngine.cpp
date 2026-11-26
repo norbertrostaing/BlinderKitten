@@ -1234,7 +1234,18 @@ static int gdtfDMXValueToInt(String value, int resolution)
 }
 
 
+static int gdtfRDMHexToInt(String value)
+{
+	value = value.trim();
 
+	if (value.startsWithIgnoreCase("0x"))
+		value = value.substring(2);
+
+	if (value.isEmpty() || !value.containsOnly("0123456789abcdefABCDEF"))
+		return 0;
+
+	return value.getHexValue32();
+}
 
 FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeName)
 {
@@ -1367,8 +1378,66 @@ FixtureType* BKEngine::importGDTFContent(InputStream* stream, String importModeN
 					ret = ft;
 					ft->setNiceName(fixtureName + " - " + modeName);
 
-					Array<tempChannel> tempChannels;
-					HashMap<int, float> tempDefaultValues;
+					XmlElement* protocolsNode = fixtureTypeNode->getChildByName("Protocols");
+					XmlElement* rdmNode = protocolsNode != nullptr
+						? protocolsNode->getChildByName("FTRDM")
+						: nullptr;
+
+					if (rdmNode != nullptr) {
+						if (rdmNode->hasAttribute("ManufacturerID")) {
+							ft->rdmManufacturerId->setValue(
+								gdtfRDMHexToInt(rdmNode->getStringAttribute("ManufacturerID")));
+						}
+
+						if (rdmNode->hasAttribute("DeviceModelID")) {
+							ft->rdmModelId->setValue(
+								gdtfRDMHexToInt(rdmNode->getStringAttribute("DeviceModelID")));
+						}
+
+						int personality = 0;
+						bool personalityFound = false;
+						bool personalityConflict = false;
+
+						for (int iVersion = 0; iVersion < rdmNode->getNumChildElements(); iVersion++) {
+							XmlElement* versionNode = rdmNode->getChildElement(iVersion);
+
+							if (!versionNode->hasTagName("SoftwareVersionID"))
+								continue;
+
+							for (int iPersonality = 0; iPersonality < versionNode->getNumChildElements(); iPersonality++) {
+								XmlElement* personalityNode = versionNode->getChildElement(iPersonality);
+
+								if (!personalityNode->hasTagName("DMXPersonality"))
+									continue;
+
+								if (personalityNode->getStringAttribute("DMXMode") != modeName)
+									continue;
+
+								int value = gdtfRDMHexToInt(
+									personalityNode->getStringAttribute("Value"));
+
+								if (value < 1 || value > 255)
+									continue;
+
+								if (!personalityFound) {
+									personality = value;
+									personalityFound = true;
+								}
+								else if (personality != value) {
+									personalityConflict = true;
+								}
+							}
+						}
+
+						if (personalityFound && !personalityConflict) {
+							ft->rdmPersonality->setValue(personality);
+						}
+						else if (personalityConflict) {
+							LOG("GDTF: multiple RDM personalities for mode " + modeName);
+						}
+					}
+
+					Array<tempChannel> tempChannels;					HashMap<int, float> tempDefaultValues;
 					HashMap<int, float> tempHighlightValues;
 					HashMap<int, XmlElement*> tempDMXChannelNodes;
 

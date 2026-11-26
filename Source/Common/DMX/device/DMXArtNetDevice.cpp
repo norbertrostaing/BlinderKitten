@@ -370,10 +370,41 @@ void ArtnetSocket::run()
 					bool continueName = true;
 					for (int i = 0; i < 18 && continueName; i++) {
 						char c = char(receiveBuffer[i + 26]);
-						if ((int)c == 0) {continueName = false;}
+						if ((int)c == 0) { continueName = false; }
 						else { shortName += c; }
 					}
-					LOG("node replied ! "+ip+ " : "+shortName);
+
+					int net = receiveBuffer[18] & 0x7F;
+					int subnet = receiveBuffer[19] & 0x0F;
+					int numPorts = (receiveBuffer[172] << 8) | receiveBuffer[173];
+
+					LOG("Node replied ! " + ip + " : " + shortName
+						+ " | Net: " + String(net)
+						+ " | Subnet: " + String(subnet)
+						+ " | Ports: " + String(numPorts));
+
+					for (int i = 0; i < jmin(numPorts, 4); i++) {
+						int portType = receiveBuffer[174 + i];
+
+						if (portType & 0x80) {
+							int universe = receiveBuffer[190 + i] & 0x0F;
+							int address = (net << 8) | (subnet << 4) | universe;
+
+							LOG("-             Port " + String(i + 1)
+								+ " OUT | Universe: " + String(universe)
+								+ " | Address: " + String(address));
+						}
+
+						if (portType & 0x40) {
+							int universe = receiveBuffer[186 + i] & 0x0F;
+							int address = (net << 8) | (subnet << 4) | universe;
+
+							LOG("-             Port " + String(i + 1)
+								+ " IN | Universe: " + String(universe)
+								+ " | Address: " + String(address));
+						}
+					}
+					LOG("");
 				}
 				else if (opcode == 0x8100 || opcode == 0x8300)
 				{

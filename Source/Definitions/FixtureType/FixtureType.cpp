@@ -21,7 +21,8 @@ FixtureType::FixtureType(var params) :
 	chansManager(),
 	virtualChansManager(),
 	helpContainer("Editor Help"),
-	presetsCC("Presets")
+	presetsCC("Presets"),
+	rdmCC("RDM infos")
 {
 	saveAndLoadRecursiveData = true;
 	editorIsCollapsed = true;
@@ -39,6 +40,7 @@ FixtureType::FixtureType(var params) :
 	addChildControllableContainer(&virtualChansManager);
 	addChildControllableContainer(&helpContainer);
 	addChildControllableContainer(&presetsCC);
+	addChildControllableContainer(&rdmCC);
 	presetsCC.addChildControllableContainer(&presets);
 	presetsCC.saveAndLoadRecursiveData = true;
 	presets.selectItemWhenCreated = false;
@@ -47,6 +49,13 @@ FixtureType::FixtureType(var params) :
 	importFromGridBtn = presetsCC.addTrigger("Import data from grid", "");
 	exportInExistingBtn = presetsCC.addTrigger("Export in existing grid", "");
 	exportAllToGridBtn = presetsCC.addTrigger("Create missing in grid", "");
+
+	rdmManufacturerId = rdmCC.addIntParameter("Manufacturer Id", "", 0, 0);
+	rdmManufacturerId->hexMode = true;
+	rdmModelId = rdmCC.addIntParameter("Model Id", "", 0, 0);
+	rdmModelId->hexMode = true;
+	rdmPersonality = rdmCC.addIntParameter("Personality id", "", 0,0);
+	rdmPersonality->hexMode = true;
 
 }
 

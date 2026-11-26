@@ -46,10 +46,13 @@ private:
         std::map<int, juce::String> personalityDescriptions;
         std::map<int, Slot> slots;
         int footprint = 0;
+        int modelId = -1;
+        bool deviceInfoRead = false;
         bool supportedPidsRead = false;
         bool supportsSlotInfo = false, supportsSlotDescription = false, supportsDefaultSlots = false;
         bool slotInfoRequested = false, slotInfoRead = false, slotInfoUnavailable = false;
-        DMXInterface* output = nullptr;
+        DMXInterface* output = nullptr; // optional BK patch interface; RDM is routed by node IP and universe
+        int udpPort = 6454;
         int net = 0;
         int addressLow = 0;
         std::map<int, juce::String> values;
@@ -58,6 +61,17 @@ private:
         int personality = 0;
         int personalityCount = 0;
         bool identify = false;
+    };
+
+    struct DiscoveredPort
+    {
+        juce::String nodeIP, nodeName;
+        DMXInterface* output = nullptr;  // matched to a BK output if it already exists
+        int net = 0;
+        int addressLow = 0;
+        int udpPort = 6454;
+        bool supportsRDM = false;        // advertised by ArtPollReply.Status1 bit 1
+        bool flushSent = false;
     };
 
     struct Packet
@@ -70,6 +84,7 @@ private:
     {
         juce::String uidText, nodeIP;
         DMXInterface* output = nullptr;
+        int udpPort = 6454;
         int net = 0;
         int addressLow = 0;
         std::array<uint8, 6> uid{};
@@ -84,6 +99,7 @@ private:
     };
 
     juce::TextButton scanButton { "Scan all RDM" };
+    juce::TextButton createDummyButton { "Create dummy fixtures" };
     juce::Label statusLabel;
     juce::TableListBox table;
 
@@ -102,6 +118,8 @@ private:
     ActionsOverlay actionsOverlay { *this };
     int lastTableScrollY = -1;
     juce::Array<DMXInterface*> outputs;
+    DMXInterface* forcedSourceOutput = nullptr;
+    std::vector<DiscoveredPort> discoveredPorts;
     juce::Array<Device> devices;
     std::vector<int> columns;
     std::map<std::string, int> associations; // Explicit UID / node / port -> fixture ID, kept across rescans
@@ -115,19 +133,27 @@ private:
     bool scanEverStarted = false;
     double scanStarted = 0;
     double lastTodRequest = 0;
+    double lastArtPoll = 0;
     uint8 transactionNumber = 0;
     std::array<uint8, 6> controllerUID{};
 
     void refreshOutputs();
+    DMXInterface* findConfiguredOutput(const juce::String& nodeIP, int net, int addressLow) const;
+    DMXInterface* ensureInterface(int row);
+    void addDiscoveredPort(const juce::String& ip, int net, int addressLow,
+                           bool supportsRDM, const juce::String& name = {});
     void resetScan();
+    void restoreSourcePort();
     void startScan();
-    bool sendArtNet(DMXInterface* output, const juce::String& ip, const uint8* data, int size);
-    void sendTodControl(DMXInterface* output);
-    void sendTodRequest(DMXInterface* output);
+    bool sendArtNet(const juce::String& ip, const uint8* data, int size, int udpPort = 6454);
+    void sendArtPoll();
+    void sendTodControl(const DiscoveredPort& target);
+    void sendTodRequest(const DiscoveredPort& target);
     void sendRdm(Request& request);
     void queueRdm(int deviceIndex, int pid, bool set = false, const juce::MemoryBlock& payload = {});
     void timerCallback() override;
     void processPacket(const Packet& packet);
+    void processPollReply(const uint8* bytes, int size, const juce::String& senderIP);
     void processTod(const uint8* bytes, int size, const juce::String& senderIP);
     void processRdm(const uint8* bytes, int size, const juce::String& senderIP);
     int findDevice(const juce::String& uid, const juce::String& ip, int net, int addressLow) const;
@@ -139,6 +165,7 @@ private:
     void associateFixture(int row, int fixtureIndex);
     void createFixture(int row, int fixtureTypeIndex);
     void createFixtureTypeFromRDM(int row);
+    void createDummyFixtures(bool confirmed = false);
     void requestSlots(int row);
     void showSlots(int row);
     static juce::String slotLabelName(int id);

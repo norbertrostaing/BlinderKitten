@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstring>
+#include <tuple>
 #include "RDMManager.h"
 #include "Definitions/Interface/InterfaceIncludes.h"
 #include "Definitions/Fixture/FixtureManager.h"
@@ -69,6 +70,11 @@ namespace
 
     // E1.20 PIDs whose entire value is a one-byte Boolean (0 or 1).
     // DISPLAY_INVERT (0x0500) is an enum with an Auto state, not a Boolean.
+    bool isBroadcastAddress(const juce::String& ip)
+    {
+        return ip == "255.255.255.255" || ip.endsWith(".255");
+    }
+
     bool isBooleanPid(int pid)
     {
         return pid == 0x0600 || pid == 0x0601 || pid == 0x0602;
@@ -149,6 +155,7 @@ namespace
 RDMManager::RDMManager() : ShapeShifterContentComponent("RDM Manager")
 {
     addAndMakeVisible(scanButton);
+    addAndMakeVisible(createDummyButton);
     addAndMakeVisible(statusLabel);
     statusLabel.setText("Ready", juce::dontSendNotification);
     statusLabel.setJustificationType(juce::Justification::centredLeft);
@@ -162,6 +169,8 @@ RDMManager::RDMManager() : ShapeShifterContentComponent("RDM Manager")
     table.getHeader().setColour(juce::TableHeaderComponent::backgroundColourId, headerColour);
     setOpaque(true);
     scanButton.onClick = [this]() { startScan(); };
+    createDummyButton.onClick = [this]() { createDummyFixtures(); };
+    createDummyButton.setEnabled(false);
 
     // Controller UID: fixed ESTA-style controller prefix + per-window random serial.
     // For deployment use an assigned, stable manufacturer ID if available.
@@ -191,13 +200,14 @@ RDMManager::~RDMManager()
         if (currentRDMWindow == this) currentRDMWindow = nullptr;
     }
     table.setModel(nullptr);
+    restoreSourcePort();
 }
 
 void RDMManager::receiveArtNet(const uint8* bytes, int length, const juce::String& senderIP)
 {
     if (length < 12 || std::memcmp(bytes, "Art-Net\0", 8) != 0) return;
     int opcode = bytes[8] | (bytes[9] << 8);
-    if (opcode != 0x8100 && opcode != 0x8300) return;
+    if (opcode != 0x2100 && opcode != 0x8100 && opcode != 0x8300) return;
     const juce::ScopedLock receivers(receiverListLock);
     if (currentRDMWindow == nullptr) return;
     const juce::ScopedLock queueLock(currentRDMWindow->receiveLock);
@@ -218,6 +228,7 @@ void RDMManager::resized()
     juce::Rectangle<int> area = getLocalBounds().reduced(4);
     juce::Rectangle<int> top = area.removeFromTop(28);
     scanButton.setBounds(top.removeFromLeft(140).reduced(2));
+    createDummyButton.setBounds(top.removeFromLeft(175).reduced(2));
     statusLabel.setBounds(top);
     area.removeFromTop(4);
     actionsOverlay.setBounds(area.removeFromRight(48));
@@ -231,19 +242,85 @@ void RDMManager::refreshOutputs()
     juce::Array<DMXInterface*> newOutputs;
     for (auto& item : InterfaceManager::getInstance()->items)
     {
-        DMXInterface* out = dynamic_cast<DMXInterface*>(item);
-        if (out != nullptr && out->enabled->boolValue() &&
-            dynamic_cast<DMXArtNetDevice*>(out->dmxDevice.get()) != nullptr)
-            newOutputs.add(out);
+        DMXInterface* output = dynamic_cast<DMXInterface*>(item);
+        if (output != nullptr && output->enabled->boolValue() &&
+            dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get()) != nullptr)
+            newOutputs.add(output);
     }
     if (newOutputs == outputs) return;
     outputs = newOutputs;
-    resetScan();
+    // Never discard discovery results when a BK interface is created or deleted.
+    for (DiscoveredPort& port : discoveredPorts)
+        port.output = findConfiguredOutput(port.nodeIP, port.net, port.addressLow);
+    for (Device& device : devices)
+        device.output = findConfiguredOutput(device.nodeIP, device.net, device.addressLow);
+    table.updateContent();
+    actionsOverlay.repaint();
+}
+
+DMXInterface* RDMManager::findConfiguredOutput(const juce::String& nodeIP,
+                                               int net, int addressLow) const
+{
+    DMXInterface* broadcast = nullptr;
+    for (DMXInterface* output : outputs)
+    {
+        DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+        if (dev == nullptr || dev->outputNet->intValue() != net ||
+            ((dev->outputSubnet->intValue() << 4) | dev->outputUniverse->intValue()) != addressLow)
+            continue;
+        const juce::String host = dev->remoteHost->stringValue().trim();
+        if (host == nodeIP) return output;
+        if (broadcast == nullptr && isBroadcastAddress(host)) broadcast = output;
+    }
+    return broadcast;
+}
+
+void RDMManager::addDiscoveredPort(const juce::String& ip, int net, int addressLow,
+                                    bool supportsRDM, const juce::String& name)
+{
+    if (ip.isEmpty() || net < 0 || net > 127 || addressLow < 0 || addressLow > 255)
+        return;
+    for (DiscoveredPort& port : discoveredPorts)
+    {
+        if (port.nodeIP == ip && port.net == net && port.addressLow == addressLow)
+        {
+            port.supportsRDM |= supportsRDM;
+            if (name.isNotEmpty()) port.nodeName = name;
+            return;
+        }
+    }
+    DiscoveredPort port;
+    port.nodeIP = ip;
+    port.nodeName = name;
+    port.net = net;
+    port.addressLow = addressLow;
+    port.supportsRDM = supportsRDM;
+    port.output = findConfiguredOutput(ip, net, addressLow);
+    if (port.output != nullptr)
+    {
+        auto* dev = dynamic_cast<DMXArtNetDevice*>(port.output->dmxDevice.get());
+        if (dev != nullptr) port.udpPort = dev->remotePort->intValue();
+    }
+    else
+    {
+        // Same Art-Net node, but a different port-address than the BK interface.
+        for (DMXInterface* output : outputs)
+        {
+            auto* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+            if (dev != nullptr && dev->remoteHost->stringValue().trim() == ip)
+            {
+                port.udpPort = dev->remotePort->intValue();
+                break;
+            }
+        }
+    }
+    discoveredPorts.push_back(port);
 }
 
 void RDMManager::resetScan()
 {
     devices.clear();
+    discoveredPorts.clear();
     { const juce::ScopedLock lock(receiveLock); receivedPackets.clear(); }
     requests.clear();
     hasActiveRequest = false;
@@ -256,15 +333,55 @@ void RDMManager::resetScan()
     actionsOverlay.repaint();
 }
 
-bool RDMManager::sendArtNet(DMXInterface* output, const juce::String& ip, const uint8* data, int size)
+bool RDMManager::sendArtNet(const juce::String& ip, const uint8* data, int size, int udpPort)
 {
-    if (!outputs.contains(output) || ip.isEmpty()) return false;
-    DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
-    if (dev == nullptr) return false;
+    if (ip.isEmpty() || udpPort < 1 || udpPort > 65535) return false;
     ArtnetSocket* transport = ArtnetSocket::getInstance();
     const juce::ScopedLock lock(transport->isSending);
     if (transport->socket == nullptr) return false;
-    return transport->socket->write(ip, dev->remotePort->intValue(), data, size) == size;
+    return transport->socket->write(ip, udpPort, data, size) == size;
+}
+
+void RDMManager::sendArtPoll()
+{
+    // Discover ALL output universes, but ONLY on the remote hosts configured
+    // in enabled BK Art-Net interfaces (no network-wide broadcast scan).
+    const uint8 poll[18] = { 'A','r','t','-','N','e','t',0, 0x00,0x20, 0,14,
+                             0,0, 0,0, 0,0 };
+    juce::StringArray destinations;
+    for (DMXInterface* output : outputs)
+    {
+        DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+        if (dev == nullptr) continue;
+        const juce::String host = dev->remoteHost->stringValue().trim();
+        if (host.isEmpty()) continue;
+        const int port = dev->remotePort->intValue();
+        const juce::String key = host + ":" + juce::String(port);
+        if (destinations.contains(key)) continue;
+        destinations.add(key);
+        sendArtNet(host, poll, sizeof(poll), port);
+    }
+    lastArtPoll = juce::Time::getMillisecondCounterHiRes();
+}
+
+void RDMManager::restoreSourcePort()
+{
+    // Do not change source-port preferences belonging to the user.
+    if (forcedSourceOutput == nullptr) return;
+    if (InterfaceManager::getInstanceWithoutCreating() == nullptr)
+    {
+        forcedSourceOutput = nullptr;
+        return;
+    }
+    bool stillExists = false;
+    for (auto* item : InterfaceManager::getInstance()->items)
+        if (item == forcedSourceOutput) { stillExists = true; break; }
+    if (stillExists)
+    {
+        if (auto* dev = dynamic_cast<DMXArtNetDevice*>(forcedSourceOutput->dmxDevice.get()))
+            dev->forceSrcPort->setValue(false);
+    }
+    forcedSourceOutput = nullptr;
 }
 
 void RDMManager::startScan()
@@ -273,49 +390,70 @@ void RDMManager::startScan()
     resetScan();
     if (outputs.isEmpty())
     {
-        statusLabel.setText("No enabled Art-Net outputs", juce::dontSendNotification);
+        statusLabel.setText("No enabled Art-Net BK interfaces", juce::dontSendNotification);
         return;
     }
 
-    // Use the existing shared Art-Net socket for all outputs and responses.
-    // Set this only once; the existing DMXArtNetDevice code rebinds to 6454.
-    DMXArtNetDevice* first = dynamic_cast<DMXArtNetDevice*>(outputs[0]->dmxDevice.get());
-    if (first != nullptr && !first->forceSrcPort->boolValue())
-        first->forceSrcPort->setValue(true);
+    // The shared Art-Net receiver must receive ArtPollReply/TOD on UDP 6454.
+    // Only toggle Force src port temporarily if nothing else already binds it.
+    bool anyForcedOrInput = false;
+    for (auto* item : InterfaceManager::getInstance()->items)
+    {
+        DMXInterface* output = dynamic_cast<DMXInterface*>(item);
+        if (output == nullptr) continue;
+        DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+        if (dev != nullptr && (dev->forceSrcPort->boolValue() || dev->inputCC->enabled->boolValue()))
+        {
+            anyForcedOrInput = true;
+            break;
+        }
+    }
+    if (!anyForcedOrInput && forcedSourceOutput == nullptr)
+    {
+        forcedSourceOutput = outputs[0];
+        auto* dev = dynamic_cast<DMXArtNetDevice*>(forcedSourceOutput->dmxDevice.get());
+        if (dev != nullptr) dev->forceSrcPort->setValue(true);
+    }
 
     scanActive = true;
     scanEverStarted = true;
     scanStarted = juce::Time::getMillisecondCounterHiRes();
     lastTodRequest = 0;
+    lastArtPoll = 0;
 
+    // Fallback: keep each configured universe in case a node does not
+    // implement ArtPollReply, but probe extra advertised ports if it does.
     for (DMXInterface* output : outputs)
-        sendTodControl(output);
-
-    statusLabel.setText("Discovering on " + juce::String(outputs.size()) +
-        " Art-Net outputs...", juce::dontSendNotification);
+    {
+        auto* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+        if (dev == nullptr) continue;
+        addDiscoveredPort(dev->remoteHost->stringValue().trim(),
+            dev->outputNet->intValue(),
+            (dev->outputSubnet->intValue() << 4) | dev->outputUniverse->intValue(),
+            false);
+    }
+    sendArtPoll();
+    statusLabel.setText("Discovering all RDM universes on configured Art-Net IPs...",
+                        juce::dontSendNotification);
 }
 
-void RDMManager::sendTodControl(DMXInterface* output)
+void RDMManager::sendTodControl(const DiscoveredPort& target)
 {
-    DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
-    if (dev == nullptr) return;
-    uint8 p[24] = { 'A','r','t','-','N','e','t',0, 0x00, 0x82, 0, 14 };
-    p[21] = uint8(dev->outputNet->intValue());
-    p[22] = 1; // AtcFlush
-    p[23] = uint8((dev->outputSubnet->intValue() << 4) | dev->outputUniverse->intValue());
-    sendArtNet(output, dev->remoteHost->stringValue(), p, sizeof(p));
+    uint8 p[24] = { 'A','r','t','-','N','e','t',0, 0x00,0x82, 0,14 };
+    p[21] = uint8(target.net);
+    p[22] = 1; // AtcFlush: ask the gateway to rediscover connected RDM devices
+    p[23] = uint8(target.addressLow);
+    sendArtNet(target.nodeIP, p, sizeof(p), target.udpPort);
 }
 
-void RDMManager::sendTodRequest(DMXInterface* output)
+void RDMManager::sendTodRequest(const DiscoveredPort& target)
 {
-    DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
-    if (dev == nullptr) return;
-    uint8 p[56] = { 'A','r','t','-','N','e','t',0, 0x00, 0x80, 0, 14 };
-    p[21] = uint8(dev->outputNet->intValue());
+    uint8 p[56] = { 'A','r','t','-','N','e','t',0, 0x00,0x80, 0,14 };
+    p[21] = uint8(target.net);
     p[22] = 0; // TodFull
-    p[23] = 1;
-    p[24] = uint8((dev->outputSubnet->intValue() << 4) | dev->outputUniverse->intValue());
-    sendArtNet(output, dev->remoteHost->stringValue(), p, sizeof(p));
+    p[23] = 1; // one universe in this request
+    p[24] = uint8(target.addressLow);
+    sendArtNet(target.nodeIP, p, sizeof(p), target.udpPort);
 }
 
 void RDMManager::queueRdm(int index, int pid, bool set, const juce::MemoryBlock& payload)
@@ -329,6 +467,7 @@ void RDMManager::queueRdm(int index, int pid, bool set, const juce::MemoryBlock&
     request.uidText = device.uidText;
     request.nodeIP = device.nodeIP;
     request.output = device.output;
+    request.udpPort = device.udpPort;
     request.net = device.net;
     request.addressLow = device.addressLow;
     request.pid = pid;
@@ -339,9 +478,8 @@ void RDMManager::queueRdm(int index, int pid, bool set, const juce::MemoryBlock&
 
 void RDMManager::sendRdm(Request& request)
 {
-    if (!outputs.contains(request.output)) return;
-    DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(request.output->dmxDevice.get());
-    if (dev == nullptr) return;
+    // RDM routing does not require a BK output interface: the discovered
+    // gateway IP and its Art-Net Port-Address identify the destination.
     std::vector<uint8> rdm;
     rdm.reserve(256);
     rdm.push_back(0x01); // RDM Sub Start Code (start code 0xCC is omitted in ArtRdm)
@@ -371,7 +509,7 @@ void RDMManager::sendRdm(Request& request)
     packet[22] = 0; // ArProcess
     packet[23] = uint8(request.addressLow);
     std::memcpy(packet.data() + 24, rdm.data(), rdm.size());
-    sendArtNet(request.output, request.nodeIP, packet.data(), (int)packet.size());
+    sendArtNet(request.nodeIP, packet.data(), (int)packet.size(), request.udpPort);
     request.sentAt = juce::Time::getMillisecondCounterHiRes();
 }
 
@@ -385,6 +523,7 @@ void RDMManager::timerCallback()
         packets.swap(receivedPackets);
     }
     for (const Packet& p : packets) processPacket(p);
+    createDummyButton.setEnabled(!devices.isEmpty());
     if (auto* vp = table.getViewport())
     {
         const int scrollY = vp->getViewPositionY();
@@ -398,11 +537,27 @@ void RDMManager::timerCallback()
     if (scanActive)
     {
         if (now - scanStarted > 30000) scanActive = false;
-        else if (now - scanStarted > 650 && now - lastTodRequest > 1600)
+        else
         {
-            for (DMXInterface* output : outputs)
-                sendTodRequest(output);
-            lastTodRequest = now;
+            // Poll once more to find late replies / devices powering up.
+            if (now - scanStarted > 5000 && now - lastArtPoll > 5000)
+                sendArtPoll();
+            if (now - scanStarted > 800 && (lastTodRequest == 0 ||
+                                              now - lastTodRequest > 4500))
+            {
+                // Discovery packets are processed before the timer sends any TOD
+                // requests, so this container is not modified during the loop.
+                for (DiscoveredPort& port : discoveredPorts)
+                {
+                    if (!port.flushSent)
+                    {
+                        sendTodControl(port);
+                        port.flushSent = true;
+                    }
+                    sendTodRequest(port);
+                }
+                lastTodRequest = now;
+            }
         }
     }
 
@@ -435,12 +590,12 @@ void RDMManager::timerCallback()
         hasActiveRequest = true;
         sendRdm(activeRequest);
     }
-    if (devices.size() > 0)
-        statusLabel.setText(juce::String(devices.size()) + " devices / " + juce::String(outputs.size()) +
-            " Art-Net outputs | " + juce::String(requests.size() + (hasActiveRequest ? 1 : 0)) +
-            " requests remaining" + (scanActive ? " | Discovering..." : ""), juce::dontSendNotification);
-    else if (!scanActive && scanEverStarted && !outputs.isEmpty())
-        statusLabel.setText("No RDM devices returned", juce::dontSendNotification);
+    if (scanEverStarted)
+        statusLabel.setText(juce::String(devices.size()) + " RDM fixtures / " +
+            juce::String(discoveredPorts.size()) + " Art-Net ports / " +
+            juce::String(outputs.size()) + " BK interfaces | " +
+            juce::String(requests.size() + (hasActiveRequest ? 1 : 0)) + " pending" +
+            (scanActive ? " | Discovering..." : ""), juce::dontSendNotification);
 }
 
 void RDMManager::processPacket(const Packet& packet)
@@ -449,7 +604,8 @@ void RDMManager::processPacket(const Packet& packet)
     int size = (int)packet.data.getSize();
     if (size < 12) return;
     int opcode = p[8] | (p[9] << 8);
-    if (opcode == 0x8100) processTod(p, size, packet.senderIP);
+    if (opcode == 0x2100) processPollReply(p, size, packet.senderIP);
+    else if (opcode == 0x8100) processTod(p, size, packet.senderIP);
     else if (opcode == 0x8300) processRdm(p, size, packet.senderIP);
 }
 
@@ -465,27 +621,75 @@ int RDMManager::findDevice(const juce::String& uid, const juce::String& ip,
     return -1;
 }
 
+void RDMManager::processPollReply(const uint8* p, int size,
+                                      const juce::String& senderIP)
+{
+    if (!scanActive || size < 207) return; // ArtPollReply minimum length
+    bool isExpectedNode = false;
+    for (DMXInterface* output : outputs)
+    {
+        auto* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+        if (dev == nullptr) continue;
+        const juce::String host = dev->remoteHost->stringValue().trim();
+        if (host == senderIP || isBroadcastAddress(host))
+        {
+            isExpectedNode = true;
+            break;
+        }
+    }
+    if (!isExpectedNode) return;
+    const int net = p[18] & 0x7f; // NetSwitch
+    const int subnet = p[19] & 0x0f; // SubSwitch
+    const bool rdmCapable = (p[23] & 0x02) != 0; // Status1.RDM
+    const int declaredPorts = (p[172] << 8) | p[173];
+    int nameLength = 0;
+    while (nameLength < 18 && p[26 + nameLength] != 0) ++nameLength;
+    const juce::String name = juce::String::fromUTF8((const char*)p + 26, nameLength);
+
+    // A bind/page advertises at most 4 ports. Treat PortTypes as authoritative:
+    // some gateways leave NumPorts=0 even when PortTypes is populated.
+    for (int i = 0; i < 4; ++i)
+    {
+        if (declaredPorts > 0 && i >= declaredPorts) break;
+        const uint8 portType = p[174 + i];
+        if ((portType & 0x80) == 0 || (portType & 0x3f) != 0) continue;
+        const int addressLow = (subnet << 4) | (p[190 + i] & 0x0f);
+        // Probe DMX output ports even when the optional RDM capability flag
+        // is missing: some gateways incorrectly leave Status1.RDM cleared.
+        addDiscoveredPort(senderIP, net, addressLow, rdmCapable, name);
+    }
+}
+
 void RDMManager::processTod(const uint8* p, int size, const juce::String& senderIP)
 {
     if (size < 28 || p[22] != 0 || size < 28 + 6 * p[27]) return;
 
-    DMXInterface* matchingOutput = nullptr;
-    DMXInterface* broadcastOutput = nullptr;
-    for (DMXInterface* output : outputs)
+    // Only accept TOD replies for a port that we have requested; this also
+    // supports responses from a node reached through a broadcast fallback.
+    bool knownPort = false;
+    for (const DiscoveredPort& port : discoveredPorts)
     {
-        DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
-        if (dev == nullptr) continue;
-        int addressLow = (dev->outputSubnet->intValue() << 4) | dev->outputUniverse->intValue();
-        if (p[21] != dev->outputNet->intValue() || p[23] != addressLow) continue;
-        juce::String host = dev->remoteHost->stringValue();
-        if (host == senderIP) { matchingOutput = output; break; }
-        if (host.endsWith(".255") || host == "255.255.255.255")
-            broadcastOutput = output;
+        if (port.net != p[21] || port.addressLow != p[23]) continue;
+        if (port.nodeIP == senderIP || isBroadcastAddress(port.nodeIP))
+        {
+            knownPort = true;
+            break;
+        }
     }
-    // Prefer an exact configured IP. Otherwise accept a directed-broadcast output.
-    if (matchingOutput == nullptr) matchingOutput = broadcastOutput;
-    if (matchingOutput == nullptr) return;
+    if (!knownPort) return;
 
+    // Upgrade a broadcast target to a concrete node route for subsequent GET/SET.
+    addDiscoveredPort(senderIP, p[21], p[23], true);
+    DMXInterface* match = findConfiguredOutput(senderIP, p[21], p[23]);
+    int udpPort = 6454;
+    for (const DiscoveredPort& port : discoveredPorts)
+    {
+        if (port.nodeIP == senderIP && port.net == p[21] && port.addressLow == p[23])
+        {
+            udpPort = port.udpPort;
+            break;
+        }
+    }
     for (int i = 0; i < p[27]; ++i)
     {
         const uint8* uid = p + 28 + i * 6;
@@ -495,7 +699,8 @@ void RDMManager::processTod(const uint8* p, int size, const juce::String& sender
         std::memcpy(device.uid.data(), uid, 6);
         device.uidText = id;
         device.nodeIP = senderIP;
-        device.output = matchingOutput;
+        device.output = match;
+        device.udpPort = udpPort;
         device.net = p[21];
         device.addressLow = p[23];
         auto assigned = associations.find(deviceKey(device));
@@ -512,9 +717,7 @@ void RDMManager::processTod(const uint8* p, int size, const juce::String& sender
 
 void RDMManager::processRdm(const uint8* p, int size, const juce::String& senderIP)
 {
-    if (!hasActiveRequest || !outputs.contains(activeRequest.output) || size < 49) return;
-    DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(activeRequest.output->dmxDevice.get());
-    if (dev == nullptr) return;
+    if (!hasActiveRequest || size < 49) return;
     if (p[21] != activeRequest.net || p[23] != activeRequest.addressLow) return;
     if (senderIP != activeRequest.nodeIP) return;
     const uint8* rdm = p + 24;
@@ -701,6 +904,8 @@ void RDMManager::processRdm(const uint8* p, int size, const juce::String& sender
     }
     if (pid == 0x0060 && dataLength >= 19)
     {
+        device.modelId = read16(data + 2);
+        device.deviceInfoRead = true;
         if (device.personality != 0 && device.personality != data[12])
         {
             device.slots.clear();
@@ -800,7 +1005,7 @@ juce::String RDMManager::cellText(int row, int columnId) const
     if (columnId == 1) return device.uidText;
     if (columnId == 2) return getFixtureName(device);
     if (columnId == 3) return device.nodeIP;
-    if (columnId == 5) return device.output != nullptr ? device.output->niceName : "—";
+    if (columnId == 5) return device.output != nullptr ? device.output->niceName : "Not configured";
     if (columnId == 6) return juce::String(device.net) + " / " +
         juce::String(device.addressLow >> 4) + " / " + juce::String(device.addressLow & 15);
     if (columnId == 4) return {};
@@ -984,6 +1189,8 @@ void RDMManager::showDeviceMenu(int row)
     menu.addItem(3, "DMX Channels...");
     menu.addItem(4, "Create Fixture Type from RDM",
         devices[row].footprint >= 1 && devices[row].footprint <= 512);
+    if (devices[row].output == nullptr)
+        menu.addItem(5, "Create BK Art-Net interface for this universe");
     juce::PopupMenu fixtures;
     int n = 0;
     for (Fixture* fixture : FixtureManager::getInstance()->items)
@@ -997,8 +1204,7 @@ void RDMManager::showDeviceMenu(int row)
         fixtureTypes.addItem(10000 + i, type->niceName);
     }
     menu.addSubMenu("Create BK fixture", fixtureTypes,
-        devices[row].address > 0 && devices[row].output != nullptr &&
-        !FixtureTypeManager::getInstance()->items.isEmpty());
+        devices[row].address > 0 && !FixtureTypeManager::getInstance()->items.isEmpty());
 
     const Device& device = devices.getReference(row);
     const juce::String uid = device.uidText, ip = device.nodeIP;
@@ -1024,9 +1230,41 @@ void RDMManager::showDeviceMenu(int row)
         }
         else if (result == 3) safe->showSlots(row);
         else if (result == 4) safe->showSlots(row); // Preview before creating the type
+        else if (result == 5) safe->ensureInterface(row);
         else if (result >= 10000) safe->createFixture(row, result - 10000);
         else if (result >= 1000) safe->associateFixture(row, result - 1000);
     });
+}
+
+DMXInterface* RDMManager::ensureInterface(int row)
+{
+    if (row < 0 || row >= devices.size()) return nullptr;
+    // Copy everything needed because creating a BK interface invokes callbacks.
+    const Device device = devices.getReference(row);
+    refreshOutputs();
+    if (DMXInterface* existing = findConfiguredOutput(device.nodeIP, device.net,
+                                                      device.addressLow))
+        return existing;
+    DMXInterface* output = new DMXInterface();
+    InterfaceManager::getInstance()->addItem(output);
+    output->dmxType->setValueWithKey("Art-Net");
+    DMXArtNetDevice* dev = dynamic_cast<DMXArtNetDevice*>(output->dmxDevice.get());
+    if (dev == nullptr) return nullptr;
+    output->setNiceName("RDM " + device.nodeIP + " N" + juce::String(device.net) +
+        "." + juce::String(device.addressLow >> 4) +
+        "." + juce::String(device.addressLow & 0x0f));
+    dev->remoteHost->setValue(device.nodeIP);
+    dev->remotePort->setValue(device.udpPort);
+    dev->outputNet->setValue(device.net);
+    dev->outputSubnet->setValue(device.addressLow >> 4);
+    dev->outputUniverse->setValue(device.addressLow & 0x0f);
+    output->enabled->setValue(true);
+    refreshOutputs();
+    const int index = findDevice(device.uidText, device.nodeIP,
+                                 device.net, device.addressLow);
+    if (index >= 0) devices.getReference(index).output = output;
+    rebuildColumns();
+    return output;
 }
 
 void RDMManager::createFixture(int row, int fixtureTypeIndex)
@@ -1038,8 +1276,8 @@ void RDMManager::createFixture(int row, int fixtureTypeIndex)
     // Keep an independent copy before addItem()/setValueFromTarget(), which
     // can trigger BK callbacks and invalidate references into devices.
     const Device device = devices.getReference(row);
-    if (device.address < 1 || device.address > 512 ||
-        !outputs.contains(device.output)) return;
+    if (device.address < 1 || device.address > 512) return;
+    if (ensureInterface(row) == nullptr) return;
 
     auto labelIt = device.values.find(0x0082);
     const juce::String label = labelIt != device.values.end() ? labelIt->second : juce::String();
@@ -1062,27 +1300,31 @@ void RDMManager::createFixture(int row, int fixtureTypeIndex)
 void RDMManager::associateFixture(int row, int fixtureIndex)
 {
     if (row < 0 || row >= devices.size()) return;
-    DMXInterface* out = devices.getReference(row).output;
-    if (out == nullptr || !outputs.contains(out)) return;
+    const Device device = devices.getReference(row);
     if (fixtureIndex < 0 || fixtureIndex >= FixtureManager::getInstance()->items.size()) return;
+    if (device.address < 1 || device.address > 512) return;
+    DMXInterface* out = ensureInterface(row);
+    if (out == nullptr) return;
+    const int currentRow = findDevice(device.uidText, device.nodeIP,
+                                      device.net, device.addressLow);
+    if (currentRow < 0) return;
     Fixture* fixture = FixtureManager::getInstance()->items[fixtureIndex];
-    if (devices[row].address < 1 || devices[row].address > 512) return;
     FixturePatch* patch = fixture->patchs.items.isEmpty() ? fixture->patchs.addItem() : fixture->patchs.items[0];
     if (patch == nullptr) return;
     patch->targetInterface->setValueFromTarget(out);
-    patch->address->setValue(devices[row].address);
+    patch->address->setValue(device.address);
     if (!patch->enabled->boolValue())
         patch->enabled->setValue(true);
     if (!patch->enabled->boolValue() ||
         patch->currentInterface->targetContainer.get() != out ||
-        !patch->currentAdresses.contains(devices[row].address))
+        !patch->currentAdresses.contains(device.address))
     {
         statusLabel.setText("BK patch not applied (check fixture type / address conflict)",
                             juce::dontSendNotification);
         return;
     }
-    devices.getReference(row).associatedFixtureId = fixture->id->intValue();
-    associations[deviceKey(devices.getReference(row))] = fixture->id->intValue();
+    devices.getReference(currentRow).associatedFixtureId = fixture->id->intValue();
+    associations[deviceKey(devices.getReference(currentRow))] = fixture->id->intValue();
     rebuildColumns();
     table.repaint();
 }
@@ -1320,6 +1562,262 @@ void RDMManager::showSlots(int row)
     options.resizable = true;
     options.content.setOwned(view);
     options.launchAsync();
+}
+
+void RDMManager::createDummyFixtures(bool confirmed)
+{
+    if (devices.isEmpty()) return;
+
+    // Sort across all discovered nodes by Art-Net port address, DMX address,
+    // then node IP / UID. Type 1 is the first type encountered in patch order.
+    std::vector<Device> ordered;
+    for (const Device& device : devices)
+    {
+        if (!device.deviceInfoRead || device.modelId < 0 || device.personality < 1 ||
+            device.footprint < 1 || device.footprint > 512 ||
+            device.address < 1 || device.address + device.footprint - 1 > 512)
+        {
+            statusLabel.setText("Dummy creation cancelled: missing DEVICE_INFO / valid DMX address or footprint",
+                                juce::dontSendNotification);
+            return;
+        }
+        ordered.push_back(device); // Copy before creating any BK objects.
+    }
+    std::sort(ordered.begin(), ordered.end(), [](const Device& a, const Device& b)
+    {
+        if (a.net != b.net) return a.net < b.net;
+        if (a.addressLow != b.addressLow) return a.addressLow < b.addressLow;
+        if (a.address != b.address) return a.address < b.address;
+        int ipCompare = a.nodeIP.compareNatural(b.nodeIP);
+        if (ipCompare != 0) return ipCompare < 0;
+        return a.uidText.compare(b.uidText) < 0;
+    });
+
+    using TypeKey = std::tuple<int, int, int, int>;
+    struct Group
+    {
+        TypeKey key;
+        juce::String modelName;
+        std::vector<Device> members;
+        FixtureType* fixtureType = nullptr;
+    };
+    std::vector<Group> groups;
+    std::map<TypeKey, size_t> groupIndices;
+
+    for (const Device& device : ordered)
+    {
+        const int manufacturerId = (int(device.uid[0]) << 8) | int(device.uid[1]);
+        // Different personalities (or different footprints) must not share a BK type.
+        TypeKey key(manufacturerId, device.modelId, device.personality, device.footprint);
+        auto found = groupIndices.find(key);
+        if (found == groupIndices.end())
+        {
+            Group group;
+            group.key = key;
+            auto model = device.values.find(0x0080);
+            group.modelName = model == device.values.end() || model->second.isEmpty()
+                ? "Model 0x" + juce::String::toHexString(device.modelId).paddedLeft('0', 4).toUpperCase()
+                : model->second;
+            const size_t newIndex = groups.size();
+            groups.push_back(group);
+            groupIndices[key] = newIndex;
+            found = groupIndices.find(key);
+        }
+        groups[found->second].members.push_back(device);
+    }
+
+    std::set<int> occupiedIds;
+    for (Fixture* fixture : FixtureManager::getInstance()->items)
+        occupiedIds.insert(fixture->id->intValue());
+
+    int toCreate = 0;
+    std::vector<Device> planned; // For patch overlap validation.
+    for (size_t groupIndex = 0; groupIndex < groups.size(); ++groupIndex)
+    {
+        const Group& group = groups[groupIndex];
+        if (group.members.size() > 99)
+        {
+            statusLabel.setText("Dummy creation cancelled: more than 99 devices of one type",
+                                juce::dontSendNotification);
+            return;
+        }
+        for (size_t memberIndex = 0; memberIndex < group.members.size(); ++memberIndex)
+        {
+            const Device& device = group.members[memberIndex];
+            // Do not create a second fixture for an already associated RDM UID.
+            if (device.associatedFixtureId > 0 && getFixtureName(device) != "—")
+                continue;
+
+            const int wantedId = 100 * int(groupIndex + 1) + int(memberIndex + 1);
+            if (occupiedIds.count(wantedId) > 0)
+            {
+                statusLabel.setText("Dummy creation cancelled: BK fixture ID " +
+                                    juce::String(wantedId) + " is already used",
+                                    juce::dontSendNotification);
+                return;
+            }
+            // Refuse overlapping DMX ranges before modifying anything.
+            for (const Device& other : planned)
+            {
+                const bool sameDiscoveredPort = device.nodeIP == other.nodeIP &&
+                    device.net == other.net && device.addressLow == other.addressLow;
+                DMXInterface* firstOutput = findConfiguredOutput(device.nodeIP,
+                    device.net, device.addressLow);
+                DMXInterface* secondOutput = findConfiguredOutput(other.nodeIP,
+                    other.net, other.addressLow);
+                const bool sameBKOutput = firstOutput != nullptr && firstOutput == secondOutput;
+                if (!sameDiscoveredPort && !sameBKOutput) continue;
+                if (device.address <= other.address + other.footprint - 1 &&
+                    other.address <= device.address + device.footprint - 1)
+                {
+                    statusLabel.setText("Dummy creation cancelled: overlapping RDM DMX addresses",
+                                        juce::dontSendNotification);
+                    return;
+                }
+            }
+            if (DMXInterface* output = findConfiguredOutput(device.nodeIP, device.net,
+                                                             device.addressLow))
+            {
+                for (int address = device.address; address < device.address + device.footprint; ++address)
+                {
+                    if (address < output->channelToFixturePatch.size() &&
+                        output->channelToFixturePatch[address] != nullptr)
+                    {
+                        statusLabel.setText("Dummy creation cancelled: DMX address " +
+                                            juce::String(address) + " is already patched in BK",
+                                            juce::dontSendNotification);
+                        return;
+                    }
+                }
+            }
+            planned.push_back(device);
+            ++toCreate;
+        }
+    }
+
+    if (toCreate == 0)
+    {
+        statusLabel.setText("All discovered RDM devices already have BK fixtures",
+                            juce::dontSendNotification);
+        return;
+    }
+
+    if (!confirmed)
+    {
+        juce::Component::SafePointer<RDMManager> safe(this);
+        juce::AlertWindow::showOkCancelBox(juce::AlertWindow::QuestionIcon,
+            "Create RDM dummy fixtures",
+            "Create " + juce::String(toCreate) + " BK fixtures for " +
+            juce::String(groups.size()) + " RDM types? IDs: 101, 102... / 201, 202...\n"
+            "An 8-bit dummy channel will be created for each DMX channel.",
+            "Create", "Cancel", this,
+            juce::ModalCallbackFunction::create([safe](int result)
+            {
+                if (result == 1 && safe != nullptr)
+                    safe->createDummyFixtures(true);
+            }));
+        return;
+    }
+
+    // Make sure every target interface exists before creating fixture types/fixtures.
+    for (const Device& device : planned)
+    {
+        int row = findDevice(device.uidText, device.nodeIP, device.net, device.addressLow);
+        if (row < 0 || ensureInterface(row) == nullptr)
+        {
+            statusLabel.setText("Dummy creation stopped: cannot create BK Art-Net interface",
+                                juce::dontSendNotification);
+            return;
+        }
+    }
+
+    int created = 0;
+    for (size_t groupIndex = 0; groupIndex < groups.size(); ++groupIndex)
+    {
+        Group& group = groups[groupIndex];
+        bool needed = false;
+        for (const Device& device : group.members)
+            if (device.associatedFixtureId <= 0 || getFixtureName(device) == "—")
+                needed = true;
+        if (!needed) continue;
+
+        const int manufacturerId = std::get<0>(group.key);
+        const int modelId = std::get<1>(group.key);
+        const int personality = std::get<2>(group.key);
+        const int footprint = std::get<3>(group.key);
+        const juce::String dummyName = "RDM Dummy - " + group.modelName +
+            " - Mode " + juce::String(personality) + " (" + juce::String(footprint) + "ch)" +
+            " [" + juce::String::toHexString(manufacturerId).paddedLeft('0', 4).toUpperCase() +
+            ":" + juce::String::toHexString(modelId).paddedLeft('0', 4).toUpperCase() + "]";
+
+        // Re-use the same dummy type when running the batch action again.
+        for (FixtureType* type : FixtureTypeManager::getInstance()->items)
+        {
+            if (type->niceName == dummyName &&
+                type->rdmManufacturerId->intValue() == manufacturerId &&
+                type->rdmModelId->intValue() == modelId &&
+                type->rdmPersonality->intValue() == personality &&
+                type->chansManager.items.size() == footprint)
+            {
+                group.fixtureType = type;
+                break;
+            }
+        }
+        if (group.fixtureType == nullptr)
+        {
+            FixtureType* type = FixtureTypeManager::getInstance()->addItem();
+            if (type == nullptr) break;
+            group.fixtureType = type;
+            type->setNiceName(dummyName);
+            type->rdmManufacturerId->setValue(manufacturerId);
+            type->rdmModelId->setValue(modelId);
+            type->rdmPersonality->setValue(personality);
+            type->chansManager.massiveImport = true;
+            for (int i = 0; i < footprint; ++i)
+            {
+                // Dummy = reserve a DMX byte, without guessing its ChannelType.
+                FixtureTypeChannel* channel = type->chansManager.addItem(nullptr, var(), false, false);
+                if (channel == nullptr) break;
+                channel->resolution->setValueWithData("8bits");
+            }
+            type->chansManager.massiveImport = false;
+            type->chansManager.calcDmxChannels();
+            if (type->chansManager.items.size() != footprint) break;
+        }
+
+        for (size_t memberIndex = 0; memberIndex < group.members.size(); ++memberIndex)
+        {
+            const Device device = group.members[memberIndex];
+            if (device.associatedFixtureId > 0 && getFixtureName(device) != "—")
+                continue;
+            const int row = findDevice(device.uidText, device.nodeIP,
+                                       device.net, device.addressLow);
+            if (row < 0) continue;
+
+            Fixture* fixture = FixtureManager::getInstance()->addItem();
+            if (fixture == nullptr) break;
+            fixture->id->setValue(100 * int(groupIndex + 1) + int(memberIndex + 1));
+            fixture->devTypeParam->setValueFromTarget(group.fixtureType);
+            auto label = device.values.find(0x0082);
+            if (label != device.values.end() && label->second.isNotEmpty())
+                fixture->userName->setValue(label->second);
+            else
+                fixture->userName->setValue(group.modelName + " " + juce::String(memberIndex + 1));
+
+            const int index = FixtureManager::getInstance()->items.indexOf(fixture);
+            if (index >= 0)
+                associateFixture(row, index);
+            // Count only a patch actually associated to this RDM UID.
+            const int currentRow = findDevice(device.uidText, device.nodeIP,
+                                              device.net, device.addressLow);
+            if (currentRow >= 0 && devices.getReference(currentRow).associatedFixtureId == fixture->id->intValue())
+                ++created;
+        }
+    }
+    statusLabel.setText("Created " + juce::String(created) + " / " +
+                        juce::String(toCreate) + " RDM dummy fixtures",
+                        juce::dontSendNotification);
+    rebuildColumns();
 }
 
 void RDMManager::createFixtureTypeFromRDM(int row)
