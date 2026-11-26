@@ -282,33 +282,34 @@ jobs:
           path: JUCE
 
       # -------------------------------------------------------
-      # Configure Ubuntu to install ARM libraries
-      # -------------------------------------------------------
-
-      - name: Setup Multi-Arch Apt
-        run: |
-          sudo dpkg --add-architecture ${{ matrix.deb_arch }}
-
-          sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-
-          # x86_64 packages used by the GitHub runner
-          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
-          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-
-          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-
-          sudo apt-get update
-
-      # -------------------------------------------------------
       # Cross compiler + JUCE dependencies
       # -------------------------------------------------------
 
       - name: Install Cross-Compiler and ARM libraries
         run: |
-          sudo apt-get install -y \
+          set -euo pipefail
+          target_arch=${{ matrix.deb_arch }}
+          sudo dpkg --add-architecture "$target_arch"
+
+          # Use the same Jammy snapshot for AMD64 and ARM packages.
+          snapshot=$(date -u -d '6 hours ago' +%Y%m%dT%H0000Z)
+          sources=$(mktemp --suffix=.list)
+          trap 'rm -f "$sources"' EXIT
+
+          for suite in jammy jammy-updates jammy-security; do
+            printf 'deb [arch=amd64,%s signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://snapshot.ubuntu.com/ubuntu/%s %s main universe restricted multiverse\n' \
+              "$target_arch" "$snapshot" "$suite"
+          done > "$sources"
+
+          apt_options=(
+            -o "Dir::Etc::sourcelist=$sources"
+            -o Dir::Etc::sourceparts=-
+            -o Acquire::Retries=5
+            -o Acquire::https::Timeout=30
+          )
+
+          sudo apt-get "${apt_options[@]}" --error-on=any update
+          sudo apt-get "${apt_options[@]}" install -y \
             crossbuild-essential-${{ matrix.deb_arch }} \
             pkg-config \
             libasound2-dev:${{ matrix.deb_arch }} \
